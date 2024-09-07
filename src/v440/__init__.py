@@ -110,13 +110,8 @@ class Version(scaevola.Scaevola):
         other = type(self)(other)
         return self._cmpkey() == other._cmpkey()
 
-    def __ge__(self, other):
-        other = type(self)(other)
-        return self._cmpkey() >= other._cmpkey()
-
-    def __gt__(self, other):
-        other = type(self)(other)
-        return self._cmpkey() > other._cmpkey()
+    def __hash__(self):
+        return self._cmpkey().__hash__()
 
     def __init__(self, version="0") -> None:
         self.__init_setter(version)
