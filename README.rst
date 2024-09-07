@@ -5,7 +5,7 @@ v440
 Overview
 --------
 
-v440
+mutable version objects in accordance with PEP440
 
 Installation
 ------------
