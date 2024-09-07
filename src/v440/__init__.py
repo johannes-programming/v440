@@ -4,6 +4,8 @@ import functools
 import re
 import string
 
+import scaevola
+
 __all__ = ["VersionError", "Version"]
 
 
@@ -37,8 +39,7 @@ class _Pattern:
         )?"""
     DEV = r"""(?P<dev> [-_\.]? dev [-_\.]? (?:[0-9]+)? )?"""
     LOCAL = r"""(?:\+(?P<local>[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?"""
-    BASE_VERSION = f"v? {EPOCH} {RELEASE}"
-    PUBLIC = f"{BASE_VERSION} {PRE} {POST} {DEV}"
+    PUBLIC = f"v? {EPOCH} {RELEASE} {PRE} {POST} {DEV}"
 
 
 def _singleton(cls):
@@ -66,12 +67,6 @@ def _vstrip(s, /):
     return s
 
 
-def _int(value):
-    if value.strip(string.digits):
-        raise ValueError
-    return int(value)
-
-
 def _setter(old):
     @functools.wraps(old)
     def new(self, x, /) -> None:
@@ -84,15 +79,17 @@ def _setter(old):
         try:
             if y is not None:
                 ans = old(self, y)
+            elif old.__name__.startswith("_"):
+                raise ValueError
             else:
                 delattr(self, old.__name__)
                 return
         except VersionError as e:
-            raise e  # from None
+            raise e from None
         except:
             m = "%r is not a proper value for %s"
             m %= (x, old.__name__.lstrip("_"))
-            raise VersionError(m)  # from None
+            raise VersionError(m) from None
         if not old.__name__.startswith("_"):
             setattr(self, "_" + old.__name__, ans)
 
@@ -108,7 +105,7 @@ def _settername(name):
     return deco
 
 
-class Version:
+class Version(scaevola.Scaevola):
     def __eq__(self, other):
         other = type(self)(other)
         return self._cmpkey() == other._cmpkey()
@@ -117,21 +114,9 @@ class Version:
         other = type(self)(other)
         return self._cmpkey() >= other._cmpkey()
 
-    def __ge__(self, other):
+    def __gt__(self, other):
         other = type(self)(other)
         return self._cmpkey() > other._cmpkey()
-
-    def __le__(self, other):
-        other = type(self)(other)
-        return self._cmpkey() <= other._cmpkey()
-
-    def __lt__(self, other):
-        other = type(self)(other)
-        return self._cmpkey() < other._cmpkey()
-
-    def __ne__(self, other):
-        other = type(self)(other)
-        return self._cmpkey() != other._cmpkey()
 
     def __init__(self, version="0") -> None:
         self.__init_setter(version)
@@ -144,6 +129,17 @@ class Version:
             self.public, self.local = s.split("+")
         else:
             self.public, self.local = s, None
+
+    def __le__(self, other):
+        other = type(self)(other)
+        return self._cmpkey() <= other._cmpkey()
+
+    def __lt__(self, other):
+        other = type(self)(other)
+        return self._cmpkey() < other._cmpkey()
+
+    def __ne__(self, other):
+        return not (self == other)
 
     def __repr__(self) -> str:
         return "<Version(%r)>" % str(self)
@@ -185,9 +181,53 @@ class Version:
         t[index] = value
         self.release = t
 
+    @property
+    def base_version(self) -> str:
+        ans = ""
+        if self.epoch != 0:
+            ans += "%s!" % self.epoch
+        ans += ".".join(str(x) for x in self.release)
+        return ans
+
+    @base_version.setter
+    @_settername("_base_version")
+    def base_version(self, v):
+        if type(v) is not str:
+            raise TypeError
+        if "!" in v:
+            self.epoch, self.release = v.split("!")
+        else:
+            self.epoch, self.release = 0, v
+
+    @base_version.deleter
+    def base_version(self):
+        del self.epoch
+        del self.release
+
     def clear(self):
         del self.public
         del self.local
+
+    @property
+    def dev(self):
+        return self._dev
+
+    @dev.setter
+    @_setter
+    def dev(self, v):
+        if type(v) is list:
+            raise TypeError
+        v = v.lower()
+        if "dev" not in v:
+            v = "dev" + v
+        _Regex.DEV.search(v).groups()
+        v = v.strip(".-_dev")
+        v = int("0" + v)
+        return v
+
+    @dev.deleter
+    def dev(self):
+        self._dev = None
 
     @property
     def epoch(self):
@@ -201,32 +241,80 @@ class Version:
         v = _vstrip(v)
         if v.endswith("!"):
             v = v[:-1]
-        return _int("0" + v)
+        return int("0" + v)
 
     @epoch.deleter
     def epoch(self):
         self._epoch = 0
 
-    @property
-    def release(self):
-        return self._release or (0,)
+    def is_prerelease(self) -> bool:
+        return self.dev is not None or self.pre is not None
 
-    @release.setter
+    def is_postrelease(self) -> bool:
+        return self.post is not None
+
+    def is_devrelease(self) -> bool:
+        return self.dev is not None
+
+    @property
+    def major(self) -> int:
+        return self._getitem(0)
+
+    @major.setter
     @_setter
-    def release(self, v):
-        if type(v) is str:
-            v = _vstrip(v).split(".")
-        else:
-            v = [str(x) for x in v]
-        v = [int(x) for x in v]
-        if any(x < 0 for x in v):
-            raise ValueError
-        v = tuple(v)
+    def major(self, value):
+        self._setitem(0, value)
+
+    @major.deleter
+    def major(self):
+        self._setitem(0)
+
+    @property
+    def micro(self) -> int:
+        return self._getitem(2)
+
+    @micro.setter
+    @_setter
+    def micro(self, value):
+        self._setitem(2, value)
+
+    @micro.deleter
+    def micro(self):
+        self._setitem(2)
+
+    @property
+    def minor(self) -> int:
+        return self._getitem(1)
+
+    @minor.setter
+    @_setter
+    def minor(self, value):
+        self._setitem(1, value)
+
+    @minor.deleter
+    def minor(self):
+        self._setitem(1)
+
+    @property
+    def post(self):
+        return self._post
+
+    @post.setter
+    @_setter
+    def post(self, v):
+        if type(v) is list:
+            raise TypeError
+        v = v.lower()
+        if "p" not in v and "r" not in v:
+            v = "post" + v
+        _Regex.POST.search(v).groups()
+        v = v.strip(".-_postrev")
+        v = int("0" + v)
         return v
 
-    @release.deleter
-    def release(self):
-        self._release = ()
+    @post.deleter
+    def post(self):
+        self._post = None
 
     @property
     def pre(self):
@@ -253,46 +341,25 @@ class Version:
         self._pre = None
 
     @property
-    def post(self):
-        return self._post
+    def release(self):
+        return self._release or (0,)
 
-    @post.setter
+    @release.setter
     @_setter
-    def post(self, v):
-        if type(v) is list:
-            raise TypeError
-        v = v.lower()
-        if "p" not in v and "r" not in v:
-            v = "post" + v
-        _Regex.POST.search(v).groups()
-        v = v.strip(".-_postrev")
-        v = int("0" + v)
+    def release(self, v):
+        if type(v) is str:
+            v = _vstrip(v).split(".")
+        else:
+            v = [str(x) for x in v]
+        v = [int(x) for x in v]
+        if any(x < 0 for x in v):
+            raise ValueError
+        v = tuple(v)
         return v
 
-    @post.deleter
-    def post(self):
-        self._post = None
-
-    @property
-    def dev(self):
-        return self._dev
-
-    @dev.setter
-    @_setter
-    def dev(self, v):
-        if type(v) is list:
-            raise TypeError
-        v = v.lower()
-        if "dev" not in v:
-            v = "dev" + v
-        _Regex.DEV.search(v).groups()
-        v = v.strip(".-_dev")
-        v = int("0" + v)
-        return v
-
-    @dev.deleter
-    def dev(self):
-        self._dev = None
+    @release.deleter
+    def release(self):
+        self._release = ()
 
     @property
     def local(self):
@@ -342,74 +409,3 @@ class Version:
     @public.deleter
     def public(self):
         self.public = "0"
-
-    @property
-    def base_version(self) -> str:
-        ans = ""
-        if self.epoch != 0:
-            ans += "%s!" % self.epoch
-        ans += ".".join(str(x) for x in self.release)
-        return ans
-
-    @base_version.setter
-    @_settername("_base_version")
-    def base_version(self, v):
-        if type(v) is not str:
-            raise TypeError
-        if "!" in v:
-            self.epoch, self.release = v.split("!")
-        else:
-            self.epoch, self.release = 0, v
-
-    @base_version.deleter
-    def base_version(self):
-        del self.epoch
-        del self.release
-
-    def is_prerelease(self) -> bool:
-        return self.dev is not None or self.pre is not None
-
-    def is_postrelease(self) -> bool:
-        return self.post is not None
-
-    def is_devrelease(self) -> bool:
-        return self.dev is not None
-
-    @property
-    def major(self) -> int:
-        return self._getitem(0)
-
-    @major.setter
-    @_setter
-    def major(self, value):
-        self._setitem(0, value)
-
-    @major.deleter
-    def major(self):
-        self._setitem(0)
-
-    @property
-    def minor(self) -> int:
-        return self._getitem(1)
-
-    @minor.setter
-    @_setter
-    def minor(self, value):
-        self._setitem(1, value)
-
-    @minor.deleter
-    def minor(self):
-        self._setitem(1)
-
-    @property
-    def micro(self) -> int:
-        return self._getitem(2)
-
-    @micro.setter
-    @_setter
-    def micro(self, value):
-        self._setitem(2, value)
-
-    @micro.deleter
-    def micro(self):
-        self._setitem(2)
