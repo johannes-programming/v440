@@ -14,14 +14,14 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
-    "scaevola>=1.0.5",
+    "scaevola>=1.0",
 ]
-description = "v440"
+description = "mutable version objects"
 keywords = []
 name = "v440"
 readme = "README.rst"
-requires-python = ">=3.12.4"
-version = "0.0.3"
+requires-python = ">=3.12"
+version = "0.0.4"
 
 [project.license]
 file = "LICENSE.txt"
