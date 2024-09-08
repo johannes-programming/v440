@@ -319,7 +319,6 @@ class Version(scaevola.Scaevola):
         return self.getreleaseitem(0)
 
     @major.setter
-    @_Setter.predeco()
     def major(self, value):
         self.setreleaseitem(0, value)
 
