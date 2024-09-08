@@ -12,6 +12,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
 ]
 dependencies = [
     "packaging>=23.2",
@@ -22,7 +23,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.12"
-version = "0.0.17"
+version = "0.0.18"
 
 [project.license]
 file = "LICENSE.txt"
