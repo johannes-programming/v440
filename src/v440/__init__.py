@@ -21,52 +21,6 @@ _PREDICT = dict(
 )
 
 
-class _Pattern:
-    EPOCH = r"(?:(?P<epoch>[0-9]+)!)?"
-    RELEASE = r"(?P<release>[0-9]+(?:\.[0-9]+)*)"
-    PRE = r"""
-        (?P<pre>                                          
-            [-_\.]?
-            (?P<pre_l>alpha|a|beta|b|preview|pre|c|rc)
-            [-_\.]?
-            (?P<pre_n>[0-9]+)?
-        )?"""
-    POST = r"""
-        (?P<post>                                         
-            (?:-(?:[0-9]+))
-            |
-            (?: [-_\.]? (?:post|rev|r) [-_\.]? (?:[0-9]+)? )
-        )?"""
-    DEV = r"""(?P<dev> [-_\.]? dev [-_\.]? (?:[0-9]+)? )?"""
-    LOCAL = r"""(?:\+(?P<local>[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?"""
-    PUBLIC = f"v? {EPOCH} {RELEASE} {PRE} {POST} {DEV}"
-
-
-def _singleton(cls):
-    return cls()
-
-
-@_singleton
-class _Regex:
-    def __getattr__(self, name):
-        p = getattr(_Pattern, name)
-        p = r"^" + p + r"$"
-        ans = re.compile(p, re.VERBOSE | re.IGNORECASE)
-        setattr(self, name, ans)
-        return ans
-
-
-class VersionError(ValueError): ...
-
-
-def _vstrip(s, /):
-    if s.startswith("v"):
-        return s[1:]
-    if s.startswith("V"):
-        return s[1:]
-    return s
-
-
 def _setter(old):
     @functools.wraps(old)
     def new(self, x, /) -> None:
@@ -103,6 +57,49 @@ def _settername(name):
         return new
 
     return deco
+
+
+def _singleton(cls):
+    return cls()
+
+
+def _vstrip(s, /):
+    if s.startswith("v"):
+        return s[1:]
+    if s.startswith("V"):
+        return s[1:]
+    return s
+
+
+class _Pattern:
+    EPOCH = r"(?:(?P<epoch>[0-9]+)!)?"
+    RELEASE = r"(?P<release>[0-9]+(?:\.[0-9]+)*)"
+    PRE = r"""
+        (?P<pre>                                          
+            [-_\.]?
+            (?P<pre_l>alpha|a|beta|b|preview|pre|c|rc)
+            [-_\.]?
+            (?P<pre_n>[0-9]+)?
+        )?"""
+    POST = r"""
+        (?P<post>                                         
+            (?:-(?:[0-9]+))
+            |
+            (?: [-_\.]? (?:post|rev|r) [-_\.]? (?:[0-9]+)? )
+        )?"""
+    DEV = r"""(?P<dev> [-_\.]? dev [-_\.]? (?:[0-9]+)? )?"""
+    LOCAL = r"""(?:\+(?P<local>[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?"""
+    PUBLIC = f"v? {EPOCH} {RELEASE} {PRE} {POST} {DEV}"
+
+
+@_singleton
+class _Regex:
+    def __getattr__(self, name):
+        p = getattr(_Pattern, name)
+        p = r"^" + p + r"$"
+        ans = re.compile(p, re.VERBOSE | re.IGNORECASE)
+        setattr(self, name, ans)
+        return ans
 
 
 class Version(scaevola.Scaevola):
@@ -198,6 +195,17 @@ class Version(scaevola.Scaevola):
     def base_version(self):
         del self.epoch
         del self.release
+
+    def bump(self, index=-1, amount=1):
+        if type(index) is not int:
+            raise TypeError("index must be an integer")
+        if type(amount) is not int:
+            raise TypeError("amount must be an integer")
+        r = list(self.release)
+        r += [0] * max(0, index + 1 - len(r))
+        r[index] += amount
+        r = r[: index + 1]
+        self.release = r
 
     def clear(self):
         del self.public
@@ -404,3 +412,6 @@ class Version(scaevola.Scaevola):
     @public.deleter
     def public(self):
         self.public = "0"
+
+
+class VersionError(ValueError): ...
