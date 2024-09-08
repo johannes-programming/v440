@@ -135,8 +135,11 @@ class Version(scaevola.Scaevola):
     def __hash__(self):
         return self._cmpkey().__hash__()
 
-    @_Setter.predeco(name="version", delete=False, save=False)
     def __init__(self, version="0") -> None:
+        self.__init_setter(version)
+
+    @_Setter.predeco(name="version", delete=False, save=False)
+    def __init_setter(self, version):
         if type(version) is list:
             raise TypeError
         if version is None:
