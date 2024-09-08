@@ -5,6 +5,7 @@ import functools
 import re
 import string
 
+import packaging.version
 import scaevola
 
 __all__ = ["VersionError", "Version"]
@@ -117,14 +118,11 @@ class _Pattern(enum.StrEnum):
     LOCAL = r"""(?:\+(?P<local>[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?"""
     PUBLIC = f"v? {EPOCH} {RELEASE} {PRE} {POST} {DEV}"
 
-
-@_singleton
-class _Regex:
-    def __getattr__(self, name):
-        p = _Pattern[name]
+    @functools.cached_property
+    def regex(self):
+        p = self.value
         p = r"^" + p + r"$"
         ans = re.compile(p, re.VERBOSE)
-        setattr(self, name, ans)
         return ans
 
 
@@ -245,7 +243,7 @@ class Version(scaevola.Scaevola):
             raise TypeError
         if "dev" not in v:
             v = "dev" + v
-        _Regex.DEV.search(v).groups()
+        _Pattern.DEV.regex.search(v).groups()
         v = v.strip(".-_dev")
         return v
 
@@ -350,6 +348,9 @@ class Version(scaevola.Scaevola):
     def minor(self):
         self.delreleaseitem(1)
 
+    def packaging(self):
+        return packaging.version.Version(self.data)
+
     @property
     def post(self):
         return self._post
@@ -361,7 +362,7 @@ class Version(scaevola.Scaevola):
             raise TypeError
         if "p" not in v and "r" not in v:
             v = "post" + v
-        _Regex.POST.search(v).groups()
+        _Pattern.POST.regex.search(v).groups()
         v = v.strip(".-_postrev")
         return v
 
@@ -377,7 +378,7 @@ class Version(scaevola.Scaevola):
     @_Setter.predeco()
     def pre(self, v):
         if type(v) is str:
-            v = _Regex.PRE.search(v).groups()
+            v = _Pattern.PRE.regex.search(v).groups()
             v = v[1:]
             v = _Setter.parse_to_list(v)
         l = _PREDICT[l]
@@ -407,7 +408,7 @@ class Version(scaevola.Scaevola):
     def public(self, v):
         if type(v) is not str:
             raise TypeError
-        d = _Regex.PUBLIC.search(v).groupdict()
+        d = _Pattern.PUBLIC.regex.search(v).groupdict()
         names = "epoch release pre post dev".split()
         for n in names:
             setattr(self, n, d[n])
