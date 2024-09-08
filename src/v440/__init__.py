@@ -135,8 +135,9 @@ class Version(scaevola.Scaevola):
     def __hash__(self):
         return self._cmpkey().__hash__()
 
-    def __init__(self, data="0") -> None:
+    def __init__(self, data="0", /, **kwargs) -> None:
         self.data = data
+        self.update(**kwargs)
 
     def __le__(self, other):
         other = type(self)(other)
@@ -145,9 +146,6 @@ class Version(scaevola.Scaevola):
     def __lt__(self, other):
         other = type(self)(other)
         return self._cmpkey() < other._cmpkey()
-
-    def __ne__(self, other):
-        return not (self == other)
 
     def __repr__(self) -> str:
         return "<Version(%r)>" % str(self)
@@ -444,6 +442,17 @@ class Version(scaevola.Scaevola):
             t.append(0)
         t[index] = value
         self.release = t
+
+    def update(self, **kwargs):
+        for k, v in kwargs.items():
+            attr = getattr(type(self), k)
+            if isinstance(attr, property):
+                setattr(self, k, v)
+                continue
+            e = "%r object has no property %r"
+            e %= (type(self).__name__, k)
+            e = AttributeError(e)
+            raise e
 
 
 class VersionError(ValueError): ...
