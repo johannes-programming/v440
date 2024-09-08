@@ -135,19 +135,8 @@ class Version(scaevola.Scaevola):
     def __hash__(self):
         return self._cmpkey().__hash__()
 
-    def __init__(self, version="0") -> None:
-        self.__init_setter(version)
-
-    @_Setter.predeco(name="version", delete=False, save=False)
-    def __init_setter(self, version):
-        if type(version) is list:
-            raise TypeError
-        if version is None:
-            version = "0"
-        if "+" in version:
-            self.public, self.local = version.split("+")
-        else:
-            self.public, self.local = version, None
+    def __init__(self, data="0") -> None:
+        self.data = data
 
     def __le__(self, other):
         other = type(self)(other)
@@ -164,9 +153,7 @@ class Version(scaevola.Scaevola):
         return "<Version(%r)>" % str(self)
 
     def __str__(self) -> str:
-        if self.local is None:
-            return self.public
-        return "%s+%s" % (self.public, self.local)
+        return self.data
 
     def _cmpkey(self):
         if self.pre is not None:
@@ -221,6 +208,27 @@ class Version(scaevola.Scaevola):
         self.release = r
 
     def clear(self):
+        del self.public
+        del self.local
+
+    @property
+    def data(self):
+        if not self.local:
+            return self.public
+        return "%s+%s" % (self.public, self.local)
+
+    @data.setter
+    @_Setter.predeco(save=False)
+    def data(self, x):
+        if type(x) is list:
+            raise TypeError
+        if "+" in x:
+            self.public, self.local = x.split("+")
+        else:
+            self.public, self.local = x, None
+
+    @data.deleter
+    def data(self):
         del self.public
         del self.local
 
