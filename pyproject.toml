@@ -14,6 +14,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
+    "packaging>=23.2",
     "scaevola>=1.0.5",
 ]
 description = "mutable version objects"
@@ -21,7 +22,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.12"
-version = "0.0.16"
+version = "0.0.17"
 
 [project.license]
 file = "LICENSE.txt"
