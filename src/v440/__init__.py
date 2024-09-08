@@ -44,7 +44,7 @@ class _Setter:
             else:
                 return x
         else:
-            x = cls.conv_to_str(x)
+            x = _Setter.parse_to_str(x)
             if x == "":
                 return x
             if x.strip(string.digits) == "":
@@ -76,7 +76,7 @@ class _Setter:
             except:
                 m = "%r is not a proper value for %s"
                 m %= (x, _name)
-                raise VersionError(m) from None
+                raise VersionError(m)  # from None
             if save == False:
                 return
             if save == True:
