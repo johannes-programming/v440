@@ -21,54 +21,79 @@ _PREDICT = dict(
 )
 
 
-def _setter(old):
-    @functools.wraps(old)
-    def new(self, x, /) -> None:
+class _Setter:
+    def predeco(**kwargs):
+        def ans(old):
+            return _Setter.deco(old, **kwargs)
+
+        return ans
+
+    def parse_to_input(x, /):
         if x is None:
-            y = None
-        elif not issubclass(type(x), str) and hasattr(x, "__iter__"):
-            y = list(x)
-        else:
-            y = str(x).strip()
-        try:
-            if y is not None:
-                ans = old(self, y)
-            elif old.__name__.startswith("_"):
+            return None
+        if issubclass(type(x), str):
+            return str(x)
+        if not hasattr(x, "__iter__"):
+            return str(x)
+        return _Setter.parse_to_list(x)
+
+    def parse_to_item(x, /):
+        if type(x) is int:
+            if x < 0:
                 raise ValueError
             else:
-                delattr(self, old.__name__)
+                return x
+        else:
+            x = cls.conv_to_str(x)
+            if x == "":
+                return x
+            if x.strip(string.digits) == "":
+                return int(x)
+            return x
+
+    def parse_to_list(x, /):
+        return [_Setter.parse_to_item(i) for i in x]
+
+    def parse_to_str(x, /):
+        x = str(x).lower().strip()
+        return x
+
+    def deco(old, /, *, delete=True, name=None, save=True):
+        @functools.wraps(old)
+        def new(self, x, /) -> None:
+            if name is None:
+                _name = old.__name__
+            else:
+                _name = name
+            y = _Setter.parse_to_input(x)
+            try:
+                if y is None and delete:
+                    delattr(self, _name)
+                    return
+                ans = old(self, y)
+            except VersionError:
+                raise
+            except:
+                m = "%r is not a proper value for %s"
+                m %= (x, _name)
+                raise VersionError(m) from None
+            if save == False:
                 return
-        except VersionError as e:
-            raise e from None
-        except:
-            m = "%r is not a proper value for %s"
-            m %= (x, old.__name__.lstrip("_"))
-            raise VersionError(m) from None
-        if not old.__name__.startswith("_"):
-            setattr(self, "_" + old.__name__, ans)
+            if save == True:
+                pass
+            elif save == "int":
+                ans = int("0" + str(ans))
+            elif save == "tuple":
+                ans = tuple(ans)
+            else:
+                raise NotImplementedError
+            setattr(self, "_" + _name, ans)
 
-    return new
-
-
-def _settername(name):
-    def deco(old):
-        old.__name__ = name
-        new = _setter(old)
         return new
-
-    return deco
 
 
 def _singleton(cls):
     return cls()
-
-
-def _vstrip(s, /):
-    if s.startswith("v"):
-        return s[1:]
-    if s.startswith("V"):
-        return s[1:]
-    return s
 
 
 class _Pattern:
@@ -110,17 +135,16 @@ class Version(scaevola.Scaevola):
     def __hash__(self):
         return self._cmpkey().__hash__()
 
+    @_Setter.predeco(name="version", delete=False, save=False)
     def __init__(self, version="0") -> None:
-        self.__init_setter(version)
-
-    @_settername("_Version")
-    def __init_setter(self, s=None):
-        if type(s) is not str:
+        if type(version) is list:
             raise TypeError
-        if "+" in s:
-            self.public, self.local = s.split("+")
+        if version is None:
+            version = "0"
+        if "+" in version:
+            self.public, self.local = version.split("+")
         else:
-            self.public, self.local = s, None
+            self.public, self.local = version, None
 
     def __le__(self, other):
         other = type(self)(other)
@@ -150,28 +174,14 @@ class Version(scaevola.Scaevola):
             pre = "z", float("inf")
         post = -1 if self.post is None else self.post
         dev = float("inf") if self.dev is None else self.dev
-        local = []
-        for x in self.local.split("."):
-            try:
-                i = int(x), ""
-            except ValueError:
-                i = -1, x
-            local.append(i)
+        local = [(type(x) is int, x) for x in self._local]
         return self.epoch, self.release, pre, post, dev, local
 
-    def _getitem(self, index):
-        if type(index) is int:
-            if index >= len(self.release):
-                return 0
+    def getreleaseitem(self, index):
+        if index >= len(self.release):
+            return 0
+        else:
             return self.release[index]
-        raise TypeError
-
-    def _setitem(self, index, value=0):
-        t = list(self.release)
-        while len(t) <= index:
-            t.append(0)
-        t[index] = value
-        self.release = t
 
     @property
     def base_version(self) -> str:
@@ -182,9 +192,9 @@ class Version(scaevola.Scaevola):
         return ans
 
     @base_version.setter
-    @_settername("_base_version")
+    @_Setter.predeco(save=False)
     def base_version(self, v):
-        if type(v) is not str:
+        if type(v) is list:
             raise TypeError
         if "!" in v:
             self.epoch, self.release = v.split("!")
@@ -211,21 +221,28 @@ class Version(scaevola.Scaevola):
         del self.public
         del self.local
 
+    def delreleaseitem(self, index):
+        if index >= len(self.release):
+            return
+        t = list(self.release)
+        while len(t) <= index:
+            t.append(0)
+        del t[index]
+        self.release = t
+
     @property
     def dev(self):
         return self._dev
 
     @dev.setter
-    @_setter
+    @_Setter.predeco(save="int")
     def dev(self, v):
         if type(v) is list:
             raise TypeError
-        v = v.lower()
         if "dev" not in v:
             v = "dev" + v
         _Regex.DEV.search(v).groups()
         v = v.strip(".-_dev")
-        v = int("0" + v)
         return v
 
     @dev.deleter
@@ -237,14 +254,15 @@ class Version(scaevola.Scaevola):
         return self._epoch
 
     @epoch.setter
-    @_setter
+    @_Setter.predeco(save="int")
     def epoch(self, v):
-        if type(v) is not str:
+        if type(v) is list:
             raise TypeError
-        v = _vstrip(v)
+        if v.startswith("v"):
+            v = v[1:]
         if v.endswith("!"):
             v = v[:-1]
-        return int("0" + v)
+        return v
 
     @epoch.deleter
     def epoch(self):
@@ -260,59 +278,82 @@ class Version(scaevola.Scaevola):
         return self.dev is not None
 
     @property
+    def local(self):
+        if not self._local:
+            return None
+        return ".".join(str(x) for x in self._local)
+
+    @local.setter
+    @_Setter.predeco(save="tuple")
+    def local(self, v):
+        if type(v) is str:
+            if v.startswith("+"):
+                v = v[1:]
+            v = v.split(".")
+            v = _Setter.parse_to_list(v)
+        for i in v:
+            if type(i) is int:
+                continue
+            if i == "":
+                raise ValueError
+            if i.strip(string.ascii_letters + string.digits):
+                raise ValueError
+        return v
+
+    @local.deleter
+    def local(self):
+        self._local = None
+
+    @property
     def major(self) -> int:
-        return self._getitem(0)
+        return self.getreleaseitem(0)
 
     @major.setter
-    @_setter
+    @_Setter.predeco()
     def major(self, value):
-        self._setitem(0, value)
+        self.setreleaseitem(0, value)
 
     @major.deleter
     def major(self):
-        self._setitem(0)
+        self.delreleaseitem(0)
 
     @property
     def micro(self) -> int:
-        return self._getitem(2)
+        return self.getreleaseitem(2)
 
     @micro.setter
-    @_setter
     def micro(self, value):
-        self._setitem(2, value)
+        self.setreleaseitem(2, value)
 
     @micro.deleter
     def micro(self):
-        self._setitem(2)
+        self.setreleaseitem(2)
 
     @property
     def minor(self) -> int:
-        return self._getitem(1)
+        return self.getreleaseitem(1)
 
     @minor.setter
-    @_setter
     def minor(self, value):
-        self._setitem(1, value)
+        self.setreleaseitem(1, value)
 
     @minor.deleter
     def minor(self):
-        self._setitem(1)
+        self.delreleaseitem(1)
 
     @property
     def post(self):
         return self._post
 
     @post.setter
-    @_setter
+    @_Setter.predeco(save="int")
     def post(self, v):
         if type(v) is list:
             raise TypeError
-        v = v.lower()
         if "p" not in v and "r" not in v:
             v = "post" + v
         _Regex.POST.search(v).groups()
         v = v.strip(".-_postrev")
-        v = int("0" + v)
         return v
 
     @post.deleter
@@ -324,69 +365,22 @@ class Version(scaevola.Scaevola):
         return self._pre
 
     @pre.setter
-    @_setter
+    @_Setter.predeco()
     def pre(self, v):
         if type(v) is str:
-            v = v.lower()
-            l, n = _Regex.PRE.search(v).groups()[1:]
-        else:
-            l, n = v
-            l = str(l).lower()
-            n = str(n)
-            if n.strip(string.digits):
-                raise ValueError
+            v = _Regex.PRE.search(v).groups()
+            v = v[1:]
+            v = _Setter.parse_to_list(v)
         l = _PREDICT[l]
-        n = int("0" + n)
+        if n == "":
+            n = 0
+        if type(n) is str:
+            raise TypeError
         return (l, n)
 
     @pre.deleter
     def pre(self):
         self._pre = None
-
-    @property
-    def release(self):
-        return self._release or (0,)
-
-    @release.setter
-    @_setter
-    def release(self, v):
-        if type(v) is str:
-            v = _vstrip(v).split(".")
-        else:
-            v = [str(x) for x in v]
-        v = [int(x) for x in v]
-        if any(x < 0 for x in v):
-            raise ValueError
-        v = tuple(v)
-        return v
-
-    @release.deleter
-    def release(self):
-        self._release = ()
-
-    @property
-    def local(self):
-        return self._local
-
-    @local.setter
-    @_setter
-    def local(self, v):
-        if type(v) is str:
-            if v.startswith("+"):
-                v = v[1:]
-            v = v.split(".")
-        else:
-            v = [str(x) for x in v]
-        if not all(v):
-            raise ValueError
-        v = ".".join(x for x in v)
-        if v.strip(string.ascii_letters + string.digits + "."):
-            raise ValueError
-        return v
-
-    @local.deleter
-    def local(self):
-        self._local = None
 
     @property
     def public(self) -> str:
@@ -400,7 +394,7 @@ class Version(scaevola.Scaevola):
         return ans
 
     @public.setter
-    @_settername("_public")
+    @_Setter.predeco(save=False)
     def public(self, v):
         if type(v) is not str:
             raise TypeError
@@ -412,6 +406,33 @@ class Version(scaevola.Scaevola):
     @public.deleter
     def public(self):
         self.public = "0"
+
+    @property
+    def release(self):
+        return self._release or (0,)
+
+    @release.setter
+    @_Setter.predeco(save="tuple")
+    def release(self, v):
+        if type(v) is str:
+            if v.startswith("v"):
+                v = v[1:]
+            v = v.split(".")
+            v = _Setter.parse_to_list(v)
+        if any(type(x) is str for x in v):
+            raise TypeError
+        return v
+
+    @release.deleter
+    def release(self):
+        self._release = ()
+
+    def setreleaseitem(self, index, value):
+        t = list(self.release)
+        while len(t) <= index:
+            t.append(0)
+        t[index] = value
+        self.release = t
 
 
 class VersionError(ValueError): ...
