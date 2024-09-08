@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import enum
 import functools
 import re
 import string
@@ -22,42 +23,6 @@ _PREDICT = dict(
 
 
 class _Setter:
-    def predeco(**kwargs):
-        def ans(old):
-            return _Setter.deco(old, **kwargs)
-
-        return ans
-
-    def parse_to_input(x, /):
-        if x is None:
-            return None
-        if issubclass(type(x), str):
-            return str(x)
-        if not hasattr(x, "__iter__"):
-            return str(x)
-        return _Setter.parse_to_list(x)
-
-    def parse_to_item(x, /):
-        if type(x) is int:
-            if x < 0:
-                raise ValueError
-            else:
-                return x
-        else:
-            x = _Setter.parse_to_str(x)
-            if x == "":
-                return x
-            if x.strip(string.digits) == "":
-                return int(x)
-            return x
-
-    def parse_to_list(x, /):
-        return [_Setter.parse_to_item(i) for i in x]
-
-    def parse_to_str(x, /):
-        x = str(x).lower().strip()
-        return x
-
     def deco(old, /, *, delete=True, name=None, save=True):
         @functools.wraps(old)
         def new(self, x, /) -> None:
@@ -91,12 +56,48 @@ class _Setter:
 
         return new
 
+    def parse_to_input(x, /):
+        if x is None:
+            return None
+        if issubclass(type(x), str):
+            return str(x)
+        if not hasattr(x, "__iter__"):
+            return str(x)
+        return _Setter.parse_to_list(x)
+
+    def parse_to_item(x, /):
+        if type(x) is int:
+            if x < 0:
+                raise ValueError
+            else:
+                return x
+        else:
+            x = _Setter.parse_to_str(x)
+            if x == "":
+                return x
+            if x.strip(string.digits) == "":
+                return int(x)
+            return x
+
+    def parse_to_list(x, /):
+        return [_Setter.parse_to_item(i) for i in x]
+
+    def parse_to_str(x, /):
+        x = str(x).lower().strip()
+        return x
+
+    def predeco(**kwargs):
+        def ans(old):
+            return _Setter.deco(old, **kwargs)
+
+        return ans
+
 
 def _singleton(cls):
     return cls()
 
 
-class _Pattern:
+class _Pattern(enum.StrEnum):
     EPOCH = r"(?:(?P<epoch>[0-9]+)!)?"
     RELEASE = r"(?P<release>[0-9]+(?:\.[0-9]+)*)"
     PRE = r"""
@@ -120,7 +121,7 @@ class _Pattern:
 @_singleton
 class _Regex:
     def __getattr__(self, name):
-        p = getattr(_Pattern, name)
+        p = _Pattern[name]
         p = r"^" + p + r"$"
         ans = re.compile(p, re.VERBOSE)
         setattr(self, name, ans)
