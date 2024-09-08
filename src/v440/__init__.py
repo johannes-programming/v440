@@ -122,7 +122,7 @@ class _Regex:
     def __getattr__(self, name):
         p = getattr(_Pattern, name)
         p = r"^" + p + r"$"
-        ans = re.compile(p, re.VERBOSE | re.IGNORECASE)
+        ans = re.compile(p, re.VERBOSE)
         setattr(self, name, ans)
         return ans
 
@@ -164,12 +164,6 @@ class Version(scaevola.Scaevola):
         dev = float("inf") if self.dev is None else self.dev
         local = [(type(x) is int, x) for x in self._local]
         return self.epoch, self.release, pre, post, dev, local
-
-    def getreleaseitem(self, index):
-        if index >= len(self.release):
-            return 0
-        else:
-            return self.release[index]
 
     @property
     def base_version(self) -> str:
@@ -276,6 +270,12 @@ class Version(scaevola.Scaevola):
     @epoch.deleter
     def epoch(self):
         self._epoch = 0
+
+    def getreleaseitem(self, index):
+        if index >= len(self.release):
+            return 0
+        else:
+            return self.release[index]
 
     def is_prerelease(self) -> bool:
         return self.dev is not None or self.pre is not None
@@ -449,8 +449,8 @@ class Version(scaevola.Scaevola):
             if isinstance(attr, property):
                 setattr(self, k, v)
                 continue
-            e = "%r object has no property %r"
-            e %= (type(self).__name__, k)
+            e = "%r is not a property"
+            e %= k
             e = AttributeError(e)
             raise e
 
