@@ -26,32 +26,23 @@ _PREDICT = dict(
 class _Setter:
     def core(version, x, old, delete=True, name=None, save=True):
         if name is None:
-            _name = old.__name__
-        else:
-            _name = name
+            name = old.__name__
         y = _Setter.parse_to_input(x)
         try:
             if y is None and delete:
-                delattr(version, _name)
+                delattr(version, name)
                 return
             ans = old(version, y)
         except VersionError:
             raise
         except:
             m = "%r is not a proper value for %s"
-            m %= (x, _name)
+            m %= (x, name)
             raise VersionError(m)  # from None
         if save == False:
             return
-        if save == True:
-            pass
-        elif save == "int":
-            ans = int("0" + str(ans))
-        elif save == "tuple":
-            ans = tuple(ans)
-        else:
-            raise NotImplementedError
-        setattr(version, "_" + _name, ans)
+        ans = _Setter.parse_to_ans(ans)
+        setattr(version, "_" + name, ans)
 
     def deco(old, /, **kwargs):
         @functools.wraps(old)
@@ -59,6 +50,19 @@ class _Setter:
             _Setter.core(*args, old, **kwargs)
 
         return new
+
+    def parse_to_ans(x, /, *, save=True):
+        if save == False:
+            if x is not None:
+                raise ValueError
+            return None
+        if save == True:
+            return x
+        if save == "int":
+            return int("0%s" % x)
+        if save == "tuple":
+            return tuple(x)
+        raise NotImplementedError
 
     def parse_to_input(x, /):
         if x is None:
