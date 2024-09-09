@@ -24,7 +24,14 @@ _PREDICT = dict(
 
 
 class _Setter:
-    def deco(old, /, *, delete=True, name=None, save=True):
+    def deco(
+        old,
+        /,
+        *,
+        delete=True,
+        name=None,
+        save=True,
+    ):
         @functools.wraps(old)
         def new(self, x, /) -> None:
             if name is None:
@@ -60,10 +67,10 @@ class _Setter:
     def parse_to_input(x, /):
         if x is None:
             return None
-        if issubclass(type(x), str):
-            return str(x)
         if not hasattr(x, "__iter__"):
-            return str(x)
+            return _Setter.parse_to_str(x)
+        if issubclass(type(x), str):
+            return _Setter.parse_to_str(x)
         return _Setter.parse_to_list(x)
 
     def parse_to_item(x, /):
@@ -92,10 +99,6 @@ class _Setter:
             return _Setter.deco(old, **kwargs)
 
         return ans
-
-
-def _singleton(cls):
-    return cls()
 
 
 class _Pattern(enum.StrEnum):
