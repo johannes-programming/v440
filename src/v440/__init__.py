@@ -4,6 +4,7 @@ import enum
 import functools
 import re
 import string
+import typing
 
 import packaging.version
 import scaevola
@@ -11,47 +12,22 @@ import scaevola
 __all__ = ["VersionError", "Version"]
 
 
-_PREDICT = dict(
-    alpha="a",
-    a="a",
-    beta="b",
-    b="b",
-    preview="rc",
-    pre="rc",
-    c="rc",
-    rc="rc",
-)
+class _parse:
+    _PREDICT = dict(
+        alpha="a",
+        a="a",
+        beta="b",
+        b="b",
+        preview="rc",
+        pre="rc",
+        c="rc",
+        rc="rc",
+    )
 
+    def __init__(self) -> None:
+        raise NotImplementedError
 
-class _Setter:
-    def core(version, x, old, delete=True, name=None, save=True):
-        if name is None:
-            name = old.__name__
-        y = _Setter.parse_to_input(x)
-        try:
-            if y is None and delete:
-                delattr(version, name)
-                return
-            ans = old(version, y)
-        except VersionError:
-            raise
-        except:
-            m = "%r is not a proper value for %s"
-            m %= (x, name)
-            raise VersionError(m)  # from None
-        if save == False:
-            return
-        ans = _Setter.parse_to_ans(ans)
-        setattr(version, "_" + name, ans)
-
-    def deco(old, /, **kwargs):
-        @functools.wraps(old)
-        def new(*args):
-            _Setter.core(*args, old, **kwargs)
-
-        return new
-
-    def parse_to_ans(x, /, *, save=True):
+    def to_ans(x, /, *, save=True):
         if save == False:
             if x is not None:
                 raise ValueError
@@ -64,35 +40,77 @@ class _Setter:
             return tuple(x)
         raise NotImplementedError
 
-    def parse_to_input(x, /):
+    def to_input(x, /):
         if x is None:
             return None
         if not hasattr(x, "__iter__"):
-            return _Setter.parse_to_str(x)
+            return _parse.to_str(x)
         if issubclass(type(x), str):
-            return _Setter.parse_to_str(x)
-        return _Setter.parse_to_list(x)
+            return _parse.to_str(x)
+        return _parse.to_list(x)
 
-    def parse_to_item(x, /):
+    def to_item(x, /):
         if type(x) is int:
             if x < 0:
                 raise ValueError
             else:
                 return x
         else:
-            x = _Setter.parse_to_str(x)
+            x = _parse.to_str(x)
             if x == "":
                 return x
             if x.strip(string.digits) == "":
                 return int(x)
             return x
 
-    def parse_to_list(x, /):
-        return [_Setter.parse_to_item(i) for i in x]
+    def to_list(x, /):
+        return [_parse.to_item(i) for i in x]
 
-    def parse_to_str(x, /):
+    def to_pre_letter(x, /):
+        return _parse._PREDICT[x]
+
+    def to_str(x, /):
         x = str(x).lower().strip()
         return x
+
+
+class _Setter:
+    def __init__(self) -> None:
+        raise NotImplementedError
+
+    def core(
+        version: Version,
+        value: typing.Any,
+        old: typing.Callable,
+        delete: bool = True,
+        name: typing.Optional[str] = None,
+        save: typing.Union[bool, str] = True,
+    ):
+        if name is None:
+            name = old.__name__
+        y = _parse.to_input(value)
+        try:
+            if y is None and delete:
+                delattr(version, name)
+                return
+            ans = old(version, y)
+        except VersionError:
+            raise
+        except:
+            m = "%r is not a proper value for %s"
+            m %= (value, name)
+            raise VersionError(m)  # from None
+        if save == False:
+            return
+        ans = _parse.to_ans(ans)
+        setattr(version, "_" + name, ans)
+
+    def deco(old, /, **kwargs):
+        @functools.wraps(old)
+        def new(*args):
+            _Setter.core(*args, old, **kwargs)
+
+        return new
 
     def predeco(**kwargs):
         def ans(old):
@@ -130,22 +148,22 @@ class _Pattern(enum.StrEnum):
 
 
 class Version(scaevola.Scaevola):
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         other = type(self)(other)
         return self._cmpkey() == other._cmpkey()
 
-    def __hash__(self):
-        return self._cmpkey().__hash__()
+    def __hash__(self) -> int:
+        return hash(self._cmpkey())
 
     def __init__(self, data="0", /, **kwargs) -> None:
         self.data = data
         self.update(**kwargs)
 
-    def __le__(self, other):
+    def __le__(self, other) -> bool:
         other = type(self)(other)
         return self._cmpkey() <= other._cmpkey()
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         other = type(self)(other)
         return self._cmpkey() < other._cmpkey()
 
@@ -155,7 +173,7 @@ class Version(scaevola.Scaevola):
     def __str__(self) -> str:
         return self.data
 
-    def _cmpkey(self):
+    def _cmpkey(self) -> tuple:
         if self.pre is not None:
             pre = self.pre
         elif self.post is None and self.dev is not None:
@@ -301,7 +319,7 @@ class Version(scaevola.Scaevola):
             if v.startswith("+"):
                 v = v[1:]
             v = v.split(".")
-            v = _Setter.parse_to_list(v)
+            v = _parse.to_list(v)
         for i in v:
             if type(i) is int:
                 continue
@@ -383,8 +401,8 @@ class Version(scaevola.Scaevola):
         if type(v) is str:
             v = _Pattern.PRE.regex.search(v).groups()
             v = v[1:]
-            v = _Setter.parse_to_list(v)
-        l = _PREDICT[l]
+            v = _parse.to_list(v)
+        l = _parse.to_pre_letter(l)
         if n == "":
             n = 0
         if type(n) is str:
@@ -431,7 +449,7 @@ class Version(scaevola.Scaevola):
             if v.startswith("v"):
                 v = v[1:]
             v = v.split(".")
-            v = _Setter.parse_to_list(v)
+            v = _parse.to_list(v)
         if any(type(x) is str for x in v):
             raise TypeError
         return v
