@@ -24,43 +24,39 @@ _PREDICT = dict(
 
 
 class _Setter:
-    def deco(
-        old,
-        /,
-        *,
-        delete=True,
-        name=None,
-        save=True,
-    ):
-        @functools.wraps(old)
-        def new(self, x, /) -> None:
-            if name is None:
-                _name = old.__name__
-            else:
-                _name = name
-            y = _Setter.parse_to_input(x)
-            try:
-                if y is None and delete:
-                    delattr(self, _name)
-                    return
-                ans = old(self, y)
-            except VersionError:
-                raise
-            except:
-                m = "%r is not a proper value for %s"
-                m %= (x, _name)
-                raise VersionError(m)  # from None
-            if save == False:
+    def core(version, x, old, delete=True, name=None, save=True):
+        if name is None:
+            _name = old.__name__
+        else:
+            _name = name
+        y = _Setter.parse_to_input(x)
+        try:
+            if y is None and delete:
+                delattr(version, _name)
                 return
-            if save == True:
-                pass
-            elif save == "int":
-                ans = int("0" + str(ans))
-            elif save == "tuple":
-                ans = tuple(ans)
-            else:
-                raise NotImplementedError
-            setattr(self, "_" + _name, ans)
+            ans = old(version, y)
+        except VersionError:
+            raise
+        except:
+            m = "%r is not a proper value for %s"
+            m %= (x, _name)
+            raise VersionError(m)  # from None
+        if save == False:
+            return
+        if save == True:
+            pass
+        elif save == "int":
+            ans = int("0" + str(ans))
+        elif save == "tuple":
+            ans = tuple(ans)
+        else:
+            raise NotImplementedError
+        setattr(version, "_" + _name, ans)
+
+    def deco(old, /, **kwargs):
+        @functools.wraps(old)
+        def new(*args):
+            _Setter.core(*args, old, **kwargs)
 
         return new
 
