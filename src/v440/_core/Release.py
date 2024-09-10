@@ -32,9 +32,7 @@ class Release(datahold.OkayList):
             self._setitem_index(key, value)
 
     def __str__(self) -> str:
-        if len(self) == 0:
-            return "0"
-        return ".".join(str(x) for x in self)
+        return self.format()
 
     def _getitem_index(self, key):
         key = utils.toindex(key)
@@ -125,6 +123,8 @@ class Release(datahold.OkayList):
 
     def format(self, cutoff=None):
         ans = self[:cutoff]
+        if len(ans) == 0:
+            ans += [0]
         ans = [str(x) for x in ans]
         ans = ".".join(ans)
         return ans
