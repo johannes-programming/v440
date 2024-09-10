@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
 ]
 dependencies = [
-    "datahold>=0.2.0",
+    "datahold>=0.2.4",
     "packaging>=23.2",
 ]
 description = "mutable version objects"
@@ -23,7 +23,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.12"
-version = "0.3.1"
+version = "0.3.2"
 
 [project.license]
 file = "LICENSE.txt"
