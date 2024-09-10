@@ -143,7 +143,7 @@ class Version(scaevola.Scaevola):
         if v.endswith("!"):
             v = v[:-1]
         v = utils.numeral(v)
-        return v
+        self._epoch = v
 
     @epoch.deleter
     def epoch(self):
