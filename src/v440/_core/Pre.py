@@ -75,7 +75,7 @@ class Pre:
     @data.setter
     @utils.setterdeco
     def data(self, value, /):
-        value = utils.todata(value, ".")
+        value = utils.tolist(value, ".")
         if len(value) == 0:
             del self.data
             return
@@ -90,7 +90,7 @@ class Pre:
             if p == "":
                 continue
             self.phase = short
-            self.subphase = value[len(long) :]
+            self.subphase = value
             return
         raise ValueError
 
