@@ -5,12 +5,12 @@ v440
 Overview
 --------
 
-mutable version objects in accordance with PEP440
+mutable version objects
 
 Installation
 ------------
 
-To install v440, you can use `pip`. Open your terminal and run:
+To install ``v440``, you can use ``pip``. Open your terminal and run:
 
 .. code-block:: bash
 
@@ -33,4 +33,4 @@ Credits
 - Author: Johannes
 - Email: johannes-programming@mailfence.com
 
-Thank you for using v440!
+Thank you for using ``v440``!
