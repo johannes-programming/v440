@@ -23,11 +23,12 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.12"
-version = "0.3.7"
+version = "0.3.8"
 
 [project.license]
 file = "LICENSE.txt"
 
 [project.urls]
+Documentation = "https://pypi.org/project/v440"
 Download = "https://pypi.org/project/v440/#files"
 Source = "https://github.com/johannes-programming/v440"

@@ -77,12 +77,13 @@ class Release(datahold.OkayList):
     def _setitem_index(self, key, value):
         key = utils.toindex(key)
         value = utils.numeral(value)
-        if len(self) > key:
-            super().__setitem__(key, value)
+        length = len(self)
+        if length > key:
+            self._data[key] = value
             return
         if value == 0:
             return
-        self._data.extend([0] * (key - len(self)))
+        self._data.extend([0] * (key - length))
         self._data.append(value)
 
     def _setitem_slice(self, key, value):
