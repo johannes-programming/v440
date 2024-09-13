@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 import types
 import typing
 
@@ -13,14 +14,28 @@ class Release(datahold.OkayList):
     def __add__(self, other):
         return type(self)(self._data + list(other))
 
-    def __format__(self, cutoff=None):
-        return self.format(cutoff=cutoff)
+    def __format__(self, format_spec="", /):
+        format_spec = str(format_spec)
+        if format_spec == "":
+            i = None
+        else:
+            i = int(format_spec)
+        ans = self._data[:i]
+        if len(ans) == 0:
+            ans += [0]
+        ans = [str(x) for x in ans]
+        ans = ".".join(ans)
+        return ans
 
     def __getitem__(self, key):
         if type(key) is slice:
             return self._getitem_slice(key)
         else:
             return self._getitem_index(key)
+
+    @functools.wraps(datahold.OkayList.__iadd__)
+    def __iadd__(self, other, /):
+        self.extend(other)
 
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
@@ -122,13 +137,15 @@ class Release(datahold.OkayList):
     def data(self):
         self._data = []
 
+    @functools.wraps(datahold.OkayList.extend)
+    def extend(self, other, /):
+        self._data += type(self)(other)._data
+
     def format(self, cutoff=None):
-        ans = self[:cutoff]
-        if len(ans) == 0:
-            ans += [0]
-        ans = [str(x) for x in ans]
-        ans = ".".join(ans)
-        return ans
+        if cutoff:
+            return format(self, str(cutoff))
+        else:
+            return format(self)
 
     @property
     def major(self) -> int:
