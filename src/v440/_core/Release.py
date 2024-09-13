@@ -14,19 +14,6 @@ class Release(datahold.OkayList):
     def __add__(self, other):
         return type(self)(self._data + list(other))
 
-    def __format__(self, format_spec="", /):
-        format_spec = str(format_spec)
-        if format_spec == "":
-            i = None
-        else:
-            i = int(format_spec)
-        ans = self._data[:i]
-        if len(ans) == 0:
-            ans += [0]
-        ans = [str(x) for x in ans]
-        ans = ".".join(ans)
-        return ans
-
     def __getitem__(self, key):
         if type(key) is slice:
             return self._getitem_slice(key)
@@ -142,10 +129,14 @@ class Release(datahold.OkayList):
         self._data += type(self)(other)._data
 
     def format(self, cutoff=None):
-        if cutoff:
-            return format(self, str(cutoff))
-        else:
-            return format(self)
+        format_spec = str(cutoff) if cutoff else ""
+        i = int(format_spec) if format_spec else None
+        ans = self[:i]
+        if len(ans) == 0:
+            ans += [0]
+        ans = [str(x) for x in ans]
+        ans = ".".join(ans)
+        return ans
 
     @property
     def major(self) -> int:
