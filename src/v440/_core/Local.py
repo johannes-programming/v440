@@ -10,8 +10,9 @@ from . import utils
 
 
 class Local(datahold.OkayList):
-    def __add__(self, other):
-        return type(self)(self._data + list(other))
+    @functools.wraps(datahold.OkayList.__iadd__)
+    def __iadd__(self, other, /):
+        self.extend(other)
 
     def __le__(self, other):
         other = type(self)(other)
