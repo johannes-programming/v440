@@ -137,7 +137,7 @@ def segment_1(value, /):
             return value
     value = str(value).lower().strip()
     if value.strip(SEGCHARS):
-        raise ValueError
+        raise ValueError(value)
     if value.strip(string.digits):
         return value
     if value == "":
