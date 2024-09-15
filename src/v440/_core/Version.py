@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import dataclasses
+import re
 import typing
 
 import packaging.version
@@ -11,19 +13,37 @@ from v440._core.Release import Release
 
 from . import utils
 
+EPOCHPATTERN = r"^(?:(?P<n>[0-9]+)!?)?$"
+EPOCHREGEX = re.compile(EPOCHPATTERN)
+PUBLICPATTERN = r"^v?(?P<b>[0-9\.!]*[0-9])?(?P<q>[\.a-z][\.a-z0-9+])?$"
+
+
+@dataclasses.dataclass(order=True)
+class _Version:
+    epoch: int = 0
+    release: Release = dataclasses.field(default_factory=Release)
+    pre: Pre = dataclasses.field(default_factory=Pre)
+    post: typing.Optional[int] = None
+    dev: typing.Optional[int] = None
+    local: Local = dataclasses.field(default_factory=Local)
+
+    def copy(self):
+        return dataclasses.replace(self)
+
 
 class Version(scaevola.Scaevola):
     def __bool__(self):
-        return self != type(self)()
+        return self._data != _Version()
 
     def __eq__(self, other) -> bool:
         other = type(self)(other)
-        return self._cmpkey() == other._cmpkey()
+        return self._data == other._data
 
     def __hash__(self) -> int:
-        return hash(self._cmpkey())
+        raise Exception
 
     def __init__(self, data="0", /, **kwargs) -> None:
+        self._data = _Version()
         self.data = data
         self.update(**kwargs)
 
@@ -32,8 +52,7 @@ class Version(scaevola.Scaevola):
         return self._cmpkey() <= other._cmpkey()
 
     def __lt__(self, other) -> bool:
-        other = type(self)(other)
-        return self._cmpkey() < other._cmpkey()
+        return (self != other) and (self <= other)
 
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
@@ -41,24 +60,29 @@ class Version(scaevola.Scaevola):
     def __str__(self) -> str:
         return self.data
 
-    def _aux(self) -> str:
+    def _cmpkey(self) -> tuple:
+        ans = self._data.copy()
+        if not ans.pre.isempty():
+            ans.pre = tuple(ans.pre)
+        elif ans.post is not None:
+            ans.pre = "z", float("inf")
+        elif ans.dev is None:
+            ans.pre = "z", float("inf")
+        else:
+            ans.pre = "", -1
+        if ans.post is None:
+            ans.post = -1
+        if ans.dev is None:
+            ans.dev = float("inf")
+        return ans
+
+    def _qualifiers(self):
         ans = str(self.pre)
         if self.post is not None:
             ans += ".post%s" % self.post
         if self.dev is not None:
             ans += ".dev%s" % self.dev
         return ans
-
-    def _cmpkey(self) -> tuple:
-        if self.pre:
-            pre = self.pre.data
-        elif self.post is None and self.dev is not None:
-            pre = "", -1
-        else:
-            pre = "z", float("inf")
-        post = -1 if self.post is None else self.post
-        dev = float("inf") if self.dev is None else self.dev
-        return self.epoch, self.release, pre, post, dev, self.local
 
     @property
     def base(self) -> str:
@@ -68,8 +92,10 @@ class Version(scaevola.Scaevola):
             return str(self.release)
 
     @base.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def base(self, v):
+        if v is None:
+            self.epoch, self.release = None, None
         v = str(v)
         if "!" in v:
             self.epoch, self.release = v.split("!")
@@ -78,12 +104,10 @@ class Version(scaevola.Scaevola):
 
     @base.deleter
     def base(self):
-        del self.epoch
-        del self.release
+        self.base = None
 
     def clear(self):
-        del self.public
-        del self.local
+        self.data = None
 
     def copy(self):
         return type(self)(self)
@@ -93,7 +117,7 @@ class Version(scaevola.Scaevola):
         return self.format()
 
     @data.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def data(self, x):
         x = str(x)
         if "+" in x:
@@ -108,146 +132,131 @@ class Version(scaevola.Scaevola):
 
     @property
     def dev(self):
-        return self._dev
+        return self._data.dev
 
     @dev.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def dev(self, v):
-        v = utils.tolist(v, ".")
-        if len(v) > 2:
-            raise ValueError
-        if len(v) == 0:
-            del self.dev
-            return
-        if len(v) == 1:
-            v = v[0]
-            v = utils.lsplit(v, "dev", "")
-        if v[0] != "dev":
-            raise ValueError
-        v = utils.numeral(v[1])
-        self._dev = v
+        self._data.dev = utils.qparse(v, "dev", "")[1]
 
     @dev.deleter
     def dev(self):
-        self._dev = None
+        self.dev = None
 
     @property
     def epoch(self):
-        return self._epoch
+        return self._data.epoch
 
     @epoch.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def epoch(self, v):
-        v = str(v)
-        v = utils.lsplit(v, "v", "")[1]
-        if v.endswith("!"):
-            v = v[:-1]
-        v = utils.numeral(v)
-        self._epoch = v
+        if v is None:
+            self._data.epoch = 0
+            return
+        if utils.isinteger(v):
+            v = int(v)
+            if v < 0:
+                raise ValueError
+            self._data.epoch = v
+            return
+        v = str(v).lower().strip()
+        v = EPOCHREGEX.fullmatch(v).group("n")
+        if v is None:
+            self._data.epoch = 0
+            return
+        self._data.epoch = int(v)
 
     @epoch.deleter
     def epoch(self):
-        self._epoch = 0
+        self.epoch = None
 
     def format(self, cutoff=None) -> str:
         ans = ""
         if self.epoch:
             ans += "%s!" % self.epoch
-        ans += self.release.format(cutoff=cutoff)
-        ans += self._aux()
+        ans += self.release.format(cutoff)
+        ans += self._qualifiers()
         if self.local:
             ans += "+%s" % self.local
         return ans
 
-    def is_prerelease(self) -> bool:
-        return self.dev is not None or self.pre is not None
+    def isprerelease(self) -> bool:
+        return self.isdevrelease() or not self.pre.isempty()
 
-    def is_postrelease(self) -> bool:
+    def ispostrelease(self) -> bool:
         return self.post is not None
 
-    def is_devrelease(self) -> bool:
+    def isdevrelease(self) -> bool:
         return self.dev is not None
 
     @property
     def local(self) -> str:
-        return self._local
+        return self._data.local
 
     @local.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def local(self, v):
-        self._local = Local(v)
+        self._data.local = Local(v)
 
     @local.deleter
     def local(self):
-        self._local = Local()
+        self.local = None
 
     def packaging(self):
         return packaging.version.Version(self.data)
 
     @property
     def post(self):
-        return self._post
+        return self._data.post
 
     @post.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def post(self, v):
-        v = utils.tolist(v, ".")
-        if len(v) > 2:
-            raise ValueError
-        if len(v) == 0:
-            del self.post
-            return
-        prefices = "post", "rev", "r", ""
-        if len(v) == 1:
-            v = utils.lsplit(v[0], *prefices)
-        elif v[0] not in prefices:
-            raise ValueError
-        v = utils.numeral(v[1])
-        self._post = v
+        v = utils.qparse(v, "post", "rev", "r", "")
+        self._data.post = v[1]
 
     @post.deleter
     def post(self):
-        self._post = None
+        self.post = None
 
     @property
     def pre(self):
-        return self._pre
+        return self._data.pre
 
     @pre.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def pre(self, data, /):
-        self._pre = Pre(data)
+        self._data.pre = Pre(data)
 
     @pre.deleter
     def pre(self):
-        self._pre = Pre()
+        self.pre = None
 
     @property
     def public(self) -> str:
-        return self.base + self._aux()
+        return self.base + self._qualifiers()
 
     @public.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def public(self, v):
-        v = str(v).lower().strip()
-        if v == "":
-            del self.public
-            return
-        d = utils.Pattern.PUBLIC.regex.search(v).groupdict()
-        names = "epoch release pre post dev".split()
-        for n in names:
-            setattr(self, n, d[n])
+        if v is None:
+            v = "0"
+        else:
+            v = str(v).strip().lower()
+        d = utils.Pattern.PUBLIC.regex.fullmatch(v).groupdict()
+        for i in d.items():
+            setattr(self, *i)
 
     @public.deleter
     def public(self):
-        self.public = "0"
+        self.public = None
 
     @property
     def release(self) -> Release:
         return self._release
 
     @release.setter
-    @utils.setterdeco
+    @utils.setterbackupdeco
     def release(self, v):
         self._release = Release(v)
 
