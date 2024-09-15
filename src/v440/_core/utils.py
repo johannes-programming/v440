@@ -8,42 +8,11 @@ import string
 import typing
 
 SEGCHARS = string.ascii_lowercase + string.digits
+QPATTERN = r"^(?:\.?(?P<l>[a-z]+))?(?:\.?(?P<n>[0-9]+))?$"
+QREGEX = re.compile(QPATTERN)
 
 
 class EMPTY: ...
-
-
-def compclass(innerclass):
-    return functools.partial(compclass_core, innerclass)
-
-
-def compclass_core(innerclass, outerclass):
-    for n in dir(innerclass):
-        if not (isnunder(n) or ismagic(n)):
-            continue
-        i = getattr(innerclass, n)
-        if type(i) is type:
-            continue
-        if not callable(i):
-            continue
-        o = getattr(outerclass, n, EMPTY)
-        o = compclass_outerfunc(n, o)
-        if isnunder(n):
-            o = functools.wraps(i)(o)
-        setattr(outerclass, n, o)
-    return outerclass
-
-
-def compclass_outerfunc(n, gotten, /):
-    if gotten is not EMPTY:
-        return gotten
-
-    def o(self, *args, **kwargs):
-        f = getattr(self._data, n)
-        y = f(*args, **kwargs)
-        return y
-
-    return o
 
 
 def ismagic(name):
@@ -66,6 +35,20 @@ def isnunder(name):
     return not name.startswith("_")
 
 
+def isinteger(value, /):
+    return issubclass(type(value), int)
+
+
+def isiterable(value, /):
+    if isstring(value):
+        return False
+    return hasattr(value, "__iter__")
+
+
+def isstring(value, /):
+    return issubclass(type(value), str)
+
+
 def literal(value, /):
     e = "%r is not a valid literal segment"
     e = VersionError(e % value)
@@ -86,40 +69,85 @@ def lsplit(value: str, *prefices):
 
 
 def numeral(value, /):
+    value = segment(value)
+    if type(value) is int:
+        return value
     e = "%r is not a valid numeral segment"
     e = VersionError(e % value)
-    try:
-        x = segment(value)
-    except:
-        raise e
-    if type(x) is int:
-        return x
-    if x == "":
-        return 0
     raise e
 
 
+def qparse(value, /, *keys):
+    return list(qparse_0(value, *keys))
+
+
+def qparse_0(value, /, *keys):
+    if value is None:
+        return None, None
+    if isinteger(value):
+        if "" not in keys:
+            raise ValueError
+        value = int(value)
+        if value < 0:
+            raise ValueError
+        return "", value
+    if isiterable(value):
+        l, n = value
+        if l is None and n is None:
+            return None, None
+        if l is None:
+            raise ValueError
+        l = str(l).lower().strip()
+        if l not in keys:
+            raise ValueError
+        n = segment(n)
+        return l, n
+    value = str(value).lower().strip()
+    value = value.replace("_", ".")
+    value = value.replace("-", ".")
+    l, n = QREGEX.fullmatch(value).groups()
+    if l is None:
+        l = ""
+    if l not in keys:
+        raise ValueError
+    if n is None:
+        n = 0
+    else:
+        n = int(n)
+    return l, n
+
+
 def segment(value, /):
-    e = "%r is not a valid segment"
-    e = VersionError(e % value)
     try:
-        x = str(value).lower().strip()
+        return segment_1(value)
     except:
-        raise e
-    if x.strip(SEGCHARS):
-        raise e
-    try:
-        return int(x)
-    except:
-        return x
+        e = "%r is not a valid segment"
+        e = VersionError(e % value)
+        raise e  # from None
+
+
+def segment_1(value, /):
+    if value is None:
+        return None
+    if isinteger(value):
+        value = int(value)
+        if value < 0:
+            raise ValueError
+        else:
+            return value
+    value = str(value).lower().strip()
+    if value.strip(SEGCHARS):
+        raise ValueError
+    if value.strip(string.digits):
+        return value
+    if value == "":
+        return 0
+    return int(value)
 
 
 def setterdeco(old, /):
     @functools.wraps(old)
     def new(self, value, /):
-        if value is None:
-            delattr(self, old.__name__)
-            return
         try:
             old(self, value)
         except VersionError:
@@ -132,15 +160,22 @@ def setterdeco(old, /):
     return new
 
 
-def todata(value, *args):
-    try:
-        return tolist(value, *args)
-    except VersionError:
-        raise
-    except:
-        e = "%r is an invalid value for %r"
-        e %= (value, "data")
-        raise VersionError(e)
+def setterbackupdeco(old, /):
+    @functools.wraps(old)
+    def new(self, value, /):
+        backup = self._data.copy()
+        try:
+            old(self, value)
+        except VersionError:
+            self._data = backup
+            raise
+        except:
+            self._data = backup
+            e = "%r is an invalid value for %r"
+            e %= (value, old.__name__)
+            raise VersionError(e)
+
+    return new
 
 
 def toindex(value, /):
@@ -150,19 +185,55 @@ def toindex(value, /):
     return ans
 
 
-def tolist(value, prefix):
+def tolist(value, prefix, apply):
+    ans = tolist_0(value, prefix)
+    ans = [apply(x) for x in ans]
+    return ans
+
+
+def tolist_0(value, prefix):
     if value is None:
-        return
-    if not issubclass(type(value), str) and hasattr(value, "__iter__"):
+        return list()
+    if isiterable(value):
         return list(value)
     value = str(value).lower()
     value = value.replace("-", ".")
     value = value.replace("_", ".")
     value = lsplit(value, prefix, "")[1]
     if value == "":
-        return []
+        return list()
     value = value.split(".")
     return value
+
+
+def torange(key, length):
+    start = key.start
+    stop = key.stop
+    step = key.step
+    if step is None:
+        step = 1
+    else:
+        step = toindex(step)
+        if step == 0:
+            raise ValueError
+    fwd = step > 0
+    if start is None:
+        start = 0 if fwd else length - 1
+    else:
+        start = toindex(start)
+    if stop is None:
+        stop = length if fwd else -1
+    else:
+        stop = toindex(stop)
+    if start < 0:
+        start += length
+    if start < 0:
+        start = 0 if fwd else -1
+    if stop < 0:
+        stop += length
+    if stop < 0:
+        stop = 0 if fwd else -1
+    return range(start, stop, step)
 
 
 class Pattern(enum.StrEnum):
@@ -171,9 +242,9 @@ class Pattern(enum.StrEnum):
     PRE = r"""
         (?P<pre>                                          
             [-_\.]?
-            (?P<pre_l>alpha|a|beta|b|preview|pre|c|rc)
+            (?:alpha|a|beta|b|preview|pre|c|rc)
             [-_\.]?
-            (?P<pre_n>[0-9]+)?
+            (?:[0-9]+)?
         )?"""
     POST = r"""
         (?P<post>                                         
@@ -182,7 +253,6 @@ class Pattern(enum.StrEnum):
             (?: [-_\.]? (?:post|rev|r) [-_\.]? (?:[0-9]+)? )
         )?"""
     DEV = r"""(?P<dev> [-_\.]? dev [-_\.]? (?:[0-9]+)? )?"""
-    LOCAL = r"""(?:\+(?P<local>[a-z0-9]+(?:[-_\.][a-z0-9]+)*))?"""
     PUBLIC = f"v? {EPOCH} {RELEASE} {PRE} {POST} {DEV}"
 
     @functools.cached_property

@@ -5,21 +5,23 @@ import types
 import typing
 
 import datahold
+import scaevola
 
 from . import utils
 
 
-class Local(datahold.OkayList):
-    @functools.wraps(datahold.OkayList.__iadd__)
-    def __iadd__(self, other, /):
-        self.extend(other)
-
+class Local(datahold.OkayList, scaevola.Scaevola):
     def __le__(self, other):
         other = type(self)(other)
         return self._cmpkey() <= other._cmpkey()
 
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
+
+    def __sorted__(self, /, **kwargs):
+        ans = self.copy()
+        ans.sort(**kwargs)
+        return ans
 
     def __str__(self) -> str:
         return ".".join(str(x) for x in self)
@@ -37,19 +39,28 @@ class Local(datahold.OkayList):
 
     @data.setter
     @utils.setterdeco
-    def data(self, data, /):
-        self._data = utils.todata(data, "+")
+    def data(self, value, /):
+        if value is None:
+            self._data = list()
+            return
+        if not utils.isiterable(value):
+            value = str(value)
+            if value.startswith("+"):
+                value = value[1:]
+            value = value.replace("_", ".")
+            value = value.replace("-", ".")
+            value = value.split(".")
+        value = [utils.segment(x) for x in value]
+        if None in value:
+            raise ValueError
+        self._data = value
 
     @data.deleter
     def data(self):
-        self._data = []
-
-    @functools.wraps(datahold.OkayList.extend)
-    def extend(self, other, /):
-        self._data += type(self)(other)._data
+        self._data = list()
 
     @functools.wraps(datahold.OkayList.sort)
-    def sort(self, key=None, **kwargs):
+    def sort(self, /, *, key=None, **kwargs):
         if key is None:
             key = self._sortkey
         self._data.sort(key=key, **kwargs)
