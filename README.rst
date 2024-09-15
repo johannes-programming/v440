@@ -60,7 +60,6 @@ Example
     v = Version("1.2.3")
     v.post = "post1"
     v.local = "local.7.dev"
-
     print("Post-release version:", v)
     print("Formatted version with post and local:", v.format('-1'))
     v.post = "post.2"
@@ -81,12 +80,13 @@ Example
     print("After reset:", v)
 
     v.base = "4!5.0.1"
-    print(v)
+    print("Before error:", v)
     try:
-        v.base = "!!!"
+        v.base = "9!x"
     except Exception as e:
-        print(e)
-    print(v)
+        print("Error:", e)
+    print("After error:", v)
+
 
     # The output:
         # Initial version: 1
@@ -114,9 +114,9 @@ Example
         # Modified: 1.2.3.post3+3.test.19
         # Original version: 5
         # After reset: 0
-        # 4!5.0.1
-        # '!!!' is an invalid value for 'base'
-        # 4!5.0.1
+        # Before error: 4!5.0.1
+        # Error: 'x' is not a valid numeral segment
+        # After error: 4!5.0.1
     # Formatting is necessary because release automatically drops the tailing zeros
     # The parsing is in general very tolerant and self correcting.
     # release, pre, and local behave like lists
