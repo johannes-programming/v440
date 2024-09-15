@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import functools
+import string
 import types
 import typing
 
@@ -63,7 +64,7 @@ class Release(datahold.OkayList, scaevola.Scaevola):
 
     def _setitem_slice(self, key, value):
         key = list(utils.torange(key, len(self)))
-        value = self._tolist(value)
+        value = self._tolist(value, slicing=len(key))
         if len(key) != len(value):
             e = "attempt to assign sequence of size %s to extended slice of size %s"
             e %= (len(value), len(key))
@@ -79,15 +80,18 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         self._data = data
 
     @staticmethod
-    def _tolist(value):
+    def _tolist(value, *, slicing=None):
         if utils.isiterable(value):
             value = [utils.numeral(x) for x in value]
             return value
-        value = str(value).lower().strip()
-        value = value.replace("_", ".")
-        value = value.replace("-", ".")
+        value = str(value)
         if value == "":
             return list()
+        if "" == value.strip(string.digits) and slicing == len(value):
+            return [int(x) for x in value]
+        value = value.lower().strip()
+        value = value.replace("_", ".")
+        value = value.replace("-", ".")
         if value.startswith("v") or value.startswith("."):
             value = value[1:]
         value = value.split(".")
