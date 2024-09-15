@@ -5,14 +5,17 @@ import types
 import typing
 
 import datahold
+import scaevola
 
 from . import utils
 
 
-@utils.compclass(list)
-class Release(datahold.OkayList):
-    def __add__(self, other):
-        return type(self)(self._data + list(other))
+class Release(datahold.OkayList, scaevola.Scaevola):
+    def __add__(self, other, /):
+        other = type(self)(other)
+        ans = self.copy()
+        ans._data += other._data
+        return ans
 
     def __getitem__(self, key):
         if type(key) is slice:
@@ -20,9 +23,8 @@ class Release(datahold.OkayList):
         else:
             return self._getitem_index(key)
 
-    @functools.wraps(datahold.OkayList.__iadd__)
     def __iadd__(self, other, /):
-        self.extend(other)
+        self._data += type(self)(other)._data
 
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
@@ -43,38 +45,9 @@ class Release(datahold.OkayList):
         return self._data[key]
 
     def _getitem_slice(self, key):
-        ans = self._range(key)
-        ans = [self._getitem_index(i) for i in ans]
+        key = utils.torange(key, len(self))
+        ans = [self._getitem_index(i) for i in key]
         return ans
-
-    def _range(self, key):
-        start = key.start
-        stop = key.stop
-        step = key.step
-        if step is None:
-            step = 1
-        else:
-            step = utils.toindex(step)
-            if step == 0:
-                raise ValueError
-        fwd = step > 0
-        if start is None:
-            start = 0 if fwd else len(self) - 1
-        else:
-            start = utils.toindex(start)
-        if stop is None:
-            stop = len(self) if fwd else -1
-        else:
-            stop = utils.toindex(stop)
-        if start < 0:
-            start += len(self)
-        if start < 0:
-            start = 0 if fwd else -1
-        if stop < 0:
-            stop += len(self)
-        if stop < 0:
-            stop = 0 if fwd else -1
-        return range(start, stop, step)
 
     def _setitem_index(self, key, value):
         key = utils.toindex(key)
@@ -89,18 +62,39 @@ class Release(datahold.OkayList):
         self._data.append(value)
 
     def _setitem_slice(self, key, value):
-        key = list(self._range(key))
-        value = self._todata(value)
+        key = list(utils.torange(key, len(self)))
+        value = self._tolist(value)
         if len(key) != len(value):
             e = "attempt to assign sequence of size %s to extended slice of size %s"
             e %= (len(value), len(key))
             raise ValueError(e)
+        maximum = max(*key)
+        ext = max(0, maximum + 1 - len(self))
+        data = self.data
+        data += [0] * ext
         for k, v in zip(key, value):
-            self._setitem_index(k, v)
+            data[k] = v
+        while len(data) and not data[-1]:
+            data.pop()
+        self._data = data
 
     @staticmethod
-    def _todata(value):
-        return [utils.numeral(x) for x in utils.tolist(value, "v")]
+    def _tolist(value):
+        if utils.isiterable(value):
+            value = [utils.numeral(x) for x in value]
+            return value
+        value = str(value).lower().strip()
+        value = value.replace("_", ".")
+        value = value.replace("-", ".")
+        if value == "":
+            return list()
+        if value.startswith("v") or value.startswith("."):
+            value = value[1:]
+        value = value.split(".")
+        if "" in value:
+            raise ValueError
+        value = [utils.numeral(x) for x in value]
+        return value
 
     def bump(self, index=-1, amount=1):
         x = self._getitem_index(index) + amount
@@ -115,7 +109,7 @@ class Release(datahold.OkayList):
     @data.setter
     @utils.setterdeco
     def data(self, v):
-        v = self._todata(v)
+        v = self._tolist(v)
         while v and v[-1] == 0:
             v.pop()
         self._data = v
@@ -124,9 +118,8 @@ class Release(datahold.OkayList):
     def data(self):
         self._data = []
 
-    @functools.wraps(datahold.OkayList.extend)
     def extend(self, other, /):
-        self._data += type(self)(other)._data
+        self += other
 
     def format(self, cutoff=None):
         format_spec = str(cutoff) if cutoff else ""
