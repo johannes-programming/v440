@@ -253,16 +253,16 @@ class Version(scaevola.Scaevola):
 
     @property
     def release(self) -> Release:
-        return self._release
+        return self._data.release
 
     @release.setter
     @utils.setterbackupdeco
     def release(self, v):
-        self._release = Release(v)
+        self._data.release = Release(v)
 
     @release.deleter
     def release(self):
-        self._release = Release()
+        self._data.release = Release()
 
     def update(self, **kwargs):
         for k, v in kwargs.items():
