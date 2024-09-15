@@ -27,6 +27,13 @@ class Release(datahold.OkayList, scaevola.Scaevola):
     def __iadd__(self, other, /):
         self._data += type(self)(other)._data
 
+    @typing.overload
+    def __init__(self, /, data=[]): ...
+    @typing.overload
+    def __init__(self, /, major=0, minor=0, micro=0): ...
+    def __init__(self, *args, **kwargs):
+        self._init(*args, **kwargs)(*args, **kwargs)
+
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
 
@@ -49,6 +56,25 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         key = utils.torange(key, len(self))
         ans = [self._getitem_index(i) for i in key]
         return ans
+
+    def _init(self, *args, **kwargs):
+        if "data" in kwargs.keys():
+            return self._init_data
+        if len(kwargs):
+            return self._init_items
+        if len(args) < 2:
+            return self._init_data
+        else:
+            return self._init_items
+
+    def _init_data(self, /, data=[]):
+        self.data = data
+
+    def _init_items(self, /, major=0, minor=0, micro=0):
+        self.data = []
+        self.major = major
+        self.minor = minor
+        self.micro = micro
 
     def _setitem_index(self, key, value):
         key = utils.toindex(key)
