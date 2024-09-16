@@ -12,60 +12,17 @@ QPATTERN = r"^(?:\.?(?P<l>[a-z]+))?(?:\.?(?P<n>[0-9]+))?$"
 QREGEX = re.compile(QPATTERN)
 
 
-class EMPTY: ...
-
-
-def ismagic(name):
-    name = str(name)
-    if len(name) < 5:
-        return False
-    if not name.startswith("__"):
-        return False
-    if not name.endswith("__"):
-        return False
-    if name.startswith("___"):
-        return False
-    if name.endswith("___"):
-        return False
-    return True
-
-
-def isnunder(name):
-    name = str(name)
-    return not name.startswith("_")
-
-
-def isinteger(value, /):
-    return issubclass(type(value), int)
-
-
 def isiterable(value, /):
-    if isstring(value):
-        return False
-    return hasattr(value, "__iter__")
-
-
-def isstring(value, /):
-    return issubclass(type(value), str)
+    return hasattr(value, "__iter__") and not isinstance(value, str)
 
 
 def literal(value, /):
+    value = segment(value)
+    if type(value) is str:
+        return value
     e = "%r is not a valid literal segment"
     e = VersionError(e % value)
-    try:
-        x = segment(value)
-    except:
-        raise e
-    if type(x) is str:
-        return x
     raise e
-
-
-def lsplit(value: str, *prefices):
-    for p in prefices:
-        if value.startswith(p):
-            return p, value[len(p) :]
-    raise ValueError
 
 
 def numeral(value, /):
@@ -84,7 +41,7 @@ def qparse(value, /, *keys):
 def qparse_0(value, /, *keys):
     if value is None:
         return None, None
-    if isinteger(value):
+    if isinstance(value, int):
         if "" not in keys:
             raise ValueError
         value = int(value)
@@ -129,7 +86,7 @@ def segment(value, /):
 def segment_1(value, /):
     if value is None:
         return None
-    if isinteger(value):
+    if isinstance(value, int):
         value = int(value)
         if value < 0:
             raise ValueError
@@ -143,21 +100,6 @@ def segment_1(value, /):
     if value == "":
         return 0
     return int(value)
-
-
-def setterdeco(old, /):
-    @functools.wraps(old)
-    def new(self, value, /):
-        try:
-            old(self, value)
-        except VersionError:
-            raise
-        except:
-            e = "%r is an invalid value for %r"
-            e %= (value, old.__name__)
-            raise VersionError(e)
-
-    return new
 
 
 def setterbackupdeco(old, /):
@@ -178,32 +120,26 @@ def setterbackupdeco(old, /):
     return new
 
 
+def setterdeco(old, /):
+    @functools.wraps(old)
+    def new(self, value, /):
+        try:
+            old(self, value)
+        except VersionError:
+            raise
+        except:
+            e = "%r is an invalid value for %r"
+            e %= (value, old.__name__)
+            raise VersionError(e)
+
+    return new
+
+
 def toindex(value, /):
     ans = value.__index__()
     if type(ans) is not int:
         raise TypeError("__index__ returned non-int (type %s)" % type(ans).__name__)
     return ans
-
-
-def tolist(value, prefix, apply):
-    ans = tolist_0(value, prefix)
-    ans = [apply(x) for x in ans]
-    return ans
-
-
-def tolist_0(value, prefix):
-    if value is None:
-        return list()
-    if isiterable(value):
-        return list(value)
-    value = str(value).lower()
-    value = value.replace("-", ".")
-    value = value.replace("_", ".")
-    value = lsplit(value, prefix, "")[1]
-    if value == "":
-        return list()
-    value = value.split(".")
-    return value
 
 
 def torange(key, length):
@@ -234,6 +170,23 @@ def torange(key, length):
     if stop < 0:
         stop = 0 if fwd else -1
     return range(start, stop, step)
+
+
+class Base:
+    def __repr__(self) -> str:
+        return "%s(%r)" % (type(self).__name__, str(self))
+
+    def __setattr__(self, name, value):
+        cls = type(self)
+        if name.startswith("_"):
+            object.__setattr__(self, name, value)
+            return
+        if isinstance(getattr(cls, name), property):
+            object.__setattr__(self, name, value)
+            return
+        e = "%r object has no property %r"
+        e %= (cls.__name__, name)
+        raise AttributeError(e)
 
 
 class Pattern(enum.StrEnum):
