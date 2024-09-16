@@ -36,7 +36,10 @@ class Version(scaevola.Scaevola):
         return self._data != _Version()
 
     def __eq__(self, other) -> bool:
-        other = type(self)(other)
+        try:
+            other = type(self)(other)
+        except utils.VersionError:
+            return False
         return self._data == other._data
 
     def __hash__(self) -> int:
