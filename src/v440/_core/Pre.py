@@ -25,8 +25,9 @@ class Pre(datahold.OkayList):
     def __init__(self, data=None):
         self.data = data
 
-    def __repr__(self) -> str:
-        return "%s(%r)" % (type(self).__name__, str(self))
+    __repr__ = utils.Base.__repr__
+
+    __setattr__ = utils.Base.__setattr__
 
     def __str__(self) -> str:
         if self.isempty():
