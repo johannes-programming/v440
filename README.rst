@@ -44,7 +44,7 @@ A Code Example:
     print("----------------")
 
     print("EXAMPLE #3")
-    v1 = Version("1.6.3")
+    v1 = "1.6.3"
     v2 = Version("1.6.4")
     print("v1", v1)
     print("v2", v2)
@@ -70,7 +70,7 @@ A Code Example:
     print("Modified pre-release version:", v)
     v.pre[1] = 4
     print("Further modified pre-release version:", v)
-    v.pre.phase = "BeTa"
+    v.pre.phase = "PrEvIeW"
     print("Even further modified pre-release version:", v)
     print("----------------")
 
@@ -143,7 +143,7 @@ The Output:
     Pre-release version: 2a1
     Modified pre-release version: 2b2
     Further modified pre-release version: 2b4
-    Even further modified pre-release version: 2b4
+    Even further modified pre-release version: 2rc4
     ----------------
     EXAMPLE #6
     Post-release version: 1.2.3.post1+local.7.dev
