@@ -15,8 +15,9 @@ class Local(datahold.OkayList, scaevola.Scaevola):
         other = type(self)(other)
         return self._cmpkey() <= other._cmpkey()
 
-    def __repr__(self) -> str:
-        return "%s(%r)" % (type(self).__name__, str(self))
+    __repr__ = utils.Base.__repr__
+
+    __setattr__ = utils.Base.__setattr__
 
     def __sorted__(self, /, **kwargs):
         ans = self.copy()
