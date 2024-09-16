@@ -40,7 +40,7 @@ class Version(scaevola.Scaevola):
         return self._data == other._data
 
     def __hash__(self) -> int:
-        raise Exception
+        raise TypeError("unhashable type: %r" % type(self).__name__)
 
     def __init__(self, data="0", /, **kwargs) -> None:
         self._data = _Version()
@@ -54,8 +54,9 @@ class Version(scaevola.Scaevola):
     def __lt__(self, other) -> bool:
         return (self != other) and (self <= other)
 
-    def __repr__(self) -> str:
-        return "%s(%r)" % (type(self).__name__, str(self))
+    __repr__ = utils.Base.__repr__
+
+    __setattr__ = utils.Base.__setattr__
 
     def __str__(self) -> str:
         return self.data
@@ -153,7 +154,7 @@ class Version(scaevola.Scaevola):
         if v is None:
             self._data.epoch = 0
             return
-        if utils.isinteger(v):
+        if isinstance(v, int):
             v = int(v)
             if v < 0:
                 raise ValueError
