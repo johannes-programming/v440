@@ -68,7 +68,9 @@ class Pre(datahold.OkayList):
 
     @phase.deleter
     def phase(self):
-        self.phase = None
+        data = self.data
+        del data[0]
+        self.data = data
 
     @property
     def subphase(self):
@@ -83,4 +85,6 @@ class Pre(datahold.OkayList):
 
     @subphase.deleter
     def subphase(self):
-        self.subphase = None
+        data = self.data
+        del data[1]
+        self.data = data
