@@ -83,4 +83,4 @@ class Pre(datahold.OkayList):
 
     @subphase.deleter
     def subphase(self):
-        del self.subphase
+        self.subphase = None
