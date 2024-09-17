@@ -52,12 +52,12 @@ def qparse_0(value, /, *keys):
         l, n = value
         if l is None and n is None:
             return None, None
-        if l is None:
-            raise ValueError
         l = str(l).lower().strip()
         if l not in keys:
             raise ValueError
         n = segment(n)
+        if isinstance(n, str):
+            raise TypeError
         return l, n
     value = str(value).lower().strip()
     value = value.replace("_", ".")
