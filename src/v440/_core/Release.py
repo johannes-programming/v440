@@ -18,6 +18,12 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         ans._data += other._data
         return ans
 
+    def __delitem__(self, key):
+        if type(key) is slice:
+            self._delitem_slice(key)
+        else:
+            self._delitem_index(key)
+
     def __getitem__(self, key):
         if type(key) is slice:
             return self._getitem_slice(key)
@@ -47,11 +53,24 @@ class Release(datahold.OkayList, scaevola.Scaevola):
     def __str__(self) -> str:
         return self.format()
 
+    def _delitem_index(self, key):
+        key = utils.toindex(key)
+        if key < len(self):
+            del self._data[key]
+
+    def _delitem_slice(self, key):
+        key = utils.torange(key, len(self))
+        key = [k for k in key if k < len(self)]
+        key.sort(reverse=True)
+        for k in key:
+            del self._data[k]
+
     def _getitem_index(self, key):
         key = utils.toindex(key)
-        if len(self) <= key:
+        if key < len(self):
+            return self._data[key]
+        else:
             return 0
-        return self._data[key]
 
     def _getitem_slice(self, key):
         key = utils.torange(key, len(self))
@@ -90,7 +109,25 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         self._data.append(value)
 
     def _setitem_slice(self, key, value):
-        key = list(utils.torange(key, len(self)))
+        key = utils.torange(key, len(self))
+        if key.step == 1:
+            self._setitem_slice_simple(key, value)
+        else:
+            self._setitem_slice_complex(key, value)
+
+    def _setitem_slice_simple(self, key, value):
+        data = self.data
+        ext = max(0, key.start - len(data))
+        data += ext * [0]
+        value = self._tolist(value, slicing="always")
+        data = data[: key.start] + value + data[key.stop :]
+        while len(data) and not data[-1]:
+            data.pop()
+        self._data = data
+        return
+
+    def _setitem_slice_complex(self, key: range, value):
+        key = list(key)
         value = self._tolist(value, slicing=len(key))
         if len(key) != len(value):
             e = "attempt to assign sequence of size %s to extended slice of size %s"
@@ -107,14 +144,20 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         self._data = data
 
     @staticmethod
-    def _tolist(value, *, slicing=None):
-        if utils.isiterable(value):
+    def _tolist(value, *, slicing):
+        if isinstance(value, int):
+            return [utils.numeral(value)]
+        elif isinstance(value, str):
+            pass
+        elif utils.isiterable(value):
             value = [utils.numeral(x) for x in value]
             return value
+        else:
+            slicing = "never"
         value = str(value)
         if value == "":
             return list()
-        if "" == value.strip(string.digits) and slicing == len(value):
+        if "" == value.strip(string.digits) and slicing in (len(value), "always"):
             return [int(x) for x in value]
         value = value.lower().strip()
         value = value.replace("_", ".")
@@ -140,7 +183,7 @@ class Release(datahold.OkayList, scaevola.Scaevola):
     @data.setter
     @utils.setterdeco
     def data(self, v):
-        v = self._tolist(v)
+        v = self._tolist(v, slicing="always")
         while v and v[-1] == 0:
             v.pop()
         self._data = v
