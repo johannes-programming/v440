@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-import functools
 import string
 import types
 import typing
 
 import datahold
+import keyalias
 import scaevola
 
 from . import utils
 
 
+@keyalias.keyalias(major=0, minor=1, micro=2)
 class Release(datahold.OkayList, scaevola.Scaevola):
     def __add__(self, other, /):
         other = type(self)(other)
@@ -30,15 +31,15 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         else:
             return self._getitem_index(key)
 
+    __ge__ = utils.Base.__ge__
+
     def __iadd__(self, other, /):
         self._data += type(self)(other)._data
 
-    @typing.overload
-    def __init__(self, /, data=[]): ...
-    @typing.overload
-    def __init__(self, /, major=0, minor=0, micro=0): ...
-    def __init__(self, *args, **kwargs):
-        self._init(*args, **kwargs)(*args, **kwargs)
+    def __init__(self, /, data=[]):
+        self.data = data
+
+    __le__ = utils.Base.__le__
 
     __repr__ = utils.Base.__repr__
 
@@ -76,25 +77,6 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         key = utils.torange(key, len(self))
         ans = [self._getitem_index(i) for i in key]
         return ans
-
-    def _init(self, *args, **kwargs):
-        if "data" in kwargs.keys():
-            return self._init_data
-        if len(kwargs):
-            return self._init_items
-        if len(args) < 2:
-            return self._init_data
-        else:
-            return self._init_items
-
-    def _init_data(self, /, data=[]):
-        self.data = data
-
-    def _init_items(self, /, major=0, minor=0, micro=0):
-        self.data = []
-        self.major = major
-        self.minor = minor
-        self.micro = micro
 
     def _setitem_index(self, key, value):
         key = utils.toindex(key)
@@ -204,42 +186,3 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         ans = [str(x) for x in ans]
         ans = ".".join(ans)
         return ans
-
-    @property
-    def major(self) -> int:
-        return self[0]
-
-    @major.setter
-    @utils.setterdeco
-    def major(self, value: typing.Any):
-        self[0] = value
-
-    @major.deleter
-    def major(self):
-        del self[0]
-
-    @property
-    def micro(self) -> int:
-        return self[2]
-
-    @micro.setter
-    @utils.setterdeco
-    def micro(self, value: typing.Any):
-        self[2] = value
-
-    @micro.deleter
-    def micro(self):
-        del self[2]
-
-    @property
-    def minor(self) -> int:
-        return self[1]
-
-    @minor.setter
-    @utils.setterdeco
-    def minor(self, value: typing.Any):
-        self[1] = value
-
-    @minor.deleter
-    def minor(self):
-        del self[1]
