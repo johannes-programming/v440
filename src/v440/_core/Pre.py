@@ -3,6 +3,7 @@ from __future__ import annotations
 import typing
 
 import datahold
+import keyalias
 
 from . import utils
 
@@ -20,10 +21,15 @@ PHASEDICT = dict(
 )
 
 
+@keyalias.keyalias(phase=0, subphase=1)
 class Pre(datahold.OkayList):
+
+    __ge__ = utils.Base.__ge__
 
     def __init__(self, data=None):
         self.data = data
+
+    __le__ = utils.Base.__le__
 
     __repr__ = utils.Base.__repr__
 
@@ -54,37 +60,3 @@ class Pre(datahold.OkayList):
 
     def isempty(self):
         return self._data == [None, None]
-
-    @property
-    def phase(self):
-        return self._data[0]
-
-    @phase.setter
-    @utils.setterdeco
-    def phase(self, value):
-        data = self.data
-        data[0] = value
-        self.data = data
-
-    @phase.deleter
-    def phase(self):
-        data = self.data
-        del data[0]
-        self.data = data
-
-    @property
-    def subphase(self):
-        return self._data[1]
-
-    @subphase.setter
-    @utils.setterdeco
-    def subphase(self, value):
-        data = self.data
-        data[1] = value
-        self.data = data
-
-    @subphase.deleter
-    def subphase(self):
-        data = self.data
-        del data[1]
-        self.data = data
