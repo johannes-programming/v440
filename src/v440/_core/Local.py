@@ -11,9 +11,23 @@ from . import utils
 
 
 class Local(datahold.OkayList, scaevola.Scaevola):
+    def __ge__(self, other):
+        try:
+            other = type(self)(other)
+        except ValueError:
+            pass
+        else:
+            return other <= self
+        return self.data >= other
+
     def __le__(self, other):
-        other = type(self)(other)
-        return self._cmpkey() <= other._cmpkey()
+        try:
+            other = type(self)(other)
+        except ValueError:
+            pass
+        else:
+            return self._cmpkey() <= other._cmpkey()
+        return self.data <= other
 
     __repr__ = utils.Base.__repr__
 
