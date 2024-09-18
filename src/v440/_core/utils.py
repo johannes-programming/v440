@@ -173,6 +173,25 @@ def torange(key, length):
 
 
 class Base:
+
+    def __ge__(self, other, /):
+        try:
+            other = type(self)(other)
+        except:
+            pass
+        else:
+            return other <= self
+        return self.data >= other
+
+    def __le__(self, other, /):
+        try:
+            other = type(self)(other)
+        except:
+            pass
+        else:
+            return self._data <= other._data
+        return self.data <= other
+
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
 
