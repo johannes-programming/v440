@@ -375,7 +375,7 @@ class TestVersionRelease(unittest.TestCase):
         self.assertEqual(self.version.release.major, 1)
         self.assertEqual(self.version.release.minor, 2)
         self.assertEqual(self.version.release.micro, 3)
-        # self.assertEqual(self.version.release.patch, 3)  # 'patch' is an alias for micro
+        self.assertEqual(self.version.release.patch, 3)  # 'patch' is an alias for micro
 
     def test_release_modify_aliases(self):
         # Test modifying the release via major, minor, and micro properties
@@ -384,7 +384,7 @@ class TestVersionRelease(unittest.TestCase):
         self.version.release.minor = 20
         self.version.release.micro = 30
         self.assertEqual(self.version.release, [10, 20, 30])
-        # self.assertEqual(self.version.release.patch, 30)
+        self.assertEqual(self.version.release.patch, 30)
 
     def test_release_with_tailing_zeros_simulation(self):
         # Test that the release can simulate arbitrary high number of tailing zeros
@@ -403,7 +403,7 @@ class TestVersionRelease(unittest.TestCase):
         self.assertEqual(self.version.release.major, 0)
         self.assertEqual(self.version.release.minor, 0)
         self.assertEqual(self.version.release.micro, 0)
-        # self.assertEqual(self.version.release.patch, 0)
+        self.assertEqual(self.version.release.patch, 0)
 
     def test_release_modify_with_alias_increase_length(self):
         # Test that modifying an alias can extend the length of release
