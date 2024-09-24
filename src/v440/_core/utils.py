@@ -195,18 +195,6 @@ class Base:
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
 
-    def __setattr__(self, name, value):
-        cls = type(self)
-        if name.startswith("_"):
-            object.__setattr__(self, name, value)
-            return
-        if isinstance(getattr(cls, name), property):
-            object.__setattr__(self, name, value)
-            return
-        e = "%r object has no property %r"
-        e %= (cls.__name__, name)
-        raise AttributeError(e)
-
 
 class Pattern(enum.StrEnum):
     EPOCH = r"(?:(?P<epoch>[0-9]+)!)?"
