@@ -121,7 +121,10 @@ venv.bak/
 dmypy.json
 
 # Pyre type checker
-.pyre/
+.pyre/ 
+
+# PKG-INFO
+PKG-INFO
 
 # .DS_store
 **/.DS_store
