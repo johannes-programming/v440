@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-import enum
+
 import functools
-import inspect
-import re
 import string
 import typing
 
@@ -30,45 +28,6 @@ def numeral(value, /):
     e = "%r is not a valid numeral segment"
     e = VersionError(e % value)
     raise e
-
-def qparse(value, /, *keys):
-    return list(qparse_0(value, *keys))
-
-
-def qparse_0(value, /, *keys):
-    if value is None:
-        return None, None
-    if isinstance(value, int):
-        if "" not in keys:
-            raise ValueError
-        value = int(value)
-        if value < 0:
-            raise ValueError
-        return "", value
-    if isiterable(value):
-        l, n = value
-        if l is None and n is None:
-            return None, None
-        l = str(l).lower().strip()
-        if l not in keys:
-            raise ValueError
-        n = segment(n)
-        if isinstance(n, str):
-            raise TypeError
-        return l, n
-    value = str(value).lower().strip()
-    value = value.replace("_", ".")
-    value = value.replace("-", ".")
-    l, n = Pattern.Q.regex.fullmatch(value).groups()
-    if l is None:
-        l = ""
-    if l not in keys:
-        raise ValueError
-    if n is None:
-        n = 0
-    else:
-        n = int(n)
-    return l, n
 
 
 def segment(value, /):
@@ -191,37 +150,5 @@ class Base:
 
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
-
-
-class Pattern(enum.StrEnum):
-    EPOCH = r"(?:(?P<epoch>[0-9]+)!)?"
-    RELEASE = r"(?P<release>[0-9]+(?:\.[0-9]+)*)"
-    PRE = r"""
-        (?P<pre>                                          
-            [-_\.]?
-            (?:alpha|a|beta|b|preview|pre|c|rc)
-            [-_\.]?
-            (?:[0-9]+)?
-        )?"""
-    POST = r"""
-        (?P<post>                                         
-            (?:-(?:[0-9]+))
-            |
-            (?: [-_\.]? (?:post|rev|r) [-_\.]? (?:[0-9]+)? )
-        )?"""
-    DEV = r"""(?P<dev> [-_\.]? dev [-_\.]? (?:[0-9]+)? )?"""
-    BASE = f"v? {EPOCH} {RELEASE}"
-    QUALIFIER = r"^((\.?(?P<l>[a-z]+)\.?(?P<n>[0-9]*))|(-(?P<N>[0-9]+)))"  
-    QUALIFIERS = f"{PRE} {POST} {DEV}"
-    PUBLIC = f"{BASE} {QUALIFIERS}"
-    Q = r"^(?:\.?(?P<l>[a-z]+))?(?:\.?(?P<n>[0-9]+))?$"
-
-    @functools.cached_property
-    def regex(self):
-        p = self.value
-        p = r"^" + p + r"$"
-        ans = re.compile(p, re.VERBOSE)
-        return ans
-
 
 class VersionError(ValueError): ...

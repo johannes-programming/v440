@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import re
 import typing
 import string
 
@@ -13,12 +12,11 @@ from overloadable import overloadable
 from v440._core.Local import Local
 from v440._core.Pre import Pre
 from v440._core.Release import Release
+from v440._core import Parser
+from v440._core.Pattern import Pattern
+
 
 from v440._core import utils
-
-EPOCHPATTERN = r"^(?:(?P<n>[0-9]+)!?)?$"
-EPOCHREGEX = re.compile(EPOCHPATTERN)
-PUBLICPATTERN = r"^v?(?P<b>[0-9\.!]*[0-9])?(?P<q>[\.a-z][\.a-z0-9+])?$"
 
 
 @dataclasses.dataclass(order=True)
@@ -106,14 +104,14 @@ class Version(Protected, Scaevola):
         if value is None:
             return "del"
         if utils.isiterable(value):
-            return "iter"
+            return "list"
         return "str"
 
     @_qualifierssetter.overload("del")
     def _qualifierssetter(self, value, /):
         ...
 
-    @_qualifierssetter.overload("iter")
+    @_qualifierssetter.overload("list")
     def _qualifierssetter(self, value, /):
         value = [utils.segment(x) for x in value]
         while value:
@@ -132,11 +130,9 @@ class Version(Protected, Scaevola):
             
     @_qualifierssetter.overload("str")
     def _qualifierssetter(self, value, /):
-        pattern = r"^(([-_\.]?(?P<l>[a-z]+)[-_\.]?(?P<n>[0-9]*))|(-(?P<N>[0-9]+)))"
-        regex = re.compile(pattern, re.VERBOSE)
         value = str(value).lower().strip()
         while value:
-            m = regex.search(value)
+            m = Pattern.QUALIFIERS.leftbound.search(value)
             value = value[m.end():]
             if m.group("N"):
                 self.post = m.group("N")
@@ -199,8 +195,8 @@ class Version(Protected, Scaevola):
 
     @dev.setter
     @utils.setterbackupdeco
-    def dev(self, v):
-        self._data.dev = utils.qparse(v, "dev", "")[1]
+    def dev(self, value):
+        self._data.dev = Parser.DEV.parse(value)
 
     @dev.deleter
     def dev(self):
@@ -223,7 +219,7 @@ class Version(Protected, Scaevola):
             self._data.epoch = v
             return
         v = str(v).lower().strip()
-        v = EPOCHREGEX.fullmatch(v).group("n")
+        v = Pattern.EPOCH.bound.fullmatch(v).group("n")
         if v is None:
             self._data.epoch = 0
             return
@@ -253,13 +249,13 @@ class Version(Protected, Scaevola):
         return self.dev is not None
 
     @property
-    def local(self) -> str:
+    def local(self) -> Local:
         return self._data.local
 
     @local.setter
     @utils.setterbackupdeco
-    def local(self, v):
-        self._data.local = Local(v)
+    def local(self, value):
+        self._data.local = Local(value)
 
     @local.deleter
     def local(self):
@@ -274,9 +270,8 @@ class Version(Protected, Scaevola):
 
     @post.setter
     @utils.setterbackupdeco
-    def post(self, v):
-        v = utils.qparse(v, "post", "rev", "r", "")
-        self._data.post = v[1]
+    def post(self, value):
+        self._data.post = Parser.POST.parse(value)
 
     @post.deleter
     def post(self):
@@ -307,9 +302,7 @@ class Version(Protected, Scaevola):
             del self.qualifiers
             return
         v = str(v).strip().lower()
-        pattern = r"^(v?([0-9]+!)?[0-9]+(\.[0-9]+)*)?"
-        regex = re.compile(pattern, re.VERBOSE)
-        match = regex.search(v)
+        match = Pattern.PUBLIC.leftbound.search(v)
         self.base = v[:match.end()]
         self.qualifiers = v[match.end():]
 
@@ -327,8 +320,8 @@ class Version(Protected, Scaevola):
         return ans
     @qualifiers.setter
     @utils.setterbackupdeco
-    def qualifiers(self, v):
-        self._qualifierssetter(v)
+    def qualifiers(self, value):
+        self._qualifierssetter(value)
     @qualifiers.deleter
     def qualifiers(self):
         self.qualifiers = None
@@ -340,8 +333,8 @@ class Version(Protected, Scaevola):
 
     @release.setter
     @utils.setterbackupdeco
-    def release(self, v):
-        self._data.release = Release(v)
+    def release(self, value):
+        self._data.release = Release(value)
 
     @release.deleter
     def release(self):
