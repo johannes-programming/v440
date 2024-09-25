@@ -8,8 +8,6 @@ import string
 import typing
 
 SEGCHARS = string.ascii_lowercase + string.digits
-QPATTERN = r"^(?:\.?(?P<l>[a-z]+))?(?:\.?(?P<n>[0-9]+))?$"
-QREGEX = re.compile(QPATTERN)
 
 
 def isiterable(value, /):
@@ -32,7 +30,6 @@ def numeral(value, /):
     e = "%r is not a valid numeral segment"
     e = VersionError(e % value)
     raise e
-
 
 def qparse(value, /, *keys):
     return list(qparse_0(value, *keys))
@@ -62,7 +59,7 @@ def qparse_0(value, /, *keys):
     value = str(value).lower().strip()
     value = value.replace("_", ".")
     value = value.replace("-", ".")
-    l, n = QREGEX.fullmatch(value).groups()
+    l, n = Pattern.Q.regex.fullmatch(value).groups()
     if l is None:
         l = ""
     if l not in keys:
@@ -80,7 +77,7 @@ def segment(value, /):
     except:
         e = "%r is not a valid segment"
         e = VersionError(e % value)
-        raise e  # from None
+        raise e from None
 
 
 def segment_1(value, /):
@@ -213,7 +210,11 @@ class Pattern(enum.StrEnum):
             (?: [-_\.]? (?:post|rev|r) [-_\.]? (?:[0-9]+)? )
         )?"""
     DEV = r"""(?P<dev> [-_\.]? dev [-_\.]? (?:[0-9]+)? )?"""
-    PUBLIC = f"v? {EPOCH} {RELEASE} {PRE} {POST} {DEV}"
+    BASE = f"v? {EPOCH} {RELEASE}"
+    QUALIFIER = r"^((\.?(?P<l>[a-z]+)\.?(?P<n>[0-9]*))|(-(?P<N>[0-9]+)))"  
+    QUALIFIERS = f"{PRE} {POST} {DEV}"
+    PUBLIC = f"{BASE} {QUALIFIERS}"
+    Q = r"^(?:\.?(?P<l>[a-z]+))?(?:\.?(?P<n>[0-9]+))?$"
 
     @functools.cached_property
     def regex(self):

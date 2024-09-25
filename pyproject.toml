@@ -22,6 +22,7 @@ dependencies = [
     "packaging>=23.2",
     "protectedclasses>=1.0",
     "scaevola>=1.0.7",
+    "overloadable",
 ]
 description = "mutable version objects in accordance with PEP440"
 keywords = []
