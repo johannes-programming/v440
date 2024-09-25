@@ -42,6 +42,7 @@ class Release(datahold.OkayList, scaevola.Scaevola):
     __le__ = utils.Base.__le__
 
     __repr__ = utils.Base.__repr__
+    __setattr__ = utils.Base.__setattr__
 
     def __setitem__(self, key, value):
         if type(key) is slice:
@@ -125,14 +126,13 @@ class Release(datahold.OkayList, scaevola.Scaevola):
 
     @staticmethod
     def _tolist(value, *, slicing):
+        if value is None:
+            return []
         if isinstance(value, int):
             return [utils.numeral(value)]
-        elif isinstance(value, str):
-            pass
-        elif utils.isiterable(value):
-            value = [utils.numeral(x) for x in value]
-            return value
-        else:
+        if not isinstance(value, str):
+            if hasattr(value, "__iter__"):
+                return [utils.numeral(x) for x in value]
             slicing = "never"
         value = str(value)
         if value == "":
@@ -156,21 +156,16 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         if index != -1:
             self.data = self.data[: index + 1]
 
-    @property
-    def data(self):
-        return list(self._data)
+    @utils.proprietary
+    class data:
+        def getter(self):
+            return list(self._data)
 
-    @data.setter
-    @utils.setterdeco
-    def data(self, v):
-        v = self._tolist(v, slicing="always")
-        while v and v[-1] == 0:
-            v.pop()
-        self._data = v
-
-    @data.deleter
-    def data(self):
-        self._data = []
+        def setter(self, v):
+            v = self._tolist(v, slicing="always")
+            while v and v[-1] == 0:
+                v.pop()
+            self._data = v
 
     def extend(self, other, /):
         self += other
