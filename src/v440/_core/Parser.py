@@ -1,22 +1,26 @@
 from __future__ import annotations
 
+import dataclasses
+import functools
 import re
+
 from overloadable import overloadable
-import re
-import dataclasses 
+
 from v440._core import utils
 from v440._core.Pattern import Pattern
-import functools
+
 
 @dataclasses.dataclass(frozen=True)
 class Parser:
-    keysforlist:tuple=None
-    keysforstr:tuple=None
-    phasedict:dict=None
-    allow_len_1:bool=False
+    keysforlist: tuple = None
+    keysforstr: tuple = None
+    phasedict: dict = None
+    allow_len_1: bool = False
+
     @functools.cached_property
     def dual(self):
         return type(self.phasedict) is dict
+
     def nbylist(self, value, /):
         if len(value) == 2:
             l, n = value
@@ -29,6 +33,7 @@ class Parser:
                 raise ValueError
             return n
         raise ValueError
+
     @overloadable
     def parse(self, value, /):
         if value is None:
@@ -40,9 +45,11 @@ class Parser:
         if hasattr(value, "__iter__"):
             return "list"
         return "str"
+
     @parse.overload("del")
     def parse(self, value, /):
         return [None, None] if self.dual else None
+
     @parse.overload("int")
     def parse(self, value, /):
         if self.dual:
@@ -51,6 +58,7 @@ class Parser:
         if value < 0:
             raise ValueError
         return value
+
     @parse.overload("list")
     def parse(self, value, /):
         value = [utils.segment(x) for x in value]
@@ -67,6 +75,7 @@ class Parser:
             if isinstance(n, str):
                 raise TypeError
             return n
+
     @parse.overload("str")
     def parse(self, value, /):
         value = str(value).lower().strip()
@@ -85,6 +94,7 @@ class Parser:
             return None
         else:
             return int(n)
+
 
 POST = Parser(
     keysforlist=("post", "rev", "r", ""),
@@ -107,4 +117,3 @@ PRE = Parser(
         rc="rc",
     ),
 )
-

@@ -312,8 +312,6 @@ class TestPackaging(unittest.TestCase):
             a = packaging.version.Version(s)
             b = Version(s).packaging()
             self.assertEqual(a, b, f"{s} should match packaging.version.Version")
-        
-
 
         ops = [
             operator.eq,
@@ -443,6 +441,7 @@ class TestVersionRelease(unittest.TestCase):
         # Test that release can handle large integers
         self.version.release = [1000000000, 2000000000, 3000000000]
         self.assertEqual(self.version.release, [1000000000, 2000000000, 3000000000])
+
 
 class TestAdditionalVersionRelease(unittest.TestCase):
 
@@ -616,6 +615,8 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         # Ensure valid boolean values are converted to integers
         self.version.release = [True, False, 1]
         self.assertEqual(self.version.release, [1, 0, 1])
+
+
 class TestVersionLocal(unittest.TestCase):
 
     def setUp(self):
@@ -713,7 +714,7 @@ class TestVersionLocal(unittest.TestCase):
         # Test sorting the local list
         self.version.local = [3, 1, "dev", 2, "2", "4a", "a4"]
         self.version.local.sort()
-        self.assertEqual(self.version.local, ['4a', 'a4', 'dev', 1, 2, 2, 3])
+        self.assertEqual(self.version.local, ["4a", "a4", "dev", 1, 2, 2, 3])
 
     def test_local_len(self):
         # Test the length of the local list
@@ -789,6 +790,7 @@ class TestVersionLocal(unittest.TestCase):
         result = [x for x in self.version.local]
         self.assertEqual(result, [1, "dev", "build"])
 
+
 class TestField(unittest.TestCase):
 
     def setUp(self):
@@ -807,6 +809,7 @@ class TestField(unittest.TestCase):
             self.assertEqual(str(v.base), str(v.packaging().base_version))
             self.version.local = v.packaging().local
             self.assertEqual(str(v.local), str(self.version.local))
+
 
 class TestVersionSpecifiers(unittest.TestCase):
 
@@ -886,13 +889,12 @@ class TestVersionSpecifiers(unittest.TestCase):
     def test_version_with_complex_specifiers_and_local(self):
         # Test a complex version with mixed specifiers and a local version
         version = Version("1.2.3a1-4-dev5+local")
-        self.assertEqual(str(version), '1.2.3a1.post4.dev5+local')
+        self.assertEqual(str(version), "1.2.3a1.post4.dev5+local")
 
     def test_version_with_multiple_releases_and_epoch(self):
         # Test version with multiple release-like elements and an epoch
         version = Version("1!1.2.3a1-4-dev5-6+local")
         self.assertEqual(str(version), "1!1.2.3a1.post6.dev5+local")
-
 
 
 class TestVersionQualifiers(unittest.TestCase):
@@ -993,7 +995,9 @@ class TestVersionQualifiers(unittest.TestCase):
         # Test setting qualifiers in the wrong order and ensuring the correct representation
         self.version = Version("1.2.3")
         self.version.qualifiers = "post4a1"
-        self.assertEqual(str(self.version), "1.2.3a1.post4")  # Should reorder to a1.post4
+        self.assertEqual(
+            str(self.version), "1.2.3a1.post4"
+        )  # Should reorder to a1.post4
 
     def test_qualifiers_set_with_local(self):
         # Test setting qualifiers along with a local version
@@ -1006,6 +1010,7 @@ class TestVersionQualifiers(unittest.TestCase):
         self.version = Version("0!1.2.3a1dev9-42")
         self.version.qualifiers = ".post3b1"
         self.assertEqual(str(self.version), "1.2.3b1.post3")
+
 
 class TestVersionQualifiersIterable(unittest.TestCase):
 
@@ -1106,9 +1111,6 @@ class TestVersionQualifiersIterable(unittest.TestCase):
         self.version = Version("2!1.2.3")
         self.version.qualifiers = ["b1", "post3"]
         self.assertEqual(str(self.version), "2!1.2.3b1.post3")
-
-
-
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import typing
 import re
+import typing
 
 import datahold
 import keyalias
@@ -45,4 +45,3 @@ class Pre(datahold.OkayList):
 
     def isempty(self):
         return self._data == [None, None]
-    

@@ -1,22 +1,19 @@
 from __future__ import annotations
 
 import dataclasses
-import typing
 import string
+import typing
 
 import packaging.version
+from overloadable import overloadable
 from protectedclasses import Protected
 from scaevola import Scaevola
-from overloadable import overloadable
 
+from v440._core import Parser, utils
 from v440._core.Local import Local
+from v440._core.Pattern import Pattern
 from v440._core.Pre import Pre
 from v440._core.Release import Release
-from v440._core import Parser
-from v440._core.Pattern import Pattern
-
-
-from v440._core import utils
 
 
 @dataclasses.dataclass(order=True)
@@ -78,7 +75,7 @@ class Version(Protected, Scaevola):
         if ans.dev is None:
             ans.dev = float("inf")
         return ans
-    
+
     @staticmethod
     def _qualifiername(value, /):
         if value == "dev":
@@ -86,7 +83,7 @@ class Version(Protected, Scaevola):
         if value in ("post", "rev", "r"):
             return "post"
         return "pre"
-    
+
     def _qualifiersetter1(self, value, /):
         k = value.rstrip(string.digits)
         n = self._qualifiername(k)
@@ -95,7 +92,7 @@ class Version(Protected, Scaevola):
     def _qualifiersetter2(self, x, y, /):
         n = self._qualifiername(x)
         setattr(self, n, (x, y))
-    
+
     @overloadable
     def _qualifierssetter(self, value, /):
         self.pre = None
@@ -108,8 +105,7 @@ class Version(Protected, Scaevola):
         return "str"
 
     @_qualifierssetter.overload("del")
-    def _qualifierssetter(self, value, /):
-        ...
+    def _qualifierssetter(self, value, /): ...
 
     @_qualifierssetter.overload("list")
     def _qualifierssetter(self, value, /):
@@ -127,13 +123,13 @@ class Version(Protected, Scaevola):
             else:
                 y = value.pop(0)
                 self._qualifiersetter2(x, y)
-            
+
     @_qualifierssetter.overload("str")
     def _qualifierssetter(self, value, /):
         value = str(value).lower().strip()
         while value:
             m = Pattern.QUALIFIERS.leftbound.search(value)
-            value = value[m.end():]
+            value = value[m.end() :]
             if m.group("N"):
                 self.post = m.group("N")
             else:
@@ -303,13 +299,13 @@ class Version(Protected, Scaevola):
             return
         v = str(v).strip().lower()
         match = Pattern.PUBLIC.leftbound.search(v)
-        self.base = v[:match.end()]
-        self.qualifiers = v[match.end():]
+        self.base = v[: match.end()]
+        self.qualifiers = v[match.end() :]
 
     @public.deleter
     def public(self):
         self.public = None
-    
+
     @property
     def qualifiers(self):
         ans = str(self.pre)
@@ -318,14 +314,15 @@ class Version(Protected, Scaevola):
         if self.dev is not None:
             ans += ".dev%s" % self.dev
         return ans
+
     @qualifiers.setter
     @utils.setterbackupdeco
     def qualifiers(self, value):
         self._qualifierssetter(value)
+
     @qualifiers.deleter
     def qualifiers(self):
         self.qualifiers = None
-
 
     @property
     def release(self) -> Release:

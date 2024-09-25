@@ -2,6 +2,7 @@ import enum
 import functools
 import re
 
+
 class Pattern(enum.StrEnum):
 
     EPOCH = r"""(?:(?P<n>[0-9]+)!?)?"""
@@ -12,13 +13,15 @@ class Pattern(enum.StrEnum):
     @staticmethod
     def compile(value, /):
         return re.compile(value, re.VERBOSE)
+
     @functools.cached_property
     def bound(self):
         return self.compile(r"^" + self.value + r"$")
+
     @functools.cached_property
     def leftbound(self):
         return self.compile(r"^" + self.value)
+
     @functools.cached_property
     def unbound(self):
         return self.compile(self.value)
-

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 import functools
 import string
 import typing
@@ -150,5 +149,6 @@ class Base:
 
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
+
 
 class VersionError(ValueError): ...
