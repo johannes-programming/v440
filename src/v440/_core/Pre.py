@@ -1,24 +1,16 @@
 from __future__ import annotations
 
+import re
 import typing
 
 import datahold
 import keyalias
 
+from v440._core import Parser
+
 from . import utils
 
 __all__ = ["Pre"]
-
-PHASEDICT = dict(
-    alpha="a",
-    a="a",
-    beta="b",
-    b="b",
-    preview="rc",
-    pre="rc",
-    c="rc",
-    rc="rc",
-)
 
 
 @keyalias.keyalias(phase=0, subphase=1)
@@ -39,22 +31,17 @@ class Pre(datahold.OkayList):
         return self.phase + str(self.subphase)
 
     @property
-    def data(self):
+    def data(self) -> list:
         return list(self._data)
 
     @data.setter
     @utils.setterdeco
     def data(self, value, /):
-        value = utils.qparse(value, *PHASEDICT.keys())
-        if value[0] is not None:
-            if value[1] is None:
-                raise ValueError
-            value[0] = PHASEDICT[value[0]]
-        self._data = value
+        self._data = Parser.PRE.parse(value)
 
     @data.deleter
     def data(self):
-        self._data = [None, None]
+        self._data = None
 
     def isempty(self):
         return self._data == [None, None]

@@ -1,22 +1,19 @@
 from __future__ import annotations
 
 import dataclasses
-import re
+import string
 import typing
 
 import packaging.version
+from overloadable import overloadable
 from protectedclasses import Protected
 from scaevola import Scaevola
 
+from v440._core import Parser, utils
 from v440._core.Local import Local
+from v440._core.Pattern import Pattern
 from v440._core.Pre import Pre
 from v440._core.Release import Release
-
-from . import utils
-
-EPOCHPATTERN = r"^(?:(?P<n>[0-9]+)!?)?$"
-EPOCHREGEX = re.compile(EPOCHPATTERN)
-PUBLICPATTERN = r"^v?(?P<b>[0-9\.!]*[0-9])?(?P<q>[\.a-z][\.a-z0-9+])?$"
 
 
 @dataclasses.dataclass(order=True)
@@ -79,13 +76,66 @@ class Version(Protected, Scaevola):
             ans.dev = float("inf")
         return ans
 
-    def _qualifiers(self):
-        ans = str(self.pre)
-        if self.post is not None:
-            ans += ".post%s" % self.post
-        if self.dev is not None:
-            ans += ".dev%s" % self.dev
-        return ans
+    @staticmethod
+    def _qualifiername(value, /):
+        if value == "dev":
+            return "dev"
+        if value in ("post", "rev", "r"):
+            return "post"
+        return "pre"
+
+    def _qualifiersetter1(self, value, /):
+        k = value.rstrip(string.digits)
+        n = self._qualifiername(k)
+        setattr(self, n, value)
+
+    def _qualifiersetter2(self, x, y, /):
+        n = self._qualifiername(x)
+        setattr(self, n, (x, y))
+
+    @overloadable
+    def _qualifierssetter(self, value, /):
+        self.pre = None
+        self.post = None
+        self.dev = None
+        if value is None:
+            return "del"
+        if utils.isiterable(value):
+            return "list"
+        return "str"
+
+    @_qualifierssetter.overload("del")
+    def _qualifierssetter(self, value, /): ...
+
+    @_qualifierssetter.overload("list")
+    def _qualifierssetter(self, value, /):
+        value = [utils.segment(x) for x in value]
+        while value:
+            x = value.pop(0)
+            if type(x) is not str:
+                self.post = x
+            elif not value:
+                self._qualifiersetter1(x)
+            elif type(value[0]) is str:
+                self._qualifiersetter1(x)
+            elif set(string.digits) & set(x):
+                self._qualifiersetter1(x)
+            else:
+                y = value.pop(0)
+                self._qualifiersetter2(x, y)
+
+    @_qualifierssetter.overload("str")
+    def _qualifierssetter(self, value, /):
+        value = str(value).lower().strip()
+        while value:
+            m = Pattern.QUALIFIERS.leftbound.search(value)
+            value = value[m.end() :]
+            if m.group("N"):
+                self.post = m.group("N")
+            else:
+                l = m.group("l")
+                n = m.group("n")
+                self._qualifiersetter2(l, n)
 
     @property
     def base(self) -> str:
@@ -98,10 +148,12 @@ class Version(Protected, Scaevola):
     @utils.setterbackupdeco
     def base(self, v):
         if v is None:
-            self.epoch, self.release = None, None
+            del self.epoch
+            del self.release
+            return
         v = str(v)
         if "!" in v:
-            self.epoch, self.release = v.split("!")
+            self.epoch, self.release = v.split("!", 2)
         else:
             self.epoch, self.release = 0, v
 
@@ -124,7 +176,7 @@ class Version(Protected, Scaevola):
     def data(self, x):
         x = str(x)
         if "+" in x:
-            self.public, self.local = x.split("+")
+            self.public, self.local = x.split("+", 2)
         else:
             self.public, self.local = x, None
 
@@ -139,8 +191,8 @@ class Version(Protected, Scaevola):
 
     @dev.setter
     @utils.setterbackupdeco
-    def dev(self, v):
-        self._data.dev = utils.qparse(v, "dev", "")[1]
+    def dev(self, value):
+        self._data.dev = Parser.DEV.parse(value)
 
     @dev.deleter
     def dev(self):
@@ -163,7 +215,7 @@ class Version(Protected, Scaevola):
             self._data.epoch = v
             return
         v = str(v).lower().strip()
-        v = EPOCHREGEX.fullmatch(v).group("n")
+        v = Pattern.EPOCH.bound.fullmatch(v).group("n")
         if v is None:
             self._data.epoch = 0
             return
@@ -178,7 +230,7 @@ class Version(Protected, Scaevola):
         if self.epoch:
             ans += "%s!" % self.epoch
         ans += self.release.format(cutoff)
-        ans += self._qualifiers()
+        ans += self.qualifiers
         if self.local:
             ans += "+%s" % self.local
         return ans
@@ -193,13 +245,13 @@ class Version(Protected, Scaevola):
         return self.dev is not None
 
     @property
-    def local(self) -> str:
+    def local(self) -> Local:
         return self._data.local
 
     @local.setter
     @utils.setterbackupdeco
-    def local(self, v):
-        self._data.local = Local(v)
+    def local(self, value):
+        self._data.local = Local(value)
 
     @local.deleter
     def local(self):
@@ -214,9 +266,8 @@ class Version(Protected, Scaevola):
 
     @post.setter
     @utils.setterbackupdeco
-    def post(self, v):
-        v = utils.qparse(v, "post", "rev", "r", "")
-        self._data.post = v[1]
+    def post(self, value):
+        self._data.post = Parser.POST.parse(value)
 
     @post.deleter
     def post(self):
@@ -237,22 +288,41 @@ class Version(Protected, Scaevola):
 
     @property
     def public(self) -> str:
-        return self.base + self._qualifiers()
+        return self.base + self.qualifiers
 
     @public.setter
     @utils.setterbackupdeco
     def public(self, v):
         if v is None:
-            v = "0"
-        else:
-            v = str(v).strip().lower()
-        d = utils.Pattern.PUBLIC.regex.fullmatch(v).groupdict()
-        for i in d.items():
-            setattr(self, *i)
+            del self.base
+            del self.qualifiers
+            return
+        v = str(v).strip().lower()
+        match = Pattern.PUBLIC.leftbound.search(v)
+        self.base = v[: match.end()]
+        self.qualifiers = v[match.end() :]
 
     @public.deleter
     def public(self):
         self.public = None
+
+    @property
+    def qualifiers(self):
+        ans = str(self.pre)
+        if self.post is not None:
+            ans += ".post%s" % self.post
+        if self.dev is not None:
+            ans += ".dev%s" % self.dev
+        return ans
+
+    @qualifiers.setter
+    @utils.setterbackupdeco
+    def qualifiers(self, value):
+        self._qualifierssetter(value)
+
+    @qualifiers.deleter
+    def qualifiers(self):
+        self.qualifiers = None
 
     @property
     def release(self) -> Release:
@@ -260,8 +330,8 @@ class Version(Protected, Scaevola):
 
     @release.setter
     @utils.setterbackupdeco
-    def release(self, v):
-        self._data.release = Release(v)
+    def release(self, value):
+        self._data.release = Release(value)
 
     @release.deleter
     def release(self):

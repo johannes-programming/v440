@@ -125,14 +125,13 @@ class Release(datahold.OkayList, scaevola.Scaevola):
 
     @staticmethod
     def _tolist(value, *, slicing):
+        if value is None:
+            return []
         if isinstance(value, int):
             return [utils.numeral(value)]
-        elif isinstance(value, str):
-            pass
-        elif utils.isiterable(value):
-            value = [utils.numeral(x) for x in value]
-            return value
-        else:
+        if not isinstance(value, str):
+            if hasattr(value, "__iter__"):
+                return [utils.numeral(x) for x in value]
             slicing = "never"
         value = str(value)
         if value == "":
