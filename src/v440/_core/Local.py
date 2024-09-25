@@ -30,6 +30,7 @@ class Local(datahold.OkayList, scaevola.Scaevola):
         return self.data <= other
 
     __repr__ = utils.Base.__repr__
+    __setattr__ = utils.Base.__setattr__
 
     def __sorted__(self, /, **kwargs):
         ans = self.copy()
@@ -46,31 +47,35 @@ class Local(datahold.OkayList, scaevola.Scaevola):
     def _sortkey(value):
         return type(value) is int, value
 
-    @property
-    def data(self, /):
-        return list(self._data)
+    @utils.proprietary
+    class data:
+        def getter(self, /):
+            return list(self._data)
 
-    @data.setter
-    @utils.setterdeco
-    def data(self, value, /):
-        if value is None:
-            self._data = list()
-            return
-        if not utils.isiterable(value):
-            value = str(value)
-            if value.startswith("+"):
-                value = value[1:]
-            value = value.replace("_", ".")
-            value = value.replace("-", ".")
-            value = value.split(".")
-        value = [utils.segment(x) for x in value]
-        if None in value:
-            raise ValueError
-        self._data = value
+        @utils.digest
+        class setter:
+            def byInt(self, value):
+                self._data = [value]
 
-    @data.deleter
-    def data(self):
-        self._data = list()
+            def byList(self, value):
+                value = [utils.segment(x) for x in value]
+                if None in value:
+                    raise ValueError
+                self._data = value
+
+            def byNone(self):
+                self._data = list()
+
+            def byStr(self, value):
+                if value.startswith("+"):
+                    value = value[1:]
+                value = value.replace("_", ".")
+                value = value.replace("-", ".")
+                value = value.split(".")
+                value = [utils.segment(x) for x in value]
+                if None in value:
+                    raise ValueError
+                self._data = value
 
     @functools.wraps(datahold.OkayList.sort)
     def sort(self, /, *, key=None, **kwargs):
