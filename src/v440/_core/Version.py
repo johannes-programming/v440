@@ -1,22 +1,24 @@
 from __future__ import annotations
 
 import dataclasses
-import re
-import typing
+from typing import *
 
 import packaging.version
-from protectedclasses import Protected
+from datahold import OkayABC
 from scaevola import Scaevola
 
+from v440._core import Parser, utils
 from v440._core.Local import Local
+from v440._core.Pattern import Pattern
 from v440._core.Pre import Pre
 from v440._core.Release import Release
 
-from . import utils
-
-EPOCHPATTERN = r"^(?:(?P<n>[0-9]+)!?)?$"
-EPOCHREGEX = re.compile(EPOCHPATTERN)
-PUBLICPATTERN = r"^v?(?P<b>[0-9\.!]*[0-9])?(?P<q>[\.a-z][\.a-z0-9+])?$"
+QUALIFIERDICT = dict(
+    dev="dev",
+    post="post",
+    r="post",
+    rev="post",
+)
 
 
 @dataclasses.dataclass(order=True)
@@ -24,30 +26,29 @@ class _Version:
     epoch: int = 0
     release: Release = dataclasses.field(default_factory=Release)
     pre: Pre = dataclasses.field(default_factory=Pre)
-    post: typing.Optional[int] = None
-    dev: typing.Optional[int] = None
+    post: Optional[int] = None
+    dev: Optional[int] = None
     local: Local = dataclasses.field(default_factory=Local)
 
     def copy(self):
         return dataclasses.replace(self)
 
 
-class Version(Protected, Scaevola):
+class Version(Scaevola):
     def __bool__(self):
         return self._data != _Version()
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Any) -> bool:
         try:
             other = type(self)(other)
         except utils.VersionError:
             return False
         return self._data == other._data
 
-    def __hash__(self) -> int:
-        raise TypeError("unhashable type: %r" % type(self).__name__)
+    __hash__ = OkayABC.__hash__
 
-    def __init__(self, data="0", /, **kwargs) -> None:
-        self._data = _Version()
+    def __init__(self, data: Any = "0", /, **kwargs) -> None:
+        object.__setattr__(self, "_data", _Version())
         self.data = data
         self.update(**kwargs)
 
@@ -59,6 +60,14 @@ class Version(Protected, Scaevola):
         return (self != other) and (self <= other)
 
     __repr__ = utils.Base.__repr__
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        backup = self._data.copy()
+        try:
+            utils.Base.__setattr__(self, name, value)
+        except utils.VersionError:
+            self._data = backup
+            raise
 
     def __str__(self) -> str:
         return self.data
@@ -79,106 +88,98 @@ class Version(Protected, Scaevola):
             ans.dev = float("inf")
         return ans
 
-    def _qualifiers(self):
-        ans = str(self.pre)
-        if self.post is not None:
-            ans += ".post%s" % self.post
-        if self.dev is not None:
-            ans += ".dev%s" % self.dev
-        return ans
+    @utils.proprietary
+    class base:
+        def getter(self) -> str:
+            ans = self.public
+            del ans.dev
+            del ans.pre
+            del ans.post
+            return ans
 
-    @property
-    def base(self) -> str:
-        if self.epoch:
-            return "%s!%s" % (self.epoch, self.release)
-        else:
-            return str(self.release)
+        @utils.digest
+        class setter:
+            def byInt(self, value):
+                del self.epoch
+                self.release = value
 
-    @base.setter
-    @utils.setterbackupdeco
-    def base(self, v):
-        if v is None:
-            self.epoch, self.release = None, None
-        v = str(v)
-        if "!" in v:
-            self.epoch, self.release = v.split("!")
-        else:
-            self.epoch, self.release = 0, v
+            def byNone(self):
+                del self.epoch
+                del self.release
 
-    @base.deleter
-    def base(self):
-        self.base = None
+            def byStr(self, value):
+                if "!" in value:
+                    self.epoch, self.release = value.split("!", 1)
+                else:
+                    self.epoch, self.release = 0, value
 
     def clear(self):
-        self.data = None
+        del self.data
 
     def copy(self):
         return type(self)(self)
 
-    @property
-    def data(self):
-        return self.format()
+    @utils.proprietary
+    class data:
+        def getter(self):
+            return self.format()
 
-    @data.setter
-    @utils.setterbackupdeco
-    def data(self, x):
-        x = str(x)
-        if "+" in x:
-            self.public, self.local = x.split("+")
-        else:
-            self.public, self.local = x, None
+        @utils.digest
+        class setter:
+            def byInt(self, value):
+                self.public = value
+                del self.local
 
-    @data.deleter
-    def data(self):
-        del self.public
-        del self.local
+            def byNone(self):
+                del self.public
+                del self.local
 
-    @property
-    def dev(self):
-        return self._data.dev
+            def byStr(self, value):
+                if "+" in value:
+                    self.public, self.local = value.split("+", 1)
+                else:
+                    self.public, self.local = value, None
 
-    @dev.setter
-    @utils.setterbackupdeco
-    def dev(self, v):
-        self._data.dev = utils.qparse(v, "dev", "")[1]
+    @utils.proprietary
+    class dev:
+        def getter(self):
+            return self._data.dev
 
-    @dev.deleter
-    def dev(self):
-        self.dev = None
+        def setter(self, value):
+            self._data.dev = Parser.DEV.parse(value)
 
-    @property
-    def epoch(self):
-        return self._data.epoch
+    @utils.proprietary
+    class epoch:
+        def getter(self):
+            return self._data.epoch
 
-    @epoch.setter
-    @utils.setterbackupdeco
-    def epoch(self, v):
-        if v is None:
-            self._data.epoch = 0
-            return
-        if isinstance(v, int):
-            v = int(v)
-            if v < 0:
-                raise ValueError
-            self._data.epoch = v
-            return
-        v = str(v).lower().strip()
-        v = EPOCHREGEX.fullmatch(v).group("n")
-        if v is None:
-            self._data.epoch = 0
-            return
-        self._data.epoch = int(v)
+        @utils.digest
+        class setter:
+            def byInt(self, value):
+                if value < 0:
+                    raise ValueError
+                self._data.epoch = value
 
-    @epoch.deleter
-    def epoch(self):
-        self.epoch = None
+            def byNone(self):
+                self._data.epoch = 0
+
+            def byStr(self, v):
+                v = Pattern.EPOCH.bound.search(v).group("n")
+                if v is None:
+                    self._data.epoch = 0
+                else:
+                    self._data.epoch = int(v)
 
     def format(self, cutoff=None) -> str:
         ans = ""
         if self.epoch:
             ans += "%s!" % self.epoch
         ans += self.release.format(cutoff)
-        ans += self._qualifiers()
+        ans += str(self.pre)
+        if self.post is not None:
+            ans += ".post%s" % self.post
+        if self.dev is not None:
+            ans += ".dev%s" % self.dev
         if self.local:
             ans += "+%s" % self.local
         return ans
@@ -192,80 +193,79 @@ class Version(Protected, Scaevola):
     def isdevrelease(self) -> bool:
         return self.dev is not None
 
-    @property
-    def local(self) -> str:
-        return self._data.local
+    @utils.proprietary
+    class local:
+        def getter(self) -> Local:
+            return self._data.local
 
-    @local.setter
-    @utils.setterbackupdeco
-    def local(self, v):
-        self._data.local = Local(v)
-
-    @local.deleter
-    def local(self):
-        self.local = None
+        def setter(self, value):
+            self._data.local = Local(value)
 
     def packaging(self):
         return packaging.version.Version(self.data)
 
-    @property
-    def post(self):
-        return self._data.post
+    @utils.proprietary
+    class post:
+        def getter(self):
+            return self._data.post
 
-    @post.setter
-    @utils.setterbackupdeco
-    def post(self, v):
-        v = utils.qparse(v, "post", "rev", "r", "")
-        self._data.post = v[1]
+        def setter(self, value):
+            self._data.post = Parser.POST.parse(value)
 
-    @post.deleter
-    def post(self):
-        self.post = None
+    @utils.proprietary
+    class pre:
+        def getter(self) -> Pre:
+            return self._data.pre
 
-    @property
-    def pre(self):
-        return self._data.pre
+        def setter(self, data, /):
+            self._data.pre = Pre(data)
 
-    @pre.setter
-    @utils.setterbackupdeco
-    def pre(self, data, /):
-        self._data.pre = Pre(data)
+    @utils.proprietary
+    class public:
+        def getter(self) -> str:
+            ans = self.copy()
+            del ans.local
+            return ans
 
-    @pre.deleter
-    def pre(self):
-        self.pre = None
+        @utils.digest
+        class setter:
+            def byInt(self, value):
+                self.base = value
+                del self.pre
+                del self.post
+                del self.dev
 
-    @property
-    def public(self) -> str:
-        return self.base + self._qualifiers()
+            def byNone(self):
+                del self.base
+                del self.pre
+                del self.post
+                del self.dev
 
-    @public.setter
-    @utils.setterbackupdeco
-    def public(self, v):
-        if v is None:
-            v = "0"
-        else:
-            v = str(v).strip().lower()
-        d = utils.Pattern.PUBLIC.regex.fullmatch(v).groupdict()
-        for i in d.items():
-            setattr(self, *i)
+            def byStr(self, value):
+                match = Pattern.PUBLIC.leftbound.search(value)
+                self.base = value[: match.end()]
+                value = value[match.end() :]
+                self.pre = None
+                self.post = None
+                self.dev = None
+                while value:
+                    m = Pattern.QUALIFIERS.leftbound.search(value)
+                    value = value[m.end() :]
+                    if m.group("N"):
+                        self.post = m.group("N")
+                    else:
+                        x = m.group("l")
+                        y = m.group("n")
+                        n = QUALIFIERDICT.get(x, "pre")
+                        setattr(self, n, (x, y))
 
-    @public.deleter
-    def public(self):
-        self.public = None
+    @utils.proprietary
+    class release:
+        def getter(self) -> Release:
+            return self._data.release
 
-    @property
-    def release(self) -> Release:
-        return self._data.release
-
-    @release.setter
-    @utils.setterbackupdeco
-    def release(self, v):
-        self._data.release = Release(v)
-
-    @release.deleter
-    def release(self):
-        self._data.release = Release()
+        def setter(self, value):
+            self._data.release = Release(value)
 
     def update(self, **kwargs):
         for k, v in kwargs.items():
