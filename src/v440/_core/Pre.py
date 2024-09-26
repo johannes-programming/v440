@@ -1,14 +1,9 @@
 from __future__ import annotations
 
-import re
-import typing
-
 import datahold
 import keyalias
 
-from v440._core import Parser
-
-from . import utils
+from v440._core import Parser, utils
 
 __all__ = ["Pre"]
 
@@ -24,24 +19,20 @@ class Pre(datahold.OkayList):
     __le__ = utils.Base.__le__
 
     __repr__ = utils.Base.__repr__
+    __setattr__ = utils.Base.__setattr__
 
     def __str__(self) -> str:
         if self.isempty():
             return ""
         return self.phase + str(self.subphase)
 
-    @property
-    def data(self) -> list:
-        return list(self._data)
+    @utils.proprietary
+    class data:
+        def getter(self) -> list:
+            return list(self._data)
 
-    @data.setter
-    @utils.setterdeco
-    def data(self, value, /):
-        self._data = Parser.PRE.parse(value)
-
-    @data.deleter
-    def data(self):
-        self._data = None
+        def setter(self, value, /):
+            self._data = Parser.PRE.parse(value)
 
     def isempty(self):
         return self._data == [None, None]

@@ -1107,7 +1107,7 @@ class TestVersionQualifiersIterable(unittest.TestCase):
         self.assertEqual(str(self.version), "1.2.3.post9999")
 
     def test_qualifiers_set_by_iterable_again(self):
-        # Test setting qualifiers using an iterable when the version has multiple epochs
+        # Test setting qualifiers using an iterable when the version has an epoch
         self.version = Version("2!1.2.3")
         self.version.qualifiers = ["b1", "post3"]
         self.assertEqual(str(self.version), "2!1.2.3b1.post3")

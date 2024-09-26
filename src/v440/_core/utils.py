@@ -2,13 +2,34 @@ from __future__ import annotations
 
 import functools
 import string
-import typing
+from typing import *
 
 SEGCHARS = string.ascii_lowercase + string.digits
 
 
-def isiterable(value, /):
-    return hasattr(value, "__iter__") and not isinstance(value, str)
+def digest(old, /):
+    byNone = getattr(old, "byNone", None)
+    byInt = getattr(old, "byInt", None)
+    byList = getattr(old, "byList", None)
+    byStr = getattr(old, "byStr", None)
+
+    def new(*args):
+        args = list(args)
+        value = args.pop()
+        if value is None:
+            return byNone(*args)
+        if isinstance(value, int):
+            value = int(value)
+            return byInt(*args, value)
+        if isinstance(value, str) or not hasattr(value, "__iter__"):
+            value = str(value).lower().strip()
+            return byStr(*args, value)
+        else:
+            value = list(value)
+            return byList(*args, value)
+
+    new.__name__ = old.__name__
+    return new
 
 
 def literal(value, /):
@@ -29,71 +50,59 @@ def numeral(value, /):
     raise e
 
 
+def proprietary(old, /):
+    def deleter(self):
+        old.setter(self, None)
+
+    kwargs = dict()
+    kwargs["fget"] = old.getter
+    kwargs["fset"] = old.setter
+    kwargs["fdel"] = deleter
+    for v in kwargs.values():
+        v.__name__ = old.__name__
+    try:
+        kwargs["doc"] = getattr(old, "__doc__")
+    except AttributeError:
+        pass
+    ans = property(**kwargs)
+    return ans
+
+
 def segment(value, /):
     try:
-        return segment_1(value)
+        return _segment(value)
     except:
         e = "%r is not a valid segment"
         e = VersionError(e % value)
         raise e from None
 
 
-def segment_1(value, /):
-    if value is None:
-        return None
-    if isinstance(value, int):
-        value = int(value)
+@digest
+class _segment:
+    def byNone():
+        return
+
+    def byInt(value, /):
         if value < 0:
             raise ValueError
-        else:
-            return value
-    value = str(value).lower().strip()
-    if value.strip(SEGCHARS):
-        raise ValueError(value)
-    if value.strip(string.digits):
         return value
-    if value == "":
-        return 0
-    return int(value)
 
-
-def setterbackupdeco(old, /):
-    @functools.wraps(old)
-    def new(self, value, /):
-        backup = self._data.copy()
-        try:
-            old(self, value)
-        except VersionError:
-            self._data = backup
-            raise
-        except:
-            self._data = backup
-            e = "%r is an invalid value for %r"
-            e %= (value, old.__name__)
-            raise VersionError(e)
-
-    return new
-
-
-def setterdeco(old, /):
-    @functools.wraps(old)
-    def new(self, value, /):
-        try:
-            old(self, value)
-        except VersionError:
-            raise
-        except:
-            e = "%r is an invalid value for %r"
-            e %= (value, old.__name__)
-            raise VersionError(e)
-
-    return new
+    def byStr(value, /):
+        if value.strip(SEGCHARS):
+            raise ValueError(value)
+        if value.strip(string.digits):
+            return value
+        if value == "":
+            return 0
+        return int(value)
 
 
 def toindex(value, /):
     ans = value.__index__()
     if type(ans) is not int:
-        raise TypeError("__index__ returned non-int (type %s)" % type(ans).__name__)
+        e = "__index__ returned non-int (type %s)"
+        e %= type(ans).__name__
+        raise TypeError(e)
     return ans
 
 
@@ -109,7 +118,7 @@ def torange(key, length):
             raise ValueError
     fwd = step > 0
     if start is None:
-        start = 0 if fwd else length - 1
+        start = 0 if fwd else (length - 1)
     else:
         start = toindex(start)
     if stop is None:
@@ -149,6 +158,26 @@ class Base:
 
     def __repr__(self) -> str:
         return "%s(%r)" % (type(self).__name__, str(self))
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if name.startswith("_"):
+            object.__setattr__(self, name, value)
+            return
+        cls = type(self)
+        attr = getattr(cls, name)
+        if type(attr) is not property:
+            e = "%r is not a property"
+            e %= name
+            e = AttributeError(e)
+            raise e
+        try:
+            object.__setattr__(self, name, value)
+        except VersionError:
+            raise
+        except:
+            e = "%r is an invalid value for %r"
+            e %= (value, cls.__name__ + "." + name)
+            raise VersionError(e)
 
 
 class VersionError(ValueError): ...
