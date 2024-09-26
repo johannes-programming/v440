@@ -6,6 +6,39 @@ import typing
 
 SEGCHARS = string.ascii_lowercase + string.digits
 
+def digest(old, /):
+    byNone = getattr(old, "byNone", None)
+    byInt = getattr(old, "byInt", None)
+    byList = getattr(old, "byList", None)
+    byStr = getattr(old, "byStr", None)
+    def new(self, value):
+        h = hint(value)
+        if h is None:
+            return byNone(self)
+        if h is int:
+            value = int(value)
+            return byInt(self, value)
+        if h is str:
+            value = str(value).lower().strip()
+            return byStr(self, value) 
+        if h is list:
+            value = list(value)
+            return byList(self, value)
+        raise NotImplementedError
+    return new
+
+
+def hint(value, /):
+    if value is None:
+        return
+    if isinstance(value, int):
+        return int
+    if isinstance(value, str):
+        return str
+    if hasattr(value, "__iter__"):
+        return list
+    return str
+    
 
 def isiterable(value, /):
     return hasattr(value, "__iter__") and not isinstance(value, str)
@@ -28,6 +61,21 @@ def numeral(value, /):
     e = VersionError(e % value)
     raise e
 
+def proprietary(old, /):
+    def deleter(self):
+        old.setter(self, None)
+    kwargs = dict()
+    kwargs["fget"] = old.getter
+    kwargs["fset"] = old.setter
+    kwargs["fdel"] = deleter
+    for v in kwargs.values():
+        v.__name__ = old.__name__
+    try:
+        kwargs["doc"] = getattr(old, "__doc__")
+    except AttributeError:
+        pass
+    ans = property(**kwargs)
+    return ans
 
 def segment(value, /):
     try:
@@ -152,3 +200,4 @@ class Base:
 
 
 class VersionError(ValueError): ...
+

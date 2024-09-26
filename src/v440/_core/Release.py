@@ -155,21 +155,16 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         if index != -1:
             self.data = self.data[: index + 1]
 
-    @property
-    def data(self):
-        return list(self._data)
-
-    @data.setter
-    @utils.setterdeco
-    def data(self, v):
-        v = self._tolist(v, slicing="always")
-        while v and v[-1] == 0:
-            v.pop()
-        self._data = v
-
-    @data.deleter
-    def data(self):
-        self._data = []
+    @utils.proprietary
+    class data:
+        def getter(self):
+            return list(self._data)
+        @utils.setterdeco
+        def setter(self, v):
+            v = self._tolist(v, slicing="always")
+            while v and v[-1] == 0:
+                v.pop()
+            self._data = v
 
     def extend(self, other, /):
         self += other

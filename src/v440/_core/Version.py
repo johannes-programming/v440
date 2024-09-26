@@ -5,7 +5,6 @@ import string
 import typing
 
 import packaging.version
-from overloadable import overloadable
 from protectedclasses import Protected
 from scaevola import Scaevola
 
@@ -14,6 +13,7 @@ from v440._core.Local import Local
 from v440._core.Pattern import Pattern
 from v440._core.Pre import Pre
 from v440._core.Release import Release
+
 
 
 @dataclasses.dataclass(order=True)
@@ -93,73 +93,32 @@ class Version(Protected, Scaevola):
         n = self._qualifiername(x)
         setattr(self, n, (x, y))
 
-    @overloadable
-    def _qualifierssetter(self, value, /):
-        self.pre = None
-        self.post = None
-        self.dev = None
-        if value is None:
-            return "del"
-        if utils.isiterable(value):
-            return "list"
-        return "str"
 
-    @_qualifierssetter.overload("del")
-    def _qualifierssetter(self, value, /): ...
-
-    @_qualifierssetter.overload("list")
-    def _qualifierssetter(self, value, /):
-        value = [utils.segment(x) for x in value]
-        while value:
-            x = value.pop(0)
-            if type(x) is not str:
-                self.post = x
-            elif not value:
-                self._qualifiersetter1(x)
-            elif type(value[0]) is str:
-                self._qualifiersetter1(x)
-            elif set(string.digits) & set(x):
-                self._qualifiersetter1(x)
+    @utils.proprietary
+    class base:
+        def getter(self) -> str:
+            if self.epoch:
+                return "%s!%s" % (self.epoch, self.release)
             else:
-                y = value.pop(0)
-                self._qualifiersetter2(x, y)
+                return str(self.release)
 
-    @_qualifierssetter.overload("str")
-    def _qualifierssetter(self, value, /):
-        value = str(value).lower().strip()
-        while value:
-            m = Pattern.QUALIFIERS.leftbound.search(value)
-            value = value[m.end() :]
-            if m.group("N"):
-                self.post = m.group("N")
-            else:
-                l = m.group("l")
-                n = m.group("n")
-                self._qualifiersetter2(l, n)
+        @utils.setterbackupdeco
+        @utils.digest
+        class setter:
+            def byInt(self, value):
+                del self.epoch
+                self.release = value
 
-    @property
-    def base(self) -> str:
-        if self.epoch:
-            return "%s!%s" % (self.epoch, self.release)
-        else:
-            return str(self.release)
-
-    @base.setter
-    @utils.setterbackupdeco
-    def base(self, v):
-        if v is None:
-            del self.epoch
-            del self.release
-            return
-        v = str(v)
-        if "!" in v:
-            self.epoch, self.release = v.split("!", 2)
-        else:
-            self.epoch, self.release = 0, v
-
-    @base.deleter
-    def base(self):
-        self.base = None
+            def byNone(self):
+                del self.epoch
+                del self.release
+            
+            def byStr(self, v):
+                if "!" in v:
+                    self.epoch, self.release = v.split("!", 2)
+                else:
+                    self.epoch, self.release = 0, v
+        
 
     def clear(self):
         self.data = None
@@ -167,63 +126,61 @@ class Version(Protected, Scaevola):
     def copy(self):
         return type(self)(self)
 
-    @property
-    def data(self):
-        return self.format()
+    @utils.proprietary
+    class data:
+        def getter(self):
+            return self.format()
 
-    @data.setter
-    @utils.setterbackupdeco
-    def data(self, x):
-        x = str(x)
-        if "+" in x:
-            self.public, self.local = x.split("+", 2)
-        else:
-            self.public, self.local = x, None
+        @utils.setterbackupdeco
+        @utils.digest
+        class setter:
+            def byInt(self, value):
+                self.public = value
+                del self.local
+            
+            def byNone(self):
+                del self.public
+                del self.local
 
-    @data.deleter
-    def data(self):
-        del self.public
-        del self.local
+            def byStr(self, x):
+                if "+" in x:
+                    self.public, self.local = x.split("+", 2)
+                else:
+                    self.public, self.local = x, None
 
-    @property
-    def dev(self):
-        return self._data.dev
+    @utils.proprietary
+    class dev:
+        def getter(self):
+            return self._data.dev
 
-    @dev.setter
-    @utils.setterbackupdeco
-    def dev(self, value):
-        self._data.dev = Parser.DEV.parse(value)
+        @utils.setterbackupdeco
+        def setter(self, value):
+            self._data.dev = Parser.DEV.parse(value)
 
-    @dev.deleter
-    def dev(self):
-        self.dev = None
+    @utils.proprietary
+    class epoch:
+        def getter(self):
+            return self._data.epoch
 
-    @property
-    def epoch(self):
-        return self._data.epoch
+        @utils.setterbackupdeco
+        @utils.digest
+        class setter:
+            def byInt(self, v):
+                v = int(v)
+                if v < 0:
+                    raise ValueError
+                self._data.epoch = v
 
-    @epoch.setter
-    @utils.setterbackupdeco
-    def epoch(self, v):
-        if v is None:
-            self._data.epoch = 0
-            return
-        if isinstance(v, int):
-            v = int(v)
-            if v < 0:
-                raise ValueError
-            self._data.epoch = v
-            return
-        v = str(v).lower().strip()
-        v = Pattern.EPOCH.bound.fullmatch(v).group("n")
-        if v is None:
-            self._data.epoch = 0
-            return
-        self._data.epoch = int(v)
+            def byNone(self): 
+                self._data.epoch = 0
+            
+            def byStr(self, v):
+                v = Pattern.EPOCH.bound.fullmatch(v).group("n")
+                if v is None:
+                    self._data.epoch = 0
+                else:
+                    self._data.epoch = int(v)
 
-    @epoch.deleter
-    def epoch(self):
-        self.epoch = None
 
     def format(self, cutoff=None) -> str:
         ans = ""
@@ -244,98 +201,121 @@ class Version(Protected, Scaevola):
     def isdevrelease(self) -> bool:
         return self.dev is not None
 
-    @property
-    def local(self) -> Local:
-        return self._data.local
+    @utils.proprietary
+    class local:
+        def getter(self) -> Local:
+            return self._data.local
 
-    @local.setter
-    @utils.setterbackupdeco
-    def local(self, value):
-        self._data.local = Local(value)
-
-    @local.deleter
-    def local(self):
-        self.local = None
+        @utils.setterbackupdeco
+        def setter(self, value):
+            self._data.local = Local(value)
 
     def packaging(self):
         return packaging.version.Version(self.data)
 
-    @property
-    def post(self):
-        return self._data.post
+    @utils.proprietary
+    class post:
+        def getter(self):
+            return self._data.post
 
-    @post.setter
-    @utils.setterbackupdeco
-    def post(self, value):
-        self._data.post = Parser.POST.parse(value)
+        @utils.setterbackupdeco
+        def setter(self, value):
+            self._data.post = Parser.POST.parse(value)
 
-    @post.deleter
-    def post(self):
-        self.post = None
 
-    @property
-    def pre(self):
-        return self._data.pre
+    @utils.proprietary
+    class pre:
+        def getter(self) -> Pre:
+            return self._data.pre
 
-    @pre.setter
-    @utils.setterbackupdeco
-    def pre(self, data, /):
-        self._data.pre = Pre(data)
+        @utils.setterbackupdeco
+        def setter(self, data, /):
+            self._data.pre = Pre(data)
 
-    @pre.deleter
-    def pre(self):
-        self.pre = None
 
-    @property
-    def public(self) -> str:
-        return self.base + self.qualifiers
+    @utils.proprietary
+    class public:
+        def getter(self) -> str:
+            return self.base + self.qualifiers
 
-    @public.setter
-    @utils.setterbackupdeco
-    def public(self, v):
-        if v is None:
-            del self.base
-            del self.qualifiers
-            return
-        v = str(v).strip().lower()
-        match = Pattern.PUBLIC.leftbound.search(v)
-        self.base = v[: match.end()]
-        self.qualifiers = v[match.end() :]
+        @utils.setterbackupdeco
+        @utils.digest
+        class setter:
+            def byInt(self, v):
+                self.base = v
+                del self.qualifiers
 
-    @public.deleter
-    def public(self):
-        self.public = None
+            def byNone(self):
+                del self.base
+                del self.qualifiers
+            
+            def byStr(self, v):
+                match = Pattern.PUBLIC.leftbound.search(v)
+                self.base = v[: match.end()]
+                self.qualifiers = v[match.end() :]
 
-    @property
-    def qualifiers(self):
-        ans = str(self.pre)
-        if self.post is not None:
-            ans += ".post%s" % self.post
-        if self.dev is not None:
-            ans += ".dev%s" % self.dev
-        return ans
 
-    @qualifiers.setter
-    @utils.setterbackupdeco
-    def qualifiers(self, value):
-        self._qualifierssetter(value)
+    @utils.proprietary
+    class qualifiers:
+        def getter(self):
+            ans = str(self.pre)
+            if self.post is not None:
+                ans += ".post%s" % self.post
+            if self.dev is not None:
+                ans += ".dev%s" % self.dev
+            return ans
 
-    @qualifiers.deleter
-    def qualifiers(self):
-        self.qualifiers = None
+        @utils.setterbackupdeco
+        @utils.digest
+        class setter:
+            def byList(self, value):
+                self.pre = None
+                self.post = None
+                self.dev = None
+                value = [utils.segment(x) for x in value]
+                while value:
+                    x = value.pop(0)
+                    if type(x) is not str:
+                        self.post = x
+                    elif not value:
+                        self._qualifiersetter1(x)
+                    elif type(value[0]) is str:
+                        self._qualifiersetter1(x)
+                    elif set(string.digits) & set(x):
+                        self._qualifiersetter1(x)
+                    else:
+                        y = value.pop(0)
+                        self._qualifiersetter2(x, y)
+            
+            def byNone(self):
+                self.pre = None
+                self.post = None
+                self.dev = None
 
-    @property
-    def release(self) -> Release:
-        return self._data.release
+            def byStr(self, value):
+                self.pre = None
+                self.post = None
+                self.dev = None
+                while value:
+                    m = Pattern.QUALIFIERS.leftbound.search(value)
+                    value = value[m.end() :]
+                    if m.group("N"):
+                        self.post = m.group("N")
+                    else:
+                        l = m.group("l")
+                        n = m.group("n")
+                        self._qualifiersetter2(l, n)
 
-    @release.setter
-    @utils.setterbackupdeco
-    def release(self, value):
-        self._data.release = Release(value)
 
-    @release.deleter
-    def release(self):
-        self._data.release = Release()
+    @utils.proprietary
+    class release:
+        def getter(self) -> Release:
+            return self._data.release
+
+        @utils.setterbackupdeco
+        def setter(self, value):
+            self._data.release = Release(value)
+
 
     def update(self, **kwargs):
         for k, v in kwargs.items():
