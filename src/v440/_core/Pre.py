@@ -21,6 +21,7 @@ class Pre(datahold.OkayList):
     __le__ = utils.Base.__le__
 
     __repr__ = utils.Base.__repr__
+    __setattr__ = utils.Base.__setattr__
 
     def __str__(self) -> str:
         if self.isempty():
@@ -31,7 +32,6 @@ class Pre(datahold.OkayList):
     class data:
         def getter(self) -> list:
             return list(self._data)
-        @utils.setterdeco
         def setter(self, value, /):
             self._data = Parser.PRE.parse(value)
 

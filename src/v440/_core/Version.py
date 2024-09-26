@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import dataclasses
 import string
-import typing
+from typing import *
 
 import packaging.version
-from protectedclasses import Protected
 from scaevola import Scaevola
 
 from v440._core import Parser, utils
@@ -21,19 +20,19 @@ class _Version:
     epoch: int = 0
     release: Release = dataclasses.field(default_factory=Release)
     pre: Pre = dataclasses.field(default_factory=Pre)
-    post: typing.Optional[int] = None
-    dev: typing.Optional[int] = None
+    post: Optional[int] = None
+    dev: Optional[int] = None
     local: Local = dataclasses.field(default_factory=Local)
 
     def copy(self):
         return dataclasses.replace(self)
 
 
-class Version(Protected, Scaevola):
+class Version(Scaevola):
     def __bool__(self):
         return self._data != _Version()
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other:Any) -> bool:
         try:
             other = type(self)(other)
         except utils.VersionError:
@@ -43,8 +42,8 @@ class Version(Protected, Scaevola):
     def __hash__(self) -> int:
         raise TypeError("unhashable type: %r" % type(self).__name__)
 
-    def __init__(self, data="0", /, **kwargs) -> None:
-        self._data = _Version()
+    def __init__(self, data:Any="0", /, **kwargs) -> None:
+        object.__setattr__(self, "_data", _Version())
         self.data = data
         self.update(**kwargs)
 
@@ -56,6 +55,14 @@ class Version(Protected, Scaevola):
         return (self != other) and (self <= other)
 
     __repr__ = utils.Base.__repr__
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        backup = self._data.copy()
+        try:
+            utils.Base.__setattr__(self, name, value)
+        except utils.VersionError:
+            self._data = backup
+            raise
 
     def __str__(self) -> str:
         return self.data
@@ -102,7 +109,6 @@ class Version(Protected, Scaevola):
             else:
                 return str(self.release)
 
-        @utils.setterbackupdeco
         @utils.digest
         class setter:
             def byInt(self, value):
@@ -131,7 +137,6 @@ class Version(Protected, Scaevola):
         def getter(self):
             return self.format()
 
-        @utils.setterbackupdeco
         @utils.digest
         class setter:
             def byInt(self, value):
@@ -153,7 +158,6 @@ class Version(Protected, Scaevola):
         def getter(self):
             return self._data.dev
 
-        @utils.setterbackupdeco
         def setter(self, value):
             self._data.dev = Parser.DEV.parse(value)
 
@@ -162,7 +166,6 @@ class Version(Protected, Scaevola):
         def getter(self):
             return self._data.epoch
 
-        @utils.setterbackupdeco
         @utils.digest
         class setter:
             def byInt(self, v):
@@ -206,7 +209,6 @@ class Version(Protected, Scaevola):
         def getter(self) -> Local:
             return self._data.local
 
-        @utils.setterbackupdeco
         def setter(self, value):
             self._data.local = Local(value)
 
@@ -218,7 +220,6 @@ class Version(Protected, Scaevola):
         def getter(self):
             return self._data.post
 
-        @utils.setterbackupdeco
         def setter(self, value):
             self._data.post = Parser.POST.parse(value)
 
@@ -228,7 +229,6 @@ class Version(Protected, Scaevola):
         def getter(self) -> Pre:
             return self._data.pre
 
-        @utils.setterbackupdeco
         def setter(self, data, /):
             self._data.pre = Pre(data)
 
@@ -238,7 +238,6 @@ class Version(Protected, Scaevola):
         def getter(self) -> str:
             return self.base + self.qualifiers
 
-        @utils.setterbackupdeco
         @utils.digest
         class setter:
             def byInt(self, v):
@@ -265,7 +264,6 @@ class Version(Protected, Scaevola):
                 ans += ".dev%s" % self.dev
             return ans
 
-        @utils.setterbackupdeco
         @utils.digest
         class setter:
             def byList(self, value):
@@ -312,7 +310,6 @@ class Version(Protected, Scaevola):
         def getter(self) -> Release:
             return self._data.release
 
-        @utils.setterbackupdeco
         def setter(self, value):
             self._data.release = Release(value)
 

@@ -30,6 +30,7 @@ class Local(datahold.OkayList, scaevola.Scaevola):
         return self.data <= other
 
     __repr__ = utils.Base.__repr__
+    __setattr__ = utils.Base.__setattr__
 
     def __sorted__(self, /, **kwargs):
         ans = self.copy()
@@ -51,7 +52,6 @@ class Local(datahold.OkayList, scaevola.Scaevola):
         def getter(self, /):
             return list(self._data)
 
-        @utils.setterdeco
         @utils.digest
         class setter:
             def byInt(self, value):
