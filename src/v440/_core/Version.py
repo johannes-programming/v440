@@ -13,6 +13,12 @@ from v440._core.Pattern import Pattern
 from v440._core.Pre import Pre
 from v440._core.Release import Release
 
+QUALIFIERDICT = dict(
+    dev="dev",
+    post="post", 
+    r="post",
+    rev="post", 
+)
 
 @dataclasses.dataclass(order=True)
 class _Version:
@@ -81,23 +87,6 @@ class Version(Scaevola):
         if ans.dev is None:
             ans.dev = float("inf")
         return ans
-
-    @staticmethod
-    def _qualifiername(value, /):
-        if value == "dev":
-            return "dev"
-        if value in ("post", "rev", "r"):
-            return "post"
-        return "pre"
-
-    def _qualifiersetter1(self, value, /):
-        k = value.rstrip(string.digits)
-        n = self._qualifiername(k)
-        setattr(self, n, value)
-
-    def _qualifiersetter2(self, x, y, /):
-        n = self._qualifiername(x)
-        setattr(self, n, (x, y))
 
     @utils.proprietary
     class base:
@@ -268,15 +257,16 @@ class Version(Scaevola):
                     x = value.pop(0)
                     if type(x) is not str:
                         self.post = x
-                    elif not value:
-                        self._qualifiersetter1(x)
-                    elif type(value[0]) is str:
-                        self._qualifiersetter1(x)
-                    elif set(string.digits) & set(x):
-                        self._qualifiersetter1(x)
+                    elif ((not value)
+                            or (type(value[0]) is str)
+                            or (set(string.digits) & set(x))):            
+                        k = x.rstrip(string.digits)
+                        n = QUALIFIERDICT.get(k, "pre")
+                        setattr(self, n, x)
                     else:
                         y = value.pop(0)
-                        self._qualifiersetter2(x, y)
+                        n = QUALIFIERDICT.get(x, "pre")
+                        setattr(self, n, (x, y))
 
             def byNone(self):
                 self.pre = None
@@ -293,9 +283,10 @@ class Version(Scaevola):
                     if m.group("N"):
                         self.post = m.group("N")
                     else:
-                        l = m.group("l")
-                        n = m.group("n")
-                        self._qualifiersetter2(l, n)
+                        x = m.group("l")
+                        y = m.group("n")
+                        n = QUALIFIERDICT.get(x, "pre")
+                        setattr(self, n, (x, y))
 
     @utils.proprietary
     class release:
