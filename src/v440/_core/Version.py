@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import string
 from typing import *
 
 import packaging.version
@@ -12,6 +11,8 @@ from v440._core.Local import Local
 from v440._core.Pattern import Pattern
 from v440._core.Pre import Pre
 from v440._core.Release import Release
+
+from datahold import OkayABC
 
 QUALIFIERDICT = dict(
     dev="dev",
@@ -44,8 +45,7 @@ class Version(Scaevola):
             return False
         return self._data == other._data
 
-    def __hash__(self) -> int:
-        raise TypeError("unhashable type: %r" % type(self).__name__)
+    __hash__ = OkayABC.__hash__
 
     def __init__(self, data: Any = "0", /, **kwargs) -> None:
         object.__setattr__(self, "_data", _Version())
@@ -91,10 +91,11 @@ class Version(Scaevola):
     @utils.proprietary
     class base:
         def getter(self) -> str:
-            if self.epoch:
-                return "%s!%s" % (self.epoch, self.release)
-            else:
-                return str(self.release)
+            ans = self.public
+            del ans.dev
+            del ans.pre
+            del ans.post
+            return ans
 
         @utils.digest
         class setter:
@@ -106,14 +107,14 @@ class Version(Scaevola):
                 del self.epoch
                 del self.release
 
-            def byStr(self, v):
-                if "!" in v:
-                    self.epoch, self.release = v.split("!", 2)
+            def byStr(self, value):
+                if "!" in value:
+                    self.epoch, self.release = value.split("!", 1)
                 else:
-                    self.epoch, self.release = 0, v
+                    self.epoch, self.release = 0, value
 
     def clear(self):
-        self.data = None
+        del self.data
 
     def copy(self):
         return type(self)(self)
@@ -133,11 +134,11 @@ class Version(Scaevola):
                 del self.public
                 del self.local
 
-            def byStr(self, x):
-                if "+" in x:
-                    self.public, self.local = x.split("+", 2)
+            def byStr(self, value):
+                if "+" in value:
+                    self.public, self.local = value.split("+", 1)
                 else:
-                    self.public, self.local = x, None
+                    self.public, self.local = value, None
 
     @utils.proprietary
     class dev:
@@ -154,17 +155,16 @@ class Version(Scaevola):
 
         @utils.digest
         class setter:
-            def byInt(self, v):
-                v = int(v)
-                if v < 0:
+            def byInt(self, value):
+                if value < 0:
                     raise ValueError
-                self._data.epoch = v
+                self._data.epoch = value
 
             def byNone(self):
                 self._data.epoch = 0
 
             def byStr(self, v):
-                v = Pattern.EPOCH.bound.fullmatch(v).group("n")
+                v = Pattern.EPOCH.bound.search(v).group("n")
                 if v is None:
                     self._data.epoch = 0
                 else:
@@ -175,7 +175,11 @@ class Version(Scaevola):
         if self.epoch:
             ans += "%s!" % self.epoch
         ans += self.release.format(cutoff)
-        ans += self.qualifiers
+        ans += str(self.pre)
+        if self.post is not None:
+            ans += ".post%s" % self.post
+        if self.dev is not None:
+            ans += ".dev%s" % self.dev
         if self.local:
             ans += "+%s" % self.local
         return ans
@@ -219,61 +223,28 @@ class Version(Scaevola):
     @utils.proprietary
     class public:
         def getter(self) -> str:
-            return self.base + self.qualifiers
-
-        @utils.digest
-        class setter:
-            def byInt(self, v):
-                self.base = v
-                del self.qualifiers
-
-            def byNone(self):
-                del self.base
-                del self.qualifiers
-
-            def byStr(self, v):
-                match = Pattern.PUBLIC.leftbound.search(v)
-                self.base = v[: match.end()]
-                self.qualifiers = v[match.end() :]
-
-    @utils.proprietary
-    class qualifiers:
-        def getter(self):
-            ans = str(self.pre)
-            if self.post is not None:
-                ans += ".post%s" % self.post
-            if self.dev is not None:
-                ans += ".dev%s" % self.dev
+            ans = self.copy()
+            del ans.local
             return ans
 
         @utils.digest
         class setter:
-            def byList(self, value):
-                self.pre = None
-                self.post = None
-                self.dev = None
-                value = [utils.segment(x) for x in value]
-                while value:
-                    x = value.pop(0)
-                    if type(x) is not str:
-                        self.post = x
-                    elif ((not value)
-                            or (type(value[0]) is str)
-                            or (set(string.digits) & set(x))):            
-                        k = x.rstrip(string.digits)
-                        n = QUALIFIERDICT.get(k, "pre")
-                        setattr(self, n, x)
-                    else:
-                        y = value.pop(0)
-                        n = QUALIFIERDICT.get(x, "pre")
-                        setattr(self, n, (x, y))
+            def byInt(self, value):
+                self.base = value
+                del self.pre
+                del self.post
+                del self.dev
 
             def byNone(self):
-                self.pre = None
-                self.post = None
-                self.dev = None
+                del self.base
+                del self.pre
+                del self.post
+                del self.dev
 
             def byStr(self, value):
+                match = Pattern.PUBLIC.leftbound.search(value)
+                self.base = value[: match.end()]
+                value = value[match.end() :]
                 self.pre = None
                 self.post = None
                 self.dev = None
@@ -287,6 +258,7 @@ class Version(Scaevola):
                         y = m.group("n")
                         n = QUALIFIERDICT.get(x, "pre")
                         setattr(self, n, (x, y))
+
 
     @utils.proprietary
     class release:
