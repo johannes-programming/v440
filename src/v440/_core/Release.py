@@ -7,6 +7,7 @@ import typing
 import datahold
 import keyalias
 import scaevola
+from overloadable import overloadable
 
 from . import utils
 
@@ -19,11 +20,23 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         ans._data += other._data
         return ans
 
+    @overloadable
     def __delitem__(self, key):
-        if type(key) is slice:
-            self._delitem_slice(key)
-        else:
-            self._delitem_index(key)
+        return type(key) is slice
+
+    @__delitem__.overload(False)
+    def __delitem__(self, key):
+        key = utils.toindex(key)
+        if key < len(self):
+            del self._data[key]
+
+    @__delitem__.overload(True)
+    def __delitem__(self, key):
+        key = utils.torange(key, len(self))
+        key = [k for k in key if k < len(self)]
+        key.sort(reverse=True)
+        for k in key:
+            del self._data[k]
 
     def __getitem__(self, key):
         if type(key) is slice:
@@ -53,18 +66,6 @@ class Release(datahold.OkayList, scaevola.Scaevola):
     def __str__(self) -> str:
         return self.format()
 
-    def _delitem_index(self, key):
-        key = utils.toindex(key)
-        if key < len(self):
-            del self._data[key]
-
-    def _delitem_slice(self, key):
-        key = utils.torange(key, len(self))
-        key = [k for k in key if k < len(self)]
-        key.sort(reverse=True)
-        for k in key:
-            del self._data[k]
-
     def _getitem_index(self, key):
         key = utils.toindex(key)
         if key < len(self):
@@ -74,7 +75,12 @@ class Release(datahold.OkayList, scaevola.Scaevola):
 
     def _getitem_slice(self, key):
         key = utils.torange(key, len(self))
-        ans = [self._getitem_index(i) for i in key]
+        ans = list()
+        for i in key:
+            if i < len(self):
+                ans.append(self._data[key])
+            else:
+                ans.append(0)
         return ans
 
     def _setitem_index(self, key, value):
@@ -105,7 +111,6 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         while len(data) and not data[-1]:
             data.pop()
         self._data = data
-        return
 
     def _setitem_slice_complex(self, key: range, value):
         key = list(key)
@@ -156,16 +161,16 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         if index != -1:
             self.data = self.data[: index + 1]
 
-    @utils.proprietary
-    class data:
-        def getter(self):
-            return list(self._data)
+    @property
+    def data(self):
+        return list(self._data)
 
-        def setter(self, v):
-            v = self._tolist(v, slicing="always")
-            while v and v[-1] == 0:
-                v.pop()
-            self._data = v
+    @data.setter
+    def data(self, value):
+        value = self._tolist(value, slicing="always")
+        while value and value[-1] == 0:
+            value.pop()
+        self._data = value
 
     def extend(self, other, /):
         self += other

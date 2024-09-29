@@ -19,8 +19,13 @@ def digest(old, /):
         if value is None:
             return byNone(*args)
         if isinstance(value, int):
-            value = int(value)
-            return byInt(*args, value)
+            v = int(value)
+            if v < 0:
+                e = "%r is not a valid numeral segment"
+                e = VersionError(e % value)
+                raise e
+            else:
+                return byInt(*args, v)
         if isinstance(value, str) or not hasattr(value, "__iter__"):
             value = str(value).lower().strip()
             return byStr(*args, value)
@@ -48,24 +53,6 @@ def numeral(value, /):
     e = "%r is not a valid numeral segment"
     e = VersionError(e % value)
     raise e
-
-
-def proprietary(old, /):
-    def deleter(self):
-        old.setter(self, None)
-
-    kwargs = dict()
-    kwargs["fget"] = old.getter
-    kwargs["fset"] = old.setter
-    kwargs["fdel"] = deleter
-    for v in kwargs.values():
-        v.__name__ = old.__name__
-    try:
-        kwargs["doc"] = getattr(old, "__doc__")
-    except AttributeError:
-        pass
-    ans = property(**kwargs)
-    return ans
 
 
 def segment(value, /):

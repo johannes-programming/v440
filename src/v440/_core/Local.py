@@ -47,35 +47,35 @@ class Local(datahold.OkayList, scaevola.Scaevola):
     def _sortkey(value):
         return type(value) is int, value
 
-    @utils.proprietary
+    @property
+    def data(self):
+        return list(self._data)
+
+    @data.setter
+    @utils.digest
     class data:
-        def getter(self, /):
-            return list(self._data)
+        def byInt(self, value):
+            self._data = [value]
 
-        @utils.digest
-        class setter:
-            def byInt(self, value):
-                self._data = [value]
+        def byList(self, value):
+            value = [utils.segment(x) for x in value]
+            if None in value:
+                raise ValueError
+            self._data = value
 
-            def byList(self, value):
-                value = [utils.segment(x) for x in value]
-                if None in value:
-                    raise ValueError
-                self._data = value
+        def byNone(self):
+            self._data = list()
 
-            def byNone(self):
-                self._data = list()
-
-            def byStr(self, value):
-                if value.startswith("+"):
-                    value = value[1:]
-                value = value.replace("_", ".")
-                value = value.replace("-", ".")
-                value = value.split(".")
-                value = [utils.segment(x) for x in value]
-                if None in value:
-                    raise ValueError
-                self._data = value
+        def byStr(self, value):
+            if value.startswith("+"):
+                value = value[1:]
+            value = value.replace("_", ".")
+            value = value.replace("-", ".")
+            value = value.split(".")
+            value = [utils.segment(x) for x in value]
+            if None in value:
+                raise ValueError
+            self._data = value
 
     @functools.wraps(datahold.OkayList.sort)
     def sort(self, /, *, key=None, **kwargs):

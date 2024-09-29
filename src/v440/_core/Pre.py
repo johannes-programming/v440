@@ -26,13 +26,13 @@ class Pre(datahold.OkayList):
             return ""
         return self.phase + str(self.subphase)
 
-    @utils.proprietary
-    class data:
-        def getter(self) -> list:
-            return list(self._data)
+    @property
+    def data(self) -> list:
+        return list(self._data)
 
-        def setter(self, value, /):
-            self._data = Parser.PRE.parse(value)
+    @data.setter
+    def data(self, value):
+        self._data = Parser.PRE.parse(value)
 
     def isempty(self):
         return self._data == [None, None]
