@@ -6,6 +6,7 @@ from typing import *
 import packaging.version
 from datahold import OkayABC
 from scaevola import Scaevola
+from contextlib import contextmanager
 
 from v440._core import Parser, utils
 from v440._core.Local import Local
@@ -20,7 +21,6 @@ QUALIFIERDICT = dict(
     rev="post",
 )
 
-
 @dataclasses.dataclass(order=True)
 class _Version:
     epoch: int = 0
@@ -29,9 +29,27 @@ class _Version:
     post: Optional[int] = None
     dev: Optional[int] = None
     local: Local = dataclasses.field(default_factory=Local)
-
+    @contextmanager
+    def backup(self):
+        epoch = self.epoch
+        release = self.release.data
+        pre = self.pre.data
+        post = self.post
+        dev = self.dev
+        local = self.local.data
+        try:
+            yield
+        except utils.VersionError:
+            self.epoch = epoch
+            self.release.data = release
+            self.pre.data = pre
+            self.post = post
+            self.dev = dev
+            self.local.data = local
     def copy(self):
         return dataclasses.replace(self)
+    def todict(self):
+        return dataclasses.asdict(self)
 
 
 class Version(Scaevola):
@@ -62,12 +80,8 @@ class Version(Scaevola):
     __repr__ = utils.Base.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:
-        backup = self._data.copy()
-        try:
+        with self._data.backup():
             utils.Base.__setattr__(self, name, value)
-        except utils.VersionError:
-            self._data = backup
-            raise
 
     def __str__(self) -> str:
         return self.data
@@ -100,7 +114,7 @@ class Version(Scaevola):
         @utils.digest
         class setter:
             def byInt(self, value):
-                del self.epoch
+                self.epoch = 0
                 self.release = value
 
             def byNone(self):
@@ -199,7 +213,10 @@ class Version(Scaevola):
             return self._data.local
 
         def setter(self, value):
-            self._data.local = Local(value)
+            if value is None:
+                self._data.local = Local()
+            else:
+                self._data.local.data = value
 
     def packaging(self):
         return packaging.version.Version(self.data)
@@ -217,8 +234,11 @@ class Version(Scaevola):
         def getter(self) -> Pre:
             return self._data.pre
 
-        def setter(self, data, /):
-            self._data.pre = Pre(data)
+        def setter(self, value):
+            if value is None:
+                self._data.pre = Pre()
+            else:
+                self._data.pre.data = value
 
     @utils.proprietary
     class public:
@@ -265,7 +285,10 @@ class Version(Scaevola):
             return self._data.release
 
         def setter(self, value):
-            self._data.release = Release(value)
+            if value is None:
+                self._data.release = Release()
+            else:
+                self._data.release.data = value
 
     def update(self, **kwargs):
         for k, v in kwargs.items():
