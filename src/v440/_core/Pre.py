@@ -3,7 +3,7 @@ from __future__ import annotations
 import datahold
 import keyalias
 
-from v440._core import Parser, utils
+from v440._core import QualifierParser, utils
 
 __all__ = ["Pre"]
 
@@ -26,13 +26,13 @@ class Pre(datahold.OkayList):
             return ""
         return self.phase + str(self.subphase)
 
-    @utils.proprietary
-    class data:
-        def getter(self) -> list:
-            return list(self._data)
+    @property
+    def data(self) -> list:
+        return list(self._data)
 
-        def setter(self, value, /):
-            self._data = Parser.PRE.parse(value)
+    @data.setter
+    def data(self, value):
+        self._data = QualifierParser.PRE(value)
 
-    def isempty(self):
+    def isempty(self) -> bool:
         return self._data == [None, None]
