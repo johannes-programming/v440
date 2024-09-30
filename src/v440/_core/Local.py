@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import functools
-import types
-import typing
+from typing import *
 
 import datahold
 import scaevola
@@ -11,7 +10,7 @@ from . import utils
 
 
 class Local(datahold.OkayList, scaevola.Scaevola):
-    def __ge__(self, other):
+    def __ge__(self, other: Iterable) -> bool:
         try:
             other = type(self)(other)
         except ValueError:
@@ -20,7 +19,7 @@ class Local(datahold.OkayList, scaevola.Scaevola):
             return other <= self
         return self.data >= other
 
-    def __le__(self, other):
+    def __le__(self, other: Iterable) -> bool:
         try:
             other = type(self)(other)
         except ValueError:
@@ -32,7 +31,7 @@ class Local(datahold.OkayList, scaevola.Scaevola):
     __repr__ = utils.Base.__repr__
     __setattr__ = utils.Base.__setattr__
 
-    def __sorted__(self, /, **kwargs):
+    def __sorted__(self, /, **kwargs) -> Self:
         ans = self.copy()
         ans.sort(**kwargs)
         return ans
@@ -40,45 +39,45 @@ class Local(datahold.OkayList, scaevola.Scaevola):
     def __str__(self) -> str:
         return ".".join(str(x) for x in self)
 
-    def _cmpkey(self):
+    def _cmpkey(self) -> list:
         return [self._sortkey(x) for x in self]
 
     @staticmethod
-    def _sortkey(value):
+    def _sortkey(value) -> Tuple[bool, Any]:
         return type(value) is int, value
 
-    @utils.proprietary
+    @property
+    def data(self) -> List[Union[int, str]]:
+        return list(self._data)
+
+    @data.setter
+    @utils.digest
     class data:
-        def getter(self, /):
-            return list(self._data)
+        def byInt(self, value: int) -> None:
+            self._data = [value]
 
-        @utils.digest
-        class setter:
-            def byInt(self, value):
-                self._data = [value]
+        def byList(self, value: list) -> None:
+            value = [utils.segment(x) for x in value]
+            if None in value:
+                raise ValueError
+            self._data = value
 
-            def byList(self, value):
-                value = [utils.segment(x) for x in value]
-                if None in value:
-                    raise ValueError
-                self._data = value
+        def byNone(self) -> None:
+            self._data = list()
 
-            def byNone(self):
-                self._data = list()
-
-            def byStr(self, value):
-                if value.startswith("+"):
-                    value = value[1:]
-                value = value.replace("_", ".")
-                value = value.replace("-", ".")
-                value = value.split(".")
-                value = [utils.segment(x) for x in value]
-                if None in value:
-                    raise ValueError
-                self._data = value
+        def byStr(self, value: str) -> None:
+            if value.startswith("+"):
+                value = value[1:]
+            value = value.replace("_", ".")
+            value = value.replace("-", ".")
+            value = value.split(".")
+            value = [utils.segment(x) for x in value]
+            if None in value:
+                raise ValueError
+            self._data = value
 
     @functools.wraps(datahold.OkayList.sort)
-    def sort(self, /, *, key=None, **kwargs):
+    def sort(self, /, *, key=None, **kwargs) -> None:
         if key is None:
             key = self._sortkey
         self._data.sort(key=key, **kwargs)
