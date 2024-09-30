@@ -13,20 +13,20 @@ def digest(old, /):
     byList = getattr(old, "byList", None)
     byStr = getattr(old, "byStr", None)
 
-    def new(*args):
+    def new(*args, **kwargs):
         args = list(args)
         value = args.pop()
         if value is None:
-            return byNone(*args)
+            return byNone(*args, **kwargs)
         if isinstance(value, int):
             value = int(value)
-            return byInt(*args, value)
+            return byInt(*args, value, **kwargs)
         if isinstance(value, str) or not hasattr(value, "__iter__"):
             value = str(value).lower().strip()
-            return byStr(*args, value)
+            return byStr(*args, value, **kwargs)
         else:
             value = list(value)
-            return byList(*args, value)
+            return byList(*args, value, **kwargs)
 
     new.__name__ = old.__name__
     return new
@@ -48,24 +48,6 @@ def numeral(value, /):
     e = "%r is not a valid numeral segment"
     e = VersionError(e % value)
     raise e
-
-
-def proprietary(old, /):
-    def deleter(self):
-        old.setter(self, None)
-
-    kwargs = dict()
-    kwargs["fget"] = old.getter
-    kwargs["fset"] = old.setter
-    kwargs["fdel"] = deleter
-    for v in kwargs.values():
-        v.__name__ = old.__name__
-    try:
-        kwargs["doc"] = getattr(old, "__doc__")
-    except AttributeError:
-        pass
-    ans = property(**kwargs)
-    return ans
 
 
 def segment(value, /):
