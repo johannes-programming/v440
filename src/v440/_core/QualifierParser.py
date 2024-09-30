@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import functools
+from typing import *
 
 from v440._core import utils
 from v440._core.Pattern import Pattern
@@ -9,41 +10,24 @@ from v440._core.Pattern import Pattern
 
 @dataclasses.dataclass(frozen=True)
 class Parser:
-    keysforlist: tuple = None
-    keysforstr: tuple = None
-    phasedict: dict = None
+    keysforlist: tuple = ()
+    keysforstr: tuple = ()
+    phasedict: dict = dataclasses.field(default_factory=dict)
     allow_len_1: bool = False
 
-    @functools.cached_property
-    def dual(self):
-        return type(self.phasedict) is dict
-
-    def nbylist(self, value, /):
-        if len(value) == 2:
-            l, n = value
-            if l not in self.keysforlist:
-                raise ValueError
-            return n
-        if len(value) == 1:
-            n = value[0]
-            if not self.allow_len_1:
-                raise ValueError
-            return n
-        raise ValueError
-
     @utils.digest
-    class parse:
-        def byInt(self, value):
-            if self.dual:
+    class __call__:
+        def byInt(self, value: int):
+            if self.phasedict:
                 raise TypeError
             value = int(value)
             if value < 0:
                 raise ValueError
             return value
 
-        def byList(self, value):
+        def byList(self, value: list):
             value = [utils.segment(x) for x in value]
-            if self.dual:
+            if self.phasedict:
                 l, n = value
                 if [l, n] == [None, None]:
                     return [None, None]
@@ -58,15 +42,16 @@ class Parser:
                 return n
 
         def byNone(self):
-            return [None, None] if self.dual else None
+            return [None, None] if self.phasedict else None
 
-        def byStr(self, value, /):
+        def byStr(self, value: str):
             value = value.replace("_", ".")
             value = value.replace("-", ".")
-            if self.dual and value == "":
+            if self.phasedict and value == "":
                 return [None, None]
-            l, n = Pattern.PARSER.bound.fullmatch(value).groups()
-            if self.dual:
+            value = Pattern.PARSER.bound.search(value)
+            l, n = value.groups()
+            if self.phasedict:
                 l = self.phasedict[l]
                 n = 0 if (n is None) else int(n)
                 return [l, n]
@@ -76,6 +61,41 @@ class Parser:
                 return None
             else:
                 return int(n)
+
+    def __post_init__(self):
+        if type(self.phasedict) is not dict:
+            raise TypeError
+        pd = self.phasedict
+        pd = list(pd.keys()) + list(pd.values())
+        pd = set(type(x) for x in pd)
+        if not (pd <= {str}):
+            raise TypeError
+        if type(self.allow_len_1) is not bool:
+            raise TypeError
+        if type(self.keysforlist) is not tuple:
+            raise TypeError
+        if type(self.keysforstr) is not tuple:
+            raise TypeError
+        keys = self.keysforlist + self.keysforstr
+        for k in keys:
+            if k is None:
+                continue
+            if type(k) is str:
+                continue
+            raise TypeError
+
+    def nbylist(self, value, /):
+        if len(value) == 2:
+            l, n = value
+            if l not in self.keysforlist:
+                raise ValueError
+            return n
+        if len(value) == 1:
+            n = value[0]
+            if not self.allow_len_1:
+                raise ValueError
+            return n
+        raise ValueError
 
 
 POST = Parser(

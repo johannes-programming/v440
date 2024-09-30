@@ -82,7 +82,7 @@ A Code Example:
     print("Formatted version with post and local:", v.format('-1'))
     v.post = "post.2"
     print("Modified:", v)
-    del v.post
+    v.post = None
     print("Modified:", v)
     v.post = "post", 3
     v.local.sort()
@@ -96,7 +96,7 @@ A Code Example:
     print("EXAMPLE #7")
     v = Version("5.0.0")
     print("Original version:", v)
-    del v.data
+    v.data = None
     print("After reset:", v)
     v.base = "4!5.0.1"
     print("Before error:", v)

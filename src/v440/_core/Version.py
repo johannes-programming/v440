@@ -7,7 +7,7 @@ import packaging.version
 from datahold import OkayABC
 from scaevola import Scaevola
 
-from v440._core import Parser, utils
+from v440._core import QualifierParser, utils
 from v440._core.Local import Local
 from v440._core.Pattern import Pattern
 from v440._core.Pre import Pre
@@ -30,12 +30,15 @@ class _Version:
     dev: Optional[int] = None
     local: Local = dataclasses.field(default_factory=Local)
 
-    def copy(self):
+    def copy(self) -> Self:
         return dataclasses.replace(self)
+
+    def todict(self) -> dict:
+        return dataclasses.asdict(self)
 
 
 class Version(Scaevola):
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return self._data != _Version()
 
     def __eq__(self, other: Any) -> bool:
@@ -62,11 +65,20 @@ class Version(Scaevola):
     __repr__ = utils.Base.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:
-        backup = self._data.copy()
+        a = dict()
+        b = dict()
+        for k, v in self._data.todict().items():
+            try:
+                a[k] = v.data
+            except AttributeError:
+                b[k] = v
         try:
             utils.Base.__setattr__(self, name, value)
         except utils.VersionError:
-            self._data = backup
+            for k, v in a.items():
+                getattr(self._data, k).data = v
+            for k, v in b.items():
+                setattr(self._data, k, v)
             raise
 
     def __str__(self) -> str:
@@ -88,87 +100,88 @@ class Version(Scaevola):
             ans.dev = float("inf")
         return ans
 
-    @utils.proprietary
+    @property
+    def base(self) -> Version:
+        ans = self.public
+        ans.dev = None
+        ans.pre = None
+        ans.post = None
+        return ans
+
+    @base.setter
+    @utils.digest
     class base:
-        def getter(self) -> str:
-            ans = self.public
-            del ans.dev
-            del ans.pre
-            del ans.post
-            return ans
+        def byInt(self, value):
+            self.epoch = None
+            self.release = value
 
-        @utils.digest
-        class setter:
-            def byInt(self, value):
-                del self.epoch
-                self.release = value
+        def byNone(self):
+            self.epoch = None
+            self.release = None
 
-            def byNone(self):
-                del self.epoch
-                del self.release
+        def byStr(self, value):
+            if "!" in value:
+                self.epoch, self.release = value.split("!", 1)
+            else:
+                self.epoch, self.release = 0, value
 
-            def byStr(self, value):
-                if "!" in value:
-                    self.epoch, self.release = value.split("!", 1)
-                else:
-                    self.epoch, self.release = 0, value
+    def clear(self) -> None:
+        self.data = None
 
-    def clear(self):
-        del self.data
-
-    def copy(self):
+    def copy(self) -> Self:
         return type(self)(self)
 
-    @utils.proprietary
+    @property
+    def data(self) -> str:
+        return self.format()
+
+    @data.setter
+    @utils.digest
     class data:
-        def getter(self):
-            return self.format()
+        def byInt(self, value: int):
+            self.public = value
+            self.local = None
 
-        @utils.digest
-        class setter:
-            def byInt(self, value):
-                self.public = value
-                del self.local
+        def byNone(self):
+            self.public = None
+            self.local = None
 
-            def byNone(self):
-                del self.public
-                del self.local
+        def byStr(self, value: str):
+            if "+" in value:
+                self.public, self.local = value.split("+", 1)
+            else:
+                self.public, self.local = value, None
 
-            def byStr(self, value):
-                if "+" in value:
-                    self.public, self.local = value.split("+", 1)
-                else:
-                    self.public, self.local = value, None
+    @property
+    def dev(self) -> Optional[int]:
+        return self._data.dev
 
-    @utils.proprietary
-    class dev:
-        def getter(self):
-            return self._data.dev
+    @dev.setter
+    def dev(self, value):
+        self._data.dev = QualifierParser.DEV(value)
 
-        def setter(self, value):
-            self._data.dev = Parser.DEV.parse(value)
+    @property
+    def epoch(self) -> int:
+        return self._data.epoch
 
-    @utils.proprietary
+    @epoch.setter
+    @utils.digest
     class epoch:
-        def getter(self):
-            return self._data.epoch
+        def byInt(self, value: int):
+            if value < 0:
+                raise ValueError
+            self._data.epoch = value
 
-        @utils.digest
-        class setter:
-            def byInt(self, value):
-                if value < 0:
-                    raise ValueError
-                self._data.epoch = value
+        def byNone(self):
+            self._data.epoch = 0
 
-            def byNone(self):
+        def byStr(self, value: str):
+            value = Pattern.EPOCH.bound.search(value)
+            value = value.group("n")
+            if value is None:
                 self._data.epoch = 0
-
-            def byStr(self, v):
-                v = Pattern.EPOCH.bound.search(v).group("n")
-                if v is None:
-                    self._data.epoch = 0
-                else:
-                    self._data.epoch = int(v)
+            else:
+                self._data.epoch = int(value)
 
     def format(self, cutoff=None) -> str:
         ans = ""
@@ -193,79 +206,79 @@ class Version(Scaevola):
     def isdevrelease(self) -> bool:
         return self.dev is not None
 
-    @utils.proprietary
-    class local:
-        def getter(self) -> Local:
-            return self._data.local
+    @property
+    def local(self) -> Local:
+        return self._data.local
 
-        def setter(self, value):
-            self._data.local = Local(value)
+    @local.setter
+    def local(self, value):
+        self._data.local.data = value
 
-    def packaging(self):
+    def packaging(self) -> packaging.version.Version:
         return packaging.version.Version(self.data)
 
-    @utils.proprietary
-    class post:
-        def getter(self):
-            return self._data.post
+    @property
+    def post(self) -> Optional[int]:
+        return self._data.post
 
-        def setter(self, value):
-            self._data.post = Parser.POST.parse(value)
+    @post.setter
+    def post(self, value):
+        self._data.post = QualifierParser.POST(value)
 
-    @utils.proprietary
-    class pre:
-        def getter(self) -> Pre:
-            return self._data.pre
+    @property
+    def pre(self) -> Pre:
+        return self._data.pre
 
-        def setter(self, data, /):
-            self._data.pre = Pre(data)
+    @pre.setter
+    def pre(self, value):
+        self._data.pre.data = value
 
-    @utils.proprietary
+    @property
+    def public(self) -> Self:
+        ans = self.copy()
+        ans.local = None
+        return ans
+
+    @public.setter
+    @utils.digest
     class public:
-        def getter(self) -> str:
-            ans = self.copy()
-            del ans.local
-            return ans
+        def byInt(self, value):
+            self.base = value
+            self.pre = None
+            self.post = None
+            self.dev = None
 
-        @utils.digest
-        class setter:
-            def byInt(self, value):
-                self.base = value
-                del self.pre
-                del self.post
-                del self.dev
+        def byNone(self):
+            self.base = None
+            self.pre = None
+            self.post = None
+            self.dev = None
 
-            def byNone(self):
-                del self.base
-                del self.pre
-                del self.post
-                del self.dev
+        def byStr(self, value):
+            match = Pattern.PUBLIC.leftbound.search(value)
+            self.base = value[: match.end()]
+            value = value[match.end() :]
+            self.pre = None
+            self.post = None
+            self.dev = None
+            while value:
+                m = Pattern.QUALIFIERS.leftbound.search(value)
+                value = value[m.end() :]
+                if m.group("N"):
+                    self.post = m.group("N")
+                else:
+                    x = m.group("l")
+                    y = m.group("n")
+                    n = QUALIFIERDICT.get(x, "pre")
+                    setattr(self, n, (x, y))
 
-            def byStr(self, value):
-                match = Pattern.PUBLIC.leftbound.search(value)
-                self.base = value[: match.end()]
-                value = value[match.end() :]
-                self.pre = None
-                self.post = None
-                self.dev = None
-                while value:
-                    m = Pattern.QUALIFIERS.leftbound.search(value)
-                    value = value[m.end() :]
-                    if m.group("N"):
-                        self.post = m.group("N")
-                    else:
-                        x = m.group("l")
-                        y = m.group("n")
-                        n = QUALIFIERDICT.get(x, "pre")
-                        setattr(self, n, (x, y))
+    @property
+    def release(self) -> Release:
+        return self._data.release
 
-    @utils.proprietary
-    class release:
-        def getter(self) -> Release:
-            return self._data.release
-
-        def setter(self, value):
-            self._data.release = Release(value)
+    @release.setter
+    def release(self, value):
+        self._data.release.data = value
 
     def update(self, **kwargs):
         for k, v in kwargs.items():

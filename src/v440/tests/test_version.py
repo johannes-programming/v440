@@ -216,7 +216,7 @@ class TestExample(unittest.TestCase):
         self.assertEqual(v.format("-1"), "1.2.post1+local.7.dev")  # Formatted version
         v.post = "post.2"
         self.assertEqual(str(v), "1.2.3.post2+local.7.dev")  # Modified version
-        del v.post
+        v.post = None
         self.assertEqual(str(v), "1.2.3+local.7.dev")  # Modified without post
         v.post = "post", 3
         v.local.sort()
@@ -229,7 +229,7 @@ class TestExample(unittest.TestCase):
     def test_example_7(self):
         v = Version("5.0.0")
         self.assertEqual(str(v), "5")  # Original version
-        del v.data
+        v.data = None
         self.assertEqual(str(v), "0")  # After reset
         v.base = "4!5.0.1"
         self.assertEqual(str(v), "4!5.0.1")  # Before error
