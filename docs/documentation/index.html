@@ -250,13 +250,90 @@ print(v, type(v.epoch), v.epoch)
 
 Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
     
-</code></pre>
 </section>
 <section id="local">
     <h3>local</h3>
 </section>
 <section id="post">
     <h3>post</h3>
+
+    The post property in versioning is used to identify post-releases, which are minor updates made to final releases that do not introduce significant changes to the software itself. These updates may address issues such as errors in release notes or minor tweaks that don't affect functionality. The inclusion of a post-release segment in the version identifier is denoted as X.Y.postN, where N is a non-negative integer that represents the post-release number.
+    
+    Post-releases are sequenced to appear directly after their corresponding stable releases in the version hierarchy. This means if you have a version 1.2.3, the post-releases will be labeled as 1.2.3.post1, 1.2.3.post2, etc. It's important to note that while post-releases can also be applied to pre-releases and release candidates (like 1.2.3a.post1 for an alpha version), using post-releases for significant bug fixes is not recommended. Instead, developers are encouraged to increment the main version number to reflect more substantial updates.
+    
+    The following code example illustrates the flexibility of the post property in handling various input formats, allowing it to accept different types while maintaining the integrity of the versioning system:
+<pre><code>
+from v440 import Version
+
+v = Version("1.2.3")
+print(v, type(v.post), v.post)
+v.post = 1
+print(v, type(v.post), v.post)
+v.post = "42"
+print(v, type(v.post), v.post)
+v.post = "post1000"
+print(v, type(v.post), v.post)
+v.post = "post.2000"
+print(v, type(v.post), v.post)
+v.post = ".post.3000"
+print(v, type(v.post), v.post)
+v.post = ".post4000"
+print(v, type(v.post), v.post)
+v.post = ("post", "5000")
+print(v, type(v.post), v.post)
+v.post = ["post", "6000"]
+print(v, type(v.post), v.post)
+v.post = "POST7000"
+print(v, type(v.post), v.post)
+v.post = "pOsT8000"
+print(v, type(v.post), v.post)
+v.post = ["poST", 9000]
+print(v, type(v.post), v.post)
+v.post = ["10000"]
+print(v, type(v.post), v.post)
+v.post = "REV11000"
+print(v, type(v.post), v.post)
+v.post = "rEv12000"
+print(v, type(v.post), v.post)
+v.post = "R13000"
+print(v, type(v.post), v.post)
+v.post = "r14000"
+print(v, type(v.post), v.post)
+v.post = ["post", None]
+print(v, type(v.post), v.post)
+v.post = False
+print(v, type(v.post), v.post)
+v.post = True
+print(v, type(v.post), v.post)
+v.post = None
+print(v, type(v.post), v.post)
+
+# Output:
+# 1.2.3 &lt;class 'NoneType'&gt; None
+# 1.2.3.post1 &lt;class 'int'&gt; 1
+# 1.2.3.post42 &lt;class 'int'&gt; 42
+# 1.2.3.post1000 &lt;class 'int'&gt; 1000
+# 1.2.3.post2000 &lt;class 'int'&gt; 2000
+# 1.2.3.post3000 &lt;class 'int'&gt; 3000
+# 1.2.3.post4000 &lt;class 'int'&gt; 4000
+# 1.2.3.post5000 &lt;class 'int'&gt; 5000
+# 1.2.3.post6000 &lt;class 'int'&gt; 6000
+# 1.2.3.post7000 &lt;class 'int'&gt; 7000
+# 1.2.3.post8000 &lt;class 'int'&gt; 8000
+# 1.2.3.post9000 &lt;class 'int'&gt; 9000
+# 1.2.3.post10000 &lt;class 'int'&gt; 10000
+# 1.2.3.post11000 &lt;class 'int'&gt; 11000
+# 1.2.3.post12000 &lt;class 'int'&gt; 12000
+# 1.2.3.post13000 &lt;class 'int'&gt; 13000
+# 1.2.3.post14000 &lt;class 'int'&gt; 14000
+# 1.2.3 &lt;class 'NoneType'&gt; None
+# 1.2.3.post0 &lt;class 'int'&gt; 0
+# 1.2.3.post1 &lt;class 'int'&gt; 1
+# 1.2.3 &lt;class 'NoneType'&gt; None
+
+</code></pre>
+This example showcases how the post property can accept various input formats, reinforcing the system's versatility while adhering to the requirements of versioning conventions.
+
 </section>
 <section id="pre">
     <h3>pre</h3>
