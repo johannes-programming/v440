@@ -103,7 +103,7 @@ print(v)  # Output: 2.5.3b1+local.7.dev
         </tr>
         <tr>
             <td><a href="#public">public</a></td>
-            <td>Represents the public part of the version identifier (everything but <a href="#local"><code>local</code></a>.</td>
+            <td>Represents the public part of the version identifier (everything but <a href="#local"><code>local</code></a>).</td>
             <td>Gives a copy without <a href="#local"><code>local</code></a>.</td>
             <td>Overwrites all properties except for <a href="#public"><code>public</code></a>.</td>
         </tr>
@@ -135,7 +135,7 @@ print(str(v))  # Output: 1.5.0
 
 <section id="Version">
     <h2>Version objects</h2>
-    <h4><code><i>class</i> <br>v440.<b>Version</b>(<i>data</i>: <i>Any</i> = "0", /, <i>**kwargs</i>)</code></h4>
+    <h4><code><i>class</i> <br>v440.<b>Version(</b><i>data</i>: <i>Any</i> = "0", /, <i>**kwargs</i><b>)</b></code></h4>
     Create a new <code><a href="#Version">Version</a></code> object. 
     The one (non required) positional argument is passed to the <code><a href="#data">data</a></code> property. 
     The keyword arguments are then passed to the properties defined by their keywords. 
@@ -152,6 +152,27 @@ print(str(v))  # Output: 1.5.0
 </section>
 <section id="epoch">
     <h3>epoch</h3>
+    <pre><code>
+from v440 import Version
+
+v = Version("1.2.3")
+v.epoch = 1
+print(v)
+v.epoch = "42"
+print(type(v.epoch))
+v.epoch = "9001!"
+print(v)
+v.epoch = None
+print(v)
+
+#Output:
+    #1.2.3
+    #1!1.2.3
+    #&lt;class 'int'>
+    #9001!1.2.3
+    #1.2.3
+
+</code></pre>
 </section>
 <section id="local">
     <h3>local</h3>
