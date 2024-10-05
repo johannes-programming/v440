@@ -1,19 +1,18 @@
 from __future__ import annotations
 
+import operator
 import string
-import types
 from typing import *
 
-import datahold
-import keyalias
-import scaevola
+from keyalias import keyalias
 from overloadable import overloadable
 
-from . import utils
+from v440._utils import utils
+from v440._utils.VList import VList
 
 
-@keyalias.keyalias(major=0, minor=1, micro=2, patch=2)
-class Release(datahold.OkayList, scaevola.Scaevola):
+@keyalias(major=0, minor=1, micro=2, patch=2)
+class Release(VList):
     def __add__(self, other, /) -> Self:
         other = type(self)(other)
         ans = self.copy()
@@ -26,7 +25,7 @@ class Release(datahold.OkayList, scaevola.Scaevola):
 
     @__delitem__.overload(False)
     def __delitem__(self, key) -> None:
-        key = utils.toindex(key)
+        key = operator.index(key)
         if key < len(self):
             del self._data[key]
 
@@ -44,7 +43,7 @@ class Release(datahold.OkayList, scaevola.Scaevola):
 
     @__getitem__.overload(False)
     def __getitem__(self, key) -> int:
-        key = utils.toindex(key)
+        key = operator.index(key)
         return self._getitem_int(key)
 
     @__getitem__.overload(True)
@@ -53,25 +52,13 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         ans = [self._getitem_int(i) for i in key]
         return ans
 
-    __ge__ = utils.Base.__ge__
-
-    def __iadd__(self, other, /) -> None:
-        self._data += type(self)(other)._data
-
-    def __init__(self, /, data=[]) -> None:
-        self.data = data
-
-    __le__ = utils.Base.__le__
-    __repr__ = utils.Base.__repr__
-    __setattr__ = utils.Base.__setattr__
-
     @overloadable
     def __setitem__(self, key, value) -> bool:
         return type(key) is slice
 
     @__setitem__.overload(False)
     def __setitem__(self, key: SupportsIndex, value):
-        key = utils.toindex(key)
+        key = operator.index(key)
         self._setitem_int(key, value)
 
     @__setitem__.overload(True)
@@ -159,8 +146,8 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         return value
 
     def bump(self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
-        index = utils.toindex(index)
-        amount = utils.toindex(amount)
+        index = operator.index(index)
+        amount = operator.index(amount)
         x = self._getitem_int(index) + amount
         self._setitem_int(index, x)
         if index != -1:
@@ -176,9 +163,6 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         while value and value[-1] == 0:
             value.pop()
         self._data = value
-
-    def extend(self, other, /) -> None:
-        self += other
 
     def format(self, cutoff=None) -> str:
         format_spec = str(cutoff) if cutoff else ""
