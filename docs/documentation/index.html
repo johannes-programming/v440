@@ -152,26 +152,41 @@ print(str(v))  # Output: 1.5.0
 </section>
 <section id="epoch">
     <h3>epoch</h3>
+
+The epoch property in versioning serves as a mechanism to manage version identifiers in situations where the conventional sorting rules might not suffice. It is particularly useful when a project transitions from one versioning scheme to another, ensuring that version comparisons yield the correct results. The epoch is represented as a nonnegative integer and is placed before the main version components, separated by an exclamation mark (e.g., E!X.Y).
+
+If a version identifier lacks an explicit epoch, it defaults to 0. This is significant because it allows developers to redefine versioning strategies without conflicting with previous releases. For instance, if a project previously utilized date-based versioning and then shifts to semantic versioning, the epoch ensures that the new versions are recognized as more recent than the earlier versions.
+
+In the provided code example, the epoch property demonstrates its flexibility and tolerance in handling various types of inputs. The setter can accept strings, booleans, and even None, converting them to a valid integer or resetting the epoch to its default value. This behavior emphasizes the robustness of the versioning system in the v440 project.
+
     <pre><code>
 from v440 import Version
 
 v = Version("1.2.3")
 v.epoch = 1
-print(v)
+print(v, type(v.epoch), v.epoch)
 v.epoch = "42"
-print(type(v.epoch))
+print(v, type(v.epoch), v.epoch)
 v.epoch = "9001!"
-print(v)
+print(v, type(v.epoch), v.epoch)
+v.epoch = False
+print(v, type(v.epoch), v.epoch)
+v.epoch = True
+print(v, type(v.epoch), v.epoch)
 v.epoch = None
-print(v)
+print(v, type(v.epoch), v.epoch)
 
 #Output:
-    #1.2.3
-    #1!1.2.3
-    #&lt;class 'int'>
-    #9001!1.2.3
-    #1.2.3
+    #1!1.2.3 &lt;class 'int'> 1
+    #42!1.2.3 &lt;class 'int'> 42
+    #9001!1.2.3 &lt;class 'int'> 9001
+    #1.2.3 &lt;class 'int'> 0
+    #1!1.2.3 &lt;class 'int'> 1
+    #1.2.3 &lt;class 'int'> 0
+</code></pre>
 
+Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
+    
 </code></pre>
 </section>
 <section id="local">
