@@ -4,12 +4,12 @@ import dataclasses
 import functools
 from typing import *
 
-from v440._core import utils
-from v440._core.Pattern import Pattern
+from v440._utils import utils
+from v440._utils.Pattern import Pattern
 
 
 @dataclasses.dataclass(frozen=True)
-class Parser:
+class QualifierParser:
     keysforlist: tuple = ()
     keysforstr: tuple = ()
     phasedict: dict = dataclasses.field(default_factory=dict)
@@ -98,16 +98,16 @@ class Parser:
         raise ValueError
 
 
-POST = Parser(
+POST = QualifierParser(
     keysforlist=("post", "rev", "r", ""),
     keysforstr=(None, "post", "rev", "r"),
     allow_len_1=True,
 )
-DEV = Parser(
+DEV = QualifierParser(
     keysforlist=("dev",),
     keysforstr=(None, "dev"),
 )
-PRE = Parser(
+PRE = QualifierParser(
     phasedict=dict(
         alpha="a",
         a="a",
