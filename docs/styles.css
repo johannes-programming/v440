@@ -24,7 +24,6 @@ h1 {
     font-size: 32;
     font-weight: normal;
 }
-
 h2 {
     font-size: 26;
     font-weight: normal;
@@ -32,6 +31,11 @@ h2 {
 h3 {
     font-size: 23;
     font-weight: normal;
+}
+h4 {
+    font-size: 14;
+    font-weight: normal;
+    background-color: #4CAF50;
 }
 
 header {
