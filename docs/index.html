@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v440 Project Documentation</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="navigation-links">
+    <a href="/">Back to Startpage</a> |
+    <a href="/projects">Back to Projects</a>
+</div>
+
+<header>
+    <h1><code>v440</code> - Mutable version object handling based on PEP 440</h1>
+    <b>Source Code:</b> <a href="https://github.com/johannes-programming/v440">https://github.com/johannes-programming/v440</a>
+</header>
+
+<section>
+    The project <code>v440</code> provides a mutable version object that allows flexible manipulation of version strings following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. It includes features such as support for release versions, pre-releases (alpha, beta, release candidate), post-releases, development releases, and local versions. The Version class enables direct manipulation of version components, such as major, minor, micro parts, and local identifiers. This project also supports version comparison and formatting, error handling for invalid version strings, and advanced versioning scenarios, like handling epochs, pre-releases, and complex version string combinations. Extensive unit tests ensure the accuracy of these operations.
+</section>
+
+<section>
+    <h3>Core Components</h3>
+    The <code>v440</code> module is built around the class <code>v440.Version</code>. Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions allowing to manipulate the specific parts of the version identifiers individually. 
+    <pre><code>
+from v440 import Version
+
+# Create an instance of the v440.Version class
+v = Version("1.2.3")
+
+# The instance allows manipulation of individual parts of the version
+v.release.major = 2
+v.release.minor = 5
+v.pre = "beta.1"
+v.local = "local.7.dev"
+
+# Print the modified version
+print(v)  # Output: 2.5.3b1+local.7.dev
+
+</code></pre>
+
+    
+</section>
+
+
+<section>
+    <h3>Quick Links for the properties of <code>v440.Version</code></h3>
+    
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Getter</th>
+            <th>Setter</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="#base">base</a></td>
+            <td>Represents <a href="#epoch"><code>epoch</code></a> and <a href="#release"><code>release</code></a>.</td>
+            <td>Gives a copy trunkated to only <a href="#epoch"><code>epoch</code></a> and <a href="#release"><code>release</code></a>. </td>
+            <td>Overwrites <a href="#epoch"><code>epoch</code></a> and <a href="#release"><code>release</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#data">data</a></td>
+            <td>Represents the entire instance.</td>
+            <td>Gives string representation.</td>
+            <td>Overwrites all properties.</td>
+        </tr>
+        <tr>
+            <td><a href="#dev">dev</a></td>
+            <td>Represents the devrelease part of the version identifier.</td>
+            <td>Gives <code>None</code> or a non negative integer.</td>
+            <td>Converts and saves the value.</td>
+        </tr>
+        <tr>
+            <td><a href="#epoch">epoch</a></td>
+            <td>Represents the epoch part of the version identifier.</td>
+            <td>Gives a non negative integer.</td>
+            <td>Converts and saves the value.</td>
+        </tr>
+        <tr>
+            <td><a href="#local">local</a></td>
+            <td>Represents the local part of the version identifier.</td>
+            <td>Gives a modified list-like object that can be altered.</td>
+            <td>Converts the value and saves it inside of <a href="#local"><code>local</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#post">post</a></td>
+            <td>Represents the postrelease part of the version identifier.</td>
+            <td>Gives <code>None</code> or a non negative integer.</td>
+            <td>Converts and saves the value.</td>
+        </tr>
+        <tr>
+            <td><a href="#pre">pre</a></td>
+            <td>Represents the prerelease part of the version identifier.</td>
+            <td>Gives a specialized list-like object that can be altered.</td>
+            <td>Converts the value and saves it inside of <a href="#pre"><code>pre</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#public">public</a></td>
+            <td>Represents the public part of the version identifier (everything but <a href="#local"><code>local</code></a>.</td>
+            <td>Gives a copy without <a href="#local"><code>local</code></a>.</td>
+            <td>Overwrites all properties except for <a href="#public"><code>public</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#release">release</a></td>
+            <td>Represents the release part of the version identifier.</td>
+            <td>Gives a specialized list-like object that can be altered.</td>
+            <td>Converts the value and saves it inside of <a href="#release"><code>release</code></a>.</td>
+        </tr>
+    </tbody>
+</table>
+
+</section>
+
+
+<section>
+    <h3>Version Object Examples</h3>
+    <pre><code>
+v = Version("1.0.0")
+print(str(v))  # Output: 1.0.0
+v.release[1] = 5
+print(str(v))  # Output: 1.5.0
+
+</code></pre>
+
+    
+</section>
+
+<div class="navigation-links">    <a href="#top">Back to Top</a></div>
+
+<footer>
+    <p>Johannes Programming</p>
+</footer>
+
+</body>
+</html>
