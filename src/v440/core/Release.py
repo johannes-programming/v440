@@ -5,15 +5,18 @@ import types
 from typing import *
 
 import datahold
-import keyalias
-import scaevola
+from keyalias import keyalias
+from scaevola import Scaevola
 from overloadable import overloadable
 
-from . import utils
+from v440._utils import utils
+from v440._utils.Base import Base
+from v440._utils.VList import VList
 
 
-@keyalias.keyalias(major=0, minor=1, micro=2, patch=2)
-class Release(datahold.OkayList, scaevola.Scaevola):
+
+@keyalias(major=0, minor=1, micro=2, patch=2)
+class Release(VList):
     def __add__(self, other, /) -> Self:
         other = type(self)(other)
         ans = self.copy()
@@ -53,17 +56,8 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         ans = [self._getitem_int(i) for i in key]
         return ans
 
-    __ge__ = utils.Base.__ge__
-
-    def __iadd__(self, other, /) -> None:
-        self._data += type(self)(other)._data
-
     def __init__(self, /, data=[]) -> None:
         self.data = data
-
-    __le__ = utils.Base.__le__
-    __repr__ = utils.Base.__repr__
-    __setattr__ = utils.Base.__setattr__
 
     @overloadable
     def __setitem__(self, key, value) -> bool:
@@ -177,8 +171,6 @@ class Release(datahold.OkayList, scaevola.Scaevola):
             value.pop()
         self._data = value
 
-    def extend(self, other, /) -> None:
-        self += other
 
     def format(self, cutoff=None) -> str:
         format_spec = str(cutoff) if cutoff else ""

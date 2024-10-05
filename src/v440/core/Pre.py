@@ -3,23 +3,18 @@ from __future__ import annotations
 import datahold
 import keyalias
 
-from v440._core import QualifierParser, utils
+from v440._utils.Base import Base
+from v440._utils.VList import VList
+from v440._utils import QualifierParser
 
 __all__ = ["Pre"]
 
 
 @keyalias.keyalias(phase=0, subphase=1)
-class Pre(datahold.OkayList):
-
-    __ge__ = utils.Base.__ge__
+class Pre(VList):
 
     def __init__(self, data=None):
         self.data = data
-
-    __le__ = utils.Base.__le__
-
-    __repr__ = utils.Base.__repr__
-    __setattr__ = utils.Base.__setattr__
 
     def __str__(self) -> str:
         if self.isempty():

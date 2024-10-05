@@ -7,11 +7,15 @@ import packaging.version
 from datahold import OkayABC
 from scaevola import Scaevola
 
-from v440._core import QualifierParser, utils
-from v440._core.Local import Local
-from v440._core.Pattern import Pattern
-from v440._core.Pre import Pre
-from v440._core.Release import Release
+
+from v440._utils.Base import Base
+from v440._utils import QualifierParser
+from v440.core.VersionError import VersionError
+from v440._utils import utils
+from v440.core.Local import Local
+from v440._utils.Pattern import Pattern
+from v440.core.Pre import Pre
+from v440.core.Release import Release
 
 QUALIFIERDICT = dict(
     dev="dev",
@@ -37,18 +41,11 @@ class _Version:
         return dataclasses.asdict(self)
 
 
-class Version(Scaevola):
+class Version(Base):
     def __bool__(self) -> bool:
         return self._data != _Version()
 
-    def __eq__(self, other: Any) -> bool:
-        try:
-            other = type(self)(other)
-        except utils.VersionError:
-            return False
-        return self._data == other._data
 
-    __hash__ = OkayABC.__hash__
 
     def __init__(self, data: Any = "0", /, **kwargs) -> None:
         object.__setattr__(self, "_data", _Version())
@@ -59,10 +56,7 @@ class Version(Scaevola):
         other = type(self)(other)
         return self._cmpkey() <= other._cmpkey()
 
-    def __lt__(self, other) -> bool:
-        return (self != other) and (self <= other)
 
-    __repr__ = utils.Base.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:
         a = dict()
@@ -73,8 +67,8 @@ class Version(Scaevola):
             except AttributeError:
                 b[k] = v
         try:
-            utils.Base.__setattr__(self, name, value)
-        except utils.VersionError:
+            Base.__setattr__(self, name, value)
+        except VersionError:
             for k, v in a.items():
                 getattr(self._data, k).data = v
             for k, v in b.items():
@@ -157,7 +151,7 @@ class Version(Scaevola):
         return self._data.dev
 
     @dev.setter
-    def dev(self, value):
+    def dev(self, value)->None:
         self._data.dev = QualifierParser.DEV(value)
 
     @property
@@ -211,7 +205,7 @@ class Version(Scaevola):
         return self._data.local
 
     @local.setter
-    def local(self, value):
+    def local(self, value)->None:
         self._data.local.data = value
 
     def packaging(self) -> packaging.version.Version:
@@ -222,7 +216,7 @@ class Version(Scaevola):
         return self._data.post
 
     @post.setter
-    def post(self, value):
+    def post(self, value)->None:
         self._data.post = QualifierParser.POST(value)
 
     @property
@@ -230,7 +224,7 @@ class Version(Scaevola):
         return self._data.pre
 
     @pre.setter
-    def pre(self, value):
+    def pre(self, value) -> None:
         self._data.pre.data = value
 
     @property
@@ -277,7 +271,7 @@ class Version(Scaevola):
         return self._data.release
 
     @release.setter
-    def release(self, value):
+    def release(self, value) -> None:
         self._data.release.data = value
 
     def update(self, **kwargs):

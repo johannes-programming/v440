@@ -3,21 +3,13 @@ from __future__ import annotations
 import functools
 from typing import *
 
-import datahold
-import scaevola
 
-from . import utils
+from v440._utils import utils
+from v440._utils.VList import VList
 
+__all__ = ["Local"]
 
-class Local(datahold.OkayList, scaevola.Scaevola):
-    def __ge__(self, other: Iterable) -> bool:
-        try:
-            other = type(self)(other)
-        except ValueError:
-            pass
-        else:
-            return other <= self
-        return self.data >= other
+class Local(VList):
 
     def __le__(self, other: Iterable) -> bool:
         try:
@@ -27,14 +19,6 @@ class Local(datahold.OkayList, scaevola.Scaevola):
         else:
             return self._cmpkey() <= other._cmpkey()
         return self.data <= other
-
-    __repr__ = utils.Base.__repr__
-    __setattr__ = utils.Base.__setattr__
-
-    def __sorted__(self, /, **kwargs) -> Self:
-        ans = self.copy()
-        ans.sort(**kwargs)
-        return ans
 
     def __str__(self) -> str:
         return ".".join(str(x) for x in self)
@@ -76,7 +60,7 @@ class Local(datahold.OkayList, scaevola.Scaevola):
                 raise ValueError
             self._data = value
 
-    @functools.wraps(datahold.OkayList.sort)
+    @functools.wraps(VList.sort)
     def sort(self, /, *, key=None, **kwargs) -> None:
         if key is None:
             key = self._sortkey

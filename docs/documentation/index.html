@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v440 Project Documentation</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="navigation-links">
+    <a href="/">Back to Startpage</a>
+</div>
+
+<header>
+    <h1><code>v440</code> - Mutable version object handling based on PEP 440</h1>
+    <b>Source Code:</b> <a href="https://github.com/johannes-programming/v440">https://github.com/johannes-programming/v440</a>
+</header>
+
+<section>
+    The project <code>v440</code> provides a mutable version object that allows flexible manipulation of version strings following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. It includes features such as support for release versions, pre-releases (alpha, beta, release candidate), post-releases, development releases, and local versions. The Version class enables direct manipulation of version components, such as major, minor, micro parts, and local identifiers. This project also supports version comparison and formatting, error handling for invalid version strings, and advanced versioning scenarios, like handling epochs, pre-releases, and complex version string combinations. Extensive unit tests ensure the accuracy of these operations.
+</section>
+
+<section>
+    <h3>Core Components</h3>
+    The <code>v440</code> module is built around the class <code>v440.Version</code>. Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions allowing to manipulate the specific parts of the version identifiers individually. 
+    <pre><code>
+from v440 import Version
+
+# Create an instance of the v440.Version class
+v = Version("1.2.3")
+
+# The instance allows manipulation of individual parts of the version
+v.release.major = 2
+v.release.minor = 5
+v.pre = "beta.1"
+v.local = "local.7.dev"
+
+# Print the modified version
+print(v)  # Output: 2.5.3b1+local.7.dev
+
+</code></pre>
+
+    
+</section>
+
+
+<section>
+    <h3>Quick Links for the properties of <code>v440.Version</code></h3>
+    
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Getter</th>
+            <th>Setter</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="#base">base</a></td>
+            <td>Represents <a href="#epoch"><code>epoch</code></a> and <a href="#release"><code>release</code></a>.</td>
+            <td>Gives a copy trunkated to only <a href="#epoch"><code>epoch</code></a> and <a href="#release"><code>release</code></a>. </td>
+            <td>Overwrites <a href="#epoch"><code>epoch</code></a> and <a href="#release"><code>release</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#data">data</a></td>
+            <td>Represents the entire instance.</td>
+            <td>Gives string representation.</td>
+            <td>Overwrites all properties.</td>
+        </tr>
+        <tr>
+            <td><a href="#dev">dev</a></td>
+            <td>Represents the devrelease part of the version identifier.</td>
+            <td>Gives <code>None</code> or a non negative integer.</td>
+            <td>Converts and saves the value.</td>
+        </tr>
+        <tr>
+            <td><a href="#epoch">epoch</a></td>
+            <td>Represents the epoch part of the version identifier.</td>
+            <td>Gives a non negative integer.</td>
+            <td>Converts and saves the value.</td>
+        </tr>
+        <tr>
+            <td><a href="#local">local</a></td>
+            <td>Represents the local part of the version identifier.</td>
+            <td>Gives a modified list-like object that can be altered.</td>
+            <td>Converts the value and saves it inside of <a href="#local"><code>local</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#post">post</a></td>
+            <td>Represents the postrelease part of the version identifier.</td>
+            <td>Gives <code>None</code> or a non negative integer.</td>
+            <td>Converts and saves the value.</td>
+        </tr>
+        <tr>
+            <td><a href="#pre">pre</a></td>
+            <td>Represents the prerelease part of the version identifier.</td>
+            <td>Gives a specialized list-like object that can be altered.</td>
+            <td>Converts the value and saves it inside of <a href="#pre"><code>pre</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#public">public</a></td>
+            <td>Represents the public part of the version identifier (everything but <a href="#local"><code>local</code></a>).</td>
+            <td>Gives a copy without <a href="#local"><code>local</code></a>.</td>
+            <td>Overwrites all properties except for <a href="#public"><code>public</code></a>.</td>
+        </tr>
+        <tr>
+            <td><a href="#release">release</a></td>
+            <td>Represents the release part of the version identifier.</td>
+            <td>Gives a specialized list-like object that can be altered.</td>
+            <td>Converts the value and saves it inside of <a href="#release"><code>release</code></a>.</td>
+        </tr>
+    </tbody>
+</table>
+
+</section>
+
+
+<section>
+    <h3>Version Object Examples</h3>
+    <pre><code>
+v = Version("1.0.0")
+print(str(v))  # Output: 1.0.0
+v.release[1] = 5
+print(str(v))  # Output: 1.5.0
+
+</code></pre>
+
+    
+</section>
+
+
+<section id="Version">
+    <h2>Version objects</h2>
+    <h4><code><i>class</i> v440.<b>Version(</b><i>data</i>: <i>Any</i> = "0", /, <i>**kwargs</i><b>)</b></code></h4>
+    Create a new <code><a href="#Version">Version</a></code> object. 
+    The one (non required) positional argument is passed to the <code><a href="#data">data</a></code> property. 
+    The keyword arguments are then passed to the properties defined by their keywords. 
+    All properties are explained below. 
+</section>
+<section id="base">
+    <h3>base</h3>
+</section>
+<section id="data">
+    <h3>data</h3>
+</section>
+<section id="dev">
+    <h3>dev</h3>
+    The dev property in versioning signifies developmental releases, which are often created during a project's development cycle. These releases are useful for developers and packagers who want to test early versions of the software without interfering with stable releases. The dev segment consists of the string .dev followed by a non-negative integer, which indicates the specific developmental release.
+
+    Developmental releases are ordered numerically, appearing right before the corresponding stable release in version sorting. For example, if you have a version 1.2.3, the developmental releases would be labeled 1.2.3.dev1, 1.2.3.dev2, etc. Additionally, developmental releases can also be used in conjunction with pre-releases and post-releases, such as 1.2.3a.dev1 for an alpha release or 1.2.3.post1.dev1 for a post-release.
+    
+    While developmental releases serve a purpose in testing and continuous integration, it's generally advised against publishing them publicly, especially for pre-releases, as they can complicate version interpretation. Instead, it's clearer to create a new pre-release by incrementing the numeric part of the version.
+    
+    In the provided example code, the dev property is shown to be highly tolerant, accepting various formats and types, including strings, lists, and booleans, while maintaining the integrity of the versioning system:
+    
+    <pre><code>
+from v440 import Version
+
+v = Version("1.2.3")
+print(v, type(v.dev), v.dev)
+v.dev = 1
+print(v, type(v.dev), v.dev)
+v.dev = "42"
+print(v, type(v.dev), v.dev)
+v.dev = "dev1000"
+print(v, type(v.dev), v.dev)
+v.dev = "dev.2000"
+print(v, type(v.dev), v.dev)
+v.dev = ".dev.3000"
+print(v, type(v.dev), v.dev)
+v.dev = ".dev4000"
+print(v, type(v.dev), v.dev)
+v.dev = ("dev", "5000")
+print(v, type(v.dev), v.dev)
+v.dev = ["dev", "6000"]
+print(v, type(v.dev), v.dev)
+v.dev = "DEV7000"
+print(v, type(v.dev), v.dev)
+v.dev = "dEv8000"
+print(v, type(v.dev), v.dev)
+v.dev = ["dEV", "9000"]
+print(v, type(v.dev), v.dev)
+v.dev = False
+print(v, type(v.dev), v.dev)
+v.dev = True
+print(v, type(v.dev), v.dev)
+v.dev = None
+print(v, type(v.dev), v.dev)
+
+#Output:
+    #1.2.3 &lt;class 'NoneType'&gt; None
+    #1.2.3.dev1 &lt;class 'int'&gt; 1
+    #1.2.3.dev42 &lt;class 'int'&gt; 42
+    #1.2.3.dev1000 &lt;class 'int'&gt; 1000
+    #1.2.3.dev2000 &lt;class 'int'&gt; 2000
+    #1.2.3.dev3000 &lt;class 'int'&gt; 3000
+    #1.2.3.dev4000 &lt;class 'int'&gt; 4000
+    #1.2.3.dev5000 &lt;class 'int'&gt; 5000
+    #1.2.3.dev6000 &lt;class 'int'&gt; 6000
+    #1.2.3.dev7000 &lt;class 'int'&gt; 7000
+    #1.2.3.dev8000 &lt;class 'int'&gt; 8000
+    #1.2.3.dev9000 &lt;class 'int'&gt; 9000
+    #1.2.3.dev0 &lt;class 'int'&gt; 0
+    #1.2.3.dev1 &lt;class 'int'&gt; 1
+    #1.2.3 &lt;class 'NoneType'&gt; None
+    
+</code></pre>
+    
+    This example highlights the flexibility of the dev property in handling different input types while adhering to the requirements of the versioning system.
+</section>
+<section id="epoch">
+    <h3>epoch</h3>
+
+The epoch property in versioning serves as a mechanism to manage version identifiers in situations where the conventional sorting rules might not suffice. It is particularly useful when a project transitions from one versioning scheme to another, ensuring that version comparisons yield the correct results. The epoch is represented as a nonnegative integer and is placed before the main version components, separated by an exclamation mark (e.g., E!X.Y).
+
+If a version identifier lacks an explicit epoch, it defaults to 0. This is significant because it allows developers to redefine versioning strategies without conflicting with previous releases. For instance, if a project previously utilized date-based versioning and then shifts to semantic versioning, the epoch ensures that the new versions are recognized as more recent than the earlier versions.
+
+In the provided code example, the epoch property demonstrates its flexibility and tolerance in handling various types of inputs. The setter can accept strings, booleans, and even None, converting them to a valid integer or resetting the epoch to its default value. This behavior emphasizes the robustness of the versioning system in the v440 project.
+
+    <pre><code>
+from v440 import Version
+
+v = Version("1.2.3")
+v.epoch = 1
+print(v, type(v.epoch), v.epoch)
+v.epoch = "42"
+print(v, type(v.epoch), v.epoch)
+v.epoch = "9001!"
+print(v, type(v.epoch), v.epoch)
+v.epoch = False
+print(v, type(v.epoch), v.epoch)
+v.epoch = True
+print(v, type(v.epoch), v.epoch)
+v.epoch = None
+print(v, type(v.epoch), v.epoch)
+
+#Output:
+    #1!1.2.3 &lt;class 'int'&gt; 1
+    #42!1.2.3 &lt;class 'int'&gt; 42
+    #9001!1.2.3 &lt;class 'int'&gt; 9001
+    #1.2.3 &lt;class 'int'&gt; 0
+    #1!1.2.3 &lt;class 'int'&gt; 1
+    #1.2.3 &lt;class 'int'&gt; 0
+    
+</code></pre>
+
+Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
+    
+</section>
+<section id="local">
+    <h3>local</h3>
+</section>
+<section id="post">
+    <h3>post</h3>
+
+    The post property in versioning is used to identify post-releases, which are minor updates made to final releases that do not introduce significant changes to the software itself. These updates may address issues such as errors in release notes or minor tweaks that don't affect functionality. The inclusion of a post-release segment in the version identifier is denoted as X.Y.postN, where N is a non-negative integer that represents the post-release number.
+    
+    Post-releases are sequenced to appear directly after their corresponding stable releases in the version hierarchy. This means if you have a version 1.2.3, the post-releases will be labeled as 1.2.3.post1, 1.2.3.post2, etc. It's important to note that while post-releases can also be applied to pre-releases and release candidates (like 1.2.3a.post1 for an alpha version), using post-releases for significant bug fixes is not recommended. Instead, developers are encouraged to increment the main version number to reflect more substantial updates.
+    
+    The following code example illustrates the flexibility of the post property in handling various input formats, allowing it to accept different types while maintaining the integrity of the versioning system:
+<pre><code>
+from v440 import Version
+
+v = Version("1.2.3")
+print(v, type(v.post), v.post)
+v.post = 1
+print(v, type(v.post), v.post)
+v.post = "42"
+print(v, type(v.post), v.post)
+v.post = "post1000"
+print(v, type(v.post), v.post)
+v.post = "post.2000"
+print(v, type(v.post), v.post)
+v.post = ".post.3000"
+print(v, type(v.post), v.post)
+v.post = ".post4000"
+print(v, type(v.post), v.post)
+v.post = ("post", "5000")
+print(v, type(v.post), v.post)
+v.post = ["post", "6000"]
+print(v, type(v.post), v.post)
+v.post = "POST7000"
+print(v, type(v.post), v.post)
+v.post = "pOsT8000"
+print(v, type(v.post), v.post)
+v.post = ["poST", 9000]
+print(v, type(v.post), v.post)
+v.post = ["10000"]
+print(v, type(v.post), v.post)
+v.post = "REV11000"
+print(v, type(v.post), v.post)
+v.post = "rEv12000"
+print(v, type(v.post), v.post)
+v.post = "R13000"
+print(v, type(v.post), v.post)
+v.post = "r14000"
+print(v, type(v.post), v.post)
+v.post = ["post", None]
+print(v, type(v.post), v.post)
+v.post = False
+print(v, type(v.post), v.post)
+v.post = True
+print(v, type(v.post), v.post)
+v.post = None
+print(v, type(v.post), v.post)
+
+# Output:
+# 1.2.3 &lt;class 'NoneType'&gt; None
+# 1.2.3.post1 &lt;class 'int'&gt; 1
+# 1.2.3.post42 &lt;class 'int'&gt; 42
+# 1.2.3.post1000 &lt;class 'int'&gt; 1000
+# 1.2.3.post2000 &lt;class 'int'&gt; 2000
+# 1.2.3.post3000 &lt;class 'int'&gt; 3000
+# 1.2.3.post4000 &lt;class 'int'&gt; 4000
+# 1.2.3.post5000 &lt;class 'int'&gt; 5000
+# 1.2.3.post6000 &lt;class 'int'&gt; 6000
+# 1.2.3.post7000 &lt;class 'int'&gt; 7000
+# 1.2.3.post8000 &lt;class 'int'&gt; 8000
+# 1.2.3.post9000 &lt;class 'int'&gt; 9000
+# 1.2.3.post10000 &lt;class 'int'&gt; 10000
+# 1.2.3.post11000 &lt;class 'int'&gt; 11000
+# 1.2.3.post12000 &lt;class 'int'&gt; 12000
+# 1.2.3.post13000 &lt;class 'int'&gt; 13000
+# 1.2.3.post14000 &lt;class 'int'&gt; 14000
+# 1.2.3 &lt;class 'NoneType'&gt; None
+# 1.2.3.post0 &lt;class 'int'&gt; 0
+# 1.2.3.post1 &lt;class 'int'&gt; 1
+# 1.2.3 &lt;class 'NoneType'&gt; None
+
+</code></pre>
+This example showcases how the post property can accept various input formats, reinforcing the system's versatility while adhering to the requirements of versioning conventions.
+
+</section>
+<section id="pre">
+    <h3>pre</h3>
+</section>
+<section id="public">
+    <h3>public</h3>
+</section>
+<section id="release">
+    <h3>release</h3>
+</section>
+
+<div class="navigation-links"><a href="#top">Back to Top</a></div>
+
+<footer>
+    <a href="http://johannes-programming.online/impressum.html">Johannes Programming</a>
+</footer>
+
+</body>
+</html>
