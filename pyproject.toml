@@ -17,18 +17,18 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
 ]
 dependencies = [
-    "datahold>=1.0",
-    "keyalias>=1.0",
+    "datahold>=1.1.7",
+    "keyalias>=1.0.3",
     "overloadable>=1.0.5",
     "packaging>=23.2",
-    "scaevola>=1.0.7",
+    "scaevola>=1.0.11",
 ]
 description = "mutable version objects in accordance with PEP440"
 keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.0.17"
+version = "1.0.18"
 
 [project.license]
 file = "LICENSE.txt"
@@ -36,4 +36,6 @@ file = "LICENSE.txt"
 [project.urls]
 Documentation = "https://pypi.org/project/v440"
 Download = "https://pypi.org/project/v440/#files"
-Source = "https://github.com/johannes-programming/v440"
+Index = "https://pypi.org/project/v440/"
+Source = "https://github.com/johannes-programming/v440/"
+Website = "http://v440.johannes-programming.online/"
