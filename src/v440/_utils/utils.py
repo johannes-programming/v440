@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import functools
+import operator
 import string
 from typing import *
+
+from v440.core.VersionError import VersionError
 
 SEGCHARS = string.ascii_lowercase + string.digits
 
@@ -79,15 +82,6 @@ class _segment:
         return int(value)
 
 
-def toindex(value, /):
-    ans = value.__index__()
-    if type(ans) is not int:
-        e = "__index__ returned non-int (type %s)"
-        e %= type(ans).__name__
-        raise TypeError(e)
-    return ans
-
-
 def torange(key, length):
     start = key.start
     stop = key.stop
@@ -95,18 +89,18 @@ def torange(key, length):
     if step is None:
         step = 1
     else:
-        step = toindex(step)
+        step = operator.index(step)
         if step == 0:
             raise ValueError
     fwd = step > 0
     if start is None:
         start = 0 if fwd else (length - 1)
     else:
-        start = toindex(start)
+        start = operator.index(start)
     if stop is None:
         stop = length if fwd else -1
     else:
-        stop = toindex(stop)
+        stop = operator.index(stop)
     if start < 0:
         start += length
     if start < 0:
@@ -116,50 +110,3 @@ def torange(key, length):
     if stop < 0:
         stop = 0 if fwd else -1
     return range(start, stop, step)
-
-
-class Base:
-
-    def __ge__(self, other, /):
-        try:
-            other = type(self)(other)
-        except:
-            pass
-        else:
-            return other <= self
-        return self.data >= other
-
-    def __le__(self, other, /):
-        try:
-            other = type(self)(other)
-        except:
-            pass
-        else:
-            return self._data <= other._data
-        return self.data <= other
-
-    def __repr__(self) -> str:
-        return "%s(%r)" % (type(self).__name__, str(self))
-
-    def __setattr__(self, name: str, value: Any) -> None:
-        if name.startswith("_"):
-            object.__setattr__(self, name, value)
-            return
-        cls = type(self)
-        attr = getattr(cls, name)
-        if type(attr) is not property:
-            e = "%r is not a property"
-            e %= name
-            e = AttributeError(e)
-            raise e
-        try:
-            object.__setattr__(self, name, value)
-        except VersionError:
-            raise
-        except:
-            e = "%r is an invalid value for %r"
-            e %= (value, cls.__name__ + "." + name)
-            raise VersionError(e)
-
-
-class VersionError(ValueError): ...
