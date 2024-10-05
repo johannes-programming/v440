@@ -7,31 +7,34 @@ from typing import *
 import datahold
 import keyalias
 import scaevola
+
 from overloadable import overloadable
 
 from . import utils
 
+INDEX = Union[slice, SupportsIndex]
+
 
 @keyalias.keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(datahold.OkayList, scaevola.Scaevola):
-    def __add__(self, other, /) -> Self:
+    def __add__(self, other:Any, /) -> Self:
         other = type(self)(other)
         ans = self.copy()
         ans._data += other._data
         return ans
 
     @overloadable
-    def __delitem__(self, key) -> bool:
+    def __delitem__(self, key:INDEX) -> bool:
         return type(key) is slice
 
     @__delitem__.overload(False)
-    def __delitem__(self, key) -> None:
+    def __delitem__(self, key:SupportsIndex) -> None:
         key = utils.toindex(key)
         if key < len(self):
             del self._data[key]
 
     @__delitem__.overload(True)
-    def __delitem__(self, key) -> None:
+    def __delitem__(self, key:slice) -> None:
         key = utils.torange(key, len(self))
         key = [k for k in key if k < len(self)]
         key.sort(reverse=True)
@@ -39,26 +42,26 @@ class Release(datahold.OkayList, scaevola.Scaevola):
             del self._data[k]
 
     @overloadable
-    def __getitem__(self, key) -> bool:
+    def __getitem__(self, key:INDEX) -> bool:
         return type(key) is slice
 
     @__getitem__.overload(False)
-    def __getitem__(self, key) -> int:
+    def __getitem__(self, key:SupportsIndex) -> int:
         key = utils.toindex(key)
         return self._getitem_int(key)
 
     @__getitem__.overload(True)
-    def __getitem__(self, key) -> list:
+    def __getitem__(self, key:slice) -> list:
         key = utils.torange(key, len(self))
         ans = [self._getitem_int(i) for i in key]
         return ans
 
     __ge__ = utils.Base.__ge__
 
-    def __iadd__(self, other, /) -> None:
+    def __iadd__(self, other:Any, /) -> None:
         self._data += type(self)(other)._data
 
-    def __init__(self, /, data=[]) -> None:
+    def __init__(self, /, data:Any=[]) -> None:
         self.data = data
 
     __le__ = utils.Base.__le__
@@ -66,16 +69,24 @@ class Release(datahold.OkayList, scaevola.Scaevola):
     __setattr__ = utils.Base.__setattr__
 
     @overloadable
-    def __setitem__(self, key, value) -> bool:
+    def __setitem__(self, key:INDEX, value:Any) -> bool:
         return type(key) is slice
 
     @__setitem__.overload(False)
-    def __setitem__(self, key: SupportsIndex, value):
+    def __setitem__(
+        self,
+        key: SupportsIndex,
+        value: Any,
+    ) -> None:
         key = utils.toindex(key)
         self._setitem_int(key, value)
 
     @__setitem__.overload(True)
-    def __setitem__(self, key: SupportsIndex, value):
+    def __setitem__(
+        self,
+        key: slice,
+        value: Any,
+    ) -> None:
         key = utils.torange(key, len(self))
         self._setitem_range(key, value)
 
@@ -88,7 +99,7 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         else:
             return 0
 
-    def _setitem_int(self, key: int, value):
+    def _setitem_int(self, key: int, value: Any) -> None:
         value = utils.numeral(value)
         length = len(self)
         if length > key:
@@ -133,7 +144,7 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         self._data = data
 
     @staticmethod
-    def _tolist(value, *, slicing) -> list:
+    def _tolist(value: Any, *, slicing: Union[int, str]) -> list:
         if value is None:
             return []
         if isinstance(value, int):
@@ -158,7 +169,10 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         value = [utils.numeral(x) for x in value]
         return value
 
-    def bump(self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
+    def bump(self, 
+                index: SupportsIndex = -1, 
+                amount: SupportsIndex = 1,
+            ) -> None:
         index = utils.toindex(index)
         amount = utils.toindex(amount)
         x = self._getitem_int(index) + amount
@@ -171,16 +185,16 @@ class Release(datahold.OkayList, scaevola.Scaevola):
         return list(self._data)
 
     @data.setter
-    def data(self, value) -> None:
+    def data(self, value: Any) -> None:
         value = self._tolist(value, slicing="always")
         while value and value[-1] == 0:
             value.pop()
         self._data = value
 
-    def extend(self, other, /) -> None:
+    def extend(self, other: Any, /) -> None:
         self += other
 
-    def format(self, cutoff=None) -> str:
+    def format(self, cutoff: Any = None) -> str:
         format_spec = str(cutoff) if cutoff else ""
         i = int(format_spec) if format_spec else None
         ans = self[:i]

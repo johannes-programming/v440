@@ -7,6 +7,7 @@ from typing import *
 from v440._core import utils
 from v440._core.Pattern import Pattern
 
+BYLIST = Union[None, int, list]
 
 @dataclasses.dataclass(frozen=True)
 class Parser:
@@ -17,7 +18,7 @@ class Parser:
 
     @utils.digest
     class __call__:
-        def byInt(self, value: int):
+        def byInt(self, value: int) -> int:
             if self.phasedict:
                 raise TypeError
             value = int(value)
@@ -25,8 +26,7 @@ class Parser:
                 raise ValueError
             return value
 
-        def byList(self, value: list):
-            value = [utils.segment(x) for x in value]
+        def byList(self, value: list) -> BYLIST:
             if self.phasedict:
                 l, n = value
                 if [l, n] == [None, None]:
@@ -84,7 +84,7 @@ class Parser:
                 continue
             raise TypeError
 
-    def nbylist(self, value, /):
+    def nbylist(self, value:list, /):
         if len(value) == 2:
             l, n = value
             if l not in self.keysforlist:

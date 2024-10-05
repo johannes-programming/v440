@@ -57,7 +57,6 @@ class Local(datahold.OkayList, scaevola.Scaevola):
             self._data = [value]
 
         def byList(self, value: list) -> None:
-            value = [utils.segment(x) for x in value]
             if None in value:
                 raise ValueError
             self._data = value
@@ -72,8 +71,6 @@ class Local(datahold.OkayList, scaevola.Scaevola):
             value = value.replace("-", ".")
             value = value.split(".")
             value = [utils.segment(x) for x in value]
-            if None in value:
-                raise ValueError
             self._data = value
 
     @functools.wraps(datahold.OkayList.sort)

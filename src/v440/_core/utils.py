@@ -6,8 +6,25 @@ from typing import *
 
 SEGCHARS = string.ascii_lowercase + string.digits
 
+def digest_default(old, /):
+    try:
+        elsewise = getattr(old, "elsewise")
+    except AttributeError:
+        return None
+    
+    def ans(*args, **kwargs):
+        value = args.pop()
+        
+        return elsewise(*args, **kwargs)
 
 def digest(old, /):
+    try:
+        elsewise = getattr(old, "elsewise")
+    except AttributeError:
+        default = None
+    else:
+        def default(*args, **kwargs):
+
     byNone = getattr(old, "byNone", None)
     byInt = getattr(old, "byInt", None)
     byList = getattr(old, "byList", None)
@@ -21,12 +38,16 @@ def digest(old, /):
         if isinstance(value, int):
             value = int(value)
             return byInt(*args, value, **kwargs)
-        if isinstance(value, str) or not hasattr(value, "__iter__"):
-            value = str(value).lower().strip()
-            return byStr(*args, value, **kwargs)
-        else:
-            value = list(value)
+        if isinstance(value, str):
+            wasStr = True
+        elif hasattr(value, "__iter__"):
+            value = [segment(x) for x in value]
             return byList(*args, value, **kwargs)
+        else:
+            wasStr = False
+        value = str(value).lower().strip()
+        
+        return byStr(*args, value, wasStr=wasStr, **kwargs)
 
     new.__name__ = old.__name__
     return new

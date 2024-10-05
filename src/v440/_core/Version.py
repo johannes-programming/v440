@@ -111,15 +111,15 @@ class Version(Scaevola):
     @base.setter
     @utils.digest
     class base:
-        def byInt(self, value):
+        def byInt(self, value:int) -> None:
             self.epoch = None
             self.release = value
 
-        def byNone(self):
+        def byNone(self) -> None:
             self.epoch = None
             self.release = None
 
-        def byStr(self, value):
+        def byStr(self, value:str) -> None:
             if "!" in value:
                 self.epoch, self.release = value.split("!", 1)
             else:
@@ -167,15 +167,15 @@ class Version(Scaevola):
     @epoch.setter
     @utils.digest
     class epoch:
-        def byInt(self, value: int):
+        def byInt(self, value: int) -> None:
             if value < 0:
                 raise ValueError
             self._data.epoch = value
 
-        def byNone(self):
+        def byNone(self)->None:
             self._data.epoch = 0
 
-        def byStr(self, value: str):
+        def byStr(self, value: str)-> None:
             value = Pattern.EPOCH.bound.search(value)
             value = value.group("n")
             if value is None:
@@ -242,19 +242,19 @@ class Version(Scaevola):
     @public.setter
     @utils.digest
     class public:
-        def byInt(self, value):
+        def byInt(self, value:int)->None:
             self.base = value
             self.pre = None
             self.post = None
             self.dev = None
 
-        def byNone(self):
+        def byNone(self)-> None:
             self.base = None
             self.pre = None
             self.post = None
             self.dev = None
 
-        def byStr(self, value):
+        def byStr(self, value:str):
             match = Pattern.PUBLIC.leftbound.search(value)
             self.base = value[: match.end()]
             value = value[match.end() :]
