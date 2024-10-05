@@ -149,6 +149,68 @@ print(str(v))  # Output: 1.5.0
 </section>
 <section id="dev">
     <h3>dev</h3>
+    The dev property in versioning signifies developmental releases, which are often created during a project's development cycle. These releases are useful for developers and packagers who want to test early versions of the software without interfering with stable releases. The dev segment consists of the string .dev followed by a non-negative integer, which indicates the specific developmental release.
+
+    Developmental releases are ordered numerically, appearing right before the corresponding stable release in version sorting. For example, if you have a version 1.2.3, the developmental releases would be labeled 1.2.3.dev1, 1.2.3.dev2, etc. Additionally, developmental releases can also be used in conjunction with pre-releases and post-releases, such as 1.2.3a.dev1 for an alpha release or 1.2.3.post1.dev1 for a post-release.
+    
+    While developmental releases serve a purpose in testing and continuous integration, it's generally advised against publishing them publicly, especially for pre-releases, as they can complicate version interpretation. Instead, it's clearer to create a new pre-release by incrementing the numeric part of the version.
+    
+    In the provided example code, the dev property is shown to be highly tolerant, accepting various formats and types, including strings, lists, and booleans, while maintaining the integrity of the versioning system:
+    
+    <pre><code>
+from v440 import Version
+
+v = Version("1.2.3")
+print(v, type(v.dev), v.dev)
+v.dev = 1
+print(v, type(v.dev), v.dev)
+v.dev = "42"
+print(v, type(v.dev), v.dev)
+v.dev = "dev1000"
+print(v, type(v.dev), v.dev)
+v.dev = "dev.2000"
+print(v, type(v.dev), v.dev)
+v.dev = ".dev.3000"
+print(v, type(v.dev), v.dev)
+v.dev = ".dev4000"
+print(v, type(v.dev), v.dev)
+v.dev = ("dev", "5000")
+print(v, type(v.dev), v.dev)
+v.dev = ["dev", "6000"]
+print(v, type(v.dev), v.dev)
+v.dev = "DEV7000"
+print(v, type(v.dev), v.dev)
+v.dev = "dEv8000"
+print(v, type(v.dev), v.dev)
+v.dev = ["dEV", "9000"]
+print(v, type(v.dev), v.dev)
+v.dev = False
+print(v, type(v.dev), v.dev)
+v.dev = True
+print(v, type(v.dev), v.dev)
+v.dev = None
+print(v, type(v.dev), v.dev)
+
+#Output:
+    #1.2.3 &lt;class 'NoneType'> None
+    #1.2.3.dev1 &lt;class 'int'> 1
+    #1.2.3.dev42 &lt;class 'int'> 42
+    #1.2.3.dev1000 &lt;class 'int'> 1000
+    #1.2.3.dev2000 &lt;class 'int'> 2000
+    #1.2.3.dev3000 &lt;class 'int'> 3000
+    #1.2.3.dev4000 &lt;class 'int'> 4000
+    #1.2.3.dev5000 &lt;class 'int'> 5000
+    #1.2.3.dev6000 &lt;class 'int'> 6000
+    #1.2.3.dev7000 &lt;class 'int'> 7000
+    #1.2.3.dev8000 &lt;class 'int'> 8000
+    #1.2.3.dev9000 &lt;class 'int'> 9000
+    #1.2.3.dev0 &lt;class 'int'> 0
+    #1.2.3.dev1 &lt;class 'int'> 1
+    #1.2.3 &lt;class 'NoneType'> None
+        
+        </code></pre>
+    
+    This example highlights the flexibility of the dev property in handling different input types while adhering to the requirements of the versioning system.
 </section>
 <section id="epoch">
     <h3>epoch</h3>
@@ -208,7 +270,7 @@ Overall, the epoch property is a vital feature for managing complex versioning s
 <div class="navigation-links"><a href="#top">Back to Top</a></div>
 
 <footer>
-    <a href="http://johannes-programming.online">Johannes Programming</a>
+    <a href="http://johannes-programming.online/impressum.html">Johannes Programming</a>
 </footer>
 
 </body>
