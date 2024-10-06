@@ -13,12 +13,7 @@ from . import utils
 
 
 @keyalias.keyalias(major=0, minor=1, micro=2, patch=2)
-class Release(datahold.OkayList, scaevola.Scaevola):
-    def __add__(self, other, /) -> Self:
-        other = type(self)(other)
-        ans = self.copy()
-        ans._data += other._data
-        return ans
+class Release(utils.ListLike, scaevola.Scaevola):
 
     @overloadable
     def __delitem__(self, key) -> bool:
