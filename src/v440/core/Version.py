@@ -45,15 +45,7 @@ class Version(Base):
     def __bool__(self) -> bool:
         return self._data != _Version()
 
-    def __eq__(self, other: Any) -> bool:
-        try:
-            other = type(self)(other)
-        except VersionError:
-            return False
-        return self._data == other._data
 
-    __ge__ = Scaevola.__ge__
-    __gt__ = Scaevola.__gt__
 
     def __init__(self, data: Any = "0", /, **kwargs) -> None:
         object.__setattr__(self, "_data", _Version())
@@ -64,10 +56,7 @@ class Version(Base):
         other = type(self)(other)
         return self._cmpkey() <= other._cmpkey()
 
-    def __lt__(self, other) -> bool:
-        return (self != other) and (self <= other)
 
-    __repr__ = Base.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:
         a = dict()
@@ -162,7 +151,7 @@ class Version(Base):
         return self._data.dev
 
     @dev.setter
-    def dev(self, value):
+    def dev(self, value)->None:
         self._data.dev = QualifierParser.DEV(value)
 
     @property
@@ -216,7 +205,7 @@ class Version(Base):
         return self._data.local
 
     @local.setter
-    def local(self, value):
+    def local(self, value)->None:
         self._data.local.data = value
 
     def packaging(self) -> packaging.version.Version:
@@ -227,7 +216,7 @@ class Version(Base):
         return self._data.post
 
     @post.setter
-    def post(self, value):
+    def post(self, value)->None:
         self._data.post = QualifierParser.POST(value)
 
     @property
@@ -235,7 +224,7 @@ class Version(Base):
         return self._data.pre
 
     @pre.setter
-    def pre(self, value):
+    def pre(self, value) -> None:
         self._data.pre.data = value
 
     @property
@@ -282,7 +271,7 @@ class Version(Base):
         return self._data.release
 
     @release.setter
-    def release(self, value):
+    def release(self, value) -> None:
         self._data.release.data = value
 
     def update(self, **kwargs):

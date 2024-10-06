@@ -10,14 +10,6 @@ from v440._utils.Base import Base
 from v440._utils.VList import VList
 
 class Local(VList):
-    def __ge__(self, other: Iterable) -> bool:
-        try:
-            other = type(self)(other)
-        except ValueError:
-            pass
-        else:
-            return other <= self
-        return self.data >= other
 
     def __le__(self, other: Iterable) -> bool:
         try:
@@ -28,13 +20,7 @@ class Local(VList):
             return self._cmpkey() <= other._cmpkey()
         return self.data <= other
 
-    __repr__ = Base.__repr__
-    __setattr__ = Base.__setattr__
 
-    def __sorted__(self, /, **kwargs) -> Self:
-        ans = self.copy()
-        ans.sort(**kwargs)
-        return ans
 
     def __str__(self) -> str:
         return ".".join(str(x) for x in self)
