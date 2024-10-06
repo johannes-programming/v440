@@ -4,12 +4,12 @@ import functools
 from typing import *
 
 import datahold
-from scaevola import Scaevola
 
 from v440._utils import utils
 from v440._utils.Base import Base
+from v440._utils.VList import VList
 
-class Local(datahold.OkayList, Scaevola):
+class Local(VList):
     def __ge__(self, other: Iterable) -> bool:
         try:
             other = type(self)(other)

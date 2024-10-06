@@ -11,11 +11,12 @@ from overloadable import overloadable
 
 from v440._utils import utils
 from v440._utils.Base import Base
+from v440._utils.VList import VList
 
 
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
-class Release(datahold.OkayList, Scaevola):
+class Release(VList):
     def __add__(self, other, /) -> Self:
         other = type(self)(other)
         ans = self.copy()

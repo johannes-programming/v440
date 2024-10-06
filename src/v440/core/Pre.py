@@ -4,13 +4,14 @@ import datahold
 import keyalias
 
 from v440._utils.Base import Base
+from v440._utils.VList import VList
 from v440._utils import QualifierParser
 
 __all__ = ["Pre"]
 
 
 @keyalias.keyalias(phase=0, subphase=1)
-class Pre(datahold.OkayList):
+class Pre(VList):
 
     __ge__ = Base.__ge__
 

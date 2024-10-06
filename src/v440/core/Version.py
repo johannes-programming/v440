@@ -41,7 +41,7 @@ class _Version:
         return dataclasses.asdict(self)
 
 
-class Version(Scaevola):
+class Version(Base):
     def __bool__(self) -> bool:
         return self._data != _Version()
 
@@ -52,7 +52,8 @@ class Version(Scaevola):
             return False
         return self._data == other._data
 
-    __hash__ = OkayABC.__hash__
+    __ge__ = Scaevola.__ge__
+    __gt__ = Scaevola.__gt__
 
     def __init__(self, data: Any = "0", /, **kwargs) -> None:
         object.__setattr__(self, "_data", _Version())

@@ -1,4 +1,5 @@
 from v440.core.VersionError import VersionError
+from datahold import OkayABC
 from typing import *
 
 class Base:
@@ -11,6 +12,8 @@ class Base:
         else:
             return other <= self
         return self.data >= other
+
+    __hash__ = OkayABC.__hash__
 
     def __le__(self, other, /):
         try:
