@@ -7,11 +7,15 @@ import packaging.version
 from datahold import OkayABC
 from scaevola import Scaevola
 
-from v440._core import QualifierParser, utils
-from v440._core.Local import Local
-from v440._core.Pattern import Pattern
-from v440._core.Pre import Pre
-from v440._core.Release import Release
+
+from v440._utils.Base import Base
+from v440._utils import QualifierParser
+from v440.core.VersionError import VersionError
+from v440._utils import utils
+from v440.core.Local import Local
+from v440._utils.Pattern import Pattern
+from v440.core.Pre import Pre
+from v440.core.Release import Release
 
 QUALIFIERDICT = dict(
     dev="dev",
@@ -44,7 +48,7 @@ class Version(Scaevola):
     def __eq__(self, other: Any) -> bool:
         try:
             other = type(self)(other)
-        except utils.VersionError:
+        except VersionError:
             return False
         return self._data == other._data
 
@@ -62,7 +66,7 @@ class Version(Scaevola):
     def __lt__(self, other) -> bool:
         return (self != other) and (self <= other)
 
-    __repr__ = utils.Base.__repr__
+    __repr__ = Base.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:
         a = dict()
@@ -73,8 +77,8 @@ class Version(Scaevola):
             except AttributeError:
                 b[k] = v
         try:
-            utils.Base.__setattr__(self, name, value)
-        except utils.VersionError:
+            Base.__setattr__(self, name, value)
+        except VersionError:
             for k, v in a.items():
                 getattr(self._data, k).data = v
             for k, v in b.items():

@@ -4,12 +4,12 @@ import functools
 from typing import *
 
 import datahold
-import scaevola
+from scaevola import Scaevola
 
-from . import utils
+from v440._utils import utils
+from v440._utils.Base import Base
 
-
-class Local(datahold.OkayList, scaevola.Scaevola):
+class Local(datahold.OkayList, Scaevola):
     def __ge__(self, other: Iterable) -> bool:
         try:
             other = type(self)(other)
@@ -28,8 +28,8 @@ class Local(datahold.OkayList, scaevola.Scaevola):
             return self._cmpkey() <= other._cmpkey()
         return self.data <= other
 
-    __repr__ = utils.Base.__repr__
-    __setattr__ = utils.Base.__setattr__
+    __repr__ = Base.__repr__
+    __setattr__ = Base.__setattr__
 
     def __sorted__(self, /, **kwargs) -> Self:
         ans = self.copy()
