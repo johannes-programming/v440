@@ -23,9 +23,8 @@ class Base:
         else:
             return self._data <= other._data
         return self.data <= other
-
-    def __repr__(self) -> str:
-        return "%s(%r)" % (type(self).__name__, str(self))
+    
+    __repr__ = OkayABC.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name.startswith("_"):
