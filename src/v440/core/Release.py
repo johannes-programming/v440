@@ -56,17 +56,8 @@ class Release(VList):
         ans = [self._getitem_int(i) for i in key]
         return ans
 
-    __ge__ = Base.__ge__
-
-    def __iadd__(self, other, /) -> None:
-        self._data += type(self)(other)._data
-
     def __init__(self, /, data=[]) -> None:
         self.data = data
-
-    __le__ = Base.__le__
-    __repr__ = Base.__repr__
-    __setattr__ = Base.__setattr__
 
     @overloadable
     def __setitem__(self, key, value) -> bool:
@@ -180,8 +171,6 @@ class Release(VList):
             value.pop()
         self._data = value
 
-    def extend(self, other, /) -> None:
-        self += other
 
     def format(self, cutoff=None) -> str:
         format_spec = str(cutoff) if cutoff else ""

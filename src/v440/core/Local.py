@@ -3,11 +3,11 @@ from __future__ import annotations
 import functools
 from typing import *
 
-import datahold
 
 from v440._utils import utils
-from v440._utils.Base import Base
 from v440._utils.VList import VList
+
+__all__ = ["Local"]
 
 class Local(VList):
 
@@ -19,8 +19,6 @@ class Local(VList):
         else:
             return self._cmpkey() <= other._cmpkey()
         return self.data <= other
-
-
 
     def __str__(self) -> str:
         return ".".join(str(x) for x in self)
@@ -62,7 +60,7 @@ class Local(VList):
                 raise ValueError
             self._data = value
 
-    @functools.wraps(datahold.OkayList.sort)
+    @functools.wraps(VList.sort)
     def sort(self, /, *, key=None, **kwargs) -> None:
         if key is None:
             key = self._sortkey
