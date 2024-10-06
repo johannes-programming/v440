@@ -16,6 +16,9 @@ from v440.core.Local import Local
 from v440._utils.Pattern import Pattern
 from v440.core.Pre import Pre
 from v440.core.Release import Release
+from v440._utils.VList import VList
+
+__all__ = ["Version"]
 
 QUALIFIERDICT = dict(
     dev="dev",
@@ -41,18 +44,15 @@ class _Version:
         return dataclasses.asdict(self)
 
 
-class Version(Scaevola):
+class Version(Base):
     def __bool__(self) -> bool:
         return self._data != _Version()
-
-    def __eq__(self, other: Any) -> bool:
-        try:
-            other = type(self)(other)
-        except VersionError:
-            return False
-        return self._data == other._data
-
-    __hash__ = OkayABC.__hash__
+    
+    __eq__ = Base.__eq__
+    __ge__ = Base.__ge__
+    __gt__ = Base.__gt__
+    __lt__ = Base.__lt__
+    __ne__ = Base.__ne__
 
     def __init__(self, data: Any = "0", /, **kwargs) -> None:
         object.__setattr__(self, "_data", _Version())
@@ -62,11 +62,6 @@ class Version(Scaevola):
     def __le__(self, other) -> bool:
         other = type(self)(other)
         return self._cmpkey() <= other._cmpkey()
-
-    def __lt__(self, other) -> bool:
-        return (self != other) and (self <= other)
-
-    __repr__ = Base.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:
         a = dict()
@@ -134,7 +129,7 @@ class Version(Scaevola):
 
     def copy(self) -> Self:
         return type(self)(self)
-
+    
     @property
     def data(self) -> str:
         return self.format()
@@ -226,7 +221,7 @@ class Version(Scaevola):
         return self._data.post
 
     @post.setter
-    def post(self, value):
+    def post(self, value:Any):
         self._data.post = QualifierParser.POST(value)
 
     @property
@@ -234,7 +229,7 @@ class Version(Scaevola):
         return self._data.pre
 
     @pre.setter
-    def pre(self, value):
+    def pre(self, value:Any):
         self._data.pre.data = value
 
     @property
@@ -246,7 +241,7 @@ class Version(Scaevola):
     @public.setter
     @utils.digest
     class public:
-        def byInt(self, value):
+        def byInt(self, value:int):
             self.base = value
             self.pre = None
             self.post = None
@@ -258,7 +253,7 @@ class Version(Scaevola):
             self.post = None
             self.dev = None
 
-        def byStr(self, value):
+        def byStr(self, value:str):
             match = Pattern.PUBLIC.leftbound.search(value)
             self.base = value[: match.end()]
             value = value[match.end() :]

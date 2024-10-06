@@ -6,34 +6,31 @@ from typing import *
 
 import datahold
 from keyalias import keyalias
-from scaevola import Scaevola
 from overloadable import overloadable
 
 from v440._utils import utils
 from v440._utils.Base import Base
+from v440._utils.VList import VList
 
+
+__all__ = ["Release"]
 
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
-class Release(datahold.OkayList, Scaevola):
-    def __add__(self, other, /) -> Self:
-        other = type(self)(other)
-        ans = self.copy()
-        ans._data += other._data
-        return ans
+class Release(VList):
 
     @overloadable
     def __delitem__(self, key) -> bool:
         return type(key) is slice
 
     @__delitem__.overload(False)
-    def __delitem__(self, key) -> None:
+    def __delitem__(self, key:SupportsIndex) -> None:
         key = utils.toindex(key)
         if key < len(self):
             del self._data[key]
 
     @__delitem__.overload(True)
-    def __delitem__(self, key) -> None:
+    def __delitem__(self, key:slice) -> None:
         key = utils.torange(key, len(self))
         key = [k for k in key if k < len(self)]
         key.sort(reverse=True)
@@ -55,17 +52,8 @@ class Release(datahold.OkayList, Scaevola):
         ans = [self._getitem_int(i) for i in key]
         return ans
 
-    __ge__ = Base.__ge__
-
-    def __iadd__(self, other, /) -> None:
-        self._data += type(self)(other)._data
-
     def __init__(self, /, data=[]) -> None:
         self.data = data
-
-    __le__ = Base.__le__
-    __repr__ = Base.__repr__
-    __setattr__ = Base.__setattr__
 
     @overloadable
     def __setitem__(self, key, value) -> bool:
@@ -178,9 +166,6 @@ class Release(datahold.OkayList, Scaevola):
         while value and value[-1] == 0:
             value.pop()
         self._data = value
-
-    def extend(self, other, /) -> None:
-        self += other
 
     def format(self, cutoff=None) -> str:
         format_spec = str(cutoff) if cutoff else ""
