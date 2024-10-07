@@ -17,10 +17,10 @@ from v440._utils.VList import VList
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(VList):
-    def __add__(self, other, /) -> Self:
-        other = type(self)(other)
-        ans = self.copy()
-        ans._data += other._data
+    def __radd__(self, other:Any, /) -> Self:
+        other = self._tolist(other, "none")
+        data = other + self.data
+        ans = type(self)(data)
         return ans
 
     @overloadable
@@ -55,9 +55,6 @@ class Release(VList):
         key = utils.torange(key, len(self))
         ans = [self._getitem_int(i) for i in key]
         return ans
-
-    def __init__(self, /, data=[]) -> None:
-        self.data = data
 
     @overloadable
     def __setitem__(self, key, value) -> bool:
@@ -100,7 +97,7 @@ class Release(VList):
     @_setitem_range.overload(False)
     def _setitem_range(self, key: range, value: Any):
         key = list(key)
-        value = self._tolist(value, slicing=len(key))
+        value = self._tolist(value, length=len(key))
         if len(key) != len(value):
             e = "attempt to assign sequence of size %s to extended slice of size %s"
             e %= (len(value), len(key))
@@ -127,7 +124,7 @@ class Release(VList):
         self._data = data
 
     @staticmethod
-    def _tolist(value, *, slicing) -> list:
+    def _tolist(value, /, length="none") -> list:
         if value is None:
             return []
         if isinstance(value, int):
@@ -135,11 +132,11 @@ class Release(VList):
         if not isinstance(value, str):
             if hasattr(value, "__iter__"):
                 return [utils.numeral(x) for x in value]
-            slicing = "never"
+            length = "none"
         value = str(value)
         if value == "":
             return list()
-        if "" == value.strip(string.digits) and slicing in (len(value), "always"):
+        if "" == value.strip(string.digits) and length in (len(value), "any"):
             return [int(x) for x in value]
         value = value.lower().strip()
         value = value.replace("_", ".")
@@ -166,7 +163,7 @@ class Release(VList):
 
     @data.setter
     def data(self, value) -> None:
-        value = self._tolist(value, slicing="always")
+        value = self._tolist(value)
         while value and value[-1] == 0:
             value.pop()
         self._data = value
