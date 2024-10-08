@@ -33,6 +33,7 @@ class Base:
         return self.data <= other
     
     __lt__ = OkayList.__lt__
+    __ne__ = OkayABC.__ne__
     __repr__ = OkayABC.__repr__
 
     def __setattr__(self, name: str, value: Any) -> None:

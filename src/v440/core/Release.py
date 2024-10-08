@@ -56,9 +56,6 @@ class Release(VList):
         ans = [self._getitem_int(i) for i in key]
         return ans
 
-    def __init__(self, /, data=[]) -> None:
-        self.data = data
-
     @overloadable
     def __setitem__(self, key, value) -> bool:
         return type(key) is slice
