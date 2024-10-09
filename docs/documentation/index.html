@@ -15,7 +15,11 @@
             <b>Source Code:</b> <a href="https://github.com/johannes-programming/v440">https://github.com/johannes-programming/v440</a>
         </header>
         <section>
-            The project <code>v440</code> provides a mutable version object that allows flexible manipulation of version strings following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. It includes features such as support for release versions, pre-releases (alpha, beta, release candidate), post-releases, development releases, and local versions. The Version class enables direct manipulation of version components, such as major, minor, micro parts, and local identifiers. This project also supports version comparison and formatting, error handling for invalid version strings, and advanced versioning scenarios, like handling epochs, pre-releases, and complex version string combinations. Extensive unit tests ensure the accuracy of these operations.
+            The project <code><a href="#v440">v440</a></code> provides a mutable version object that allows flexible manipulation of version strings following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. 
+            It includes features such as support for release versions, pre-releases (alpha, beta, release candidate), post-releases, development releases, and local versions. 
+            The <code><a href="#Version">Version</a></code> class enables direct manipulation of version components, such as major, minor, micro parts, and local identifiers. 
+            This project also supports version comparison and formatting, error handling for invalid version strings, and advanced versioning scenarios, like handling epochs, pre-releases, and complex version string combinations. 
+            Extensive unit tests ensure the accuracy of these operations.
         </section>
         <section>
             <h3>Core Components</h3>
@@ -146,7 +150,7 @@ print(str(v))  # Output: 1.5.0
         </section>
         <section>
             <h3>The <code>data</code> property</h3>
-            The data property of Pre represents the entire instance. 
+            The <code><a href="#Pre.data">data</a></code> property of <code><a href="#Pre">Pre</a></code> represents the entire instance. 
             Its getter returns a list of length 2 containing the values of phase and subphase. 
             Its setter interprets the given value as a prelease identifier and uses this to change phase and subphase accordingly.
         </section>
@@ -387,13 +391,16 @@ print(v, type(v.epoch), v.epoch)
         </section>
         <section id="Version.local">
             <h3>The <code>local</code> property</h3>
-            The local property in versioning is designed to manage local version identifiers, which serve as extensions to the main version number. These identifiers enable developers and integrators to indicate that a version is a specific, compatible variation of an upstream release, often due to custom patches or modifications. Local version identifiers follow the syntax 
-            &lt;public version identifier&gt;
-            [+
-            &lt;local version label&gt;
-            ], where the local label is prefixed by a plus sign.
-            Local version identifiers can include ASCII letters, digits, and periods, and they must start and end with an alphanumeric character. The primary purpose of local identifiers is to help differentiate between official upstream releases and downstream adaptations, which may not contain the same code as the upstream version. This is particularly useful in environments like Linux distributions, where system integrators may backport critical bug fixes instead of performing a disruptive upgrade.
-            The local property in the v440 project behaves like a specialized list, capable of being manipulated while preserving its integrity. It can interpret strings with periods as lists, allowing for operations typical of lists, such as appending, removing, and sorting elements.
+            The local property in versioning is designed to manage local version identifiers, which serve as extensions to the main version number. 
+            These identifiers enable developers and integrators to indicate that a version is a specific, compatible variation of an upstream release, often due to custom patches or modifications. 
+            Local version identifiers follow the syntax 
+            &lt;public version identifier&gt;[+&lt;local version label&gt;], 
+            where the local label is prefixed by a plus sign.
+            Local version identifiers can include ASCII letters, digits, and periods, and they must start and end with an alphanumeric character. 
+            The primary purpose of local identifiers is to help differentiate between official upstream releases and downstream adaptations, which may not contain the same code as the upstream version. 
+            This is particularly useful in environments like Linux distributions, where system integrators may backport critical bug fixes instead of performing a disruptive upgrade.
+            The local property in the <code><a href="#v440">v440</a></code> project behaves like a specialized list, capable of being manipulated while preserving its integrity. 
+            It can interpret strings with periods as lists, allowing for operations typical of lists, such as appending, removing, and sorting elements.
             Here's an example illustrating how the local property works:
             <pre><code>
 from v440 import Version
@@ -428,13 +435,26 @@ print(v.local is backup)
     #True
 
 </code></pre>
-            In this example, the local property is initialized with a string that gets interpreted as a list. Various list operations are demonstrated, showcasing its functionality while preserving the original versioning structure. The local property is versatile and maintains the versioning rules, allowing for clear differentiation between upstream releases and downstream modifications.
+            In this example, the local property is initialized with a string that gets interpreted as a list. 
+            Various list operations are demonstrated, showcasing its functionality while preserving the original versioning structure. 
+            The local property is versatile and maintains the versioning rules, 
+            allowing for clear differentiation between upstream releases and downstream modifications.
         </section>
         <section id="Version.post">
             <h3>The <code>post</code> property</h3>
-            The post property in versioning is used to identify post-releases, which are minor updates made to final releases that do not introduce significant changes to the software itself. These updates may address issues such as errors in release notes or minor tweaks that don't affect functionality. The inclusion of a post-release segment in the version identifier is denoted as X.Y.postN, where N is a non-negative integer that represents the post-release number.
-            Post-releases are sequenced to appear directly after their corresponding stable releases in the version hierarchy. This means if you have a version 1.2.3, the post-releases will be labeled as 1.2.3.post1, 1.2.3.post2, etc. It's important to note that while post-releases can also be applied to pre-releases and release candidates (like 1.2.3a.post1 for an alpha version), using post-releases for significant bug fixes is not recommended. Instead, developers are encouraged to increment the main version number to reflect more substantial updates.
-            The following code example illustrates the flexibility of the post property in handling various input formats, allowing it to accept different types while maintaining the integrity of the versioning system:
+            The <code><a href="#Version.post">v440</a></code> property in versioning is used to identify post-releases, 
+            which are minor updates made to final releases that do not introduce significant changes to the software itself. 
+            These updates may address issues such as errors in release notes or minor tweaks that don't affect functionality. 
+            The inclusion of a post-release segment in the version identifier is denoted as X.Y.postN, 
+            where N is a non-negative integer that represents the post-release number.
+            Post-releases are sequenced to appear directly after their corresponding stable releases in the version hierarchy. 
+            This means if you have a version 1.2.3, the post-releases will be labeled as 1.2.3.post1, 1.2.3.post2, etc. 
+            It's important to note that while post-releases can also be applied to pre-releases and release candidates 
+            (like 1.2.3a.post1 for an alpha version), 
+            using post-releases for significant bug fixes is not recommended. 
+            Instead, developers are encouraged to increment the main version number to reflect more substantial updates.
+            The following code example illustrates the flexibility of the post property in handling various input formats, 
+            allowing it to accept different types while maintaining the integrity of the versioning system:
             <pre><code>
 from v440 import Version
 
@@ -505,13 +525,25 @@ print(v, type(v.post), v.post)
 # 1.2.3 &lt;class 'NoneType'&gt; None
 
 </code></pre>
-            This example showcases how the post property can accept various input formats, reinforcing the system's versatility while adhering to the requirements of versioning conventions.
+            This example showcases how the post property can accept various input formats, 
+            reinforcing the system's versatility while adhering to the requirements of versioning conventions.
         </section>
         <section id="Version.pre">
             <h3>The <code>pre</code> property</h3>
-            The <code><a href="#pre">pre</a></code> property in versioning is designed to handle pre-releases, which allow developers to provide alpha, beta, or release candidate versions of their software for user testing prior to a final release. Pre-releases are indicated by a specific format in the version identifier, such as X.YaN for alpha releases, X.YbN for beta releases, and X.YrcN for release candidates.
-            The <code><a href="#pre">pre</a></code> property in the <code><a href="#v440">v440</a></code> project is implemented as a specialized list-like object that can be modified but must always contain exactly two components: the phase of the pre-release (such as "alpha," "beta," or "release candidate") and an associated numerical value. This constraint ensures that pre-releases maintain their intended structure and semantics.
-            Pre-releases are ordered based on their phase and the numerical component within that phase. For instance, alpha releases come before beta releases, which in turn precede release candidates. When comparing pre-release versions, installation tools may treat "c" (candidate) and "rc" (release candidate) as equivalent to simplify legacy version handling.
+            The <code><a href="#pre">pre</a></code> property in versioning is designed to handle pre-releases, 
+            which allow developers to provide alpha, beta, or release candidate versions 
+            of their software for user testing prior to a final release. 
+            Pre-releases are indicated by a specific format in the version identifier, 
+            such as X.YaN for alpha releases, X.YbN for beta releases, and X.YrcN for release candidates.
+            The <code><a href="#pre">pre</a></code> property in the <code><a href="#v440">v440</a></code> project 
+            is implemented as a specialized list-like object 
+            that can be modified but must always contain exactly two components: 
+            the phase of the pre-release (such as "alpha," "beta," or "release candidate") and an associated numerical value. 
+            This constraint ensures that pre-releases maintain their intended structure and semantics.
+            Pre-releases are ordered based on their phase and the numerical component within that phase. 
+            For instance, alpha releases come before beta releases, which in turn precede release candidates. 
+            When comparing pre-release versions, installation tools may treat "c" (candidate) and "rc" (release candidate) 
+            as equivalent to simplify legacy version handling.
             Here's an example demonstrating how the pre property works:
             <pre><code>
 from v440 import Version
