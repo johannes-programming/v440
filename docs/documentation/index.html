@@ -20,13 +20,12 @@
             following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. 
         </p>
         <h3>Core Components</h3>
-        <section>
-            <p>
-                The <code><a href="#v440"></a></code> module is built around the class <code><a href="#Version">v440.Version</a></code>. 
-                Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions 
-                allowing to manipulate the specific parts of the version identifiers individually. 
-            </p>
-            <pre><code>
+        <p>
+            The <code><a href="#v440"></a></code> module is built around the class <code><a href="#Version">v440.Version</a></code>. 
+            Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions 
+            allowing to manipulate the specific parts of the version identifiers individually. 
+        </p>
+        <pre><code>
 from v440 import Version
 
 # Create an instance of the v440.Version class
@@ -42,78 +41,74 @@ v.local = "local.7.dev"
 print(v)  # Output: 2.5.3b1+local.7.dev
 
 </code></pre>
-        </section>
         <h3>Quick Links for the properties of <code>v440.Version</code></h3>
-        <section>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Getter</th>
-                        <th>Setter</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#Version.base">base</a></td>
-                        <td>Represents <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>.</td>
-                        <td>Gives a copy trunkated to only <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>. </td>
-                        <td>Overwrites <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.data">data</a></td>
-                        <td>Represents the entire instance.</td>
-                        <td>Gives string representation.</td>
-                        <td>Overwrites all properties.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.dev">dev</a></td>
-                        <td>Represents the devrelease part of the version identifier.</td>
-                        <td>Gives <code>None</code> or a nonnegative integer.</td>
-                        <td>Converts and saves the value.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.epoch">epoch</a></td>
-                        <td>Represents the epoch part of the version identifier.</td>
-                        <td>Gives a nonnegative integer.</td>
-                        <td>Converts and saves the value.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.local">local</a></td>
-                        <td>Represents the local part of the version identifier.</td>
-                        <td>Gives an object of the class <code><a href="#Local">Local</a></code>.</td>
-                        <td>Converts the value and saves it inside of <a href="#Version.local"><code>local</code></a>.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.post">post</a></td>
-                        <td>Represents the postrelease part of the version identifier.</td>
-                        <td>Gives <code>None</code> or a nonnegative integer.</td>
-                        <td>Converts and saves the value.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.pre">pre</a></td>
-                        <td>Represents the prerelease part of the version identifier.</td>
-                        <td>Gives an object of the class <code><a href="#Pre">Pre</a></code>.</td>
-                        <td>Converts the value and saves it inside of <a href="#Version.pre"><code>pre</code></a>.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.public">public</a></td>
-                        <td>Represents the public part of the version identifier (everything but <a href="#Version.local"><code>local</code></a>).</td>
-                        <td>Gives a copy without <a href="#Version.local"><code>local</code></a>.</td>
-                        <td>Overwrites all properties except for <a href="#Version.local"><code>local</code></a>.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#Version.release">release</a></td>
-                        <td>Represents the release part of the version identifier.</td>
-                        <td>Gives a specialized list-like object that can be altered.</td>
-                        <td>Converts the value and saves it inside of <a href="#Version.release"><code>release</code></a>.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Getter</th>
+                    <th>Setter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#Version.base">base</a></td>
+                    <td>Represents <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>.</td>
+                    <td>Gives a copy trunkated to only <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>. </td>
+                    <td>Overwrites <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.data">data</a></td>
+                    <td>Represents the entire instance.</td>
+                    <td>Gives string representation.</td>
+                    <td>Overwrites all properties.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.dev">dev</a></td>
+                    <td>Represents the devrelease part of the version identifier.</td>
+                    <td>Gives <code>None</code> or a nonnegative integer.</td>
+                    <td>Converts and saves the value.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.epoch">epoch</a></td>
+                    <td>Represents the epoch part of the version identifier.</td>
+                    <td>Gives a nonnegative integer.</td>
+                    <td>Converts and saves the value.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.local">local</a></td>
+                    <td>Represents the local part of the version identifier.</td>
+                    <td>Gives an object of the class <code><a href="#Local">Local</a></code>.</td>
+                    <td>Converts the value and saves it inside of <a href="#Version.local"><code>local</code></a>.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.post">post</a></td>
+                    <td>Represents the postrelease part of the version identifier.</td>
+                    <td>Gives <code>None</code> or a nonnegative integer.</td>
+                    <td>Converts and saves the value.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.pre">pre</a></td>
+                    <td>Represents the prerelease part of the version identifier.</td>
+                    <td>Gives an object of the class <code><a href="#Pre">Pre</a></code>.</td>
+                    <td>Converts the value and saves it inside of <a href="#Version.pre"><code>pre</code></a>.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.public">public</a></td>
+                    <td>Represents the public part of the version identifier (everything but <a href="#Version.local"><code>local</code></a>).</td>
+                    <td>Gives a copy without <a href="#Version.local"><code>local</code></a>.</td>
+                    <td>Overwrites all properties except for <a href="#Version.local"><code>local</code></a>.</td>
+                </tr>
+                <tr>
+                    <td><a href="#Version.release">release</a></td>
+                    <td>Represents the release part of the version identifier.</td>
+                    <td>Gives a specialized list-like object that can be altered.</td>
+                    <td>Converts the value and saves it inside of <a href="#Version.release"><code>release</code></a>.</td>
+                </tr>
+            </tbody>
+        </table>
         <h3>Version Object Examples</h3>
-        <section>
             <pre><code>
 v = Version("1.0.0")
 print(str(v))  # Output: 1.0.0
@@ -121,7 +116,6 @@ v.release[1] = 5
 print(str(v))  # Output: 1.5.0
 
 </code></pre>
-        </section>
         <h2 id="Local">The <code>Local</code> class</h2>
         <p>
             <code><a href="#Local">Local</a></code> is a list-like class 
@@ -165,8 +159,8 @@ print(str(v))  # Output: 1.5.0
                 The <code><a href="#Pre.phase">phase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
                 It take a value of <code>"a"</code>, <code>"b"</code>, or <code>"rc"</code> iff <code><a href="#Pre.subphase">subphase</a></code> is a nonnegative integer and the value <code>None</code> iff <code><a href="#Pre.subphase">subphase</a></code> is likewise <code>None</code>.
             </section>
-            <section id="Pre.subphase">
-                <h3>The <code>subphase</code> property</h3>
+            <h3 id="Pre.subphase">The <code>subphase</code> property</h3>
+            <section>
                 The <code><a href="#Pre.subphase">subphase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
                 It take a nonnegative integer value iff <code><a href="Pre.phase">phase</a></code> is a string and the value <code>None</code> iff <code><a href="#Pre.phase">phase</a></code> is likewise <code>None</code>.
             </section>
@@ -177,58 +171,56 @@ print(str(v))  # Output: 1.5.0
             All items are are nonnegative integers. 
             While normally all tailing zeros are dropped if it is necessary an unlimited amount of tailing zeros will be simulated.
         </p>
+        <h4><code><i>class</i> v440.core.<b>Release(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
         <section>
-            <h4><code><i>class</i> v440.core.<b>Release(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
+            Create a new <code><a href="#Release">Release</a></code> object. 
+            The one (non required) positional argument is passed to its <code>data</code> property. 
+            <h4 id="Release.bump"><code>
+                <b>bump(</b><i>index</i>: <i>SupportsIndex</i> = <i>-1</i>, 
+                <i>amount</i>: <i>SupportsIndex</i> = <i>1</i><b>)</b> -> <i>None</i>
+                </code>
+            </h4>
             <section>
-                Create a new <code><a href="#Release">Release</a></code> object. 
-                The one (non required) positional argument is passed to its <code>data</code> property. 
-                <h4 id="Release.bump"><code>
-                    <b>bump(</b><i>index</i>: <i>SupportsIndex</i> = <i>-1</i>, 
-                    <i>amount</i>: <i>SupportsIndex</i> = <i>1</i><b>)</b> -> <i>None</i>
-                    </code>
-                </h4>
-                <section>
-                    The <code><a href="#Release.bump">bump</a></code> method 
-                    increases the item at the given <code>index</code> by <code>amount</code> 
-                    and sets all further items to zeros/cuts them off.
-                </section>
-                <h4 id="Release.data"><code><b>data</b></code></h4>
-                <section>
-                    The <code><a href="#Release.data">data</a></code> property of <code><a href="#Release">Release</a></code> represents the entire instance. 
-                    Its getter returns a list. 
-                    Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
-                </section>
-                <h4 id="Release.format"><code>
-                    <b>format(</b>
-                    <i>cutoff</i> = <i>None</i>
-                    <b>)</b> -> <i>str</i>
-                    </code>
-                </h4>
-                <section>
-                    The <code><a href="#Release.format">format</a></code> method 
-                    returns a string representation of the instance.
-                </section>
-                <h4 id="Release.major"><code><b>major</b></code></h4>
-                <section>
-                    The <code><a href="#Release.major">major</a></code> property of <code><a href="#Release">Release</a></code> 
-                    is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
-                </section>
-                <h4 id="Release.minor"><code><b>minor</b></code></h4>
-                <section>
-                    The <code><a href="#Release.minor">minor</a></code> property of <code><a href="#Release">Release</a></code> 
-                    is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
-                </section>
-                <h4 id="Release.micro"><code><b>micro</b></code></h4>
-                <section>
-                    The <code><a href="#Release.micro">micro</a></code> property of <code><a href="#Release">Release</a></code> 
-                    is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>.
-                </section>
-                <h4 id="Release.patch"><code><b>patch</b></code></h4>
-                <section>
-                    The <code><a href="#Release.patch">patch</a></code> property of <code><a href="#Release">Release</a></code> 
-                    is another <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>, 
-                    just as <code><a href="#Release.micro">micro</a></code>.
-                </section>
+                The <code><a href="#Release.bump">bump</a></code> method 
+                increases the item at the given <code>index</code> by <code>amount</code> 
+                and sets all further items to zeros/cuts them off.
+            </section>
+            <h4 id="Release.data"><code><b>data</b></code></h4>
+            <section>
+                The <code><a href="#Release.data">data</a></code> property of <code><a href="#Release">Release</a></code> represents the entire instance. 
+                Its getter returns a list. 
+                Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
+            </section>
+            <h4 id="Release.format"><code>
+                <b>format(</b>
+                <i>cutoff</i> = <i>None</i>
+                <b>)</b> -> <i>str</i>
+                </code>
+            </h4>
+            <section>
+                The <code><a href="#Release.format">format</a></code> method 
+                returns a string representation of the instance.
+            </section>
+            <h4 id="Release.major"><code><b>major</b></code></h4>
+            <section>
+                The <code><a href="#Release.major">major</a></code> property of <code><a href="#Release">Release</a></code> 
+                is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
+            </section>
+            <h4 id="Release.minor"><code><b>minor</b></code></h4>
+            <section>
+                The <code><a href="#Release.minor">minor</a></code> property of <code><a href="#Release">Release</a></code> 
+                is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
+            </section>
+            <h4 id="Release.micro"><code><b>micro</b></code></h4>
+            <section>
+                The <code><a href="#Release.micro">micro</a></code> property of <code><a href="#Release">Release</a></code> 
+                is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>.
+            </section>
+            <h4 id="Release.patch"><code><b>patch</b></code></h4>
+            <section>
+                The <code><a href="#Release.patch">patch</a></code> property of <code><a href="#Release">Release</a></code> 
+                is another <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>, 
+                just as <code><a href="#Release.micro">micro</a></code>.
             </section>
         </section>
         <h2 id="Version">The <code>Version</code> class</h2>
