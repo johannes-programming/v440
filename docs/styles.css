@@ -57,6 +57,7 @@ pre {
 /* Section and Content Styling */
 section {
     margin: 20px 0;
+    text-indent: 2em;
 }
 
 strong {

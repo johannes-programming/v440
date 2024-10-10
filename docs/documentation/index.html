@@ -14,13 +14,13 @@
             <h1><code>v440</code> - Mutable version object handling based on PEP 440</h1>
             <b>Source Code:</b> <a href="https://github.com/johannes-programming/v440">https://github.com/johannes-programming/v440</a>
         </header>
-        <section>
+        <p>
             The project <code><a href="#v440">v440</a></code> provides mutable version objects 
             that allow flexible manipulation of version identifiers 
             following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. 
-        </section>
+        </p>
+        <h3>Core Components</h3>
         <section>
-            <h3>Core Components</h3>
             The <code><a href="#v440"></a></code> module is built around the class <code><a href="#Version">v440.Version</a></code>. 
             Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions 
             allowing to manipulate the specific parts of the version identifiers individually. 
@@ -41,8 +41,8 @@ print(v)  # Output: 2.5.3b1+local.7.dev
 
 </code></pre>
         </section>
+        <h3>Quick Links for the properties of <code>v440.Version</code></h3>
         <section>
-            <h3>Quick Links for the properties of <code>v440.Version</code></h3>
             <table>
                 <thead>
                     <tr>
@@ -110,8 +110,8 @@ print(v)  # Output: 2.5.3b1+local.7.dev
                 </tbody>
             </table>
         </section>
+        <h3>Version Object Examples</h3>
         <section>
-            <h3>Version Object Examples</h3>
             <pre><code>
 v = Version("1.0.0")
 print(str(v))  # Output: 1.0.0
@@ -120,23 +120,25 @@ print(str(v))  # Output: 1.5.0
 
 </code></pre>
         </section>
-        <section id="Local">
-            <h2>The <code>Local</code> class</h2>
-            <h4><code><i>class</i> v440.core.<b>Local(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
-            Create a new <code><a href="#Local">Local</a></code> object. 
-            The one (non required) positional argument is passed 
-            to its <code>data</code> property. 
+        <h2 id="Local">The <code>Local</code> class</h2>
+        <p>
             <code><a href="#Local">Local</a></code> is a list-like class 
             specifically for the <code><a href="#Version.local">local</a></code> property 
             of <code><a href="#Version">Version</a></code>. 
             It implements all operations and methods of <code>list</code>.
             All items are are nonnegative integers or nonempty strings.
-            <section id="Local.data">
-                <h3>The <code>data</code> property</h3>
-                The <code><a href="#Local.data">data</a></code> property of <code><a href="#Local">Local</a></code> represents the entire instance. 
-                Its getter returns a list. 
-                Its setter interprets the given value as a local version identifier and uses this to change the instance accordingly.
-            </section>
+        </p>
+        <h4><code><i>class</i> v440.core.<b>Local(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
+        <p>
+            Create a new <code><a href="#Local">Local</a></code> object. 
+            The one (non required) positional argument is passed 
+            to its <code>data</code> property. 
+        </p>
+        <section id="Local.data">
+            <h3>The <code>data</code> property</h3>
+            The <code><a href="#Local.data">data</a></code> property of <code><a href="#Local">Local</a></code> represents the entire instance. 
+            Its getter returns a list. 
+            Its setter interprets the given value as a local version identifier and uses this to change the instance accordingly.
         </section>
         <section id="Pre">
             <h2>The <code>Pre</code> class</h2>
