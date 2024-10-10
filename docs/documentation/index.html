@@ -169,8 +169,8 @@ print(str(v))  # Output: 1.5.0
                     <h4><code><b>isempty()</b> -> <i>bool</i></code></h4>
                     <section>
                         The <code><a href="#Pre.isempty">isempty</a></code> method returns a boolean value. 
-                        <code>True</code> if its <code><a href="#Pre.data">data</a></code> is equal to <code>[None, None]</code> 
-                        meaning that the version is not a prerelease, otherwise <code>False</code>
+                        <code>True</code> if <code><a href="#Pre.data">data</a></code> is equal to <code>[None, None]</code> 
+                        meaning that the version is not a prerelease, otherwise <code>False</code>.
                     </section>
                 </div>
                 <div id="Pre.phase">
@@ -475,6 +475,24 @@ print(v, type(v.epoch), v.epoch)
                         The <code><a href="#Version.format">format</a></code> method
                     </section>
                 </div>
+                <div id="Version.isprerelease">
+                    <h4><code><b>isprerelease()</b> -> <i>bool</i></code></h4>
+                    <section>
+                        The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method
+                    </section>
+                </div>
+                <div id="Version.ispostrelease">
+                    <h4><code><b>ispostrelease()</b> -> <i>bool</i></code></h4>
+                    <section>
+                        The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method
+                    </section>
+                </div>
+                <div id="Version.isdevrelease">
+                    <h4><code><b>isdevrelease()</b> -> <i>bool</i></code></h4>
+                    <section>
+                        The <code><a href="#Version.isdevrelease">isdevrelease</a></code> method
+                    </section>
+                </div>
                 <div id="Version.local">
                     <h4><code><b>local</b></code></h4>
                     <section>
@@ -526,6 +544,12 @@ print(v.local is backup)
                         Various list operations are demonstrated, showcasing its functionality while preserving the original versioning structure. 
                         The local property is versatile and maintains the versioning rules, 
                         allowing for clear differentiation between upstream releases and downstream modifications.
+                    </section>
+                </div>
+                <div id="Version.packaging">
+                    <h4><code><b>packaging()</b> -> <i>packaging.version.Version</i></code></h4>
+                    <section>
+                        The <code><a href="#Version.packaging">packaging</a></code> method
                     </section>
                 </div>
                 <div id="Version.post">
@@ -685,7 +709,7 @@ print(v, v.pre)
                     </section>
                 </div>
                 <div  id="Version.update">
-                    <h4><code><b>update(</b><i>**kwargs</i><b>)</b></code></h4>
+                    <h4><code><b>update(</b><i>**kwargs</i><b>)</b> -> <i>None</i></code></h4>
                     <section>
                         The <code><a href="#Version.update">update</a></code> method 
                     </section>
