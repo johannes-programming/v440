@@ -105,15 +105,15 @@ class Version(Base):
     @base.setter
     @utils.digest
     class base:
-        def byInt(self, value):
+        def byInt(self, value:int)->None:
             self.epoch = None
             self.release = value
 
-        def byNone(self):
+        def byNone(self)->None:
             self.epoch = None
             self.release = None
 
-        def byStr(self, value):
+        def byStr(self, value:str)->None:
             if "!" in value:
                 self.epoch, self.release = value.split("!", 1)
             else:
@@ -132,15 +132,15 @@ class Version(Base):
     @data.setter
     @utils.digest
     class data:
-        def byInt(self, value: int):
+        def byInt(self, value: int)->None:
             self.public = value
             self.local = None
 
-        def byNone(self):
+        def byNone(self)->None:
             self.public = None
             self.local = None
 
-        def byStr(self, value: str):
+        def byStr(self, value: str)->None:
             if "+" in value:
                 self.public, self.local = value.split("+", 1)
             else:
@@ -151,7 +151,7 @@ class Version(Base):
         return self._data.dev
 
     @dev.setter
-    def dev(self, value)->None:
+    def dev(self, value:Any)->None:
         self._data.dev = QualifierParser.DEV(value)
 
     @property
@@ -161,15 +161,15 @@ class Version(Base):
     @epoch.setter
     @utils.digest
     class epoch:
-        def byInt(self, value: int):
+        def byInt(self, value: int)-> None:
             if value < 0:
                 raise ValueError
             self._data.epoch = value
 
-        def byNone(self):
+        def byNone(self) ->None:
             self._data.epoch = 0
 
-        def byStr(self, value: str):
+        def byStr(self, value: str) -> None:
             value = Pattern.EPOCH.bound.search(value)
             value = value.group("n")
             if value is None:
@@ -205,7 +205,7 @@ class Version(Base):
         return self._data.local
 
     @local.setter
-    def local(self, value)->None:
+    def local(self, value:Any)->None:
         self._data.local.data = value
 
     def packaging(self) -> packaging.version.Version:
@@ -216,7 +216,7 @@ class Version(Base):
         return self._data.post
 
     @post.setter
-    def post(self, value)->None:
+    def post(self, value:Any)->None:
         self._data.post = QualifierParser.POST(value)
 
     @property
@@ -224,7 +224,7 @@ class Version(Base):
         return self._data.pre
 
     @pre.setter
-    def pre(self, value) -> None:
+    def pre(self, value:Any) -> None:
         self._data.pre.data = value
 
     @property
@@ -236,19 +236,19 @@ class Version(Base):
     @public.setter
     @utils.digest
     class public:
-        def byInt(self, value):
+        def byInt(self, value:int) -> None:
             self.base = value
             self.pre = None
             self.post = None
             self.dev = None
 
-        def byNone(self):
+        def byNone(self) -> None:
             self.base = None
             self.pre = None
             self.post = None
             self.dev = None
 
-        def byStr(self, value):
+        def byStr(self, value:str) -> None:
             match = Pattern.PUBLIC.leftbound.search(value)
             self.base = value[: match.end()]
             value = value[match.end() :]
@@ -274,7 +274,7 @@ class Version(Base):
     def release(self, value) -> None:
         self._data.release.data = value
 
-    def update(self, **kwargs):
+    def update(self, **kwargs) -> None:
         for k, v in kwargs.items():
             attr = getattr(type(self), k)
             if isinstance(attr, property):
