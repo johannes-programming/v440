@@ -457,10 +457,16 @@ print(v, type(v.epoch), v.epoch)
                         Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
                     </section>
                 </div>
-                <div  id="Version.local">
+                <div id="Version.format">
+                    <b>format(</b><i>cutoff</i> = <i>None</i><b>)</b> -> <i>str</i></code>
+                    <section>
+                        The <code><a href="#Version.format">format</a></code> method
+                    </section>
+                </div>
+                <div id="Version.local">
                     <h4><code><b>local</b></code></h4>
                     <section>
-                        The local property in versioning is designed to manage local version identifiers, which serve as extensions to the main version number. 
+                        The <code><a href="#local">local</a></code> property in versioning is designed to manage local version identifiers, which serve as extensions to the main version number. 
                         These identifiers enable developers and integrators to indicate that a version is a specific, compatible variation of an upstream release, often due to custom patches or modifications. 
                         Local version identifiers follow the syntax 
                         &lt;public version identifier&gt;[+&lt;local version label&gt;], 
