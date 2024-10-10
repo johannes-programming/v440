@@ -278,49 +278,49 @@ print("Base version remains unchanged:", v.base)
                 <h4><code><b>data</b></code></h4>
                 The <code>data</code> property represents the entire instance. Its getter returns the instance converted into a string. Its setter interprets the given value as a version identifier and uses this to change every property of the instance accordingly.
                 <pre><code>
-    from v440 import Version
+from v440 import Version
 
-    v = Version("42!1.2.3.dev1337+5.nov")
-    print("Initial version:", v)
-    print("Data property:", v.data)
-    print("Type of data property:", type(v.data))
+v = Version("42!1.2.3.dev1337+5.nov")
+print("Initial version:", v)
+print("Data property:", v.data)
+print("Type of data property:", type(v.data))
 
-    v.data = 4.2
-    print("Updated version:", v)
-    print("Data property:", v.data)
-    print("Type of data property:", type(v.data))
+v.data = 4.2
+print("Updated version:", v)
+print("Data property:", v.data)
+print("Type of data property:", type(v.data))
 
-    v.data = 9001
-    print("Updated version:", v)
-    print("Data property:", v.data)
-    print("Type of data property:", type(v.data))
+v.data = 9001
+print("Updated version:", v)
+print("Data property:", v.data)
+print("Type of data property:", type(v.data))
 
-    v.data = None
-    print("Updated version:", v)
-    print("Data property:", v.data)
-    print("Type of data property:", type(v.data))
+v.data = None
+print("Updated version:", v)
+print("Data property:", v.data)
+print("Type of data property:", type(v.data))
 
-    v.data = "1701!4.5.6.rc255+reset"
-    print("Updated version:", v)
-    print("Data property:", v.data)
-    print("Type of data property:", type(v.data))
+v.data = "1701!4.5.6.rc255+reset"
+print("Updated version:", v)
+print("Data property:", v.data)
+print("Type of data property:", type(v.data))
 
-    #Output
-        #Initial version: 42!1.2.3.dev1337+5.nov
-        #Data property: 42!1.2.3.dev1337+5.nov
-        #Type of data property: &lt;class 'str'&gt;
-        #Updated version: 4.2
-        #Data property: 4.2
-        #Type of data property: &lt;class 'str'&gt;
-        #Updated version: 9001
-        #Data property: 9001
-        #Type of data property: &lt;class 'str'&gt;
-        #Updated version: 0
-        #Data property: 0
-        #Type of data property: &lt;class 'str'&gt;
-        #Updated version: 1701!4.5.6rc255+reset
-        #Data property: 1701!4.5.6rc255+reset
-        #Type of data property: &lt;class 'str'&gt;
+#Output
+    #Initial version: 42!1.2.3.dev1337+5.nov
+    #Data property: 42!1.2.3.dev1337+5.nov
+    #Type of data property: &lt;class 'str'&gt;
+    #Updated version: 4.2
+    #Data property: 4.2
+    #Type of data property: &lt;class 'str'&gt;
+    #Updated version: 9001
+    #Data property: 9001
+    #Type of data property: &lt;class 'str'&gt;
+    #Updated version: 0
+    #Data property: 0
+    #Type of data property: &lt;class 'str'&gt;
+    #Updated version: 1701!4.5.6rc255+reset
+    #Data property: 1701!4.5.6rc255+reset
+    #Type of data property: &lt;class 'str'&gt;
                 </code></pre>
             </section>
             <section id="Version.dev">
