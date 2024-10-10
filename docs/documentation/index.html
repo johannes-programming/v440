@@ -429,7 +429,6 @@ print(v, type(v.dev), v.dev)
     #1.2.3.dev0 &lt;class 'int'&gt; 0
     #1.2.3.dev1 &lt;class 'int'&gt; 1
     #1.2.3 &lt;class 'NoneType'&gt; None
-    
     </code></pre>
                         This example highlights the flexibility of the dev property in handling different input types while adhering to the requirements of the versioning system.
                     </section>
@@ -437,7 +436,7 @@ print(v, type(v.dev), v.dev)
                 <div id="Version.epoch">
                     <h4><code><b>epoch</b></code></h4>
                     <section>
-                        The epoch property in versioning serves as a mechanism to manage version identifiers in situations where the conventional sorting rules might not suffice. It is particularly useful when a project transitions from one versioning scheme to another, ensuring that version comparisons yield the correct results. The epoch is represented as a nonnegative integer and is placed before the other version components, separated by an exclamation mark (e.g., E!X.Y).
+                        The <code><a href="#Version.epoch">epoch</a></code> property in versioning serves as a mechanism to manage version identifiers in situations where the conventional sorting rules might not suffice. It is particularly useful when a project transitions from one versioning scheme to another, ensuring that version comparisons yield the correct results. The epoch is represented as a nonnegative integer and is placed before the other version components, separated by an exclamation mark (e.g., E!X.Y).
                         If a version identifier lacks an explicit epoch, it defaults to <code>0</code>. This is significant because it allows developers to redefine versioning strategies without conflicting with previous releases. For instance, if a project previously utilized date-based versioning and then shifts to semantic versioning, the epoch ensures that the new versions are recognized as more recent than the earlier versions.
                         In the provided code example, the epoch property demonstrates its flexibility and tolerance in handling various types of inputs. The setter can accept strings, booleans, and even None, converting them to a valid integer or resetting the epoch to its default value. 
                         <pre><code>
@@ -464,7 +463,6 @@ print(v, type(v.epoch), v.epoch)
     #1.2.3 &lt;class 'int'&gt; 0
     #1!1.2.3 &lt;class 'int'&gt; 1
     #1.2.3 &lt;class 'int'&gt; 0
-        
     </code></pre>
                         Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
                     </section>
