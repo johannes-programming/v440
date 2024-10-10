@@ -209,7 +209,7 @@ class Version(Base):
         self._data.local.data = value
 
     def packaging(self) -> packaging.version.Version:
-        return packaging.version.Version(self.data)
+        return packaging.version.Version(str(self))
 
     @property
     def post(self) -> Optional[int]:

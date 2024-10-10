@@ -132,7 +132,7 @@ print(str(v))  # Output: 1.5.0
                     The one (non required) positional argument is passed 
                     to its <code>data</code> property. 
                 </p>
-                <h4 id="Local.data"><code>data</code></h4>
+                <h4 id="Local.data"><code><b>data</b></code></h4>
                 <section>
                     The <code><a href="#Local.data">data</a></code> property of <code><a href="#Local">Local</a></code> represents the entire instance. 
                     Its getter returns a list. 
@@ -549,7 +549,18 @@ print(v.local is backup)
                 <div id="Version.packaging">
                     <h4><code><b>packaging()</b> -> <i>packaging.version.Version</i></code></h4>
                     <section>
-                        The <code><a href="#Version.packaging">packaging</a></code> method
+                        The <code><a href="#Version.packaging">packaging</a></code> method converts the current instance 
+                        into an (immutable) <code><a href="https://packaging.pypa.io/">packaging</a>.version.Version</code> object.
+                        <pre><code>
+import packaging.version 
+import v440
+
+# the following two functions are identical
+def f(version:v440.Version) -> packaging.version.Version:
+    return version.packaging()
+def g(version:v440.Version) -> packaging.version.Version:
+    return packaging.version.Version(str(version))
+                        </code></pre>
                     </section>
                 </div>
                 <div id="Version.post">
