@@ -15,16 +15,15 @@
             <b>Source Code:</b> <a href="https://github.com/johannes-programming/v440">https://github.com/johannes-programming/v440</a>
         </header>
         <section>
-            The project <code><a href="#v440">v440</a></code> provides a mutable version object that allows flexible manipulation of version strings following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. 
-            It includes features such as support for release versions, pre-releases (alpha, beta, release candidate), post-releases, development releases, and local versions. 
-            The <code><a href="#Version">Version</a></code> class enables direct manipulation of version components, such as major, minor, micro parts, and local identifiers. 
-            This project also supports version comparison and formatting, error handling for invalid version strings, and advanced versioning scenarios, like handling epochs, pre-releases, and complex version string combinations. 
-            Extensive unit tests ensure the accuracy of these operations.
+            The project <code><a href="#v440">v440</a></code> provides mutable version objects 
+            that allow flexible manipulation of version identifiers 
+            following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. 
         </section>
         <section>
             <h3>Core Components</h3>
             The <code><a href="#v440"></a></code> module is built around the class <code><a href="#Version">v440.Version</a></code>. 
-            Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions allowing to manipulate the specific parts of the version identifiers individually. 
+            Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions 
+            allowing to manipulate the specific parts of the version identifiers individually. 
             <pre><code>
 from v440 import Version
 
@@ -125,8 +124,12 @@ print(str(v))  # Output: 1.5.0
             <h2>The <code>Local</code> class</h2>
             <h4><code><i>class</i> v440.core.<b>Local(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
             Create a new <code><a href="#Local">Local</a></code> object. 
-            The one (non required) positional argument is passed to its <code>data</code> property. 
-            <code><a href="#Local">Local</a></code> is a list-like class specifically for the <code><a href="#Version.local">local</a></code> property of <code><a href="#Version">Version</a></code>. It implements all operations and methods of list.
+            The one (non required) positional argument is passed 
+            to its <code>data</code> property. 
+            <code><a href="#Local">Local</a></code> is a list-like class 
+            specifically for the <code><a href="#Version.local">local</a></code> property 
+            of <code><a href="#Version">Version</a></code>. 
+            It implements all operations and methods of <code>list</code>.
             All items are are nonnegative integers or nonempty strings.
         </section>
         <section id="Local.data">
@@ -298,10 +301,20 @@ print("Type of data property:", type(v.data))
         </section>
         <section id="Version.dev">
             <h3>The <code>dev</code> property</h3>
-            The <code>dev</code> property in versioning signifies developmental releases, which are often created during a project's development cycle. These releases are useful for developers and packagers who want to test early versions of the software without interfering with stable releases. The dev segment consists of the string <code>".dev"</code> followed by a non-negative integer, which indicates the specific developmental release.
-            Developmental releases are ordered numerically, appearing right before the corresponding stable release in version sorting. For example, if you have a version <code>"1.2.3"</code>, the developmental releases would be labeled <code>"1.2.3.dev1"</code>, <code>"1.2.3.dev2"</code>, etc. Additionally, developmental releases can also be used in conjunction with pre-releases and post-releases, such as <code>"1.2.3a.dev1"</code> for an alpha release or <code>"1.2.3.post1.dev1"</code> for a post-release.
+            The <code>dev</code> property in versioning signifies developmental releases, 
+            which are often created during a project's development cycle. 
+            These releases are useful for developers and packagers 
+            who want to test early versions of the software without interfering with stable releases. 
+            The <code>dev</code> segment consists of the string <code>".dev"</code> 
+            followed by a non-negative integer, which indicates the specific developmental release.
+            Developmental releases are ordered numerically, 
+            appearing right before the corresponding stable release in version sorting. 
+            For example, if you have a version <code>"1.2.3"</code>, 
+            the developmental releases would be labeled <code>"1.2.3.dev1"</code>, 
+            <code>"1.2.3.dev2"</code>, etc. 
+            Additionally, developmental releases can also be used in conjunction with pre-releases and post-releases, such as <code>"1.2.3a.dev1"</code> for an alpha release or <code>"1.2.3.post1.dev1"</code> for a post-release.
             While developmental releases serve a purpose in testing and continuous integration, it's generally advised against publishing them publicly, especially for pre-releases, as they can complicate version interpretation. Instead, it's clearer to create a new pre-release by incrementing the numeric part of the version.
-            In the provided example code, the dev property is shown to be highly tolerant, accepting various formats and types, including strings, lists, and booleans, while maintaining the integrity of the versioning system:
+            In the provided example code, the <code>dev</code> property is shown to be highly tolerant, accepting various formats and types, including strings, lists, and booleans, while maintaining the integrity of the versioning system:
             <pre><code>
 from v440 import Version
 
