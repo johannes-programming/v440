@@ -478,7 +478,17 @@ print(v, type(v.epoch), v.epoch)
                 <div id="Version.isdevrelease">
                     <h4><code><b>isdevrelease()</b> -> <i>bool</i></code></h4>
                     <section>
-                        The <code><a href="#Version.isdevrelease">isdevrelease</a></code> method
+                        The <code><a href="#Version.isdevrelease">isdevrelease</a></code> method 
+                        returns a booloean value that tells whether the instance represents a devrelease or not.
+                        <pre><code>
+from v440 import Version
+
+# the following two functions are identical
+def f(version:Version) -> bool:
+    return version.isdevrelease()
+def g(version:Version) -> bool:
+    return version.dev is not None
+                        </code></pre>
                     </section>
                 </div>
                 <div id="Version.isprerelease">

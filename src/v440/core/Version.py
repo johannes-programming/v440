@@ -190,15 +190,15 @@ class Version(Base):
         if self.local:
             ans += "+%s" % self.local
         return ans
+    
+    def isdevrelease(self) -> bool:
+        return self.dev is not None
 
     def isprerelease(self) -> bool:
         return self.isdevrelease() or not self.pre.isempty()
 
     def ispostrelease(self) -> bool:
         return self.post is not None
-
-    def isdevrelease(self) -> bool:
-        return self.dev is not None
 
     @property
     def local(self) -> Local:
