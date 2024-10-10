@@ -144,26 +144,26 @@ print(str(v))  # Output: 1.5.0
                 Its setter interprets the given value as a local version identifier and uses this to change the instance accordingly.
             </section>
         </section>
-    <section id="Pre">
         <h2>The <code>Pre</code> class</h2>
-        <h4><code><i>class</i> v440.core.<b>Pre(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
-        <div>
+    <section id="Pre">
+        <p>
             Create a new <code><a href="#Pre">Pre</a></code> object. 
             The one (non required) positional argument is passed to its <code>data</code> property. 
-        </div>
-        <div>
+        </p>
+        <h4><code><i>class</i> v440.core.<b>Pre(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
+        <section>
             <code><a href="#Pre">Pre</a></code> is a list-like class specifically for the <code><a href="#Version.pre">pre</a></code> property of <code><a href="#Version">Version</a></code>. 
             It implements all operations and methods of <code>list</code>.
             It has always a length of 2.
-        </div>
+        </section>
+        <h4><code><b>data</b></code></h4>
         <section>
-            <h3>The <code>data</code> property</h3>
             The <code><a href="#Pre.data">data</a></code> property of <code><a href="#Pre">Pre</a></code> represents the entire instance. 
             Its getter returns a list of length 2 containing the values of phase and subphase. 
             Its setter interprets the given value as a prelease identifier and uses this to change phase and subphase accordingly.
         </section>
-        <section id="Pre.phase">
-            <h3>The <code>phase</code> property</h3>
+        <h3 id="Pre.phase">The <code>phase</code> property</h3>
+        <section>
             The <code><a href="#Pre.phase">phase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
             It take a value of <code>"a"</code>, <code>"b"</code>, or <code>"rc"</code> iff <code><a href="#Pre.subphase">subphase</a></code> is a nonnegative integer and the value <code>None</code> iff <code><a href="#Pre.subphase">subphase</a></code> is likewise <code>None</code>.
         </section>
