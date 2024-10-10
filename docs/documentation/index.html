@@ -475,6 +475,12 @@ print(v, type(v.epoch), v.epoch)
                         The <code><a href="#Version.format">format</a></code> method
                     </section>
                 </div>
+                <div id="Version.isdevrelease">
+                    <h4><code><b>isdevrelease()</b> -> <i>bool</i></code></h4>
+                    <section>
+                        The <code><a href="#Version.isdevrelease">isdevrelease</a></code> method
+                    </section>
+                </div>
                 <div id="Version.isprerelease">
                     <h4><code><b>isprerelease()</b> -> <i>bool</i></code></h4>
                     <section>
@@ -484,7 +490,7 @@ print(v, type(v.epoch), v.epoch)
                 <div id="Version.ispostrelease">
                     <h4><code><b>ispostrelease()</b> -> <i>bool</i></code></h4>
                     <section>
-                        The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method
+                        The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method returns a booloean value that tells whether the instance represents a postrelease or not.
                         <pre><code>
 from v440 import Version
 
@@ -494,12 +500,6 @@ def f(version:Version) -> bool:
 def g(version:Version) -> bool:
     return version.post is not None
                         </code></pre>
-                    </section>
-                </div>
-                <div id="Version.isdevrelease">
-                    <h4><code><b>isdevrelease()</b> -> <i>bool</i></code></h4>
-                    <section>
-                        The <code><a href="#Version.isdevrelease">isdevrelease</a></code> method
                     </section>
                 </div>
                 <div id="Version.local">
