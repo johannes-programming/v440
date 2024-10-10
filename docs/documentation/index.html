@@ -145,7 +145,11 @@ print(str(v))  # Output: 1.5.0
             <p>
                 <code><a href="#Pre">Pre</a></code> is a list-like class specifically for the <code><a href="#Version.pre">pre</a></code> property of <code><a href="#Version">Version</a></code>. 
                 It implements all operations and methods of <code>list</code>.
-                It has always a length of 2.
+                However the possibilities of modification are limited by strong constrains, especially that there must always be exactly two items, 
+                <code><a href="#Pre.phase">phase</code> and <code><a href=“#Pre.subphase">subphase</a></code>.
+                The constraints ensures that pre-releases maintain their intended structure and semantics.
+                Prereleases are ordered based on their phase and the numerical component within that phase. 
+                For instance, alpha releases come before beta releases, which in turn precede release candidates.
             </p>
             <h4><code><i>class</i> v440.core.Pre.<b>Pre(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
             <section>
@@ -165,7 +169,7 @@ print(str(v))  # Output: 1.5.0
                     <h4><code><b>phase</b></code></h4>
                     <section>
                         The <code><a href="#Pre.phase">phase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
-                        It take a value of <code>"a"</code>, <code>"b"</code>, or <code>"rc"</code> iff <code><a href="#Pre.subphase">subphase</a></code> is a nonnegative integer and the value <code>None</code> iff <code><a href="#Pre.subphase">subphase</a></code> is likewise <code>None</code>.
+                        It take a value of <code>"a"</code> (for an alpha release), <code>"b"</code> (for a beta release), or <code>"rc"</code> (for a release candidate) iff <code><a href="#Pre.subphase">subphase</a></code> is a nonnegative integer and the value <code>None</code> iff <code><a href="#Pre.subphase">subphase</a></code> is likewise <code>None</code>.
                     </section>
                 </div>
                 <div id="Pre.subphase">
@@ -609,20 +613,15 @@ print(v, type(v.post), v.post)
                 <div id="Version.pre">
                     <h4><code><b>pre</b></code></h4>
                     <section>
-                        The <code><a href="#pre">pre</a></code> property in versioning is designed to handle pre-releases, 
+                        The <code><a href="#Version.pre">pre</a></code> property is designed to handle prereleases,
                         which allow developers to provide alpha, beta, or release candidate versions 
                         of their software for user testing prior to a final release. 
                         Pre-releases are indicated by a specific format in the version identifier, 
                         such as X.YaN for alpha releases, X.YbN for beta releases, and X.YrcN for release candidates.
-                        The <code><a href="#pre">pre</a></code> property in the <code><a href="#v440">v440</a></code> project 
-                        is implemented as a specialized list-like object 
-                        that can be modified but must always contain exactly two components: 
-                        the phase of the pre-release (such as "alpha," "beta," or "release candidate") and an associated numerical value. 
-                        This constraint ensures that pre-releases maintain their intended structure and semantics.
-                        Pre-releases are ordered based on their phase and the numerical component within that phase. 
-                        For instance, alpha releases come before beta releases, which in turn precede release candidates. 
-                        When comparing pre-release versions, installation tools may treat "c" (candidate) and "rc" (release candidate) 
-                        as equivalent to simplify legacy version handling.
+                        Its getter returns a <code><a href="#Pre">Pre</a></code> object whose modification will also modify the <code><a href="#Version">Version</a></code> instance. 
+                        Its setter passes the value to the <code><a href="#Pre.data">data</a></code> property of the <code><a href="#Pre">Pre</a></code> object. 
+                        Therefore the underlying <code><a href="#Pre">Pre</a></code> object of the <code><a href="#Version">Version</a></code> object can never actually be replaced. 
+                        Once called through the getter it can always be used.
                         Here's an example demonstrating how the pre property works:
                         <pre><code>
 from v440 import Version
@@ -657,7 +656,7 @@ print(v, v.pre)
     </code></pre>
                         In this example, the pre property starts with a version initialized to <code>"1.2.3"</code> Various operations illustrate how the pre property can be manipulated, such as setting the phase and subphase of the pre-release. 
                         However, it's important to note that most operations on the pre property are subject to restrictions—attempting to change the length of the list or assign an incorrect value would raise a <code><a href="#VersionError">VersionError</a></code>. 
-                        The implementation ensures that pre-releases are clearly defined while preserving the flexibility needed for version management.
+                        The implementation ensures that prereleases are clearly defined while preserving the flexibility needed for version management.
                     </section>
                 </div>
                 <div id="Version.public">
