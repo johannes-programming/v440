@@ -132,101 +132,105 @@ print(str(v))  # Output: 1.5.0
                 All items are are nonnegative integers or nonempty strings.
             </p>
             <h4><code><i>class</i> v440.core.<b>Local(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
-            <p>
-                Create a new <code><a href="#Local">Local</a></code> object. 
-                The one (non required) positional argument is passed 
-                to its <code>data</code> property. 
-            </p>
-            <h3 id="Local.data">The <code>data</code> property</h3>
             <section>
-                The <code><a href="#Local.data">data</a></code> property of <code><a href="#Local">Local</a></code> represents the entire instance. 
-                Its getter returns a list. 
-                Its setter interprets the given value as a local version identifier and uses this to change the instance accordingly.
+                <p>
+                    Create a new <code><a href="#Local">Local</a></code> object. 
+                    The one (non required) positional argument is passed 
+                    to its <code>data</code> property. 
+                </p>
+                <h3 id="Local.data">The <code>data</code> property</h3>
+                <section>
+                    The <code><a href="#Local.data">data</a></code> property of <code><a href="#Local">Local</a></code> represents the entire instance. 
+                    Its getter returns a list. 
+                    Its setter interprets the given value as a local version identifier and uses this to change the instance accordingly.
+                </section>
             </section>
         </section>
         <h2>The <code>Pre</code> class</h2>
-    <section id="Pre">
-        <p>
-            Create a new <code><a href="#Pre">Pre</a></code> object. 
-            The one (non required) positional argument is passed to its <code>data</code> property. 
-        </p>
-        <h4><code><i>class</i> v440.core.<b>Pre(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
-        <section>
-            <code><a href="#Pre">Pre</a></code> is a list-like class specifically for the <code><a href="#Version.pre">pre</a></code> property of <code><a href="#Version">Version</a></code>. 
-            It implements all operations and methods of <code>list</code>.
-            It has always a length of 2.
-        </section>
-        <h4><code><b>data</b></code></h4>
-        <section>
-            The <code><a href="#Pre.data">data</a></code> property of <code><a href="#Pre">Pre</a></code> represents the entire instance. 
-            Its getter returns a list of length 2 containing the values of phase and subphase. 
-            Its setter interprets the given value as a prelease identifier and uses this to change phase and subphase accordingly.
-        </section>
-        <h3 id="Pre.phase">The <code>phase</code> property</h3>
-        <section>
-            The <code><a href="#Pre.phase">phase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
-            It take a value of <code>"a"</code>, <code>"b"</code>, or <code>"rc"</code> iff <code><a href="#Pre.subphase">subphase</a></code> is a nonnegative integer and the value <code>None</code> iff <code><a href="#Pre.subphase">subphase</a></code> is likewise <code>None</code>.
-        </section>
-        <section id="Pre.subphase">
-            <h3>The <code>subphase</code> property</h3>
-            The <code><a href="#Pre.subphase">subphase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
-            It take a nonnegative integer value iff <code><a href="Pre.phase">phase</a></code> is a string and the value <code>None</code> iff <code><a href="#Pre.phase">phase</a></code> is likewise <code>None</code>.
-        </section>
-    </section>
-    <section id="Release">
-        <h2>The <code>Release</code> class</h2>
-        <h4><code><i>class</i> v440.core.<b>Release(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
-        Create a new <code><a href="#Release">Release</a></code> object. 
-        The one (non required) positional argument is passed to its <code>data</code> property. 
-        <code><a href="#Release">Release</a></code> is a list-like class specifically for the <code><a href="#Version.release">release</a></code> property of <code><a href="#Version">Version</a></code>. It implements all operations and methods of list.
-        All items are are nonnegative integers. 
-        While normally all tailing zeros are dropped if it is necessary an unlimited amount of tailing zeros will be simulated.
-        <section id="Release.bump">
-            <h4><code>
-                <b>bump(</b><i>index</i>: <i>SupportsIndex</i> = <i>-1</i>, 
-                <i>amount</i>: <i>SupportsIndex</i> = <i>1</i><b>)</b> -> <i>None</i>
-            </code></h4>
-            The <code><a href="#Release.bump">bump</a></code> method 
-            increases the item at the given <code>index</code> by <code>amount</code> 
-            and sets all further items to zeros/cuts them off.
-        </section>
-        <section id="Release.data">
+        <section id="Pre">
+            <p>
+                Create a new <code><a href="#Pre">Pre</a></code> object. 
+                The one (non required) positional argument is passed to its <code>data</code> property. 
+            </p>
+            <h4><code><i>class</i> v440.core.<b>Pre(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
+            <section>
+                <code><a href="#Pre">Pre</a></code> is a list-like class specifically for the <code><a href="#Version.pre">pre</a></code> property of <code><a href="#Version">Version</a></code>. 
+                It implements all operations and methods of <code>list</code>.
+                It has always a length of 2.
+            </section>
             <h4><code><b>data</b></code></h4>
-            The <code><a href="#Release.data">data</a></code> property of <code><a href="#Release">Release</a></code> represents the entire instance. 
-            Its getter returns a list. 
-            Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
+            <section>
+                The <code><a href="#Pre.data">data</a></code> property of <code><a href="#Pre">Pre</a></code> represents the entire instance. 
+                Its getter returns a list of length 2 containing the values of phase and subphase. 
+                Its setter interprets the given value as a prelease identifier and uses this to change phase and subphase accordingly.
+            </section>
+            <h3 id="Pre.phase">The <code>phase</code> property</h3>
+            <section>
+                The <code><a href="#Pre.phase">phase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
+                It take a value of <code>"a"</code>, <code>"b"</code>, or <code>"rc"</code> iff <code><a href="#Pre.subphase">subphase</a></code> is a nonnegative integer and the value <code>None</code> iff <code><a href="#Pre.subphase">subphase</a></code> is likewise <code>None</code>.
+            </section>
+            <section id="Pre.subphase">
+                <h3>The <code>subphase</code> property</h3>
+                The <code><a href="#Pre.subphase">subphase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
+                It take a nonnegative integer value iff <code><a href="Pre.phase">phase</a></code> is a string and the value <code>None</code> iff <code><a href="#Pre.phase">phase</a></code> is likewise <code>None</code>.
+            </section>
         </section>
-        <section id="Release.format">
-            <h4><code>
-                <b>format(</b>
-                <i>cutoff</i> = <i>None</i>
-                <b>)</b> -> <i>str</i>
-            </code></h4>
-            The <code><a href="#Release.format">format</a></code> method 
-            returns a string representation of the instance.
+        <section id="Release">
+            <h2>The <code>Release</code> class</h2>
+            <h4><code><i>class</i> v440.core.<b>Release(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
+            Create a new <code><a href="#Release">Release</a></code> object. 
+            The one (non required) positional argument is passed to its <code>data</code> property. 
+            <code><a href="#Release">Release</a></code> is a list-like class specifically for the <code><a href="#Version.release">release</a></code> property of <code><a href="#Version">Version</a></code>. It implements all operations and methods of list.
+            All items are are nonnegative integers. 
+            While normally all tailing zeros are dropped if it is necessary an unlimited amount of tailing zeros will be simulated.
+            <section id="Release.bump">
+                <h4><code>
+                    <b>bump(</b><i>index</i>: <i>SupportsIndex</i> = <i>-1</i>, 
+                    <i>amount</i>: <i>SupportsIndex</i> = <i>1</i><b>)</b> -> <i>None</i>
+                    </code>
+                </h4>
+                The <code><a href="#Release.bump">bump</a></code> method 
+                increases the item at the given <code>index</code> by <code>amount</code> 
+                and sets all further items to zeros/cuts them off.
+            </section>
+            <section id="Release.data">
+                <h4><code><b>data</b></code></h4>
+                The <code><a href="#Release.data">data</a></code> property of <code><a href="#Release">Release</a></code> represents the entire instance. 
+                Its getter returns a list. 
+                Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
+            </section>
+            <section id="Release.format">
+                <h4><code>
+                    <b>format(</b>
+                    <i>cutoff</i> = <i>None</i>
+                    <b>)</b> -> <i>str</i>
+                    </code>
+                </h4>
+                The <code><a href="#Release.format">format</a></code> method 
+                returns a string representation of the instance.
+            </section>
+            <section id="Release.major">
+                <h4><code><b>major</b></code></h4>
+                The <code><a href="#Release.major">major</a></code> property of <code><a href="#Release">Release</a></code> 
+                is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
+            </section>
+            <section id="Release.minor">
+                <h4><code><b>minor</b></code></h4>
+                The <code><a href="#Release.minor">minor</a></code> property of <code><a href="#Release">Release</a></code> 
+                is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
+            </section>
+            <section id="Release.micro">
+                <h4><code><b>micro</b></code></h4>
+                The <code><a href="#Release.micro">micro</a></code> property of <code><a href="#Release">Release</a></code> 
+                is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>.
+            </section>
+            <section id="Release.patch">
+                <h4><code><b>patch</b></code></h4>
+                The <code><a href="#Release.patch">patch</a></code> property of <code><a href="#Release">Release</a></code> 
+                is another <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>, 
+                just as <code><a href="#Release.micro">micro</a></code>.
+            </section>
         </section>
-        <section id="Release.major">
-            <h4><code><b>major</b></code></h4>
-            The <code><a href="#Release.major">major</a></code> property of <code><a href="#Release">Release</a></code> 
-            is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
-        </section>
-        <section id="Release.minor">
-            <h4><code><b>minor</b></code></h4>
-            The <code><a href="#Release.minor">minor</a></code> property of <code><a href="#Release">Release</a></code> 
-            is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
-        </section>
-        <section id="Release.micro">
-            <h4><code><b>micro</b></code></h4>
-            The <code><a href="#Release.micro">micro</a></code> property of <code><a href="#Release">Release</a></code> 
-            is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>.
-        </section>
-        <section id="Release.patch">
-            <h4><code><b>patch</b></code></h4>
-            The <code><a href="#Release.patch">patch</a></code> property of <code><a href="#Release">Release</a></code> 
-            is another <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>2</code>, 
-            just as <code><a href="#Release.micro">micro</a></code>.
-        </section>
-    </section>
         <section id="Version">
             <h2>The <code>Version</code> class</h2>
             <h4><code><i>class</i> v440.<b>Version(</b><i>data</i>: <i>Any</i> = "0", /, <i>**kwargs</i><b>)</b></code></h4>
@@ -237,11 +241,8 @@ print(str(v))  # Output: 1.5.0
             <section id="Version.base">
                 <h4><code><b>base</b></code></h4>
                 The <code><a href="#Version.base">base</a></code> property in the <code><a href="#v440">v440</a></code> versioning system is designed to provide a streamlined way to handle base versioning information. When accessing the base property, it returns a <code><a href="#Version">Version</a></code> object that retains only the epoch and release information, effectively omitting the pre-release, post-release, development, and local version components. This property is particularly useful for scenarios where a clear and simplified version identifier is required without the additional complexity of other version components.
-
                 The <code><a href="#Version.base">base</a></code> property allows for both retrieval and modification. When setting <code><a href="#Version.base">base</a></code>, you can update <code><a href="#Version.epoch">epoch</a></code> and <code><a href="#Version.release">release</a></code> simultaneously, which helps maintain consistency in versioning and makes it easier to manage version hierarchies.
-                
                 Here's an example demonstrating the functionality of the <code><a href="#Version.base">base</a></code> property:
-                
                 <pre><code>
 from v440 import Version
 
@@ -274,9 +275,7 @@ print("Base version remains unchanged:", v.base)
     #Base version remains unchanged: 1!3.4
 
             </code></pre>
-                
-            In this example, the base property is used to demonstrate its functionality and flexibility. Initially, the version is set to "1.2.3." When the base property is updated to "2.0," it shows the changes. Later, by assigning "1!3.4" to the base, both the epoch and the release version are modified, while the pre-release component remains unaffected. This showcases how the base property effectively streamlines version management by focusing solely on the essential components of a version identifier.
-                
+                In this example, the base property is used to demonstrate its functionality and flexibility. Initially, the version is set to "1.2.3." When the base property is updated to "2.0," it shows the changes. Later, by assigning "1!3.4" to the base, both the epoch and the release version are modified, while the pre-release component remains unaffected. This showcases how the base property effectively streamlines version management by focusing solely on the essential components of a version identifier.
             </section>
             <section id="Version.data">
                 <h4><code><b>data</b></code></h4>
