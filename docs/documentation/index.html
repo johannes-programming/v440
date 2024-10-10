@@ -131,7 +131,7 @@ print(str(v))  # Output: 1.5.0
                 The one (non required) positional argument is passed 
                 to its <code>data</code> property. 
             </p>
-            <h3 id="Local.data">The <code>data</code> property</h3>
+            <h4 id="Local.data"><code>data</code></h4>
             <section>
                 The <code><a href="#Local.data">data</a></code> property of <code><a href="#Local">Local</a></code> represents the entire instance. 
                 Its getter returns a list. 
@@ -148,18 +148,18 @@ print(str(v))  # Output: 1.5.0
             <code><a href="#Pre">Pre</a></code> is a list-like class specifically for the <code><a href="#Version.pre">pre</a></code> property of <code><a href="#Version">Version</a></code>. 
             It implements all operations and methods of <code>list</code>.
             It has always a length of 2.
-            <h4><code><b>data</b></code></h4>
+            <h4 id="Pre.data"><code><b>data</b></code></h4>
             <section>
                 The <code><a href="#Pre.data">data</a></code> property of <code><a href="#Pre">Pre</a></code> represents the entire instance. 
                 Its getter returns a list of length 2 containing the values of phase and subphase. 
                 Its setter interprets the given value as a prelease identifier and uses this to change phase and subphase accordingly.
             </section>
-            <h3 id="Pre.phase">The <code>phase</code> property</h3>
+            <h4 id="Pre.phase"><code><b>phase</b></code></h4>
             <section>
                 The <code><a href="#Pre.phase">phase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>0</code>.
                 It take a value of <code>"a"</code>, <code>"b"</code>, or <code>"rc"</code> iff <code><a href="#Pre.subphase">subphase</a></code> is a nonnegative integer and the value <code>None</code> iff <code><a href="#Pre.subphase">subphase</a></code> is likewise <code>None</code>.
             </section>
-            <h3 id="Pre.subphase">The <code>subphase</code> property</h3>
+            <h4 id="Pre.subphase"><code><b>subphase</b></code></h4>
             <section>
                 The <code><a href="#Pre.subphase">subphase</a></code> property of <code><a href="#Pre">Pre</a></code> is a <a href="http://keyalias.johannes-programming.online/">keyalias</a> for <code>1</code>.
                 It take a nonnegative integer value iff <code><a href="Pre.phase">phase</a></code> is a string and the value <code>None</code> iff <code><a href="#Pre.phase">phase</a></code> is likewise <code>None</code>.
