@@ -478,13 +478,22 @@ print(v, type(v.epoch), v.epoch)
                 <div id="Version.isprerelease">
                     <h4><code><b>isprerelease()</b> -> <i>bool</i></code></h4>
                     <section>
-                        The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method
+                        The <code><a href="#Version.isprerelease">isprerelease</a></code> method
                     </section>
                 </div>
                 <div id="Version.ispostrelease">
                     <h4><code><b>ispostrelease()</b> -> <i>bool</i></code></h4>
                     <section>
                         The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method
+                        <pre><code>
+from v440 import Version
+
+# the following two functions are identical
+def f(version:Version) -> bool:
+    return version.ispostrelease()
+def g(version:Version) -> bool:
+    return version.post is not None
+                        </code></pre>
                     </section>
                 </div>
                 <div id="Version.isdevrelease">
