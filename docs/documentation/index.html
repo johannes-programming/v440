@@ -170,7 +170,7 @@ print(str(v))  # Output: 1.5.0
                     <section>
                         The <code><a href="#Pre.isempty">isempty</a></code> method returns a boolean value. 
                         <code>True</code> if <code><a href="#Pre.data">data</a></code> is equal to <code>[None, None]</code> 
-                        meaning that the version is not a prerelease, otherwise <code>False</code>.
+                        meaning that the version is not an alpharelease, betarelease, or release candidate, otherwise <code>False</code>.
                     </section>
                 </div>
                 <div id="Pre.phase">
@@ -489,7 +489,7 @@ print(v, type(v.epoch), v.epoch)
     #1.2.3 &lt;class 'int'&gt; 0
     #1!1.2.3 &lt;class 'int'&gt; 1
     #1.2.3 &lt;class 'int'&gt; 0
-    </code></pre>
+                        </code></pre>
                         Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
                     </section>
                 </div>
@@ -596,7 +596,8 @@ def g(version:Version) -> bool:
                         allowing for operations typical of lists, 
                         such as appending, removing, and sorting elements.
                         Here's an example illustrating how the <code><a href="#local">local</a></code> property works:
-                        <pre><code>
+                        <pre>
+                            <code>
 from v440 import Version
 
 v = Version("1.2.3")
@@ -627,8 +628,8 @@ print(v.local is backup)
     #1.2.3 
     #1.2.3+reset.1.2 reset.1.2
     #True
-
-        </code></pre>
+        </code>
+    </pre>
                         In this example, the <code><a href="#local">local</a></code> property 
                         is initialized with a string that gets interpreted as a list. 
                         Various list operations are demonstrated, 
@@ -670,7 +671,8 @@ def g(version:v440.Version) -> packaging.version.Version:
                         Instead, developers are encouraged to increment the main version number to reflect more substantial updates.
                         The following code example illustrates the flexibility of the post property in handling various input formats, 
                         allowing it to accept different types while maintaining the integrity of the versioning system:
-                        <pre><code>
+                        <pre>
+                            <code>
 from v440 import Version
 
 v = Version("1.2.3")
@@ -738,8 +740,8 @@ print(v, type(v.post), v.post)
     # 1.2.3.post0 &lt;class 'int'&gt; 0
     # 1.2.3.post1 &lt;class 'int'&gt; 1
     # 1.2.3 &lt;class 'NoneType'&gt; None
-
-    </code></pre>
+                            </code>
+                        </pre>
                         This example showcases how the <code><a href="#Version.post">post</a></code> property can accept various input formats, 
                         reinforcing the system's versatility while adhering to the requirements of versioning conventions.
                     </section>
