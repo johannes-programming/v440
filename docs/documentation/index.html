@@ -236,6 +236,24 @@ print(release)
                         The <code><a href="#Release.data">data</a></code> property of <code><a href="#Release">Release</a></code> represents the entire instance. 
                         Its getter returns a list. 
                         Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
+                        <pre><code>
+                            from v440.core.Release import Release
+
+                            release = Release("1.2.3")
+                            print(release)
+                            release.data = None
+                            print(release)
+                            release.data = range(5)
+                            print(release)
+                            release.data = 3.14
+                            print(release)
+
+                            #Output:
+                                #1.2.3
+                                #0
+                                #0.1.2.3.4
+                                #3.14
+                        </code></pre>
                     </section>
                 </div>
                 <div id="Release.format">
