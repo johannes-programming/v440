@@ -237,22 +237,30 @@ print(release)
                         Its getter returns a list. 
                         Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
                         <pre><code>
-                            from v440.core.Release import Release
+from v440.core.Release import Release
 
-                            release = Release("1.2.3")
-                            print(release)
-                            release.data = None
-                            print(release)
-                            release.data = range(5)
-                            print(release)
-                            release.data = 3.14
-                            print(release)
+release = Release("1.2.3")
+print(release) 
+print(list(release)) 
+release.insert(1, 42)
+print(release)  
+release *= 2
+print(release) 
+release += [3, 1, 4]
+print(release) 
+print(release[0::2]) 
+print(release[10]) 
+print(release[100]) 
 
-                            #Output:
-                                #1.2.3
-                                #0
-                                #0.1.2.3.4
-                                #3.14
+#Output:
+    #1.2.3
+    #[1, 2, 3]
+    #1.42.2.3
+    #1.42.2.3.1.42.2.3
+    #1.42.2.3.1.42.2.3.3.1.4
+    #[1, 2, 1, 2, 3, 4]
+    #4
+    #0
                         </code></pre>
                     </section>
                 </div>
