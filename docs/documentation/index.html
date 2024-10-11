@@ -210,6 +210,24 @@ print(str(v))  # Output: 1.5.0
                         The <code><a href="#Release.bump">bump</a></code> method 
                         increases the item at the given <code>index</code> by <code>amount</code> 
                         and sets all further items to zeros/cuts them off.
+                        <pre><code>
+from v440.core.Release import Release
+
+release = Release("1.2.3")
+print(release)
+release.bump(2)
+print(release)
+release.bump(-2, 10)
+print(release)
+release.bump(5)
+print(release)
+
+#Output:
+    #1.2.3
+    #1.2.4
+    #1.12
+    #1.12.0.0.0.1
+                        </code></pre>
                     </section>
                 </div>
                 <div id="Release.data">
