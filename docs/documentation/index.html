@@ -196,6 +196,32 @@ print(str(v))  # Output: 1.5.0
                 All items are are nonnegative integers. 
                 While normally all tailing zeros are dropped if it is necessary an unlimited amount of tailing zeros will be simulated.
             </p>
+            <pre><code>
+from v440.core.Release import Release
+
+release = Release("1.2.3")
+print(release) 
+print(list(release)) 
+release.insert(1, 42)
+print(release)  
+release *= 2
+print(release) 
+release += [3, 1, 4]
+print(release) 
+print(release[0::2]) 
+print(release[10]) 
+print(release[100]) 
+
+#Output:
+    #1.2.3
+    #[1, 2, 3]
+    #1.42.2.3
+    #1.42.2.3.1.42.2.3
+    #1.42.2.3.1.42.2.3.3.1.4
+    #[1, 2, 1, 2, 3, 4]
+    #4
+    #0
+            </code></pre>
             <h4><code><i>class</i> v440.core.Release.<b>Release(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b></code></h4>
             <section>
                 Create a new <code><a href="#Release">Release</a></code> object. 
@@ -236,32 +262,6 @@ print(release)
                         The <code><a href="#Release.data">data</a></code> property of <code><a href="#Release">Release</a></code> represents the entire instance. 
                         Its getter returns a list. 
                         Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
-                        <pre><code>
-from v440.core.Release import Release
-
-release = Release("1.2.3")
-print(release) 
-print(list(release)) 
-release.insert(1, 42)
-print(release)  
-release *= 2
-print(release) 
-release += [3, 1, 4]
-print(release) 
-print(release[0::2]) 
-print(release[10]) 
-print(release[100]) 
-
-#Output:
-    #1.2.3
-    #[1, 2, 3]
-    #1.42.2.3
-    #1.42.2.3.1.42.2.3
-    #1.42.2.3.1.42.2.3.3.1.4
-    #[1, 2, 1, 2, 3, 4]
-    #4
-    #0
-                        </code></pre>
                     </section>
                 </div>
                 <div id="Release.format">
@@ -378,7 +378,15 @@ print("Base version remains unchanged:", v.base)
     #Base version remains unchanged: 1!3.4
 
             </code></pre>
-                        In this example, the base property is used to demonstrate its functionality and flexibility. Initially, the version is set to "1.2.3." When the base property is updated to "2.0," it shows the changes. Later, by assigning "1!3.4" to the base, both the epoch and the release version are modified, while the pre-release component remains unaffected. This showcases how the base property effectively streamlines version management by focusing solely on the essential components of a version identifier.
+                        In this example, the base property is used to demonstrate its functionality and flexibility. 
+                        Initially, the version is set to <code>"1.2.3"</code>. 
+                        When the base property is updated to <code>"2.0"</code>, it shows the changes. 
+                        Later, by assigning <code>"1!3.4"</code> to <code><a href="#Version.base">base</a></code>, 
+                        both the epoch and the release version are modified, 
+                        while the pre-release component remains unaffected. 
+                        This showcases how the <code><a href="#Version.base">base</a></code> property 
+                        effectively streamlines version management 
+                        by focusing solely on the essential components of a version identifier.
                     </section>
                 </div>
                 <div id="Version.data">
@@ -439,16 +447,23 @@ print("Type of data property:", type(v.data))
                         which are often created during a project's development cycle. 
                         These releases are useful for developers and packagers 
                         who want to test early versions of the software without interfering with stable releases. 
-                        The <code>dev</code> segment consists of the string <code>".dev"</code> 
+                        The devsegment consists of the string <code>".dev"</code> 
                         followed by a non-negative integer, which indicates the specific developmental release.
                         Developmental releases are ordered numerically, 
                         appearing right before the corresponding stable release in version sorting. 
                         For example, if you have a version <code>"1.2.3"</code>, 
                         the developmental releases would be labeled <code>"1.2.3.dev1"</code>, 
                         <code>"1.2.3.dev2"</code>, etc. 
-                        Additionally, developmental releases can also be used in conjunction with pre-releases and post-releases, such as <code>"1.2.3a.dev1"</code> for an alpha release or <code>"1.2.3.post1.dev1"</code> for a post-release.
-                        While developmental releases serve a purpose in testing and continuous integration, it's generally advised against publishing them publicly, especially for pre-releases, as they can complicate version interpretation. Instead, it's clearer to create a new pre-release by incrementing the numeric part of the version.
-                        In the provided example code, the <code>dev</code> property is shown to be highly tolerant, accepting various formats and types, including strings, lists, and booleans, while maintaining the integrity of the versioning system:
+                        Additionally, developmental releases can also be used in conjunction 
+                        with pre-releases and post-releases, 
+                        such as <code>"1.2.3a.dev1"</code> for an alpha release or <code>"1.2.3.post1.dev1"</code> for a post-release.
+                        While developmental releases serve a purpose in testing and continuous integration, 
+                        it's generally advised against publishing them publicly, 
+                        especially for pre-releases, as they can complicate version interpretation. 
+                        Instead, it's clearer to create a new pre-release by incrementing the numeric part of the version.
+                        In the provided example code, the <code><a href="#Version.dev">dev</a></code> property 
+                        is shown to be highly tolerant, accepting various formats and types, 
+                        including strings, lists, and booleans, while maintaining the integrity of the versioning system:
                         <pre><code>
 from v440 import Version
 
