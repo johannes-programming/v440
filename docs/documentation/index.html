@@ -496,7 +496,29 @@ print(v, type(v.epoch), v.epoch)
                 <div id="Version.format">
                     <h4><code><b>format(</b><i>cutoff</i> = <i>None</i><b>)</b> -> <i>str</i></code></h4>
                     <section>
-                        The <code><a href="#Version.format">format</a></code> method
+                        The <code><a href="#Version.format">format</a></code> method returns a string representation
+                        of the instance in which <code><a href="#Version.release">release</a></code> is formatted 
+                        with the given <code>cutoff</code>. See the <code><a href="#Release.format">format</a></code>
+                        method of <code><a href="#Release">Release</a></code> for more information.
+                        <pre><code>
+from v440 import Version
+
+version = Version("1.2.3rc42+my.local.patch")
+print(version)
+print(version.format())
+print(version.format("2"))
+print(version.format("4"))
+print(version.format("6"))
+print(version.format("-1"))
+
+#Output:
+    #1.2.3rc42+my.local.patch
+    #1.2.3rc42+my.local.patch
+    #1.2rc42+my.local.patch
+    #1.2.3.0rc42+my.local.patch
+    #1.2.3.0.0.0rc42+my.local.patch
+    #1.2rc42+my.local.patch
+                        </code></pre>
                     </section>
                 </div>
                 <div id="Version.isdevrelease">
@@ -507,7 +529,7 @@ print(v, type(v.epoch), v.epoch)
                         <pre><code>
 from v440 import Version
 
-# the following two functions are identical
+# the following two functions are equivalent
 def f(version:Version) -> bool:
     return version.isdevrelease()
 def g(version:Version) -> bool:
@@ -519,16 +541,29 @@ def g(version:Version) -> bool:
                     <h4><code><b>isprerelease()</b> -> <i>bool</i></code></h4>
                     <section>
                         The <code><a href="#Version.isprerelease">isprerelease</a></code> method
+                        returns a booloean value that tells whether the instance represents a prerelease or not.
+                        Devreleases are also counted as prereleases, as they are by 
+                        <code><a href="https://packaging.pypa.io/">packaging</a>.version.Version</code>.
+                        <pre><code>
+from v440 import Version
+
+# the following two functions are equivalent
+def f(version:Version) -> bool:
+    return version.isprerelease()
+def g(version:Version) -> bool:
+    return version.isdevrelease() or not version.pre.isempty()
+                        </code></pre>
                     </section>
                 </div>
                 <div id="Version.ispostrelease">
                     <h4><code><b>ispostrelease()</b> -> <i>bool</i></code></h4>
                     <section>
-                        The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method returns a booloean value that tells whether the instance represents a postrelease or not.
+                        The <code><a href="#Version.ispostrelease">ispostrelease</a></code> method 
+                        returns a booloean value that tells whether the instance represents a postrelease or not.
                         <pre><code>
 from v440 import Version
 
-# the following two functions are identical
+# the following two functions are equivalent
 def f(version:Version) -> bool:
     return version.ispostrelease()
 def g(version:Version) -> bool:
@@ -539,17 +574,28 @@ def g(version:Version) -> bool:
                 <div id="Version.local">
                     <h4><code><b>local</b></code></h4>
                     <section>
-                        The <code><a href="#local">local</a></code> property in versioning is designed to manage local version identifiers, which serve as extensions to the main version number. 
-                        These identifiers enable developers and integrators to indicate that a version is a specific, compatible variation of an upstream release, often due to custom patches or modifications. 
+                        The <code><a href="#local">local</a></code> property 
+                        is designed to manage local version identifiers, 
+                        which serve as extensions to the public version number. 
+                        These identifiers enable developers and integrators 
+                        to indicate that a version is a specific variation 
+                        of an upstream release, often due to custom patches or modifications. 
                         Local version identifiers follow the syntax 
                         &lt;public version identifier&gt;[+&lt;local version label&gt;], 
                         where the local label is prefixed by a plus sign.
-                        Local version identifiers can include ASCII letters, digits, and periods, and they must start and end with an alphanumeric character. 
-                        The primary purpose of local identifiers is to help differentiate between official upstream releases and downstream adaptations, which may not contain the same code as the upstream version. 
-                        This is particularly useful in environments like Linux distributions, where system integrators may backport critical bug fixes instead of performing a disruptive upgrade.
-                        The local property in the <code><a href="#v440">v440</a></code> project behaves like a specialized list, capable of being manipulated while preserving its integrity. 
-                        It can interpret strings with periods as lists, allowing for operations typical of lists, such as appending, removing, and sorting elements.
-                        Here's an example illustrating how the local property works:
+                        Local version identifiers can include ASCII letters, digits, and periods, 
+                        and they must start and end with an alphanumeric character. 
+                        The primary purpose of local identifiers is to help differentiate 
+                        between official (public) upstream releases and downstream adaptations, 
+                        which may not contain the same code as the upstream version. 
+                        The <code><a href="#local">local</a></code> property 
+                        in the <code><a href="#v440">v440</a></code> project 
+                        behaves like a specialized list, 
+                        capable of being manipulated while preserving its integrity. 
+                        It can interpret strings with periods as lists, 
+                        allowing for operations typical of lists, 
+                        such as appending, removing, and sorting elements.
+                        Here's an example illustrating how the <code><a href="#local">local</a></code> property works:
                         <pre><code>
 from v440 import Version
 
@@ -583,9 +629,11 @@ print(v.local is backup)
     #True
 
         </code></pre>
-                        In this example, the local property is initialized with a string that gets interpreted as a list. 
-                        Various list operations are demonstrated, showcasing its functionality while preserving the original versioning structure. 
-                        The local property is versatile and maintains the versioning rules, 
+                        In this example, the <code><a href="#local">local</a></code> property 
+                        is initialized with a string that gets interpreted as a list. 
+                        Various list operations are demonstrated, 
+                        showcasing its functionality while preserving the original versioning structure. 
+                        The <code><a href="#local">local</a></code> property is versatile and maintains the versioning rules, 
                         allowing for clear differentiation between upstream releases and downstream modifications.
                     </section>
                 </div>
@@ -598,7 +646,7 @@ print(v.local is backup)
 import packaging.version 
 import v440
 
-# the following two functions are identical
+# the following two functions are equivalent
 def f(version:v440.Version) -> packaging.version.Version:
     return version.packaging()
 def g(version:v440.Version) -> packaging.version.Version:
