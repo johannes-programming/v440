@@ -1,121 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>v440 Project Documentation</title>
+        <title>Feautures of v440</title>
         <link rel="stylesheet" href="https://www.johannes-programming.online/styles.css">
     </head>
-    <body>
-        <div class="navigation-links">
-            <a href="/">Back to Startpage</a>
-        </div>
-        <header id="v440">
-            <h1><code>v440</code> - Mutable version object handling based on PEP 440</h1>
-            <b>Source Code:</b> <a href="https://github.com/johannes-programming/v440">https://github.com/johannes-programming/v440</a>
+    <body id="top">
+        <header id="header">
+            <h1>
+                Feautures of <code><a href="https://v440.johannes-programming.online">v440</a></code>
+            </h1>
         </header>
-        <p>
-            The project <code><a href="#v440">v440</a></code> provides mutable version objects 
-            that allow flexible manipulation of version identifiers 
-            following the <a href="https://peps.python.org/pep-0440/">PEP 440</a> standard. 
-        </p>
-        <h3>Core Components</h3>
-        <p>
-            The <code><a href="#v440"></a></code> module is built around the class <code><a href="#Version">v440.Version</a></code>. 
-            Its instances are mutable representations of <a href="https://peps.python.org/pep-0440/">PEP 440</a> conforming versions 
-            allowing to manipulate the specific parts of the version identifiers individually. 
-        </p>
-        <pre><code>
-from v440 import Version
-
-# Create an instance of the v440.Version class
-v = Version("1.2.3")
-
-# The instance allows manipulation of individual parts of the version
-v.release.major = 2
-v.release.minor = 5
-v.pre = "beta.1"
-v.local = "local.7.dev"
-
-# Print the modified version
-print(v)  # Output: 2.5.3b1+local.7.dev
-
-</code></pre>
-        <h3>Quick Links for the properties of <code>v440.Version</code></h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Getter</th>
-                    <th>Setter</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="#Version.base">base</a></td>
-                    <td>Represents <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>.</td>
-                    <td>Gives a copy trunkated to only <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>. </td>
-                    <td>Overwrites <a href="#Version.epoch"><code>epoch</code></a> and <a href="#Version.release"><code>release</code></a>.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.data">data</a></td>
-                    <td>Represents the entire instance.</td>
-                    <td>Gives string representation.</td>
-                    <td>Overwrites all properties.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.dev">dev</a></td>
-                    <td>Represents the devrelease part of the version identifier.</td>
-                    <td>Gives <code>None</code> or a nonnegative integer.</td>
-                    <td>Converts and saves the value.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.epoch">epoch</a></td>
-                    <td>Represents the epoch part of the version identifier.</td>
-                    <td>Gives a nonnegative integer.</td>
-                    <td>Converts and saves the value.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.local">local</a></td>
-                    <td>Represents the local part of the version identifier.</td>
-                    <td>Gives an object of the class <code><a href="#Local">Local</a></code>.</td>
-                    <td>Converts the value and saves it inside of <a href="#Version.local"><code>local</code></a>.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.post">post</a></td>
-                    <td>Represents the postrelease part of the version identifier.</td>
-                    <td>Gives <code>None</code> or a nonnegative integer.</td>
-                    <td>Converts and saves the value.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.pre">pre</a></td>
-                    <td>Represents the prerelease part of the version identifier.</td>
-                    <td>Gives an object of the class <code><a href="#Pre">Pre</a></code>.</td>
-                    <td>Converts the value and saves it inside of <a href="#Version.pre"><code>pre</code></a>.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.public">public</a></td>
-                    <td>Represents the public part of the version identifier (everything but <a href="#Version.local"><code>local</code></a>).</td>
-                    <td>Gives a copy without <a href="#Version.local"><code>local</code></a>.</td>
-                    <td>Overwrites all properties except for <a href="#Version.local"><code>local</code></a>.</td>
-                </tr>
-                <tr>
-                    <td><a href="#Version.release">release</a></td>
-                    <td>Represents the release part of the version identifier.</td>
-                    <td>Gives a specialized list-like object that can be altered.</td>
-                    <td>Converts the value and saves it inside of <a href="#Version.release"><code>release</code></a>.</td>
-                </tr>
-            </tbody>
-        </table>
-        <h3>Version Object Examples</h3>
-        <pre><code>
-v = Version("1.0.0")
-print(str(v))  # Output: 1.0.0
-v.release[1] = 5
-print(str(v))  # Output: 1.5.0
-
-</code></pre>
         <div id="Local">
             <h2>The <code>Local</code> class</h2>
             <p>
@@ -333,19 +230,37 @@ print(release.format("-3"))
         <div  id="Version">
             <h2>The <code>Version</code> class</h2>
             <p>
-                The <code><a href="#Version">Version</a></code> class is the central class of the <code><a href="#v440">v440</a></code> project.
+                The <code><a href="#Version">Version</a></code> class 
+                is the central class of the <code><a href="#v440">v440</a></code> project.
             </p>
             <h4><code><i>class</i> v440.<b>Version(</b><i>data</i>: <i>Any</i> = "0", /, <i>**kwargs</i><b>)</b></code></h4>
             <section>
                 Create a new <code><a href="#Version">Version</a></code> object. 
-                The one (non required) positional argument is passed to the <code><a href="#Version.data">data</a></code> property. 
+                The one (non required) positional argument is passed 
+                to the <code><a href="#Version.data">data</a></code> property. 
                 The keyword arguments are then passed to the properties defined by their keywords. 
                 <div id="Version.base">
                     <h4><code><b>base</b></code></h4>
                     <section>
-                        The <code><a href="#Version.base">base</a></code> property in the <code><a href="#v440">v440</a></code> versioning system is designed to provide a streamlined way to handle base versioning information. When accessing the base property, it returns a <code><a href="#Version">Version</a></code> object that retains only the epoch and release information, effectively omitting the pre-release, post-release, development, and local version components. This property is particularly useful for scenarios where a clear and simplified version identifier is required without the additional complexity of other version components.
-                        The <code><a href="#Version.base">base</a></code> property allows for both retrieval and modification. When setting <code><a href="#Version.base">base</a></code>, you can update <code><a href="#Version.epoch">epoch</a></code> and <code><a href="#Version.release">release</a></code> simultaneously, which helps maintain consistency in versioning and makes it easier to manage version hierarchies.
-                        Here's an example demonstrating the functionality of the <code><a href="#Version.base">base</a></code> property:
+                        The <code><a href="#Version.base">base</a></code> property 
+                        in the <code><a href="#v440">v440</a></code> versioning system 
+                        is designed to provide a streamlined way to handle base versioning information. 
+                        When accessing the base property, 
+                        it returns a <code><a href="#Version">Version</a></code> object 
+                        that retains only the epoch and release information, 
+                        effectively omitting the pre-release, post-release, development, and local version components. 
+                        This property is particularly useful for scenarios 
+                        where a clear and simplified version identifier 
+                        is required without the additional complexity of other version components.
+                        The <code><a href="#Version.base">base</a></code> property 
+                        allows for both retrieval and modification. 
+                        When setting <code><a href="#Version.base">base</a></code>, 
+                        you can update <code><a href="#Version.epoch">epoch</a></code> 
+                        and <code><a href="#Version.release">release</a></code> 
+                        simultaneously, which helps maintain consistency in versioning 
+                        and makes it easier to manage version hierarchies.
+                        Here's an example demonstrating the functionality 
+                        of the <code><a href="#Version.base">base</a></code> property:
                         <pre><code>
 from v440 import Version
 
@@ -378,7 +293,8 @@ print("Base version remains unchanged:", v.base)
     #Base version remains unchanged: 1!3.4
 
             </code></pre>
-                        In this example, the base property is used to demonstrate its functionality and flexibility. 
+                        In this example, the base property 
+                        is used to demonstrate its functionality and flexibility. 
                         Initially, the version is set to <code>"1.2.3"</code>. 
                         When the base property is updated to <code>"2.0"</code>, it shows the changes. 
                         Later, by assigning <code>"1!3.4"</code> to <code><a href="#Version.base">base</a></code>, 
@@ -894,9 +810,24 @@ print(v, v.pre)
                 Create a new <code><a href="#VersionError">VersionError</a></code> object.
             </section>
         </div>
-        <div class="navigation-links"><a href="#top">Back to Top</a></div>
         <footer>
-            <a href="https://johannes-programming.online/impressum.html">Johannes Programming</a>
+            <div class="navigation-links"><a href="#top">Back to Top</a></div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/intro.html">
+                            <p>Previous &larr;</p>
+                            <p>Introduction to <code>v440</code></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/impressum.html">
+                            <p>Next &rarr;</p>
+                            <p>Impressum</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </footer>
     </body>
 </html>
