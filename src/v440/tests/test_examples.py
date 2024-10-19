@@ -31,7 +31,7 @@ class TestData(unittest.TestCase):
         self.assertEqual(type(v.data), str)
 
         v.data = 9001
-        self.assertEqual("4.2", str(v))
+        self.assertEqual("9001", str(v))
         self.assertEqual(v.data, str(v))
         self.assertEqual(type(v.data), str)
 
@@ -41,7 +41,7 @@ class TestData(unittest.TestCase):
         self.assertEqual(type(v.data), str)
 
         v.data = "1701!4.5.6.rc255+reset"
-        self.assertEqual("1701!4.5.6.rc255+reset", str(v))
+        self.assertEqual("1701!4.5.6rc255+reset", str(v))
         self.assertEqual(v.data, str(v))
         self.assertEqual(type(v.data), str)
 
