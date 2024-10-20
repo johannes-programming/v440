@@ -4,6 +4,7 @@ import functools
 import string
 from typing import *
 from v440.core.VersionError import VersionError
+import operator
 
 SEGCHARS = string.ascii_lowercase + string.digits
 
@@ -80,15 +81,6 @@ class _segment:
         return int(value)
 
 
-def toindex(value, /):
-    ans = value.__index__()
-    if type(ans) is not int:
-        e = "__index__ returned non-int (type %s)"
-        e %= type(ans).__name__
-        raise TypeError(e)
-    return ans
-
-
 def torange(key, length):
     start = key.start
     stop = key.stop
@@ -96,18 +88,18 @@ def torange(key, length):
     if step is None:
         step = 1
     else:
-        step = toindex(step)
+        step = operator.index(step)
         if step == 0:
             raise ValueError
     fwd = step > 0
     if start is None:
         start = 0 if fwd else (length - 1)
     else:
-        start = toindex(start)
+        start = operator.index(start)
     if stop is None:
         stop = length if fwd else -1
     else:
-        stop = toindex(stop)
+        stop = operator.index(stop)
     if start < 0:
         start += length
     if start < 0:

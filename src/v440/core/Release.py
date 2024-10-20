@@ -1,16 +1,13 @@
 from __future__ import annotations
 
 import string
-import types
 from typing import *
 
-import datahold
+import operator
 from keyalias import keyalias
-from scaevola import Scaevola
 from overloadable import overloadable
 
 from v440._utils import utils
-from v440._utils.Base import Base
 from v440._utils.VList import VList
 
 
@@ -29,7 +26,7 @@ class Release(VList):
 
     @__delitem__.overload(False)
     def __delitem__(self, key) -> None:
-        key = utils.toindex(key)
+        key = operator.index(key)
         if key < len(self):
             del self._data[key]
 
@@ -47,7 +44,7 @@ class Release(VList):
 
     @__getitem__.overload(False)
     def __getitem__(self, key) -> int:
-        key = utils.toindex(key)
+        key = operator.index(key)
         return self._getitem_int(key)
 
     @__getitem__.overload(True)
@@ -62,7 +59,7 @@ class Release(VList):
 
     @__setitem__.overload(False)
     def __setitem__(self, key: SupportsIndex, value):
-        key = utils.toindex(key)
+        key = operator.index(key)
         self._setitem_int(key, value)
 
     @__setitem__.overload(True)
@@ -150,8 +147,8 @@ class Release(VList):
         return value
 
     def bump(self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
-        index = utils.toindex(index)
-        amount = utils.toindex(amount)
+        index = operator.index(index)
+        amount = operator.index(amount)
         x = self._getitem_int(index) + amount
         self._setitem_int(index, x)
         if index != -1:
