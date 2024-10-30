@@ -4,18 +4,16 @@ import dataclasses
 from typing import *
 
 import packaging.version
+
 from datahold import OkayABC
 from scaevola import Scaevola
-
-
+from v440._utils import QualifierParser, utils
 from v440._utils.Base import Base
-from v440._utils import QualifierParser
-from v440.core.VersionError import VersionError
-from v440._utils import utils
-from v440.core.Local import Local
 from v440._utils.Pattern import Pattern
+from v440.core.Local import Local
 from v440.core.Pre import Pre
 from v440.core.Release import Release
+from v440.core.VersionError import VersionError
 
 QUALIFIERDICT = dict(
     dev="dev",
@@ -45,8 +43,6 @@ class Version(Base):
     def __bool__(self) -> bool:
         return self._data != _Version()
 
-
-
     def __init__(self, data: Any = "0", /, **kwargs) -> None:
         object.__setattr__(self, "_data", _Version())
         self.data = data
@@ -55,8 +51,6 @@ class Version(Base):
     def __le__(self, other) -> bool:
         other = type(self)(other)
         return self._cmpkey() <= other._cmpkey()
-
-
 
     def __setattr__(self, name: str, value: Any) -> None:
         a = dict()
@@ -105,15 +99,15 @@ class Version(Base):
     @base.setter
     @utils.digest
     class base:
-        def byInt(self, value:int)->None:
+        def byInt(self, value: int) -> None:
             self.epoch = None
             self.release = value
 
-        def byNone(self)->None:
+        def byNone(self) -> None:
             self.epoch = None
             self.release = None
 
-        def byStr(self, value:str)->None:
+        def byStr(self, value: str) -> None:
             if "!" in value:
                 self.epoch, self.release = value.split("!", 1)
             else:
@@ -132,15 +126,15 @@ class Version(Base):
     @data.setter
     @utils.digest
     class data:
-        def byInt(self, value: int)->None:
+        def byInt(self, value: int) -> None:
             self.public = value
             self.local = None
 
-        def byNone(self)->None:
+        def byNone(self) -> None:
             self.public = None
             self.local = None
 
-        def byStr(self, value: str)->None:
+        def byStr(self, value: str) -> None:
             if "+" in value:
                 self.public, self.local = value.split("+", 1)
             else:
@@ -151,7 +145,7 @@ class Version(Base):
         return self._data.dev
 
     @dev.setter
-    def dev(self, value:Any)->None:
+    def dev(self, value: Any) -> None:
         self._data.dev = QualifierParser.DEV(value)
 
     @property
@@ -161,12 +155,12 @@ class Version(Base):
     @epoch.setter
     @utils.digest
     class epoch:
-        def byInt(self, value: int)-> None:
+        def byInt(self, value: int) -> None:
             if value < 0:
                 raise ValueError
             self._data.epoch = value
 
-        def byNone(self) ->None:
+        def byNone(self) -> None:
             self._data.epoch = 0
 
         def byStr(self, value: str) -> None:
@@ -190,7 +184,7 @@ class Version(Base):
         if self.local:
             ans += "+%s" % self.local
         return ans
-    
+
     def isdevrelease(self) -> bool:
         return self.dev is not None
 
@@ -205,7 +199,7 @@ class Version(Base):
         return self._data.local
 
     @local.setter
-    def local(self, value:Any)->None:
+    def local(self, value: Any) -> None:
         self._data.local.data = value
 
     def packaging(self) -> packaging.version.Version:
@@ -216,7 +210,7 @@ class Version(Base):
         return self._data.post
 
     @post.setter
-    def post(self, value:Any)->None:
+    def post(self, value: Any) -> None:
         self._data.post = QualifierParser.POST(value)
 
     @property
@@ -224,7 +218,7 @@ class Version(Base):
         return self._data.pre
 
     @pre.setter
-    def pre(self, value:Any) -> None:
+    def pre(self, value: Any) -> None:
         self._data.pre.data = value
 
     @property
@@ -236,7 +230,7 @@ class Version(Base):
     @public.setter
     @utils.digest
     class public:
-        def byInt(self, value:int) -> None:
+        def byInt(self, value: int) -> None:
             self.base = value
             self.pre = None
             self.post = None
@@ -248,7 +242,7 @@ class Version(Base):
             self.post = None
             self.dev = None
 
-        def byStr(self, value:str) -> None:
+        def byStr(self, value: str) -> None:
             match = Pattern.PUBLIC.leftbound.search(value)
             self.base = value[: match.end()]
             value = value[match.end() :]

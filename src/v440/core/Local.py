@@ -3,11 +3,11 @@ from __future__ import annotations
 import functools
 from typing import *
 
-
 from v440._utils import utils
 from v440._utils.VList import VList
 
 __all__ = ["Local"]
+
 
 class Local(VList):
 

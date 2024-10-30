@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import datahold
 import keyalias
-
+from v440._utils import QualifierParser
 from v440._utils.Base import Base
 from v440._utils.VList import VList
-from v440._utils import QualifierParser
 
 __all__ = ["Pre"]
 

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import functools
+import operator
 import string
 from typing import *
+
 from v440.core.VersionError import VersionError
-import operator
 
 SEGCHARS = string.ascii_lowercase + string.digits
 
@@ -109,6 +110,3 @@ def torange(key, length):
     if stop < 0:
         stop = 0 if fwd else -1
     return range(start, stop, step)
-
-
-

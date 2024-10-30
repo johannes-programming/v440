@@ -1,18 +1,20 @@
 import unittest
+
 from v440 import Version
+
 
 class TestVersionManipulation(unittest.TestCase):
 
     def test_version_modification(self):
         # Create an instance of the v440.Version class
         v = Version("1.2.3")
-        
+
         # Modify individual parts of the version
         v.release.major = 2
         v.release.minor = 5
         v.pre = "beta.1"
         v.local = "local.7.dev"
-        
+
         # Verify the expected output
         self.assertEqual(str(v), "2.5.3b1+local.7.dev")
 
@@ -44,6 +46,7 @@ class TestData(unittest.TestCase):
         self.assertEqual("1701!4.5.6rc255+reset", str(v))
         self.assertEqual(v.data, str(v))
         self.assertEqual(type(v.data), str)
+
 
 class TestVersionDev(unittest.TestCase):
 
@@ -149,6 +152,7 @@ class TestVersionDev(unittest.TestCase):
         self.assertEqual(str(v), "1.2.3")
         self.assertIsNone(v.dev)
 
+
 class TestVersionEpoch(unittest.TestCase):
     def test_epoch_as_int(self):
         v = Version("1.2.3")
@@ -191,6 +195,7 @@ class TestVersionEpoch(unittest.TestCase):
         self.assertEqual(str(v), "1.2.3")
         self.assertIsInstance(v.epoch, int)
         self.assertEqual(v.epoch, 0)
+
 
 class TestVersionLocal(unittest.TestCase):
 
@@ -258,7 +263,7 @@ class TestVersion(unittest.TestCase):
         v.pre = None
         self.assertEqual(str(v), "1.2.3")
         self.assertEqual(v.pre, [None, None])
-        
+
 
 if __name__ == "__main__":
     unittest.main()

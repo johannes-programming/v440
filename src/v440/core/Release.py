@@ -1,15 +1,13 @@
 from __future__ import annotations
 
+import operator
 import string
 from typing import *
 
-import operator
 from keyalias import keyalias
 from overloadable import overloadable
-
 from v440._utils import utils
 from v440._utils.VList import VList
-
 
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
@@ -164,7 +162,6 @@ class Release(VList):
         while value and value[-1] == 0:
             value.pop()
         self._data = value
-
 
     def format(self, cutoff=None) -> str:
         format_spec = str(cutoff) if cutoff else ""

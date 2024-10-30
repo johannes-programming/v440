@@ -1,6 +1,8 @@
-from v440.core.VersionError import VersionError
-from datahold import OkayABC, OkayList
 from typing import *
+
+from datahold import OkayABC, OkayList
+from v440.core.VersionError import VersionError
+
 
 class Base:
 
@@ -10,7 +12,7 @@ class Base:
         except VersionError:
             return False
         return self._data == other._data
-    
+
     def __ge__(self, other, /):
         try:
             other = type(self)(other)
@@ -31,7 +33,7 @@ class Base:
         else:
             return self._data <= other._data
         return self.data <= other
-    
+
     __lt__ = OkayList.__lt__
     __ne__ = OkayABC.__ne__
     __repr__ = OkayABC.__repr__
