@@ -110,7 +110,7 @@
                 <div id="Pre.isempty">
                     <h4>
                         <code>
-                            <b>isempty()</b> -> <i>bool</i>
+                            <b>isempty()</b> -&gt; <i>bool</i>
                         </code>
                     </h4>
                     <section> 
@@ -219,7 +219,7 @@ print(release[100])
                             <b>bump(</b><i>index</i>:
                             <i>SupportsIndex</i> = <i>-1</i>,
                             <i>amount</i>: <i>SupportsIndex</i> = <i>1</i><b>)</b> 
-                            -> <i>None</i>
+                            -&gt; <i>None</i>
                         </code>
                     </h4>
                     <section> 
@@ -266,7 +266,7 @@ print(release)
                     <h4>
                         <code>
                             <b>format(</b><i>cutoff</i> = <i>None</i><b>)</b> 
-                            -> <i>str</i>
+                            -&gt; <i>str</i>
                         </code>
                     </h4>
                     <section> 
@@ -640,7 +640,7 @@ print(version.format("-1"))
                 <div id="Version.isdevrelease">
                     <h4>
                         <code>
-                            <b>isdevrelease()</b> -> <i>bool</i>
+                            <b>isdevrelease()</b> -&gt; <i>bool</i>
                         </code>
                     </h4>
                     <section> The <code>
@@ -651,9 +651,9 @@ print(version.format("-1"))
 from v440 import Version
 
 # the following two functions are equivalent
-def f(version:Version) -> bool:
+def f(version:Version) -&gt; bool:
     return version.isdevrelease()
-def g(version:Version) -> bool:
+def g(version:Version) -&gt; bool:
     return version.dev is not None
                         </code>
 									</pre>
@@ -662,7 +662,7 @@ def g(version:Version) -> bool:
                 <div id="Version.isprerelease">
                     <h4>
                         <code>
-                            <b>isprerelease()</b> -> <i>bool</i>
+                            <b>isprerelease()</b> -&gt; <i>bool</i>
                         </code>
                     </h4>
                     <section> The <code>
@@ -674,9 +674,9 @@ def g(version:Version) -> bool:
 from v440 import Version
 
 # the following two functions are equivalent
-def f(version:Version) -> bool:
+def f(version:Version) -&gt; bool:
     return version.isprerelease()
-def g(version:Version) -> bool:
+def g(version:Version) -&gt; bool:
     return version.isdevrelease() or not version.pre.isempty()
                         </code>
 									</pre>
@@ -685,7 +685,7 @@ def g(version:Version) -> bool:
                 <div id="Version.ispostrelease">
                     <h4>
                         <code>
-                            <b>ispostrelease()</b> -> <i>bool</i>
+                            <b>ispostrelease()</b> -&gt; <i>bool</i>
                         </code>
                     </h4>
                     <section> The <code>
@@ -696,9 +696,9 @@ def g(version:Version) -> bool:
 from v440 import Version
 
 # the following two functions are equivalent
-def f(version:Version) -> bool:
+def f(version:Version) -&gt; bool:
     return version.ispostrelease()
-def g(version:Version) -> bool:
+def g(version:Version) -&gt; bool:
     return version.post is not None
                         </code>
 									</pre>
@@ -762,7 +762,7 @@ print(v.local is backup)
                 <div id="Version.packaging">
                     <h4>
                         <code>
-                            <b>packaging()</b> -> <i>packaging.version.Version</i>
+                            <b>packaging()</b> -&gt; <i>packaging.version.Version</i>
                         </code>
                     </h4>
                     <section> The <code>
@@ -775,9 +775,9 @@ import packaging.version
 import v440
 
 # the following two functions are equivalent
-def f(version:v440.Version) -> packaging.version.Version:
+def f(version:v440.Version) -&gt; packaging.version.Version:
     return version.packaging()
-def g(version:v440.Version) -> packaging.version.Version:
+def g(version:v440.Version) -&gt; packaging.version.Version:
     return packaging.version.Version(str(version))
                         </code>
 									</pre>
@@ -960,9 +960,7 @@ print(v, v.pre)
                 <div id="Version.update">
                     <h4>
                         <code>
-                            <b>update(</b>
-                            <i>**kwargs</i>
-                            <b>)</b> -> <i>None</i>
+                            <b>update(</b><i>**kwargs</i><b>)</b> -&gt; <i>None</i>
                         </code>
                     </h4>
                     <section> The <code>
@@ -978,14 +976,14 @@ print(v, v.pre)
                 </code> that is raised iff an improper value is passed to any property of a class in this project. </p>
             <h4>
                 <code>
-                    <i>class</i> v440. <b>VersionError(</b>
-                    <i>*args</i>: <i>object</i>
-                    <b>)</b>
+                    <i>class</i> v440. <b>VersionError(</b><i>*args</i>: <i>object</i><b>)</b>
                 </code>
             </h4>
-            <section> Create a new <code>
-                    <a href="#VersionError">VersionError</a>
-                </code> object. </section>
+            <section> 
+                Create a new
+                <code><a href="#VersionError">VersionError</a></code>
+                object. 
+            </section>
         </div>
         <footer>
             <div class="navigation-links">
