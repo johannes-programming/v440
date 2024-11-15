@@ -164,7 +164,7 @@ class Release(VList):
             value.pop()
         self._data = value
 
-    def format(self, cutoff=None) -> str:
+    def format(self, cutoff: Any = None) -> str:
         format_spec = str(cutoff) if cutoff else ""
         i = int(format_spec) if format_spec else None
         ans = self[:i]
