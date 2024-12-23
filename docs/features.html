@@ -23,9 +23,7 @@
                 <dl id="Local" class="heading4">
                     <dt>
                         <code>
-                            <i>class</i> 
-                            v440.core.Local.<b>Local(</b><i>data</i>: 
-                            <i>Any</i> = <i>None</i><b>)</b>
+                            <i>class</i> v440.core.Local.<b>Local</b><em>(</em><i>data: Any = None</i><em>)</em>
                         </code>
                     </dt>
                     <dd>
@@ -75,8 +73,8 @@
                 <dl id="Pre" class="heading4">
                     <dt>
                         <code>
-                            <i>class</i> v440.core.Pre.<b>Pre(</b><i>data</i>: 
-                            <i>Any</i> = <i>None</i><b>)</b>
+                            <i>class</i> v440.core.Pre.<b>Pre</b><em>(</em><i>data: 
+                            Any = None</i><em>)</em>
                         </code>
                     </dt>
                     <dd>
@@ -100,7 +98,10 @@
                         </dl>
                         <dl id="Pre.isempty" class="heading4" >
                             <dt>
-                                <code><b>isempty()</b> -&gt; <i>bool</i></code>
+                                <code>
+                                    <b>isempty</b><em>()</em>
+                                    <i>-&gt; bool</i>
+                                </code>
                             </dt>
                             <dd> 
                                 <p>
@@ -199,7 +200,8 @@ print(release[100])
                 <dl id="Release" class="heading4" >
                     <dt>
                         <code>
-                            <i>class</i> v440.core.Release.<b>Release(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b>
+                            <i>class</i>
+                            v440.core.Release.<b>Release</b><em>(</em><i>data: Any = None</i><em>)</em>
                         </code>
                     </dt>
                     <dd>
@@ -212,10 +214,9 @@ print(release[100])
                         <dl id="Release.bump" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>bump(</b><i>index</i>:
-                                    <i>SupportsIndex</i> = <i>-1</i>,
-                                    <i>amount</i>: <i>SupportsIndex</i> = <i>1</i><b>)</b> 
-                                    -&gt; <i>None</i>
+                                    <b>bump</b><em>(</em><i>index: SupportsIndex = -1</i>,
+                                    <i>amount: SupportsIndex = 1</i><em>)</em> 
+                                    <i>-&gt; None</i>
                                 </code>
                             </dt>
                             <dd> 
@@ -261,7 +262,8 @@ print(release)
                         <dl id="Release.format" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>format(</b><i>cutoff</i>: <i>Any</i> = <i>None</i><b>)</b> -&gt; <i>str</i>
+                                    <b>format</b><em>(</em><i>cutoff: Any = None</i><em>)</em>
+                                    <i>-&gt; str</i>
                                 </code>
                             </dt>
                             <dd> 
@@ -349,8 +351,10 @@ print(release.format("-3"))
                 <dl id="Version.Version" class="heading4">
                     <dt>
                         <code>
-                            <i>class</i> v440.<b>Version(</b><i>data</i>: <i>Any</i> = "0", /, 
-                            <i>**kwargs</i><b>)</b>
+                            <i>class</i>
+                            v440.<b>Version</b><em>(</em><i>data: Any = "0"</i>, 
+                            <i>/</i>, 
+                            <i>**kwargs</i><em>)</em>
                         </code>
                     </dt>
                     <dd> 
@@ -619,7 +623,8 @@ print(v, type(v.epoch), v.epoch)
                         <dl id="Version.format" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>format(</b><i>cutoff</i> : <i>Any</i> = <i>None</i><b>)</b> -&gt; <i>str</i>
+                                    <b>format</b><em>(</em><i>cutoff: Any = None</i><em>)</em>
+                                    <i>-&gt; str</i>
                                 </code>
                             </dt>
                             <dd> 
@@ -656,7 +661,8 @@ print(version.format("-1"))
                         <dl id="Version.isdevrelease" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>isdevrelease()</b> -&gt; <i>bool</i>
+                                    <b>isdevrelease</b><em>()</em> 
+                                    <i>-&gt; bool</i>
                                 </code>
                             </dt>
                             <dd> 
@@ -678,7 +684,8 @@ def g(version:Version) -&gt; bool:
                         <dl id="Version.isprerelease" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>isprerelease()</b> -&gt; <i>bool</i>
+                                    <b>isprerelease</b><em>()</em>
+                                    <i>-&gt; bool</i>
                                 </code>
                             </dt>
                             <dd>
@@ -700,7 +707,8 @@ def g(version:Version) -&gt; bool:
                         <dl id="Version.ispostrelease" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>ispostrelease()</b> -&gt; <i>bool</i>
+                                    <b>ispostrelease</b><em>()</em>
+                                    <i>-&gt; bool</i>
                                 </code>
                             </dt>
                             <dd> 
@@ -778,7 +786,8 @@ print(v.local is backup)
                         <dl id="Version.packaging" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>packaging()</b> -&gt; <i>packaging.version.Version</i>
+                                    <b>packaging</b><em>()</em>
+                                    <i>-&gt; packaging.version.Version</i>
                                 </code>
                             </dt>
                             <dd> 
@@ -992,7 +1001,8 @@ print(v, v.pre)
                         <dl id="Version.update" class="heading4" >
                             <dt>
                                 <code>
-                                    <b>update(</b><i>**kwargs</i><b>)</b> -&gt; <i>None</i>
+                                    <b>update</b><em>(</em><i>**kwargs</i><em>)</em>
+                                    <i>-&gt; None</i>
                                 </code>
                             </dt>
                             <dd> 
@@ -1022,7 +1032,8 @@ print(v, v.pre)
                 <dl id="VersionError.VersionError" class="heading4" >
                     <dt>
                         <code>
-                            <i>class</i> v440.<b>VersionError(</b><i>*args</i>: <i>object</i><b>)</b>
+                            <i>class</i>
+                            v440.<b>VersionError</b><em>(</em><i>*args: object</i><em>)</em>
                         </code>
                     </dt>
                     <dd> 
