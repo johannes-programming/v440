@@ -517,8 +517,7 @@ print("Type of data property:", type(v.data))
                                         <a href="#Version.dev">dev</a>
                                     </code> property is shown to be highly tolerant, accepting various formats and types, including strings, lists, and booleans, while maintaining the integrity of the versioning system:
                                 </p>
-                                <pre>
-                                                <code>
+                                <pre><code>
 from v440 import Version
 
 v = Version("1.2.3")
@@ -950,7 +949,6 @@ print(v, v.pre)
     #1.2.3rc42 rc42
     #1.2.3b42 b42
     #1.2.3
-
             </code></pre> 
                                 <p>
                                     In this example, the pre property starts with a version initialized to <code>"1.2.3"</code> Various operations illustrate how the pre property can be manipulated, such as setting the phase and subphase of the pre-release. However, it's important to note that most operations on the pre property are subject to restrictions—attempting to change the length of the list or assign an incorrect value would raise a <code>
