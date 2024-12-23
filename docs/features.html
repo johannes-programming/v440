@@ -23,7 +23,7 @@
                     It implements all operations and methods of <code>list</code>. 
                     All items are are nonnegative integers or nonempty strings.
                 </p>
-                <dl id="Local">
+                <dl id="Local" class="heading4">
                     <dt>
                         <code>
                             <i>class</i> 
@@ -37,7 +37,7 @@
                             The one (non required) positional argument 
                             is passed to its <code><a href="#Local.data">data</a></code> property. 
                         </p>
-                        <dl id="Local.data">
+                        <dl id="Local.data" class="heading4">
                             <dt>
                                 <code>
                                     <b>data</b>
@@ -73,7 +73,7 @@
                     The constraints ensures that pre-releases 
                     maintain their intended structure and semantics. 
                 </p>
-                <dl id="Pre">
+                <dl id="Pre" class="heading4">
                     <dt>
                         <code>
                             <i>class</i> v440.core.Pre.<b>Pre(</b><i>data</i>: 
@@ -86,7 +86,7 @@
                             The one (non required) positional argument is passed to its 
                             <code><a href="#Pre.data">data</a></code> property. 
                         </p>
-                        <dl id="Pre.data">
+                        <dl id="Pre.data" class="heading4" >
                             <dt><code><b>data</b></code></dt>
                             <dd> 
                                 This property represents the entire instance. 
@@ -97,7 +97,7 @@
                                 and uses this to change phase and subphase accordingly. 
                             </dd>
                         </dl>
-                        <dl id="Pre.isempty">
+                        <dl id="Pre.isempty" class="heading4" >
                             <dt>
                                 <code><b>isempty()</b> -&gt; <i>bool</i></code>
                             </dt>
@@ -113,7 +113,7 @@
                                 otherwise <code>False</code>. 
                             </dd>
                         </dl>
-                        <dl id="Pre.phase">
+                        <dl id="Pre.phase" class="heading4" >
                             <dt>
                                 <code><b>phase</b></code>
                             </dt>
@@ -128,7 +128,7 @@
                                 is likewise <code>None</code>. 
                             </dd>
                         </dl>
-                        <dl id="Pre.subphase">
+                        <dl id="Pre.subphase" class="heading4" >
                             <dt>
                                 <code>
                                     <b>subphase</b>
@@ -191,7 +191,7 @@ print(release[100])
     #0
                 </code>
                             </pre>
-                <dl id="Release">
+                <dl id="Release" class="heading4" >
                     <dt>
                         <code>
                             <i>class</i> v440.core.Release.<b>Release(</b><i>data</i>: <i>Any</i> = <i>None</i><b>)</b>
@@ -202,7 +202,7 @@ print(release[100])
                         <code><a href="#Release">Release</a></code> object. 
                         The one (non required) positional argument 
                         is passed to its <code><a href="#Release.data">data</a></code> property. 
-                        <dl id="Release.bump">
+                        <dl id="Release.bump" class="heading4" >
                             <dt>
                                 <code>
                                     <b>bump(</b><i>index</i>:
@@ -237,7 +237,7 @@ print(release)
                                             </pre>
                             </dd>
                         </dl>
-                        <dl id="Release.data">
+                        <dl id="Release.data" class="heading4" >
                             <dt>
                                 <code><b>data</b></code>
                             </dt>
@@ -249,7 +249,7 @@ print(release)
                                 and uses this to change the instance accordingly. 
                             </dd>
                         </dl>
-                        <dl id="Release.format">
+                        <dl id="Release.format" class="heading4" >
                             <dt>
                                 <code>
                                     <b>format(</b><i>cutoff</i>: <i>Any</i> = <i>None</i><b>)</b> -&gt; <i>str</i>
@@ -288,7 +288,7 @@ print(release.format("-3"))
                                             </pre>
                             </dd>
                         </dl>
-                        <dl id="Release.major">
+                        <dl id="Release.major" class="heading4" >
                             <dt>
                                 <code><b>major</b></code>
                             </dt>
@@ -296,7 +296,7 @@ print(release.format("-3"))
                                 This property is a <a>keyalias</a> for <code>0</code>. 
                             </dd>
                         </dl>
-                        <dl id="Release.minor">
+                        <dl id="Release.minor" class="heading4" >
                             <dt>
                                 <code>
                                     <b>minor</b>
@@ -306,7 +306,7 @@ print(release.format("-3"))
                                 This property is a <a>keyalias</a> for <code>1</code>. 
                             </dd>
                         </dl>
-                        <dl id="Release.micro">
+                        <dl id="Release.micro" class="heading4" >
                             <dt>
                                 <code>
                                     <b>micro</b>
@@ -316,7 +316,7 @@ print(release.format("-3"))
                                 This property is a <a>keyalias</a> for <code>2</code>. 
                             </dd>
                         </dl>
-                        <dl id="Release.patch">
+                        <dl id="Release.patch" class="heading4" >
                             <dt>
                                 <code>
                                     <b>patch</b>
@@ -335,7 +335,7 @@ print(release.format("-3"))
             <dt>The <code>Version</code> class </dt>
             <dd>
                 <p>This class is the central class of the <code><a href="/">v440</a></code> project. </p>
-                <dl>
+                <dl id="Version.Version" class="heading4">
                     <dt>
                         <code>
                             <i>class</i> v440.<b>Version(</b><i>data</i>: <i>Any</i> = "0", /, 
@@ -349,7 +349,7 @@ print(release.format("-3"))
                         </code> object. The one (non required) positional argument is passed to the <code>
                             <a href="#Version.data">data</a>
                         </code> property. The keyword arguments are then passed to the properties defined by their keywords. <div id="Version.base">
-                            <dl id="Version.base">
+                            <dl id="Version.base" class="heading4" >
                             <dt>
                                 <code>
                                     <b>base</b>
@@ -409,7 +409,7 @@ print("Base version remains unchanged:", v.base)
                                 </code> property effectively streamlines version management by focusing solely on the essential components of a version identifier.
                             </dd>
                         </dl>
-                        <dl id="Version.data">
+                        <dl id="Version.data" class="heading4" >
                             <dt>
                                 <code>
                                     <b>data</b>
@@ -469,7 +469,7 @@ print("Type of data property:", type(v.data))
                                 </pre>
                             </dd>
                         </dl>
-                        <dl id="Version.dev">
+                        <dl id="Version.dev" class="heading4" >
                             <dt>
                                 <code>
                                     <b>dev</b>
@@ -546,7 +546,7 @@ print(v, type(v.dev), v.dev)
                                 </pre> This example highlights the flexibility of the dev property in handling different input types while adhering to the requirements of the versioning system.
                             </dd>
                         </dl>
-                        <dl id="Version.epoch">
+                        <dl id="Version.epoch" class="heading4" >
                             <dt>
                                 <code>
                                     <b>epoch</b>
@@ -582,7 +582,7 @@ print(v, type(v.epoch), v.epoch)
                                             </pre> Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
                             </dd>
                         </dl>
-                        <dl id="Version.format">
+                        <dl id="Version.format" class="heading4" >
                             <dt>
                                 <code>
                                     <b>format(</b><i>cutoff</i> : <i>Any</i> = <i>None</i><b>)</b> -&gt; <i>str</i>
@@ -619,7 +619,7 @@ print(version.format("-1"))
                                             </pre>
                             </dd>
                         </dl>
-                        <dl id="Version.isdevrelease">
+                        <dl id="Version.isdevrelease" class="heading4" >
                             <dt>
                                 <code>
                                     <b>isdevrelease()</b> -&gt; <i>bool</i>
@@ -640,7 +640,7 @@ def g(version:Version) -&gt; bool:
                                             </pre>
                             </dd>
                         </dl>
-                        <dl id="Version.isprerelease">
+                        <dl id="Version.isprerelease" class="heading4" >
                             <dt>
                                 <code>
                                     <b>isprerelease()</b> -&gt; <i>bool</i>
@@ -661,7 +661,7 @@ def g(version:Version) -&gt; bool:
                                             </pre>
                             </dd>
                         </dl>
-                        <dl id="Version.ispostrelease">
+                        <dl id="Version.ispostrelease" class="heading4" >
                             <dt>
                                 <code>
                                     <b>ispostrelease()</b> -&gt; <i>bool</i>
@@ -681,7 +681,7 @@ def g(version:Version) -&gt; bool:
                                             </pre>
                             </dd>
                         </dl>
-                        <dl id="Version.local">
+                        <dl id="Version.local" class="heading4" >
                             <dt>
                                 <code>
                                     <b>local</b>
@@ -735,7 +735,7 @@ print(v.local is backup)
                                 </code> property is versatile and maintains the versioning rules, allowing for clear differentiation between upstream releases and downstream modifications.
                             </dd>
                         </dl>
-                        <dl id="Version.packaging">
+                        <dl id="Version.packaging" class="heading4" >
                             <dt>
                                 <code>
                                     <b>packaging()</b> -&gt; <i>packaging.version.Version</i>
@@ -759,7 +759,7 @@ print(v.local is backup)
                                             </pre>
                             </dd>
                         </dl>
-                        <dl id="Version.post">
+                        <dl id="Version.post" class="heading4" >
                             <dt>
                                 <code>
                                     <b>post</b>
@@ -842,7 +842,7 @@ print(v, type(v.post), v.post)
                                 </code> property can accept various input formats, reinforcing the system's versatility while adhering to the requirements of versioning conventions.
                             </dd>
                         </dl>
-                        <dl id="Version.pre">
+                        <dl id="Version.pre" class="heading4" >
                             <dt>
                                 <code>
                                     <b>pre</b>
@@ -906,7 +906,7 @@ print(v, v.pre)
                                 while preserving the flexibility needed for version management.
                             </dd>
                         </dl>
-                        <dl id="Version.public">
+                        <dl id="Version.public" class="heading4" >
                             <dt>
                                 <code>
                                     <b>public</b>
@@ -921,7 +921,7 @@ print(v, v.pre)
                                 but is otherwise identical to the original instance. 
                             </dd>
                         </dl>
-                        <dl id="Version.release">
+                        <dl id="Version.release" class="heading4" >
                             <dt>
                                 <code>
                                     <b>release</b>
@@ -938,7 +938,7 @@ print(v, v.pre)
                                 </code> object. The object itself can only ever be altered but never be replaced. 
                             </dd>
                         </dl>
-                        <dl id="Version.update">
+                        <dl id="Version.update" class="heading4" >
                             <dt>
                                 <code>
                                     <b>update(</b><i>**kwargs</i><b>)</b> -&gt; <i>None</i>
@@ -966,7 +966,7 @@ print(v, v.pre)
                     </code> 
                     that is raised iff an improper value is passed to any property of a class in this project. 
                 </p>
-                <dl>
+                <dl id="VersionError.VersionError" class="heading4" >
                     <dt>
                         <code>
                             <i>class</i> v440. <b>VersionError(</b><i>*args</i>: <i>object</i><b>)</b>
