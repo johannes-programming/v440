@@ -18,8 +18,7 @@
     conforming versions 
     allowing to manipulate the specific parts of the version identifiers individually. 
 </p>
-<pre><code>
-from v440 import Version
+<pre class="block"><code>from v440 import Version
 
 # Create an instance of the v440.Version class
 v = Version("1.2.3")
@@ -31,9 +30,7 @@ v.pre = "beta.1"
 v.local = "local.7.dev"
 
 # Print the modified version
-print(v)  # Output: 2.5.3b1+local.7.dev
-
-</code></pre>
+print(v)  # Output: 2.5.3b1+local.7.dev</code></pre>
 <h3>Quick Links for the properties of <code>v440.Version</code></h3>
 <table>
     <thead>
@@ -130,13 +127,10 @@ print(v)  # Output: 2.5.3b1+local.7.dev
     </tbody>
 </table>
 <h3>Version Object Examples</h3>
-<pre><code>
-v = Version("1.0.0")
+<pre class="block"><code>v = Version("1.0.0")
 print(str(v))  # Output: 1.0.0
 v.release[1] = 5
-print(str(v))  # Output: 1.5.0
-
-</code></pre>
+print(str(v))  # Output: 1.5.0</code></pre>
 <footer>
     <nav>
         <ul>
