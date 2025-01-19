@@ -16,9 +16,7 @@
                 </p>
                 <dl class="heading4">
                     <dt id="Local.__new__">
-                        <code>
-                            <i>class</i> v440.core.<b>Local</b><em>(</em><i>data: Any = None</i><em>)</em>
-                        </code>
+                        class v440.core.Local(data: Any = None)
                     </dt>
                     <dd>
                         <p> 
@@ -27,11 +25,7 @@
                             is passed to its <code><a href="#Local.data">data</a></code> property. 
                         </p>
                         <dl class="heading4">
-                            <dt id="Local.data">
-                                <code>
-                                    <b>data</b>
-                                </code>
-                            </dt>
+                            <dt id="Local.data">data</dt>
                             <dd>
                                 <p>
                                     This property represents the entire instance. 
@@ -66,10 +60,7 @@
                 </p>
                 <dl class="heading4">
                     <dt id="Pre.__new__">
-                        <code>
-                            <i>class</i> v440.core.<b>Pre</b><em>(</em><i>data: 
-                            Any = None</i><em>)</em>
-                        </code>
+                        class v440.core.Pre(data: Any = None)
                     </dt>
                     <dd>
                         <p> Create a new 
@@ -78,7 +69,7 @@
                             <code><a href="#Pre.data">data</a></code> property. 
                         </p>
                         <dl class="heading4" >
-                            <dt id="Pre.data"><code><b>data</b></code></dt>
+                            <dt id="Pre.data">data</dt>
                             <dd> 
                                 <p>
                                     This property represents the entire instance. 
@@ -89,12 +80,7 @@
                                     and uses this to change phase and subphase accordingly. 
                                 </p>
                             </dd>
-                            <dt id="Pre.isempty">
-                                <code>
-                                    <b>isempty</b><em>()</em>
-                                    <i>-&gt; bool</i>
-                                </code>
-                            </dt>
+                            <dt id="Pre.isempty">isempty() -&gt; bool</dt>
                             <dd> 
                                 <p>
                                     This method returns a boolean value. 
@@ -108,9 +94,7 @@
                                     otherwise <code>False</code>. 
                                 </p>
                             </dd>
-                            <dt id="Pre.phase">
-                                <code><b>phase</b></code>
-                            </dt>
+                            <dt id="Pre.phase">phase</dt>
                             <dd> 
                                 <p>
                                     This property is a <a>keyalias</a> for <code>0</code>. 
@@ -123,11 +107,7 @@
                                     is likewise <code>None</code>. 
                                 </p>
                             </dd>
-                            <dt id="Pre.subphase">
-                                <code>
-                                    <b>subphase</b>
-                                </code>
-                            </dt>
+                            <dt id="Pre.subphase">subphase</dt>
                             <dd> 
                                 <p>
                                     This property is a <a>keyalias</a> for <code>1</code>. 
@@ -186,12 +166,7 @@ print(release[100])
     #4
     #0</code></pre>
                 <dl class="heading4" >
-                    <dt id="Release">
-                        <code>
-                            <i>class</i>
-                            v440.core.<b>Release</b><em>(</em><i>data: Any = None</i><em>)</em>
-                        </code>
-                    </dt>
+                    <dt id="Release">class v440.core.Release(data: Any = None)</dt>
                     <dd>
                         <p>
                             Create a new 
@@ -201,11 +176,9 @@ print(release[100])
                         </p>
                         <dl class="heading4" >
                             <dt id="Release.bump">
-                                <code>
-                                    <b>bump</b><em>(</em><i>index: SupportsIndex = -1</i>,
-                                    <i>amount: SupportsIndex = 1</i><em>)</em> 
-                                    <i>-&gt; None</i>
-                                </code>
+                                bump(index: SupportsIndex = -1,
+                                amount: SupportsIndex = 1)
+                                -&gt; None
                             </dt>
                             <dd> 
                                 <p>
@@ -230,9 +203,7 @@ print(release)
     #1.12
     #1.12.0.0.0.1</code></pre>
                             </dd>
-                            <dt id="Release.data">
-                                <code><b>data</b></code>
-                            </dt>
+                            <dt id="Release.data">data</dt>
                             <dd> 
                                 <p>
                                     This property represents the entire instance. 
@@ -243,10 +214,8 @@ print(release)
                                 </p>
                             </dd>
                             <dt id="Release.format">
-                                <code>
-                                    <b>format</b><em>(</em><i>cutoff: Any = None</i><em>)</em>
-                                    <i>-&gt; str</i>
-                                </code>
+                                format(cutoff: Any = None)
+                                -&gt; str
                             </dt>
                             <dd> 
                                 <p>
@@ -278,33 +247,19 @@ print(release.format("-3"))
     #1.3.3
     #1</code></pre>
                             </dd>
-                            <dt id="Release.major">
-                                <code><b>major</b></code>
-                            </dt>
+                            <dt id="Release.major">major</dt>
                             <dd> 
                                 <p>This property is a <a>keyalias</a> for <code>0</code>. </p>
                             </dd>
-                            <dt id="Release.minor">
-                                <code>
-                                    <b>minor</b>
-                                </code>
-                            </dt>
+                            <dt id="Release.minor">minor</dt>
                             <dd> 
                                 <p>This property is a <a>keyalias</a> for <code>1</code>. </p>
                             </dd>
-                            <dt id="Release.micro">
-                                <code>
-                                    <b>micro</b>
-                                </code>
-                            </dt>
+                            <dt id="Release.micro">micro</dt>
                             <dd> 
                                 <p>This property is a <a>keyalias</a> for <code>2</code>. </p>
                             </dd>
-                            <dt id="Release.patch">
-                                <code>
-                                    <b>patch</b>
-                                </code>
-                            </dt>
+                            <dt id="Release.patch">patch</dt>
                             <dd> 
                                 <p>
                                     This property is another <a>keyalias</a> for <code>2</code>, 
@@ -322,12 +277,7 @@ print(release.format("-3"))
                 <p>This class is the central class of the <code><a href="/">v440</a></code> project. </p>
                 <dl class="heading4">
                     <dt id="Version.__new__">
-                        <code>
-                            <i>class</i>
-                            v440.<b>Version</b><em>(</em><i>data: Any = "0"</i>, 
-                            <i>/</i>, 
-                            <i>**kwargs</i><em>)</em>
-                        </code>
+                        class v440.Version(data: Any = "0", /, **kwargs)
                     </dt>
                     <dd> 
                         <p>
@@ -337,11 +287,7 @@ print(release.format("-3"))
                             The keyword arguments are then passed to the properties defined by their keywords. 
                         </p>
                         <dl class="heading4" >
-                            <dt id="Version.base">
-                                <code>
-                                    <b>base</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.base">base</dt>
                             <dd> 
                                 <p>
                                     This property is designed to provide a streamlined way to handle base versioning information. 
@@ -402,11 +348,7 @@ print("Base version remains unchanged:", v.base)
                                     </code> property effectively streamlines version management by focusing solely on the essential components of a version identifier.
                                 </p>
                             </dd>
-                            <dt id="Version.data">
-                                <code>
-                                    <b>data</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.data">data</dt>
                             <dd> 
                                 <p>
                                     This property represents the entire instance. 
@@ -458,11 +400,7 @@ print("Type of data property:", type(v.data))
     #Data property: 1701!4.5.6rc255+reset
     #Type of data property: &lt;class 'str'&gt;</code></pre>
                             </dd>
-                            <dt id="Version.dev">
-                                <code>
-                                    <b>dev</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.dev">dev</dt>
                             <dd> 
                                 <p>
                                     This property signifies developmental releases, 
@@ -534,11 +472,7 @@ print(v, type(v.dev), v.dev)
                                     This example highlights the flexibility of the dev property in handling different input types while adhering to the requirements of the versioning system.
                                 </p>
                             </dd>
-                            <dt id="Version.epoch">
-                                <code>
-                                    <b>epoch</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.epoch">epoch</dt>
                             <dd> 
                                 <p>
                                     This property in versioning serves as a mechanism to manage version identifiers in situations where the conventional sorting rules might not suffice. 
@@ -579,10 +513,7 @@ print(v, type(v.epoch), v.epoch)
                                 </p>
                             </dd>
                             <dt id="Version.format">
-                                <code>
-                                    <b>format</b><em>(</em><i>cutoff: Any = None</i><em>)</em>
-                                    <i>-&gt; str</i>
-                                </code>
+                                format(cutoff: Any = None) -&gt; str
                             </dt>
                             <dd> 
                                 <p>
@@ -613,10 +544,7 @@ print(version.format("-1"))
     #1.2rc42+my.local.patch</code></pre>
                             </dd>
                             <dt id="Version.isdevrelease" >
-                                <code>
-                                    <b>isdevrelease</b><em>()</em> 
-                                    <i>-&gt; bool</i>
-                                </code>
+                                isdevrelease() -&gt; bool
                             </dt>
                             <dd> 
                                 <p>
@@ -631,10 +559,7 @@ def g(version:Version) -&gt; bool:
     return version.dev is not None</code></pre>
                             </dd>
                             <dt id="Version.isprerelease">
-                                <code>
-                                    <b>isprerelease</b><em>()</em>
-                                    <i>-&gt; bool</i>
-                                </code>
+                                isprerelease() -&gt; bool
                             </dt>
                             <dd>
                                 <p>
@@ -650,10 +575,7 @@ def g(version:Version) -&gt; bool:
     return version.isdevrelease() or not version.pre.isempty()</code></pre>
                             </dd>
                             <dt id="Version.ispostrelease">
-                                <code>
-                                    <b>ispostrelease</b><em>()</em>
-                                    <i>-&gt; bool</i>
-                                </code>
+                                ispostrelease() -&gt; bool
                             </dt>
                             <dd> 
                                 <p>
@@ -667,11 +589,7 @@ def f(version:Version) -&gt; bool:
 def g(version:Version) -&gt; bool:
     return version.post is not None</code></pre>
                             </dd>
-                            <dt id="Version.local">
-                                <code>
-                                    <b>local</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.local">local</dt>
                             <dd> 
                                 <p>
                                     This property is designed to manage local version identifiers, which serve as extensions to the public version number. These identifiers enable developers and integrators to indicate that a version is a specific variation of an upstream release, often due to custom patches or modifications. Local version identifiers follow the syntax &lt;public version identifier&gt;[+&lt;local version label&gt;], where the local label is prefixed by a plus sign. Local version identifiers can include ASCII letters, digits, and periods, and they must start and end with an alphanumeric character. The primary purpose of local identifiers is to help differentiate between official (public) upstream releases and downstream adaptations, which may not contain the same code as the upstream version. The <code>
@@ -721,10 +639,7 @@ print(v.local is backup)
                                 </p>
                             </dd>
                             <dt id="Version.packaging">
-                                <code>
-                                    <b>packaging</b><em>()</em>
-                                    <i>-&gt; packaging.version.Version</i>
-                                </code>
+                                packaging() -&gt; packaging.version.Version
                             </dt>
                             <dd> 
                                 <p>
@@ -741,11 +656,7 @@ def f(version:v440.Version) -&gt; packaging.version.Version:
 def g(version:v440.Version) -&gt; packaging.version.Version:
     return packaging.version.Version(str(version))</code></pre>
                             </dd>
-                            <dt id="Version.post">
-                                <code>
-                                    <b>post</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.post">post</dt>
                             <dd> 
                                 <p>
                                     This property in versioning is used to identify post-releases, which are minor updates made to final releases that do not introduce significant changes to the software itself. These updates may address issues such as errors in release notes or minor tweaks that don't affect functionality. The inclusion of a post-release segment in the version identifier is denoted as X.Y.postN, where N is a non-negative integer that represents the post-release number. Post-releases are sequenced to appear directly after their corresponding stable releases in the version hierarchy. This means if you have a version 1.2.3, the post-releases will be labeled as 1.2.3.post1, 1.2.3.post2, etc. It's important to note that while post-releases can also be applied to pre-releases and release candidates (like 1.2.3a.post1 for an alpha version), using post-releases for significant bug fixes is not recommended. Instead, developers are encouraged to increment the main version number to reflect more substantial updates. The following code example illustrates the flexibility of the post property in handling various input formats, allowing it to accept different types while maintaining the integrity of the versioning system:
@@ -825,11 +736,7 @@ print(v, type(v.post), v.post)
                                     while adhering to the requirements of versioning conventions.
                                 </p>
                             </dd>
-                            <dt id="Version.pre">
-                                <code>
-                                    <b>pre</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.pre">pre</dt>
                             <dd> 
                                 <p>
                                     This property is designed to handle prereleases, 
@@ -887,11 +794,7 @@ print(v, v.pre)
                                     while preserving the flexibility needed for version management.
                                 </p>
                             </dd>
-                            <dt id="Version.public">
-                                <code>
-                                    <b>public</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.public">public</dt>
                             <dd> 
                                 <p>
                                     This property is designed 
@@ -902,11 +805,7 @@ print(v, v.pre)
                                     but is otherwise identical to the original instance. 
                                 </p>
                             </dd>
-                            <dt id="Version.release">
-                                <code>
-                                    <b>release</b>
-                                </code>
-                            </dt>
+                            <dt id="Version.release">release</dt>
                             <dd> 
                                 <p>
                                     This property represents the release identifier of the version. 
@@ -920,10 +819,7 @@ print(v, v.pre)
                                 </p>
                             </dd>
                             <dt id="Version.update">
-                                <code>
-                                    <b>update</b><em>(</em><i>**kwargs</i><em>)</em>
-                                    <i>-&gt; None</i>
-                                </code>
+                                update(**kwargs) -&gt; None
                             </dt>
                             <dd> 
                                 <p>
@@ -948,10 +844,7 @@ print(v, v.pre)
                 </p>
                 <dl class="heading4">
                     <dt id="VersionError.__new__">
-                        <code>
-                            <i>class</i>
-                            v440.<b>VersionError</b><em>(</em><i>*args: Any</i><em>)</em>
-                        </code>
+                        v440.VersionError(*args: Any)
                     </dt>
                     <dd> 
                         <p>
