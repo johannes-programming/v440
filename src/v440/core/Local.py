@@ -11,6 +11,8 @@ __all__ = ["Local"]
 
 class Local(VList):
 
+    data:list[Union[int, str]]
+
     def __le__(self:Self, other: Iterable) -> bool:
         try:
             other = type(self)(other)
@@ -31,7 +33,7 @@ class Local(VList):
         return type(value) is int, value
 
     @property
-    def data(self:Self) -> List[Union[int, str]]:
+    def data(self:Self) -> list[Union[int, str]]:
         return list(self._data)
 
     @data.setter

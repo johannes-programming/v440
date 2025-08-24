@@ -12,6 +12,10 @@ __all__ = ["Pre"]
 @keyalias.keyalias(phase=0, subphase=1)
 class Pre(VList):
 
+    data:list
+    phase:Any
+    subphase:Any
+
     def __init__(self:Self, data:Any=None)->None:
         self.data = data
 

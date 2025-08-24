@@ -40,6 +40,15 @@ class _Version:
 
 
 class Version(Base):
+    base:Self
+    data:str
+    dev:Any
+    epoch:Any
+    local:Local
+    post:Any
+    pre:Pre
+    public:Self
+    release:Release
     def __bool__(self:Self) -> bool:
         return self._data != _Version()
 
