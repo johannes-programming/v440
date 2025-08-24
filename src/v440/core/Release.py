@@ -13,11 +13,11 @@ from v440._utils.VList import VList
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(VList):
-    data:list
-    major:Any
-    minor:Any
-    micro:Any
-    patch:Any
+    data:list[int]
+    major:int
+    minor:int
+    micro:int
+    patch:int
     def __add__(self:Self, other:Any, /) -> Self:
         other = type(self)(other)
         ans = self.copy()
