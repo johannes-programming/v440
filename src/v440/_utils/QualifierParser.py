@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import functools
 from typing import *
 
 from v440._utils import utils
@@ -17,7 +16,7 @@ class QualifierParser:
 
     @utils.digest
     class __call__:
-        def byInt(self, value: int):
+        def byInt(self:Self, value: int)->Any:
             if self.phasedict:
                 raise TypeError
             value = int(value)
@@ -25,7 +24,7 @@ class QualifierParser:
                 raise ValueError
             return value
 
-        def byList(self, value: list):
+        def byList(self:Self, value: list)->Any:
             value = [utils.segment(x) for x in value]
             if self.phasedict:
                 l, n = value
@@ -41,10 +40,10 @@ class QualifierParser:
                     raise TypeError
                 return n
 
-        def byNone(self):
+        def byNone(self:Self)->Any:
             return [None, None] if self.phasedict else None
 
-        def byStr(self, value: str):
+        def byStr(self:Self, value: str)->Any:
             value = value.replace("_", ".")
             value = value.replace("-", ".")
             if self.phasedict and value == "":
@@ -62,7 +61,7 @@ class QualifierParser:
             else:
                 return int(n)
 
-    def __post_init__(self):
+    def __post_init__(self:Self)->None:
         if type(self.phasedict) is not dict:
             raise TypeError
         pd = self.phasedict
@@ -84,7 +83,7 @@ class QualifierParser:
                 continue
             raise TypeError
 
-    def nbylist(self, value, /):
+    def nbylist(self:Self, value:Any, /)->Any:
         if len(value) == 2:
             l, n = value
             if l not in self.keysforlist:

@@ -1,7 +1,7 @@
 import enum
 import functools
 import re
-
+from typing import *
 
 class Pattern(enum.StrEnum):
 
@@ -11,17 +11,17 @@ class Pattern(enum.StrEnum):
     QUALIFIERS = r"(([-_\.]?(?P<l>[a-z]+)[-_\.]?(?P<n>[0-9]*))|(-(?P<N>[0-9]+)))"
 
     @staticmethod
-    def compile(value, /):
+    def compile(value:Any, /)->Any:
         return re.compile(value, re.VERBOSE)
 
     @functools.cached_property
-    def bound(self):
+    def bound(self:Self)->Any:
         return self.compile(r"^" + self.value + r"$")
 
     @functools.cached_property
-    def leftbound(self):
+    def leftbound(self:Self)->Any:
         return self.compile(r"^" + self.value)
 
     @functools.cached_property
-    def unbound(self):
+    def unbound(self:Self)->Any:
         return self.compile(self.value)

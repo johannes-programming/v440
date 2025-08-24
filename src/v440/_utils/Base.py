@@ -7,14 +7,14 @@ from v440.core.VersionError import VersionError
 
 class Base:
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self:Self, other: Any) -> bool:
         try:
             other = type(self)(other)
         except VersionError:
             return False
         return self._data == other._data
 
-    def __ge__(self, other, /):
+    def __ge__(self:Self, other:Any, /)->bool:
         try:
             other = type(self)(other)
         except:
@@ -26,7 +26,7 @@ class Base:
     __gt__ = OkayList.__gt__
     __hash__ = OkayABC.__hash__
 
-    def __le__(self, other, /):
+    def __le__(self:Self, other:Any, /)->bool:
         try:
             other = type(self)(other)
         except:
@@ -39,7 +39,7 @@ class Base:
     __ne__ = OkayABC.__ne__
     __repr__ = OkayABC.__repr__
 
-    def __setattr__(self, name: str, value: Any) -> None:
+    def __setattr__(self:Self, name: str, value: Any) -> None:
         if name.startswith("_"):
             object.__setattr__(self, name, value)
             return

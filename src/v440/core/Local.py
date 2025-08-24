@@ -11,7 +11,7 @@ __all__ = ["Local"]
 
 class Local(VList):
 
-    def __le__(self, other: Iterable) -> bool:
+    def __le__(self:Self, other: Iterable) -> bool:
         try:
             other = type(self)(other)
         except ValueError:
@@ -20,10 +20,10 @@ class Local(VList):
             return self._cmpkey() <= other._cmpkey()
         return self.data <= other
 
-    def __str__(self) -> str:
+    def __str__(self:Self) -> str:
         return ".".join(str(x) for x in self)
 
-    def _cmpkey(self) -> list:
+    def _cmpkey(self:Self) -> list:
         return [self._sortkey(x) for x in self]
 
     @staticmethod
@@ -31,25 +31,25 @@ class Local(VList):
         return type(value) is int, value
 
     @property
-    def data(self) -> List[Union[int, str]]:
+    def data(self:Self) -> List[Union[int, str]]:
         return list(self._data)
 
     @data.setter
     @utils.digest
     class data:
-        def byInt(self, value: int) -> None:
+        def byInt(self:Self, value: int) -> None:
             self._data = [value]
 
-        def byList(self, value: list) -> None:
+        def byList(self:Self, value: list) -> None:
             value = [utils.segment(x) for x in value]
             if None in value:
                 raise ValueError
             self._data = value
 
-        def byNone(self) -> None:
+        def byNone(self:Self) -> None:
             self._data = list()
 
-        def byStr(self, value: str) -> None:
+        def byStr(self:Self, value: str) -> None:
             if value.startswith("+"):
                 value = value[1:]
             value = value.replace("_", ".")
@@ -61,7 +61,7 @@ class Local(VList):
             self._data = value
 
     @functools.wraps(VList.sort)
-    def sort(self, /, *, key=None, **kwargs) -> None:
+    def sort(self:Self, /, *, key:Any=None, **kwargs:Any) -> None:
         if key is None:
             key = self._sortkey
         self._data.sort(key=key, **kwargs)

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import functools
 import operator
 import string
 from typing import *
@@ -10,7 +9,7 @@ from v440.core.VersionError import VersionError
 SEGCHARS = string.ascii_lowercase + string.digits
 
 
-def digest(old, /):
+def digest(old:Any, /)->Any:
     byNone = getattr(old, "byNone", None)
     byInt = getattr(old, "byInt", None)
     byList = getattr(old, "byList", None)
@@ -35,7 +34,7 @@ def digest(old, /):
     return new
 
 
-def literal(value, /):
+def literal(value:Any, /)->Any:
     value = segment(value)
     if type(value) is str:
         return value
@@ -44,7 +43,7 @@ def literal(value, /):
     raise e
 
 
-def numeral(value, /):
+def numeral(value:Any, /)->Any:
     value = segment(value)
     if type(value) is int:
         return value
@@ -53,7 +52,7 @@ def numeral(value, /):
     raise e
 
 
-def segment(value, /):
+def segment(value:Any, /)->Any:
     try:
         return _segment(value)
     except:
@@ -64,15 +63,15 @@ def segment(value, /):
 
 @digest
 class _segment:
-    def byNone():
+    def byNone()->None:
         return
 
-    def byInt(value, /):
+    def byInt(value:Any, /)->Any:
         if value < 0:
             raise ValueError
         return value
 
-    def byStr(value, /):
+    def byStr(value:Any, /)->Any:
         if value.strip(SEGCHARS):
             raise ValueError(value)
         if value.strip(string.digits):
@@ -82,7 +81,7 @@ class _segment:
         return int(value)
 
 
-def torange(key, length):
+def torange(key:Any, length:Any)->Any:
     start = key.start
     stop = key.stop
     step = key.step
