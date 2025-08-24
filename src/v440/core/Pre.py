@@ -20,9 +20,11 @@ class Pre(VList):
         self.data = data
 
     def __str__(self:Self) -> str:
-        if self.isempty():
-            return ""
-        return self.phase + str(self.subphase)
+        ans : str = ""
+        if not self.isempty():
+            ans += self.phase 
+            ans += str(self.subphase)
+        return ans
 
     @property
     def data(self:Self) -> list:

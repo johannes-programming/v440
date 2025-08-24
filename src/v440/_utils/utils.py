@@ -34,7 +34,7 @@ def digest(old:Any, /)->Any:
     return new
 
 
-def literal(value:Any, /)->Any:
+def literal(value:Any, /)->str:
     value = segment(value)
     if type(value) is str:
         return value
@@ -43,7 +43,7 @@ def literal(value:Any, /)->Any:
     raise e
 
 
-def numeral(value:Any, /)->Any:
+def numeral(value:Any, /)->int:
     value = segment(value)
     if type(value) is int:
         return value
@@ -81,7 +81,7 @@ class _segment:
         return int(value)
 
 
-def torange(key:Any, length:Any)->Any:
+def torange(key:Any, length:Any)->range:
     start = key.start
     stop = key.stop
     step = key.step

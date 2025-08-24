@@ -62,20 +62,22 @@ class Version(Base):
         return self._cmpkey() <= other._cmpkey()
 
     def __setattr__(self:Self, name: str, value: Any) -> None:
-        a = dict()
-        b = dict()
-        for k, v in self._data.todict().items():
+        a :dict= dict()
+        b :dict= dict()
+        x:Any
+        y:Any
+        for x,y in self._data.todict().items():
             try:
-                a[k] = v.data
+                a[x] = y.data
             except AttributeError:
-                b[k] = v
+                b[x] = y
         try:
             Base.__setattr__(self, name, value)
         except VersionError:
-            for k, v in a.items():
-                getattr(self._data, k).data = v
-            for k, v in b.items():
-                setattr(self._data, k, v)
+            for x,y in a.items():
+                getattr(self._data, x).data = y
+            for x,y in b.items():
+                setattr(self._data, x,y)
             raise
 
     def __str__(self:Self) -> str:
@@ -98,8 +100,8 @@ class Version(Base):
         return ans
 
     @property
-    def base(self:Self) -> Version:
-        ans = self.public
+    def base(self:Self) -> Self:
+        ans:Self = self.public
         ans.dev = None
         ans.pre = None
         ans.post = None
@@ -181,7 +183,7 @@ class Version(Base):
                 self._data.epoch = int(value)
 
     def format(self:Self, cutoff:Any=None) -> str:
-        ans = ""
+        ans :str= ""
         if self.epoch:
             ans += "%s!" % self.epoch
         ans += self.release.format(cutoff)
@@ -232,7 +234,7 @@ class Version(Base):
 
     @property
     def public(self:Self) -> Self:
-        ans = self.copy()
+        ans :Self= self.copy()
         ans.local = None
         return ans
 
@@ -278,12 +280,14 @@ class Version(Base):
         self._data.release.data = value
 
     def update(self:Self, **kwargs:Any) -> None:
-        for k, v in kwargs.items():
-            attr = getattr(type(self), k)
+        x:Any
+        y:Any
+        for x,y in kwargs.items():
+            attr = getattr(type(self), x)
             if isinstance(attr, property):
-                setattr(self, k, v)
+                setattr(self, x,y)
                 continue
             e = "%r is not a property"
-            e %= k
+            e %= x
             e = AttributeError(e)
             raise e

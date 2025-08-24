@@ -11,7 +11,7 @@ __all__ = ["Local"]
 
 class Local(VList):
 
-    data:list[Union[int, str]]
+    data:list[int|str]
 
     def __le__(self:Self, other: Iterable) -> bool:
         try:
@@ -23,17 +23,17 @@ class Local(VList):
         return self.data <= other
 
     def __str__(self:Self) -> str:
-        return ".".join(str(x) for x in self)
+        return ".".join(map(str, self))
 
     def _cmpkey(self:Self) -> list:
         return [self._sortkey(x) for x in self]
 
     @staticmethod
-    def _sortkey(value) -> Tuple[bool, Any]:
+    def _sortkey(value:Any) -> Tuple[bool, Any]:
         return type(value) is int, value
 
     @property
-    def data(self:Self) -> list[Union[int, str]]:
+    def data(self:Self) -> list[int|str]:
         return list(self._data)
 
     @data.setter

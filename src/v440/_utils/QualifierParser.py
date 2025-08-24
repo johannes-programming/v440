@@ -40,16 +40,18 @@ class QualifierParser:
                     raise TypeError
                 return n
 
-        def byNone(self:Self)->Any:
-            return [None, None] if self.phasedict else None
-
-        def byStr(self:Self, value: str)->Any:
-            value = value.replace("_", ".")
-            value = value.replace("-", ".")
-            if self.phasedict and value == "":
+        def byNone(self:Self)->Optional[list]:
+            if self.phasedict:
                 return [None, None]
-            value = Pattern.PARSER.bound.search(value)
-            l, n = value.groups()
+
+        def byStr(self:Self, value: str)->Optional[int|list]:
+            v:str=value
+            v = v.replace("_", ".")
+            v = v.replace("-", ".")
+            if self.phasedict and v == "":
+                return [None, None]
+            m:Any = Pattern.PARSER.bound.search(v)
+            l, n = m.groups()
             if self.phasedict:
                 l = self.phasedict[l]
                 n = 0 if (n is None) else int(n)

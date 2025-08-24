@@ -19,9 +19,9 @@ class Release(VList):
     micro:int
     patch:int
     def __add__(self:Self, other:Any, /) -> Self:
-        other = type(self)(other)
-        ans = self.copy()
-        ans._data += other._data
+        opp:Self = type(self)(other)
+        ans:Self = self.copy()
+        ans._data += opp._data
         return ans
 
     @overloadable
@@ -29,10 +29,10 @@ class Release(VList):
         return type(key) is slice
 
     @__delitem__.overload(False)
-    def __delitem__(self:Self, key:Any) -> None:
-        key = operator.index(key)
-        if key < len(self):
-            del self._data[key]
+    def __delitem__(self:Self, key:SupportsIndex) -> None:
+        i:int = operator.index(key)
+        if i < len(self):
+            del self._data[i]
 
     @__delitem__.overload(True)
     def __delitem__(self:Self, key:Any) -> None:
@@ -48,13 +48,15 @@ class Release(VList):
 
     @__getitem__.overload(False)
     def __getitem__(self:Self, key:Any) -> int:
-        key = operator.index(key)
-        return self._getitem_int(key)
+        i:int = operator.index(key)
+        ans:int= self._getitem_int(i)
+        return ans
 
     @__getitem__.overload(True)
     def __getitem__(self:Self, key:Any) -> list:
-        key = utils.torange(key, len(self))
-        ans = [self._getitem_int(i) for i in key]
+        r:range = utils.torange(key, len(self))
+        m:map = map(self._getitem_int, r)
+        ans:list = list(m)
         return ans
 
     @overloadable
@@ -63,8 +65,8 @@ class Release(VList):
 
     @__setitem__.overload(False)
     def __setitem__(self:Self, key: SupportsIndex, value:Any)->Any:
-        key = operator.index(key)
-        self._setitem_int(key, value)
+        i:int = operator.index(key)
+        self._setitem_int(i, value)
 
     @__setitem__.overload(True)
     def __setitem__(self:Self, key: SupportsIndex, value:Any)->Any:
@@ -151,12 +153,12 @@ class Release(VList):
         return value
 
     def bump(self:Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
-        index = operator.index(index)
-        amount = operator.index(amount)
-        x = self._getitem_int(index) + amount
-        self._setitem_int(index, x)
-        if index != -1:
-            self.data = self.data[: index + 1]
+        i:int = operator.index(index)
+        a:int = operator.index(amount)
+        x:int = self._getitem_int(i) + a
+        self._setitem_int(i, x)
+        if i != -1:
+            self.data = self.data[: i + 1]
 
     @property
     def data(self:Self) -> list:
@@ -170,8 +172,8 @@ class Release(VList):
         self._data = value
 
     def format(self:Self, cutoff: Any = None) -> str:
-        format_spec = str(cutoff) if cutoff else ""
-        i = int(format_spec) if format_spec else None
+        s :str= str(cutoff) if cutoff else ""
+        i :Optional[int]= int(s) if s else None
         ans = self[:i]
         if len(ans) == 0:
             ans += [0]
