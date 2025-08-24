@@ -42,10 +42,10 @@ class _Version:
 class Version(Base):
     base:Self
     data:str
-    dev:Any
-    epoch:Any
+    dev:Optional[int]
+    epoch:int
     local:Local
-    post:Any
+    post:Optional[int]
     pre:Pre
     public:Self
     release:Release
