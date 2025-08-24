@@ -154,7 +154,7 @@ print(str(v))  # Output: 1.5.0</code></pre>
                     <dt>Features</dt>
                     <dd>
                         <dl class="heading4">
-                            <dt id="Local">class v440.core.Local(data: Any = None)</dt>
+                            <dt id="Local">class v440.core.Local.Local(data: Any = None)</dt>
                             <dd>
                                 <p>
                                     This class is a list-like subclass 
@@ -182,7 +182,7 @@ print(str(v))  # Output: 1.5.0</code></pre>
                                 </dl>
                             </dd>
                             <dt id="Pre">
-                                class v440.core.Pre(data: Any = None)
+                                class v440.core.Pre.Pre(data: Any = None)
                             </dt>
                             <dd>
                                 <p>
@@ -259,7 +259,7 @@ print(str(v))  # Output: 1.5.0</code></pre>
                                     </dd>
                                 </dl>
                             </dd>
-                            <dt id="Release">class v440.core.Release(data: Any = None)</dt>
+                            <dt id="Release">class v440.core.Release.Release(data: Any = None)</dt>
                             <dd>
 
 
@@ -716,7 +716,7 @@ def f(version:Version) -&gt; bool:
 def g(version:Version) -&gt; bool:
     return version.post is not None</code></pre>
                                     </dd>
-                                    <dt id="Version.local">local:Local</dt>
+                                    <dt id="Version.local">local:v440.core.Local.Local</dt>
                                     <dd> 
                                         <p>
                                             This property is designed to manage local version identifiers, which serve as extensions to the public version number. These identifiers enable developers and integrators to indicate that a version is a specific variation of an upstream release, often due to custom patches or modifications. Local version identifiers follow the syntax &lt;public version identifier&gt;[+&lt;local version label&gt;], where the local label is prefixed by a plus sign. Local version identifiers can include ASCII letters, digits, and periods, and they must start and end with an alphanumeric character. The primary purpose of local identifiers is to help differentiate between official (public) upstream releases and downstream adaptations, which may not contain the same code as the upstream version. The <code>
@@ -863,7 +863,7 @@ print(v, type(v.post), v.post)
                                             while adhering to the requirements of versioning conventions.
                                         </p>
                                     </dd>
-                                    <dt id="Version.pre">pre:Pre</dt>
+                                    <dt id="Version.pre">pre:v440.core.Pre.Pre</dt>
                                     <dd> 
                                         <p>
                                             This property is designed to handle prereleases, 
@@ -932,7 +932,7 @@ print(v, v.pre)
                                             but is otherwise identical to the original instance. 
                                         </p>
                                     </dd>
-                                    <dt id="Version.release">release:Release</dt>
+                                    <dt id="Version.release">release:v440.core.Release.Release</dt>
                                     <dd> 
                                         <p>
                                             This property represents the release identifier of the version. 
