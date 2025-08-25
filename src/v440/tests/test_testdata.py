@@ -29,6 +29,50 @@ class utils:
         return False
     
 
+class TestDev(unittest.TestCase):
+
+    def test_initial_none_dev(self:Self)->None:
+        v = Version("1.2.3")
+        self.assertEqual(str(v), "1.2.3")
+        self.assertIsNone(v.dev)
+
+    def test_dev_as_none(self:Self)->None:
+        v = Version("1.2.3")
+        v.dev = None
+        self.assertEqual(str(v), "1.2.3")
+        self.assertIsNone(v.dev)
+
+
+    def test_dev_as_tuple(self:Self)->None:
+        self.dev(
+            key = "test_dev_as_tuple",
+            v_version = "1.2.3",
+            v_dev =  ("dev", "5000"),
+            v_str = "1.2.3.dev5000",
+            v_ans = 5000,
+        )
+        
+    def test_strings_a(self:Self)->None:
+        devint :list= utils.get_data()["data"]["devint"]
+        k:str
+        v:dict
+        for k, v in devint.items():
+            self.dev(key=k, **v)
+    
+    def dev(self:Self, 
+                key:str, 
+                v_version:Any,
+                v_dev:Any,
+                v_str:Any,
+                v_ans:Any, 
+                dev_type:type=int,      
+    ):
+        v=Version(v_version)
+        v.dev = v_dev
+        self.assertEqual(str(v), v_str)
+        self.assertIsInstance(v.dev, dev_type)
+        self.assertEqual(v.dev, v_ans) 
+
 class TestPackaging(unittest.TestCase):
     def test_strings_a(self:Self)->None:
 
