@@ -32,15 +32,7 @@ class utils:
 class TestPackaging(unittest.TestCase):
     def test_strings(self:Self)->None:
 
-        pure = list()
-
-        for s in utils.get_data()["data"]["strings"]:
-            try:
-                a = packaging.version.Version(s)
-            except:
-                continue
-            else:
-                pure.append(s)
+        pure :list= utils.get_data()["data"]["valid"]
 
         for s in pure:
             a = packaging.version.Version(s)
@@ -79,12 +71,12 @@ class TestPackaging(unittest.TestCase):
 class TestField(unittest.TestCase):
 
     def test_field(self:Self)->None:
+        valid = utils.get_data()["data"]["valid"] 
+        incomp = utils.get_data()["data"]["incomp"]
+        versionable = valid + incomp
         version_obj = Version()
-        for x in utils.get_data()["data"]["strings"]:
-            try:
-                v = Version(x)
-            except VersionError:
-                continue
+        for x in versionable:
+            v = Version(x)
             self.assertEqual(v.isdevrelease(), v.packaging().is_devrelease)
             self.assertEqual(v.isprerelease(), v.packaging().is_prerelease)
             self.assertEqual(v.ispostrelease(), v.packaging().is_postrelease)
@@ -93,7 +85,11 @@ class TestField(unittest.TestCase):
             version_obj.local = v.packaging().local
             self.assertEqual(str(v.local), str(version_obj.local))
 
-
+    def test_exc(self:Self)->None:
+        exc = utils.get_data()["data"]["exc"] 
+        for x in exc:
+            with self.assertRaises(VersionError):
+                Version(x)
 
 
 
