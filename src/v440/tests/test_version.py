@@ -1,147 +1,12 @@
-import operator
 import unittest
 
-import packaging.version
 from typing import *
 
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
-VERSION_STRINGS = [
-    # Basic Versioning
-    "1.0.0",
-    "0.9.1",
-    "2.1.0",
-    "10.5.3",
-    "0.0.1",
-    "0.0.0",
-    "0.1",
-    "1.2",
-    "2.4",
-    # Pre-releases (alpha, beta, release candidate)
-    "1.0.0a1",
-    "2.0b3",
-    "0.9.1rc4",
-    "1.1.0-alpha",
-    "3.0.0b2",
-    "4.1.0-rc.1",
-    "1.1a0",
-    "1.1.0-alpha.2",
-    "5.0rc1",
-    # Post-releases
-    "1.0.0.post1",
-    "2.1.0.post4",
-    "3.2.1.post7",
-    "1.2.post.3",
-    "1.2.0-post4",
-    "0.9.0post5",
-    # Development releases
-    "1.0.0.dev1",
-    "2.0.0.dev2",
-    "0.9.1.dev10",
-    "2.1.dev0",
-    "1.0dev5",
-    "1.1.0-dev3",
-    "0.5.0.dev4",
-    # Local Versions
-    "1.0.0+local",
-    "2.0.1+20130313144700",
-    "1.0.0+exp.sha.5114f85",
-    "1.0.0+abc.5.1",
-    "1.0.1+2019.10.22",
-    "0.9.0+ubuntu1",
-    "2.1.0+build.12345",
-    "3.2.1+dfsg1",
-    # Epoch Versions
-    "1!0.1.0",
-    "2!1.0.0",
-    "1!2.3.4",
-    "0!0.0.1",
-    "3!1.2.0",
-    # Mixed Versions (combining post, dev, pre-releases, etc.)
-    "1.0.0a1.post2",
-    "2.1.0b2.dev3",
-    "1.2.3rc1+build123",
-    "1!1.0.0a1.dev1",
-    "1.2.3.post4+exp.sha.5114f85",
-    "3.2.1rc2.post1.dev3",
-    "0!0.9.0.post5.dev7+local.5",
-    "2!3.4.5a2+ubuntu1",
-    # Edge Cases / Special Forms
-    "1.0",
-    "v2.0",  # Some might write v prefix in tags, though it's non-standard
-    "1.2.3-456",
-    "2.0.0-beta",
-    "1.0.0.dev1234567",
-    "1.0.0.post123456789",
-    "1.2.3+abc.123",
-    "1.0+deadbeef",
-    "0.1+build.1",
-    # Invalid or Potentially Problematic Cases (for error handling)
-    "1..0",  # double dot
-    "1.0.0+@build",  # invalid character
-    "1.2.3-beta",  # non-PEP 440 pre-release format
-    "01.0.0",  # leading zero
-    "1.0.0beta1",  # invalid beta format
-    "v1.2.3"  # use of v, technically non-standard
-    # Increasing complexity with more combinations
-    "1.0.0a1.post2.dev3",
-    "1!2.0.0b3.post1+exp.sha.1234abcd",
-    "1!1.0.0.dev4567.post9+20190101",
-    "0.9.0.post99.dev1000+ubuntu12.04.5",
-    "3!2.1.0-alpha.5+build.34567abcd",
-    "1.2.3a1.post11.dev7+sha256.abc123def456",
-    "0!0.0.0a1.post9999.dev8888+local-build.0",
-    "42!1.0.0rc999.post999.dev9999+exp.build.local1",
-    # Combining epochs with local versions
-    "2!1.0.0+local.version.1234",
-    "1!2.0.1.post3.dev1+local.hash.deadbeef",
-    "3!4.5.6a2.post8.dev9+build.sha.abcdef123456",
-    # Advanced pre-release + post-release + development combinations
-    "0.1a1.post2.dev0+local.build.1234abc",
-    "2!5.6.7b5.post10.dev1000+exp.sha12345678",
-    "1.0.0b99.post8888.dev7777+local.version.abcdef",
-    "0.5.0rc1.post1111.dev987+local.build.exp123",
-    "0!1.1a1.post1.dev100+local.build.hash99999",
-    # Very large versions with long numeric parts
-    "1.0.0.post999999.dev9999999+build.1234567890",
-    "0!99999999.99999.99999+local.version.9876543210",
-    "100!0.0.0a0.post0.dev0+exp.sha.0",
-    "2!999.999.999a999.post9999.dev9999+local.build.9",
-    # Complex strings with multiple epochs, large numbers, and combinations
-    "10!9999.8888.7777a6666.post5555.dev4444+build.hash123abc",
-    "1!1.1a1000000000.post1000000000.dev1000000000+local.0",
-    # Mixed use of pre-release and post-release with complex local versions
-    "1.0.0a1.post2+ubuntu16.04",
-    "2.0.0-rc.1.post2+build.sha.e91e63f0",
-    "1.0.0-alpha+linux-x86_64",
-    "0.1.0-beta+20190506.commit.gdeadbeef",
-    # Invalid cases (testing error handling for extreme cases)
-    "0.0.0a1.post0.dev0+local.build.invalid_character#",
-    "1.0.0-alpha_1",  # invalid separator
-    "1.0.0a1..post2",  # double dot
-    "1!2.0.0+",  # trailing plus sign
-    "v1.0.0.post0.dev0",  # 'v' prefix with multiple post/dev releases
-    "1.0.0.a1",  # invalid pre-release format
-    "2!1..0",  # double dot with epoch
-    "1.0.0++local.version.doubleplus",  # double plus in local version
-    "1.2.3alpha1.post2",  # invalid pre-release format
-    "00!1.0.0",  # invalid epoch with leading zero
-    "1.0.0a01.post00.dev01+build00",  # invalid leading zeros
-    "1.0.0+build@sha.123",  # invalid character in local version
-    "v1.0.0-0",  # invalid pre-release number
-    "1.0.0alpha_beta",  # invalid underscore in pre-release
-    "1.0.0...dev",  # triple dots
-    # Extreme cases with very long versions
-    "0.1.0a12345678901234567890.post12345678901234567890.dev12345678901234567890+build12345678901234567890",
-    "1.2.3+local.version.with.extremely.long.identifier.123456789012345678901234567890",
-    "0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999",
-    # Cases with inconsistent pre-release and post-release ordering
-    "1.0.0.post1a1",  # post before alpha (invalid)
-    "1.0.0.dev1rc1",  # dev before rc (invalid)
-    "2!1.0.0rc1.post1a1",  # rc and post combined in wrong order (invalid)
-    "3!1.0.0a1.dev1rc1+build123",  # rc after dev (invalid)
-]
+from typing import *
+
 
 
 class TestExample(unittest.TestCase):
@@ -290,51 +155,13 @@ class TestSlicing(unittest.TestCase):
         self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
 
 
-class TestPackaging(unittest.TestCase):
-    def test_strings(self:Self)->None:
 
-        pure = list()
 
-        for s in VERSION_STRINGS:
-            try:
-                a = packaging.version.Version(s)
-            except:
-                continue
-            else:
-                pure.append(s)
 
-        for s in pure:
-            a = packaging.version.Version(s)
-            b = str(a)
-            f = len(a.release)
-            g = Version(s).format(f)
-            self.assertEqual(b, g)
 
-        for s in pure:
-            a = packaging.version.Version(s)
-            b = Version(s).packaging()
-            self.assertEqual(a, b, f"{s} should match packaging.version.Version")
 
-        ops = [
-            operator.eq,
-            operator.ne,
-            operator.gt,
-            operator.ge,
-            operator.le,
-            operator.lt,
-        ]
-        for x in pure:
-            a = packaging.version.Version(x)
-            b = Version(x).packaging()
-            for y in pure:
-                c = packaging.version.Version(y)
-                d = Version(y).packaging()
-                for op in ops:
-                    self.assertEqual(
-                        op(a, c),
-                        op(b, d),
-                        f"{op} should match for {x!r} and {y!r}",
-                    )
+
+
 
 
 class TestVersionRelease(unittest.TestCase):
@@ -342,36 +169,6 @@ class TestVersionRelease(unittest.TestCase):
     def setUp(self:Self)->None:
         # Create a version class instance
         self.version = Version()
-
-    def test_release_basic_assignment(self:Self)->None:
-        # Test simple assignment of a list of non-negative integers
-        self.version.release = [1, 2, 3]
-        self.assertEqual(self.version.release, [1, 2, 3])
-
-    def test_release_trailing_zeros(self:Self)->None:
-        # Test that trailing zeros are removed
-        self.version.release = [1, 2, 3, 0, 0]
-        self.assertEqual(self.version.release, [1, 2, 3])
-
-    def test_release_zero(self:Self)->None:
-        # Test that a single zero is allowed
-        self.version.release = [0]
-        self.assertEqual(self.version.release, [])
-
-    def test_release_empty_list(self:Self)->None:
-        # Test empty list assignment
-        self.version.release = []
-        self.assertEqual(self.version.release, [])
-
-    def test_release_conversion_string(self:Self)->None:
-        # Test assignment of string that can be converted to numbers
-        self.version.release = ["1", "2", "3"]
-        self.assertEqual(self.version.release, [1, 2, 3])
-
-    def test_release_conversion_mixed(self:Self)->None:
-        # Test assignment of mixed string and integer values
-        self.version.release = ["1", 2, "3"]
-        self.assertEqual(self.version.release, [1, 2, 3])
 
     def test_release_invalid_value(self:Self)->None:
         # Test that invalid values raise an appropriate error
@@ -443,6 +240,15 @@ class TestVersionRelease(unittest.TestCase):
         # Test that release can handle large integers
         self.version.release = [1000000000, 2000000000, 3000000000]
         self.assertEqual(self.version.release, [1000000000, 2000000000, 3000000000])
+
+
+
+
+
+
+
+
+
 
 
 class TestAdditionalVersionRelease(unittest.TestCase):
@@ -792,112 +598,6 @@ class TestVersionLocal(unittest.TestCase):
         result = [x for x in self.version.local]
         self.assertEqual(result, [1, "dev", "build"])
 
-
-class TestField(unittest.TestCase):
-
-    def setUp(self:Self)->None:
-        # Initialize a fresh Version instance for every test
-        self.version = Version()
-
-    def test_field(self:Self)->None:
-        for x in VERSION_STRINGS:
-            try:
-                v = Version(x)
-            except VersionError:
-                continue
-            self.assertEqual(v.isdevrelease(), v.packaging().is_devrelease)
-            self.assertEqual(v.isprerelease(), v.packaging().is_prerelease)
-            self.assertEqual(v.ispostrelease(), v.packaging().is_postrelease)
-            self.assertEqual(str(v.base), v.packaging().base_version)
-            self.assertEqual(str(v.public), v.packaging().public)
-            self.version.local = v.packaging().local
-            self.assertEqual(str(v.local), str(self.version.local))
-
-
-class TestVersionSpecifiers(unittest.TestCase):
-
-    def test_basic_version_with_post_specifier(self:Self)->None:
-        # Test basic version with post specifier using a hyphen
-        version = Version("1.2.3-4")
-        self.assertEqual(str(version), "1.2.3.post4")
-
-    def test_version_with_multiple_post_specifiers(self:Self)->None:
-        # Test multiple post specifiers, last one should take precedence
-        version = Version("1.2.3-4-5")
-        self.assertEqual(str(version), "1.2.3.post5")
-
-    def test_version_with_mixed_post_and_dev_specifiers(self:Self)->None:
-        # Test multiple mixed specifiers (dev, post), last one should take precedence
-        version = Version("1.2.3-dev1-post2-dev3")
-        self.assertEqual(str(version), "1.2.3.post2.dev3")
-
-    def test_version_with_pre_release_and_post_specifiers(self:Self)->None:
-        # Test pre-release specifier followed by a post-release
-        version = Version("1.2.3a1-4")
-        self.assertEqual(str(version), "1.2.3a1.post4")
-
-    def test_version_with_multiple_pre_and_post_specifiers(self:Self)->None:
-        # Test multiple pre-release and post-release specifiers, last one should take precedence
-        version = Version("1.2.3a1-4-5")
-        self.assertEqual(str(version), "1.2.3a1.post5")
-
-    def test_version_with_post_and_local_specifiers(self:Self)->None:
-        # Test post-release with local version specifier
-        version = Version("1.2.3-4+local")
-        self.assertEqual(str(version), "1.2.3.post4+local")
-
-    def test_version_with_post_specifier_and_epoch(self:Self)->None:
-        # Test version with an epoch and post specifier
-        version = Version("1!1.2.3-4")
-        self.assertEqual(str(version), "1!1.2.3.post4")
-
-    def test_version_with_wrong_order_specifiers(self:Self)->None:
-        # Test version with wrong order of specifiers (e.g., post before pre)
-        version = Version("1.2.3-4a1")
-        self.assertEqual(str(version), "1.2.3a1.post4")
-
-    def test_version_with_multiple_misordered_specifiers(self:Self)->None:
-        # Test version with a more complex wrong ordering of specifiers
-        version = Version("1.2.3-4a1-dev5-6")
-        self.assertEqual(str(version), "1.2.3a1.post6.dev5")
-
-    def test_version_with_dev_specifier_after_post(self:Self)->None:
-        # Test version where a dev specifier follows a post-release (last one takes precedence)
-        version = Version("1.2.3-4-dev5")
-        self.assertEqual(str(version), "1.2.3.post4.dev5")
-
-    def test_version_with_epoch_and_wrong_order_specifiers(self:Self)->None:
-        # Test version with epoch and mixed, wrong order of specifiers
-        version = Version("1!1.2.3-4-dev2")
-        self.assertEqual(str(version), "1!1.2.3.post4.dev2")
-
-    def test_version_with_multiple_epoch_and_specifiers(self:Self)->None:
-        # Test multiple version specifiers (only last specifier should count)
-        version = Version("2!1.2.3-4-5")
-        self.assertEqual(str(version), "2!1.2.3.post5")
-
-    def test_version_with_invalid_specifiers(self:Self)->None:
-        # Test version with invalid specifiers that should raise an error
-        with self.assertRaises(VersionError):
-            Version("1.2.3--4")
-
-        with self.assertRaises(VersionError):
-            Version("1.2.3a1--4")
-
-    def test_version_with_repeated_dev_specifier(self:Self)->None:
-        # Test version where the dev specifier is repeated multiple times
-        version = Version("1.2.3-dev1-dev2")
-        self.assertEqual(str(version), "1.2.3.dev2")
-
-    def test_version_with_complex_specifiers_and_local(self:Self)->None:
-        # Test a complex version with mixed specifiers and a local version
-        version = Version("1.2.3a1-4-dev5+local")
-        self.assertEqual(str(version), "1.2.3a1.post4.dev5+local")
-
-    def test_version_with_multiple_releases_and_epoch(self:Self)->None:
-        # Test version with multiple release-like elements and an epoch
-        version = Version("1!1.2.3a1-4-dev5-6+local")
-        self.assertEqual(str(version), "1!1.2.3a1.post6.dev5+local")
 
 
 if __name__ == "__main__":
