@@ -314,3 +314,35 @@ string_a = "1!1.2.3a1-4-dev5-6+local"
 string_b = "1!1.2.3a1.post6.dev5+local"
 
 
+
+[data.release.test_release_basic_assignment]
+# Test simple assignment of a list of non-negative integers
+query = [1, 2, 3]
+solution = [1, 2, 3]
+
+[data.release.test_release_trailing_zeros]
+# Test that trailing zeros are removed
+query = [1, 2, 3, 0, 0]
+solution = [1, 2, 3]
+
+[data.release.test_release_zero]
+# Test that a single zero is allowed
+query = [0]
+solution = []
+
+[data.release.test_release_empty_list]
+# Test empty list assignment
+query = []
+solution = []
+
+[data.release.test_release_conversion_string]
+# Test assignment of string that can be converted to numbers
+query = ["1", "2", "3"]
+solution = [1, 2, 3]
+
+[data.release.test_release_conversion_mixed]
+# Test assignment of mixed string and integer values
+query = ["1", 2, "3"]
+solution = [1, 2, 3]
+
+

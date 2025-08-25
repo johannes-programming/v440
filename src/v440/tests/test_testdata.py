@@ -29,6 +29,28 @@ class utils:
         return False
     
 
+class TestVersionRelease(unittest.TestCase):
+
+
+    def setUp(self:Self)->None:
+        # Create a version class instance
+        self.version = Version()
+
+    def test_0(self:Self)->None:
+        data :dict = utils.get_data()
+        release: dict = data["data"]["release"]
+        for k, v in release.items():
+            self.release(key=k, **v)
+    
+    def release(self:Self, query:Any, solution:Any, key:str="")->None:
+        self.version.release = query
+        self.assertEqual(self.version.release, solution)
+
+
+
+
+
+
 class TestDev(unittest.TestCase):
 
     def test_initial_none_dev(self:Self)->None:

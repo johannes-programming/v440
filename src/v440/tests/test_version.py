@@ -156,41 +156,19 @@ class TestSlicing(unittest.TestCase):
 
 
 
+
+
+
+
+
+
+
+
 class TestVersionRelease(unittest.TestCase):
 
     def setUp(self:Self)->None:
         # Create a version class instance
         self.version = Version()
-
-    def test_release_basic_assignment(self:Self)->None:
-        # Test simple assignment of a list of non-negative integers
-        self.version.release = [1, 2, 3]
-        self.assertEqual(self.version.release, [1, 2, 3])
-
-    def test_release_trailing_zeros(self:Self)->None:
-        # Test that trailing zeros are removed
-        self.version.release = [1, 2, 3, 0, 0]
-        self.assertEqual(self.version.release, [1, 2, 3])
-
-    def test_release_zero(self:Self)->None:
-        # Test that a single zero is allowed
-        self.version.release = [0]
-        self.assertEqual(self.version.release, [])
-
-    def test_release_empty_list(self:Self)->None:
-        # Test empty list assignment
-        self.version.release = []
-        self.assertEqual(self.version.release, [])
-
-    def test_release_conversion_string(self:Self)->None:
-        # Test assignment of string that can be converted to numbers
-        self.version.release = ["1", "2", "3"]
-        self.assertEqual(self.version.release, [1, 2, 3])
-
-    def test_release_conversion_mixed(self:Self)->None:
-        # Test assignment of mixed string and integer values
-        self.version.release = ["1", 2, "3"]
-        self.assertEqual(self.version.release, [1, 2, 3])
 
     def test_release_invalid_value(self:Self)->None:
         # Test that invalid values raise an appropriate error
@@ -262,6 +240,15 @@ class TestVersionRelease(unittest.TestCase):
         # Test that release can handle large integers
         self.version.release = [1000000000, 2000000000, 3000000000]
         self.assertEqual(self.version.release, [1000000000, 2000000000, 3000000000])
+
+
+
+
+
+
+
+
+
 
 
 class TestAdditionalVersionRelease(unittest.TestCase):
