@@ -73,6 +73,30 @@ class TestDev(unittest.TestCase):
         self.assertIsInstance(v.dev, dev_type)
         self.assertEqual(v.dev, v_ans) 
 
+
+
+class TestVersionSpecifiers(unittest.TestCase):
+
+    def test_version_with_invalid_specifiers(self:Self)->None:
+        # Test version with invalid specifiers that should raise an error
+        with self.assertRaises(VersionError):
+            Version("1.2.3--4")
+
+        with self.assertRaises(VersionError):
+            Version("1.2.3a1--4")
+    
+    def test_spec_toml(self:Self)->None:
+        data = utils.get_data()
+        spec = data["data"]["spec"]
+        for k, v in spec.items():
+            self.spec(**v, key=k)
+    
+    def spec(self:Self, string_a:str, string_b:str, key:str="")->None:
+        version = Version(string_a)
+        self.assertEqual(str(version), string_b)
+
+
+        
 class TestPackaging(unittest.TestCase):
     def test_strings_a(self:Self)->None:
 
