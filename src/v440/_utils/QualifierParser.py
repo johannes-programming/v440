@@ -16,7 +16,7 @@ class QualifierParser:
 
     @utils.digest
     class __call__:
-        def byInt(self:Self, value: int)->Any:
+        def byInt(self: Self, value: int) -> Any:
             if self.phasedict:
                 raise TypeError
             value = int(value)
@@ -24,7 +24,7 @@ class QualifierParser:
                 raise ValueError
             return value
 
-        def byList(self:Self, value: list)->Any:
+        def byList(self: Self, value: list) -> Any:
             value = [utils.segment(x) for x in value]
             if self.phasedict:
                 l, n = value
@@ -40,17 +40,17 @@ class QualifierParser:
                     raise TypeError
                 return n
 
-        def byNone(self:Self)->Optional[list]:
+        def byNone(self: Self) -> Optional[list]:
             if self.phasedict:
                 return [None, None]
 
-        def byStr(self:Self, value: str)->Optional[int|list]:
-            v:str=value
+        def byStr(self: Self, value: str) -> Optional[int | list]:
+            v: str = value
             v = v.replace("_", ".")
             v = v.replace("-", ".")
             if self.phasedict and v == "":
                 return [None, None]
-            m:Any = Pattern.PARSER.bound.search(v)
+            m: Any = Pattern.PARSER.bound.search(v)
             l, n = m.groups()
             if self.phasedict:
                 l = self.phasedict[l]
@@ -63,7 +63,7 @@ class QualifierParser:
             else:
                 return int(n)
 
-    def __post_init__(self:Self)->None:
+    def __post_init__(self: Self) -> None:
         if type(self.phasedict) is not dict:
             raise TypeError
         pd = self.phasedict
@@ -85,7 +85,7 @@ class QualifierParser:
                 continue
             raise TypeError
 
-    def nbylist(self:Self, value:Any, /)->Any:
+    def nbylist(self: Self, value: Any, /) -> Any:
         if len(value) == 2:
             l, n = value
             if l not in self.keysforlist:
