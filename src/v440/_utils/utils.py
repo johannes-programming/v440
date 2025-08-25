@@ -9,7 +9,7 @@ from v440.core.VersionError import VersionError
 SEGCHARS = string.ascii_lowercase + string.digits
 
 
-def digest(old:Any, /)->Any:
+def digest(old: Any, /) -> Any:
     byNone = getattr(old, "byNone", None)
     byInt = getattr(old, "byInt", None)
     byList = getattr(old, "byList", None)
@@ -34,7 +34,7 @@ def digest(old:Any, /)->Any:
     return new
 
 
-def literal(value:Any, /)->str:
+def literal(value: Any, /) -> str:
     value = segment(value)
     if type(value) is str:
         return value
@@ -43,7 +43,7 @@ def literal(value:Any, /)->str:
     raise e
 
 
-def numeral(value:Any, /)->int:
+def numeral(value: Any, /) -> int:
     value = segment(value)
     if type(value) is int:
         return value
@@ -52,7 +52,7 @@ def numeral(value:Any, /)->int:
     raise e
 
 
-def segment(value:Any, /)->Any:
+def segment(value: Any, /) -> Any:
     try:
         return _segment(value)
     except:
@@ -63,15 +63,15 @@ def segment(value:Any, /)->Any:
 
 @digest
 class _segment:
-    def byNone()->None:
+    def byNone() -> None:
         return
 
-    def byInt(value:Any, /)->Any:
+    def byInt(value: Any, /) -> Any:
         if value < 0:
             raise ValueError
         return value
 
-    def byStr(value:Any, /)->Any:
+    def byStr(value: Any, /) -> Any:
         if value.strip(SEGCHARS):
             raise ValueError(value)
         if value.strip(string.digits):
@@ -81,7 +81,7 @@ class _segment:
         return int(value)
 
 
-def torange(key:Any, length:Any)->range:
+def torange(key: Any, length: Any) -> range:
     start = key.start
     stop = key.stop
     step = key.step

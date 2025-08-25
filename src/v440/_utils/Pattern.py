@@ -3,6 +3,7 @@ import functools
 import re
 from typing import *
 
+
 class Pattern(enum.StrEnum):
 
     EPOCH = r"""(?:(?P<n>[0-9]+)!?)?"""
@@ -11,17 +12,17 @@ class Pattern(enum.StrEnum):
     QUALIFIERS = r"(([-_\.]?(?P<l>[a-z]+)[-_\.]?(?P<n>[0-9]*))|(-(?P<N>[0-9]+)))"
 
     @staticmethod
-    def compile(value:Any, /)->re.Pattern:
+    def compile(value: Any, /) -> re.Pattern:
         return re.compile(value, re.VERBOSE)
 
     @functools.cached_property
-    def bound(self:Self)->re.Pattern:
+    def bound(self: Self) -> re.Pattern:
         return self.compile(r"^" + self.value + r"$")
 
     @functools.cached_property
-    def leftbound(self:Self)->re.Pattern:
+    def leftbound(self: Self) -> re.Pattern:
         return self.compile(r"^" + self.value)
 
     @functools.cached_property
-    def unbound(self:Self)->re.Pattern:
+    def unbound(self: Self) -> re.Pattern:
         return self.compile(self.value)
