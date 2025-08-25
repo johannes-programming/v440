@@ -30,7 +30,7 @@ class utils:
     
 
 class TestPackaging(unittest.TestCase):
-    def test_strings(self:Self)->None:
+    def test_strings_a(self:Self)->None:
 
         pure :list= utils.get_data()["data"]["valid"]
 
@@ -41,11 +41,19 @@ class TestPackaging(unittest.TestCase):
             g = Version(s).format(f)
             self.assertEqual(b, g)
 
+    def test_strings_b(self:Self)->None:
+
+        pure :list= utils.get_data()["data"]["valid"]
+
         for s in pure:
             a = packaging.version.Version(s)
             b = Version(s).packaging()
             self.assertEqual(a, b, f"{s} should match packaging.version.Version")
 
+
+    def test_strings_c(self:Self)->None:
+
+        pure :list= utils.get_data()["data"]["valid"]
         ops = [
             operator.eq,
             operator.ne,
