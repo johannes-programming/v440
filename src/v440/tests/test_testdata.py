@@ -37,7 +37,7 @@ class TestVersionEpoch(unittest.TestCase):
     def test_0(self:Self) -> None:
         k:str
         v:dict
-        for k, v in Util.util.data["data"]["epoch"].items():
+        for k, v in Util.util.data["epoch"].items():
             self.epoch(**v, key=k)
 
 
@@ -67,7 +67,7 @@ class TestSlicing(unittest.TestCase):
         self.assertEqual(str(v), solution, "slicingmethod %s" % key)
 
     def test_slicing_3(self: Self) -> None:
-        sli:dict = Util.util.data["data"]["slicingmethod"]
+        sli:dict = Util.util.data["slicingmethod"]
         k:str
         v:dict
         for k, v in sli.items():
@@ -83,7 +83,7 @@ class TestSlicing(unittest.TestCase):
 class TestDataProperty(unittest.TestCase):
     def test_data(self: Self) -> None:
         self.v = Version()
-        for k, v in Util.util.data["data"]["data_property"].items():
+        for k, v in Util.util.data["data_property"].items():
             self.data(**v, key=k)
         self.data(query=None, solution="0")
     
@@ -108,7 +108,7 @@ class TestVersionRelease(unittest.TestCase):
     def test_0(self: Self) -> None:
         k:str
         v:Any
-        for k, v in Util.util.data["data"]["release"].items():
+        for k, v in Util.util.data["release"].items():
             self.release(key=k, **v)
 
     def release(self: Self, query: Any, solution: Any, key: str = "") -> None:
@@ -141,7 +141,7 @@ class TestDev(unittest.TestCase):
     def test_strings_a(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["data"]["devint"].items():
+        for k, v in Util.util.data["devint"].items():
             self.dev(key=k, **v)
 
     def dev(
@@ -174,7 +174,7 @@ class TestVersionSpecifiers(unittest.TestCase):
     def test_spec_toml(self: Self) -> None:
         k:str
         v:dict
-        for k, v in Util.util.data["data"]["spec"].items():
+        for k, v in Util.util.data["spec"].items():
             self.spec(**v, key=k)
 
     def spec(self: Self, string_a: str, string_b: str, key: str = "") -> None:
@@ -192,7 +192,7 @@ class TestPackaging(unittest.TestCase):
         s:str
         x:str
         y:list
-        for x, y in Util.util.data["data"]["strings"]["valid"].items():
+        for x, y in Util.util.data["strings"]["valid"].items():
             for s in y:
                 a = packaging.version.Version(s)
                 b = str(a)
@@ -207,7 +207,7 @@ class TestPackaging(unittest.TestCase):
         msg:str
         x:str
         y:list
-        for x, y in Util.util.data["data"]["strings"]["valid"].items():
+        for x, y in Util.util.data["strings"]["valid"].items():
             for s in y:
                 a = packaging.version.Version(s)
                 b = Version(s).packaging()
@@ -217,7 +217,7 @@ class TestPackaging(unittest.TestCase):
     def test_strings_c(self: Self) -> None:
         pure: list = list()
         l:list
-        for l in Util.util.data["data"]["strings"]["valid"].values():
+        for l in Util.util.data["strings"]["valid"].values():
             pure += l
         ops:list = [
             operator.eq,
@@ -251,9 +251,9 @@ class TestPackaging(unittest.TestCase):
     def test_field(self: Self) -> None:
         versionable :list= list()
         l:list
-        for l in Util.util.data["data"]["strings"]["valid"].values():
+        for l in Util.util.data["strings"]["valid"].values():
             versionable += l
-        for l in Util.util.data["data"]["strings"]["incomp"].values():
+        for l in Util.util.data["strings"]["incomp"].values():
             versionable += l
         version_obj:Version = Version()
         v:Version
@@ -271,7 +271,7 @@ class TestPackaging(unittest.TestCase):
     def test_exc(self: Self) -> None:
         l:list
         x:str
-        for l in Util.util.data["data"]["strings"]["exc"].values():
+        for l in Util.util.data["strings"]["exc"].values():
             for x in l:
                 with self.assertRaises(VersionError):
                     Version(x)
@@ -279,9 +279,9 @@ class TestPackaging(unittest.TestCase):
     def test_exc_pack(self: Self) -> None:
         impure :list= list()
         l:list
-        for l in Util.util.data["data"]["strings"]["incomp"].values():
+        for l in Util.util.data["strings"]["incomp"].values():
             impure += l
-        for l in Util.util.data["data"]["strings"]["exc"].values():
+        for l in Util.util.data["strings"]["exc"].values():
             impure += l
         x:str
         for x in impure:
