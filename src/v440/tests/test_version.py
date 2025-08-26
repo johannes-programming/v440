@@ -21,10 +21,6 @@ class TestVersionManipulation(unittest.TestCase):
         self.assertEqual(str(v), "2.5.3b1+local.7.dev")
 
 
-
-
-
-
 class TestVersionLocal(unittest.TestCase):
 
     def test_version_operations(self: Self) -> None:
@@ -91,7 +87,6 @@ class TestVersion(unittest.TestCase):
         v.pre = None
         self.assertEqual(str(v), "1.2.3")
         self.assertEqual(v.pre, [None, None])
-
 
 
 class TestExample(unittest.TestCase):
@@ -196,7 +191,6 @@ class TestExample(unittest.TestCase):
         v = Version("1.2.3.4.5.6.7.8.9.10")
         v.release.bump(index=7, amount=5)
         self.assertEqual(str(v), "1.2.3.4.5.6.7.13")  # Bumping
-
 
 
 class TestVersionRelease(unittest.TestCase):
