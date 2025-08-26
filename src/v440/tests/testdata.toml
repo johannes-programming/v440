@@ -1,4 +1,4 @@
-[data.strings.valid]
+[strings.valid]
 "Basic Versioning" = [
     "1.0.0",
     "0.9.1",
@@ -135,7 +135,7 @@
 ]
 
 
-[data.strings.incomp]
+[strings.incomp]
 "Increasing complexity with more combinations" = [
     "1!1.0.0.dev4567.post9+20190101",
 ]
@@ -151,7 +151,7 @@
     "3!1.0.0a1.dev1rc1+build123",  # rc after dev (invalid)
 ]
 
-[data.strings.exc]
+[strings.exc]
 "Invalid or Potentially Problematic Cases (for error handling)" = [
     "1..0",  # double dot
     "1.0.0+@build",  # invalid character
@@ -165,73 +165,73 @@
 ]
 
 
-[data.devint.test_dev_as_int]
+[devint.test_dev_as_int]
 v_version = "1.2.3"
 v_dev =  1
 v_str = "1.2.3.dev1"
 v_ans = 1
 
-[data.devint.test_dev_as_string_int]
+[devint.test_dev_as_string_int]
 v_version = "1.2.3"
 v_dev =  "42"
 v_str = "1.2.3.dev42"
 v_ans = 42
 
-[data.devint.test_dev_as_string_with_dev_prefix]
+[devint.test_dev_as_string_with_dev_prefix]
 v_version = "1.2.3"
 v_dev =  "dev1000"
 v_str = "1.2.3.dev1000"
 v_ans = 1000
 
-[data.devint.test_dev_as_string_with_dev_dot_prefix]
+[devint.test_dev_as_string_with_dev_dot_prefix]
 v_version = "1.2.3"
 v_dev =  "dev.2000"
 v_str = "1.2.3.dev2000"
 v_ans = 2000
 
-[data.devint.test_dev_as_string_with_dot_dev_prefix]
+[devint.test_dev_as_string_with_dot_dev_prefix]
 v_version = "1.2.3"
 v_dev =  ".dev.3000"
 v_str = "1.2.3.dev3000"
 v_ans = 3000
 
-[data.devint.test_dev_as_string_with_dot_dev_number_prefix]
+[devint.test_dev_as_string_with_dot_dev_number_prefix]
 v_version = "1.2.3"
 v_dev =  ".dev4000"
 v_str = "1.2.3.dev4000"
 v_ans = 4000
 
-[data.devint.test_dev_as_list]
+[devint.test_dev_as_list]
 v_version = "1.2.3"
 v_dev =  ["dev", "6000"]
 v_str = "1.2.3.dev6000"
 v_ans = 6000
 
-[data.devint.test_dev_as_uppercase_string]
+[devint.test_dev_as_uppercase_string]
 v_version = "1.2.3"
 v_dev =  "DEV7000"
 v_str = "1.2.3.dev7000"
 v_ans = 7000
 
-[data.devint.test_dev_as_mixed_case_string]
+[devint.test_dev_as_mixed_case_string]
 v_version = "1.2.3"
 v_dev =  "dEv8000"
 v_str = "1.2.3.dev8000"
 v_ans = 8000
 
-[data.devint.test_dev_as_list_mixed_case]
+[devint.test_dev_as_list_mixed_case]
 v_version = "1.2.3"
 v_dev =  ["dEV", "9000"]
 v_str = "1.2.3.dev9000"
 v_ans = 9000
 
-[data.devint.test_dev_as_false]
+[devint.test_dev_as_false]
 v_version = "1.2.3"
 v_dev = false
 v_str = "1.2.3.dev0"
 v_ans = 0
 
-[data.devint.test_dev_as_true]
+[devint.test_dev_as_true]
 v_version = "1.2.3"
 v_dev = true
 v_str = "1.2.3.dev1"
@@ -239,131 +239,131 @@ v_ans = 1
 
 
 
-[data.spec.test_basic_version_with_post_specifier]
+[spec.test_basic_version_with_post_specifier]
 # Test basic version with post specifier using a hyphen
 string_a = "1.2.3-4"
 string_b = "1.2.3.post4"
 
-[data.spec.test_version_with_multiple_post_specifiers]
+[spec.test_version_with_multiple_post_specifiers]
 # Test multiple post specifiers, last one should take precedence
 string_a = "1.2.3-4-5"
 string_b = "1.2.3.post5"
 
-[data.spec.test_version_with_mixed_post_and_dev_specifiers]
+[spec.test_version_with_mixed_post_and_dev_specifiers]
 # Test multiple mixed specifiers (dev, post), last one should take precedence
 string_a = "1.2.3-dev1-post2-dev3"
 string_b = "1.2.3.post2.dev3"
 
-[data.spec.test_version_with_pre_release_and_post_specifiers]
+[spec.test_version_with_pre_release_and_post_specifiers]
 # Test pre-release specifier followed by a post-release
 string_a = "1.2.3a1-4"
 string_b = "1.2.3a1.post4"
 
-[data.spec.test_version_with_multiple_pre_and_post_specifiers]
+[spec.test_version_with_multiple_pre_and_post_specifiers]
 # Test multiple pre-release and post-release specifiers, last one should take precedence
 string_a = "1.2.3a1-4-5"
 string_b = "1.2.3a1.post5"
 
-[data.spec.test_version_with_post_and_local_specifiers]
+[spec.test_version_with_post_and_local_specifiers]
 # Test post-release with local version specifier
 string_a = "1.2.3-4+local"
 string_b = "1.2.3.post4+local"
 
-[data.spec.test_version_with_post_specifier_and_epoch]
+[spec.test_version_with_post_specifier_and_epoch]
 # Test version with an epoch and post specifier
 string_a = "1!1.2.3-4"
 string_b = "1!1.2.3.post4"
 
-[data.spec.test_version_with_wrong_order_specifiers]
+[spec.test_version_with_wrong_order_specifiers]
 # Test version with wrong order of specifiers (e.g., post before pre)
 string_a = "1.2.3-4a1"
 string_b = "1.2.3a1.post4"
 
-[data.spec.test_version_with_multiple_misordered_specifiers]
+[spec.test_version_with_multiple_misordered_specifiers]
 # Test version with a more complex wrong ordering of specifiers
 string_a = "1.2.3-4a1-dev5-6"
 string_b = "1.2.3a1.post6.dev5"
 
-[data.spec.test_version_with_dev_specifier_after_post]
+[spec.test_version_with_dev_specifier_after_post]
 # Test version where a dev specifier follows a post-release (last one takes precedence)
 string_a = "1.2.3-4-dev5"
 string_b = "1.2.3.post4.dev5"
 
-[data.spec.test_version_with_epoch_and_wrong_order_specifiers]
+[spec.test_version_with_epoch_and_wrong_order_specifiers]
 # Test version with epoch and mixed, wrong order of specifiers
 string_a = "1!1.2.3-4-dev2"
 string_b = "1!1.2.3.post4.dev2"
 
-[data.spec.test_version_with_multiple_epoch_and_specifiers]
+[spec.test_version_with_multiple_epoch_and_specifiers]
 # Test multiple version specifiers (only last specifier should count)
 string_a = "2!1.2.3-4-5"
 string_b = "2!1.2.3.post5"
 
-[data.spec.test_version_with_repeated_dev_specifier]
+[spec.test_version_with_repeated_dev_specifier]
 # Test version where the dev specifier is repeated multiple times
 string_a = "1.2.3-dev1-dev2"
 string_b = "1.2.3.dev2"
 
-[data.spec.test_version_with_complex_specifiers_and_local]
+[spec.test_version_with_complex_specifiers_and_local]
 # Test a complex version with mixed specifiers and a local version
 string_a = "1.2.3a1-4-dev5+local"
 string_b = "1.2.3a1.post4.dev5+local"
 
-[data.spec.test_version_with_multiple_releases_and_epoch]
+[spec.test_version_with_multiple_releases_and_epoch]
 # Test version with multiple release-like elements and an epoch
 string_a = "1!1.2.3a1-4-dev5-6+local"
 string_b = "1!1.2.3a1.post6.dev5+local"
 
 
 
-[data.release.test_release_basic_assignment]
+[release.test_release_basic_assignment]
 # Test simple assignment of a list of non-negative integers
 query = [1, 2, 3]
 solution = [1, 2, 3]
 
-[data.release.test_release_trailing_zeros]
+[release.test_release_trailing_zeros]
 # Test that trailing zeros are removed
 query = [1, 2, 3, 0, 0]
 solution = [1, 2, 3]
 
-[data.release.test_release_zero]
+[release.test_release_zero]
 # Test that a single zero is allowed
 query = [0]
 solution = []
 
-[data.release.test_release_empty_list]
+[release.test_release_empty_list]
 # Test empty list assignment
 query = []
 solution = []
 
-[data.release.test_release_conversion_string]
+[release.test_release_conversion_string]
 # Test assignment of string that can be converted to numbers
 query = ["1", "2", "3"]
 solution = [1, 2, 3]
 
-[data.release.test_release_conversion_mixed]
+[release.test_release_conversion_mixed]
 # Test assignment of mixed string and integer values
 query = ["1", 2, "3"]
 solution = [1, 2, 3]
 
 
-[data.data_property.local]
+[data_property.local]
 query="42!1.2.3.dev1337+5.nov"
 solution="42!1.2.3.dev1337+5.nov"
 
-[data.data_property.hitch]
+[data_property.hitch]
 query=4.2
 solution="4.2"
 
-[data.data_property.dragon]
+[data_property.dragon]
 query=9001
 solution="9001"
 
-[data.data_property.local_again]
+[data_property.local_again]
 query="1701!4.5.6.rc255+reset"
 solution="1701!4.5.6rc255+reset"
 
-[data.slicingmethod.test_slicing_1]
+[slicingmethod.test_slicing_1]
 query="1.2.3.4.5.6.7.8.9.10"
 start=-8
 stop=15
@@ -371,59 +371,59 @@ step=5
 change="777"
 solution="1.2.7.4.5.6.7.7.9.10.0.0.7"
 
-[data.slicingmethod.test_slicing_3]
+[slicingmethod.test_slicing_3]
 query="1.2.3.4.5.6.7.8.9.10"
 start=3
 stop=4
 change=777
 solution="1.2.3.777.5.6.7.8.9.10"
 
-[data.slicingmethod.test_slicing_4]
+[slicingmethod.test_slicing_4]
 query="1.2.3.4.5.6.7.8.9.10"
 start=3
 stop=4
 change= "777"
 solution="1.2.3.7.7.7.5.6.7.8.9.10"
 
-[data.slicingmethod.test_slicing_5]
+[slicingmethod.test_slicing_5]
 query="1"
 start=3
 stop=4
 change= "777"
 solution="1.0.0.7.7.7"
 
-[data.slicingmethod.test_slicing_6]
+[slicingmethod.test_slicing_6]
 query="1"
 start=3
 stop=4
 change= 777
 solution= "1.0.0.777"
 
-[data.epoch.test_epoch_as_int]
+[epoch.test_epoch_as_int]
 query=1
 full= "1!1.2.3"
 part=1
 
-[data.epoch.test_epoch_as_string_number]
+[epoch.test_epoch_as_string_number]
 query="42"
 full="42!1.2.3"
 part= 42
 
-[data.epoch.test_epoch_as_string_with_non_digit]
+[epoch.test_epoch_as_string_with_non_digit]
 query = "9001!"
 full="9001!1.2.3"
 part= 9001
 
-[data.epoch.test_epoch_as_false]
+[epoch.test_epoch_as_false]
 query = false
 full="1.2.3"
 part=0
 
-[data.epoch.test_epoch_as_true]
+[epoch.test_epoch_as_true]
 query= true
 full="1!1.2.3"
 part= 1
 
-[data.epoch.test_epoch_as_none]
+[epoch.test_epoch_as_none]
 full="1.2.3"
 part= 0
