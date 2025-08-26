@@ -202,6 +202,17 @@ class TestPackaging(unittest.TestCase):
             with self.assertRaises(VersionError):
                 Version(x)
 
+    def test_exc_pack(self: Self) -> None:
+        data:dict = utils.get_data()
+        strings:dict = data["data"]["strings"]
+        incomp: list = strings["exc"]
+        exc: list = strings["exc"]
+        impure :list = incomp + exc
+        x:str
+        for x in impure:
+            with self.assertRaises(packaging.version.InvalidVersion):
+                packaging.version.Version(x)
+
 
 if __name__ == "__main__":
     unittest.main()
