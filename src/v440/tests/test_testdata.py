@@ -67,16 +67,15 @@ class TestSlicing(unittest.TestCase):
         self.assertEqual(str(v), solution, "slicingmethod %s" % key)
 
     def test_slicing_3(self: Self) -> None:
-        data:dict = Util.util.data
-        prop:dict = data["data"]["slicingmethod"]
+        sli:dict = Util.util.data["data"]["slicingmethod"]
         k:str
         v:dict
-        for k, v in prop.items():
+        for k, v in sli.items():
             self.slicingmethod(**v, key=k)
 
     def test_slicing_7(self: Self) -> None:
         # test_slicing_7
-        v = Version("1.2.3.4.5.6.7.8.9.10")
+        v :Version= Version("1.2.3.4.5.6.7.8.9.10")
         del v.release[-8:15:5]
         self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
 
@@ -107,9 +106,9 @@ class TestVersionRelease(unittest.TestCase):
         self.version = Version()
 
     def test_0(self: Self) -> None:
-        data: dict = Util.util.data
-        release: dict = data["data"]["release"]
-        for k, v in release.items():
+        k:str
+        v:Any
+        for k, v in Util.util.data["data"]["release"].items():
             self.release(key=k, **v)
 
     def release(self: Self, query: Any, solution: Any, key: str = "") -> None:
@@ -120,12 +119,12 @@ class TestVersionRelease(unittest.TestCase):
 class TestDev(unittest.TestCase):
 
     def test_initial_none_dev(self: Self) -> None:
-        v = Version("1.2.3")
+        v :Version= Version("1.2.3")
         self.assertEqual(str(v), "1.2.3")
         self.assertIsNone(v.dev)
 
     def test_dev_as_none(self: Self) -> None:
-        v = Version("1.2.3")
+        v :Version= Version("1.2.3")
         v.dev = None
         self.assertEqual(str(v), "1.2.3")
         self.assertIsNone(v.dev)
@@ -140,10 +139,9 @@ class TestDev(unittest.TestCase):
         )
 
     def test_strings_a(self: Self) -> None:
-        devint: list = Util.util.data["data"]["devint"]
         k: str
         v: dict
-        for k, v in devint.items():
+        for k, v in Util.util.data["data"]["devint"].items():
             self.dev(key=k, **v)
 
     def dev(
@@ -187,13 +185,12 @@ class TestVersionSpecifiers(unittest.TestCase):
 
 class TestPackaging(unittest.TestCase):
     def test_strings_a(self: Self) -> None:
-        pure: list = Util.util.data["data"]["strings"]["valid"]
         a:packaging.version.Version
         b:str
         f:int
         g:str
         s:str
-        for s in pure:
+        for s in Util.util.data["data"]["strings"]["valid"]:
             a = packaging.version.Version(s)
             b = str(a)
             f = len(a.release)
@@ -201,15 +198,15 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(b, g)
 
     def test_strings_b(self: Self) -> None:
-        strings:dict = Util.util.data["data"]["strings"]
-        pure: list = strings["valid"]
         a:packaging.version.Version
         b:packaging.version.Version
         s:str
-        for s in pure:
+        msg:str
+        for s in Util.util.data["data"]["strings"]["valid"]:
             a = packaging.version.Version(s)
             b = Version(s).packaging()
-            self.assertEqual(a, b, f"{s} should match packaging.version.Version")
+            msg = f"{s} should match packaging.version.Version"
+            self.assertEqual(a, b, msg=msg)
 
     def test_strings_c(self: Self) -> None:
         pure: list = Util.util.data["data"]["strings"]["valid"]
