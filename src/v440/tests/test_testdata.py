@@ -4,6 +4,7 @@ import tomllib
 import unittest
 from importlib import resources
 from typing import *
+import itertools
 
 import packaging.version
 
@@ -234,18 +235,23 @@ class TestPackaging(unittest.TestCase):
             operator.le,
             operator.lt,
         ]
-        for x in pure:
+        a:packaging.version.Version
+        b:packaging.version.Version
+        c:packaging.version.Version
+        d:packaging.version.Version
+        native:bool
+        convert:bool
+        msg:str
+        for (x, y, op) in itertools.product(pure, pure, ops):
             a = packaging.version.Version(x)
             b = Version(x).packaging()
-            for y in pure:
-                c = packaging.version.Version(y)
-                d = Version(y).packaging()
-                for op in ops:
-                    self.assertEqual(
-                        op(a, c),
-                        op(b, d),
-                        f"{op} should match for {x!r} and {y!r}",
-                    )
+            c = packaging.version.Version(y)
+            d = Version(y).packaging()
+            native = op(a, c)
+            convert = op(b, d)
+            msg = f"{op} should match for {x!r} and {y!r}"
+            self.assertEqual(native, convert, msg=msg)
+            
 
     def test_field(self: Self) -> None:
         data:dict = utils.get_data()
