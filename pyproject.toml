@@ -21,6 +21,7 @@ classifiers = [
 ]
 dependencies = [
     "datahold>=1.1.8,<2",
+    "iterprod>=1.0,<2",
     "keyalias>=1.0.3,<2",
     "overloadable>=1.0.5,<2",
     "packaging>=23.2",
@@ -31,7 +32,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.0.21"
+version = "1.0.22"
 
 [project.license]
 file = "LICENSE.txt"
