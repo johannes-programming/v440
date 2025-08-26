@@ -397,3 +397,32 @@ start=3
 stop=4
 change= 777
 solution= "1.0.0.777"
+
+[data.epoch.test_epoch_as_int]
+query=1
+full= "1!1.2.3"
+part=1
+
+[data.epoch.test_epoch_as_string_number]
+query="42"
+full="42!1.2.3"
+part= 42
+
+[data.epoch.test_epoch_as_string_with_non_digit]
+query = "9001!"
+full="9001!1.2.3"
+part= 9001
+
+[data.epoch.test_epoch_as_false]
+query = false
+full="1.2.3"
+part=0
+
+[data.epoch.test_epoch_as_true]
+query= true
+full="1!1.2.3"
+part= 1
+
+[data.epoch.test_epoch_as_none]
+full="1.2.3"
+part= 0

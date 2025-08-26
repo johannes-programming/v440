@@ -23,49 +23,6 @@ class TestVersionManipulation(unittest.TestCase):
 
 
 
-class TestVersionEpoch(unittest.TestCase):
-    def test_epoch_as_int(self: Self) -> None:
-        v = Version("1.2.3")
-        v.epoch = 1
-        self.assertEqual(str(v), "1!1.2.3")
-        self.assertIsInstance(v.epoch, int)
-        self.assertEqual(v.epoch, 1)
-
-    def test_epoch_as_string_number(self: Self) -> None:
-        v = Version("1.2.3")
-        v.epoch = "42"
-        self.assertEqual(str(v), "42!1.2.3")
-        self.assertIsInstance(v.epoch, int)
-        self.assertEqual(v.epoch, 42)
-
-    def test_epoch_as_string_with_non_digit(self: Self) -> None:
-        v = Version("1.2.3")
-        v.epoch = "9001!"
-        self.assertEqual(str(v), "9001!1.2.3")
-        self.assertIsInstance(v.epoch, int)
-        self.assertEqual(v.epoch, 9001)
-
-    def test_epoch_as_false(self: Self) -> None:
-        v = Version("1.2.3")
-        v.epoch = False
-        self.assertEqual(str(v), "1.2.3")
-        self.assertIsInstance(v.epoch, int)
-        self.assertEqual(v.epoch, 0)
-
-    def test_epoch_as_true(self: Self) -> None:
-        v = Version("1.2.3")
-        v.epoch = True
-        self.assertEqual(str(v), "1!1.2.3")
-        self.assertIsInstance(v.epoch, int)
-        self.assertEqual(v.epoch, 1)
-
-    def test_epoch_as_none(self: Self) -> None:
-        v = Version("1.2.3")
-        v.epoch = None
-        self.assertEqual(str(v), "1.2.3")
-        self.assertIsInstance(v.epoch, int)
-        self.assertEqual(v.epoch, 0)
-
 
 class TestVersionLocal(unittest.TestCase):
 
