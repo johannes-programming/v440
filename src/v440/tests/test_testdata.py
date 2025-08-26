@@ -198,7 +198,11 @@ class TestPackaging(unittest.TestCase):
         data:dict = utils.get_data()
         strings:dict = data["data"]["strings"]
         pure: list = strings["valid"]
-
+        a:packaging.version.Version
+        b:str
+        f:int
+        g:str
+        s:str
         for s in pure:
             a = packaging.version.Version(s)
             b = str(a)
@@ -210,7 +214,9 @@ class TestPackaging(unittest.TestCase):
         data:dict = utils.get_data()
         strings:dict = data["data"]["strings"]
         pure: list = strings["valid"]
-
+        a:packaging.version.Version
+        b:packaging.version.Version
+        s:str
         for s in pure:
             a = packaging.version.Version(s)
             b = Version(s).packaging()
@@ -220,7 +226,7 @@ class TestPackaging(unittest.TestCase):
         data:dict = utils.get_data()
         strings:dict = data["data"]["strings"]
         pure: list = strings["valid"]
-        ops = [
+        ops:list = [
             operator.eq,
             operator.ne,
             operator.gt,
