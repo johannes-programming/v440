@@ -197,6 +197,7 @@ class TestPackaging(unittest.TestCase):
         data:dict = utils.get_data()
         strings:dict = data["data"]["strings"]
         exc: list = strings["exc"]
+        x:str
         for x in exc:
             with self.assertRaises(VersionError):
                 Version(x)
