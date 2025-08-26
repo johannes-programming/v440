@@ -6,6 +6,7 @@ import unittest
 from importlib import resources
 from typing import *
 
+import iterprod
 import packaging.version
 
 from v440.core.Version import Version
@@ -240,17 +241,15 @@ class TestPackaging(unittest.TestCase):
         convert: bool
         msg: str
         op: Any
-        for x in pure:
+        for x, y, op in iterprod.iterprod(pure, pure, op):
             a = packaging.version.Version(x)
             b = Version(x).packaging()
-            for y in pure:
-                c = packaging.version.Version(y)
-                d = Version(y).packaging()
-                for op in ops:
-                    native = op(a, c)
-                    convert = op(b, d)
-                    msg = f"{op} should match for {x!r} and {y!r}"
-                    self.assertEqual(native, convert, msg=msg)
+            c = packaging.version.Version(y)
+            d = Version(y).packaging()
+            native = op(a, c)
+            convert = op(b, d)
+            msg = f"{op} should match for {x!r} and {y!r}"
+            self.assertEqual(native, convert, msg=msg)
 
     def test_field(self: Self) -> None:
         versionable: list = list()
