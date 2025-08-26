@@ -3,7 +3,6 @@ import tomllib
 import unittest
 from importlib import resources
 from typing import *
-import itertools
 
 import packaging.version
 
@@ -229,15 +228,18 @@ class TestPackaging(unittest.TestCase):
         native:bool
         convert:bool
         msg:str
-        for (x, y, op) in itertools.product(pure, pure, ops):
+        op:Any
+        for x in pure:
             a = packaging.version.Version(x)
             b = Version(x).packaging()
-            c = packaging.version.Version(y)
-            d = Version(y).packaging()
-            native = op(a, c)
-            convert = op(b, d)
-            msg = f"{op} should match for {x!r} and {y!r}"
-            self.assertEqual(native, convert, msg=msg)
+            for y in pure:
+                c = packaging.version.Version(y)
+                d = Version(y).packaging()
+                for op in ops:
+                    native = op(a, c)
+                    convert = op(b, d)
+                    msg = f"{op} should match for {x!r} and {y!r}"
+                    self.assertEqual(native, convert, msg=msg)
             
 
     def test_field(self: Self) -> None:
