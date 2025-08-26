@@ -5,6 +5,95 @@ from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
 
+class TestVersionManipulation(unittest.TestCase):
+
+    def test_version_modification(self: Self) -> None:
+        # Create an instance of the v440.Version class
+        v = Version("1.2.3")
+
+        # Modify individual parts of the version
+        v.release.major = 2
+        v.release.minor = 5
+        v.pre = "beta.1"
+        v.local = "local.7.dev"
+
+        # Verify the expected output
+        self.assertEqual(str(v), "2.5.3b1+local.7.dev")
+
+
+
+
+
+
+class TestVersionLocal(unittest.TestCase):
+
+    def test_version_operations(self: Self) -> None:
+        v = Version("1.2.3")
+        backup = v.local
+        v.local = "local.1.2.3"
+        self.assertEqual(str(v), "1.2.3+local.1.2.3")
+        self.assertEqual(str(v.local), "local.1.2.3")
+        v.local.append("extra")
+        self.assertEqual(str(v), "1.2.3+local.1.2.3.extra")
+        self.assertEqual(str(v.local), "local.1.2.3.extra")
+        v.local.remove(1)
+        self.assertEqual(str(v), "1.2.3+local.2.3.extra")
+        self.assertEqual(str(v.local), "local.2.3.extra")
+        self.assertEqual(v.local[0], "local")
+        self.assertEqual(v.local[-1], "extra")
+        v.local.sort()
+        self.assertEqual(str(v), "1.2.3+extra.local.2.3")
+        self.assertEqual(str(v.local), "extra.local.2.3")
+        v.local.clear()
+        self.assertEqual(str(v), "1.2.3")
+        self.assertEqual(str(v.local), "")
+        v.local = "reset.1.2"
+        self.assertEqual(str(v), "1.2.3+reset.1.2")
+        self.assertEqual(str(v.local), "reset.1.2")
+        self.assertTrue(v.local is backup)
+
+
+class TestVersion(unittest.TestCase):
+
+    def test_version_pre(self: Self) -> None:
+        v = Version("1.2.3")
+        backup = v.pre
+
+        # Initial version, no pre-release version
+        self.assertEqual(str(v), "1.2.3")
+        self.assertEqual(v.pre, [None, None])
+
+        # Set pre-release version to "a1"
+        v.pre = "a1"
+        self.assertEqual(str(v), "1.2.3a1")
+        self.assertEqual(str(v.pre), "a1")
+
+        # Modify pre-release phase to "preview"
+        v.pre.phase = "preview"
+        self.assertEqual(str(v), "1.2.3rc1")
+        self.assertEqual(str(v.pre), "rc1")
+
+        # Modify subphase to "42"
+        v.pre.subphase = "42"
+        self.assertEqual(str(v), "1.2.3rc42")
+        self.assertEqual(str(v.pre), "rc42")
+
+        # Change phase to a formatted string "BeTa"
+        v.pre.phase = """
+        BeTa
+        """
+        self.assertEqual(str(v), "1.2.3b42")
+        self.assertEqual(str(v.pre), "b42")
+
+        self.assertEqual(v.pre, backup)
+
+        # Set pre-release to None
+        v.pre = None
+        self.assertEqual(str(v), "1.2.3")
+        self.assertEqual(v.pre, [None, None])
+
+
+
 class TestExample(unittest.TestCase):
 
     def test_example_1(self: Self) -> None:
