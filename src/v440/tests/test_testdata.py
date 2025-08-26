@@ -190,26 +190,35 @@ class TestPackaging(unittest.TestCase):
         f:int
         g:str
         s:str
-        for s in Util.util.data["data"]["strings"]["valid"]:
-            a = packaging.version.Version(s)
-            b = str(a)
-            f = len(a.release)
-            g = Version(s).format(f)
-            self.assertEqual(b, g)
+        x:str
+        y:list
+        for x, y in Util.util.data["data"]["strings"]["valid"].items():
+            for s in y:
+                a = packaging.version.Version(s)
+                b = str(a)
+                f = len(a.release)
+                g = Version(s).format(f)
+                self.assertEqual(b, g)
 
     def test_strings_b(self: Self) -> None:
         a:packaging.version.Version
         b:packaging.version.Version
         s:str
         msg:str
-        for s in Util.util.data["data"]["strings"]["valid"]:
-            a = packaging.version.Version(s)
-            b = Version(s).packaging()
-            msg = f"{s} should match packaging.version.Version"
-            self.assertEqual(a, b, msg=msg)
+        x:str
+        y:list
+        for x, y in Util.util.data["data"]["strings"]["valid"].items():
+            for s in y:
+                a = packaging.version.Version(s)
+                b = Version(s).packaging()
+                msg = f"{s} should match packaging.version.Version"
+                self.assertEqual(a, b, msg=msg)
 
     def test_strings_c(self: Self) -> None:
-        pure: list = Util.util.data["data"]["strings"]["valid"]
+        pure: list = list()
+        l:list
+        for l in Util.util.data["data"]["strings"]["valid"].values():
+            pure += l
         ops:list = [
             operator.eq,
             operator.ne,
@@ -240,9 +249,12 @@ class TestPackaging(unittest.TestCase):
             
 
     def test_field(self: Self) -> None:
-        valid: list = Util.util.data["data"]["strings"]["valid"]
-        incomp: list = Util.util.data["data"]["strings"]["incomp"]
-        versionable :list= valid + incomp
+        versionable :list= list()
+        l:list
+        for l in Util.util.data["data"]["strings"]["valid"].values():
+            versionable += l
+        for l in Util.util.data["data"]["strings"]["incomp"].values():
+            versionable += l
         version_obj:Version = Version()
         v:Version
         x:str
@@ -257,17 +269,20 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(str(v.local), str(version_obj.local))
 
     def test_exc(self: Self) -> None:
-        exc: list = Util.util.data["data"]["strings"]["exc"]
+        l:list
         x:str
-        for x in exc:
-            with self.assertRaises(VersionError):
-                Version(x)
+        for l in Util.util.data["data"]["strings"]["exc"].values():
+            for x in l:
+                with self.assertRaises(VersionError):
+                    Version(x)
 
     def test_exc_pack(self: Self) -> None:
-        strings:dict = Util.util.data["data"]["strings"]
-        incomp: list = strings["exc"]
-        exc: list = strings["exc"]
-        impure :list = incomp + exc
+        impure :list= list()
+        l:list
+        for l in Util.util.data["data"]["strings"]["incomp"].values():
+            impure += l
+        for l in Util.util.data["data"]["strings"]["exc"].values():
+            impure += l
         x:str
         for x in impure:
             with self.assertRaises(packaging.version.InvalidVersion):
