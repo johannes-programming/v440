@@ -23,7 +23,47 @@ class utils:
         if not math.isnan(x):
             return True
         return False
+
+
+
+class TestSlicing(unittest.TestCase):
+
+    def test_slicing_2(self: Self) -> None:
+        v = Version("1.2.3.4.5.6.7.8.9.10")
+        try:
+            v.release[-8:15:5] = 777
+        except Exception as e:
+            error = e
+        else:
+            error = None
+        self.assertNotEqual(error, None)
     
+    def slicingmethod(self:Self, 
+                            query:Any,
+                            change:Any,
+                            solution:str,
+                            start:Any=None,
+                            stop:Any=None,
+                            step:Any=None,
+                            key:str="",
+    ) -> None:
+        v = Version(query)
+        v.release[start:stop:step] = change
+        self.assertEqual(str(v), solution, "slicingmethod %s" % key)
+
+    def test_slicing_3(self: Self) -> None:
+
+        data:dict = utils.get_data()
+        prop:dict = data["data"]["slicingmethod"]
+        for k, v in prop.items():
+            self.slicingmethod(**v, key=k)
+
+    def test_slicing_7(self: Self) -> None:
+        # test_slicing_7
+        v = Version("1.2.3.4.5.6.7.8.9.10")
+        del v.release[-8:15:5]
+        self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
+
 
 class TestDataProperty(unittest.TestCase):
     def test_data(self: Self) -> None:
