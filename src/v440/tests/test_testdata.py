@@ -130,8 +130,9 @@ class TestVersionSpecifiers(unittest.TestCase):
 
 class TestPackaging(unittest.TestCase):
     def test_strings_a(self: Self) -> None:
-
-        pure: list = utils.get_data()["data"]["valid"]
+        data:dict = utils.get_data()
+        strings:dict = data["data"]["strings"]
+        pure: list = strings["valid"]
 
         for s in pure:
             a = packaging.version.Version(s)
@@ -141,8 +142,9 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(b, g)
 
     def test_strings_b(self: Self) -> None:
-
-        pure: list = utils.get_data()["data"]["valid"]
+        data:dict = utils.get_data()
+        strings:dict = data["data"]["strings"]
+        pure: list = strings["valid"]
 
         for s in pure:
             a = packaging.version.Version(s)
@@ -150,8 +152,9 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(a, b, f"{s} should match packaging.version.Version")
 
     def test_strings_c(self: Self) -> None:
-
-        pure: list = utils.get_data()["data"]["valid"]
+        data:dict = utils.get_data()
+        strings:dict = data["data"]["strings"]
+        pure: list = strings["valid"]
         ops = [
             operator.eq,
             operator.ne,
@@ -173,12 +176,11 @@ class TestPackaging(unittest.TestCase):
                         f"{op} should match for {x!r} and {y!r}",
                     )
 
-
-class TestField(unittest.TestCase):
-
     def test_field(self: Self) -> None:
-        valid = utils.get_data()["data"]["valid"]
-        incomp = utils.get_data()["data"]["incomp"]
+        data:dict = utils.get_data()
+        strings:dict = data["data"]["strings"]
+        valid: list = strings["valid"]
+        incomp: list = strings["incomp"]
         versionable = valid + incomp
         version_obj = Version()
         for x in versionable:
@@ -192,7 +194,9 @@ class TestField(unittest.TestCase):
             self.assertEqual(str(v.local), str(version_obj.local))
 
     def test_exc(self: Self) -> None:
-        exc = utils.get_data()["data"]["exc"]
+        data:dict = utils.get_data()
+        strings:dict = data["data"]["strings"]
+        exc: list = strings["exc"]
         for x in exc:
             with self.assertRaises(VersionError):
                 Version(x)
