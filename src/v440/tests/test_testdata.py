@@ -1,4 +1,3 @@
-import math
 import operator
 import tomllib
 import unittest
@@ -10,21 +9,17 @@ import packaging.version
 
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
+import functools
+import enum
 
 
-class utils:
-    def get_data() -> dict:
+class Util(enum.Enum):
+    util = None
+    @functools.cached_property
+    def data(self:Self)->dict:
         text: str = resources.read_text("v440.tests", "testdata.toml")
         data: dict = tomllib.loads(text)
         return data
-
-    def istestable(x: Any) -> bool:
-        if not isinstance(x, float):
-            return True
-        if not math.isnan(x):
-            return True
-        return False
-
 
 class TestVersionEpoch(unittest.TestCase):
     def epoch(self:Self, 
@@ -41,11 +36,9 @@ class TestVersionEpoch(unittest.TestCase):
         self.assertEqual(v.epoch, part,msg=msg)
     
     def test_0(self:Self) -> None:
-        data:dict = utils.get_data()
-        prop:dict = data["data"]["epoch"]
         k:str
         v:dict
-        for k, v in prop.items():
+        for k, v in Util.util.data["data"]["epoch"].items():
             self.epoch(**v, key=k)
 
 
@@ -75,7 +68,7 @@ class TestSlicing(unittest.TestCase):
         self.assertEqual(str(v), solution, "slicingmethod %s" % key)
 
     def test_slicing_3(self: Self) -> None:
-        data:dict = utils.get_data()
+        data:dict = Util.util.data
         prop:dict = data["data"]["slicingmethod"]
         k:str
         v:dict
@@ -92,9 +85,7 @@ class TestSlicing(unittest.TestCase):
 class TestDataProperty(unittest.TestCase):
     def test_data(self: Self) -> None:
         self.v = Version()
-        data:dict = utils.get_data()
-        prop:dict = data["data"]["data_property"]
-        for k, v in prop.items():
+        for k, v in Util.util.data["data"]["data_property"].items():
             self.data(**v, key=k)
         self.data(query=None, solution="0")
     
@@ -117,7 +108,7 @@ class TestVersionRelease(unittest.TestCase):
         self.version = Version()
 
     def test_0(self: Self) -> None:
-        data: dict = utils.get_data()
+        data: dict = Util.util.data
         release: dict = data["data"]["release"]
         for k, v in release.items():
             self.release(key=k, **v)
@@ -150,7 +141,7 @@ class TestDev(unittest.TestCase):
         )
 
     def test_strings_a(self: Self) -> None:
-        devint: list = utils.get_data()["data"]["devint"]
+        devint: list = Util.util.data["data"]["devint"]
         k: str
         v: dict
         for k, v in devint.items():
@@ -184,21 +175,20 @@ class TestVersionSpecifiers(unittest.TestCase):
             Version("1.2.3a1--4")
 
     def test_spec_toml(self: Self) -> None:
-        data = utils.get_data()
-        spec = data["data"]["spec"]
-        for k, v in spec.items():
+        k:str
+        v:dict
+        for k, v in Util.util.data["data"]["spec"].items():
             self.spec(**v, key=k)
 
     def spec(self: Self, string_a: str, string_b: str, key: str = "") -> None:
-        version = Version(string_a)
-        self.assertEqual(str(version), string_b)
+        msg:str="spec %r" % key
+        version :Version= Version(string_a)
+        self.assertEqual(str(version), string_b,msg=msg)
 
 
 class TestPackaging(unittest.TestCase):
     def test_strings_a(self: Self) -> None:
-        data:dict = utils.get_data()
-        strings:dict = data["data"]["strings"]
-        pure: list = strings["valid"]
+        pure: list = Util.util.data["data"]["strings"]["valid"]
         a:packaging.version.Version
         b:str
         f:int
@@ -212,8 +202,7 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(b, g)
 
     def test_strings_b(self: Self) -> None:
-        data:dict = utils.get_data()
-        strings:dict = data["data"]["strings"]
+        strings:dict = Util.util.data["data"]["strings"]
         pure: list = strings["valid"]
         a:packaging.version.Version
         b:packaging.version.Version
@@ -224,9 +213,7 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(a, b, f"{s} should match packaging.version.Version")
 
     def test_strings_c(self: Self) -> None:
-        data:dict = utils.get_data()
-        strings:dict = data["data"]["strings"]
-        pure: list = strings["valid"]
+        pure: list = Util.util.data["data"]["strings"]["valid"]
         ops:list = [
             operator.eq,
             operator.ne,
@@ -254,10 +241,8 @@ class TestPackaging(unittest.TestCase):
             
 
     def test_field(self: Self) -> None:
-        data:dict = utils.get_data()
-        strings:dict = data["data"]["strings"]
-        valid: list = strings["valid"]
-        incomp: list = strings["incomp"]
+        valid: list = Util.util.data["data"]["strings"]["valid"]
+        incomp: list = Util.util.data["data"]["strings"]["incomp"]
         versionable :list= valid + incomp
         version_obj:Version = Version()
         v:Version
@@ -273,17 +258,14 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(str(v.local), str(version_obj.local))
 
     def test_exc(self: Self) -> None:
-        data:dict = utils.get_data()
-        strings:dict = data["data"]["strings"]
-        exc: list = strings["exc"]
+        exc: list = Util.util.data["data"]["strings"]["exc"]
         x:str
         for x in exc:
             with self.assertRaises(VersionError):
                 Version(x)
 
     def test_exc_pack(self: Self) -> None:
-        data:dict = utils.get_data()
-        strings:dict = data["data"]["strings"]
+        strings:dict = Util.util.data["data"]["strings"]
         incomp: list = strings["exc"]
         exc: list = strings["exc"]
         impure :list = incomp + exc
