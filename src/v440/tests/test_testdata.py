@@ -23,6 +23,26 @@ class utils:
         if not math.isnan(x):
             return True
         return False
+    
+
+class TestDataProperty(unittest.TestCase):
+    def test_data(self: Self) -> None:
+        self.v = Version()
+        data:dict = utils.get_data()
+        prop:dict = data["data"]["data_property"]
+        for k, v in prop.items():
+            self.data(**v, key=k)
+        self.data(query=None, solution="0")
+    
+    def data(self:Self,
+        query:Any,
+        solution:str,
+        key:str="",
+    )->None:
+        self.v.data = query
+        self.assertEqual(solution, str(self.v))
+        self.assertEqual(self.v.data, str(self.v))
+        self.assertEqual(type(self.v.data), str)
 
 
 class TestVersionRelease(unittest.TestCase):
