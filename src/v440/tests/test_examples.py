@@ -20,33 +20,7 @@ class TestVersionManipulation(unittest.TestCase):
         self.assertEqual(str(v), "2.5.3b1+local.7.dev")
 
 
-class TestData(unittest.TestCase):
-    def test_data(self: Self) -> None:
 
-        v = Version("42!1.2.3.dev1337+5.nov")
-        self.assertEqual("42!1.2.3.dev1337+5.nov", str(v))
-        self.assertEqual(v.data, str(v))
-        self.assertEqual(type(v.data), str)
-
-        v.data = 4.2
-        self.assertEqual("4.2", str(v))
-        self.assertEqual(v.data, str(v))
-        self.assertEqual(type(v.data), str)
-
-        v.data = 9001
-        self.assertEqual("9001", str(v))
-        self.assertEqual(v.data, str(v))
-        self.assertEqual(type(v.data), str)
-
-        v.data = None
-        self.assertEqual("0", str(v))
-        self.assertEqual(v.data, str(v))
-        self.assertEqual(type(v.data), str)
-
-        v.data = "1701!4.5.6.rc255+reset"
-        self.assertEqual("1701!4.5.6rc255+reset", str(v))
-        self.assertEqual(v.data, str(v))
-        self.assertEqual(type(v.data), str)
 
 
 class TestVersionEpoch(unittest.TestCase):

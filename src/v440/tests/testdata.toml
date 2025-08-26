@@ -346,3 +346,18 @@ query = ["1", 2, "3"]
 solution = [1, 2, 3]
 
 
+[data.data_property.local]
+query="42!1.2.3.dev1337+5.nov"
+solution="42!1.2.3.dev1337+5.nov"
+
+[data.data_property.hitch]
+query=4.2
+solution="4.2"
+
+[data.data_property.dragon]
+query=9001
+solution="9001"
+
+[data.data_property.local_again]
+query="1701!4.5.6.rc255+reset"
+solution="1701!4.5.6rc255+reset"
