@@ -25,6 +25,28 @@ class utils:
         return False
 
 
+class TestVersionEpoch(unittest.TestCase):
+    def epoch(self:Self, 
+                full:Any, 
+                part:Any, 
+                query:Any=None, 
+                key:str="",
+    )->None:
+        msg :str = "epoch %r" % key
+        v :Version= Version("1.2.3")
+        v.epoch = query
+        self.assertEqual(str(v), full, msg=msg)
+        self.assertIsInstance(v.epoch, int, msg=msg)
+        self.assertEqual(v.epoch, part,msg=msg)
+    
+    def test_0(self:Self) -> None:
+        data:dict = utils.get_data()
+        prop:dict = data["data"]["epoch"]
+        k:str
+        v:dict
+        for k, v in prop.items():
+            self.epoch(**v, key=k)
+
 
 class TestSlicing(unittest.TestCase):
 
@@ -52,9 +74,10 @@ class TestSlicing(unittest.TestCase):
         self.assertEqual(str(v), solution, "slicingmethod %s" % key)
 
     def test_slicing_3(self: Self) -> None:
-
         data:dict = utils.get_data()
         prop:dict = data["data"]["slicingmethod"]
+        k:str
+        v:dict
         for k, v in prop.items():
             self.slicingmethod(**v, key=k)
 
@@ -79,10 +102,11 @@ class TestDataProperty(unittest.TestCase):
         solution:str,
         key:str="",
     )->None:
+        msg:str = "data_property %r" % key
         self.v.data = query
-        self.assertEqual(solution, str(self.v))
-        self.assertEqual(self.v.data, str(self.v))
-        self.assertEqual(type(self.v.data), str)
+        self.assertEqual(solution, str(self.v),msg=msg)
+        self.assertEqual(self.v.data, str(self.v), msg=msg)
+        self.assertEqual(type(self.v.data), str,msg=msg)
 
 
 class TestVersionRelease(unittest.TestCase):
@@ -135,16 +159,17 @@ class TestDev(unittest.TestCase):
         self: Self,
         key: str,
         v_version: Any,
-        v_dev: Any,
         v_str: Any,
         v_ans: Any,
+        v_dev: Any=None,
         dev_type: type = int,
     ):
-        v = Version(v_version)
+        msg:str = "dev %r" % key
+        v :Version= Version(v_version)
         v.dev = v_dev
-        self.assertEqual(str(v), v_str)
-        self.assertIsInstance(v.dev, dev_type)
-        self.assertEqual(v.dev, v_ans)
+        self.assertEqual(str(v), v_str,msg=msg)
+        self.assertIsInstance(v.dev, dev_type,msg=msg)
+        self.assertEqual(v.dev, v_ans, msg=msg)
 
 
 class TestVersionSpecifiers(unittest.TestCase):
@@ -221,8 +246,10 @@ class TestPackaging(unittest.TestCase):
         strings:dict = data["data"]["strings"]
         valid: list = strings["valid"]
         incomp: list = strings["incomp"]
-        versionable = valid + incomp
-        version_obj = Version()
+        versionable :list= valid + incomp
+        version_obj:Version = Version()
+        v:Version
+        x:str
         for x in versionable:
             v = Version(x)
             self.assertEqual(v.isdevrelease(), v.packaging().is_devrelease)
