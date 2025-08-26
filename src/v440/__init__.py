@@ -1,3 +1,2 @@
-from v440.core.Version import Version
-from v440.core.VersionError import VersionError
-from v440.tests import test
+from v440.core import *
+from v440.tests import *
