@@ -3,7 +3,6 @@ import tomllib
 import unittest
 from importlib import resources
 from typing import *
-import itertools
 
 import packaging.version
 
@@ -11,6 +10,34 @@ from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 import functools
 import enum
+
+class Product:
+    def __init__(self:Self, *args:Iterable):
+        self._lists = list()
+        arg:Iterable
+        l:list
+        for arg in args:
+            l = list(arg)
+            self._lists(l)
+
+    def __iter__(self:Self) -> Generator:
+        if len(self._lists) == 0:
+            return iter(())
+        else:
+            return self._iter(*self._lists)
+        
+    @classmethod
+    def _iter(cls:type, arg0:list, /, *args:list)->Generator:
+        x:Any
+        t:tuple
+        if len(args) == 0:
+            for x in arg0:
+                yield (x,)
+            return
+        for x in arg0:
+            for t in cls._iter(*args):
+                yield (x,) + t
+        
 
 
 class Util(enum.Enum):
@@ -229,15 +256,18 @@ class TestPackaging(unittest.TestCase):
         native:bool
         convert:bool
         msg:str
-        for (x, y, op) in itertools.product(pure, pure, ops):
+        op:Any
+        for x in pure:
             a = packaging.version.Version(x)
             b = Version(x).packaging()
-            c = packaging.version.Version(y)
-            d = Version(y).packaging()
-            native = op(a, c)
-            convert = op(b, d)
-            msg = f"{op} should match for {x!r} and {y!r}"
-            self.assertEqual(native, convert, msg=msg)
+            for y in pure:
+                c = packaging.version.Version(y)
+                d = Version(y).packaging()
+                for op in ops:
+                    native = op(a, c)
+                    convert = op(b, d)
+                    msg = f"{op} should match for {x!r} and {y!r}"
+                    self.assertEqual(native, convert, msg=msg)
             
 
     def test_field(self: Self) -> None:
