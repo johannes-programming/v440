@@ -369,10 +369,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         with self.assertRaises(VersionError):
             self.version.release = ["true", "false"]
 
-    def test_release_boolean_assignment(self: Self) -> None:
-        # Ensure valid boolean values are converted to integers
-        self.version.release = [True, False, 1]
-        self.assertEqual(self.version.release, [1, 0, 1])
 
 
 class TestVersionLocal(unittest.TestCase):

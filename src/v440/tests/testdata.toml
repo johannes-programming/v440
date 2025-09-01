@@ -86,6 +86,13 @@ target= [1, 2, 3]
 query = [true, false, 3]
 target = [1, 0, 3]
 
+
+
+
+[release_attr.test_release_boolean_assignment]
+query = [true, false, 1]
+target= [1, 0, 1]
+
 [strings.valid]
 "Basic Versioning" = [
     "1.0.0",
