@@ -373,16 +373,6 @@ class TestVersionLocal(unittest.TestCase):
         self.version = Version()
 
 
-    def test_local_empty_list(self: Self) -> None:
-        # Test assigning an empty list
-        self.version.local = []
-        self.assertEqual(self.version.local, [])
-
-    def test_local_conversion_string(self: Self) -> None:
-        # Test assignment of a string that can be converted into numbers or remains as string
-        self.version.local = ["1", "2", "local", "test"]
-        self.assertEqual(self.version.local, [1, 2, "local", "test"])
-
     def test_local_conversion_mixed(self: Self) -> None:
         # Test assignment of mixed string, integer, and other values
         self.version.local = ["1", 2, "local", 4, True]

@@ -102,6 +102,14 @@ target= [1, 2, 3]
 query = [1, "local", "dev"]
 target= [1, "local", "dev"]
 
+[local_attr.test_local_empty_list]
+query = []
+target= []
+
+[local_attr.test_local_conversion_string]
+query = ["1", "2", "local", "test"]
+target=[1, 2, "local", "test"]
+
 [strings.valid]
 "Basic Versioning" = [
     "1.0.0",
