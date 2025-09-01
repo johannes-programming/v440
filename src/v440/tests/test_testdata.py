@@ -51,6 +51,36 @@ class TestVersionReleaseAttrs(unittest.TestCase):
             self.assertEqual(version.release, target)
 
 
+
+class TestVersionLocal(unittest.TestCase):
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["local_attr"].items():
+            self.local(**v, key=k)
+
+    def local(
+            self: Self,
+            key:str,
+            query:list,
+            attrname:Optional[str]=None,
+            args:list|tuple=(),
+            kwargs:dict|tuple=(),
+            target:Optional[list]=None,
+            solution:Any=None,
+    ) -> None:
+        version:Version = Version()
+        version.local = query
+        if attrname is not None:
+            attr:Any=getattr(version.local, attrname)
+            ans:Any = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, solution)
+        if target is not None:
+            self.assertEqual(version.local, target)
+
+
+
+
 class TestVersionEpoch(unittest.TestCase):
     def epoch(
         self: Self,

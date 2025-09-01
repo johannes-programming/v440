@@ -372,10 +372,6 @@ class TestVersionLocal(unittest.TestCase):
         # Initialize a fresh Version instance for every test
         self.version = Version()
 
-    def test_local_basic_assignment(self: Self) -> None:
-        # Test simple assignment of a list of strings or non-negative integers
-        self.version.local = [1, "local", "dev"]
-        self.assertEqual(self.version.local, [1, "local", "dev"])
 
     def test_local_empty_list(self: Self) -> None:
         # Test assigning an empty list

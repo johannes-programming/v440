@@ -98,6 +98,10 @@ target= [1, 0, 1]
 query = [1, 2, 3]
 target= [1, 2, 3]
 
+[local_attr.test_local_basic_assignment]
+query = [1, "local", "dev"]
+target= [1, "local", "dev"]
+
 [strings.valid]
 "Basic Versioning" = [
     "1.0.0",
