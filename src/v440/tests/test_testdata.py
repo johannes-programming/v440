@@ -22,6 +22,32 @@ class Util(enum.Enum):
         data: dict = tomllib.loads(text)
         return data
 
+class TestVersionReleaseAttrs(unittest.TestCase):
+
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["release_attr"].items():
+            self.release(**v, key=k)
+
+    def release(
+            self: Self,
+            key:str,
+            query:list,
+            attrname:str,
+            args:list,
+            kwargs:dict,
+            target:list,
+            solution:Any=None,
+    ) -> None:
+        # Test the append method of the release list-like object
+        version:Version = Version()
+        version.release = query
+        attr:Any=getattr(version.release, attrname)
+        ans:Any = attr(*args, **kwargs)
+        self.assertEqual(ans, solution)
+        self.assertEqual(version.release, target)
+
 
 class TestVersionEpoch(unittest.TestCase):
     def epoch(
@@ -241,7 +267,7 @@ class TestPackaging(unittest.TestCase):
         convert: bool
         msg: str
         op: Any
-        for x, y, op in iterprod.iterprod(pure, pure, op):
+        for x, y, op in iterprod.iterprod(pure, pure, ops):
             a = packaging.version.Version(x)
             b = Version(x).packaging()
             c = packaging.version.Version(y)
