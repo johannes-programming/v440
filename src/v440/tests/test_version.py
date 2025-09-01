@@ -277,61 +277,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         # Initialize a fresh Version instance for every test
         self.version = Version()
 
-    def test_release_append(self: Self) -> None:
-        # Test the append method of the release list-like object
-        self.version.release = [1, 2, 3]
-        self.version.release.append(4)
-        self.assertEqual(self.version.release, [1, 2, 3, 4])
 
-    def test_release_extend(self: Self) -> None:
-        # Test extending the release list
-        self.version.release = [1, 2]
-        self.version.release.extend([3, 4, 5])
-        self.assertEqual(self.version.release, [1, 2, 3, 4, 5])
-
-    def test_release_insert(self: Self) -> None:
-        # Test inserting an element at a specific index
-        self.version.release = [1, 2, 4]
-        self.version.release.insert(2, 3)
-        self.assertEqual(self.version.release, [1, 2, 3, 4])
-
-    def test_release_pop(self: Self) -> None:
-        # Test popping an element
-        self.version.release = [1, 2, 3]
-        popped_value = self.version.release.pop()
-        self.assertEqual(popped_value, 3)
-        self.assertEqual(self.version.release, [1, 2])
-
-    def test_release_pop_with_index(self: Self) -> None:
-        # Test popping an element at a specific index
-        self.version.release = [1, 2, 3]
-        popped_value = self.version.release.pop(1)
-        self.assertEqual(popped_value, 2)
-        self.assertEqual(self.version.release, [1, 3])
-
-    def test_release_remove(self: Self) -> None:
-        # Test removing a specific value
-        self.version.release = [1, 2, 3]
-        self.version.release.remove(2)
-        self.assertEqual(self.version.release, [1, 3])
-
-    def test_release_clear(self: Self) -> None:
-        # Test clearing the release
-        self.version.release = [1, 2, 3]
-        self.version.release.clear()
-        self.assertEqual(self.version.release, [])
-
-    def test_release_count(self: Self) -> None:
-        # Test counting occurrences of a value
-        self.version.release = [1, 2, 2, 3]
-        count = self.version.release.count(2)
-        self.assertEqual(count, 2)
-
-    def test_release_index(self: Self) -> None:
-        # Test getting the index of a value
-        self.version.release = [1, 2, 3]
-        index = self.version.release.index(2)
-        self.assertEqual(index, 1)
 
     def test_release_reverse(self: Self) -> None:
         # Test reversing the release

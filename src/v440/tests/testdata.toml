@@ -1,9 +1,81 @@
-[release_attr.append]
+[release_attr.test_release_append]
 query = [1, 2, 3]
 attrname = "append"
-args = []
+args = [4]
 kwargs = {}
 target = [1, 2, 3, 4]
+
+
+[release_attr.test_release_extend]
+query = [1, 2]
+attrname = "extend"
+args = [[3, 4, 5]]
+kwargs = {}
+target = [1, 2, 3, 4, 5]
+
+
+
+[release_attr.test_release_insert]
+query = [1, 2, 4]
+attrname = "insert"
+args =[2, 3]
+kwargs={}
+target= [1, 2, 3, 4]
+
+
+
+[release_attr.test_release_pop]
+query = [1, 2, 3]
+attrname = "pop"
+solution = 3
+args = []
+kwargs = {}
+target = [1,2]
+
+
+[release_attr.test_release_pop_with_index]
+query = [1, 2, 3]
+attrname="pop"
+args=[1]
+kwargs = {}
+solution=2
+target=[1,3]
+
+[release_attr.test_release_remove]
+query = [1, 2, 3]
+attrname = "remove"
+args=[2]
+kwargs = {}
+target=[1, 3]
+
+[release_attr.test_release_clear]
+query = [1, 2, 3]
+attrname = "clear"
+args=[]
+kwargs={}
+target=[]
+
+[release_attr.test_release_count]
+query = [1, 2, 2, 3]
+args=[2]
+kwargs={}
+attrname="count"
+solution=2
+
+
+[release_attr.test_release_index]
+query = [1, 2, 3]
+attrname="index"
+args=[2]
+kwargs={}
+solution=1
+
+[release_attr.test_release_reverse]
+query =  [1, 2, 3]
+attrname = "reverse"
+args=[]
+kwargs ={}
+target= [3, 2, 1]
 
 [strings.valid]
 "Basic Versioning" = [

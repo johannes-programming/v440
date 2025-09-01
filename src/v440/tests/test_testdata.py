@@ -35,18 +35,21 @@ class TestVersionReleaseAttrs(unittest.TestCase):
             key:str,
             query:list,
             attrname:str,
-            args:list,
-            kwargs:dict,
-            target:list,
+            args:Optional[list],
+            kwargs:Optional[dict],
+            target:Optional[list]=None,
             solution:Any=None,
     ) -> None:
         # Test the append method of the release list-like object
         version:Version = Version()
         version.release = query
         attr:Any=getattr(version.release, attrname)
-        ans:Any = attr(*args, **kwargs)
+        args0:list = [] if (args is None) else args
+        kwargs0:dict = {} if (kwargs is None) else kwargs
+        ans:Any = attr(*args0, **kwargs0)
         self.assertEqual(ans, solution)
-        self.assertEqual(version.release, target)
+        if target is not None:
+            self.assertEqual(version.release, target)
 
 
 class TestVersionEpoch(unittest.TestCase):
