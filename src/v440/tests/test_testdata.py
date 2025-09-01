@@ -23,6 +23,98 @@ class Util(enum.Enum):
         return data
 
 
+class TestVersionReleaseAttrs(unittest.TestCase):
+
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["release_attr"].items():
+            self.release(**v, key=k)
+
+    def release(
+        self: Self,
+        key: str,
+        query: list,
+        attrname: Optional[str] = None,
+        args: list | tuple = (),
+        kwargs: dict | tuple = (),
+        target: Optional[list] = None,
+        solution: Any = None,
+    ) -> None:
+        # Test the append method of the release list-like object
+        version: Version = Version()
+        version.release = query
+        if attrname is not None:
+            attr: Any = getattr(version.release, attrname)
+            ans: Any = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, solution)
+        if target is not None:
+            self.assertEqual(version.release, target)
+
+
+class TestVersionReleaseVersionError(unittest.TestCase):
+
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["release_VersionError"].items():
+            self.release(**v, key=k)
+
+    def release(
+        self: Self,
+        key: str,
+        query: list,
+    ) -> None:
+        version: Version = Version()
+        with self.assertRaises(VersionError):
+            version.release = query
+
+
+class TestVersionLocalVersionError(unittest.TestCase):
+
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["local_VersionError"].items():
+            self.local(**v, key=k)
+
+    def local(
+        self: Self,
+        key: str,
+        query: list,
+    ) -> None:
+        version: Version = Version()
+        with self.assertRaises(VersionError):
+            version.local = query
+
+
+class TestVersionLocal(unittest.TestCase):
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["local_attr"].items():
+            self.local(**v, key=k)
+
+    def local(
+        self: Self,
+        key: str,
+        query: list,
+        attrname: Optional[str] = None,
+        args: list | tuple = (),
+        kwargs: dict | tuple = (),
+        target: Optional[list] = None,
+        solution: Any = None,
+    ) -> None:
+        version: Version = Version()
+        version.local = query
+        if attrname is not None:
+            attr: Any = getattr(version.local, attrname)
+            ans: Any = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, solution)
+        if target is not None:
+            self.assertEqual(version.local, target)
+
+
 class TestVersionEpoch(unittest.TestCase):
     def epoch(
         self: Self,
