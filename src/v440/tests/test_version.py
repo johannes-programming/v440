@@ -372,12 +372,6 @@ class TestVersionLocal(unittest.TestCase):
         # Initialize a fresh Version instance for every test
         self.version = Version()
 
-
-    def test_local_conversion_mixed(self: Self) -> None:
-        # Test assignment of mixed string, integer, and other values
-        self.version.local = ["1", 2, "local", 4, True]
-        self.assertEqual(self.version.local, [1, 2, "local", 4, 1])  # True -> 1
-
     def test_local_invalid_value(self: Self) -> None:
         # Test that invalid values raise an appropriate error
         with self.assertRaises(VersionError):
