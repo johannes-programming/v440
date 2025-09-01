@@ -34,7 +34,7 @@ class TestVersionReleaseAttrs(unittest.TestCase):
             self: Self,
             key:str,
             query:list,
-            attrname:str,
+            attrname:Optional[str]=None,
             args:list|tuple=(),
             kwargs:dict|tuple=(),
             target:Optional[list]=None,
@@ -43,9 +43,10 @@ class TestVersionReleaseAttrs(unittest.TestCase):
         # Test the append method of the release list-like object
         version:Version = Version()
         version.release = query
-        attr:Any=getattr(version.release, attrname)
-        ans:Any = attr(*args, **dict(kwargs))
-        self.assertEqual(ans, solution)
+        if attrname is not None:
+            attr:Any=getattr(version.release, attrname)
+            ans:Any = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, solution)
         if target is not None:
             self.assertEqual(version.release, target)
 

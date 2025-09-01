@@ -279,12 +279,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
 
 
 
-    def test_release_sort(self: Self) -> None:
-        # Test sorting the release
-        self.version.release = [3, 1, 2]
-        self.version.release.sort()
-        self.assertEqual(self.version.release, [1, 2, 3])
-
     def test_release_equality_with_list(self: Self) -> None:
         # Test equality of release with a normal list
         self.version.release = [1, 2, 3]
@@ -369,10 +363,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         with self.assertRaises(VersionError):
             self.version.release = [1, 2.5, 3]
 
-    def test_release_integer_float(self: Self) -> None:
-        # Ensure assigning float with integer value is allowed and converted to int
-        self.version.release = [True, False, 3]
-        self.assertEqual(self.version.release, [1, 0, 3])
 
     def test_release_invalid_boolean_assignment(self: Self) -> None:
         # Ensure assigning invalid boolean-like values (not `True/False`) raises an error
