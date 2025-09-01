@@ -241,7 +241,7 @@ class TestPackaging(unittest.TestCase):
         convert: bool
         msg: str
         op: Any
-        for x, y, op in iterprod.iterprod(pure, pure, op):
+        for x, y, op in iterprod.iterprod(pure, pure, ops):
             a = packaging.version.Version(x)
             b = Version(x).packaging()
             c = packaging.version.Version(y)
