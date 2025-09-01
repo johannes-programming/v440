@@ -93,6 +93,11 @@ target = [1, 0, 3]
 query = [true, false, 1]
 target= [1, 0, 1]
 
+
+[release_attr.test_release_equality_with_list]
+query = [1, 2, 3]
+target= [1, 2, 3]
+
 [strings.valid]
 "Basic Versioning" = [
     "1.0.0",

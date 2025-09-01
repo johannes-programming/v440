@@ -279,11 +279,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
 
 
 
-    def test_release_equality_with_list(self: Self) -> None:
-        # Test equality of release with a normal list
-        self.version.release = [1, 2, 3]
-        self.assertTrue(self.version.release == [1, 2, 3])
-
     def test_release_inequality_with_list(self: Self) -> None:
         # Test inequality of release with a normal list
         self.version.release = [1, 2, 3]
