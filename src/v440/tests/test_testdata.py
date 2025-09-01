@@ -35,8 +35,8 @@ class TestVersionReleaseAttrs(unittest.TestCase):
             key:str,
             query:list,
             attrname:str,
-            args:Optional[list],
-            kwargs:Optional[dict],
+            args:list|tuple=(),
+            kwargs:dict|tuple=(),
             target:Optional[list]=None,
             solution:Any=None,
     ) -> None:
@@ -44,9 +44,7 @@ class TestVersionReleaseAttrs(unittest.TestCase):
         version:Version = Version()
         version.release = query
         attr:Any=getattr(version.release, attrname)
-        args0:list = [] if (args is None) else args
-        kwargs0:dict = {} if (kwargs is None) else kwargs
-        ans:Any = attr(*args0, **kwargs0)
+        ans:Any = attr(*args, **dict(kwargs))
         self.assertEqual(ans, solution)
         if target is not None:
             self.assertEqual(version.release, target)

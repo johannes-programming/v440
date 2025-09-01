@@ -279,12 +279,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
 
 
 
-    def test_release_reverse(self: Self) -> None:
-        # Test reversing the release
-        self.version.release = [1, 2, 3]
-        self.version.release.reverse()
-        self.assertEqual(self.version.release, [3, 2, 1])
-
     def test_release_sort(self: Self) -> None:
         # Test sorting the release
         self.version.release = [3, 1, 2]

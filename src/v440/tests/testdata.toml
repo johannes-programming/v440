@@ -73,8 +73,6 @@ solution=1
 [release_attr.test_release_reverse]
 query =  [1, 2, 3]
 attrname = "reverse"
-args=[]
-kwargs ={}
 target= [3, 2, 1]
 
 [strings.valid]
