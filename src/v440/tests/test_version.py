@@ -187,10 +187,6 @@ class TestExample(unittest.TestCase):
         )  # Error
         self.assertEqual(str(v), "4!5.0.1")  # After error
 
-    def test_example_8(self: Self) -> None:
-        v = Version("1.2.3.4.5.6.7.8.9.10")
-        v.release.bump(index=7, amount=5)
-        self.assertEqual(str(v), "1.2.3.4.5.6.7.13")  # Bumping
 
 
 class TestVersionRelease(unittest.TestCase):

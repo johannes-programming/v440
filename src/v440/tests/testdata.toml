@@ -1,5 +1,10 @@
 
-        
+[release_attr.test_example_8]
+query = "1.2.3.4.5.6.7.8.9.10"
+attrname = "bump"
+kwargs = {index=7, amount=5}
+target = [1, 2, 3, 4, 5, 6, 7, 13]
+
 [release_attr.test_release_assignment_with_bool_conversion]
 query = [true, false, 3]
 target= [1, 0, 3]
