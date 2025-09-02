@@ -321,10 +321,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         self.version.release.data = [10, 20, 30]
         self.assertEqual(self.version.release, [10, 20, 30])
 
-    def test_release_data_property_empty(self: Self) -> None:
-        # Test 'data' property when release is empty
-        self.version.release = []
-        self.assertEqual(self.version.release.data, [])
 
 
     def test_release_non_integer_elements(self: Self) -> None:

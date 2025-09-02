@@ -2,6 +2,12 @@
 query = [1000000000000000000]
 target = [1000000000000000000]
 
+
+[release_attr.test_release_data_property_empty]
+query = []
+target = []
+
+
 [release_attr.test_release_append]
 query = [1, 2, 3]
 attrname = "append"
