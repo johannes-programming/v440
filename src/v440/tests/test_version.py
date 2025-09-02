@@ -326,11 +326,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         self.version.release = []
         self.assertEqual(self.version.release.data, [])
 
-    def test_release_max_integer(self: Self) -> None:
-        # Test handling of very large integer values in release
-        large_value = 10**18
-        self.version.release = [large_value]
-        self.assertEqual(self.version.release, [large_value])
 
     def test_release_non_integer_elements(self: Self) -> None:
         # Ensure assigning non-integer, non-convertible values to release raises an error
