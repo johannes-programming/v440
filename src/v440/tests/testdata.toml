@@ -1,3 +1,11 @@
+[relations.test_example_3]
+queryA = "1.6.3"
+queryB = "1.6.4"
+targetA="1.6.3"
+targetB="1.6.4"
+truths = ["ne", "le", "lt"]
+falsehoods = ["eq", "ge", "gt"]
+
 [release_attr.test_release_max_integer]
 query = [1000000000000000000]
 target = [1000000000000000000]

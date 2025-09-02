@@ -79,6 +79,38 @@ class TestVersionLocal(unittest.TestCase):
             self.assertEqual(version.local, target)
 
 
+class TestVersionRelations(unittest.TestCase):
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["relations"].items():
+            self.rel(**v, key=k)
+
+    def rel(
+            self: Self,
+            key:str,
+            queryA:Any,
+            queryB:Any,
+            targetA:Any,
+            targetB:Any,
+            truths:Iterable=(),
+            falsehoods:Iterable=(),
+    ) -> None:
+        v1 = Version(queryA)
+        v2 = Version(queryB)
+        if targetA is not None:
+            self.assertEqual(str(v1), targetA)  # v1
+        if targetB is not None:
+            self.assertEqual(str(v2), targetB)  # v2
+        x:str
+        y:Any
+        for x in truths:
+            y = getattr(operator, x)
+            self.assertTrue(y(v1, v2))
+        for x in falsehoods:
+            y = getattr(operator, x)
+            self.assertFalse(y(v1, v2))
+
 
 
 class TestVersionEpoch(unittest.TestCase):
