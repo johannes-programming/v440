@@ -176,6 +176,12 @@ query = [3, 1, "dev", 2, "2", "4a", "a4"]
 attrname="sort"
 target= ["4a", "a4", "dev", 1, 2, 2, 3]
 
+[local_attr.test_local_sort_reverse]
+query = [3, 1, "dev", 2, "2", "4a", "a4"]
+attrname="sort"
+kwargs={"reverse"=true}
+target= [3, 2, 2, 1, 'dev', 'a4', '4a']
+
 
 
 
