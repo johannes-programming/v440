@@ -265,11 +265,6 @@ class TestVersionRelease(unittest.TestCase):
         self.version.release.micro = 1
         self.assertEqual(self.version.release, [0, 0, 1])
 
-    def test_release_large_numbers(self: Self) -> None:
-        # Test that release can handle large integers
-        self.version.release = [1000000000, 2000000000, 3000000000]
-        self.assertEqual(self.version.release, [1000000000, 2000000000, 3000000000])
-
 
 class TestAdditionalVersionRelease(unittest.TestCase):
 

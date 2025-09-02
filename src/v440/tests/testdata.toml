@@ -1,3 +1,8 @@
+[release_attr.test_release_large_numbers]
+query = [1000000000, 2000000000, 3000000000]
+target = [1000000000, 2000000000, 3000000000]
+
+
 [release_attr.test_release_max_integer]
 query = [1000000000000000000]
 target = [1000000000000000000]
