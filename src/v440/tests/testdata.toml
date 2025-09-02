@@ -148,6 +148,10 @@ target= [1, 2, 3]
 query = [true, false, "dev"]
 target = [1, 0, "dev"]
 
+[local_attr.test_local_large_integers]
+query = [1000000000000000000]
+target = [1000000000000000000]
+
 [local_attr.test_local_basic_assignment]
 query = [1, "local", "dev"]
 target= [1, "local", "dev"]

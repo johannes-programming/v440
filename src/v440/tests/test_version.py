@@ -388,12 +388,6 @@ class TestVersionLocal(unittest.TestCase):
         self.version.local.data = ["custom", "data"]
         self.assertEqual(self.version.local, ["custom", "data"])
 
-    def test_local_large_integers(self: Self) -> None:
-        # Test handling of very large integers in local
-        large_value = 10**18
-        self.version.local = [large_value]
-        self.assertEqual(self.version.local, [large_value])
-
 
     def test_local_iterable(self: Self) -> None:
         # Test if local supports iteration
