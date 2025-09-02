@@ -50,6 +50,23 @@ class TestVersionReleaseAttrs(unittest.TestCase):
         if target is not None:
             self.assertEqual(version.release, target)
 
+class TestVersionReleaseVersionError(unittest.TestCase):
+
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["release_VersionError"].items():
+            self.release(**v, key=k)
+
+    def release(
+            self: Self,
+            key:str,
+            query:list,
+    ) -> None:
+        version:Version = Version()
+        with self.assertRaises(VersionError):
+            version.release = query
+
 
 
 class TestVersionLocal(unittest.TestCase):

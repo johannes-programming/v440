@@ -310,11 +310,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
 
 
 
-    def test_release_non_integer_elements(self: Self) -> None:
-        # Ensure assigning non-integer, non-convertible values to release raises an error
-        with self.assertRaises(VersionError):
-            self.version.release = ["invalid", 2, 3]
-
     def test_release_contains(self: Self) -> None:
         # Test 'in' keyword with release
         self.version.release = [1, 2, 3]
@@ -331,16 +326,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         self.version.release = [1, 2, 3]
         self.assertEqual(self.version.release + [4, 5], [1, 2, 3, 4, 5])
 
-    def test_release_invalid_float_value(self: Self) -> None:
-        # Ensure assigning non-integer float raises an error
-        with self.assertRaises(VersionError):
-            self.version.release = [1, 2.5, 3]
 
-
-    def test_release_invalid_boolean_assignment(self: Self) -> None:
-        # Ensure assigning invalid boolean-like values (not `True/False`) raises an error
-        with self.assertRaises(VersionError):
-            self.version.release = ["true", "false"]
 
 
 

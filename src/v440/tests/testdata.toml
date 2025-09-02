@@ -1,4 +1,17 @@
 
+
+[release_VersionError.test_release_non_integer_elements]
+query = ["invalid", 2, 3]
+
+
+[release_VersionError.test_release_invalid_float_value]
+query = [1, 2.5, 3]
+
+[release_VersionError.test_release_invalid_boolean_assignment]
+query = ["true", "false"]
+
+
+
 [release_attr.test_example_8]
 query = "1.2.3.4.5.6.7.8.9.10"
 attrname = "bump"
