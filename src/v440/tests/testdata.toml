@@ -111,6 +111,72 @@ query = ["1", "2", "local", "test"]
 target=[1, 2, "local", "test"]
 
 
+[local_attr.test_local_append]
+attrname="append"
+query = [1, "dev"]
+args = ["build"]
+target = [1, "dev", "build"]
+
+[local_attr.test_local_extend]
+query = [1, "dev"]
+attrname = "extend"
+args=[["test", 123]]
+target=[1, "dev", "test", 123]
+
+[local_attr.test_local_insert]
+query = [1, "dev"]
+attrname = "insert"
+args = [1, "alpha"]
+target = [1, "alpha", "dev"]
+
+[local_attr.test_local_pop]
+query = [1, "dev", "build"]
+attrname = "pop"
+solution = "build"
+target =  [1, "dev"]
+
+[local_attr.test_local_pop_with_index]
+query= [1, "dev", "build"]
+attrname = "pop"
+args=[1]
+solution="dev"
+target=[1, "build"]
+
+[local_attr.test_local_remove]
+attrname = "remove"
+query = [1, "dev", "build"]
+args=["dev"]
+target=[1, "build"]
+
+[local_attr.test_local_clear]
+query= [1, "dev", "build"]
+attrname="clear"
+target=[]
+
+
+[local_attr.test_local_count]
+query = [1, "dev", "dev", "build"]
+attrname="count"
+args=["dev"]
+solution=2
+
+[local_attr.test_local_index]
+query = [1, "dev", "build"]
+attrname="index"
+args=["dev"]
+solution=1
+
+[local_attr.test_local_reverse]
+query = [1, "dev", "build"]
+attrname="reverse"
+target= ["build", "dev", 1]
+
+[local_attr.test_local_sort]
+query = [3, 1, "dev", 2, "2", "4a", "a4"]
+attrname="sort"
+target= ["4a", "a4", "dev", 1, 2, 2, 3]
+
+
 
 
 [local_attr.test_local_conversion_mixed]
