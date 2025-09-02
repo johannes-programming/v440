@@ -68,6 +68,24 @@ class TestVersionReleaseVersionError(unittest.TestCase):
             version.release = query
 
 
+class TestVersionLocalVersionError(unittest.TestCase):
+
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["local_VersionError"].items():
+            self.local(**v, key=k)
+
+    def local(
+            self: Self,
+            key:str,
+            query:list,
+    ) -> None:
+        version:Version = Version()
+        with self.assertRaises(VersionError):
+            version.local = query
+
+
 
 class TestVersionLocal(unittest.TestCase):
     def test_0(self: Self) -> None:

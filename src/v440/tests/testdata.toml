@@ -11,6 +11,12 @@ query = [1, 2.5, 3]
 query = ["true", "false"]
 
 
+[local_VersionError.test_local_invalid_value]
+query = ["a", {}, "3"]
+
+[local_VersionError.test_local_non_string_elements]
+query = [1, [], "test"]
+
 
 [release_attr.test_example_8]
 query = "1.2.3.4.5.6.7.8.9.10"
@@ -137,6 +143,10 @@ target= [1, 0, 1]
 [release_attr.test_release_equality_with_list]
 query = [1, 2, 3]
 target= [1, 2, 3]
+
+[local_attr.test_local_boolean_assignment]
+query = [true, false, "dev"]
+target = [1, 0, "dev"]
 
 [local_attr.test_local_basic_assignment]
 query = [1, "local", "dev"]

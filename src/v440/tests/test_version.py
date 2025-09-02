@@ -336,11 +336,6 @@ class TestVersionLocal(unittest.TestCase):
         # Initialize a fresh Version instance for every test
         self.version = Version()
 
-    def test_local_invalid_value(self: Self) -> None:
-        # Test that invalid values raise an appropriate error
-        with self.assertRaises(VersionError):
-            self.version.local = ["a", {}, "3"]
-
     def test_local_len(self: Self) -> None:
         # Test the length of the local list
         self.version.local = [1, "dev", "build"]
@@ -378,11 +373,6 @@ class TestVersionLocal(unittest.TestCase):
         self.version.local = [1, "dev"]
         self.assertFalse(self.version.local == [1, "build"])
 
-    def test_local_boolean_assignment(self: Self) -> None:
-        # Ensure boolean values are handled correctly and converted to integers
-        self.version.local = [True, False, "dev"]
-        self.assertEqual(self.version.local, [1, 0, "dev"])
-
     def test_local_repr(self: Self) -> None:
         # Test repr of local list
         self.version.local = [1, "dev", "build"]
@@ -404,10 +394,6 @@ class TestVersionLocal(unittest.TestCase):
         self.version.local = [large_value]
         self.assertEqual(self.version.local, [large_value])
 
-    def test_local_non_string_elements(self: Self) -> None:
-        # Ensure non-string and non-convertible values raise an error
-        with self.assertRaises(VersionError):
-            self.version.local = [1, [], "test"]
 
     def test_local_iterable(self: Self) -> None:
         # Test if local supports iteration
