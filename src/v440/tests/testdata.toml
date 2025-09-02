@@ -1,3 +1,10 @@
+
+        
+[release_attr.test_release_assignment_with_bool_conversion]
+query = [true, false, 3]
+target= [1, 0, 3]
+        
+        
 [release_attr.test_release_large_numbers]
 query = [1000000000, 2000000000, 3000000000]
 target = [1000000000, 2000000000, 3000000000]

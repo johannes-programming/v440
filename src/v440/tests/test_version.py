@@ -227,10 +227,6 @@ class TestVersionRelease(unittest.TestCase):
         simulated_release = self.version.release[:5]
         self.assertEqual(simulated_release, [1, 2, 0, 0, 0])
 
-    def test_release_assignment_with_bool_conversion(self: Self) -> None:
-        # Test that boolean values get converted properly to integers
-        self.version.release = [True, False, 3]
-        self.assertEqual(self.version.release, [1, 0, 3])
 
     def test_release_empty_major(self: Self) -> None:
         # Test that an empty release still has valid major, minor, micro values
