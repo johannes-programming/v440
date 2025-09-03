@@ -5,6 +5,7 @@ from typing import *
 
 import packaging.version
 from datahold import OkayABC
+from exceptors import Exceptor
 from scaevola import Scaevola
 
 from v440._utils import QualifierParser, utils
@@ -65,12 +66,13 @@ class Version(Base):
     def __setattr__(self: Self, name: str, value: Any) -> None:
         a: dict = dict()
         b: dict = dict()
+        exceptor: Exceptor = Exceptor()
         x: Any
         y: Any
         for x, y in self._data.todict().items():
-            try:
+            with exceptor.capture(AttributeError):
                 a[x] = y.data
-            except AttributeError:
+            if exceptor.captured is not None:
                 b[x] = y
         try:
             Base.__setattr__(self, name, value)
