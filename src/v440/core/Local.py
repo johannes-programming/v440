@@ -3,6 +3,8 @@ from __future__ import annotations
 import functools
 from typing import *
 
+from exceptors import Exceptor
+
 from v440._utils import utils
 from v440._utils.VList import VList
 
@@ -14,19 +16,21 @@ class Local(VList):
     data: list[int | str]
 
     def __le__(self: Self, other: Iterable) -> bool:
-        try:
+        exceptor: Exceptor = Exceptor()
+        with exceptor.capture(ValueError):
             other = type(self)(other)
-        except ValueError:
-            pass
+        ans: bool
+        if exceptor.captured is None:
+            ans = self._cmpkey() <= other._cmpkey()
         else:
-            return self._cmpkey() <= other._cmpkey()
-        return self.data <= other
+            ans = self.data <= other
+        return ans
 
     def __str__(self: Self) -> str:
         return ".".join(map(str, self))
 
     def _cmpkey(self: Self) -> list:
-        return [self._sortkey(x) for x in self]
+        return list(map(self._sortkey, self))
 
     @staticmethod
     def _sortkey(value: Any) -> Tuple[bool, Any]:
@@ -43,7 +47,7 @@ class Local(VList):
             self._data = [value]
 
         def byList(self: Self, value: list) -> None:
-            value = [utils.segment(x) for x in value]
+            value = list(map(utils.segment, value))
             if None in value:
                 raise ValueError
             self._data = value
@@ -57,13 +61,12 @@ class Local(VList):
             value = value.replace("_", ".")
             value = value.replace("-", ".")
             value = value.split(".")
-            value = [utils.segment(x) for x in value]
+            value = list(map(utils.segment, value))
             if None in value:
                 raise ValueError
             self._data = value
 
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:
-        if key is None:
-            key = self._sortkey
-        self._data.sort(key=key, **kwargs)
+        k: Any = self._sortkey if key is None else key
+        self._data.sort(key=k, **kwargs)

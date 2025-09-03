@@ -6,11 +6,11 @@ from v440._utils.Base import Base
 
 
 class VList(Base, OkayList):
-    def __iadd__(self: Self, other: Any, /) -> Any:
+    def __iadd__(self: Self, other: Any, /) -> Self:
         self._data += type(self)(other)._data
         return self
 
-    def __imul__(self: Self, other: Any, /) -> Any:
+    def __imul__(self: Self, other: Any, /) -> Self:
         self.data = self.data * other
         return self
 

@@ -135,13 +135,13 @@ class Release(VList):
             return [utils.numeral(value)]
         if not isinstance(value, str):
             if hasattr(value, "__iter__"):
-                return [utils.numeral(x) for x in value]
+                return list(map(utils.numeral, value))
             slicing = "never"
         value = str(value)
         if value == "":
             return list()
         if "" == value.strip(string.digits) and slicing in (len(value), "always"):
-            return [int(x) for x in value]
+            return list(map(int, value))
         value = value.lower().strip()
         value = value.replace("_", ".")
         value = value.replace("-", ".")
@@ -150,7 +150,7 @@ class Release(VList):
         value = value.split(".")
         if "" in value:
             raise ValueError
-        value = [utils.numeral(x) for x in value]
+        value = list(map(utils.numeral, value))
         return value
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
@@ -178,6 +178,6 @@ class Release(VList):
         ans = self[:i]
         if len(ans) == 0:
             ans += [0]
-        ans = [str(x) for x in ans]
+        ans = list(map(str, ans))
         ans = ".".join(ans)
         return ans
