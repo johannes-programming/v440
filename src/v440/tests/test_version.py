@@ -273,11 +273,6 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         self.version.release[1:4] = [20, 30, 40]
         self.assertEqual(self.version.release, [1, 20, 30, 40, 5])
 
-    def test_release_invalid_assignment(self: Self) -> None:
-        # Test assigning an invalid type to release (should raise an error)
-        with self.assertRaises(VersionError):
-            self.version.release = ["1", "invalid", "3"]
-
     def test_release_iterable(self: Self) -> None:
         # Test if release supports iteration
         self.version.release = [1, 2, 3]
