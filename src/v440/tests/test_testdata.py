@@ -8,6 +8,7 @@ from typing import *
 
 import iterprod
 import packaging.version
+from exceptors import Exceptor
 
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
@@ -140,14 +141,11 @@ class TestVersionEpoch(unittest.TestCase):
 class TestSlicing(unittest.TestCase):
 
     def test_slicing_2(self: Self) -> None:
-        v = Version("1.2.3.4.5.6.7.8.9.10")
-        try:
+        v: Version = Version("1.2.3.4.5.6.7.8.9.10")
+        exceptor: Exceptor = Exceptor()
+        with exceptor.capture(Exception):
             v.release[-8:15:5] = 777
-        except Exception as e:
-            error = e
-        else:
-            error = None
-        self.assertNotEqual(error, None)
+        self.assertNotEqual(exceptor.captured, None)
 
     def slicingmethod(
         self: Self,
@@ -159,7 +157,7 @@ class TestSlicing(unittest.TestCase):
         step: Any = None,
         key: str = "",
     ) -> None:
-        v = Version(query)
+        v: Version = Version(query)
         v.release[start:stop:step] = change
         self.assertEqual(str(v), solution, "slicingmethod %s" % key)
 
