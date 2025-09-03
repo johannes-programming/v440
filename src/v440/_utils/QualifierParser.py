@@ -25,7 +25,7 @@ class QualifierParser:
             return value
 
         def byList(self: Self, value: list) -> Any:
-            value = [utils.segment(x) for x in value]
+            value = list(map(utils.segment, value))
             if self.phasedict:
                 l, n = value
                 if [l, n] == [None, None]:
@@ -68,7 +68,7 @@ class QualifierParser:
             raise TypeError
         pd = self.phasedict
         pd = list(pd.keys()) + list(pd.values())
-        pd = set(type(x) for x in pd)
+        pd = set(map(type, pd))
         if not (pd <= {str}):
             raise TypeError
         if type(self.allow_len_1) is not bool:
