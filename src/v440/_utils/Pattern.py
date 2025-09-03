@@ -13,6 +13,7 @@ class Pattern(enum.StrEnum):
 
     @staticmethod
     def compile(value: Any, /) -> re.Pattern:
+        "This staticmethod compiles the given value into a pattern."
         return re.compile(value, re.VERBOSE)
 
     @functools.cached_property
