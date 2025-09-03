@@ -26,7 +26,7 @@ class Local(VList):
         return ".".join(map(str, self))
 
     def _cmpkey(self: Self) -> list:
-        return [self._sortkey(x) for x in self]
+        return list(map(self._sortkey, self))
 
     @staticmethod
     def _sortkey(value: Any) -> Tuple[bool, Any]:
@@ -43,7 +43,7 @@ class Local(VList):
             self._data = [value]
 
         def byList(self: Self, value: list) -> None:
-            value = [utils.segment(x) for x in value]
+            value = list(map(utils.segment, value))
             if None in value:
                 raise ValueError
             self._data = value
@@ -57,7 +57,7 @@ class Local(VList):
             value = value.replace("_", ".")
             value = value.replace("-", ".")
             value = value.split(".")
-            value = [utils.segment(x) for x in value]
+            value = list(map(utils.segment, value))
             if None in value:
                 raise ValueError
             self._data = value
