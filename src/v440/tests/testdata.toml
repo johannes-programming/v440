@@ -1,3 +1,10 @@
+[release_VersionError.test_release_invalid_assignment]
+query = [
+    "1", 
+    "invalid", 
+    "3",
+]
+
 [release_VersionError.test_release_non_integer_elements]
 query = [
     "invalid",
