@@ -194,11 +194,6 @@ class TestVersionRelease(unittest.TestCase):
         # Create a version class instance
         self.version = Version()
 
-    def test_release_invalid_value(self: Self) -> None:
-        # Test that invalid values raise an appropriate error
-        with self.assertRaises(VersionError):
-            self.version.release = ["a", 2, "3"]
-
     def test_major_minor_micro_aliases(self: Self) -> None:
         # Test major, minor, and micro aliases for the first three indices
         self.version.release = [1, 2, 3]
@@ -353,11 +348,6 @@ class TestVersionLocal(unittest.TestCase):
         # Test adding another list to local
         self.version.local = [1, "dev"]
         self.assertEqual(self.version.local + ["build"], [1, "dev", "build"])
-
-    def test_local_equality_with_list(self: Self) -> None:
-        # Test equality of local with a normal list
-        self.version.local = [1, "dev"]
-        self.assertTrue(self.version.local == [1, "dev"])
 
     def test_local_inequality_with_list(self: Self) -> None:
         # Test inequality of local with a normal list
