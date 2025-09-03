@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import operator
 import string
+import types
 from typing import *
 
 from v440.core.VersionError import VersionError
@@ -9,26 +10,28 @@ from v440.core.VersionError import VersionError
 SEGCHARS = string.ascii_lowercase + string.digits
 
 
-def digest(old: Any, /) -> Any:
-    byNone = getattr(old, "byNone", None)
-    byInt = getattr(old, "byInt", None)
-    byList = getattr(old, "byList", None)
-    byStr = getattr(old, "byStr", None)
+def digest(old: Any, /) -> types.FunctionType:
+    byNone: Any = getattr(old, "byNone", None)
+    byInt: Any = getattr(old, "byInt", None)
+    byList: Any = getattr(old, "byList", None)
+    byStr: Any = getattr(old, "byStr", None)
 
-    def new(*args, **kwargs):
-        args = list(args)
-        value = args.pop()
+    def new(*args: Any, **kwargs: Any) -> Any:
+        args: list = list(args)
+        value: Any = args.pop()
+        ans: Any
         if value is None:
-            return byNone(*args, **kwargs)
-        if isinstance(value, int):
+            ans = byNone(*args, **kwargs)
+        elif isinstance(value, int):
             value = int(value)
-            return byInt(*args, value, **kwargs)
-        if isinstance(value, str) or not hasattr(value, "__iter__"):
+            ans = byInt(*args, value, **kwargs)
+        elif isinstance(value, str) or not hasattr(value, "__iter__"):
             value = str(value).lower().strip()
-            return byStr(*args, value, **kwargs)
+            ans = byStr(*args, value, **kwargs)
         else:
             value = list(value)
-            return byList(*args, value, **kwargs)
+            ans = byList(*args, value, **kwargs)
+        return ans
 
     new.__name__ = old.__name__
     return new
@@ -74,24 +77,27 @@ class _segment:
     def byStr(value: Any, /) -> Any:
         if value.strip(SEGCHARS):
             raise ValueError(value)
+        ans: Any
         if value.strip(string.digits):
-            return value
-        if value == "":
-            return 0
-        return int(value)
+            ans = value
+        elif value == "":
+            ans = 0
+        else:
+            ans = int(value)
+        return ans
 
 
 def torange(key: Any, length: Any) -> range:
-    start = key.start
-    stop = key.stop
-    step = key.step
+    start: Any = key.start
+    stop: Any = key.stop
+    step: Any = key.step
     if step is None:
         step = 1
     else:
         step = operator.index(step)
         if step == 0:
             raise ValueError
-    fwd = step > 0
+    fwd: bool = step > 0
     if start is None:
         start = 0 if fwd else (length - 1)
     else:
@@ -108,4 +114,5 @@ def torange(key: Any, length: Any) -> range:
         stop += length
     if stop < 0:
         stop = 0 if fwd else -1
-    return range(start, stop, step)
+    ans: range = range(start, stop, step)
+    return ans
