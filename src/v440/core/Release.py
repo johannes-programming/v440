@@ -5,7 +5,7 @@ import string
 from typing import *
 
 from keyalias import keyalias
-from overloadable import overloadable
+from overloadable import Overloadable
 
 from v440._utils import utils
 from v440._utils.VList import VList
@@ -25,7 +25,7 @@ class Release(VList):
         ans._data += opp._data
         return ans
 
-    @overloadable
+    @Overloadable
     def __delitem__(self: Self, key: Any) -> bool:
         return type(key) is slice
 
@@ -37,13 +37,13 @@ class Release(VList):
 
     @__delitem__.overload(True)
     def __delitem__(self: Self, key: Any) -> None:
-        key = utils.torange(key, len(self))
-        key = [k for k in key if k < len(self)]
-        key.sort(reverse=True)
-        for k in key:
+        r: range = utils.torange(key, len(self))
+        l: list = [k for k in r if k < len(self)]
+        l.sort(reverse=True)
+        for k in l:
             del self._data[k]
 
-    @overloadable
+    @Overloadable
     def __getitem__(self: Self, key: Any) -> bool:
         return type(key) is slice
 
@@ -60,7 +60,7 @@ class Release(VList):
         ans: list = list(m)
         return ans
 
-    @overloadable
+    @Overloadable
     def __setitem__(self: Self, key: Any, value: Any) -> bool:
         return type(key) is slice
 
@@ -71,8 +71,8 @@ class Release(VList):
 
     @__setitem__.overload(True)
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        key = utils.torange(key, len(self))
-        self._setitem_range(key, value)
+        k: range = utils.torange(key, len(self))
+        self._setitem_range(k, value)
 
     def __str__(self: Self) -> str:
         return self.format()
@@ -84,18 +84,18 @@ class Release(VList):
             return 0
 
     def _setitem_int(self: Self, key: int, value: Any) -> Any:
-        value = utils.numeral(value)
-        length = len(self)
-        if length > key:
-            self._data[key] = value
+        v: int = utils.numeral(value)
+        n: int = len(self)
+        if n > key:
+            self._data[key] = v
             return
-        if value == 0:
+        if v == 0:
             return
-        self._data.extend([0] * (key - length))
-        self._data.append(value)
+        self._data.extend([0] * (key - n))
+        self._data.append(v)
 
-    @overloadable
-    def _setitem_range(self: Self, key: range, value: Any) -> Any:
+    @Overloadable
+    def _setitem_range(self: Self, key: range, value: Any) -> bool:
         return key.step == 1
 
     @_setitem_range.overload(False)
@@ -118,40 +118,60 @@ class Release(VList):
 
     @_setitem_range.overload(True)
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        data = self.data
-        ext = max(0, key.start - len(data))
+        data: list = self.data
+        ext: int = max(0, key.start - len(data))
         data += ext * [0]
-        value = self._tolist(value, slicing="always")
-        data = data[: key.start] + value + data[key.stop :]
+        l: list = self._tolist(value, slicing="always")
+        data = data[: key.start] + l + data[key.stop :]
         while len(data) and not data[-1]:
             data.pop()
         self._data = data
 
+    @Overloadable
     @staticmethod
     def _tolist(value: Any, *, slicing: Any) -> list:
         if value is None:
-            return []
+            return
         if isinstance(value, int):
-            return [utils.numeral(value)]
-        if not isinstance(value, str):
-            if hasattr(value, "__iter__"):
-                return list(map(utils.numeral, value))
-            slicing = "never"
-        value = str(value)
-        if value == "":
+            return int
+        if hasattr(value, "__iter__") and not isinstance(value, str):
+            return list
+        return str
+
+    @_tolist.overload()
+    def _tolist(value: None, *, slicing: Any) -> list:
+        return list()
+
+    @_tolist.overload(int)
+    def _tolist(value: int, *, slicing: Any) -> list:
+        return [utils.numeral(value)]
+
+    @_tolist.overload(list)
+    def _tolist(value: int, *, slicing: Any) -> list:
+        return list(map(utils.numeral, value))
+
+    @_tolist.overload(str)
+    def _tolist(value: Any, *, slicing: Any) -> list:
+        s: Any
+        if isinstance(value, str):
+            s = slicing
+        else:
+            s = "never"
+        v: str = str(value)
+        if v == "":
             return list()
-        if "" == value.strip(string.digits) and slicing in (len(value), "always"):
-            return list(map(int, value))
-        value = value.lower().strip()
-        value = value.replace("_", ".")
-        value = value.replace("-", ".")
-        if value.startswith("v") or value.startswith("."):
-            value = value[1:]
-        value = value.split(".")
-        if "" in value:
+        if "" == v.strip(string.digits) and s in (len(v), "always"):
+            return list(map(int, v))
+        v = v.lower().strip()
+        v = v.replace("_", ".")
+        v = v.replace("-", ".")
+        if v.startswith("v") or v.startswith("."):
+            v = v[1:]
+        l: list = v.split(".")
+        if "" in l:
             raise ValueError
-        value = list(map(utils.numeral, value))
-        return value
+        l = list(map(utils.numeral, l))
+        return l
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
@@ -167,17 +187,17 @@ class Release(VList):
 
     @data.setter
     def data(self: Self, value: Any) -> None:
-        value = self._tolist(value, slicing="always")
-        while value and value[-1] == 0:
-            value.pop()
-        self._data = value
+        v: list = self._tolist(value, slicing="always")
+        while v and v[-1] == 0:
+            v.pop()
+        self._data = v
 
     def format(self: Self, cutoff: Any = None) -> str:
         s: str = str(cutoff) if cutoff else ""
         i: Optional[int] = int(s) if s else None
-        ans = self[:i]
-        if len(ans) == 0:
-            ans += [0]
-        ans = list(map(str, ans))
-        ans = ".".join(ans)
+        l: list = self[:i]
+        if len(l) == 0:
+            l += [0]
+        l = list(map(str, l))
+        ans: str = ".".join(l)
         return ans
