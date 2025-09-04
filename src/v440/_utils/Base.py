@@ -11,22 +11,22 @@ class Base:
         "This magic method implements self==other."
         ans: bool
         try:
-            opp: Self = type(self)(other)
+            alt: Self = type(self)(other)
         except VersionError:
             ans = False
         else:
-            ans = self._data == opp._data
+            ans = self._data == alt._data
         return ans
 
     def __ge__(self: Self, other: Any, /) -> bool:
         "This magic method implements self>=other."
         ans: bool
         try:
-            opp: Self = type(self)(other)
+            alt: Self = type(self)(other)
         except:
             ans = self.data >= other
         else:
-            ans = opp <= self
+            ans = alt <= self
         return ans
 
     __gt__ = OkayList.__gt__
@@ -36,11 +36,11 @@ class Base:
         "This magic method implements self<=other."
         ans: bool
         try:
-            opp: Self = type(self)(other)
+            alt: Self = type(self)(other)
         except:
             ans = self.data <= other
         else:
-            ans = self._data <= opp._data
+            ans = self._data <= alt._data
         return ans
 
     __lt__ = OkayList.__lt__
