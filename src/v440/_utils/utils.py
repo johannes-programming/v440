@@ -38,21 +38,21 @@ def digest(old: Any, /) -> types.FunctionType:
 
 
 def literal(value: Any, /) -> str:
-    value = segment(value)
-    if type(value) is str:
-        return value
-    e = "%r is not a valid literal segment"
-    e = VersionError(e % value)
-    raise e
+    v: Any = segment(value)
+    if type(v) is str:
+        return v
+    e: str = "%r is not a valid literal segment"
+    e %= v
+    raise VersionError(e)
 
 
 def numeral(value: Any, /) -> int:
-    value = segment(value)
-    if type(value) is int:
-        return value
+    v: Any = segment(value)
+    if type(v) is int:
+        return v
     e = "%r is not a valid numeral segment"
-    e = VersionError(e % value)
-    raise e
+    e %= v
+    raise VersionError(e)
 
 
 def segment(value: Any, /) -> Any:
