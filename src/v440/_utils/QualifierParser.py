@@ -25,7 +25,7 @@ class QualifierParser:
             return value
 
         def byList(self: Self, value: list) -> Any:
-            value = [utils.segment(x) for x in value]
+            value = list(map(utils.segment, value))
             if self.phasedict:
                 l, n = value
                 if [l, n] == [None, None]:
