@@ -55,14 +55,14 @@ class Base:
         cls: type = type(self)
         attr: Any = getattr(cls, name)
         if type(attr) is not property:
-            msg:str = "%r is not a property" 
-            msg%= name
+            msg: str = "%r is not a property"
+            msg %= name
             raise AttributeError(msg)
         try:
             object.__setattr__(self, name, value)
         except VersionError:
             raise
         except:
-            msg:str = "%r is an invalid value for %r"
+            msg: str = "%r is an invalid value for %r"
             msg %= (value, cls.__name__ + "." + name)
             raise VersionError(msg)

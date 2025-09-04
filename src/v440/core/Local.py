@@ -3,6 +3,8 @@ from __future__ import annotations
 import functools
 from typing import *
 
+from exceptors import Exceptor
+
 from v440._utils import utils
 from v440._utils.VList import VList
 
@@ -14,13 +16,15 @@ class Local(VList):
     data: list[int | str]
 
     def __le__(self: Self, other: Iterable) -> bool:
-        try:
+        exceptor: Exceptor = Exceptor()
+        with exceptor.capture(ValueError):
             other = type(self)(other)
-        except ValueError:
-            pass
+        ans: bool
+        if exceptor.captured is None:
+            ans = self._cmpkey() <= other._cmpkey()
         else:
-            return self._cmpkey() <= other._cmpkey()
-        return self.data <= other
+            ans = self.data <= other
+        return ans
 
     def __str__(self: Self) -> str:
         return ".".join(map(str, self))
@@ -64,5 +68,5 @@ class Local(VList):
 
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:
-        k : Any = self._sortkey if key is None else key
+        k: Any = self._sortkey if key is None else key
         self._data.sort(key=k, **kwargs)
