@@ -20,20 +20,20 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "datahold>=1.1.8,<2",
-    "exceptors>=0.2,<2",
-    "iterprod>=1.0,<2",
-    "keyalias>=1.0.3,<2",
-    "overloadable>=1.0.5,<2",
+    "catchlib>=1.0,<2.0",
+    "datahold>=1.1.8,<2.0",
+    "iterprod>=1.0,<2.0",
+    "keyalias>=1.0.3,<2.0",
+    "overloadable>=1.0.5,<2.0",
     "packaging>=23.2",
-    "scaevola>=1.0.11,<2",
+    "scaevola>=1.0.11,<2.0",
 ]
 description = "This project provides mutable version objects in accordance with PEP440."
 keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.0.26"
+version = "1.0.27"
 
 [project.license]
 file = "LICENSE.txt"
