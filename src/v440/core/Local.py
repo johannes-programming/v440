@@ -64,6 +64,5 @@ class Local(VList):
 
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:
-        if key is None:
-            key = self._sortkey
-        self._data.sort(key=key, **kwargs)
+        k : Any = self._sortkey if key is None else key
+        self._data.sort(key=k, **kwargs)
