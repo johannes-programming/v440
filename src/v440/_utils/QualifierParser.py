@@ -68,7 +68,7 @@ class QualifierParser:
             raise TypeError
         pd = self.phasedict
         pd = list(pd.keys()) + list(pd.values())
-        pd = set(type(x) for x in pd)
+        pd = set(map(type, pd))
         if not (pd <= {str}):
             raise TypeError
         if type(self.allow_len_1) is not bool:
