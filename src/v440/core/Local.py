@@ -3,8 +3,6 @@ from __future__ import annotations
 import functools
 from typing import *
 
-from exceptors import Exceptor
-
 from v440._utils import utils
 from v440._utils.VList import VList
 
@@ -16,17 +14,18 @@ class Local(VList):
     data: list[int | str]
 
     def __le__(self: Self, other: Iterable) -> bool:
-        exceptor: Exceptor = Exceptor()
-        with exceptor.capture(ValueError):
-            other = type(self)(other)
+        "This magic method implements self<=other."
         ans: bool
-        if exceptor.captured is None:
-            ans = self._cmpkey() <= other._cmpkey()
-        else:
+        try:
+            alt: Self = type(self)(other)
+        except ValueError:
             ans = self.data <= other
+        else:
+            ans = self._cmpkey() <= alt._cmpkey()
         return ans
 
     def __str__(self: Self) -> str:
+        "This magic method implements str(self)."
         return ".".join(map(str, self))
 
     def _cmpkey(self: Self) -> list:
@@ -47,24 +46,25 @@ class Local(VList):
             self._data = [value]
 
         def byList(self: Self, value: list) -> None:
-            value = list(map(utils.segment, value))
-            if None in value:
+            v: list = list(map(utils.segment, value))
+            if None in v:
                 raise ValueError
-            self._data = value
+            self._data = v
 
         def byNone(self: Self) -> None:
             self._data = list()
 
         def byStr(self: Self, value: str) -> None:
-            if value.startswith("+"):
-                value = value[1:]
-            value = value.replace("_", ".")
-            value = value.replace("-", ".")
-            value = value.split(".")
-            value = list(map(utils.segment, value))
-            if None in value:
+            v: str = value
+            if v.startswith("+"):
+                v = v[1:]
+            v = v.replace("_", ".")
+            v = v.replace("-", ".")
+            l: list = v.split(".")
+            l = list(map(utils.segment, l))
+            if None in l:
                 raise ValueError
-            self._data = value
+            self._data = l
 
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:
