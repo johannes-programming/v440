@@ -51,10 +51,9 @@ class Base:
         cls: type = type(self)
         attr: Any = getattr(cls, name)
         if type(attr) is not property:
-            e = "%r is not a property"
-            e %= name
-            e = AttributeError(e)
-            raise e
+            msg:str = "%r is not a property" 
+            msg%= name
+            raise AttributeError(msg)
         try:
             object.__setattr__(self, name, value)
         except VersionError:
