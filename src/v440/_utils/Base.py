@@ -59,6 +59,6 @@ class Base:
         except VersionError:
             raise
         except:
-            e = "%r is an invalid value for %r"
-            e %= (value, cls.__name__ + "." + name)
-            raise VersionError(e)
+            msg:str = "%r is an invalid value for %r"
+            msg %= (value, cls.__name__ + "." + name)
+            raise VersionError(msg)
