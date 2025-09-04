@@ -7,10 +7,12 @@ from v440._utils.Base import Base
 
 class VList(Base, OkayList):
     def __iadd__(self: Self, other: Any, /) -> Self:
+        "This magic method implements self+=other."
         self._data += type(self)(other)._data
         return self
 
     def __imul__(self: Self, other: Any, /) -> Self:
+        "This magic method implements self*=other."
         self.data = self.data * other
         return self
 
@@ -18,6 +20,7 @@ class VList(Base, OkayList):
         self.data = data
 
     def __sorted__(self: Any, /, **kwargs: Any) -> Self:
-        ans = self.copy()
+        "This magic method implements sorted(self, **kwargs)."
+        ans:Self = self.copy()
         ans.sort(**kwargs)
         return ans

@@ -14,15 +14,20 @@ class Local(VList):
     data: list[int | str]
 
     def __le__(self: Self, other: Iterable) -> bool:
+        "This magic method implements self<=other."
+        ans:bool
         try:
-            other = type(self)(other)
+            alt:Self = type(self)(other)
         except ValueError:
             pass
         else:
-            return self._cmpkey() <= other._cmpkey()
-        return self.data <= other
+            ans = self._cmpkey() <= alt._cmpkey()
+            return ans
+        ans = self.data <= other
+        return ans
 
     def __str__(self: Self) -> str:
+        "This magic method implements str(self)."
         return ".".join(map(str, self))
 
     def _cmpkey(self: Self) -> list:
@@ -43,24 +48,25 @@ class Local(VList):
             self._data = [value]
 
         def byList(self: Self, value: list) -> None:
-            value = list(map(utils.segment, value))
-            if None in value:
+            v:list = list(map(utils.segment, value))
+            if None in v:
                 raise ValueError
-            self._data = value
+            self._data = v
 
         def byNone(self: Self) -> None:
             self._data = list()
 
         def byStr(self: Self, value: str) -> None:
-            if value.startswith("+"):
-                value = value[1:]
-            value = value.replace("_", ".")
-            value = value.replace("-", ".")
-            value = value.split(".")
-            value = list(map(utils.segment, value))
-            if None in value:
+            v:str=value
+            if v.startswith("+"):
+                v = v[1:]
+            v = v.replace("_", ".")
+            v = v.replace("-", ".")
+            l:list = v.split(".")
+            l = list(map(utils.segment, v))
+            if None in l:
                 raise ValueError
-            self._data = value
+            self._data = l
 
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:

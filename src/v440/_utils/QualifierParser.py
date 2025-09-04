@@ -19,15 +19,15 @@ class QualifierParser:
         def byInt(self: Self, value: int) -> Any:
             if self.phasedict:
                 raise TypeError
-            value = int(value)
-            if value < 0:
+            v:int = int(value)
+            if v < 0:
                 raise ValueError
-            return value
+            return v
 
         def byList(self: Self, value: list) -> Any:
-            value = list(map(utils.segment, value))
+            v:list = list(map(utils.segment, value))
             if self.phasedict:
-                l, n = value
+                l, n = v
                 if [l, n] == [None, None]:
                     return [None, None]
                 l = self.phasedict[l]
@@ -35,7 +35,7 @@ class QualifierParser:
                     raise TypeError
                 return [l, n]
             else:
-                n = self.nbylist(value)
+                n = self.nbylist(v)
                 if isinstance(n, str):
                     raise TypeError
                 return n
@@ -66,10 +66,10 @@ class QualifierParser:
     def __post_init__(self: Self) -> None:
         if type(self.phasedict) is not dict:
             raise TypeError
-        pd = self.phasedict
-        pd = list(pd.keys()) + list(pd.values())
-        pd = set(map(type, pd))
-        if not (pd <= {str}):
+        phases:dict = self.phasedict
+        total:list = list(phases.keys()) + list(phases.values())
+        typeset:set = set(map(type, total))
+        if not (typeset <= {str}):
             raise TypeError
         if type(self.allow_len_1) is not bool:
             raise TypeError
@@ -77,7 +77,7 @@ class QualifierParser:
             raise TypeError
         if type(self.keysforstr) is not tuple:
             raise TypeError
-        keys = self.keysforlist + self.keysforstr
+        keys:tuple = self.keysforlist + self.keysforstr
         for k in keys:
             if k is None:
                 continue
