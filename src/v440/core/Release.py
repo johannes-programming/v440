@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 import operator
 import string
 from typing import *
@@ -37,10 +38,10 @@ class Release(VList):
 
     @__delitem__.overload(True)
     def __delitem__(self: Self, key: Any) -> None:
-        key = utils.torange(key, len(self))
-        key = [k for k in key if k < len(self)]
-        key.sort(reverse=True)
-        for k in key:
+        r:range = utils.torange(key, len(self))
+        l:list = [k for k in r if k < len(self)]
+        l.sort(reverse=True)
+        for k in l:
             del self._data[k]
 
     @overloadable
@@ -118,11 +119,11 @@ class Release(VList):
 
     @_setitem_range.overload(True)
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        data = self.data
-        ext = max(0, key.start - len(data))
+        data:list = self.data
+        ext:int = max(0, key.start - len(data))
         data += ext * [0]
-        value = self._tolist(value, slicing="always")
-        data = data[: key.start] + value + data[key.stop :]
+        l:list = self._tolist(value, slicing="always")
+        data = data[: key.start] + l + data[key.stop :]
         while len(data) and not data[-1]:
             data.pop()
         self._data = data
@@ -167,10 +168,10 @@ class Release(VList):
 
     @data.setter
     def data(self: Self, value: Any) -> None:
-        value = self._tolist(value, slicing="always")
-        while value and value[-1] == 0:
-            value.pop()
-        self._data = value
+        v:list = self._tolist(value, slicing="always")
+        while v and v[-1] == 0:
+            v.pop()
+        self._data = v
 
     def format(self: Self, cutoff: Any = None) -> str:
         s: str = str(cutoff) if cutoff else ""
