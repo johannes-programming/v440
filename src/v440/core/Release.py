@@ -72,8 +72,8 @@ class Release(VList):
 
     @__setitem__.overload(True)
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        key = utils.torange(key, len(self))
-        self._setitem_range(key, value)
+        k:range = utils.torange(key, len(self))
+        self._setitem_range(k, value)
 
     def __str__(self: Self) -> str:
         return self.format()
@@ -85,15 +85,15 @@ class Release(VList):
             return 0
 
     def _setitem_int(self: Self, key: int, value: Any) -> Any:
-        value = utils.numeral(value)
-        length = len(self)
-        if length > key:
-            self._data[key] = value
+        v:int = utils.numeral(value)
+        n:int = len(self)
+        if n > key:
+            self._data[key] = v
             return
-        if value == 0:
+        if v == 0:
             return
-        self._data.extend([0] * (key - length))
-        self._data.append(value)
+        self._data.extend([0] * (key - n))
+        self._data.append(v)
 
     @overloadable
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
