@@ -16,17 +16,18 @@ class Local(VList):
     data: list[int | str]
 
     def __le__(self: Self, other: Iterable) -> bool:
-        exceptor: Exceptor = Exceptor()
-        with exceptor.capture(ValueError):
-            other = type(self)(other)
-        ans: bool
-        if exceptor.captured is None:
-            ans = self._cmpkey() <= other._cmpkey()
-        else:
+        "This magic method implements self<=other."
+        ans:bool
+        try:
+            alt:Self = type(self)(other)
+        except ValueError:
             ans = self.data <= other
+        else:
+            ans = self._cmpkey() <= alt._cmpkey()
         return ans
 
     def __str__(self: Self) -> str:
+        "This magic method implements str(self)."
         return ".".join(map(str, self))
 
     def _cmpkey(self: Self) -> list:

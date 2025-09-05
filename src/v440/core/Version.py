@@ -257,15 +257,20 @@ class Version(Base):
             self.dev = None
 
         def byStr(self: Self, value: str) -> None:
-            match = Pattern.PUBLIC.leftbound.search(value)
-            self.base = value[: match.end()]
-            value = value[match.end() :]
+            v:str = value
+            match:Any = Pattern.PUBLIC.leftbound.search(v)
+            self.base = v[: match.end()]
+            v = v[match.end() :]
             self.pre = None
             self.post = None
             self.dev = None
-            while value:
-                m = Pattern.QUALIFIERS.leftbound.search(value)
-                value = value[m.end() :]
+            m:Any
+            n:Any
+            x:Any
+            y:Any
+            while v:
+                m = Pattern.QUALIFIERS.leftbound.search(v)
+                v = v[m.end() :]
                 if m.group("N"):
                     self.post = m.group("N")
                 else:
@@ -283,14 +288,15 @@ class Version(Base):
         self._data.release.data = value
 
     def update(self: Self, **kwargs: Any) -> None:
+        a: Any
+        m: str
         x: Any
         y: Any
         for x, y in kwargs.items():
-            attr = getattr(type(self), x)
-            if isinstance(attr, property):
+            a = getattr(type(self), x)
+            if isinstance(a, property):
                 setattr(self, x, y)
                 continue
-            e = "%r is not a property"
-            e %= x
-            e = AttributeError(e)
-            raise e
+            m:str = "%r is not a property"
+            m %= x
+            raise AttributeError(m)
