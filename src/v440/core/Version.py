@@ -58,8 +58,7 @@ class Version(Base):
         self.update(**kwargs)
 
     def __le__(self: Self, other: Any) -> bool:
-        other = type(self)(other)
-        return self._cmpkey() <= other._cmpkey()
+        return self._cmpkey() <= type(self)(other)._cmpkey()
 
     def __setattr__(self: Self, name: str, value: Any) -> None:
         a: dict = dict()
