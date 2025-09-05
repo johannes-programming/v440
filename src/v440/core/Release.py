@@ -96,7 +96,7 @@ class Release(VList):
         self._data.append(v)
 
     @Overloadable
-    def _setitem_range(self: Self, key: range, value: Any) -> Any:
+    def _setitem_range(self: Self, key: range, value: Any) -> bool:
         return key.step == 1
 
     @_setitem_range.overload(False)

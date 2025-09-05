@@ -56,15 +56,16 @@ class Local(VList):
             self._data = list()
 
         def byStr(self: Self, value: str) -> None:
-            if value.startswith("+"):
-                value = value[1:]
-            value = value.replace("_", ".")
-            value = value.replace("-", ".")
-            value = value.split(".")
-            value = list(map(utils.segment, value))
-            if None in value:
+            v:str = value
+            if v.startswith("+"):
+                v = v[1:]
+            v = v.replace("_", ".")
+            v = v.replace("-", ".")
+            l:list = v.split(".")
+            l = list(map(utils.segment, l))
+            if None in l:
                 raise ValueError
-            self._data = value
+            self._data = l
 
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:
