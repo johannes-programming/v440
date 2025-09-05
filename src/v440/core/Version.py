@@ -4,9 +4,7 @@ import dataclasses
 from typing import *
 
 import packaging.version
-from datahold import OkayABC
 from exceptors import Exceptor
-from scaevola import Scaevola
 
 from v440._utils import QualifierParser, utils
 from v440._utils.Base import Base
