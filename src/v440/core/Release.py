@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import functools
 import operator
 import string
 from typing import *
@@ -10,6 +9,8 @@ from overloadable import overloadable
 
 from v440._utils import utils
 from v440._utils.VList import VList
+
+from overloadable import Overloadable
 
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
@@ -128,31 +129,51 @@ class Release(VList):
             data.pop()
         self._data = data
 
+    @Overloadable
     @staticmethod
     def _tolist(value: Any, *, slicing: Any) -> list:
         if value is None:
-            return []
+            return
         if isinstance(value, int):
-            return [utils.numeral(value)]
-        if not isinstance(value, str):
-            if hasattr(value, "__iter__"):
-                return list(map(utils.numeral, value))
-            slicing = "never"
-        value = str(value)
-        if value == "":
+            return int
+        if hasattr(value, "__iter__") and not isinstance(value, str):
+            return list
+        return str
+    
+    @_tolist.overload()
+    def _tolist(value: None, *, slicing: Any) -> list:
+        return list()
+    
+    @_tolist.overload(int)
+    def _tolist(value: int, *, slicing: Any) -> list:
+        return [utils.numeral(value)]
+    
+    @_tolist.overload(list)
+    def _tolist(value: int, *, slicing: Any) -> list:
+        return list(map(utils.numeral, value))
+    
+    @_tolist.overload(str)
+    def _tolist(value: Any, *, slicing: Any) -> list:
+        s:Any
+        if isinstance(value, str):
+            s = slicing
+        else:
+            s = "never"
+        v:str = str(value)
+        if v == "":
             return list()
-        if "" == value.strip(string.digits) and slicing in (len(value), "always"):
-            return list(map(int, value))
-        value = value.lower().strip()
-        value = value.replace("_", ".")
-        value = value.replace("-", ".")
-        if value.startswith("v") or value.startswith("."):
-            value = value[1:]
-        value = value.split(".")
-        if "" in value:
+        if "" == v.strip(string.digits) and s in (len(v), "always"):
+            return list(map(int, v))
+        v = v.lower().strip()
+        v = v.replace("_", ".")
+        v = v.replace("-", ".")
+        if v.startswith("v") or v.startswith("."):
+            v = v[1:]
+        l:list = v.split(".")
+        if "" in l:
             raise ValueError
-        value = list(map(utils.numeral, value))
-        return value
+        l = list(map(utils.numeral, l))
+        return l
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
@@ -176,9 +197,9 @@ class Release(VList):
     def format(self: Self, cutoff: Any = None) -> str:
         s: str = str(cutoff) if cutoff else ""
         i: Optional[int] = int(s) if s else None
-        ans = self[:i]
-        if len(ans) == 0:
-            ans += [0]
-        ans = list(map(str, ans))
-        ans = ".".join(ans)
+        l:list = self[:i]
+        if len(l) == 0:
+            l += [0]
+        l = list(map(str, l))
+        ans:str = ".".join(l)
         return ans
