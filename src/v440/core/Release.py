@@ -5,7 +5,6 @@ import string
 from typing import *
 
 from keyalias import keyalias
-from overloadable import overloadable
 
 from v440._utils import utils
 from v440._utils.VList import VList
@@ -27,7 +26,7 @@ class Release(VList):
         ans._data += opp._data
         return ans
 
-    @overloadable
+    @Overloadable
     def __delitem__(self: Self, key: Any) -> bool:
         return type(key) is slice
 
@@ -45,7 +44,7 @@ class Release(VList):
         for k in l:
             del self._data[k]
 
-    @overloadable
+    @Overloadable
     def __getitem__(self: Self, key: Any) -> bool:
         return type(key) is slice
 
@@ -62,7 +61,7 @@ class Release(VList):
         ans: list = list(m)
         return ans
 
-    @overloadable
+    @Overloadable
     def __setitem__(self: Self, key: Any, value: Any) -> bool:
         return type(key) is slice
 
@@ -96,7 +95,7 @@ class Release(VList):
         self._data.extend([0] * (key - n))
         self._data.append(v)
 
-    @overloadable
+    @Overloadable
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
         return key.step == 1
 
