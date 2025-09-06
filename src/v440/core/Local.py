@@ -48,10 +48,10 @@ class Local(VList):
             self._data = [value]
 
         def byList(self: Self, value: list) -> None:
-            value = list(map(utils.segment, value))
-            if None in value:
+            v:list = list(map(utils.segment, value))
+            if None in v:
                 raise ValueError
-            self._data = value
+            self._data = v
 
         def byNone(self: Self) -> None:
             self._data = list()
