@@ -3,8 +3,6 @@ from __future__ import annotations
 import functools
 from typing import *
 
-from exceptors import Exceptor
-
 from v440._utils import utils
 from v440._utils.VList import VList
 
@@ -17,9 +15,9 @@ class Local(VList):
 
     def __le__(self: Self, other: Iterable) -> bool:
         "This magic method implements self<=other."
-        ans:bool
+        ans: bool
         try:
-            alt:Self = type(self)(other)
+            alt: Self = type(self)(other)
         except ValueError:
             ans = self.data <= other
         else:
@@ -48,7 +46,7 @@ class Local(VList):
             self._data = [value]
 
         def byList(self: Self, value: list) -> None:
-            v:list = list(map(utils.segment, value))
+            v: list = list(map(utils.segment, value))
             if None in v:
                 raise ValueError
             self._data = v
@@ -57,12 +55,12 @@ class Local(VList):
             self._data = list()
 
         def byStr(self: Self, value: str) -> None:
-            v:str = value
+            v: str = value
             if v.startswith("+"):
                 v = v[1:]
             v = v.replace("_", ".")
             v = v.replace("-", ".")
-            l:list = v.split(".")
+            l: list = v.split(".")
             l = list(map(utils.segment, l))
             if None in l:
                 raise ValueError

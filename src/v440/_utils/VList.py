@@ -22,6 +22,6 @@ class VList(Base, OkayList):
 
     def __sorted__(self: Any, /, **kwargs: Any) -> Self:
         "This magic method implements sorted(self, **kwargs)."
-        ans:Any = self.copy()
+        ans: Any = self.copy()
         ans.sort(**kwargs)
         return ans

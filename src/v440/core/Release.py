@@ -5,11 +5,10 @@ import string
 from typing import *
 
 from keyalias import keyalias
+from overloadable import Overloadable
 
 from v440._utils import utils
 from v440._utils.VList import VList
-
-from overloadable import Overloadable
 
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
@@ -38,8 +37,8 @@ class Release(VList):
 
     @__delitem__.overload(True)
     def __delitem__(self: Self, key: Any) -> None:
-        r:range = utils.torange(key, len(self))
-        l:list = [k for k in r if k < len(self)]
+        r: range = utils.torange(key, len(self))
+        l: list = [k for k in r if k < len(self)]
         l.sort(reverse=True)
         for k in l:
             del self._data[k]
@@ -72,7 +71,7 @@ class Release(VList):
 
     @__setitem__.overload(True)
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        k:range = utils.torange(key, len(self))
+        k: range = utils.torange(key, len(self))
         self._setitem_range(k, value)
 
     def __str__(self: Self) -> str:
@@ -85,8 +84,8 @@ class Release(VList):
             return 0
 
     def _setitem_int(self: Self, key: int, value: Any) -> Any:
-        v:int = utils.numeral(value)
-        n:int = len(self)
+        v: int = utils.numeral(value)
+        n: int = len(self)
         if n > key:
             self._data[key] = v
             return
@@ -119,10 +118,10 @@ class Release(VList):
 
     @_setitem_range.overload(True)
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        data:list = self.data
-        ext:int = max(0, key.start - len(data))
+        data: list = self.data
+        ext: int = max(0, key.start - len(data))
         data += ext * [0]
-        l:list = self._tolist(value, slicing="always")
+        l: list = self._tolist(value, slicing="always")
         data = data[: key.start] + l + data[key.stop :]
         while len(data) and not data[-1]:
             data.pop()
@@ -138,27 +137,27 @@ class Release(VList):
         if hasattr(value, "__iter__") and not isinstance(value, str):
             return list
         return str
-    
+
     @_tolist.overload()
     def _tolist(value: None, *, slicing: Any) -> list:
         return list()
-    
+
     @_tolist.overload(int)
     def _tolist(value: int, *, slicing: Any) -> list:
         return [utils.numeral(value)]
-    
+
     @_tolist.overload(list)
     def _tolist(value: int, *, slicing: Any) -> list:
         return list(map(utils.numeral, value))
-    
+
     @_tolist.overload(str)
     def _tolist(value: Any, *, slicing: Any) -> list:
-        s:Any
+        s: Any
         if isinstance(value, str):
             s = slicing
         else:
             s = "never"
-        v:str = str(value)
+        v: str = str(value)
         if v == "":
             return list()
         if "" == v.strip(string.digits) and s in (len(v), "always"):
@@ -168,7 +167,7 @@ class Release(VList):
         v = v.replace("-", ".")
         if v.startswith("v") or v.startswith("."):
             v = v[1:]
-        l:list = v.split(".")
+        l: list = v.split(".")
         if "" in l:
             raise ValueError
         l = list(map(utils.numeral, l))
@@ -188,7 +187,7 @@ class Release(VList):
 
     @data.setter
     def data(self: Self, value: Any) -> None:
-        v:list = self._tolist(value, slicing="always")
+        v: list = self._tolist(value, slicing="always")
         while v and v[-1] == 0:
             v.pop()
         self._data = v
@@ -196,9 +195,9 @@ class Release(VList):
     def format(self: Self, cutoff: Any = None) -> str:
         s: str = str(cutoff) if cutoff else ""
         i: Optional[int] = int(s) if s else None
-        l:list = self[:i]
+        l: list = self[:i]
         if len(l) == 0:
             l += [0]
         l = list(map(str, l))
-        ans:str = ".".join(l)
+        ans: str = ".".join(l)
         return ans

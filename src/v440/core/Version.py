@@ -4,7 +4,7 @@ import dataclasses
 from typing import *
 
 import packaging.version
-from exceptors import Exceptor
+from catchlib import Catcher
 
 from v440._utils import QualifierParser, utils
 from v440._utils.Base import Base
@@ -63,13 +63,13 @@ class Version(Base):
     def __setattr__(self: Self, name: str, value: Any) -> None:
         a: dict = dict()
         b: dict = dict()
-        exceptor: Exceptor = Exceptor()
+        catcher: Catcher = Catcher()
         x: Any
         y: Any
         for x, y in self._data.todict().items():
-            with exceptor.capture(AttributeError):
+            with catcher.catch(AttributeError):
                 a[x] = y.data
-            if exceptor.captured is not None:
+            if catcher.caught is not None:
                 b[x] = y
         try:
             Base.__setattr__(self, name, value)
@@ -254,17 +254,17 @@ class Version(Base):
             self.dev = None
 
         def byStr(self: Self, value: str) -> None:
-            v:str = value
-            match:Any = Pattern.PUBLIC.leftbound.search(v)
+            v: str = value
+            match: Any = Pattern.PUBLIC.leftbound.search(v)
             self.base = v[: match.end()]
             v = v[match.end() :]
             self.pre = None
             self.post = None
             self.dev = None
-            m:Any
-            n:Any
-            x:Any
-            y:Any
+            m: Any
+            n: Any
+            x: Any
+            y: Any
             while v:
                 m = Pattern.QUALIFIERS.leftbound.search(v)
                 v = v[m.end() :]
@@ -294,6 +294,6 @@ class Version(Base):
             if isinstance(a, property):
                 setattr(self, x, y)
                 continue
-            m:str = "%r is not a property"
+            m: str = "%r is not a property"
             m %= x
             raise AttributeError(m)
