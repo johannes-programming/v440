@@ -27,13 +27,14 @@ dependencies = [
     "overloadable>=1.0.5,<2.0",
     "packaging>=23.2",
     "scaevola>=1.0.11,<2.0",
+    "tofunc>=1.0.0,<2",
 ]
 description = "This project provides mutable version objects in accordance with PEP440."
 keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.0.28"
+version = "1.0.29"
 
 [project.license]
 file = "LICENSE.txt"
