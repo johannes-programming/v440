@@ -5,9 +5,9 @@ from typing import *
 
 import packaging.version
 from catchlib import Catcher
+from datahold import OkayABC, OkayList
 
 from v440._utils import QualifierParser, utils
-from v440._utils.Base import Base
 from v440._utils.Pattern import Pattern
 from v440.core.Local import Local
 from v440.core.Pre import Pre
@@ -38,7 +38,8 @@ class _Version:
         return dataclasses.asdict(self)
 
 
-class Version(Base):
+class Version:
+
     base: Self
     data: str
     dev: Optional[int]
@@ -52,6 +53,31 @@ class Version(Base):
     def __bool__(self: Self) -> bool:
         return self._data != _Version()
 
+    def __eq__(self: Self, other: Any) -> bool:
+        "This magic method implements self==other."
+        ans: bool
+        try:
+            alt: Self = type(self)(other)
+        except VersionError:
+            ans = False
+        else:
+            ans = self._data == alt._data
+        return ans
+
+    def __ge__(self: Self, other: Any, /) -> bool:
+        "This magic method implements self>=other."
+        ans: bool
+        try:
+            alt: Self = type(self)(other)
+        except:
+            ans = self.data >= other
+        else:
+            ans = alt <= self
+        return ans
+
+    __gt__ = OkayList.__gt__
+    __hash__ = OkayABC.__hash__
+
     def __init__(self: Self, data: Any = "0", /, **kwargs: Any) -> None:
         object.__setattr__(self, "_data", _Version())
         self.data = data
@@ -59,6 +85,10 @@ class Version(Base):
 
     def __le__(self: Self, other: Any) -> bool:
         return self._cmpkey() <= type(self)(other)._cmpkey()
+
+    __lt__ = OkayList.__lt__
+    __ne__ = OkayABC.__ne__
+    __repr__ = OkayABC.__repr__
 
     def __setattr__(self: Self, name: str, value: Any) -> None:
         a: dict = dict()
@@ -72,13 +102,33 @@ class Version(Base):
             if catcher.caught is not None:
                 b[x] = y
         try:
-            Base.__setattr__(self, name, value)
+            self.__setattr(name, value)
         except VersionError:
             for x, y in a.items():
                 getattr(self._data, x).data = y
             for x, y in b.items():
                 setattr(self._data, x, y)
             raise
+
+    def __setattr(self: Self, name: str, value: Any) -> None:
+        "This magic method implements setattr(self, name, value)."
+        if name.startswith("_"):
+            object.__setattr__(self, name, value)
+            return
+        cls: type = type(self)
+        attr: Any = getattr(cls, name)
+        if type(attr) is not property:
+            msg: str = "%r is not a property"
+            msg %= name
+            raise AttributeError(msg)
+        try:
+            object.__setattr__(self, name, value)
+        except VersionError:
+            raise
+        except:
+            msg: str = "%r is an invalid value for %r"
+            msg %= (value, cls.__name__ + "." + name)
+            raise VersionError(msg)
 
     def __str__(self: Self) -> str:
         return self.data
