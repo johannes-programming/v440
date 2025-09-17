@@ -83,24 +83,22 @@ class Version(Base):
     def __str__(self: Self) -> str:
         return self.data
 
-    _base_fset: utils.Digest = utils.Digest("base")
+    _base_calc: utils.Digest = utils.Digest("base")
 
-    @_base_fset.overload()
-    def _base_fset(self: Self) -> None:
-        self.epoch = None
-        self.release = None
+    @_base_calc.overload()
+    def _base_calc(self: Self) -> None:
+        return None, None
 
-    @_base_fset.overload(int)
-    def _base_fset(self: Self, value: int) -> None:
-        self.epoch = None
-        self.release = value
+    @_base_calc.overload(int)
+    def _base_calc(self: Self, value: int) -> None:
+        return None, value
 
-    @_base_fset.overload(str)
-    def _base_fset(self: Self, value: str) -> None:
+    @_base_calc.overload(str)
+    def _base_calc(self: Self, value: str) -> None:
         if "!" in value:
-            self.epoch, self.release = value.split("!", 1)
+            return value.split("!", 1)
         else:
-            self.epoch, self.release = 0, value
+            return 0, value
 
     def _cmpkey(self: Self) -> tuple:
         ans = self._data.copy()
@@ -166,7 +164,9 @@ class Version(Base):
         ans.post = None
         return ans
 
-    base = base.setter(_base_fset)
+    @base.setter
+    def base(self: Self, value: Any) -> None:
+        self.epoch, self.release = self._base_calc(value)
 
     def clear(self: Self) -> None:
         self.data = None
