@@ -175,24 +175,24 @@ class TestSlicing(unittest.TestCase):
         self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
 
 
-class TestDataProperty(unittest.TestCase):
-    def test_data(self: Self) -> None:
+class TestStringProperty(unittest.TestCase):
+    def test_string(self: Self) -> None:
         self.v = Version()
-        for k, v in Util.util.data["data_property"].items():
-            self.data(**v, key=k)
-        self.data(query=None, solution="0")
+        for k, v in Util.util.data["string-property"].items():
+            self.go(**v, key=k)
+        self.go(query=None, solution="0")
 
-    def data(
+    def go(
         self: Self,
         query: Any,
         solution: str,
         key: str = "",
     ) -> None:
-        msg: str = "data_property %r" % key
-        self.v.data = query
+        msg: str = "string-property %r" % key
+        self.v.string = query
         self.assertEqual(solution, str(self.v), msg=msg)
-        self.assertEqual(self.v.data, str(self.v), msg=msg)
-        self.assertEqual(type(self.v.data), str, msg=msg)
+        self.assertEqual(self.v.string, str(self.v), msg=msg)
+        self.assertEqual(type(self.v.string), str, msg=msg)
 
 
 class TestVersionRelease(unittest.TestCase):
