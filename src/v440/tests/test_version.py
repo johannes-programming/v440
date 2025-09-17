@@ -177,7 +177,7 @@ class TestExample(unittest.TestCase):
     def test_example_7(self: Self) -> None:
         v = Version("5.0.0")
         self.assertEqual(str(v), "5")  # Original version
-        v.data = None
+        v.string = None
         self.assertEqual(str(v), "0")  # After reset
         v.base = "4!5.0.1"
         self.assertEqual(str(v), "4!5.0.1")  # Before error
