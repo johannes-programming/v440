@@ -1,6 +1,7 @@
 import unittest
 from typing import *
 
+from v440.core.Pre import Pre
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
@@ -186,6 +187,14 @@ class TestExample(unittest.TestCase):
             "not a valid numeral segment" in str(context.exception)
         )  # Error
         self.assertEqual(str(v), "4!5.0.1")  # After error
+
+
+class TestPatch(unittest.TestCase):
+    def test_example_0(self: Self) -> None:
+        x: Pre = Pre("a1")
+        y: Pre = Pre("b2")
+        with self.assertRaises(VersionError):
+            x += y
 
 
 class TestVersionRelease(unittest.TestCase):
