@@ -40,7 +40,7 @@ class _Version:
 
 class Version(Base):
     base: Self
-    data: str
+    string: str
     dev: Optional[int]
     epoch: int
     local: Local
@@ -52,9 +52,9 @@ class Version(Base):
     def __bool__(self: Self) -> bool:
         return self._data != _Version()
 
-    def __init__(self: Self, data: Any = "0", /, **kwargs: Any) -> None:
+    def __init__(self: Self, string: Any = "0", /, **kwargs: Any) -> None:
         object.__setattr__(self, "_data", _Version())
-        self.data = data
+        self.string = string
         self.update(**kwargs)
 
     def __le__(self: Self, other: Any) -> bool:
@@ -68,7 +68,7 @@ class Version(Base):
         y: Any
         for x, y in self._data.todict().items():
             with catcher.catch(AttributeError):
-                a[x] = y.data
+                a[x] = y.string
             if catcher.caught is not None:
                 b[x] = y
         try:
@@ -81,7 +81,7 @@ class Version(Base):
             raise
 
     def __str__(self: Self) -> str:
-        return self.data
+        return self.string
 
     _base_calc: utils.Digest = utils.Digest("base")
 
@@ -116,20 +116,20 @@ class Version(Base):
             ans.dev = float("inf")
         return ans
 
-    _data_fset: utils.Digest = utils.Digest("_data_fset")
+    _string_fset: utils.Digest = utils.Digest("_string_fset")
 
-    @_data_fset.overload()
-    def _data_fset(self: Self) -> None:
+    @_string_fset.overload()
+    def _string_fset(self: Self) -> None:
         self.public = None
         self.local = None
 
-    @_data_fset.overload(int)
-    def _data_fset(self: Self, value: int) -> None:
+    @_string_fset.overload(int)
+    def _string_fset(self: Self, value: int) -> None:
         self.public = value
         self.local = None
 
-    @_data_fset.overload(str)
-    def _data_fset(self: Self, value: str) -> None:
+    @_string_fset.overload(str)
+    def _string_fset(self: Self, value: str) -> None:
         if "+" in value:
             self.public, self.local = value.split("+", 1)
         else:
@@ -169,16 +169,16 @@ class Version(Base):
         self.epoch, self.release = self._base_calc(value)
 
     def clear(self: Self) -> None:
-        self.data = None
+        self.string = None
 
     def copy(self: Self) -> Self:
         return type(self)(self)
 
     @property
-    def data(self: Self) -> str:
+    def string(self: Self) -> str:
         return self.format()
 
-    data = data.setter(_data_fset)
+    string = string.setter(_string_fset)
 
     @property
     def dev(self: Self) -> Optional[int]:
