@@ -31,6 +31,36 @@ class Local(VList):
     def _cmpkey(self: Self) -> list:
         return list(map(self._sortkey, self))
 
+    _data_calc: utils.Digest = utils.Digest("_data_calc")
+
+    @_data_calc.overload()
+    def _data_calc(self: Self) -> None:
+        return list()
+
+    @_data_calc.overload(int)
+    def _data_calc(self: Self, value: int) -> list:
+        return [value]
+
+    @_data_calc.overload(list)
+    def _data_calc(self: Self, value: list) -> list:
+        ans: list = list(map(utils.segment, value))
+        if None in ans:
+            raise ValueError
+        return ans
+
+    @_data_calc.overload(str)
+    def _data_calc(self: Self, value: str) -> None:
+        v: str = value
+        if v.startswith("+"):
+            v = v[1:]
+        v = v.replace("_", ".")
+        v = v.replace("-", ".")
+        ans: list = v.split(".")
+        ans = list(map(utils.segment, ans))
+        if None in ans:
+            raise ValueError
+        return ans
+
     @staticmethod
     def _sortkey(value: Any) -> Tuple[bool, Any]:
         return type(value) is int, value
@@ -40,31 +70,8 @@ class Local(VList):
         return list(self._data)
 
     @data.setter
-    @utils.digest
-    class data:
-        def byInt(self: Self, value: int) -> None:
-            self._data = [value]
-
-        def byList(self: Self, value: list) -> None:
-            v: list = list(map(utils.segment, value))
-            if None in v:
-                raise ValueError
-            self._data = v
-
-        def byNone(self: Self) -> None:
-            self._data = list()
-
-        def byStr(self: Self, value: str) -> None:
-            v: str = value
-            if v.startswith("+"):
-                v = v[1:]
-            v = v.replace("_", ".")
-            v = v.replace("-", ".")
-            l: list = v.split(".")
-            l = list(map(utils.segment, l))
-            if None in l:
-                raise ValueError
-            self._data = l
+    def data(self: Self, value: Any) -> None:
+        self._data = self._data_calc(value)
 
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:

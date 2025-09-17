@@ -14,54 +14,57 @@ class QualifierParser:
     phasedict: dict = dataclasses.field(default_factory=dict)
     allow_len_1: bool = False
 
-    @utils.digest
-    class __call__:
-        def byInt(self: Self, value: int) -> Any:
-            if self.phasedict:
+    __call__ = utils.Digest("__call__")
+
+    @__call__.overload(int)
+    def __call__(self: Self, value: int) -> Any:
+        if self.phasedict:
+            raise TypeError
+        if value < 0:
+            raise ValueError
+        return value
+
+    @__call__.overload(list)
+    def __call__(self: Self, value: list) -> Any:
+        v: list = list(map(utils.segment, value))
+        if self.phasedict:
+            l, n = v
+            if [l, n] == [None, None]:
+                return [None, None]
+            l = self.phasedict[l]
+            if not isinstance(n, int):
                 raise TypeError
-            value = int(value)
-            if value < 0:
-                raise ValueError
-            return value
+            return [l, n]
+        else:
+            n = self.nbylist(v)
+            if isinstance(n, str):
+                raise TypeError
+            return n
 
-        def byList(self: Self, value: list) -> Any:
-            value = list(map(utils.segment, value))
-            if self.phasedict:
-                l, n = value
-                if [l, n] == [None, None]:
-                    return [None, None]
-                l = self.phasedict[l]
-                if not isinstance(n, int):
-                    raise TypeError
-                return [l, n]
-            else:
-                n = self.nbylist(value)
-                if isinstance(n, str):
-                    raise TypeError
-                return n
+    @__call__.overload()
+    def __call__(self: Self) -> Optional[list]:
+        if self.phasedict:
+            return [None, None]
 
-        def byNone(self: Self) -> Optional[list]:
-            if self.phasedict:
-                return [None, None]
-
-        def byStr(self: Self, value: str) -> Optional[int | list]:
-            v: str = value
-            v = v.replace("_", ".")
-            v = v.replace("-", ".")
-            if self.phasedict and v == "":
-                return [None, None]
-            m: Any = Pattern.PARSER.bound.search(v)
-            l, n = m.groups()
-            if self.phasedict:
-                l = self.phasedict[l]
-                n = 0 if (n is None) else int(n)
-                return [l, n]
-            if l not in self.keysforstr:
-                raise ValueError
-            if n is None:
-                return None
-            else:
-                return int(n)
+    @__call__.overload(str)
+    def __call__(self: Self, value: str) -> Optional[int | list]:
+        v: str = value
+        v = v.replace("_", ".")
+        v = v.replace("-", ".")
+        if self.phasedict and v == "":
+            return [None, None]
+        m: Any = Pattern.PARSER.bound.search(v)
+        l, n = m.groups()
+        if self.phasedict:
+            l = self.phasedict[l]
+            n = 0 if (n is None) else int(n)
+            return [l, n]
+        if l not in self.keysforstr:
+            raise ValueError
+        if n is None:
+            return None
+        else:
+            return int(n)
 
     def __post_init__(self: Self) -> None:
         if type(self.phasedict) is not dict:
