@@ -83,6 +83,25 @@ class Version(Base):
     def __str__(self: Self) -> str:
         return self.data
 
+    _base_fset: utils.Digest = utils.Digest("base")
+
+    @_base_fset.overload()
+    def _base_fset(self: Self) -> None:
+        self.epoch = None
+        self.release = None
+
+    @_base_fset.overload(int)
+    def _base_fset(self: Self, value: int) -> None:
+        self.epoch = None
+        self.release = value
+
+    @_base_fset.overload(str)
+    def _base_fset(self: Self, value: str) -> None:
+        if "!" in value:
+            self.epoch, self.release = value.split("!", 1)
+        else:
+            self.epoch, self.release = 0, value
+
     def _cmpkey(self: Self) -> tuple:
         ans = self._data.copy()
         if not ans.pre.isempty():
@@ -99,6 +118,46 @@ class Version(Base):
             ans.dev = float("inf")
         return ans
 
+    _data_fset: utils.Digest = utils.Digest("_data_fset")
+
+    @_data_fset.overload()
+    def _data_fset(self: Self) -> None:
+        self.public = None
+        self.local = None
+
+    @_data_fset.overload(int)
+    def _data_fset(self: Self, value: int) -> None:
+        self.public = value
+        self.local = None
+
+    @_data_fset.overload(str)
+    def _data_fset(self: Self, value: str) -> None:
+        if "+" in value:
+            self.public, self.local = value.split("+", 1)
+        else:
+            self.public, self.local = value, None
+
+    _epoch_calc: utils.Digest = utils.Digest("_epoch_calc")
+
+    @_epoch_calc.overload()
+    def _epoch_calc(self: Self) -> None:
+        return 0
+
+    @_epoch_calc.overload(int)
+    def _epoch_calc(self: Self, value: int) -> None:
+        if value < 0:
+            raise ValueError
+        return value
+
+    @_epoch_calc.overload(str)
+    def _epoch_calc(self: Self, value: str) -> None:
+        v: Any = Pattern.EPOCH.bound.search(value)
+        v = v.group("n")
+        if v is None:
+            return 0
+        else:
+            return int(v)
+
     @property
     def base(self: Self) -> Self:
         ans: Self = self.public
@@ -107,22 +166,7 @@ class Version(Base):
         ans.post = None
         return ans
 
-    @base.setter
-    @utils.digest
-    class base:
-        def byInt(self: Self, value: int) -> None:
-            self.epoch = None
-            self.release = value
-
-        def byNone(self: Self) -> None:
-            self.epoch = None
-            self.release = None
-
-        def byStr(self: Self, value: str) -> None:
-            if "!" in value:
-                self.epoch, self.release = value.split("!", 1)
-            else:
-                self.epoch, self.release = 0, value
+    base = base.setter(_base_fset)
 
     def clear(self: Self) -> None:
         self.data = None
@@ -134,22 +178,7 @@ class Version(Base):
     def data(self: Self) -> str:
         return self.format()
 
-    @data.setter
-    @utils.digest
-    class data:
-        def byInt(self: Self, value: int) -> None:
-            self.public = value
-            self.local = None
-
-        def byNone(self: Self) -> None:
-            self.public = None
-            self.local = None
-
-        def byStr(self: Self, value: str) -> None:
-            if "+" in value:
-                self.public, self.local = value.split("+", 1)
-            else:
-                self.public, self.local = value, None
+    data = data.setter(_data_fset)
 
     @property
     def dev(self: Self) -> Optional[int]:
@@ -164,23 +193,8 @@ class Version(Base):
         return self._data.epoch
 
     @epoch.setter
-    @utils.digest
-    class epoch:
-        def byInt(self: Self, value: int) -> None:
-            if value < 0:
-                raise ValueError
-            self._data.epoch = value
-
-        def byNone(self: Self) -> None:
-            self._data.epoch = 0
-
-        def byStr(self: Self, value: str) -> None:
-            value = Pattern.EPOCH.bound.search(value)
-            value = value.group("n")
-            if value is None:
-                self._data.epoch = 0
-            else:
-                self._data.epoch = int(value)
+    def epoch(self: Self, value: Any) -> None:
+        self._data.epoch = self._epoch_calc(value)
 
     def format(self: Self, cutoff: Any = None) -> str:
         ans: str = ""
@@ -232,49 +246,53 @@ class Version(Base):
     def pre(self: Self, value: Any) -> None:
         self._data.pre.data = value
 
+    _public_fset: utils.Digest = utils.Digest("_public_fset")
+
+    @_public_fset.overload()
+    def _public_fset(self: Self) -> None:
+        self.base = None
+        self.pre = None
+        self.post = None
+        self.dev = None
+
+    @_public_fset.overload(int)
+    def _public_fset(self: Self, value: int) -> None:
+        self.base = value
+        self.pre = None
+        self.post = None
+        self.dev = None
+
+    @_public_fset.overload(str)
+    def _public_fset(self: Self, value: str) -> None:
+        v: str = value
+        match: Any = Pattern.PUBLIC.leftbound.search(v)
+        self.base = v[: match.end()]
+        v = v[match.end() :]
+        self.pre = None
+        self.post = None
+        self.dev = None
+        m: Any
+        n: Any
+        x: Any
+        y: Any
+        while v:
+            m = Pattern.QUALIFIERS.leftbound.search(v)
+            v = v[m.end() :]
+            if m.group("N"):
+                self.post = m.group("N")
+            else:
+                x = m.group("l")
+                y = m.group("n")
+                n = QUALIFIERDICT.get(x, "pre")
+                setattr(self, n, (x, y))
+
     @property
     def public(self: Self) -> Self:
         ans: Self = self.copy()
         ans.local = None
         return ans
 
-    @public.setter
-    @utils.digest
-    class public:
-        def byInt(self: Self, value: int) -> None:
-            self.base = value
-            self.pre = None
-            self.post = None
-            self.dev = None
-
-        def byNone(self: Self) -> None:
-            self.base = None
-            self.pre = None
-            self.post = None
-            self.dev = None
-
-        def byStr(self: Self, value: str) -> None:
-            v: str = value
-            match: Any = Pattern.PUBLIC.leftbound.search(v)
-            self.base = v[: match.end()]
-            v = v[match.end() :]
-            self.pre = None
-            self.post = None
-            self.dev = None
-            m: Any
-            n: Any
-            x: Any
-            y: Any
-            while v:
-                m = Pattern.QUALIFIERS.leftbound.search(v)
-                v = v[m.end() :]
-                if m.group("N"):
-                    self.post = m.group("N")
-                else:
-                    x = m.group("l")
-                    y = m.group("n")
-                    n = QUALIFIERDICT.get(x, "pre")
-                    setattr(self, n, (x, y))
+    public = public.setter(_public_fset)
 
     @property
     def release(self: Self) -> Release:
