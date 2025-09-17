@@ -8,7 +8,7 @@ from v440._utils.Base import Base
 class VList(Base, OkayList):
     def __iadd__(self: Self, other: Any, /) -> Self:
         "This magic method implements self+=other."
-        self._data += type(self)(other)._data
+        self.data += type(self)(other).data
         return self
 
     def __imul__(self: Self, other: Any, /) -> Self:
