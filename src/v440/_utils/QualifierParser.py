@@ -7,19 +7,23 @@ from v440._utils import utils
 from v440._utils.Pattern import Pattern
 
 
+class QualifierParser: ...
+
+
 @dataclasses.dataclass(frozen=True)
-class QualifierParser:
+class SimpleQualifierParser(QualifierParser):
     keysforlist: tuple = ()
     keysforstr: tuple = ()
-    phasedict: dict = dataclasses.field(default_factory=dict)
     allow_len_1: bool = False
 
     __call__ = utils.Digest("__call__")
 
+    @__call__.overload()
+    def __call__(self: Self) -> Optional[list]:
+        pass
+
     @__call__.overload(int)
     def __call__(self: Self, value: int) -> Any:
-        if self.phasedict:
-            raise TypeError
         if value < 0:
             raise ValueError
         return value
@@ -27,38 +31,18 @@ class QualifierParser:
     @__call__.overload(list)
     def __call__(self: Self, value: list) -> Any:
         v: list = list(map(utils.segment, value))
-        if self.phasedict:
-            l, n = v
-            if [l, n] == [None, None]:
-                return [None, None]
-            l = self.phasedict[l]
-            if not isinstance(n, int):
-                raise TypeError
-            return [l, n]
-        else:
-            n = self.nbylist(v)
-            if isinstance(n, str):
-                raise TypeError
-            return n
-
-    @__call__.overload()
-    def __call__(self: Self) -> Optional[list]:
-        if self.phasedict:
-            return [None, None]
+        n = self.nbylist(v)
+        if isinstance(n, str):
+            raise TypeError
+        return n
 
     @__call__.overload(str)
     def __call__(self: Self, value: str) -> Optional[int | list]:
         v: str = value
         v = v.replace("_", ".")
         v = v.replace("-", ".")
-        if self.phasedict and v == "":
-            return [None, None]
         m: Any = Pattern.PARSER.bound.search(v)
         l, n = m.groups()
-        if self.phasedict:
-            l = self.phasedict[l]
-            n = 0 if (n is None) else int(n)
-            return [l, n]
         if l not in self.keysforstr:
             raise ValueError
         if n is None:
@@ -67,13 +51,6 @@ class QualifierParser:
             return int(n)
 
     def __post_init__(self: Self) -> None:
-        if type(self.phasedict) is not dict:
-            raise TypeError
-        pd = self.phasedict
-        pd = list(pd.keys()) + list(pd.values())
-        pd = set(map(type, pd))
-        if not (pd <= {str}):
-            raise TypeError
         if type(self.allow_len_1) is not bool:
             raise TypeError
         if type(self.keysforlist) is not tuple:
@@ -102,24 +79,75 @@ class QualifierParser:
         raise ValueError
 
 
-POST = QualifierParser(
+class PhasedQualifierParser(QualifierParser):
+    __slots__ = ("_phasedict",)
+
+    phasedict: dict
+
+    __call__ = utils.Digest("__call__")
+
+    @__call__.overload()
+    def __call__(self: Self) -> list:
+        return [None, None]
+
+    @__call__.overload(list)
+    def __call__(self: Self, value: list) -> Any:
+        l: Any
+        n: Any
+        l, n = list(map(utils.segment, value))
+        if [l, n] == [None, None]:
+            return [None, None]
+        l = self.phasedict[l]
+        if not isinstance(n, int):
+            raise TypeError
+        return [l, n]
+
+    @__call__.overload(str)
+    def __call__(self: Self, value: str) -> list:
+        if value == "":
+            return [None, None]
+        v: str = value
+        v = v.replace("_", ".")
+        v = v.replace("-", ".")
+        m: Any = Pattern.PARSER.bound.search(v)
+        l: Any
+        n: Any
+        l, n = m.groups()
+        l = self.phasedict[l]
+        n = 0 if (n is None) else int(n)
+        return [l, n]
+
+    def __init__(self: Self, **kwargs: Any) -> None:
+        self._phasedict = dict()
+        x: Any
+        y: Any
+        for x, y in kwargs.items():
+            self._phasedict[str(x)] = str(y)
+
+    def nbylist(self: Self, value: Any, /) -> Any:
+        raise ValueError
+
+    @property
+    def phasedict(self: Self) -> dict:
+        return dict(self._phasedict)
+
+
+POST = SimpleQualifierParser(
     keysforlist=("post", "rev", "r", ""),
     keysforstr=(None, "post", "rev", "r"),
     allow_len_1=True,
 )
-DEV = QualifierParser(
+DEV = SimpleQualifierParser(
     keysforlist=("dev",),
     keysforstr=(None, "dev"),
 )
-PRE = QualifierParser(
-    phasedict=dict(
-        alpha="a",
-        a="a",
-        beta="b",
-        b="b",
-        preview="rc",
-        pre="rc",
-        c="rc",
-        rc="rc",
-    ),
+PRE = PhasedQualifierParser(
+    alpha="a",
+    a="a",
+    beta="b",
+    b="b",
+    preview="rc",
+    pre="rc",
+    c="rc",
+    rc="rc",
 )
