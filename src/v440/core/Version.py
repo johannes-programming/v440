@@ -8,6 +8,7 @@ from catchlib import Catcher
 
 from v440._utils import QualifierParser, utils
 from v440._utils.Base import Base
+from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 from v440.core.Local import Local
 from v440.core.Pre import Pre
@@ -83,7 +84,7 @@ class Version(Base):
     def __str__(self: Self) -> str:
         return self.data
 
-    _base_calc: utils.Digest = utils.Digest("base")
+    _base_calc: Digest = Digest("base")
 
     @_base_calc.overload()
     def _base_calc(self: Self) -> None:
@@ -116,7 +117,7 @@ class Version(Base):
             ans.dev = float("inf")
         return ans
 
-    _data_fset: utils.Digest = utils.Digest("_data_fset")
+    _data_fset: Digest = Digest("_data_fset")
 
     @_data_fset.overload()
     def _data_fset(self: Self) -> None:
@@ -135,7 +136,7 @@ class Version(Base):
         else:
             self.public, self.local = value, None
 
-    _epoch_calc: utils.Digest = utils.Digest("_epoch_calc")
+    _epoch_calc: Digest = Digest("_epoch_calc")
 
     @_epoch_calc.overload()
     def _epoch_calc(self: Self) -> None:
@@ -246,7 +247,7 @@ class Version(Base):
     def pre(self: Self, value: Any) -> None:
         self._data.pre.data = value
 
-    _public_fset: utils.Digest = utils.Digest("_public_fset")
+    _public_fset: Digest = Digest("_public_fset")
 
     @_public_fset.overload()
     def _public_fset(self: Self) -> None:
