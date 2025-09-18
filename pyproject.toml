@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-    "setuptools>=61.0",
+    "setuptools>=64.0",
 ]
 
 [project]
@@ -20,21 +20,22 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "catchlib>=1.0,<2.0",
-    "datahold>=1.1.8,<2.0",
+    "datahold>=2.0,<3",
+    "datarepr>=1.1,<2",
+    "iterflat>=0.1.3,<2",
     "iterprod>=1.0,<2.0",
     "keyalias>=1.0.3,<2.0",
-    "overloadable>=1.0.5,<2.0",
-    "packaging>=23.2",
-    "scaevola>=1.0.11,<2.0",
-    "tofunc>=1.0.0,<2",
+    "packaging>=25.0,<26",
+    "setdoc>=1.2.6,<2",
+    "setsig>=1.0,<2",
+    "unhash>=1.0.1,<2",
 ]
 description = "This project provides mutable version objects in accordance with PEP440."
 keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.1.0.dev5"
+version = "2.0.0.dev200"
 
 [project.license]
 file = "LICENSE.txt"
