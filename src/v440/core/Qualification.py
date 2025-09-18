@@ -5,7 +5,7 @@ from typing import *
 from v440._utils import SimpleQualifierParser
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
-from v440._utils.VList import VList
+from v440._utils.WList import WList
 from v440.core.Pre import Pre
 
 __all__ = ["Qualification"]
@@ -56,7 +56,7 @@ def parse_data(value: str) -> list:
     return [pre, post, dev]
 
 
-class Qualification(VList):
+class Qualification(WList):
 
     __slots__ = ("_pre", "_post", "_dev")
 
@@ -141,3 +141,5 @@ class Qualification(VList):
     @pre.setter
     def pre(self: Self, value: Any) -> None:
         self._pre.data = value
+
+    _data = data
