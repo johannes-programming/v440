@@ -12,6 +12,7 @@ from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 from v440.core.Local import Local
 from v440.core.Pre import Pre
+from v440.core.Qualification import Qualification
 from v440.core.Release import Release
 from v440.core.VersionError import VersionError
 
@@ -27,9 +28,7 @@ QUALIFIERDICT = dict(
 class _Version:
     epoch: int = 0
     release: Release = dataclasses.field(default_factory=Release)
-    pre: Pre = dataclasses.field(default_factory=Pre)
-    post: Optional[int] = None
-    dev: Optional[int] = None
+    qualification: Qualification = dataclasses.field(default_factory=Qualification)
     local: Local = dataclasses.field(default_factory=Local)
 
     def copy(self: Self) -> Self:
@@ -48,6 +47,7 @@ class Version(Base):
     post: Optional[int]
     pre: Pre
     public: Self
+    qualification: Qualification
     release: Release
 
     def __bool__(self: Self) -> bool:
@@ -59,7 +59,7 @@ class Version(Base):
         self.update(**kwargs)
 
     def __le__(self: Self, other: Any) -> bool:
-        return self._cmpkey() <= type(self)(other)._cmpkey()
+        return self._data <= type(self)(other)._data
 
     def __setattr__(self: Self, name: str, value: Any) -> None:
         a: dict = dict()
@@ -100,22 +100,6 @@ class Version(Base):
             return value.split("!", 1)
         else:
             return 0, value
-
-    def _cmpkey(self: Self) -> tuple:
-        ans = self._data.copy()
-        if not ans.pre.isempty():
-            ans.pre = tuple(ans.pre)
-        elif ans.post is not None:
-            ans.pre = "z", float("inf")
-        elif ans.dev is None:
-            ans.pre = "z", float("inf")
-        else:
-            ans.pre = "", -1
-        if ans.post is None:
-            ans.post = -1
-        if ans.dev is None:
-            ans.dev = float("inf")
-        return ans
 
     _data_fset: Digest = Digest("_data_fset")
 
@@ -183,11 +167,11 @@ class Version(Base):
 
     @property
     def dev(self: Self) -> Optional[int]:
-        return self._data.dev
+        return self.qualification.dev
 
     @dev.setter
     def dev(self: Self, value: Any) -> None:
-        self._data.dev = SimpleQualifierParser.DEV(value)
+        self.qualification.dev = value
 
     @property
     def epoch(self: Self) -> int:
@@ -212,13 +196,13 @@ class Version(Base):
         return ans
 
     def isdevrelease(self: Self) -> bool:
-        return self.dev is not None
+        return self.qualification.isdevrelease()
 
     def isprerelease(self: Self) -> bool:
-        return self.isdevrelease() or not self.pre.isempty()
+        return self.qualification.isprerelease()
 
     def ispostrelease(self: Self) -> bool:
-        return self.post is not None
+        return self.qualification.ispostrelease()
 
     @property
     def local(self: Self) -> Local:
@@ -233,19 +217,19 @@ class Version(Base):
 
     @property
     def post(self: Self) -> Optional[int]:
-        return self._data.post
+        return self.qualification.post
 
     @post.setter
     def post(self: Self, value: Any) -> None:
-        self._data.post = SimpleQualifierParser.POST(value)
+        self.qualification.post = value
 
     @property
     def pre(self: Self) -> Pre:
-        return self._data.pre
+        return self.qualification.pre
 
     @pre.setter
     def pre(self: Self, value: Any) -> None:
-        self._data.pre.data = value
+        self.qualification.pre = value
 
     _public_fset: Digest = Digest("_public_fset")
 
@@ -265,27 +249,9 @@ class Version(Base):
 
     @_public_fset.overload(str)
     def _public_fset(self: Self, value: str) -> None:
-        v: str = value
-        match: Any = Pattern.PUBLIC.leftbound.search(v)
-        self.base = v[: match.end()]
-        v = v[match.end() :]
-        self.pre = None
-        self.post = None
-        self.dev = None
-        m: Any
-        n: Any
-        x: Any
-        y: Any
-        while v:
-            m = Pattern.QUALIFIERS.leftbound.search(v)
-            v = v[m.end() :]
-            if m.group("N"):
-                self.post = m.group("N")
-            else:
-                x = m.group("l")
-                y = m.group("n")
-                n = QUALIFIERDICT.get(x, "pre")
-                setattr(self, n, (x, y))
+        match: Any = Pattern.PUBLIC.leftbound.search(value)
+        self.base = value[: match.end()]
+        self.qualification = value[match.end() :]
 
     @property
     def public(self: Self) -> Self:
@@ -294,6 +260,14 @@ class Version(Base):
         return ans
 
     public = public.setter(_public_fset)
+
+    @property
+    def qualification(self: Self) -> Qualification:
+        return self._data.qualification
+
+    @qualification.setter
+    def qualification(self: Self, value: Any) -> None:
+        self._data.qualification.data = value
 
     @property
     def release(self: Self) -> Release:
