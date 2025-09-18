@@ -8,7 +8,7 @@ from catchlib import Catcher
 
 from v440._utils.Digest import Digest
 from v440._utils.WList import WList
-from v440.core.Base_ import Base_
+from v440.core.Base import Base_
 from v440.core.Local import Local
 from v440.core.Pre import Pre
 from v440.core.Public_ import Public_

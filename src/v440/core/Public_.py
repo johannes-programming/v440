@@ -5,7 +5,7 @@ from typing import *
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 from v440._utils.WList import WList
-from v440.core.Base_ import Base_
+from v440.core.Base import Base_
 from v440.core.Qualification import Qualification
 
 __all__ = ["Public_"]
