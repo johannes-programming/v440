@@ -8,7 +8,7 @@ from v440._utils.WList import WList
 from v440.core.Base import Base
 from v440.core.Qualification import Qualification
 
-__all__ = ["Public_"]
+__all__ = ["Public"]
 
 
 parse_data: Digest = Digest("parse_data")
@@ -35,7 +35,7 @@ def parse_data(value: str) -> list:
     return value[: match.end()], value[match.end() :]
 
 
-class Public_(WList):
+class Public(WList):
 
     __slots__ = ("_base", "_qualification")
 

@@ -11,7 +11,7 @@ from v440._utils.WList import WList
 from v440.core.Base import Base
 from v440.core.Local import Local
 from v440.core.Pre import Pre
-from v440.core.Public_ import Public_
+from v440.core.Public import Public
 from v440.core.Qualification import Qualification
 from v440.core.Release import Release
 from v440.core.VersionError import VersionError
@@ -43,7 +43,7 @@ def parse_data(value: str) -> list:
 
 
 class Version(WList):
-    __slots__ = ("_public_", "_local")
+    __slots__ = ("_public", "_local")
     base: Base
     data: list
     dev: Optional[int]
@@ -51,12 +51,12 @@ class Version(WList):
     local: Local
     post: Optional[int]
     pre: Pre
-    public_: Public_
+    public: Public
     qualification: Qualification
     release: Release
 
     def __init__(self: Self, data: Any = "0", /, **kwargs: Any) -> None:
-        self._public_ = Public_()
+        self._public = Public()
         self._local = Local()
         self.data = data
         self.update(**kwargs)
@@ -66,7 +66,7 @@ class Version(WList):
 
     @property
     def base(self: Self) -> Base:
-        return self.public_.base
+        return self.public.base
 
     @base.setter
     def base(self: Self, value: Any) -> None:
@@ -74,11 +74,11 @@ class Version(WList):
 
     @property
     def data(self: Self) -> str:
-        return [self.public_, self.local]
+        return [self.public, self.local]
 
     @data.setter
     def data(self: Self, value: Any) -> None:
-        self.public_, self.local = parse_data(value)
+        self.public, self.local = parse_data(value)
 
     @property
     def dev(self: Self) -> Optional[int]:
@@ -97,7 +97,7 @@ class Version(WList):
         self.base.epoch = value
 
     def format(self: Self, cutoff: Any = None) -> str:
-        ans: str = self.public_.format(cutoff)
+        ans: str = self.public.format(cutoff)
         if self.local:
             ans += "+%s" % self.local
         return ans
@@ -139,16 +139,16 @@ class Version(WList):
         self.qualification.pre = value
 
     @property
-    def public_(self: Self) -> Self:
-        return self._public_
+    def public(self: Self) -> Self:
+        return self._public
 
-    @public_.setter
-    def public_(self: Self, value: Any) -> None:
-        self.public_.data = value
+    @public.setter
+    def public(self: Self, value: Any) -> None:
+        self.public.data = value
 
     @property
     def qualification(self: Self) -> Qualification:
-        return self.public_.qualification
+        return self.public.qualification
 
     @qualification.setter
     def qualification(self: Self, value: Any) -> None:

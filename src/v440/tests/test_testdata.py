@@ -355,7 +355,7 @@ class TestPackaging(unittest.TestCase):
             self.assertEqual(v.isprerelease(), v.packaging().is_prerelease)
             self.assertEqual(v.ispostrelease(), v.packaging().is_postrelease)
             self.assertEqual(str(v.base), v.packaging().base_version)
-            self.assertEqual(str(v.public_), v.packaging().public)
+            self.assertEqual(str(v.public), v.packaging().public)
             version_obj.local = v.packaging().local
             self.assertEqual(str(v.local), str(version_obj.local))
 
