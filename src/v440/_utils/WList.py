@@ -8,17 +8,4 @@ __all__ = ["WList"]
 
 
 class WList(VList):
-    def __setattr__(self: Self, name: str, value: Any) -> Any:
-        if name not in type(self).__annotations__.keys():
-            return object.__setattr__(self, name, value)
-        backup: list = utils.clone(self)
-        exc: BaseException
-        try:
-            object.__setattr__(self, name, value)
-        except BaseException as exc:
-            self.data = backup
-            if isinstance(exc, VersionError):
-                raise
-            msg: str = "%r is an invalid value for %r"
-            msg %= (value, type(self).__name__ + "." + name)
-            raise VersionError(msg)
+    pass

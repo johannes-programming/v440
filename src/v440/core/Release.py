@@ -60,6 +60,11 @@ class Release(VList):
         ans: list = list(m)
         return ans
 
+    def __init__(self: Any, data: Any = None) -> None:
+        "This magic method initializes self."
+        self._data = list()
+        self.data = data
+
     @Overloadable
     def __setitem__(self: Self, key: Any, value: Any) -> bool:
         return type(key) is slice

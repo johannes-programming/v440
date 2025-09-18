@@ -2,6 +2,7 @@ from typing import *
 
 from datahold import OkayList
 
+from v440._utils import utils
 from v440.core.VersionError import VersionError
 
 
@@ -38,10 +39,6 @@ class VList(OkayList):
         self.data = self.data * other
         return self
 
-    def __init__(self: Any, data: Any = None) -> None:
-        "This magic method initializes self."
-        self.data = data
-
     def __le__(self: Self, other: Any, /) -> bool:
         "This magic method implements self<=other."
         ans: bool
@@ -53,24 +50,19 @@ class VList(OkayList):
             ans = self._data <= alt._data
         return ans
 
-    def __setattr__(self: Self, name: str, value: Any) -> None:
-        "This magic method implements setattr(self, name, value)."
-        if name.startswith("_"):
-            object.__setattr__(self, name, value)
-            return
-        cls: type = type(self)
-        attr: Any = getattr(cls, name)
-        if type(attr) is not property:
-            msg: str = "%r is not a property"
-            msg %= name
-            raise AttributeError(msg)
+    def __setattr__(self: Self, name: str, value: Any) -> Any:
+        if name not in type(self).__annotations__.keys():
+            return object.__setattr__(self, name, value)
+        backup: list = utils.clone(self)
+        exc: BaseException
         try:
             object.__setattr__(self, name, value)
-        except VersionError:
-            raise
-        except:
+        except BaseException as exc:
+            self.data = backup
+            if isinstance(exc, VersionError):
+                raise
             msg: str = "%r is an invalid value for %r"
-            msg %= (value, cls.__name__ + "." + name)
+            msg %= (value, type(self).__name__ + "." + name)
             raise VersionError(msg)
 
     def __sorted__(self: Any, /, **kwargs: Any) -> Self:

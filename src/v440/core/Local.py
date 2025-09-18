@@ -14,6 +14,11 @@ class Local(VList):
 
     data: list[int | str]
 
+    def __init__(self: Any, data: Any = None) -> None:
+        "This magic method initializes self."
+        self._data = list()
+        self.data = data
+
     def __le__(self: Self, other: Iterable) -> bool:
         "This magic method implements self<=other."
         ans: bool
