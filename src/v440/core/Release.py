@@ -1,203 +1,153 @@
 from __future__ import annotations
 
 import operator
-import string
+import string as string_
 from typing import *
 
-from keyalias import keyalias
-from overloadable import Overloadable
+import keyalias
+import setdoc
 
-from v440._utils import utils
-from v440._utils.VList import VList
+from v440._utils.ListStringer import ListStringer
+from v440._utils.releaseparse import deleting, getting, setting
+
+__all__ = ["Release"]
 
 
-@keyalias(major=0, minor=1, micro=2, patch=2)
-class Release(VList):
-    data: list[int]
+@keyalias.getdecorator(major=0, minor=1, micro=2, patch=2)
+class Release(ListStringer):
+    __slots__ = ()
+
+    string: str
+    packaging: tuple
+    data: tuple
     major: int
     minor: int
     micro: int
     patch: int
 
-    def __add__(self: Self, other: Any, /) -> Self:
-        opp: Self = type(self)(other)
-        ans: Self = self.copy()
-        ans._data += opp._data
-        return ans
-
-    @Overloadable
-    def __delitem__(self: Self, key: Any) -> bool:
-        return type(key) is slice
-
-    @__delitem__.overload(False)
-    def __delitem__(self: Self, key: SupportsIndex) -> None:
-        i: int = operator.index(key)
-        if i < len(self):
-            del self._data[i]
-
-    @__delitem__.overload(True)
+    @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
-        r: range = utils.torange(key, len(self))
-        l: list = [k for k in r if k < len(self)]
-        l.sort(reverse=True)
-        for k in l:
-            del self._data[k]
+        self._data = deleting.delitem(self.data, key)
 
-    @Overloadable
-    def __getitem__(self: Self, key: Any) -> bool:
-        return type(key) is slice
+    @setdoc.basic
+    def __getitem__(self: Self, key: Any) -> int | list:
+        return getting.getitem(self.data, key)
 
-    @__getitem__.overload(False)
-    def __getitem__(self: Self, key: Any) -> int:
-        i: int = operator.index(key)
-        ans: int = self._getitem_int(i)
-        return ans
+    @setdoc.basic
+    def __init__(self: Self, string: Any = "0") -> None:
+        self._data = ()
+        self.string = string
 
-    @__getitem__.overload(True)
-    def __getitem__(self: Self, key: Any) -> list:
-        r: range = utils.torange(key, len(self))
-        m: map = map(self._getitem_int, r)
-        ans: list = list(m)
-        return ans
+    @setdoc.basic
+    def __setitem__(self: Self, key: Any, value: Any) -> None:
+        self._data = setting.setitem(self.data, key, value)
 
-    @Overloadable
-    def __setitem__(self: Self, key: Any, value: Any) -> bool:
-        return type(key) is slice
+    @classmethod
+    def _data_parse(cls: type, value: list) -> Iterable:
+        v: list = list(map(cls._item_parse, value))
+        while v and v[-1] == 0:
+            v.pop()
+        return v
 
-    @__setitem__.overload(False)
-    def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        i: int = operator.index(key)
-        self._setitem_int(i, value)
+    @classmethod
+    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+        i: int
+        j: int
+        k: int
+        s: str
+        t: str
+        table: list[int]
+        if len(info) == 0:
+            return ""
+        i = 0
+        j = 0
+        for s in info.keys():
+            k = s.count(".")
+            i = max(i, k + 1)
+            t = s.rstrip("0")
+            if t.endswith(".") or t == "":
+                j = max(j, k)
+        if j == 0:
+            j = -1
+        table = [0] * i
+        for s in info.keys():
+            if s == "":
+                continue
+            for i, t in enumerate(s.split(".")):
+                k = cls._deformat_force(t)
+                table[i] = cls._deformat_comb(table[i], k)
+        s = ""
+        for i, k in enumerate(table):
+            if k > 1:
+                s += "#" * k
+            elif i == j:
+                s += "#"
+            s += "."
+        s = s.rstrip(".")
+        return s
 
-    @__setitem__.overload(True)
-    def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        k: range = utils.torange(key, len(self))
-        self._setitem_range(k, value)
+    @classmethod
+    def _deformat_force(cls: type, part: str) -> int:
+        if part == "0":
+            return -1
+        if part.startswith("0"):
+            return len(part)
+        return -len(part)
 
-    def __str__(self: Self) -> str:
-        return self.format()
-
-    def _getitem_int(self: Self, key: int) -> int:
-        if key < len(self):
-            return self._data[key]
-        else:
-            return 0
-
-    def _setitem_int(self: Self, key: int, value: Any) -> Any:
-        v: int = utils.numeral(value)
-        n: int = len(self)
-        if n > key:
-            self._data[key] = v
-            return
-        if v == 0:
-            return
-        self._data.extend([0] * (key - n))
-        self._data.append(v)
-
-    @Overloadable
-    def _setitem_range(self: Self, key: range, value: Any) -> bool:
-        return key.step == 1
-
-    @_setitem_range.overload(False)
-    def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        key = list(key)
-        value = self._tolist(value, slicing=len(key))
-        if len(key) != len(value):
-            e = "attempt to assign sequence of size %s to extended slice of size %s"
-            e %= (len(value), len(key))
-            raise ValueError(e)
-        maximum = max(*key)
-        ext = max(0, maximum + 1 - len(self))
-        data = self.data
-        data += [0] * ext
-        for k, v in zip(key, value):
-            data[k] = v
-        while len(data) and not data[-1]:
-            data.pop()
-        self._data = data
-
-    @_setitem_range.overload(True)
-    def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        data: list = self.data
-        ext: int = max(0, key.start - len(data))
-        data += ext * [0]
-        l: list = self._tolist(value, slicing="always")
-        data = data[: key.start] + l + data[key.stop :]
-        while len(data) and not data[-1]:
-            data.pop()
-        self._data = data
-
-    @Overloadable
-    @staticmethod
-    def _tolist(value: Any, *, slicing: Any) -> list:
-        if value is None:
-            return
-        if isinstance(value, int):
-            return int
-        if hasattr(value, "__iter__") and not isinstance(value, str):
-            return list
-        return str
-
-    @_tolist.overload()
-    def _tolist(value: None, *, slicing: Any) -> list:
-        return list()
-
-    @_tolist.overload(int)
-    def _tolist(value: int, *, slicing: Any) -> list:
-        return [utils.numeral(value)]
-
-    @_tolist.overload(list)
-    def _tolist(value: int, *, slicing: Any) -> list:
-        return list(map(utils.numeral, value))
-
-    @_tolist.overload(str)
-    def _tolist(value: Any, *, slicing: Any) -> list:
-        s: Any
-        if isinstance(value, str):
-            s = slicing
-        else:
-            s = "never"
-        v: str = str(value)
-        if v == "":
-            return list()
-        if "" == v.strip(string.digits) and s in (len(v), "always"):
-            return list(map(int, v))
-        v = v.lower().strip()
-        v = v.replace("_", ".")
-        v = v.replace("-", ".")
-        if v.startswith("v") or v.startswith("."):
-            v = v[1:]
-        l: list = v.split(".")
-        if "" in l:
+    @classmethod
+    def _deformat_comb(cls: type, x: int, y: int) -> int:
+        if 0 > x * y:
+            if x + y <= 0:
+                return max(x, y)
             raise ValueError
-        l = list(map(utils.numeral, l))
-        return l
+        elif 0 < x * y:
+            if x < 0:
+                return max(x, y)
+            if x == y:
+                return x
+            raise ValueError
+        else:
+            return x + y
+
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> str:
+        if spec.strip("#."):
+            raise ValueError
+        return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
+
+    def _format_parsed(self: Self, *, mags: tuple) -> str:
+        m: int
+        data: list[int]
+        parts: list[int]
+        data = list(self)
+        data += [0] * max(0, len(mags) - len(self))
+        parts = [f"0{m}d" for m in mags]
+        parts += [""] * max(0, len(self) - len(mags))
+        return ".".join(map(format, data, parts))
+
+    @classmethod
+    def _item_parse(cls: type, value: SupportsIndex) -> int:
+        ans: int
+        ans = operator.index(value)
+        if ans < 0:
+            raise ValueError
+        return ans
+
+    @classmethod
+    def _sort(cls: type, value: int) -> int:
+        return value
+
+    def _string_fset(self: Self, value: str) -> None:
+        if value.strip(string_.digits + "."):
+            raise ValueError
+        self.data = map(int, value.split("."))
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
         a: int = operator.index(amount)
-        x: int = self._getitem_int(i) + a
-        self._setitem_int(i, x)
+        x: int = getting.getitem_int(self.data, i) + a
+        self._data = setting.setitem_int(self.data, i, x)
         if i != -1:
             self.data = self.data[: i + 1]
 
-    @property
-    def data(self: Self) -> list:
-        return list(self._data)
-
-    @data.setter
-    def data(self: Self, value: Any) -> None:
-        v: list = self._tolist(value, slicing="always")
-        while v and v[-1] == 0:
-            v.pop()
-        self._data = v
-
-    def format(self: Self, cutoff: Any = None) -> str:
-        s: str = str(cutoff) if cutoff else ""
-        i: Optional[int] = int(s) if s else None
-        l: list = self[:i]
-        if len(l) == 0:
-            l += [0]
-        l = list(map(str, l))
-        ans: str = ".".join(l)
-        return ans
+    packaging = ListStringer.data
