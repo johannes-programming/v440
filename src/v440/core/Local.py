@@ -4,6 +4,7 @@ import functools
 from typing import *
 
 from v440._utils import utils
+from v440._utils.Digest import Digest
 from v440._utils.VList import VList
 
 __all__ = ["Local"]
@@ -31,7 +32,7 @@ class Local(VList):
     def _cmpkey(self: Self) -> list:
         return list(map(self._sortkey, self))
 
-    _data_calc: utils.Digest = utils.Digest("_data_calc")
+    _data_calc: Digest = Digest("_data_calc")
 
     @_data_calc.overload()
     def _data_calc(self: Self) -> None:
