@@ -6,7 +6,6 @@ from typing import *
 import packaging.version
 from catchlib import Catcher
 
-from v440._utils import SimpleQualifierParser
 from v440._utils.Base import Base
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
@@ -15,13 +14,6 @@ from v440.core.Pre import Pre
 from v440.core.Qualification import Qualification
 from v440.core.Release import Release
 from v440.core.VersionError import VersionError
-
-QUALIFIERDICT = dict(
-    dev="dev",
-    post="post",
-    r="post",
-    rev="post",
-)
 
 
 @dataclasses.dataclass(order=True)
