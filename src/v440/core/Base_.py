@@ -2,15 +2,9 @@ from __future__ import annotations
 
 from typing import *
 
-from catchlib import Catcher
-from datarepr import datarepr
-
-from v440._utils import utils
 from v440._utils.Digest import Digest
-from v440._utils.Pattern import Pattern
-from v440._utils.VList import VList
+from v440._utils.WList import WList
 from v440.core.Release import Release
-from v440.core.VersionError import VersionError
 
 __all__ = ["Base_"]
 
@@ -69,7 +63,7 @@ def parse_epoch(value: str) -> int:
     return ans
 
 
-class Base_(VList):
+class Base_(WList):
 
     __slots__ = ("_epoch", "_release")
 
@@ -81,21 +75,6 @@ class Base_(VList):
         self._epoch = 0
         self._release = Release()
         self.data = data
-
-    def __setattr__(self: Self, name: str, value: Any) -> Any:
-        if name not in type(self).__annotations__.keys():
-            return object.__setattr__(self, name, value)
-        backup: list = utils.clone(self)
-        exc: BaseException
-        try:
-            object.__setattr__(self, name, value)
-        except BaseException as exc:
-            self.data = backup
-            if isinstance(exc, VersionError):
-                raise
-            msg: str = "%r is an invalid value for %r"
-            msg %= (value, type(self).__name__ + "." + name)
-            raise VersionError(msg)
 
     def __str__(self: Self) -> str:
         ans: str = ""
@@ -128,4 +107,4 @@ class Base_(VList):
     def release(self: Self, value: Any) -> None:
         self._release.data = value
 
-    _data = data
+    _data = data  # why is this necessary?
