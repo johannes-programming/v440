@@ -9,6 +9,7 @@ from catchlib import Catcher
 from v440._utils.Base import Base
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440.core.Base_ import Base_
 from v440.core.Local import Local
 from v440.core.Pre import Pre
 from v440.core.Qualification import Qualification
@@ -18,8 +19,7 @@ from v440.core.VersionError import VersionError
 
 @dataclasses.dataclass(order=True)
 class _Version:
-    epoch: int = 0
-    release: Release = dataclasses.field(default_factory=Release)
+    base_: Base_ = dataclasses.field(default_factory=Base_)
     qualification: Qualification = dataclasses.field(default_factory=Qualification)
     local: Local = dataclasses.field(default_factory=Local)
 
@@ -32,6 +32,7 @@ class _Version:
 
 class Version(Base):
     base: Self
+    base_: Base_
     data: str
     dev: Optional[int]
     epoch: int
@@ -76,23 +77,6 @@ class Version(Base):
     def __str__(self: Self) -> str:
         return self.data
 
-    _base_calc: Digest = Digest("base")
-
-    @_base_calc.overload()
-    def _base_calc(self: Self) -> None:
-        return None, None
-
-    @_base_calc.overload(int)
-    def _base_calc(self: Self, value: int) -> None:
-        return None, value
-
-    @_base_calc.overload(str)
-    def _base_calc(self: Self, value: str) -> None:
-        if "!" in value:
-            return value.split("!", 1)
-        else:
-            return 0, value
-
     _data_fset: Digest = Digest("_data_fset")
 
     @_data_fset.overload()
@@ -112,38 +96,21 @@ class Version(Base):
         else:
             self.public, self.local = value, None
 
-    _epoch_calc: Digest = Digest("_epoch_calc")
-
-    @_epoch_calc.overload()
-    def _epoch_calc(self: Self) -> None:
-        return 0
-
-    @_epoch_calc.overload(int)
-    def _epoch_calc(self: Self, value: int) -> None:
-        if value < 0:
-            raise ValueError
-        return value
-
-    @_epoch_calc.overload(str)
-    def _epoch_calc(self: Self, value: str) -> None:
-        v: Any = Pattern.EPOCH.bound.search(value)
-        v = v.group("n")
-        if v is None:
-            return 0
-        else:
-            return int(v)
-
     @property
     def base(self: Self) -> Self:
-        ans: Self = self.public
-        ans.dev = None
-        ans.pre = None
-        ans.post = None
-        return ans
+        return type(self)(str(self.base_))
 
     @base.setter
     def base(self: Self, value: Any) -> None:
-        self.epoch, self.release = self._base_calc(value)
+        self.base_ = value
+
+    @property
+    def base_(self: Self) -> Base_:
+        return self._data.base_
+
+    @base_.setter
+    def base_(self: Self, value: Any) -> None:
+        self.base_.data = value
 
     def clear(self: Self) -> None:
         self.data = None
@@ -167,11 +134,11 @@ class Version(Base):
 
     @property
     def epoch(self: Self) -> int:
-        return self._data.epoch
+        return self.base_.epoch
 
     @epoch.setter
     def epoch(self: Self, value: Any) -> None:
-        self._data.epoch = self._epoch_calc(value)
+        self.base_.epoch = value
 
     def format(self: Self, cutoff: Any = None) -> str:
         ans: str = ""
@@ -263,11 +230,11 @@ class Version(Base):
 
     @property
     def release(self: Self) -> Release:
-        return self._data.release
+        return self.base_.release
 
     @release.setter
     def release(self: Self, value: Any) -> None:
-        self._data.release.data = value
+        self.base_.release = value
 
     def update(self: Self, **kwargs: Any) -> None:
         a: Any
