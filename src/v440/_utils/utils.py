@@ -5,7 +5,15 @@ import string
 from typing import *
 
 from v440._utils.Digest import Digest
+from v440._utils.VList import VList
 from v440.core.VersionError import VersionError
+
+
+def clone(value: Any) -> Any:
+    if isinstance(value, VList):
+        return list(map(clone, value))
+    else:
+        return value
 
 
 def literal(value: Any, /) -> str:
