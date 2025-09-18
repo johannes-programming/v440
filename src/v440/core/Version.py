@@ -45,7 +45,6 @@ def parse_data(value: str) -> list:
 
 class Version(WList):
     __slots__ = ("_public_", "_local")
-    base: Self
     base_: Base_
     data: list
     dev: Optional[int]
@@ -53,7 +52,6 @@ class Version(WList):
     local: Local
     post: Optional[int]
     pre: Pre
-    public: Self
     public_: Public_
     qualification: Qualification
     release: Release
@@ -66,14 +64,6 @@ class Version(WList):
 
     def __str__(self: Self) -> str:
         return self.format()
-
-    @property
-    def base(self: Self) -> Self:
-        return type(self)(str(self.public_.base_))
-
-    @base.setter
-    def base(self: Self, value: Any) -> None:
-        self.base_ = value
 
     @property
     def base_(self: Self) -> Base_:
@@ -148,14 +138,6 @@ class Version(WList):
     @pre.setter
     def pre(self: Self, value: Any) -> None:
         self.qualification.pre = value
-
-    @property
-    def public(self: Self) -> Self:
-        return type(self)(str(self.public_))
-
-    @public.setter
-    def public(self: Self, value: Any) -> None:
-        self.public_ = value
 
     @property
     def public_(self: Self) -> Self:
