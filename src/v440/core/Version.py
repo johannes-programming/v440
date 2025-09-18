@@ -1,237 +1,105 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import *
 
 import packaging.version
-from catchlib import Catcher
+import setdoc
 
-from v440._utils.Base import Base
-from v440._utils.Digest import Digest
-from v440.core.Base_ import Base_
+from v440._utils.guarding import guard
+from v440._utils.SlotStringer import SlotStringer
 from v440.core.Local import Local
-from v440.core.Pre import Pre
-from v440.core.Public_ import Public_
-from v440.core.Qualification import Qualification
-from v440.core.Release import Release
-from v440.core.VersionError import VersionError
+from v440.core.Public import Public
+
+__all__ = ["Version"]
 
 
-@dataclasses.dataclass(order=True)
-class _Version:
-    public_: Public_ = dataclasses.field(default_factory=Public_)
-    local: Local = dataclasses.field(default_factory=Local)
+class Version(SlotStringer):
+    __slots__ = ("_public", "_local")
 
-    def copy(self: Self) -> Self:
-        return dataclasses.replace(self)
-
-    def todict(self: Self) -> dict:
-        return dataclasses.asdict(self)
-
-
-class Version(Base):
-    base: Self
-    base_: Base_
-    data: str
-    dev: Optional[int]
-    epoch: int
+    string: str
+    packaging: packaging.version.Version
     local: Local
-    post: Optional[int]
-    pre: Pre
-    public: Self
-    public_: Public_
-    qualification: Qualification
-    release: Release
+    public: Public
 
-    def __bool__(self: Self) -> bool:
-        return self._data != _Version()
+    @setdoc.basic
+    def __init__(self: Self, string: Any = "0") -> None:
+        self._public = Public()
+        self._local = Local()
+        self.string = string
 
-    def __init__(self: Self, data: Any = "0", /, **kwargs: Any) -> None:
-        object.__setattr__(self, "_data", _Version())
-        self.data = data
-        self.update(**kwargs)
+    def _cmp(self: Self) -> tuple:
+        return self.public, self.local
 
-    def __le__(self: Self, other: Any) -> bool:
-        return self._data <= type(self)(other)._data
+    @classmethod
+    def _deformat(cls: type, info: dict, /) -> str:
+        publics: set
+        locals: set
+        x: str
+        y: str
+        publics = set()
+        locals = set()
+        for x, y in map(cls._split, info.keys()):
+            publics.add(x)
+            locals.add(y)
+        x = Public.deformat(*publics)
+        y = Local.deformat(*locals)
+        x = cls._join(x, y)
+        return x
 
-    def __setattr__(self: Self, name: str, value: Any) -> None:
-        a: dict = dict()
-        b: dict = dict()
-        catcher: Catcher = Catcher()
-        x: Any
-        y: Any
-        for x, y in self._data.todict().items():
-            with catcher.catch(AttributeError):
-                a[x] = y.data
-            if catcher.caught is not None:
-                b[x] = y
-        try:
-            Base.__setattr__(self, name, value)
-        except VersionError:
-            for x, y in a.items():
-                getattr(self._data, x).data = y
-            for x, y in b.items():
-                setattr(self._data, x, y)
-            raise
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> str:
+        return dict(
+            zip(
+                ("public_f", "local_f"),
+                cls._split(spec),
+                strict=True,
+            )
+        )
 
-    def __str__(self: Self) -> str:
-        return self.data
+    def _format_parsed(self: Self, *, public_f: str, local_f: str) -> str:
+        return self._join(
+            format(self.public, public_f),
+            format(self.local, local_f),
+        )
 
-    _data_fset: Digest = Digest("_data_fset")
-
-    @_data_fset.overload()
-    def _data_fset(self: Self) -> None:
-        self.public_ = None
-        self.local = None
-
-    @_data_fset.overload(int)
-    def _data_fset(self: Self, value: int) -> None:
-        self.public_ = value
-        self.local = None
-
-    @_data_fset.overload(str)
-    def _data_fset(self: Self, value: str) -> None:
-        if "+" in value:
-            self.public_, self.local = value.split("+", 1)
+    @classmethod
+    def _join(cls: type, public: str, local: str = "") -> str:
+        if local:
+            return public + "+" + local
         else:
-            self.public_, self.local = value, None
+            return public
 
-    @property
-    def base(self: Self) -> Self:
-        return type(self)(str(self.public_.base_))
+    def _string_fset(self: Self, value: str) -> None:
+        self.public.string, self.local.string = self._split(value)
 
-    @base.setter
-    def base(self: Self, value: Any) -> None:
-        self.public_.base_ = value
+    @classmethod
+    def _split(cls: type, string: str, /) -> tuple:
+        if string.endswith("+"):
+            raise ValueError
+        if "+" in string:
+            return string.split("+")
+        else:
+            return string, ""
 
-    @property
-    def base_(self: Self) -> Base_:
-        return self._data.public_.base_
-
-    @base_.setter
-    def base_(self: Self, value: Any) -> None:
-        self.base_.data = value
-
-    def clear(self: Self) -> None:
-        self.data = None
-
-    def copy(self: Self) -> Self:
-        return type(self)(self)
-
-    @property
-    def data(self: Self) -> str:
-        return self.format()
-
-    data = data.setter(_data_fset)
-
-    @property
-    def dev(self: Self) -> Optional[int]:
-        return self.qualification.dev
-
-    @dev.setter
-    def dev(self: Self, value: Any) -> None:
-        self.qualification.dev = value
-
-    @property
-    def epoch(self: Self) -> int:
-        return self.base_.epoch
-
-    @epoch.setter
-    def epoch(self: Self, value: Any) -> None:
-        self.base_.epoch = value
-
-    def format(self: Self, cutoff: Any = None) -> str:
-        ans: str = ""
-        if self.epoch:
-            ans += "%s!" % self.epoch
-        ans += self.release.format(cutoff)
-        ans += str(self.pre)
-        if self.post is not None:
-            ans += ".post%s" % self.post
-        if self.dev is not None:
-            ans += ".dev%s" % self.dev
-        if self.local:
-            ans += "+%s" % self.local
-        return ans
-
-    def isdevrelease(self: Self) -> bool:
-        return self.qualification.isdevrelease()
-
-    def isprerelease(self: Self) -> bool:
-        return self.qualification.isprerelease()
-
-    def ispostrelease(self: Self) -> bool:
-        return self.qualification.ispostrelease()
+    def _todict(self: Self) -> dict:
+        return dict(public=self.public, local=self.local)
 
     @property
     def local(self: Self) -> Local:
-        return self._data.local
+        "This property represents the local identifier."
+        return self._local
 
-    @local.setter
-    def local(self: Self, value: Any) -> None:
-        self._data.local.data = value
-
+    @property
     def packaging(self: Self) -> packaging.version.Version:
+        "This method returns an eqivalent packaging.version.Version object."
         return packaging.version.Version(str(self))
 
-    @property
-    def post(self: Self) -> Optional[int]:
-        return self.qualification.post
-
-    @post.setter
-    def post(self: Self, value: Any) -> None:
-        self.qualification.post = value
+    @packaging.setter
+    @guard
+    def packaging(self: Self, value: Any) -> None:
+        self.string = value
 
     @property
-    def pre(self: Self) -> Pre:
-        return self.qualification.pre
-
-    @pre.setter
-    def pre(self: Self, value: Any) -> None:
-        self.qualification.pre = value
-
-    @property
-    def public(self: Self) -> Self:
-        return type(self)(str(self.public_))
-
-    @public.setter
-    def public(self: Self, value: Any) -> None:
-        self.public_.data = value
-
-    @property
-    def public_(self: Self) -> Self:
-        return self._data.public_
-
-    @public_.setter
-    def public_(self: Self, value: Any) -> None:
-        self.public_.data = value
-
-    @property
-    def qualification(self: Self) -> Qualification:
-        return self._data.public_.qualification
-
-    @qualification.setter
-    def qualification(self: Self, value: Any) -> None:
-        self.qualification.data = value
-
-    @property
-    def release(self: Self) -> Release:
-        return self.base_.release
-
-    @release.setter
-    def release(self: Self, value: Any) -> None:
-        self.base_.release = value
-
-    def update(self: Self, **kwargs: Any) -> None:
-        a: Any
-        m: str
-        x: Any
-        y: Any
-        for x, y in kwargs.items():
-            a = getattr(type(self), x)
-            if isinstance(a, property):
-                setattr(self, x, y)
-                continue
-            m: str = "%r is not a property"
-            m %= x
-            raise AttributeError(m)
+    def public(self: Self) -> Public:
+        "This property represents the public identifier."
+        return self._public
