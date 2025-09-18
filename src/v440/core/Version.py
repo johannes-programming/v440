@@ -6,7 +6,7 @@ from typing import *
 import packaging.version
 from catchlib import Catcher
 
-from v440._utils import QualifierParser, utils
+from v440._utils import SimpleQualifierParser
 from v440._utils.Base import Base
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
@@ -187,7 +187,7 @@ class Version(Base):
 
     @dev.setter
     def dev(self: Self, value: Any) -> None:
-        self._data.dev = QualifierParser.DEV(value)
+        self._data.dev = SimpleQualifierParser.DEV(value)
 
     @property
     def epoch(self: Self) -> int:
@@ -237,7 +237,7 @@ class Version(Base):
 
     @post.setter
     def post(self: Self, value: Any) -> None:
-        self._data.post = QualifierParser.POST(value)
+        self._data.post = SimpleQualifierParser.POST(value)
 
     @property
     def pre(self: Self) -> Pre:
