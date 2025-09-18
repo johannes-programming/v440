@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import *
 
 import packaging.version
-from catchlib import Catcher
 
 from v440._utils.Digest import Digest
 from v440._utils.WList import WList
@@ -14,7 +12,6 @@ from v440.core.Pre import Pre
 from v440.core.Public import Public
 from v440.core.Qualification import Qualification
 from v440.core.Release import Release
-from v440.core.VersionError import VersionError
 
 parse_data: Digest = Digest("parse_data")
 
