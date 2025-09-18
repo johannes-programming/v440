@@ -721,7 +721,6 @@ Post-releases = [
 "Invalid cases (testing error handling for extreme cases)" = [
     "1.0.0alpha_beta",
     "1!2.0.0+",
-    "1.0.0++local.version.doubleplus",
 ]
 "Cases with inconsistent pre-release and post-release ordering" = [
     "1.0.0.post1a1",
@@ -741,6 +740,7 @@ Post-releases = [
     "1.0.0a1..post2",
     "2!1..0",
     "1.0.0+build@sha.123",
+    "1.0.0++local.version.doubleplus",
 ]
 
 [devint.test_dev_as_int]

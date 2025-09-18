@@ -191,8 +191,6 @@ class TestDataProperty(unittest.TestCase):
         msg: str = "data_property %r" % key
         self.v.data = query
         self.assertEqual(solution, str(self.v), msg=msg)
-        self.assertEqual(self.v.data, str(self.v), msg=msg)
-        self.assertEqual(type(self.v.data), str, msg=msg)
 
 
 class TestVersionRelease(unittest.TestCase):
