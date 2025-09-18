@@ -54,9 +54,6 @@ class PhasedQualifierParser:
         for x, y in kwargs.items():
             self._phasedict[str(x)] = str(y)
 
-    def nbylist(self: Self, value: Any, /) -> Any:
-        raise ValueError
-
     @property
     def phasedict(self: Self) -> dict:
         return dict(self._phasedict)
