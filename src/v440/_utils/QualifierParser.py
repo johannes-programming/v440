@@ -4,6 +4,7 @@ import dataclasses
 from typing import *
 
 from v440._utils import utils
+from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 
 
@@ -16,7 +17,7 @@ class SimpleQualifierParser(QualifierParser):
     keysforstr: tuple = ()
     allow_len_1: bool = False
 
-    __call__ = utils.Digest("__call__")
+    __call__ = Digest("__call__")
 
     @__call__.overload()
     def __call__(self: Self) -> Optional[list]:
@@ -84,7 +85,7 @@ class PhasedQualifierParser(QualifierParser):
 
     phasedict: dict
 
-    __call__ = utils.Digest("__call__")
+    __call__ = Digest("__call__")
 
     @__call__.overload()
     def __call__(self: Self) -> list:
