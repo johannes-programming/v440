@@ -8,7 +8,7 @@ from catchlib import Catcher
 
 from v440._utils.Digest import Digest
 from v440._utils.WList import WList
-from v440.core.Base import Base_
+from v440.core.Base import Base
 from v440.core.Local import Local
 from v440.core.Pre import Pre
 from v440.core.Public_ import Public_
@@ -44,7 +44,7 @@ def parse_data(value: str) -> list:
 
 class Version(WList):
     __slots__ = ("_public_", "_local")
-    base_: Base_
+    base_: Base
     data: list
     dev: Optional[int]
     epoch: int
@@ -65,7 +65,7 @@ class Version(WList):
         return self.format()
 
     @property
-    def base_(self: Self) -> Base_:
+    def base_(self: Self) -> Base:
         return self.public_.base_
 
     @base_.setter

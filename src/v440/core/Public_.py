@@ -5,7 +5,7 @@ from typing import *
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 from v440._utils.WList import WList
-from v440.core.Base import Base_
+from v440.core.Base import Base
 from v440.core.Qualification import Qualification
 
 __all__ = ["Public_"]
@@ -40,11 +40,11 @@ class Public_(WList):
     __slots__ = ("_base_", "_qualification")
 
     data: list
-    base_: Base_
+    base_: Base
     qualification: Qualification
 
     def __init__(self: Self, data: Any = None) -> None:
-        self._base_ = Base_()
+        self._base_ = Base()
         self._qualification = Qualification()
         self.data = data
 
@@ -52,7 +52,7 @@ class Public_(WList):
         return self.format()
 
     @property
-    def base_(self: Self) -> Base_:
+    def base_(self: Self) -> Base:
         return self._base_
 
     @base_.setter

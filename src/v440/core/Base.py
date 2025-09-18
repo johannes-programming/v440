@@ -6,7 +6,7 @@ from v440._utils.Digest import Digest
 from v440._utils.WList import WList
 from v440.core.Release import Release
 
-__all__ = ["Base_"]
+__all__ = ["Base"]
 
 
 parse_data: Digest = Digest("parse_data")
@@ -63,7 +63,7 @@ def parse_epoch(value: str) -> int:
     return ans
 
 
-class Base_(WList):
+class Base(WList):
 
     __slots__ = ("_epoch", "_release")
 
