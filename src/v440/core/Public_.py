@@ -37,14 +37,14 @@ def parse_data(value: str) -> list:
 
 class Public_(WList):
 
-    __slots__ = ("_base_", "_qualification")
+    __slots__ = ("_base", "_qualification")
 
     data: list
-    base_: Base
+    base: Base
     qualification: Qualification
 
     def __init__(self: Self, data: Any = None) -> None:
-        self._base_ = Base()
+        self._base = Base()
         self._qualification = Qualification()
         self.data = data
 
@@ -52,23 +52,23 @@ class Public_(WList):
         return self.format()
 
     @property
-    def base_(self: Self) -> Base:
-        return self._base_
+    def base(self: Self) -> Base:
+        return self._base
 
-    @base_.setter
-    def base_(self: Self, value: Any) -> None:
-        self.base_.data = value
+    @base.setter
+    def base(self: Self, value: Any) -> None:
+        self.base.data = value
 
     @property
     def data(self: Self) -> list:
-        return [self.base_, self.qualification]
+        return [self.base, self.qualification]
 
     @data.setter
     def data(self: Self, value: Any) -> None:
-        self.base_, self.qualification = parse_data(value)
+        self.base, self.qualification = parse_data(value)
 
     def format(self: Self, cutoff: Any = None) -> str:
-        return self.base_.format(cutoff) + str(self.qualification)
+        return self.base.format(cutoff) + str(self.qualification)
 
     @property
     def qualification(self: Self) -> Qualification:

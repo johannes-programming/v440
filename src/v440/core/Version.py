@@ -44,7 +44,7 @@ def parse_data(value: str) -> list:
 
 class Version(WList):
     __slots__ = ("_public_", "_local")
-    base_: Base
+    base: Base
     data: list
     dev: Optional[int]
     epoch: int
@@ -65,12 +65,12 @@ class Version(WList):
         return self.format()
 
     @property
-    def base_(self: Self) -> Base:
-        return self.public_.base_
+    def base(self: Self) -> Base:
+        return self.public_.base
 
-    @base_.setter
-    def base_(self: Self, value: Any) -> None:
-        self.base_.data = value
+    @base.setter
+    def base(self: Self, value: Any) -> None:
+        self.base.data = value
 
     @property
     def data(self: Self) -> str:
@@ -90,11 +90,11 @@ class Version(WList):
 
     @property
     def epoch(self: Self) -> int:
-        return self.base_.epoch
+        return self.base.epoch
 
     @epoch.setter
     def epoch(self: Self, value: Any) -> None:
-        self.base_.epoch = value
+        self.base.epoch = value
 
     def format(self: Self, cutoff: Any = None) -> str:
         ans: str = self.public_.format(cutoff)
@@ -156,11 +156,11 @@ class Version(WList):
 
     @property
     def release(self: Self) -> Release:
-        return self.base_.release
+        return self.base.release
 
     @release.setter
     def release(self: Self, value: Any) -> None:
-        self.base_.release = value
+        self.base.release = value
 
     def update(self: Self, **kwargs: Any) -> None:
         a: Any
