@@ -8,10 +8,10 @@ from catchlib import Catcher
 
 from v440._utils.Base import Base
 from v440._utils.Digest import Digest
-from v440._utils.Pattern import Pattern
 from v440.core.Base_ import Base_
 from v440.core.Local import Local
 from v440.core.Pre import Pre
+from v440.core.Public_ import Public_
 from v440.core.Qualification import Qualification
 from v440.core.Release import Release
 from v440.core.VersionError import VersionError
@@ -19,8 +19,7 @@ from v440.core.VersionError import VersionError
 
 @dataclasses.dataclass(order=True)
 class _Version:
-    base_: Base_ = dataclasses.field(default_factory=Base_)
-    qualification: Qualification = dataclasses.field(default_factory=Qualification)
+    public_: Public_ = dataclasses.field(default_factory=Public_)
     local: Local = dataclasses.field(default_factory=Local)
 
     def copy(self: Self) -> Self:
@@ -40,6 +39,7 @@ class Version(Base):
     post: Optional[int]
     pre: Pre
     public: Self
+    public_: Public_
     qualification: Qualification
     release: Release
 
@@ -81,32 +81,32 @@ class Version(Base):
 
     @_data_fset.overload()
     def _data_fset(self: Self) -> None:
-        self.public = None
+        self.public_ = None
         self.local = None
 
     @_data_fset.overload(int)
     def _data_fset(self: Self, value: int) -> None:
-        self.public = value
+        self.public_ = value
         self.local = None
 
     @_data_fset.overload(str)
     def _data_fset(self: Self, value: str) -> None:
         if "+" in value:
-            self.public, self.local = value.split("+", 1)
+            self.public_, self.local = value.split("+", 1)
         else:
-            self.public, self.local = value, None
+            self.public_, self.local = value, None
 
     @property
     def base(self: Self) -> Self:
-        return type(self)(str(self.base_))
+        return type(self)(str(self.public_.base_))
 
     @base.setter
     def base(self: Self, value: Any) -> None:
-        self.base_ = value
+        self.public_.base_ = value
 
     @property
     def base_(self: Self) -> Base_:
-        return self._data.base_
+        return self._data.public_.base_
 
     @base_.setter
     def base_(self: Self, value: Any) -> None:
@@ -190,43 +190,29 @@ class Version(Base):
     def pre(self: Self, value: Any) -> None:
         self.qualification.pre = value
 
-    _public_fset: Digest = Digest("_public_fset")
-
-    @_public_fset.overload()
-    def _public_fset(self: Self) -> None:
-        self.base = None
-        self.pre = None
-        self.post = None
-        self.dev = None
-
-    @_public_fset.overload(int)
-    def _public_fset(self: Self, value: int) -> None:
-        self.base = value
-        self.pre = None
-        self.post = None
-        self.dev = None
-
-    @_public_fset.overload(str)
-    def _public_fset(self: Self, value: str) -> None:
-        match: Any = Pattern.PUBLIC.leftbound.search(value)
-        self.base = value[: match.end()]
-        self.qualification = value[match.end() :]
-
     @property
     def public(self: Self) -> Self:
-        ans: Self = self.copy()
-        ans.local = None
-        return ans
+        return type(self)(str(self.public_))
 
-    public = public.setter(_public_fset)
+    @public.setter
+    def public(self: Self, value: Any) -> None:
+        self.public_.data = value
+
+    @property
+    def public_(self: Self) -> Self:
+        return self._data.public_
+
+    @public_.setter
+    def public_(self: Self, value: Any) -> None:
+        self.public_.data = value
 
     @property
     def qualification(self: Self) -> Qualification:
-        return self._data.qualification
+        return self._data.public_.qualification
 
     @qualification.setter
     def qualification(self: Self, value: Any) -> None:
-        self._data.qualification.data = value
+        self.qualification.data = value
 
     @property
     def release(self: Self) -> Release:
