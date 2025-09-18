@@ -58,13 +58,15 @@ def parse_epoch(value: int) -> int:
 
 @parse_epoch.overload(str)
 def parse_epoch(value: str) -> int:
-    v: Any = Pattern.EPOCH.bound.search(value)
-    v = v.group("n")
-    if v is None:
-        v = 0
-    else:
-        v = int(v)
-    return v
+    s: str = value
+    if s.endswith("!"):
+        s = s[:-1]
+    if s == "":
+        return 0
+    ans: int = int(s)
+    if ans < 0:
+        raise ValueError
+    return ans
 
 
 class Base_(VList):
