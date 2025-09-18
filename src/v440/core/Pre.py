@@ -16,8 +16,8 @@ class Pre(WList):
     __slots__ = ("_phase", "_subphase")
 
     data: list
-    phase: Any
-    subphase: Any
+    phase: Optional[str]
+    subphase: Optional[int]
 
     def __init__(self: Self, data: Any = None) -> None:
         self._phase = None
