@@ -6,7 +6,6 @@ from typing import *
 import packaging.version
 from catchlib import Catcher
 
-from v440._utils.Base import Base
 from v440._utils.Digest import Digest
 from v440._utils.WList import WList
 from v440.core.Base_ import Base_
