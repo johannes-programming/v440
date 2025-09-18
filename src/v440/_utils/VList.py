@@ -1,6 +1,6 @@
 from typing import *
 
-from datahold import OkayABC, OkayList
+from datahold import OkayList
 
 from v440.core.VersionError import VersionError
 
@@ -29,9 +29,6 @@ class VList(OkayList):
             ans = alt <= self
         return ans
 
-    __gt__ = OkayList.__gt__
-    __hash__ = OkayABC.__hash__
-
     def __iadd__(self: Self, other: Any, /) -> Self:
         "This magic method implements self+=other."
         self.data += type(self)(other).data
@@ -56,10 +53,6 @@ class VList(OkayList):
         else:
             ans = self._data <= alt._data
         return ans
-
-    __lt__ = OkayList.__lt__
-    __ne__ = OkayABC.__ne__
-    __repr__ = OkayABC.__repr__
 
     def __setattr__(self: Self, name: str, value: Any) -> None:
         "This magic method implements setattr(self, name, value)."
@@ -86,3 +79,6 @@ class VList(OkayList):
         ans: Any = self.copy()
         ans.sort(**kwargs)
         return ans
+
+    def isempty(self: Self) -> bool:
+        return self == type(self)()

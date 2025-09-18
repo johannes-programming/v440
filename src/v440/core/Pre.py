@@ -4,7 +4,7 @@ from typing import *
 
 import keyalias
 
-from v440._utils import QualifierParser
+from v440._utils import QualifierParser, utils
 from v440._utils.VList import VList
 
 __all__ = ["Pre"]
@@ -32,6 +32,7 @@ class Pre(VList):
         return list(self._data)
 
     @data.setter
+    @utils.vGuard
     def data(self: Self, value: Any) -> None:
         self._data = QualifierParser.PRE(value)
 

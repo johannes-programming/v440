@@ -186,6 +186,7 @@ class Release(VList):
         return list(self._data)
 
     @data.setter
+    @utils.vGuard
     def data(self: Self, value: Any) -> None:
         v: list = self._tolist(value, slicing="always")
         while v and v[-1] == 0:

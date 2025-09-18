@@ -6,6 +6,8 @@ import string
 import types
 from typing import *
 
+from catchlib import Catcher
+
 from v440.core.VersionError import VersionError
 
 
@@ -154,3 +156,39 @@ def torange(key: Any, length: Any) -> range:
         stop = 0 if fwd else -1
     ans: range = range(start, stop, step)
     return ans
+
+
+def vGuard(old: Any) -> Any:
+    @functools.wraps(old)
+    def new(self: Self, value: Any) -> Any:
+        backup: dict = dict()
+        directs: dict = dict()
+        x: str
+        y: Any
+        for x in type(self).__slots__:
+            y = getattr(self, x)
+            try:
+                y = y.data
+            except AttributeError:
+                directs[x] = False
+            else:
+                directs[x] = True
+            backup[x] = y
+        exc: BaseException
+        try:
+            return old(self, value)
+        except BaseException as exc:
+            pass
+        for x, y in backup.items():
+            if directs[x]:
+                setattr(self, x, y)
+            else:
+                getattr(self, x).data = y
+        if isinstance(exc, VersionError):
+            raise exc
+        else:
+            msg: str = "%r is an invalid value for %r"
+            msg %= (value, type(self).__name__ + "." + old.__name__)
+            raise VersionError(msg)
+
+    return new
