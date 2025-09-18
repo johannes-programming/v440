@@ -77,11 +77,7 @@ class Base_(WList):
         self.data = data
 
     def __str__(self: Self) -> str:
-        ans: str = ""
-        if self.epoch:
-            ans += "%s!" % self.epoch
-        ans += str(self.release)
-        return ans
+        return self.format()
 
     @property
     def data(self: Self) -> list:
@@ -98,6 +94,13 @@ class Base_(WList):
     @epoch.setter
     def epoch(self: Self, value: Any) -> None:
         self._epoch = parse_epoch(value)
+
+    def format(self: Self, cutoff: Any = None) -> str:
+        ans: str = ""
+        if self.epoch:
+            ans += "%s!" % self.epoch
+        ans += self.release.format(cutoff)
+        return ans
 
     @property
     def release(self: Self) -> Release:
