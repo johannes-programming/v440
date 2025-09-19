@@ -206,3 +206,6 @@ class Release(VList):
         l = list(map(str, l))
         ans: str = ".".join(l)
         return ans
+
+    def isempty(self:Self) -> bool:
+        return self.data == []

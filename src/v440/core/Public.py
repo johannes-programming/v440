@@ -70,6 +70,9 @@ class Public(WList):
     def format(self: Self, cutoff: Any = None) -> str:
         return self.base.format(cutoff) + str(self.qualification)
 
+    def isempty(self:Self) -> bool:
+        return self.base.isempty() and self.qualification.isempty()
+    
     @property
     def qualification(self: Self) -> Qualification:
         return self._qualification

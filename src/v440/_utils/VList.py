@@ -4,6 +4,9 @@ from datahold import OkayList
 
 from v440.core.VersionError import VersionError
 
+import abc
+
+
 
 def clone(value: Any) -> Any:
     if isinstance(value, VList):
@@ -56,14 +59,15 @@ class VList(OkayList):
             ans = self._data <= alt._data
         return ans
 
-    def __setattr__(self: Self, name: str, value: Any) -> Any:
-        if name not in type(self).__annotations__.keys():
-            return object.__setattr__(self, name, value)
+    def __setattr__(self: Self, name: str, value: Any) -> None:
+        if name in type(self).__annotations__.keys():
+            object.__setattr__(self, name, value)
+            return
         backup: list = clone(self)
-        exc: BaseException
+        exc: Exception
         try:
             object.__setattr__(self, name, value)
-        except BaseException as exc:
+        except Exception as exc:
             self.data = backup
             if isinstance(exc, VersionError):
                 raise
@@ -76,3 +80,8 @@ class VList(OkayList):
         ans: Any = self.copy()
         ans.sort(**kwargs)
         return ans
+    
+    @abc.abstractmethod
+    def isempty(self:Self)->bool:
+        ...
+    

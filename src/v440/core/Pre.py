@@ -90,5 +90,9 @@ class Pre(WList):
     def _data(self: Self, value: Any) -> None:
         self._phase, self._subphase = parse_data(value)
 
-    def isempty(self: Self) -> bool:
-        return set(self._data) == {None}
+    def isempty(self:Self) -> bool:
+        if self._phase is not None:
+            return False
+        if self._subphase is not None:
+            return False
+        return True

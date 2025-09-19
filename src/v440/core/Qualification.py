@@ -117,9 +117,15 @@ class Qualification(WList):
     def isdevrelease(self: Self) -> bool:
         return self.dev is not None
 
-    def isempty(self: Self) -> bool:
-        return self.data == [None, None, None]
-
+    def isempty(self:Self) -> bool:
+        if not self.pre.isempty():
+            return False
+        if self.post is not None:
+            return False
+        if self.dev is not None:
+            return False
+        return True
+    
     def isprerelease(self: Self) -> bool:
         return self.isdevrelease() or not self.pre.isempty()
 

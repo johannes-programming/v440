@@ -79,6 +79,9 @@ class Local(VList):
     def data(self: Self, value: Any) -> None:
         self._data = self._data_calc(value)
 
+    def isempty(self:Self) -> bool:
+        return self.data == []
+    
     @functools.wraps(VList.sort)
     def sort(self: Self, /, *, key: Any = None, **kwargs: Any) -> None:
         k: Any = self._sortkey if key is None else key

@@ -102,6 +102,13 @@ class Base(WList):
         ans += self.release.format(cutoff)
         return ans
 
+    def isempty(self:Self) -> bool:
+        if self.epoch != 0:
+            return False
+        if not self.release.isempty():
+            return False
+        return True
+    
     @property
     def release(self: Self) -> Release:
         return self._release
