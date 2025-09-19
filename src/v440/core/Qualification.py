@@ -5,6 +5,7 @@ from typing import *
 from v440._utils import SimpleQualifierParser
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440._utils.utils import guard
 from v440._utils.WList import WList
 from v440.core.Pre import Pre
 
@@ -111,6 +112,7 @@ class Qualification(WList):
         return self._dev
 
     @dev.setter
+    @guard
     def dev(self: Self, value: Any) -> None:
         self._dev = SimpleQualifierParser.DEV(value)
 
@@ -131,6 +133,7 @@ class Qualification(WList):
         return self._post
 
     @post.setter
+    @guard
     def post(self: Self, value: Any) -> None:
         self._post = SimpleQualifierParser.POST(value)
 
@@ -139,5 +142,6 @@ class Qualification(WList):
         return self._pre
 
     @pre.setter
+    @guard
     def pre(self: Self, value: Any) -> None:
         self._pre.data = value

@@ -1,5 +1,6 @@
 from typing import *
 
+from v440._utils.utils import guard
 from v440._utils.VList import VList
 
 __all__ = ["WList"]
@@ -11,5 +12,6 @@ class WList(VList):
         return list(self._data)
 
     @data.setter
+    @guard
     def data(self: Self, value: Any) -> None:
         self._data = value

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 import operator
 import string
 from typing import *
@@ -91,3 +92,48 @@ def torange(key: Any, length: Any) -> range:
         stop = 0 if fwd else -1
     ans: range = range(start, stop, step)
     return ans
+
+
+def ishashable(value: Any) -> bool:
+    try:
+        hash(value)
+    except:
+        return False
+    else:
+        return True
+
+
+def guard(old: Any) -> Any:
+    @functools.wraps(old)
+    def new(self: Self, value: Any) -> None:
+        backup: dict = dict()
+        x: Any
+        y: Any
+        for x in type(self).__slots__:
+            y = getattr(self, x)
+            backup[x] = y if ishashable(y) else y.copy()
+        try:
+            old(self, value)
+        except VersionError:
+            restore(obj=self, backup=backup)
+            raise
+        except Exception:
+            restore(obj=self, backup=backup)
+            msg: str = "%r is an invalid value for %r"
+            target: str = type(self).__name__ + "." + old.__name__
+            msg %= (value, target)
+            raise VersionError(msg)
+
+    return new
+
+
+def restore(obj: Any, backup: dict):
+    # print("backup", backup)
+    for x in type(obj).__slots__:
+        # print("x", x)
+        if ishashable(backup[x]):
+            # print("ishashable", True)
+            setattr(obj, x, backup[x])
+        else:
+            # print("ishashable", False)
+            getattr(obj, x).data = backup[x]

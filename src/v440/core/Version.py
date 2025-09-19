@@ -5,6 +5,7 @@ from typing import *
 import packaging.version
 
 from v440._utils.Digest import Digest
+from v440._utils.utils import guard
 from v440._utils.WList import WList
 from v440.core.Base import Base
 from v440.core.Local import Local
@@ -113,6 +114,7 @@ class Version(WList):
         return self._local
 
     @local.setter
+    @guard
     def local(self: Self, value: Any) -> None:
         self.local.data = value
 
@@ -140,6 +142,7 @@ class Version(WList):
         return self._public
 
     @public.setter
+    @guard
     def public(self: Self, value: Any) -> None:
         self.public.data = value
 

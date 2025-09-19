@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import *
 
 from v440._utils.Digest import Digest
+from v440._utils.utils import guard
 from v440._utils.WList import WList
 from v440.core.Release import Release
 
@@ -92,6 +93,7 @@ class Base(WList):
         return self._epoch
 
     @epoch.setter
+    @guard
     def epoch(self: Self, value: Any) -> None:
         self._epoch = parse_epoch(value)
 
@@ -107,5 +109,6 @@ class Base(WList):
         return self._release
 
     @release.setter
+    @guard
     def release(self: Self, value: Any) -> None:
         self._release.data = value

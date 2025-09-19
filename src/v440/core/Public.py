@@ -4,6 +4,7 @@ from typing import *
 
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440._utils.utils import guard
 from v440._utils.WList import WList
 from v440.core.Base import Base
 from v440.core.Qualification import Qualification
@@ -64,6 +65,7 @@ class Public(WList):
         return self._base
 
     @base.setter
+    @guard
     def base(self: Self, value: Any) -> None:
         self.base.data = value
 
@@ -75,5 +77,6 @@ class Public(WList):
         return self._qualification
 
     @qualification.setter
+    @guard
     def qualification(self: Self, value: Any) -> None:
         self.qualification.data = value

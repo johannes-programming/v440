@@ -8,6 +8,7 @@ from keyalias import keyalias
 from overloadable import Overloadable
 
 from v440._utils import utils
+from v440._utils.utils import guard
 from v440._utils.VList import VList
 
 
@@ -191,6 +192,7 @@ class Release(VList):
         return list(self._data)
 
     @data.setter
+    @guard
     def data(self: Self, value: Any) -> None:
         v: list = self._tolist(value, slicing="always")
         while v and v[-1] == 0:

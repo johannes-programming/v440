@@ -7,6 +7,7 @@ import keyalias
 from v440._utils import utils
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440._utils.utils import guard
 from v440._utils.WList import WList
 
 __all__ = ["Pre"]
