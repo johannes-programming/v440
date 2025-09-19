@@ -99,11 +99,11 @@ class Qualification(WList):
         return ans
 
     @property
-    def data(self: Self) -> list:
-        return [self.pre, self.post, self.dev]
+    def _data(self: Self) -> tuple:
+        return self.pre, self.post, self.dev
 
-    @data.setter
-    def data(self: Self, value: Any) -> None:
+    @_data.setter
+    def _data(self: Self, value: Any) -> None:
         self.pre, self.post, self.dev = parse_data(value)
 
     @property
@@ -141,5 +141,3 @@ class Qualification(WList):
     @pre.setter
     def pre(self: Self, value: Any) -> None:
         self._pre.data = value
-
-    _data = data

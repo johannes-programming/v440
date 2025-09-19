@@ -80,11 +80,11 @@ class Base(WList):
         return self.format()
 
     @property
-    def data(self: Self) -> list:
-        return [self.epoch, self.release]
+    def _data(self: Self) -> tuple:
+        return self.epoch, self.release
 
-    @data.setter
-    def data(self: Self, value: Any) -> None:
+    @_data.setter
+    def _data(self: Self, value: Any) -> None:
         self.epoch, self.release = parse_data(value)
 
     @property
@@ -109,5 +109,3 @@ class Base(WList):
     @release.setter
     def release(self: Self, value: Any) -> None:
         self._release.data = value
-
-    _data = data  # why is this necessary?

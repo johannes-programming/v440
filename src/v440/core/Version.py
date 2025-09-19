@@ -62,20 +62,20 @@ class Version(WList):
         return self.format()
 
     @property
+    def _data(self: Self) -> tuple:
+        return (self.public, self.local)
+
+    @_data.setter
+    def _data(self: Self, value: Any) -> None:
+        self.public, self.local = parse_data(value)
+
+    @property
     def base(self: Self) -> Base:
         return self.public.base
 
     @base.setter
     def base(self: Self, value: Any) -> None:
         self.base.data = value
-
-    @property
-    def data(self: Self) -> str:
-        return [self.public, self.local]
-
-    @data.setter
-    def data(self: Self, value: Any) -> None:
-        self.public, self.local = parse_data(value)
 
     @property
     def dev(self: Self) -> Optional[int]:
@@ -172,5 +172,3 @@ class Version(WList):
             m: str = "%r is not a property"
             m %= x
             raise AttributeError(m)
-
-    _data = data

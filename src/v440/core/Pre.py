@@ -83,14 +83,12 @@ class Pre(WList):
         return ans
 
     @property
-    def data(self: Self) -> list:
-        return [self._phase, self._subphase]
+    def _data(self: Self) -> tuple:
+        return self._phase, self._subphase
 
-    @data.setter
-    def data(self: Self, value: Any) -> None:
+    @_data.setter
+    def _data(self: Self, value: Any) -> None:
         self._phase, self._subphase = parse_data(value)
 
     def isempty(self: Self) -> bool:
-        return self._data == [None, None]
-
-    _data = data
+        return set(self._data) == {None}

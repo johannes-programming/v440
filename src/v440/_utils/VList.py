@@ -2,8 +2,14 @@ from typing import *
 
 from datahold import OkayList
 
-from v440._utils import utils
 from v440.core.VersionError import VersionError
+
+
+def clone(value: Any) -> Any:
+    if isinstance(value, VList):
+        return list(map(clone, value))
+    else:
+        return value
 
 
 class VList(OkayList):
@@ -53,7 +59,7 @@ class VList(OkayList):
     def __setattr__(self: Self, name: str, value: Any) -> Any:
         if name not in type(self).__annotations__.keys():
             return object.__setattr__(self, name, value)
-        backup: list = utils.clone(self)
+        backup: list = clone(self)
         exc: BaseException
         try:
             object.__setattr__(self, name, value)
