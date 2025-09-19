@@ -44,7 +44,7 @@ def _segment():
 
 
 @_segment.overload(int)
-def byInt(value: int, /) -> Any:
+def _segment(value: int, /) -> Any:
     if value < 0:
         raise ValueError
     return value

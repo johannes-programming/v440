@@ -38,13 +38,15 @@ class SimpleQualifierParser:
         v = v.replace("_", ".")
         v = v.replace("-", ".")
         m: Any = Pattern.PARSER.bound.search(v)
-        l, n = m.groups()
-        if l not in self.keysforstr:
+        x: Any
+        y: Any
+        x, y = m.groups()
+        if x not in self.keysforstr:
             raise ValueError
-        if n is None:
+        if y is None:
             return None
         else:
-            return int(n)
+            return int(y)
 
     def __init__(
         self: Self,

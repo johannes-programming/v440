@@ -52,20 +52,20 @@ class Public(WList):
         return self.format()
 
     @property
+    def _data(self: Self) -> list:
+        return [self.base, self.qualification]
+
+    @_data.setter
+    def _data(self: Self, value: Any) -> None:
+        self.base, self.qualification = parse_data(value)
+
+    @property
     def base(self: Self) -> Base:
         return self._base
 
     @base.setter
     def base(self: Self, value: Any) -> None:
         self.base.data = value
-
-    @property
-    def data(self: Self) -> list:
-        return [self.base, self.qualification]
-
-    @data.setter
-    def data(self: Self, value: Any) -> None:
-        self.base, self.qualification = parse_data(value)
 
     def format(self: Self, cutoff: Any = None) -> str:
         return self.base.format(cutoff) + str(self.qualification)
@@ -77,5 +77,3 @@ class Public(WList):
     @qualification.setter
     def qualification(self: Self, value: Any) -> None:
         self.qualification.data = value
-
-    _data = data
