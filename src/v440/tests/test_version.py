@@ -179,11 +179,19 @@ class TestExample(unittest.TestCase):
         self.assertEqual(str(v), "5")  # Original version
         v.data = None
         self.assertEqual(str(v), "0")  # After reset
-        v.base = "4!5.0.1"
+        v.public.base = "4!5.0.1"
         self.assertEqual(str(v), "4!5.0.1")  # Before error
         with self.assertRaises(VersionError):
-            v.base = "9!x"
+            v.public.base = "9!x"
         self.assertEqual(str(v), "4!5.0.1")  # After error
+
+    def test_example_8(self: Self) -> None:
+        v: Version = Version("5.0.0")
+        self.assertEqual(str(v), "5")  # Original version
+        v.data = None
+        self.assertEqual(str(v), "0")  # After reset
+        with self.assertRaises(Exception):
+            v.base = "4!5.0.1"
 
 
 class TestPatch(unittest.TestCase):
