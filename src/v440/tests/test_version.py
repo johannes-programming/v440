@@ -181,7 +181,7 @@ class TestExample(unittest.TestCase):
         self.assertEqual(str(v), "0")  # After reset
         v.base = "4!5.0.1"
         self.assertEqual(str(v), "4!5.0.1")  # Before error
-        with self.assertRaises(VersionError) as context:
+        with self.assertRaises(VersionError):
             v.base = "9!x"
         self.assertEqual(str(v), "4!5.0.1")  # After error
 
@@ -286,7 +286,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         # Test if release supports iteration
         version: Version = Version()
         version.release = [1, 2, 3]
-        result = [x for x in version.release]
+        result = list(version.release)
         self.assertEqual(result, [1, 2, 3])
 
     def test_release_repr(self: Self) -> None:
@@ -389,7 +389,7 @@ class TestVersionLocal(unittest.TestCase):
         # Test if local supports iteration
         version: Version = Version()
         version.local = "1.dev.build"
-        result: list = [x for x in version.local]
+        result: list = list(version.local)
         self.assertEqual(result, [1, "dev", "build"])
 
 
