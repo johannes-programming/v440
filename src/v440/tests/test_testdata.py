@@ -10,6 +10,7 @@ import iterprod
 import packaging.version
 from catchlib import Catcher
 
+from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
@@ -77,9 +78,9 @@ class TestVersionLocalVersionError(unittest.TestCase):
         k: str
         v: dict
         for k, v in Util.util.data["local_VersionError"].items():
-            self.local(**v, key=k)
+            self.go(**v, key=k)
 
-    def local(
+    def go(
         self: Self,
         key: str,
         query: list,
@@ -177,37 +178,32 @@ class TestSlicing(unittest.TestCase):
 
 class TestDataProperty(unittest.TestCase):
     def test_data(self: Self) -> None:
-        self.v = Version()
-        for k, v in Util.util.data["data_property"].items():
-            self.data(**v, key=k)
-        self.data(query=None, solution="0")
+        for k, v in Util.util.data["data-property"].items():
+            self.go(**v, key=k)
 
-    def data(
+    def go(
         self: Self,
-        query: Any,
-        solution: str,
+        query: Any = None,
+        solution: Any = None,
         key: str = "",
     ) -> None:
-        msg: str = "data_property %r" % key
-        self.v.data = query
-        self.assertEqual(solution, str(self.v), msg=msg)
+        msg: str = "data-property %r" % key
+        version: Version = Version()
+        version.data = query
+        self.assertEqual(solution, str(version), msg=msg)
 
 
 class TestVersionRelease(unittest.TestCase):
-
-    def setUp(self: Self) -> None:
-        # Create a version class instance
-        self.version = Version()
 
     def test_0(self: Self) -> None:
         k: str
         v: Any
         for k, v in Util.util.data["release"].items():
-            self.release(key=k, **v)
+            self.go(key=k, **v)
 
-    def release(self: Self, query: Any, solution: Any, key: str = "") -> None:
-        self.version.release = query
-        self.assertEqual(self.version.release, solution)
+    def go(self: Self, query: Any, solution: Any, key: str = "") -> None:
+        release: Release = Release(query)
+        self.assertEqual(release, solution)
 
 
 class TestDev(unittest.TestCase):

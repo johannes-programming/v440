@@ -941,21 +941,24 @@ solution = [
     3,
 ]
 
-[data_property.local]
+[data-property.local]
 query = "42!1.2.3.dev1337+5.nov"
 solution = "42!1.2.3.dev1337+5.nov"
 
-[data_property.hitch]
+[data-property.hitch]
 query = 4.2
 solution = "4.2"
 
-[data_property.dragon]
+[data-property.dragon]
 query = 9001
 solution = "9001"
 
-[data_property.local_again]
+[data-property.local_again]
 query = "1701!4.5.6.rc255+reset"
 solution = "1701!4.5.6rc255+reset"
+
+[data-property.none]
+solution = "0"
 
 [slicingmethod.test_slicing_1]
 query = "1.2.3.4.5.6.7.8.9.10"
