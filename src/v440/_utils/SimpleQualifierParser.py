@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import *
 
 from v440._utils import utils
@@ -10,11 +9,8 @@ from v440._utils.Pattern import Pattern
 __all__ = ["SimpleQualifierParser"]
 
 
-@dataclasses.dataclass(frozen=True)
 class SimpleQualifierParser:
-    keysforlist: tuple = ()
-    keysforstr: tuple = ()
-    allow_len_1: bool = False
+    __slots__ = ("_keysforlist", "_keysforstr", "_allow_len_1")
 
     __call__ = Digest("__call__")
 
@@ -31,7 +27,7 @@ class SimpleQualifierParser:
     @__call__.overload(list)
     def __call__(self: Self, value: list) -> Any:
         v: list = list(map(utils.segment, value))
-        n = self.nbylist(v)
+        n: Any = self.nbylist(v)
         if isinstance(n, str):
             raise TypeError
         return n
@@ -50,41 +46,51 @@ class SimpleQualifierParser:
         else:
             return int(n)
 
-    def __post_init__(self: Self) -> None:
-        if type(self.allow_len_1) is not bool:
-            raise TypeError
-        if type(self.keysforlist) is not tuple:
-            raise TypeError
-        if type(self.keysforstr) is not tuple:
-            raise TypeError
-        keys = self.keysforlist + self.keysforstr
-        for k in keys:
-            if k is None:
-                continue
-            if type(k) is str:
-                continue
-            raise TypeError
+    def __init__(
+        self: Self,
+        keysforlist: Iterable = (),
+        keysforstr: Iterable = (),
+        allow_len_1: Any = False,
+    ) -> None:
+        self._keysforlist = tuple(map(str, keysforlist))
+        self._keysforstr = tuple(map(self.optstr, keysforstr))
+        self._allow_len_1 = bool(allow_len_1)
+
+    @property
+    def allow_len_1(self: Self) -> tuple:
+        return self._allow_len_1
+
+    @property
+    def keysforlist(self: Self) -> tuple:
+        return self._keysforlist
+
+    @property
+    def keysforstr(self: Self) -> tuple:
+        return self._keysforstr
 
     def nbylist(self: Self, value: Any, /) -> Any:
         if len(value) == 2:
-            l, n = value
-            if l not in self.keysforlist:
-                raise ValueError
-            return n
+            if value[0] in self.keysforlist:
+                return value[1]
         if len(value) == 1:
-            n = value[0]
-            if not self.allow_len_1:
-                raise ValueError
-            return n
+            if self.allow_len_1:
+                return value[0]
         raise ValueError
 
+    @classmethod
+    def optstr(cls: type, value: Any) -> Optional[str]:
+        if value is None:
+            return
+        else:
+            return str(value)
 
-POST = SimpleQualifierParser(
+
+POST: SimpleQualifierParser = SimpleQualifierParser(
     keysforlist=("post", "rev", "r", ""),
     keysforstr=(None, "post", "rev", "r"),
     allow_len_1=True,
 )
-DEV = SimpleQualifierParser(
+DEV: SimpleQualifierParser = SimpleQualifierParser(
     keysforlist=("dev",),
     keysforstr=(None, "dev"),
 )
