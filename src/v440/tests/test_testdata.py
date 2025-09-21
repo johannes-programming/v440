@@ -355,14 +355,6 @@ class TestPackaging(unittest.TestCase):
             version_obj.local = v.packaging().local
             self.assertEqual(str(v.local), str(version_obj.local))
 
-    def test_exc(self: Self) -> None:
-        l: list
-        x: str
-        for l in Util.util.data["strings"]["exc"].values():
-            for x in l:
-                with self.assertRaises(VersionError):
-                    Version(x)
-
     def test_exc_pack(self: Self) -> None:
         impure: list = list()
         l: list
@@ -374,6 +366,21 @@ class TestPackaging(unittest.TestCase):
         for x in impure:
             with self.assertRaises(packaging.version.InvalidVersion):
                 packaging.version.Version(x)
+
+
+class TestExc(unittest.TestCase):
+    def test_exc(self: Self) -> None:
+        k: str
+        l: list
+        for k, l in Util.util.data["strings"]["exc"].items():
+            self.go(key=k, queries=l)
+
+    def go(self: Self, key: str, queries: list) -> None:
+        x: str
+        with self.subTest(key=key):
+            for x in queries:
+                with self.assertRaises(VersionError):
+                    Version(x)
 
 
 if __name__ == "__main__":

@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import *
 
 from v440._utils.Digest import Digest
+from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
-from v440._utils.WList import WList
 from v440.core.Release import Release
 
 __all__ = ["Base"]
@@ -64,7 +64,7 @@ def parse_epoch(value: str) -> int:
     return ans
 
 
-class Base(WList):
+class Base(SlotList):
 
     __slots__ = ("_epoch", "_release")
 
@@ -81,11 +81,12 @@ class Base(WList):
         return self.format()
 
     @property
-    def _data(self: Self) -> tuple:
-        return self.epoch, self.release
+    def data(self: Self) -> list:
+        return [self.epoch, self.release]
 
-    @_data.setter
-    def _data(self: Self, value: Any) -> None:
+    @data.setter
+    @guard
+    def data(self: Self, value: Iterable) -> None:
         self.epoch, self.release = parse_data(value)
 
     @property

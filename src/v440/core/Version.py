@@ -5,8 +5,8 @@ from typing import *
 import packaging.version
 
 from v440._utils.Digest import Digest
+from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
-from v440._utils.WList import WList
 from v440.core.Base import Base
 from v440.core.Local import Local
 from v440.core.Pre import Pre
@@ -40,7 +40,7 @@ def parse_data(value: str) -> list:
         return [value, None]
 
 
-class Version(WList):
+class Version(SlotList):
     __slots__ = ("_public", "_local")
     base: Base
     data: list
@@ -63,11 +63,12 @@ class Version(WList):
         return self.format()
 
     @property
-    def _data(self: Self) -> tuple:
-        return (self.public, self.local)
+    def data(self: Self) -> list:
+        return [self.public, self.local]
 
-    @_data.setter
-    def _data(self: Self, value: Any) -> None:
+    @data.setter
+    @guard
+    def data(self: Self, value: Any) -> None:
         self.public, self.local = parse_data(value)
 
     @property

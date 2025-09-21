@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import *
 
 from v440._utils import SimpleQualifierParser
+from v440._utils.BaseList import BaseList
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 from v440._utils.utils import guard
-from v440._utils.WList import WList
 from v440.core.Pre import Pre
 
 __all__ = ["Qualification"]
@@ -57,7 +57,7 @@ def parse_data(value: str) -> list:
     return [pre, post, dev]
 
 
-class Qualification(WList):
+class Qualification(BaseList):
 
     __slots__ = ("_pre", "_post", "_dev")
 
@@ -72,9 +72,6 @@ class Qualification(WList):
         self._dev = None
         self.data = data
 
-    def __le__(self: Self, other: Any) -> bool:
-        return self._cmpkey() <= type(self)(other)._cmpkey()
-
     def __str__(self: Self) -> str:
         ans: str = str(self.pre)
         if self.post is not None:
@@ -83,7 +80,7 @@ class Qualification(WList):
             ans += ".dev%s" % self.dev
         return ans
 
-    def _cmpkey(self: Self) -> tuple:
+    def _cmp(self: Self) -> list:
         ans = self.data
         if not ans[0].isempty():
             ans[0] = tuple(ans[0])
@@ -100,11 +97,12 @@ class Qualification(WList):
         return ans
 
     @property
-    def _data(self: Self) -> tuple:
-        return self.pre, self.post, self.dev
+    def data(self: Self) -> list:
+        return [self.pre, self.post, self.dev]
 
-    @_data.setter
-    def _data(self: Self, value: Any) -> None:
+    @data.setter
+    @guard
+    def data(self: Self, value: Any) -> None:
         self.pre, self.post, self.dev = parse_data(value)
 
     @property

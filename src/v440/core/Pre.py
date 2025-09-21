@@ -2,13 +2,11 @@ from __future__ import annotations
 
 from typing import *
 
-import keyalias
-
 from v440._utils import utils
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
-from v440._utils.WList import WList
 
 __all__ = ["Pre"]
 
@@ -62,8 +60,7 @@ def parse_data(value: str) -> list:
     return [l, n]
 
 
-@keyalias.keyalias(phase=0, subphase=1)
-class Pre(WList):
+class Pre(SlotList):
 
     __slots__ = ("_phase", "_subphase")
 
@@ -84,12 +81,29 @@ class Pre(WList):
         return ans
 
     @property
-    def _data(self: Self) -> tuple:
-        return self._phase, self._subphase
+    def data(self: Self) -> list:
+        return [self._phase, self._subphase]
 
-    @_data.setter
-    def _data(self: Self, value: Any) -> None:
+    @data.setter
+    @guard
+    def data(self: Self, value: Any) -> None:
         self._phase, self._subphase = parse_data(value)
 
     def isempty(self: Self) -> bool:
-        return set(self._data) == {None}
+        return self.data == [None, None]
+
+    @property
+    def phase(self: Self) -> Optional[str]:
+        return self._phase
+
+    @phase.setter
+    def phase(self: Self, value: Any) -> None:
+        self[0] = value
+
+    @property
+    def subphase(self: Self) -> Optional[int]:
+        return self._subphase
+
+    @subphase.setter
+    def subphase(self: Self, value: Any) -> None:
+        self[1] = value

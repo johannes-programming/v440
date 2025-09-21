@@ -2,10 +2,12 @@ from typing import *
 
 from datahold import OkayList
 
+from v440._utils.BaseList import BaseList
 from v440.core.VersionError import VersionError
 
 
-class VList(OkayList):
+class VList(OkayList, BaseList):
+
     def __eq__(self: Self, other: Any) -> bool:
         "This magic method implements self==other."
         ans: bool
@@ -54,3 +56,6 @@ class VList(OkayList):
         ans: Any = self.copy()
         ans.sort(**kwargs)
         return ans
+
+    def isempty(self: Self) -> bool:
+        return len(self) == 0

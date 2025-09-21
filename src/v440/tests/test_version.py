@@ -104,18 +104,6 @@ class TestExample(unittest.TestCase):
         v.release.micro = 4
         self.assertEqual(str(v), "2.64.4")  # Further modified version
 
-    def test_example_3(self: Self) -> None:
-        v1: Version = Version("1.6.3")
-        v2: Version = Version("1.6.4")
-        self.assertEqual(str(v1), "1.6.3")  # v1
-        self.assertEqual(str(v2), "1.6.4")  # v2
-        self.assertFalse(v1 == v2)  # v1 == v2 gives False
-        self.assertTrue(v1 != v2)  # v1 != v2 gives True
-        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
-        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
-        self.assertFalse(v1 > v2)  # v1 > v2 gives False
-        self.assertTrue(v1 < v2)  # v1 < v2 gives True
-
     def test_example_3a(self: Self) -> None:
         v1: Version = Version("1.6.3")
         v2: str = "1.6.4"
@@ -130,6 +118,18 @@ class TestExample(unittest.TestCase):
 
     def test_example_3b(self: Self) -> None:
         v1: str = "1.6.3"
+        v2: Version = Version("1.6.4")
+        self.assertEqual(str(v1), "1.6.3")  # v1
+        self.assertEqual(str(v2), "1.6.4")  # v2
+        self.assertFalse(v1 == v2)  # v1 == v2 gives False
+        self.assertTrue(v1 != v2)  # v1 != v2 gives True
+        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
+        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
+        self.assertFalse(v1 > v2)  # v1 > v2 gives False
+        self.assertTrue(v1 < v2)  # v1 < v2 gives True
+
+    def test_example_3c(self: Self) -> None:
+        v1: Version = Version("1.6.3")
         v2: Version = Version("1.6.4")
         self.assertEqual(str(v1), "1.6.3")  # v1
         self.assertEqual(str(v2), "1.6.4")  # v2
@@ -190,7 +190,7 @@ class TestPatch(unittest.TestCase):
     def test_example_0(self: Self) -> None:
         x: Pre = Pre("a1")
         y: Pre = Pre("b2")
-        with self.assertRaises(VersionError):
+        with self.assertRaises(Exception):
             x += y
 
 

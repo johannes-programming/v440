@@ -4,8 +4,8 @@ from typing import *
 
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
-from v440._utils.WList import WList
 from v440.core.Base import Base
 from v440.core.Qualification import Qualification
 
@@ -36,7 +36,7 @@ def parse_data(value: str) -> list:
     return value[: match.end()], value[match.end() :]
 
 
-class Public(WList):
+class Public(SlotList):
 
     __slots__ = ("_base", "_qualification")
 
@@ -53,14 +53,6 @@ class Public(WList):
         return self.format()
 
     @property
-    def _data(self: Self) -> list:
-        return [self.base, self.qualification]
-
-    @_data.setter
-    def _data(self: Self, value: Any) -> None:
-        self.base, self.qualification = parse_data(value)
-
-    @property
     def base(self: Self) -> Base:
         return self._base
 
@@ -68,6 +60,15 @@ class Public(WList):
     @guard
     def base(self: Self, value: Any) -> None:
         self.base.data = value
+
+    @property
+    def data(self: Self) -> list:
+        return [self.base, self.qualification]
+
+    @data.setter
+    @guard
+    def data(self: Self, value: Any) -> None:
+        self.base, self.qualification = parse_data(value)
 
     def format(self: Self, cutoff: Any = None) -> str:
         return self.base.format(cutoff) + str(self.qualification)
