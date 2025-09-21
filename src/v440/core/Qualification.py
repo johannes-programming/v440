@@ -2,38 +2,40 @@ from __future__ import annotations
 
 from typing import *
 
-from v440._utils import SimpleQualifierParser
+from v440._utils import SimpleQualifierParser, utils
 from v440._utils.BaseList import BaseList
+from v440._utils.Cfg import Cfg
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
-from v440.core.Pre import Pre
 
 __all__ = ["Qualification"]
 
 
-parse_data: Digest = Digest("parse_data")
+parse_leg: Digest = Digest("parse_leg")
 
 
-@parse_data.overload()
-def parse_data() -> list:
-    return [None, None, None]
+@parse_leg.overload()
+def parse_leg() -> list:
+    return [[None, None], None, None]
 
 
-@parse_data.overload(int)
-def parse_data(value: int) -> list:
-    return [None, abs(value), None]
+@parse_leg.overload(int)
+def parse_leg(value: int) -> list:
+    return [[None, None], abs(value), None]
 
 
-@parse_data.overload(list)
-def parse_data(value: list) -> list:
-    return value
+@parse_leg.overload(list)
+def parse_leg(value: list) -> list:
+    return [value[:2]] + value[2:]
 
 
-@parse_data.overload(str)
-def parse_data(value: str) -> list:
+@parse_leg.overload(str)
+def parse_leg(value: str) -> list:
     v = value
-    pre: Any = None
+    prephase: Any = None
+    presubphase: Any = None
     post: Any = None
     dev: Any = None
     m: Any
@@ -53,27 +55,71 @@ def parse_data(value: str) -> list:
         if x in ("post", "r", "rev"):
             post = y
             continue
-        pre = (x, y)
-    return [pre, post, dev]
+        prephase = x
+        presubphase = y
+    return [[prephase, presubphase], post, dev]
 
 
-class Qualification(BaseList):
+parse_pre: Digest = Digest("parse_pre")
 
-    __slots__ = ("_pre", "_post", "_dev")
+
+@parse_pre.overload()
+def parse_pre() -> list:
+    return [None, None]
+
+
+@parse_pre.overload(list)
+def parse_pre(value: list) -> Any:
+    l: Any
+    n: Any
+    l, n = list(map(utils.segment, value))
+    if [l, n] == [None, None]:
+        return [None, None]
+    l = Cfg.cfg.data["phases"][l]
+    if not isinstance(n, int):
+        raise TypeError
+    return [l, n]
+
+
+@parse_pre.overload(str)
+def parse_pre(value: str) -> list:
+    if value == "":
+        return [None, None]
+    v: str = value
+    v = v.replace("_", ".")
+    v = v.replace("-", ".")
+    m: Any = Pattern.PARSER.bound.search(v)
+    l: Any
+    n: Any
+    l, n = m.groups()
+    l = Cfg.cfg.data["phases"][l]
+    n = 0 if (n is None) else int(n)
+    return [l, n]
+
+
+class Qualification(SlotList):
+
+    __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 
     data: list
-    pre: Pre
+    prephase: Optional[str]
+    presubphase: Optional[int]
     post: Optional[int]
     dev: Optional[int]
 
     def __init__(self: Self, data: Any = None) -> None:
-        self._pre = Pre()
+        self._prephase = None
+        self._presubphase = None
         self._post = None
         self._dev = None
         self.data = data
 
     def __str__(self: Self) -> str:
-        ans: str = str(self.pre)
+        ans: str = ""
+        if self.prephase is not None:
+            ans += self.prephase
+        if self.presubphase is not None:
+            ans += str(self.presubphase)
         if self.post is not None:
             ans += ".post%s" % self.post
         if self.dev is not None:
@@ -96,12 +142,12 @@ class Qualification(BaseList):
 
     @property
     def data(self: Self) -> list:
-        return [self.pre, self.post, self.dev]
+        return self.pre + [self.post, self.dev]
 
     @data.setter
     @guard
     def data(self: Self, value: Any) -> None:
-        self.pre, self.post, self.dev = parse_data(value)
+        self.pre, self.post, self.dev = parse_leg(value)
 
     @property
     def dev(self: Self) -> Optional[int]:
@@ -116,10 +162,10 @@ class Qualification(BaseList):
         return self.dev is not None
 
     def isempty(self: Self) -> bool:
-        return self.data == [None, None, None]
+        return self.data == [None, None, None, None]
 
     def isprerelease(self: Self) -> bool:
-        return self.isdevrelease() or not self.pre.isempty()
+        return {self.prephase, self.presubphase, self.dev} != {None}
 
     def ispostrelease(self: Self) -> bool:
         return self.post is not None
@@ -134,10 +180,26 @@ class Qualification(BaseList):
         self._post = SimpleQualifierParser.POST(value)
 
     @property
-    def pre(self: Self) -> Pre:
-        return self._pre
+    def pre(self: Self) -> Optional[str]:
+        return [self._prephase, self._presubphase]
 
     @pre.setter
     @guard
     def pre(self: Self, value: Any) -> None:
-        self._pre.data = value
+        self._prephase, self._presubphase = parse_pre(value)
+
+    @property
+    def prephase(self: Self) -> Optional[str]:
+        return self._prephase
+
+    @prephase.setter
+    def prephase(self: Self, value: Any) -> None:
+        self[0] = value
+
+    @property
+    def presubphase(self: Self) -> Optional[int]:
+        return self._presubphase
+
+    @presubphase.setter
+    def presubphase(self: Self, value: Any) -> None:
+        self[1] = value

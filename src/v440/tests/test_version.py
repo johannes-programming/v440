@@ -1,7 +1,7 @@
 import unittest
 from typing import *
 
-from v440.core.Pre import Pre
+from v440.core.Qualification import Qualification
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
@@ -15,7 +15,7 @@ class TestVersionManipulation(unittest.TestCase):
         # Modify individual parts of the version
         v.release.major = 2
         v.release.minor = 5
-        v.pre = "beta.1"
+        v.qualification = "beta.1"
         v.local = "local.7.dev"
 
         # Verify the expected output
@@ -50,44 +50,44 @@ class TestVersionLocal(unittest.TestCase):
         self.assertTrue(v.local is backup)
 
 
-class TestVersion(unittest.TestCase):
+class TestPre(unittest.TestCase):
 
-    def test_version_pre(self: Self) -> None:
+    def test_pre(self: Self) -> None:
         v: Version = Version("1.2.3")
-        backup = v.pre
+        backup: Qualification = v.qualification
 
         # Initial version, no pre-release version
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.pre, [None, None])
+        self.assertEqual(v.qualification, [None, None, None, None])
 
         # Set pre-release version to "a1"
-        v.pre = "a1"
+        v.qualification = "a1"
         self.assertEqual(str(v), "1.2.3a1")
-        self.assertEqual(str(v.pre), "a1")
+        self.assertEqual(str(v.qualification), "a1")
 
         # Modify pre-release phase to "preview"
-        v.pre.phase = "preview"
+        v.qualification.prephase = "preview"
         self.assertEqual(str(v), "1.2.3rc1")
-        self.assertEqual(str(v.pre), "rc1")
+        self.assertEqual(str(v.qualification), "rc1")
 
         # Modify subphase to "42"
-        v.pre.subphase = "42"
+        v.qualification.presubphase = "42"
         self.assertEqual(str(v), "1.2.3rc42")
-        self.assertEqual(str(v.pre), "rc42")
+        self.assertEqual(str(v.qualification), "rc42")
 
         # Change phase to a formatted string "BeTa"
-        v.pre.phase = """
+        v.qualification.prephase = """
         BeTa
         """
         self.assertEqual(str(v), "1.2.3b42")
-        self.assertEqual(str(v.pre), "b42")
+        self.assertEqual(str(v.qualification), "b42")
 
-        self.assertEqual(v.pre, backup)
+        self.assertEqual(v.qualification, backup)
 
         # Set pre-release to None
-        v.pre = None
+        v.qualification = None
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.pre, [None, None])
+        self.assertEqual(v.qualification, [None, None, None, None])
 
 
 class TestExample(unittest.TestCase):
@@ -151,10 +151,10 @@ class TestExample(unittest.TestCase):
         self.assertEqual(str(v), "2a1")  # Pre-release version
         v.pre = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
-        v.pre[1] = 4
-        self.assertEqual(str(v), "2b4")  # Further modified pre-release version
-        v.pre.phase = "PrEvIeW"
-        self.assertEqual(str(v), "2rc4")  # Even further modified pre-release version
+        v.qualification.pre[1] = 4
+        self.assertEqual(str(v), "2b2")  # Further modified pre-release version
+        v.qualification.prephase = "PrEvIeW"
+        self.assertEqual(str(v), "2rc2")  # Even further modified pre-release version
 
     def test_example_6(self: Self) -> None:
         v: Version = Version("1.2.3")
@@ -188,8 +188,8 @@ class TestExample(unittest.TestCase):
 
 class TestPatch(unittest.TestCase):
     def test_example_0(self: Self) -> None:
-        x: Pre = Pre("a1")
-        y: Pre = Pre("b2")
+        x: Qualification = Qualification("a1")
+        y: Qualification = Qualification("b2")
         with self.assertRaises(Exception):
             x += y
 
