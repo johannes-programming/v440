@@ -97,7 +97,7 @@ def torange(key: Any, length: Any) -> range:
 def ishashable(value: Any) -> bool:
     try:
         hash(value)
-    except:
+    except Exception:
         return False
     else:
         return True
@@ -127,13 +127,9 @@ def guard(old: Any) -> Any:
     return new
 
 
-def restore(obj: Any, backup: dict):
-    # print("backup", backup)
+def restore(obj: Any, backup: dict) -> None:
     for x in type(obj).__slots__:
-        # print("x", x)
         if ishashable(backup[x]):
-            # print("ishashable", True)
             setattr(obj, x, backup[x])
         else:
-            # print("ishashable", False)
             getattr(obj, x).data = backup[x]
