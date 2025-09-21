@@ -111,22 +111,6 @@ class Version(SlotList):
         return packaging.version.Version(str(self))
 
     @property
-    def post(self: Self) -> Optional[int]:
-        return self.qualification.post
-
-    @post.setter
-    def post(self: Self, value: Any) -> None:
-        self.qualification.post = value
-
-    @property
-    def pre(self: Self) -> list:
-        return self.qualification.pre
-
-    @pre.setter
-    def pre(self: Self, value: Any) -> None:
-        self.qualification.pre = value
-
-    @property
     def public(self: Self) -> Self:
         return self._public
 
@@ -134,11 +118,3 @@ class Version(SlotList):
     @guard
     def public(self: Self, value: Any) -> None:
         self.public.data = value
-
-    @property
-    def qualification(self: Self) -> Qualification:
-        return self.public.qualification
-
-    @qualification.setter
-    def qualification(self: Self, value: Any) -> None:
-        self.qualification.data = value

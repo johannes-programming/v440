@@ -90,16 +90,16 @@ class TestVersionLocalVersionError(unittest.TestCase):
             version.local = query
 
 
-class TestVersionLocal(unittest.TestCase):
+class TestVersionLocalGo(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
         for k, v in Util.util.data["local_attr"].items():
-            self.local(**v, key=k)
+            with self.subTest(key=k):
+                self.go(**v)
 
-    def local(
+    def go(
         self: Self,
-        key: str,
         query: list,
         attrname: Optional[str] = None,
         args: list | tuple = (),
@@ -117,8 +117,16 @@ class TestVersionLocal(unittest.TestCase):
             self.assertEqual(version.local, target)
 
 
-class TestVersionEpoch(unittest.TestCase):
-    def epoch(
+class TestVersionEpochGo(unittest.TestCase):
+
+    def test_0(self: Self) -> None:
+        k: str
+        v: dict
+        for k, v in Util.util.data["epoch"].items():
+            with self.subTest(key=k):
+                self.go(**v)
+
+    def go(
         self: Self,
         full: Any,
         part: Any,
@@ -132,14 +140,8 @@ class TestVersionEpoch(unittest.TestCase):
         self.assertIsInstance(v.epoch, int, msg=msg)
         self.assertEqual(v.epoch, part, msg=msg)
 
-    def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["epoch"].items():
-            self.epoch(**v, key=k)
 
-
-class TestSlicing(unittest.TestCase):
+class TestSlicingNoGo(unittest.TestCase):
 
     def test_slicing_2(self: Self) -> None:
         v: Version = Version("1.2.3.4.5.6.7.8.9.10")
@@ -148,7 +150,36 @@ class TestSlicing(unittest.TestCase):
             v.public.base.release[-8:15:5] = 777
         self.assertNotEqual(catcher.caught, None)
 
-    def slicingmethod(
+    def test_slicing_7(self: Self) -> None:
+        # test_slicing_7
+        v: Version = Version("1.2.3.4.5.6.7.8.9.10")
+        del v.public.base.release[-8:15:5]
+        self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
+
+
+class TestDevNoGo(unittest.TestCase):
+
+    def test_initial_none_dev(self: Self) -> None:
+        v: Version = Version("1.2.3")
+        self.assertEqual(str(v), "1.2.3")
+        self.assertIsNone(v.public.qualification.dev)
+
+    def test_dev_as_none(self: Self) -> None:
+        v: Version = Version("1.2.3")
+        v.public.qualification.dev = None
+        self.assertEqual(str(v), "1.2.3")
+        self.assertIsNone(v.public.qualification.dev)
+
+
+class TestSlicingGo(unittest.TestCase):
+    def test_slicing_3(self: Self) -> None:
+        sli: dict = Util.util.data["slicingmethod"]
+        k: str
+        v: dict
+        for k, v in sli.items():
+            self.go(**v, key=k)
+
+    def go(
         self: Self,
         query: Any,
         change: Any,
@@ -161,19 +192,6 @@ class TestSlicing(unittest.TestCase):
         v: Version = Version(query)
         v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution, "slicingmethod %s" % key)
-
-    def test_slicing_3(self: Self) -> None:
-        sli: dict = Util.util.data["slicingmethod"]
-        k: str
-        v: dict
-        for k, v in sli.items():
-            self.slicingmethod(**v, key=k)
-
-    def test_slicing_7(self: Self) -> None:
-        # test_slicing_7
-        v: Version = Version("1.2.3.4.5.6.7.8.9.10")
-        del v.public.base.release[-8:15:5]
-        self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
 
 
 class TestDataProperty(unittest.TestCase):
@@ -207,21 +225,9 @@ class TestVersionRelease(unittest.TestCase):
         self.assertEqual(release, solution)
 
 
-class TestDev(unittest.TestCase):
-
-    def test_initial_none_dev(self: Self) -> None:
-        v: Version = Version("1.2.3")
-        self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.dev)
-
-    def test_dev_as_none(self: Self) -> None:
-        v: Version = Version("1.2.3")
-        v.dev = None
-        self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.dev)
-
+class TestDevGo(unittest.TestCase):
     def test_dev_as_tuple(self: Self) -> None:
-        self.dev(
+        self.go(
             key="test_dev_as_tuple",
             v_version="1.2.3",
             v_dev=("dev", "5000"),
@@ -233,9 +239,10 @@ class TestDev(unittest.TestCase):
         k: str
         v: dict
         for k, v in Util.util.data["devint"].items():
-            self.dev(key=k, **v)
+            with self.subTest(key=k):
+                self.go(**v, key=k)
 
-    def dev(
+    def go(
         self: Self,
         key: str,
         v_version: Any,
@@ -246,10 +253,10 @@ class TestDev(unittest.TestCase):
     ):
         msg: str = "dev %r" % key
         v: Version = Version(v_version)
-        v.dev = v_dev
+        v.public.qualification.dev = v_dev
         self.assertEqual(str(v), v_str, msg=msg)
-        self.assertIsInstance(v.dev, dev_type, msg=msg)
-        self.assertEqual(v.dev, v_ans, msg=msg)
+        self.assertIsInstance(v.public.qualification.dev, dev_type, msg=msg)
+        self.assertEqual(v.public.qualification.dev, v_ans, msg=msg)
 
 
 class TestVersionSpecifiers(unittest.TestCase):

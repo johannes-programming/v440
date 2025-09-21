@@ -15,7 +15,7 @@ class TestVersionManipulation(unittest.TestCase):
         # Modify individual parts of the version
         v.public.base.release.major = 2
         v.public.base.release.minor = 5
-        v.qualification = "beta.1"
+        v.public.qualification = "beta.1"
         v.local = "local.7.dev"
 
         # Verify the expected output
@@ -54,40 +54,40 @@ class TestPre(unittest.TestCase):
 
     def test_pre(self: Self) -> None:
         v: Version = Version("1.2.3")
-        backup: Qualification = v.qualification
+        backup: Qualification = v.public.qualification
 
         # Initial version, no pre-release version
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.qualification, [None, None, None, None])
+        self.assertEqual(v.public.qualification, [None, None, None, None])
 
         # Set pre-release version to "a1"
-        v.qualification = "a1"
+        v.public.qualification = "a1"
         self.assertEqual(str(v), "1.2.3a1")
-        self.assertEqual(str(v.qualification), "a1")
+        self.assertEqual(str(v.public.qualification), "a1")
 
         # Modify pre-release phase to "preview"
-        v.qualification.prephase = "preview"
+        v.public.qualification.prephase = "preview"
         self.assertEqual(str(v), "1.2.3rc1")
-        self.assertEqual(str(v.qualification), "rc1")
+        self.assertEqual(str(v.public.qualification), "rc1")
 
         # Modify subphase to "42"
-        v.qualification.presubphase = "42"
+        v.public.qualification.presubphase = "42"
         self.assertEqual(str(v), "1.2.3rc42")
-        self.assertEqual(str(v.qualification), "rc42")
+        self.assertEqual(str(v.public.qualification), "rc42")
 
         # Change phase to a formatted string "BeTa"
-        v.qualification.prephase = """
+        v.public.qualification.prephase = """
         BeTa
         """
         self.assertEqual(str(v), "1.2.3b42")
-        self.assertEqual(str(v.qualification), "b42")
+        self.assertEqual(str(v.public.qualification), "b42")
 
-        self.assertEqual(v.qualification, backup)
+        self.assertEqual(v.public.qualification, backup)
 
         # Set pre-release to None
-        v.qualification = None
+        v.public.qualification = None
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.qualification, [None, None, None, None])
+        self.assertEqual(v.public.qualification, [None, None, None, None])
 
 
 class TestExample(unittest.TestCase):
@@ -149,25 +149,25 @@ class TestExample(unittest.TestCase):
     def test_example_5(self: Self) -> None:
         v: Version = Version("2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
-        v.pre = "beta.2"
+        v.public.qualification.pre = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
         with self.assertRaises(Exception):
-            v.qualification.pre[1] = 4
+            v.public.qualification.pre[1] = 4
         self.assertEqual(str(v), "2b2")  # Further modified pre-release version
-        v.qualification.prephase = "PrEvIeW"
+        v.public.qualification.prephase = "PrEvIeW"
         self.assertEqual(str(v), "2rc2")  # Even further modified pre-release version
 
     def test_example_6(self: Self) -> None:
         v: Version = Version("1.2.3")
-        v.post = "post1"
+        v.public.qualification.post = "post1"
         v.local = "local.7.dev"
         self.assertEqual(str(v), "1.2.3.post1+local.7.dev")  # Post-release version
         self.assertEqual(v.format("-1"), "1.2.post1+local.7.dev")  # Formatted version
-        v.post = "post.2"
+        v.public.qualification.post = "post.2"
         self.assertEqual(str(v), "1.2.3.post2+local.7.dev")  # Modified version
-        v.post = None
+        v.public.qualification.post = None
         self.assertEqual(str(v), "1.2.3+local.7.dev")  # Modified without post
-        v.post = "post", 3
+        v.public.qualification.post = "post", 3
         v.local.sort()
         self.assertEqual(str(v), "1.2.3.post3+dev.local.7")  # After sorting local
         v.local.append(8)
