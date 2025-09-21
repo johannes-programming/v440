@@ -11,6 +11,8 @@ from v440._utils import utils
 from v440._utils.utils import guard
 from v440._utils.VList import VList
 
+__all__ = ["Release"]
+
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(VList):

@@ -10,6 +10,8 @@ from v440._utils.utils import guard
 from v440.core.Local import Local
 from v440.core.Public import Public
 
+__all__ = ["Version"]
+
 parse_data: Digest = Digest("parse_data")
 
 

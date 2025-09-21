@@ -26,10 +26,9 @@ def parse_leg(value: list) -> tuple:
 
 
 @parse_leg.overload(str)
-def parse_leg(value: str) -> list:
+def parse_leg(value: str) -> tuple:
     v = value
-    prephase: Any = None
-    presubphase: Any = None
+    pre: tuple = None, None
     post: Any = None
     dev: Any = None
     m: Any
@@ -49,9 +48,8 @@ def parse_leg(value: str) -> list:
         if x in ("post", "r", "rev"):
             post = y
             continue
-        prephase = x
-        presubphase = y
-    return [[prephase, presubphase], post, dev]
+        pre = x, y
+    return pre, post, dev
 
 
 parse_pre: Digest = Digest("parse_pre")
@@ -114,7 +112,7 @@ def parse_dev(value: list) -> Optional[int]:
     if x != "dev":
         raise ValueError
     if isinstance(y, str):
-        raise ValueError
+        raise TypeError
     return y
 
 
