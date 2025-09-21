@@ -14,26 +14,26 @@ parse_data: Digest = Digest("parse_data")
 
 
 @parse_data.overload()
-def parse_data() -> list:
-    return [None, None]
+def parse_data() -> tuple:
+    return None, None
 
 
 @parse_data.overload(int)
-def parse_data(value: int) -> list:
-    return [None, value]
+def parse_data(value: int) -> tuple:
+    return None, value
 
 
 @parse_data.overload(list)
-def parse_data(value: list) -> list:
-    return value
+def parse_data(value: list) -> tuple:
+    return tuple(value)
 
 
 @parse_data.overload(str)
-def parse_data(value: str) -> list:
+def parse_data(value: str) -> tuple:
     if "!" in value:
-        return value.split("!")
+        return tuple(value.split("!"))
     else:
-        return [0, value]
+        return 0, value
 
 
 parse_epoch: Digest = Digest("parse_epoch")
