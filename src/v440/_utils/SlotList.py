@@ -8,7 +8,6 @@ from datarepr import datarepr
 from unhash import unhash
 
 from v440._utils.BaseList import BaseList
-from v440._utils.utils import guard
 from v440.core.VersionError import VersionError
 
 __all__ = ["SlotList"]

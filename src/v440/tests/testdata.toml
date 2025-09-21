@@ -1024,3 +1024,18 @@ part = 1
 [epoch.test_epoch_as_none]
 full = "1.2.3"
 part = 0
+
+[core-non-attributes.test-0000]
+clsname = "Base"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0100]
+clsname = "Public"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0200]
+clsname = "Qual"
+attrname = "fdsfvdsff"
+attrvalue = 42

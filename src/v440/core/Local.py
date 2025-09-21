@@ -28,20 +28,20 @@ class Local(VList):
         except ValueError:
             ans = self.data <= other
         else:
-            ans = self._cmpkey() <= alt._cmpkey()
+            ans = self._cmp() <= alt._cmp()
         return ans
 
     def __str__(self: Self) -> str:
         "This magic method implements str(self)."
         return ".".join(map(str, self))
 
-    def _cmpkey(self: Self) -> list:
+    def _cmp(self: Self) -> list:
         return list(map(self._sortkey, self))
 
     _data_calc: Digest = Digest("_data_calc")
 
     @_data_calc.overload()
-    def _data_calc(self: Self) -> None:
+    def _data_calc(self: Self) -> list:
         return list()
 
     @_data_calc.overload(int)
@@ -56,7 +56,7 @@ class Local(VList):
         return ans
 
     @_data_calc.overload(str)
-    def _data_calc(self: Self, value: str) -> None:
+    def _data_calc(self: Self, value: str) -> list:
         v: str = value
         if v.startswith("+"):
             v = v[1:]
@@ -69,7 +69,7 @@ class Local(VList):
         return ans
 
     @staticmethod
-    def _sortkey(value: Any) -> Tuple[bool, Any]:
+    def _sortkey(value: Any) -> tuple[bool, Any]:
         return type(value) is int, value
 
     @property

@@ -9,6 +9,7 @@ from typing import *
 import iterprod
 import packaging.version
 
+from v440 import core
 from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
@@ -353,17 +354,39 @@ class TestPackagingExc(unittest.TestCase):
 
 class TestExc(unittest.TestCase):
     def test_exc(self: Self) -> None:
-        k: str
-        l: list
-        for k, l in Util.util.data["strings"]["exc"].items():
-            self.go(key=k, queries=l)
-
-    def go(self: Self, key: str, queries: list) -> None:
         x: str
-        with self.subTest(key=key):
-            for x in queries:
-                with self.assertRaises(VersionError):
-                    Version(x)
+        y: list
+        for x, y in Util.util.data["strings"]["exc"].items():
+            with self.subTest(test_label=x):
+                self.go(queries=y)
+
+    def go(self: Self, queries: list) -> None:
+        x: str
+        for x in queries:
+            with self.assertRaises(VersionError):
+                Version(x)
+
+
+class TestSlots(unittest.TestCase):
+    def test_slots(self: Self) -> None:
+        x: Any
+        y: Any
+        for x, y in Util.util.data["core-non-attributes"].items():
+            with self.subTest(test_label=x):
+                self.go(**y)
+
+    def go(
+        self: Self,
+        clsname: str,
+        attrname: str,
+        attrvalue: Any,
+        data: Any = None,
+    ) -> None:
+        module: Any = getattr(core, clsname)
+        cls: type = getattr(module, clsname)
+        obj: Any = cls(data)
+        with self.assertRaises(AttributeError):
+            setattr(obj, attrname, attrvalue)
 
 
 if __name__ == "__main__":
