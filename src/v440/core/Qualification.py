@@ -86,7 +86,7 @@ class Qualification(BaseList):
             ans += list(self.pre)
         elif self.post is not None:
             ans += ["z", float("inf")]
-        elif ans.dev is None:
+        elif self.dev is None:
             ans += ["z", float("inf")]
         else:
             ans += ["", -1]
