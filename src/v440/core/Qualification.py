@@ -81,19 +81,17 @@ class Qualification(BaseList):
         return ans
 
     def _cmp(self: Self) -> list:
-        ans = self.data
-        if not ans[0].isempty():
-            ans[0] = tuple(ans[0])
-        elif ans[1] is not None:
-            ans[0] = "z", float("inf")
-        elif ans[2] is None:
-            ans[0] = "z", float("inf")
+        ans: list = list()
+        if not self.pre.isempty():
+            ans += list(self.pre)
+        elif self.post is not None:
+            ans += ["z", float("inf")]
+        elif ans.dev is None:
+            ans += ["z", float("inf")]
         else:
-            ans[0] = "", -1
-        if ans[1] is None:
-            ans[1] = -1
-        if ans[2] is None:
-            ans[2] = float("inf")
+            ans += ["", -1]
+        ans.append(-1 if self.post is None else self.post)
+        ans.append(float("inf") if self.dev is None else self.dev)
         return ans
 
     @property
