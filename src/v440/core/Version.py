@@ -51,11 +51,10 @@ class Version(SlotList):
     qualification: Qualification
     release: Release
 
-    def __init__(self: Self, data: Any = "0", /, **kwargs: Any) -> None:
+    def __init__(self: Self, data: Any = "0") -> None:
         self._public = Public()
         self._local = Local()
         self.data = data
-        self.update(**kwargs)
 
     def __str__(self: Self) -> str:
         return self.format()
@@ -160,17 +159,3 @@ class Version(SlotList):
     @release.setter
     def release(self: Self, value: Any) -> None:
         self.base.release = value
-
-    def update(self: Self, **kwargs: Any) -> None:
-        a: Any
-        m: str
-        x: Any
-        y: Any
-        for x, y in kwargs.items():
-            a = getattr(type(self), x)
-            if isinstance(a, property):
-                setattr(self, x, y)
-                continue
-            m: str = "%r is not a property"
-            m %= x
-            raise AttributeError(m)
