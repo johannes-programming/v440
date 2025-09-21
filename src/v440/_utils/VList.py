@@ -24,7 +24,7 @@ class VList(OkayList, BaseList):
         ans: bool
         try:
             alt: Self = type(self)(other)
-        except:
+        except Exception:
             ans = self.data >= other
         else:
             ans = alt <= self
@@ -45,7 +45,7 @@ class VList(OkayList, BaseList):
         ans: bool
         try:
             alt: Self = type(self)(other)
-        except:
+        except Exception:
             ans = self.data <= other
         else:
             ans = self._data <= alt._data
