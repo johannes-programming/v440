@@ -1,6 +1,8 @@
 import unittest
 from typing import *
 
+from catchlib import Catcher
+
 from v440.core.Qualification import Qualification
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
@@ -394,6 +396,47 @@ class TestVersionLocal(unittest.TestCase):
         version.local = "1.dev.build"
         result: list = list(version.local)
         self.assertEqual(result, [1, "dev", "build"])
+
+
+class TestSlicingNoGo(unittest.TestCase):
+
+    def test_slicing_2(self: Self) -> None:
+        v: Version = Version("1.2.3.4.5.6.7.8.9.10")
+        catcher: Catcher = Catcher()
+        with catcher.catch(Exception):
+            v.public.base.release[-8:15:5] = 777
+        self.assertNotEqual(catcher.caught, None)
+
+    def test_slicing_7(self: Self) -> None:
+        # test_slicing_7
+        v: Version = Version("1.2.3.4.5.6.7.8.9.10")
+        del v.public.base.release[-8:15:5]
+        self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
+
+
+class TestDevNoGo(unittest.TestCase):
+
+    def test_initial_none_dev(self: Self) -> None:
+        v: Version = Version("1.2.3")
+        self.assertEqual(str(v), "1.2.3")
+        self.assertIsNone(v.public.qualification.dev)
+
+    def test_dev_as_none(self: Self) -> None:
+        v: Version = Version("1.2.3")
+        v.public.qualification.dev = None
+        self.assertEqual(str(v), "1.2.3")
+        self.assertIsNone(v.public.qualification.dev)
+
+
+class TestVersionSpecifiersNoGo(unittest.TestCase):
+
+    def test_version_with_invalid_specifiers(self: Self) -> None:
+        # Test version with invalid specifiers that should raise an error
+        with self.assertRaises(VersionError):
+            Version("1.2.3--4")
+
+        with self.assertRaises(VersionError):
+            Version("1.2.3a1--4")
 
 
 if __name__ == "__main__":

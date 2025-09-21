@@ -8,7 +8,6 @@ from typing import *
 
 import iterprod
 import packaging.version
-from catchlib import Catcher
 
 from v440.core.Release import Release
 from v440.core.Version import Version
@@ -78,11 +77,11 @@ class TestVersionLocalVersionError(unittest.TestCase):
         k: str
         v: dict
         for k, v in Util.util.data["local_VersionError"].items():
-            self.go(**v, key=k)
+            with self.subTest(key=k):
+                self.go(**v)
 
     def go(
         self: Self,
-        key: str,
         query: list,
     ) -> None:
         version: Version = Version()
@@ -139,36 +138,6 @@ class TestVersionEpochGo(unittest.TestCase):
         self.assertEqual(str(v), full, msg=msg)
         self.assertIsInstance(v.epoch, int, msg=msg)
         self.assertEqual(v.epoch, part, msg=msg)
-
-
-class TestSlicingNoGo(unittest.TestCase):
-
-    def test_slicing_2(self: Self) -> None:
-        v: Version = Version("1.2.3.4.5.6.7.8.9.10")
-        catcher: Catcher = Catcher()
-        with catcher.catch(Exception):
-            v.public.base.release[-8:15:5] = 777
-        self.assertNotEqual(catcher.caught, None)
-
-    def test_slicing_7(self: Self) -> None:
-        # test_slicing_7
-        v: Version = Version("1.2.3.4.5.6.7.8.9.10")
-        del v.public.base.release[-8:15:5]
-        self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
-
-
-class TestDevNoGo(unittest.TestCase):
-
-    def test_initial_none_dev(self: Self) -> None:
-        v: Version = Version("1.2.3")
-        self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qualification.dev)
-
-    def test_dev_as_none(self: Self) -> None:
-        v: Version = Version("1.2.3")
-        v.public.qualification.dev = None
-        self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qualification.dev)
 
 
 class TestSlicingGo(unittest.TestCase):
@@ -259,29 +228,21 @@ class TestDevGo(unittest.TestCase):
         self.assertEqual(v.public.qualification.dev, v_ans, msg=msg)
 
 
-class TestVersionSpecifiers(unittest.TestCase):
-
-    def test_version_with_invalid_specifiers(self: Self) -> None:
-        # Test version with invalid specifiers that should raise an error
-        with self.assertRaises(VersionError):
-            Version("1.2.3--4")
-
-        with self.assertRaises(VersionError):
-            Version("1.2.3a1--4")
+class TestVersionSpecifiersGo(unittest.TestCase):
 
     def test_spec_toml(self: Self) -> None:
         k: str
         v: dict
         for k, v in Util.util.data["spec"].items():
-            self.spec(**v, key=k)
+            self.go(**v, key=k)
 
-    def spec(self: Self, string_a: str, string_b: str, key: str = "") -> None:
+    def go(self: Self, string_a: str, string_b: str, key: str = "") -> None:
         msg: str = "spec %r" % key
         version: Version = Version(string_a)
         self.assertEqual(str(version), string_b, msg=msg)
 
 
-class TestPackaging(unittest.TestCase):
+class TestPackagingA(unittest.TestCase):
     def test_strings_a(self: Self) -> None:
         a: packaging.version.Version
         b: str
@@ -298,6 +259,8 @@ class TestPackaging(unittest.TestCase):
                 g = Version(s).format(f)
                 self.assertEqual(b, g)
 
+
+class TestPackagingB(unittest.TestCase):
     def test_strings_b(self: Self) -> None:
         a: packaging.version.Version
         b: packaging.version.Version
@@ -312,6 +275,8 @@ class TestPackaging(unittest.TestCase):
                 msg = f"{s} should match packaging.version.Version"
                 self.assertEqual(a, b, msg=msg)
 
+
+class TestPackagingC(unittest.TestCase):
     def test_strings_c(self: Self) -> None:
         pure: list = list()
         l: list
@@ -343,6 +308,8 @@ class TestPackaging(unittest.TestCase):
             msg = f"{op} should match for {x!r} and {y!r}"
             self.assertEqual(native, convert, msg=msg)
 
+
+class TestPackagingField(unittest.TestCase):
     def test_field(self: Self) -> None:
         versionable: list = list()
         l: list
@@ -369,6 +336,8 @@ class TestPackaging(unittest.TestCase):
             version_obj.local = v.packaging().local
             self.assertEqual(str(v.local), str(version_obj.local))
 
+
+class TestPackagingExc(unittest.TestCase):
     def test_exc_pack(self: Self) -> None:
         impure: list = list()
         l: list
