@@ -244,20 +244,24 @@ class TestVersionSpecifiersGo(unittest.TestCase):
 
 class TestPackagingA(unittest.TestCase):
     def test_strings_a(self: Self) -> None:
-        a: packaging.version.Version
-        b: str
-        f: int
-        g: str
         s: str
         x: str
         y: list
         for x, y in Util.util.data["strings"]["valid"].items():
             for s in y:
-                a = packaging.version.Version(s)
-                b = str(a)
-                f = len(a.release)
-                g = Version(s).format(f)
-                self.assertEqual(b, g)
+                with self.subTest(key=x):
+                    self.go(text=s)
+
+    def go(self: Self, text: str) -> None:
+        a: packaging.version.Version
+        b: str
+        f: int
+        g: str
+        a = packaging.version.Version(text)
+        b = str(a)
+        f = len(a.release)
+        g = Version(text).format(f)
+        self.assertEqual(b, g)
 
 
 class TestPackagingB(unittest.TestCase):
