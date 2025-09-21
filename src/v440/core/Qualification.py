@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import *
 
 from v440._utils import SimpleQualifierParser, utils
-from v440._utils.BaseList import BaseList
 from v440._utils.Cfg import Cfg
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern

@@ -142,11 +142,3 @@ class Version(SlotList):
     @qualification.setter
     def qualification(self: Self, value: Any) -> None:
         self.qualification.data = value
-
-    @property
-    def release(self: Self) -> Release:
-        return self.base.release
-
-    @release.setter
-    def release(self: Self, value: Any) -> None:
-        self.base.release = value

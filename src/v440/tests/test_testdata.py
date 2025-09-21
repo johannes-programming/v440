@@ -31,11 +31,11 @@ class TestVersionReleaseAttrs(unittest.TestCase):
         k: str
         v: dict
         for k, v in Util.util.data["release_attr"].items():
-            self.release(**v, key=k)
+            with self.subTest(key=k):
+                self.go(**v)
 
-    def release(
+    def go(
         self: Self,
-        key: str,
         query: list,
         attrname: Optional[str] = None,
         args: list | tuple = (),
@@ -45,13 +45,13 @@ class TestVersionReleaseAttrs(unittest.TestCase):
     ) -> None:
         # Test the append method of the release list-like object
         version: Version = Version()
-        version.release = query
+        version.public.base.release = query
         if attrname is not None:
-            attr: Any = getattr(version.release, attrname)
+            attr: Any = getattr(version.public.base.release, attrname)
             ans: Any = attr(*args, **dict(kwargs))
             self.assertEqual(ans, solution)
         if target is not None:
-            self.assertEqual(version.release, target)
+            self.assertEqual(version.public.base.release, target)
 
 
 class TestVersionReleaseVersionError(unittest.TestCase):
@@ -60,16 +60,16 @@ class TestVersionReleaseVersionError(unittest.TestCase):
         k: str
         v: dict
         for k, v in Util.util.data["release_VersionError"].items():
-            self.release(**v, key=k)
+            with self.subTest(key=k):
+                self.go(**v)
 
-    def release(
+    def go(
         self: Self,
-        key: str,
         query: list,
     ) -> None:
         version: Version = Version()
         with self.assertRaises(VersionError):
-            version.release = query
+            version.public.base.release = query
 
 
 class TestVersionLocalVersionError(unittest.TestCase):
@@ -145,7 +145,7 @@ class TestSlicing(unittest.TestCase):
         v: Version = Version("1.2.3.4.5.6.7.8.9.10")
         catcher: Catcher = Catcher()
         with catcher.catch(Exception):
-            v.release[-8:15:5] = 777
+            v.public.base.release[-8:15:5] = 777
         self.assertNotEqual(catcher.caught, None)
 
     def slicingmethod(
@@ -159,7 +159,7 @@ class TestSlicing(unittest.TestCase):
         key: str = "",
     ) -> None:
         v: Version = Version(query)
-        v.release[start:stop:step] = change
+        v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution, "slicingmethod %s" % key)
 
     def test_slicing_3(self: Self) -> None:
@@ -172,7 +172,7 @@ class TestSlicing(unittest.TestCase):
     def test_slicing_7(self: Self) -> None:
         # test_slicing_7
         v: Version = Version("1.2.3.4.5.6.7.8.9.10")
-        del v.release[-8:15:5]
+        del v.public.base.release[-8:15:5]
         self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
 
 
@@ -199,9 +199,10 @@ class TestVersionRelease(unittest.TestCase):
         k: str
         v: Any
         for k, v in Util.util.data["release"].items():
-            self.go(key=k, **v)
+            with self.subTest(key=k):
+                self.go(**v)
 
-    def go(self: Self, query: Any, solution: Any, key: str = "") -> None:
+    def go(self: Self, query: Any, solution: Any) -> None:
         release: Release = Release(query)
         self.assertEqual(release, solution)
 
@@ -348,13 +349,13 @@ class TestPackaging(unittest.TestCase):
         for x in versionable:
             v = Version(x)
             self.assertEqual(
-                v.qualification.isdevrelease(), v.packaging().is_devrelease
+                v.public.qualification.isdevrelease(), v.packaging().is_devrelease
             )
             self.assertEqual(
-                v.qualification.isprerelease(), v.packaging().is_prerelease
+                v.public.qualification.isprerelease(), v.packaging().is_prerelease
             )
             self.assertEqual(
-                v.qualification.ispostrelease(), v.packaging().is_postrelease
+                v.public.qualification.ispostrelease(), v.packaging().is_postrelease
             )
             self.assertEqual(str(v.base), v.packaging().base_version)
             self.assertEqual(str(v.public), v.packaging().public)
