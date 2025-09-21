@@ -3,7 +3,7 @@ from typing import *
 
 from catchlib import Catcher
 
-from v440.core.Qualification import Qualification
+from v440.core.Qual import Qual
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
@@ -17,7 +17,7 @@ class TestVersionManipulation(unittest.TestCase):
         # Modify individual parts of the version
         v.public.base.release.major = 2
         v.public.base.release.minor = 5
-        v.public.qualification = "beta.1"
+        v.public.qual = "beta.1"
         v.local = "local.7.dev"
 
         # Verify the expected output
@@ -56,40 +56,40 @@ class TestPre(unittest.TestCase):
 
     def test_pre(self: Self) -> None:
         v: Version = Version("1.2.3")
-        backup: Qualification = v.public.qualification
+        backup: Qual = v.public.qual
 
         # Initial version, no pre-release version
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.public.qualification, [None, None, None, None])
+        self.assertEqual(v.public.qual, [None, None, None, None])
 
         # Set pre-release version to "a1"
-        v.public.qualification = "a1"
+        v.public.qual = "a1"
         self.assertEqual(str(v), "1.2.3a1")
-        self.assertEqual(str(v.public.qualification), "a1")
+        self.assertEqual(str(v.public.qual), "a1")
 
         # Modify pre-release phase to "preview"
-        v.public.qualification.prephase = "preview"
+        v.public.qual.prephase = "preview"
         self.assertEqual(str(v), "1.2.3rc1")
-        self.assertEqual(str(v.public.qualification), "rc1")
+        self.assertEqual(str(v.public.qual), "rc1")
 
         # Modify subphase to "42"
-        v.public.qualification.presubphase = "42"
+        v.public.qual.presubphase = "42"
         self.assertEqual(str(v), "1.2.3rc42")
-        self.assertEqual(str(v.public.qualification), "rc42")
+        self.assertEqual(str(v.public.qual), "rc42")
 
         # Change phase to a formatted string "BeTa"
-        v.public.qualification.prephase = """
+        v.public.qual.prephase = """
         BeTa
         """
         self.assertEqual(str(v), "1.2.3b42")
-        self.assertEqual(str(v.public.qualification), "b42")
+        self.assertEqual(str(v.public.qual), "b42")
 
-        self.assertEqual(v.public.qualification, backup)
+        self.assertEqual(v.public.qual, backup)
 
         # Set pre-release to None
-        v.public.qualification = None
+        v.public.qual = None
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.public.qualification, [None, None, None, None])
+        self.assertEqual(v.public.qual, [None, None, None, None])
 
 
 class TestExample(unittest.TestCase):
@@ -151,25 +151,25 @@ class TestExample(unittest.TestCase):
     def test_example_5(self: Self) -> None:
         v: Version = Version("2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
-        v.public.qualification.pre = "beta.2"
+        v.public.qual.pre = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
         with self.assertRaises(Exception):
-            v.public.qualification.pre[1] = 4
+            v.public.qual.pre[1] = 4
         self.assertEqual(str(v), "2b2")  # Further modified pre-release version
-        v.public.qualification.prephase = "PrEvIeW"
+        v.public.qual.prephase = "PrEvIeW"
         self.assertEqual(str(v), "2rc2")  # Even further modified pre-release version
 
     def test_example_6(self: Self) -> None:
         v: Version = Version("1.2.3")
-        v.public.qualification.post = "post1"
+        v.public.qual.post = "post1"
         v.local = "local.7.dev"
         self.assertEqual(str(v), "1.2.3.post1+local.7.dev")  # Post-release version
         self.assertEqual(v.format("-1"), "1.2.post1+local.7.dev")  # Formatted version
-        v.public.qualification.post = "post.2"
+        v.public.qual.post = "post.2"
         self.assertEqual(str(v), "1.2.3.post2+local.7.dev")  # Modified version
-        v.public.qualification.post = None
+        v.public.qual.post = None
         self.assertEqual(str(v), "1.2.3+local.7.dev")  # Modified without post
-        v.public.qualification.post = "post", 3
+        v.public.qual.post = "post", 3
         v.local.sort()
         self.assertEqual(str(v), "1.2.3.post3+dev.local.7")  # After sorting local
         v.local.append(8)
@@ -191,8 +191,8 @@ class TestExample(unittest.TestCase):
 
 class TestPatch(unittest.TestCase):
     def test_example_0(self: Self) -> None:
-        x: Qualification = Qualification("a1")
-        y: Qualification = Qualification("b2")
+        x: Qual = Qual("a1")
+        y: Qual = Qual("b2")
         with self.assertRaises(Exception):
             x += y
 
@@ -419,13 +419,13 @@ class TestDevNoGo(unittest.TestCase):
     def test_initial_none_dev(self: Self) -> None:
         v: Version = Version("1.2.3")
         self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qualification.dev)
+        self.assertIsNone(v.public.qual.dev)
 
     def test_dev_as_none(self: Self) -> None:
         v: Version = Version("1.2.3")
-        v.public.qualification.dev = None
+        v.public.qual.dev = None
         self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qualification.dev)
+        self.assertIsNone(v.public.qual.dev)
 
 
 class TestVersionSpecifiersNoGo(unittest.TestCase):

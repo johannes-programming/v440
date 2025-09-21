@@ -10,7 +10,7 @@ from v440._utils.utils import guard
 from v440.core.Base import Base
 from v440.core.Local import Local
 from v440.core.Public import Public
-from v440.core.Qualification import Qualification
+from v440.core.Qual import Qual
 from v440.core.Release import Release
 
 parse_data: Digest = Digest("parse_data")

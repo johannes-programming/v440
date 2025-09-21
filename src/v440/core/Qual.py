@@ -6,10 +6,10 @@ from v440._utils import SimpleQualifierParser, qualparse
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
 
-__all__ = ["Qualification"]
+__all__ = ["Qual"]
 
 
-class Qualification(SlotList):
+class Qual(SlotList):
 
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 

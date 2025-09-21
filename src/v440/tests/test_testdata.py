@@ -222,10 +222,10 @@ class TestDevGo(unittest.TestCase):
     ):
         msg: str = "dev %r" % key
         v: Version = Version(v_version)
-        v.public.qualification.dev = v_dev
+        v.public.qual.dev = v_dev
         self.assertEqual(str(v), v_str, msg=msg)
-        self.assertIsInstance(v.public.qualification.dev, dev_type, msg=msg)
-        self.assertEqual(v.public.qualification.dev, v_ans, msg=msg)
+        self.assertIsInstance(v.public.qual.dev, dev_type, msg=msg)
+        self.assertEqual(v.public.qual.dev, v_ans, msg=msg)
 
 
 class TestVersionSpecifiersGo(unittest.TestCase):
@@ -326,14 +326,10 @@ class TestPackagingField(unittest.TestCase):
         x: str
         for x in versionable:
             v = Version(x)
+            self.assertEqual(v.public.qual.isdevrelease(), v.packaging().is_devrelease)
+            self.assertEqual(v.public.qual.isprerelease(), v.packaging().is_prerelease)
             self.assertEqual(
-                v.public.qualification.isdevrelease(), v.packaging().is_devrelease
-            )
-            self.assertEqual(
-                v.public.qualification.isprerelease(), v.packaging().is_prerelease
-            )
-            self.assertEqual(
-                v.public.qualification.ispostrelease(), v.packaging().is_postrelease
+                v.public.qual.ispostrelease(), v.packaging().is_postrelease
             )
             self.assertEqual(str(v.public.base), v.packaging().base_version)
             self.assertEqual(str(v.public), v.packaging().public)

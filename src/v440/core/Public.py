@@ -7,7 +7,7 @@ from v440._utils.Pattern import Pattern
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
 from v440.core.Base import Base
-from v440.core.Qualification import Qualification
+from v440.core.Qual import Qual
 
 __all__ = ["Public"]
 
@@ -38,15 +38,15 @@ def parse_data(value: str) -> list:
 
 class Public(SlotList):
 
-    __slots__ = ("_base", "_qualification")
+    __slots__ = ("_base", "_qual")
 
     data: list
     base: Base
-    qualification: Qualification
+    qual: Qual
 
     def __init__(self: Self, data: Any = None) -> None:
         self._base = Base()
-        self._qualification = Qualification()
+        self._qual = Qual()
         self.data = data
 
     def __str__(self: Self) -> str:
@@ -63,21 +63,21 @@ class Public(SlotList):
 
     @property
     def data(self: Self) -> list:
-        return [self.base, self.qualification]
+        return [self.base, self.qual]
 
     @data.setter
     @guard
     def data(self: Self, value: Any) -> None:
-        self.base, self.qualification = parse_data(value)
+        self.base, self.qual = parse_data(value)
 
     def format(self: Self, cutoff: Any = None) -> str:
-        return self.base.format(cutoff) + str(self.qualification)
+        return self.base.format(cutoff) + str(self.qual)
 
     @property
-    def qualification(self: Self) -> Qualification:
-        return self._qualification
+    def qual(self: Self) -> Qual:
+        return self._qual
 
-    @qualification.setter
+    @qual.setter
     @guard
-    def qualification(self: Self, value: Any) -> None:
-        self.qualification.data = value
+    def qual(self: Self, value: Any) -> None:
+        self.qual.data = value
