@@ -108,14 +108,14 @@ def parse_dev(value: int) -> int:
 
 @parse_dev.overload(list)
 def parse_dev(value: list) -> Optional[int]:
-    v: list = list(map(utils.segment, value))
-    if len(v) != 2:
+    x: Any
+    y: Any
+    x, y = map(utils.segment, value)
+    if x != "dev":
         raise ValueError
-    if v[0] != "dev":
+    if isinstance(y, str):
         raise ValueError
-    if isinstance(v[1], str):
-        raise ValueError
-    return v[1]
+    return y
 
 
 @parse_dev.overload(str)
@@ -175,7 +175,5 @@ def parse_post(value: str) -> Optional[int]:
     x, y = m.groups()
     if x not in (None, "post", "rev", "r"):
         raise ValueError
-    if y is None:
-        return None
-    else:
+    if y is not None:
         return int(y)
