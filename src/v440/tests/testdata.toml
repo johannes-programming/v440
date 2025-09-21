@@ -713,7 +713,7 @@ Post-releases = [
     "1.2.3+local.version.with.extremely.long.identifier.123456789012345678901234567890",
     "0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999",
 ]
-
+"Difficult Qualification Relations" = ['1.2.3', '1.2.3.dev0', '1.2.3.dev1', '1.2.3.dev2', '1.2.3.post0', '1.2.3.post0.dev0', '1.2.3.post0.dev1', '1.2.3.post0.dev2', '1.2.3.post10', '1.2.3.post10.dev0', '1.2.3.post10.dev1', '1.2.3.post10.dev2', '1.2.3a0', '1.2.3a0.dev0', '1.2.3a0.dev1', '1.2.3a0.dev2', '1.2.3a0.post0', '1.2.3a0.post0.dev0', '1.2.3a0.post0.dev1', '1.2.3a0.post0.dev2', '1.2.3a0.post10', '1.2.3a0.post10.dev0', '1.2.3a0.post10.dev1', '1.2.3a0.post10.dev2', '1.2.3a4', '1.2.3a4.dev0', '1.2.3a4.dev1', '1.2.3a4.dev2', '1.2.3a4.post0', '1.2.3a4.post0.dev0', '1.2.3a4.post0.dev1', '1.2.3a4.post0.dev2', '1.2.3a4.post10', '1.2.3a4.post10.dev0', '1.2.3a4.post10.dev1', '1.2.3a4.post10.dev2', '1.2.3b1', '1.2.3b1.dev0', '1.2.3b1.dev1', '1.2.3b1.dev2', '1.2.3b1.post0', '1.2.3b1.post0.dev0', '1.2.3b1.post0.dev1', '1.2.3b1.post0.dev2', '1.2.3b1.post10', '1.2.3b1.post10.dev0', '1.2.3b1.post10.dev1', '1.2.3b1.post10.dev2']
 [strings.incomp]
 "Increasing complexity with more combinations" = [
     "1!1.0.0.dev4567.post9+20190101",
