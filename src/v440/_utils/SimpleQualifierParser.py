@@ -85,14 +85,3 @@ class SimpleQualifierParser:
             return
         else:
             return str(value)
-
-
-POST: SimpleQualifierParser = SimpleQualifierParser(
-    keysforlist=("post", "rev", "r", ""),
-    keysforstr=(None, "post", "rev", "r"),
-    allow_len_1=True,
-)
-DEV: SimpleQualifierParser = SimpleQualifierParser(
-    keysforlist=("dev",),
-    keysforstr=(None, "dev"),
-)

@@ -68,7 +68,7 @@ class Qual(SlotList):
     @dev.setter
     @guard
     def dev(self: Self, value: Any) -> None:
-        self._dev = SimpleQualifierParser.DEV(value)
+        self._dev = qualparse.parse_dev(value)
 
     def isdevrelease(self: Self) -> bool:
         return self.dev is not None
@@ -89,7 +89,7 @@ class Qual(SlotList):
     @post.setter
     @guard
     def post(self: Self, value: Any) -> None:
-        self._post = SimpleQualifierParser.POST(value)
+        self._post = qualparse.parse_post(value)
 
     @property
     def pre(self: Self) -> tuple:

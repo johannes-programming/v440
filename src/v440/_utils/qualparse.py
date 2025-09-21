@@ -6,18 +6,19 @@ from v440._utils import utils
 from v440._utils.Cfg import Cfg
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
+from v440._utils.SimpleQualifierParser import SimpleQualifierParser
 
 parse_leg: Digest = Digest("parse_leg")
 
 
 @parse_leg.overload()
 def parse_leg() -> list:
-    return [[None, None], None, None]
+    return [None, None, None]
 
 
 @parse_leg.overload(int)
 def parse_leg(value: int) -> list:
-    return [[None, None], abs(value), None]
+    return [None, abs(value), None]
 
 
 @parse_leg.overload(list)
@@ -89,3 +90,15 @@ def parse_pre(value: str) -> list:
     l = Cfg.cfg.data["phases"][l]
     n = 0 if (n is None) else int(n)
     return [l, n]
+
+
+parse_dev: SimpleQualifierParser = SimpleQualifierParser(
+    keysforlist=("dev",),
+    keysforstr=(None, "dev"),
+)
+
+parse_post: SimpleQualifierParser = SimpleQualifierParser(
+    keysforlist=("post", "rev", "r", ""),
+    keysforstr=(None, "post", "rev", "r"),
+    allow_len_1=True,
+)
