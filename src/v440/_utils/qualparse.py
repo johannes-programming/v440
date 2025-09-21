@@ -11,18 +11,18 @@ parse_leg: Digest = Digest("parse_leg")
 
 
 @parse_leg.overload()
-def parse_leg() -> list:
-    return [None, None, None]
+def parse_leg() -> tuple:
+    return None, None, None
 
 
 @parse_leg.overload(int)
-def parse_leg(value: int) -> list:
-    return [None, abs(value), None]
+def parse_leg(value: int) -> tuple:
+    return None, abs(value), None
 
 
 @parse_leg.overload(list)
-def parse_leg(value: list) -> list:
-    return [value[:2]] + value[2:]
+def parse_leg(value: list) -> tuple:
+    return tuple([value[:2]] + value[2:])
 
 
 @parse_leg.overload(str)
@@ -129,9 +129,7 @@ def parse_dev(value: str) -> Optional[int]:
     x, y = m.groups()
     if x not in (None, "dev"):
         raise ValueError
-    if y is None:
-        return
-    else:
+    if y is not None:
         return int(y)
 
 
