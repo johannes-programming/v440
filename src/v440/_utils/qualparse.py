@@ -58,25 +58,25 @@ parse_pre: Digest = Digest("parse_pre")
 
 
 @parse_pre.overload()
-def parse_pre() -> list:
-    return [None, None]
+def parse_pre() -> tuple:
+    return None, None
 
 
 @parse_pre.overload(list)
-def parse_pre(value: list) -> Any:
-    l: Any
-    n: Any
-    l, n = list(map(utils.segment, value))
-    if [l, n] == [None, None]:
-        return [None, None]
-    l = Cfg.cfg.data["phases"][l]
-    if not isinstance(n, int):
+def parse_pre(value: list) -> tuple:
+    x: Any
+    y: Any
+    x, y = map(utils.segment, value)
+    if (x, y) == (None, None):
+        return None, None
+    x = Cfg.cfg.data["phases"][x]
+    if not isinstance(y, int):
         raise TypeError
-    return [l, n]
+    return x, y
 
 
 @parse_pre.overload(str)
-def parse_pre(value: str) -> list:
+def parse_pre(value: str) -> tuple:
     if value == "":
         return [None, None]
     v: str = value
@@ -88,7 +88,7 @@ def parse_pre(value: str) -> list:
     l, n = m.groups()
     l = Cfg.cfg.data["phases"][l]
     n = 0 if (n is None) else int(n)
-    return [l, n]
+    return l, n
 
 
 parse_dev: Digest = Digest("parse_dev")
