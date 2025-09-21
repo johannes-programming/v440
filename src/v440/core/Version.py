@@ -41,15 +41,10 @@ def parse_data(value: str) -> list:
 
 class Version(SlotList):
     __slots__ = ("_public", "_local")
-    base: Base
+
     data: list
-    dev: Optional[int]
-    epoch: int
     local: Local
-    post: Optional[int]
     public: Public
-    qualification: Qualification
-    release: Release
 
     def __init__(self: Self, data: Any = "0") -> None:
         self._public = Public()
@@ -67,30 +62,6 @@ class Version(SlotList):
     @guard
     def data(self: Self, value: Any) -> None:
         self.public, self.local = parse_data(value)
-
-    @property
-    def base(self: Self) -> Base:
-        return self.public.base
-
-    @base.setter
-    def base(self: Self, value: Any) -> None:
-        self.base.data = value
-
-    @property
-    def dev(self: Self) -> Optional[int]:
-        return self.qualification.dev
-
-    @dev.setter
-    def dev(self: Self, value: Any) -> None:
-        self.qualification.dev = value
-
-    @property
-    def epoch(self: Self) -> int:
-        return self.base.epoch
-
-    @epoch.setter
-    def epoch(self: Self, value: Any) -> None:
-        self.base.epoch = value
 
     def format(self: Self, cutoff: Any = None) -> str:
         ans: str = self.public.format(cutoff)

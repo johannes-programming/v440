@@ -134,10 +134,10 @@ class TestVersionEpochGo(unittest.TestCase):
     ) -> None:
         msg: str = "epoch %r" % key
         v: Version = Version("1.2.3")
-        v.epoch = query
+        v.public.base.epoch = query
         self.assertEqual(str(v), full, msg=msg)
-        self.assertIsInstance(v.epoch, int, msg=msg)
-        self.assertEqual(v.epoch, part, msg=msg)
+        self.assertIsInstance(v.public.base.epoch, int, msg=msg)
+        self.assertEqual(v.public.base.epoch, part, msg=msg)
 
 
 class TestSlicingGo(unittest.TestCase):
@@ -335,7 +335,7 @@ class TestPackagingField(unittest.TestCase):
             self.assertEqual(
                 v.public.qualification.ispostrelease(), v.packaging().is_postrelease
             )
-            self.assertEqual(str(v.base), v.packaging().base_version)
+            self.assertEqual(str(v.public.base), v.packaging().base_version)
             self.assertEqual(str(v.public), v.packaging().public)
             version_obj.local = v.packaging().local
             self.assertEqual(str(v.local), str(version_obj.local))
