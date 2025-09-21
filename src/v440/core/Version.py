@@ -47,7 +47,6 @@ class Version(SlotList):
     epoch: int
     local: Local
     post: Optional[int]
-    pre: Pre
     public: Public
     qualification: Qualification
     release: Release

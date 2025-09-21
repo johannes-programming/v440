@@ -151,7 +151,8 @@ class TestExample(unittest.TestCase):
         self.assertEqual(str(v), "2a1")  # Pre-release version
         v.pre = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
-        v.qualification.pre[1] = 4
+        with self.assertRaises(Exception):
+            v.qualification.pre[1] = 4
         self.assertEqual(str(v), "2b2")  # Further modified pre-release version
         v.qualification.prephase = "PrEvIeW"
         self.assertEqual(str(v), "2rc2")  # Even further modified pre-release version

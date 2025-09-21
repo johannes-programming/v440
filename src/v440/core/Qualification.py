@@ -142,7 +142,7 @@ class Qualification(SlotList):
 
     @property
     def data(self: Self) -> list:
-        return self.pre + [self.post, self.dev]
+        return [self.prephase, self.presubphase, self.post, self.dev]
 
     @data.setter
     @guard
@@ -180,8 +180,8 @@ class Qualification(SlotList):
         self._post = SimpleQualifierParser.POST(value)
 
     @property
-    def pre(self: Self) -> Optional[str]:
-        return [self._prephase, self._presubphase]
+    def pre(self: Self) -> tuple:
+        return (self._prephase, self._presubphase)
 
     @pre.setter
     @guard
@@ -194,7 +194,7 @@ class Qualification(SlotList):
 
     @prephase.setter
     def prephase(self: Self, value: Any) -> None:
-        self[0] = value
+        self.pre = value, self.presubphase
 
     @property
     def presubphase(self: Self) -> Optional[int]:
@@ -202,4 +202,4 @@ class Qualification(SlotList):
 
     @presubphase.setter
     def presubphase(self: Self, value: Any) -> None:
-        self[1] = value
+        self.pre = self.prephase, value
