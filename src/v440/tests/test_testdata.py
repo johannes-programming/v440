@@ -347,9 +347,15 @@ class TestPackaging(unittest.TestCase):
         x: str
         for x in versionable:
             v = Version(x)
-            self.assertEqual(v.isdevrelease(), v.packaging().is_devrelease)
-            self.assertEqual(v.isprerelease(), v.packaging().is_prerelease)
-            self.assertEqual(v.ispostrelease(), v.packaging().is_postrelease)
+            self.assertEqual(
+                v.qualification.isdevrelease(), v.packaging().is_devrelease
+            )
+            self.assertEqual(
+                v.qualification.isprerelease(), v.packaging().is_prerelease
+            )
+            self.assertEqual(
+                v.qualification.ispostrelease(), v.packaging().is_postrelease
+            )
             self.assertEqual(str(v.base), v.packaging().base_version)
             self.assertEqual(str(v.public), v.packaging().public)
             version_obj.local = v.packaging().local

@@ -98,15 +98,6 @@ class Version(SlotList):
             ans += "+%s" % self.local
         return ans
 
-    def isdevrelease(self: Self) -> bool:
-        return self.qualification.isdevrelease()
-
-    def isprerelease(self: Self) -> bool:
-        return self.qualification.isprerelease()
-
-    def ispostrelease(self: Self) -> bool:
-        return self.qualification.ispostrelease()
-
     @property
     def local(self: Self) -> Local:
         return self._local
