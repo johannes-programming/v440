@@ -6,7 +6,6 @@ from v440._utils import utils
 from v440._utils.Cfg import Cfg
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
-from v440._utils.SimpleQualifierParser import SimpleQualifierParser
 
 parse_leg: Digest = Digest("parse_leg")
 
@@ -92,13 +91,93 @@ def parse_pre(value: str) -> list:
     return [l, n]
 
 
-parse_dev: SimpleQualifierParser = SimpleQualifierParser(
-    keysforlist=("dev",),
-    keysforstr=(None, "dev"),
-)
+parse_dev: Digest = Digest("parse_dev")
 
-parse_post: SimpleQualifierParser = SimpleQualifierParser(
-    keysforlist=("post", "rev", "r", ""),
-    keysforstr=(None, "post", "rev", "r"),
-    allow_len_1=True,
-)
+
+@parse_dev.overload()
+def parse_dev() -> None:
+    return
+
+
+@parse_dev.overload(int)
+def parse_dev(value: int) -> int:
+    if value < 0:
+        raise ValueError
+    return value
+
+
+@parse_dev.overload(list)
+def parse_dev(value: list) -> Optional[int]:
+    v: list = list(map(utils.segment, value))
+    if len(v) != 2:
+        raise ValueError
+    if v[0] != "dev":
+        raise ValueError
+    if isinstance(v[1], str):
+        raise ValueError
+    return v[1]
+
+
+@parse_dev.overload(str)
+def parse_dev(value: str) -> Optional[int]:
+    v: str = value
+    v = v.replace("_", ".")
+    v = v.replace("-", ".")
+    m: Any = Pattern.PARSER.bound.search(v)
+    x: Any
+    y: Any
+    x, y = m.groups()
+    if x not in (None, "dev"):
+        raise ValueError
+    if y is None:
+        return
+    else:
+        return int(y)
+
+
+parse_post: Digest = Digest("parse_post")
+
+
+@parse_post.overload()
+def parse_post() -> None:
+    return
+
+
+@parse_post.overload(int)
+def parse_post(value: int) -> int:
+    if value < 0:
+        raise ValueError
+    return value
+
+
+@parse_post.overload(list)
+def parse_post(value: list) -> Optional[int]:
+    v: list = list(map(utils.segment, value))
+    if len(v) == 0:
+        raise ValueError
+    if len(v) > 2:
+        raise ValueError
+    if len(v) == 1:
+        v.insert(0, "")
+    if v[0] not in ("post", "rev", "r", ""):
+        raise ValueError
+    if isinstance(v[1], str):
+        raise TypeError
+    return v[1]
+
+
+@parse_post.overload(str)
+def parse_post(value: str) -> Optional[int]:
+    v: str = value
+    v = v.replace("_", ".")
+    v = v.replace("-", ".")
+    m: Any = Pattern.PARSER.bound.search(v)
+    x: Any
+    y: Any
+    x, y = m.groups()
+    if x not in (None, "post", "rev", "r"):
+        raise ValueError
+    if y is None:
+        return None
+    else:
+        return int(y)

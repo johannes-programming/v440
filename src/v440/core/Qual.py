@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import *
 
-from v440._utils import SimpleQualifierParser, qualparse
+from v440._utils import qualparse
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
 

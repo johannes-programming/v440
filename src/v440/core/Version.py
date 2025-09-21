@@ -7,36 +7,33 @@ import packaging.version
 from v440._utils.Digest import Digest
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
-from v440.core.Base import Base
 from v440.core.Local import Local
 from v440.core.Public import Public
-from v440.core.Qual import Qual
-from v440.core.Release import Release
 
 parse_data: Digest = Digest("parse_data")
 
 
 @parse_data.overload()
-def parse_data() -> list:
-    return [None, None]
+def parse_data() -> tuple:
+    return None, None
 
 
 @parse_data.overload(int)
-def parse_data(value: int) -> list:
-    return [value, None]
+def parse_data(value: int) -> tuple:
+    return value, None
 
 
 @parse_data.overload(list)
-def parse_data(value: list) -> list:
-    return value
+def parse_data(value: list) -> tuple:
+    return tuple(value)
 
 
 @parse_data.overload(str)
-def parse_data(value: str) -> list:
+def parse_data(value: str) -> tuple:
     if "+" in value:
-        return value.split("+")
+        return tuple(value.split("+"))
     else:
-        return [value, None]
+        return value, None
 
 
 class Version(SlotList):
