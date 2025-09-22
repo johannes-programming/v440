@@ -1,8 +1,7 @@
 import unittest
 from typing import *
 
-from catchlib import Catcher
-
+from v440.core.Local import Local
 from v440.core.Qual import Qual
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
@@ -28,7 +27,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_version_operations(self: Self) -> None:
         v: Version = Version("1.2.3")
-        backup = v.local
+        backup: Local = v.local
         v.local = "local.1.2.3"
         self.assertEqual(str(v), "1.2.3+local.1.2.3")
         self.assertEqual(str(v.local), "local.1.2.3")
@@ -402,13 +401,10 @@ class TestSlicingNoGo(unittest.TestCase):
 
     def test_slicing_2(self: Self) -> None:
         v: Version = Version("1.2.3.4.5.6.7.8.9.10")
-        catcher: Catcher = Catcher()
-        with catcher.catch(Exception):
+        with self.assertRaises(Exception):
             v.public.base.release[-8:15:5] = 777
-        self.assertNotEqual(catcher.caught, None)
 
     def test_slicing_7(self: Self) -> None:
-        # test_slicing_7
         v: Version = Version("1.2.3.4.5.6.7.8.9.10")
         del v.public.base.release[-8:15:5]
         self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
