@@ -22,6 +22,10 @@ class Qual(SlotList):
     dev: Optional[int]
 
     @setdoc.basic
+    def __bool__(self: Self) -> bool:
+        return set(self.data) != {None}
+
+    @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
         self._prephase = None
         self._presubphase = None
@@ -76,15 +80,15 @@ class Qual(SlotList):
         self._dev = qualparse.parse_dev(value)
 
     def isdevrelease(self: Self) -> bool:
+        "This method returns whether the current instance denotes a dev-release."
         return self.dev is not None
 
-    def isempty(self: Self) -> bool:
-        return self.data == [None, None, None, None]
-
     def isprerelease(self: Self) -> bool:
+        "This method returns whether the current instance denotes a pre-release."
         return {self.prephase, self.presubphase, self.dev} != {None}
 
     def ispostrelease(self: Self) -> bool:
+        "This method returns whether the current instance denotes a post-release."
         return self.post is not None
 
     @property

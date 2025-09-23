@@ -20,6 +20,10 @@ class SlotList(collections.abc.Collection, BaseList):
     data: list
 
     @setdoc.basic
+    def __bool__(self: Self) -> bool:
+        return any(self.data)
+
+    @setdoc.basic
     def __contains__(self: Self, other: Any) -> bool:
         return other in self.data
 

@@ -1,9 +1,9 @@
-from abc import abstractmethod
+from abc import ABCMeta, abstractmethod
 from typing import *
 
 
-class BaseList:
+class BaseList(metaclass=ABCMeta):
     __slots__ = ()
 
     @abstractmethod
-    def isempty(self: Self) -> bool: ...
+    def __bool__(self: Self) -> bool: ...

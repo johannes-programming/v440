@@ -57,6 +57,3 @@ class VList(OkayList, BaseList):
         ans: Any = self.copy()
         ans.sort(**kwargs)
         return ans
-
-    def isempty(self: Self) -> bool:
-        return len(self) == 0
