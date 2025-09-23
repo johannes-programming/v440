@@ -15,6 +15,59 @@ from v440._utils.VList import VList
 __all__ = ["Release"]
 
 
+@Overloadable
+def tolist(value: Any, *, slicing: Any) -> list:
+    if value is None:
+        return
+    if isinstance(value, int):
+        return int
+    if hasattr(value, "__iter__") and not isinstance(value, str):
+        return list
+    return str
+
+
+@tolist.overload()
+def tolist(value: None, *, slicing: Any) -> list:
+    return list()
+
+
+@tolist.overload(int)
+def tolist(value: int, *, slicing: Any) -> list:
+    v: int = int(value)
+    if value < 0:
+        raise ValueError
+    return [v]
+
+
+@tolist.overload(list)
+def tolist(value: int, *, slicing: Any) -> list:
+    return list(map(utils.numeral, value))
+
+
+@tolist.overload(str)
+def tolist(value: Any, *, slicing: Any) -> list:
+    s: Any
+    if isinstance(value, str):
+        s = slicing
+    else:
+        s = "never"
+    v: str = str(value)
+    if v == "":
+        return list()
+    if "" == v.strip(string.digits) and s in (len(v), "always"):
+        return list(map(int, v))
+    v = v.lower().strip()
+    v = v.replace("_", ".")
+    v = v.replace("-", ".")
+    if v.startswith("v") or v.startswith("."):
+        v = v[1:]
+    l: list = v.split(".")
+    if "" in l:
+        raise ValueError
+    l = list(map(utils.numeral, l))
+    return l
+
+
 @keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(VList):
     data: list[int]
@@ -121,7 +174,7 @@ class Release(VList):
     @_setitem_range.overload(False)
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
         key = list(key)
-        value = self._tolist(value, slicing=len(key))
+        value = tolist(value, slicing=len(key))
         if len(key) != len(value):
             e = "attempt to assign sequence of size %s to extended slice of size %s"
             e %= (len(value), len(key))
@@ -141,57 +194,11 @@ class Release(VList):
         data: list = self.data
         ext: int = max(0, key.start - len(data))
         data += ext * [0]
-        l: list = self._tolist(value, slicing="always")
+        l: list = tolist(value, slicing="always")
         data = data[: key.start] + l + data[key.stop :]
         while len(data) and not data[-1]:
             data.pop()
         self._data = data
-
-    @Overloadable
-    @staticmethod
-    def _tolist(value: Any, *, slicing: Any) -> list:
-        if value is None:
-            return
-        if isinstance(value, int):
-            return int
-        if hasattr(value, "__iter__") and not isinstance(value, str):
-            return list
-        return str
-
-    @_tolist.overload()
-    def _tolist(value: None, *, slicing: Any) -> list:
-        return list()
-
-    @_tolist.overload(int)
-    def _tolist(value: int, *, slicing: Any) -> list:
-        return [utils.numeral(value)]
-
-    @_tolist.overload(list)
-    def _tolist(value: int, *, slicing: Any) -> list:
-        return list(map(utils.numeral, value))
-
-    @_tolist.overload(str)
-    def _tolist(value: Any, *, slicing: Any) -> list:
-        s: Any
-        if isinstance(value, str):
-            s = slicing
-        else:
-            s = "never"
-        v: str = str(value)
-        if v == "":
-            return list()
-        if "" == v.strip(string.digits) and s in (len(v), "always"):
-            return list(map(int, v))
-        v = v.lower().strip()
-        v = v.replace("_", ".")
-        v = v.replace("-", ".")
-        if v.startswith("v") or v.startswith("."):
-            v = v[1:]
-        l: list = v.split(".")
-        if "" in l:
-            raise ValueError
-        l = list(map(utils.numeral, l))
-        return l
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
@@ -209,7 +216,7 @@ class Release(VList):
     @data.setter
     @guard
     def data(self: Self, value: Any) -> None:
-        v: list = self._tolist(value, slicing="always")
+        v: list = tolist(value, slicing="always")
         while v and v[-1] == 0:
             v.pop()
         self._data = v
