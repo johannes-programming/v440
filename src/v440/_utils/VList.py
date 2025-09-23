@@ -9,6 +9,8 @@ from v440.core.VersionError import VersionError
 
 class VList(OkayList, BaseList):
 
+    __slots__ = ()
+
     @setdoc.basic
     def __eq__(self: Self, other: Any) -> bool:
         ans: bool
@@ -52,8 +54,8 @@ class VList(OkayList, BaseList):
             ans = self._data <= alt._data
         return ans
 
+    @setdoc.basic
     def __sorted__(self: Any, /, **kwargs: Any) -> Self:
-        "This magic method implements sorted(self, **kwargs)."
         ans: Any = self.copy()
         ans.sort(**kwargs)
         return ans
