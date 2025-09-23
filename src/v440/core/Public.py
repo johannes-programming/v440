@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import *
 
+import setdoc
+
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 from v440._utils.SlotList import SlotList
@@ -44,6 +46,7 @@ class Public(SlotList):
     base: Base
     qual: Qual
 
+    @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
         self._base = Base()
         self._qual = Qual()
@@ -62,6 +65,7 @@ class Public(SlotList):
         self.base.data = value
 
     @property
+    @setdoc.basic
     def data(self: Self) -> list:
         return [self.base, self.qual]
 

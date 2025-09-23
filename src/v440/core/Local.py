@@ -3,6 +3,8 @@ from __future__ import annotations
 import functools
 from typing import *
 
+import setdoc
+
 from v440._utils import utils
 from v440._utils.Digest import Digest
 from v440._utils.utils import guard
@@ -15,13 +17,13 @@ class Local(VList):
 
     data: list[int | str]
 
+    @setdoc.basic
     def __init__(self: Any, data: Any = None) -> None:
-        "This magic method initializes self."
         self._data = list()
         self.data = data
 
+    @setdoc.basic
     def __le__(self: Self, other: Iterable) -> bool:
-        "This magic method implements self<=other."
         ans: bool
         try:
             alt: Self = type(self)(other)
@@ -31,8 +33,8 @@ class Local(VList):
             ans = self._cmp() <= alt._cmp()
         return ans
 
+    @setdoc.basic
     def __str__(self: Self) -> str:
-        "This magic method implements str(self)."
         return ".".join(map(str, self))
 
     def _cmp(self: Self) -> list:
@@ -73,6 +75,7 @@ class Local(VList):
         return type(value) is int, value
 
     @property
+    @setdoc.basic
     def data(self: Self) -> list[int | str]:
         return list(self._data)
 

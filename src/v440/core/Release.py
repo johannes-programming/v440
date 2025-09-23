@@ -4,6 +4,7 @@ import operator
 import string
 from typing import *
 
+import setdoc
 from keyalias import keyalias
 from overloadable import Overloadable
 
@@ -22,6 +23,7 @@ class Release(VList):
     micro: int
     patch: int
 
+    @setdoc.basic
     def __add__(self: Self, other: Any, /) -> Self:
         opp: Self = type(self)(other)
         ans: Self = self.copy()
@@ -29,16 +31,19 @@ class Release(VList):
         return ans
 
     @Overloadable
+    @setdoc.basic
     def __delitem__(self: Self, key: Any) -> bool:
         return type(key) is slice
 
     @__delitem__.overload(False)
+    @setdoc.basic
     def __delitem__(self: Self, key: SupportsIndex) -> None:
         i: int = operator.index(key)
         if i < len(self):
             del self._data[i]
 
     @__delitem__.overload(True)
+    @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
         r: range = utils.torange(key, len(self))
         l: list = [k for k in r if k < len(self)]
@@ -47,41 +52,48 @@ class Release(VList):
             del self._data[k]
 
     @Overloadable
+    @setdoc.basic
     def __getitem__(self: Self, key: Any) -> bool:
         return type(key) is slice
 
     @__getitem__.overload(False)
+    @setdoc.basic
     def __getitem__(self: Self, key: Any) -> int:
         i: int = operator.index(key)
         ans: int = self._getitem_int(i)
         return ans
 
     @__getitem__.overload(True)
+    @setdoc.basic
     def __getitem__(self: Self, key: Any) -> list:
         r: range = utils.torange(key, len(self))
         m: map = map(self._getitem_int, r)
         ans: list = list(m)
         return ans
 
+    @setdoc.basic
     def __init__(self: Any, data: Any = None) -> None:
-        "This magic method initializes self."
         self._data = list()
         self.data = data
 
     @Overloadable
+    @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> bool:
         return type(key) is slice
 
     @__setitem__.overload(False)
+    @setdoc.basic
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
         i: int = operator.index(key)
         self._setitem_int(i, value)
 
     @__setitem__.overload(True)
+    @setdoc.basic
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
         k: range = utils.torange(key, len(self))
         self._setitem_range(k, value)
 
+    @setdoc.basic
     def __str__(self: Self) -> str:
         return self.format()
 
@@ -190,6 +202,7 @@ class Release(VList):
             self.data = self.data[: i + 1]
 
     @property
+    @setdoc.basic
     def data(self: Self) -> list:
         return list(self._data)
 

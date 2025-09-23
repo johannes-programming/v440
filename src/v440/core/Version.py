@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import *
 
 import packaging.version
+import setdoc
 
 from v440._utils.Digest import Digest
 from v440._utils.SlotList import SlotList
@@ -45,15 +46,18 @@ class Version(SlotList):
     local: Local
     public: Public
 
-    def __init__(self: Self, data: Any = "0") -> None:
+    @setdoc.basic
+    def __init__(self: Self, data: Any = None) -> None:
         self._public = Public()
         self._local = Local()
         self.data = data
 
+    @setdoc.basic
     def __str__(self: Self) -> str:
         return self.format()
 
     @property
+    @setdoc.basic
     def data(self: Self) -> list:
         return [self.public, self.local]
 
@@ -78,6 +82,7 @@ class Version(SlotList):
         self.local.data = value
 
     def packaging(self: Self) -> packaging.version.Version:
+        "This method returns an eqivalent packaging.version.Version object."
         return packaging.version.Version(str(self))
 
     @property

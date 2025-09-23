@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import *
 
+import setdoc
+
 from v440._utils.Digest import Digest
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
@@ -72,15 +74,18 @@ class Base(SlotList):
     epoch: int
     release: Release
 
+    @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
         self._epoch = 0
         self._release = Release()
         self.data = data
 
+    @setdoc.basic
     def __str__(self: Self) -> str:
         return self.format()
 
     @property
+    @setdoc.basic
     def data(self: Self) -> list:
         return [self.epoch, self.release]
 

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import *
 
+import setdoc
+
 from v440._utils import qualparse
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
@@ -19,6 +21,7 @@ class Qual(SlotList):
     post: Optional[int]
     dev: Optional[int]
 
+    @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
         self._prephase = None
         self._presubphase = None
@@ -26,6 +29,7 @@ class Qual(SlotList):
         self._dev = None
         self.data = data
 
+    @setdoc.basic
     def __str__(self: Self) -> str:
         ans: str = ""
         if self.prephase is not None:
@@ -53,6 +57,7 @@ class Qual(SlotList):
         return ans
 
     @property
+    @setdoc.basic
     def data(self: Self) -> list:
         return [self.prephase, self.presubphase, self.post, self.dev]
 

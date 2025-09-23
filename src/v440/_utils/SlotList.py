@@ -4,6 +4,7 @@ from abc import abstractmethod
 from typing import *
 
 import scaevola
+import setdoc
 from datarepr import datarepr
 from unhash import unhash
 
@@ -19,11 +20,12 @@ class SlotList(collections.abc.Collection, BaseList):
 
     data: list
 
+    @setdoc.basic
     def __contains__(self: Self, other: Any) -> bool:
         return other in self.data
 
+    @setdoc.basic
     def __eq__(self: Self, other: Any) -> bool:
-        "This magic method implements self==other."
         try:
             alt: Self = type(self)(other)
         except VersionError:
@@ -31,15 +33,16 @@ class SlotList(collections.abc.Collection, BaseList):
         else:
             return self.data == alt.data
 
+    @setdoc.basic
     def __format__(self: Self, format_spec: Any = "", /) -> str:
-        "This magic method implements format(self, format_spec)."
         return format(str(self), str(format_spec))
 
+    @setdoc.basic
     def __getitem__(self: Self, key: Any) -> Any:
         return self.data[key]
 
+    @setdoc.basic
     def __ge__(self: Self, other: Any, /) -> bool:
-        "This magic method implements self<=other."
         alt: Self
         try:
             alt = type(self)(other)
@@ -48,8 +51,8 @@ class SlotList(collections.abc.Collection, BaseList):
         else:
             return self._cmp() >= alt._cmp()
 
+    @setdoc.basic
     def __gt__(self: Self, other: Any, /) -> bool:
-        "This magic method implements self<=other."
         alt: Self
         try:
             alt = type(self)(other)
@@ -60,14 +63,16 @@ class SlotList(collections.abc.Collection, BaseList):
 
     __hash__ = unhash
 
+    @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
         self.data = data
 
+    @setdoc.basic
     def __iter__(self: Self) -> Any:
         return iter(self.data)
 
+    @setdoc.basic
     def __le__(self: Self, other: Any, /) -> bool:
-        "This magic method implements self<=other."
         alt: Self
         try:
             alt = type(self)(other)
@@ -76,11 +81,12 @@ class SlotList(collections.abc.Collection, BaseList):
         else:
             return self._cmp() <= alt._cmp()
 
+    @setdoc.basic
     def __len__(self: Self) -> int:
         return len(type(self).__slots__)
 
+    @setdoc.basic
     def __lt__(self: Self, other: Any, /) -> bool:
-        "This magic method implements self<=other."
         alt: Self
         try:
             alt = type(self)(other)
@@ -89,20 +95,25 @@ class SlotList(collections.abc.Collection, BaseList):
         else:
             return self._cmp() < alt._cmp()
 
+    @setdoc.basic
     def __ne__(self: Self, other: Any) -> bool:
         return not (self == other)
 
+    @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, self.data)
 
+    @setdoc.basic
     def __reversed__(self: Self) -> Iterable:
         return reversed(self.data)
 
+    @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> None:
         data: list = self.data
         data[key] = value
         self.data = data
 
+    @setdoc.basic
     def __str__(self: Self) -> str:
         return NotImplemented
 
