@@ -316,7 +316,7 @@ target = [
     3,
 ]
 
-[local_attr.test_local_boolean_assignment]
+[local-attr.test_local_boolean_assignment]
 query = [
     true,
     false,
@@ -328,7 +328,7 @@ target = [
     "dev",
 ]
 
-[local_attr.test_local_large_integers]
+[local-attr.test_local_large_integers]
 query = [
     1000000000000000000,
 ]
@@ -336,7 +336,7 @@ target = [
     1000000000000000000,
 ]
 
-[local_attr.test_local_basic_assignment]
+[local-attr.test_local_basic_assignment]
 query = [
     1,
     "local",
@@ -348,11 +348,11 @@ target = [
     "dev",
 ]
 
-[local_attr.test_local_empty_list]
+[local-attr.test_local_empty_list]
 query = []
 target = []
 
-[local_attr.test_local_conversion_string]
+[local-attr.test_local_conversion_string]
 query = [
     "1",
     "2",
@@ -366,7 +366,7 @@ target = [
     "test",
 ]
 
-[local_attr.test_local_append]
+[local-attr.test_local_append]
 attrname = "append"
 query = [
     1,
@@ -381,7 +381,7 @@ target = [
     "build",
 ]
 
-[local_attr.test_local_extend]
+[local-attr.test_local_extend]
 query = [
     1,
     "dev",
@@ -400,7 +400,7 @@ target = [
     123,
 ]
 
-[local_attr.test_local_insert]
+[local-attr.test_local_insert]
 query = [
     1,
     "dev",
@@ -416,7 +416,7 @@ target = [
     "dev",
 ]
 
-[local_attr.test_local_pop]
+[local-attr.test_local_pop]
 query = [
     1,
     "dev",
@@ -429,7 +429,7 @@ target = [
     "dev",
 ]
 
-[local_attr.test_local_pop_with_index]
+[local-attr.test_local_pop_with_index]
 query = [
     1,
     "dev",
@@ -445,7 +445,7 @@ target = [
     "build",
 ]
 
-[local_attr.test_local_remove]
+[local-attr.test_local_remove]
 attrname = "remove"
 query = [
     1,
@@ -460,7 +460,7 @@ target = [
     "build",
 ]
 
-[local_attr.test_local_clear]
+[local-attr.test_local_clear]
 query = [
     1,
     "dev",
@@ -469,7 +469,7 @@ query = [
 attrname = "clear"
 target = []
 
-[local_attr.test_local_count]
+[local-attr.test_local_count]
 query = [
     1,
     "dev",
@@ -482,7 +482,7 @@ args = [
 ]
 solution = 2
 
-[local_attr.test_local_index]
+[local-attr.test_local_index]
 query = [
     1,
     "dev",
@@ -494,7 +494,7 @@ args = [
 ]
 solution = 1
 
-[local_attr.test_local_reverse]
+[local-attr.test_local_reverse]
 query = [
     1,
     "dev",
@@ -507,7 +507,7 @@ target = [
     1,
 ]
 
-[local_attr.test_local_sort]
+[local-attr.test_local_sort]
 query = [
     3,
     1,
@@ -528,7 +528,7 @@ target = [
     3,
 ]
 
-[local_attr.test_local_sort_reverse]
+[local-attr.test_local_sort_reverse]
 query = [
     3,
     1,
@@ -549,10 +549,10 @@ target = [
     "4a",
 ]
 
-[local_attr.test_local_sort_reverse.kwargs]
+[local-attr.test_local_sort_reverse.kwargs]
 reverse = true
 
-[local_attr.test_local_conversion_mixed]
+[local-attr.test_local_conversion_mixed]
 query = [
     "1",
     2,
@@ -568,7 +568,7 @@ target = [
     1,
 ]
 
-[local_attr.test_local_equality_with_list]
+[local-attr.test_local_equality_with_list]
 query = [
     1,
     "dev",
@@ -1031,11 +1031,32 @@ attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0100]
-clsname = "Public"
+clsname = "Local"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0200]
+clsname = "Public"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0300]
 clsname = "Qual"
 attrname = "fdsfvdsff"
 attrvalue = 42
+
+[core-non-attributes.test-0400]
+clsname = "Release"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0500]
+clsname = "Public"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0600]
+clsname = "Version"
+attrname = "fdsfvdsff"
+attrvalue = 42
+isimported = true

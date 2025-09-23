@@ -94,7 +94,7 @@ class TestVersionLocalGo(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["local_attr"].items():
+        for k, v in Util.util.data["local-attr"].items():
             with self.subTest(key=k):
                 self.go(**v)
 
@@ -381,9 +381,13 @@ class TestSlots(unittest.TestCase):
         attrname: str,
         attrvalue: Any,
         data: Any = None,
+        isimported: Optional[bool] = False,
     ) -> None:
-        module: Any = getattr(core, clsname)
-        cls: type = getattr(module, clsname)
+        cls: type
+        if isimported:
+            cls = getattr(core, clsname)
+        else:
+            cls = getattr(getattr(core, clsname), clsname)
         obj: Any = cls(data)
         with self.assertRaises(AttributeError):
             setattr(obj, attrname, attrvalue)

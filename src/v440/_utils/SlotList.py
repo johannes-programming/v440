@@ -1,5 +1,4 @@
 import collections
-import operator
 from abc import abstractmethod
 from typing import *
 
