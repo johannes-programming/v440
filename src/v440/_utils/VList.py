@@ -67,9 +67,3 @@ class VList(OkayList, BaseList):
         else:
             ans = self._data <= alt._data
         return ans
-
-    def __sorted__(self: Any, /, **kwargs: Any) -> Self:
-        "This magic method implements sorted(self, **kwargs)."
-        ans: Any = self.copy()
-        ans.sort(**kwargs)
-        return ans

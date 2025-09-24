@@ -267,18 +267,22 @@ class TestPackagingA(unittest.TestCase):
 
 class TestPackagingB(unittest.TestCase):
     def test_strings_b(self: Self) -> None:
+        x: str
+        y: list
+        for x, y in Util.util.data["strings"]["valid"].items():
+            with self.subTest(key=x):
+                self.go(y)
+
+    def go(self: Self, y: list) -> None:
         a: packaging.version.Version
         b: packaging.version.Version
         s: str
         msg: str
-        x: str
-        y: list
-        for x, y in Util.util.data["strings"]["valid"].items():
-            for s in y:
-                a = packaging.version.Version(s)
-                b = Version(s).packaging()
-                msg = f"{s} should match packaging.version.Version"
-                self.assertEqual(a, b, msg=msg)
+        for s in y:
+            a = packaging.version.Version(s)
+            b = Version(s).packaging()
+            msg = f"{s} should match packaging.version.Version"
+            self.assertEqual(a, b, msg=msg)
 
 
 class TestPackagingC(unittest.TestCase):
