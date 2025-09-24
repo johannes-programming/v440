@@ -70,6 +70,8 @@ def tolist(value: Any, *, slicing: Any) -> list:
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(VList):
+    __slots__ = ()
+
     data: list[int]
     major: int
     minor: int

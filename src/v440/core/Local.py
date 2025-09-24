@@ -14,6 +14,7 @@ __all__ = ["Local"]
 
 
 class Local(VList):
+    __slots__ = ()
 
     data: list[int | str]
 
