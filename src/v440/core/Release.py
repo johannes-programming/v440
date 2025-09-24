@@ -148,9 +148,18 @@ class Release(VList):
         k: range = utils.torange(key, len(self))
         self._setitem_range(k, value)
 
-    @setdoc.basic
-    def __str__(self: Self) -> str:
-        return self.format()
+    def _format(self: Self, format_spec: str) -> str:
+        i: Optional[int]
+        if format_spec:
+            i = int(format_spec)
+        else:
+            i = None
+        l: list = self[:i]
+        if len(l) == 0:
+            l += [0]
+        l = list(map(str, l))
+        ans: str = ".".join(l)
+        return ans
 
     def _getitem_int(self: Self, key: int) -> int:
         if key < len(self):
@@ -222,13 +231,3 @@ class Release(VList):
         while v and v[-1] == 0:
             v.pop()
         self._data = v
-
-    def format(self: Self, cutoff: Any = None) -> str:
-        s: str = str(cutoff) if cutoff else ""
-        i: Optional[int] = int(s) if s else None
-        l: list = self[:i]
-        if len(l) == 0:
-            l += [0]
-        l = list(map(str, l))
-        ans: str = ".".join(l)
-        return ans

@@ -1,3 +1,4 @@
+import builtins
 from typing import *
 
 import setdoc
@@ -10,6 +11,19 @@ from v440.core.VersionError import VersionError
 class VList(OkayList, BaseList):
 
     __slots__ = ()
+
+    @setdoc.basic
+    def __format__(self: Self, format_spec: Any) -> str:
+        try:
+            return self._format(str(format_spec))
+        except Exception:
+            msg: str = "unsupported format string passed to %s.__format__"
+            msg %= type(self).__name__
+            raise TypeError(msg) from None
+
+    @setdoc.basic
+    def __str__(self: Self) -> str:
+        return builtins.format(self)
 
     @setdoc.basic
     def __eq__(self: Self, other: Any) -> bool:

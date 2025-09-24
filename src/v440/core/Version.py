@@ -52,9 +52,14 @@ class Version(SlotList):
         self._local = Local()
         self.data = data
 
-    @setdoc.basic
     def __str__(self: Self) -> str:
-        return self.format()
+        return format(self)
+
+    def _format(self: Self, format_spec: str) -> str:
+        ans: str = format(self.public, format_spec)
+        if self.local:
+            ans += "+" + format(self.local)
+        return ans
 
     @property
     @setdoc.basic
@@ -65,12 +70,6 @@ class Version(SlotList):
     @guard
     def data(self: Self, value: Any) -> None:
         self.public, self.local = parse_data(value)
-
-    def format(self: Self, cutoff: Any = None) -> str:
-        ans: str = self.public.format(cutoff)
-        if self.local:
-            ans += "+%s" % self.local
-        return ans
 
     @property
     def local(self: Self) -> Local:

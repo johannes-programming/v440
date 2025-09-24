@@ -1,4 +1,5 @@
 import collections
+import sys
 from abc import abstractmethod
 from typing import *
 
@@ -37,8 +38,13 @@ class SlotList(collections.abc.Collection, BaseList):
             return self.data == alt.data
 
     @setdoc.basic
-    def __format__(self: Self, format_spec: Any = "", /) -> str:
-        return format(str(self), str(format_spec))
+    def __format__(self: Self, format_spec: Any) -> str:
+        try:
+            return self._format(str(format_spec))
+        except Exception:
+            msg: str = "unsupported format string passed to %s.__format__"
+            msg %= type(self).__name__
+            raise TypeError(msg) from None
 
     @setdoc.basic
     def __getitem__(self: Self, key: Any) -> Any:
@@ -118,7 +124,7 @@ class SlotList(collections.abc.Collection, BaseList):
 
     @setdoc.basic
     def __str__(self: Self) -> str:
-        return NotImplemented
+        return format(self)
 
     @classmethod
     def __subclasshook__(cls: type, other: type, /) -> bool:
@@ -128,6 +134,7 @@ class SlotList(collections.abc.Collection, BaseList):
     def _cmp(self: Self) -> Any:
         return self.data
 
+    @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
 
@@ -136,6 +143,7 @@ class SlotList(collections.abc.Collection, BaseList):
 
     @property
     @abstractmethod
+    @setdoc.basic
     def data(self: Self) -> list: ...
 
     def index(self: Self, value: Any) -> Any:

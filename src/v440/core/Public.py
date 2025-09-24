@@ -52,11 +52,12 @@ class Public(SlotList):
         self._qual = Qual()
         self.data = data
 
-    def __str__(self: Self) -> str:
-        return self.format()
+    def _format(self: Self, format_spec: str) -> str:
+        return format(self.base, format_spec) + format(self.qual)
 
     @property
     def base(self: Self) -> Base:
+        "This property represents the version base."
         return self._base
 
     @base.setter
@@ -74,11 +75,9 @@ class Public(SlotList):
     def data(self: Self, value: Any) -> None:
         self.base, self.qual = parse_data(value)
 
-    def format(self: Self, cutoff: Any = None) -> str:
-        return self.base.format(cutoff) + str(self.qual)
-
     @property
     def qual(self: Self) -> Qual:
+        "This property represents the qualification."
         return self._qual
 
     @qual.setter

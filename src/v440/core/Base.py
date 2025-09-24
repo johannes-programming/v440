@@ -80,9 +80,12 @@ class Base(SlotList):
         self._release = Release()
         self.data = data
 
-    @setdoc.basic
-    def __str__(self: Self) -> str:
-        return self.format()
+    def _format(self: Self, format_spec: str) -> str:
+        ans: str = ""
+        if self.epoch:
+            ans += "%s!" % self.epoch
+        ans += format(self.release, format_spec)
+        return ans
 
     @property
     @setdoc.basic
@@ -95,7 +98,8 @@ class Base(SlotList):
         self.epoch, self.release = parse_data(value)
 
     @property
-    def epoch(self: Self) -> Optional[int]:
+    def epoch(self: Self) -> int:
+        "This property represents the epoch."
         return self._epoch
 
     @epoch.setter
@@ -103,15 +107,9 @@ class Base(SlotList):
     def epoch(self: Self, value: Any) -> None:
         self._epoch = parse_epoch(value)
 
-    def format(self: Self, cutoff: Any = None) -> str:
-        ans: str = ""
-        if self.epoch:
-            ans += "%s!" % self.epoch
-        ans += self.release.format(cutoff)
-        return ans
-
     @property
     def release(self: Self) -> Release:
+        "This property represents the release."
         return self._release
 
     @release.setter

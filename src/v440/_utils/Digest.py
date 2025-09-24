@@ -4,6 +4,8 @@ import functools
 import types
 from typing import *
 
+import setdoc
+
 
 class Digest:
     __slots__ = ("__dict__", "lookup", "name", "kind")
@@ -23,12 +25,12 @@ class Digest:
         "This magic method implements getting as an attribute from a class or an object."
         return self.wrapped.__get__(*args, **kwargs)
 
+    @setdoc.basic
     def __init__(
         self: Self,
         name: str = "",
         kind: Any = None,
     ) -> None:
-        "This magic method sets up self."
         self.lookup = dict()
         self.name = name
         self.kind = kind

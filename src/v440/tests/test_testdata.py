@@ -261,7 +261,7 @@ class TestPackagingA(unittest.TestCase):
         a = packaging.version.Version(text)
         b = str(a)
         f = len(a.release)
-        g = Version(text).format(f)
+        g = format(Version(text), str(f))
         self.assertEqual(b, g)
 
 

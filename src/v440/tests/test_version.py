@@ -96,7 +96,7 @@ class TestExample(unittest.TestCase):
     def test_example_1(self: Self) -> None:
         v: Version = Version("v1.0.0")
         self.assertEqual(str(v), "1")  # Initial version
-        self.assertEqual(v.format("3"), "1.0.0")  # Initial version formatted
+        self.assertEqual(format(v, "3"), "1.0.0")  # Initial version formatted
 
     def test_example_2(self: Self) -> None:
         v: Version = Version("2.5.3")
@@ -163,7 +163,7 @@ class TestExample(unittest.TestCase):
         v.public.qual.post = "post1"
         v.local = "local.7.dev"
         self.assertEqual(str(v), "1.2.3.post1+local.7.dev")  # Post-release version
-        self.assertEqual(v.format("-1"), "1.2.post1+local.7.dev")  # Formatted version
+        self.assertEqual(format(v, "-1"), "1.2.post1+local.7.dev")  # Formatted version
         v.public.qual.post = "post.2"
         self.assertEqual(str(v), "1.2.3.post2+local.7.dev")  # Modified version
         v.public.qual.post = None

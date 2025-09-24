@@ -16,6 +16,7 @@ class Qual(SlotList):
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 
     data: list
+    pre: tuple
     prephase: Optional[str]
     presubphase: Optional[int]
     post: Optional[int]
@@ -33,19 +34,6 @@ class Qual(SlotList):
         self._dev = None
         self.data = data
 
-    @setdoc.basic
-    def __str__(self: Self) -> str:
-        ans: str = ""
-        if self.prephase is not None:
-            ans += self.prephase
-        if self.presubphase is not None:
-            ans += str(self.presubphase)
-        if self.post is not None:
-            ans += ".post%s" % self.post
-        if self.dev is not None:
-            ans += ".dev%s" % self.dev
-        return ans
-
     def _cmp(self: Self) -> list:
         ans: list = list()
         if not self.pre.isempty():
@@ -58,6 +46,20 @@ class Qual(SlotList):
             ans += ["", -1]
         ans.append(-1 if self.post is None else self.post)
         ans.append(float("inf") if self.dev is None else self.dev)
+        return ans
+
+    def _format(self: Self, format_spec: str) -> str:
+        if format_spec:
+            raise ValueError
+        ans: str = ""
+        if self.prephase is not None:
+            ans += self.prephase
+        if self.presubphase is not None:
+            ans += str(self.presubphase)
+        if self.post is not None:
+            ans += ".post%s" % self.post
+        if self.dev is not None:
+            ans += ".dev%s" % self.dev
         return ans
 
     @property
@@ -102,7 +104,7 @@ class Qual(SlotList):
 
     @property
     def pre(self: Self) -> tuple:
-        return (self._prephase, self._presubphase)
+        return self._prephase, self._presubphase
 
     @pre.setter
     @guard
