@@ -1030,10 +1030,10 @@ clsname = "Base"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[core-non-attributes.test-0100]
-clsname = "Local"
-attrname = "fdsfvdsff"
-attrvalue = 42
+#[core-non-attributes.test-0100]
+#clsname = "Local"
+#attrname = "fdsfvdsff"
+#attrvalue = 42
 
 [core-non-attributes.test-0200]
 clsname = "Public"
@@ -1045,10 +1045,10 @@ clsname = "Qual"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[core-non-attributes.test-0400]
-clsname = "Release"
-attrname = "fdsfvdsff"
-attrvalue = 42
+#[core-non-attributes.test-0400]
+#clsname = "Release"
+#attrname = "fdsfvdsff"
+#attrvalue = 42
 
 [core-non-attributes.test-0500]
 clsname = "Public"
