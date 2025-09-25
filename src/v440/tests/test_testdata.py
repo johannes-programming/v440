@@ -30,7 +30,7 @@ class TestVersionReleaseAttrs(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["release_attr"].items():
+        for k, v in Util.util.data["release-attr"].items():
             with self.subTest(key=k):
                 self.go(**v)
 
@@ -59,7 +59,7 @@ class TestVersionReleaseVersionError(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["release_VersionError"].items():
+        for k, v in Util.util.data["release-VersionError"].items():
             with self.subTest(key=k):
                 self.go(**v)
 
@@ -77,7 +77,7 @@ class TestVersionLocalVersionError(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["local_VersionError"].items():
+        for k, v in Util.util.data["local-VersionError"].items():
             with self.subTest(key=k):
                 self.go(**v)
 
