@@ -13,8 +13,8 @@ class Digest:
     name: str
     kind: Any
 
+    @setdoc.basic
     def __call__(self: Self, *args: Any, **kwargs: Any) -> Any:
-        "This magic method implements self(*args, **kwargs)."
         return self.wrapped(*args, **kwargs)
 
     def __get__(

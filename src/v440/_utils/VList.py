@@ -3,7 +3,6 @@ from typing import *
 
 import setdoc
 
-from v440._utils import utils
 from v440._utils.BaseList import BaseList
 
 __all__ = ["VList"]

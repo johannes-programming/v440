@@ -11,7 +11,7 @@ from v440.core.VersionError import VersionError
 
 
 @scaevola.auto
-class BaseList(collections.abc.Sized):
+class BaseList(collections.abc.Collection):
     __slots__ = ()
 
     @abstractmethod
