@@ -70,7 +70,7 @@ class Base(SlotList):
 
     __slots__ = ("_epoch", "_release")
 
-    data: list
+    data: tuple
     epoch: int
     release: Release
 
@@ -89,12 +89,12 @@ class Base(SlotList):
 
     @property
     @setdoc.basic
-    def data(self: Self) -> list:
-        return [self.epoch, self.release]
+    def data(self: Self) -> tuple:
+        return self.epoch, self.release
 
     @data.setter
     @guard
-    def data(self: Self, value: Iterable) -> None:
+    def data(self: Self, value: Any) -> None:
         self.epoch, self.release = parse_data(value)
 
     @property

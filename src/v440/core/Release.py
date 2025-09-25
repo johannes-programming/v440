@@ -68,22 +68,46 @@ def tolist(value: Any, *, slicing: Any) -> list:
     return l
 
 
+def torange(key: Any, length: Any) -> range:
+    start: Any = key.start
+    stop: Any = key.stop
+    step: Any = key.step
+    if step is None:
+        step = 1
+    else:
+        step = operator.index(step)
+        if step == 0:
+            raise ValueError
+    fwd: bool = step > 0
+    if start is None:
+        start = 0 if fwd else (length - 1)
+    else:
+        start = operator.index(start)
+    if stop is None:
+        stop = length if fwd else -1
+    else:
+        stop = operator.index(stop)
+    if start < 0:
+        start += length
+    if start < 0:
+        start = 0 if fwd else -1
+    if stop < 0:
+        stop += length
+    if stop < 0:
+        stop = 0 if fwd else -1
+    ans: range = range(start, stop, step)
+    return ans
+
+
 @keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(VList):
     __slots__ = ()
 
-    data: list[int]
+    data: tuple[int]
     major: int
     minor: int
     micro: int
     patch: int
-
-    @setdoc.basic
-    def __add__(self: Self, other: Any, /) -> Self:
-        opp: Self = type(self)(other)
-        ans: Self = self.copy()
-        ans._data += opp._data
-        return ans
 
     @Overloadable
     @setdoc.basic
@@ -94,17 +118,23 @@ class Release(VList):
     @setdoc.basic
     def __delitem__(self: Self, key: SupportsIndex) -> None:
         i: int = operator.index(key)
-        if i < len(self):
-            del self._data[i]
+        if i >= len(self):
+            return
+        data: list = list(self.data)
+        del data[i]
+        self.data = data
 
     @__delitem__.overload(True)
     @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
-        r: range = utils.torange(key, len(self))
+        r: range = torange(key, len(self))
+        k: Any
         l: list = [k for k in r if k < len(self)]
         l.sort(reverse=True)
+        data: list = list(self.data)
         for k in l:
-            del self._data[k]
+            del data[k]
+        self.data = data
 
     @Overloadable
     @setdoc.basic
@@ -121,14 +151,13 @@ class Release(VList):
     @__getitem__.overload(True)
     @setdoc.basic
     def __getitem__(self: Self, key: Any) -> list:
-        r: range = utils.torange(key, len(self))
+        r: range = torange(key, len(self))
         m: map = map(self._getitem_int, r)
         ans: list = list(m)
         return ans
 
     @setdoc.basic
     def __init__(self: Any, data: Any = None) -> None:
-        self._data = list()
         self.data = data
 
     @Overloadable
@@ -145,7 +174,7 @@ class Release(VList):
     @__setitem__.overload(True)
     @setdoc.basic
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        k: range = utils.torange(key, len(self))
+        k: range = torange(key, len(self))
         self._setitem_range(k, value)
 
     def _format(self: Self, format_spec: str) -> str:
@@ -163,20 +192,21 @@ class Release(VList):
 
     def _getitem_int(self: Self, key: int) -> int:
         if key < len(self):
-            return self._data[key]
+            return self.data[key]
         else:
             return 0
 
     def _setitem_int(self: Self, key: int, value: Any) -> Any:
         v: int = utils.numeral(value)
-        n: int = len(self)
-        if n > key:
-            self._data[key] = v
+        if key < len(self):
+            data = list(self.data)
+            data[key] = v
+            self.data = data
             return
         if v == 0:
             return
-        self._data.extend([0] * (key - n))
-        self._data.append(v)
+        self._data += (0,) * (key - len(self))
+        self._data += (v,)
 
     @Overloadable
     def _setitem_range(self: Self, key: range, value: Any) -> bool:
@@ -184,32 +214,31 @@ class Release(VList):
 
     @_setitem_range.overload(False)
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        key = list(key)
-        value = tolist(value, slicing=len(key))
+        key: list = list(key)
+        value: list = tolist(value, slicing=len(key))
         if len(key) != len(value):
             e = "attempt to assign sequence of size %s to extended slice of size %s"
             e %= (len(value), len(key))
             raise ValueError(e)
-        maximum = max(*key)
-        ext = max(0, maximum + 1 - len(self))
-        data = self.data
+        ext: int = max(0, max(*key) + 1 - len(self))
+        data: list = list(self.data)
         data += [0] * ext
         for k, v in zip(key, value):
             data[k] = v
-        while len(data) and not data[-1]:
-            data.pop()
-        self._data = data
+        self.data = data
 
     @_setitem_range.overload(True)
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        data: list = self.data
+        data: list = list(self.data)
         ext: int = max(0, key.start - len(data))
         data += ext * [0]
         l: list = tolist(value, slicing="always")
         data = data[: key.start] + l + data[key.stop :]
-        while len(data) and not data[-1]:
-            data.pop()
-        self._data = data
+        self.data = data
+
+    @classmethod
+    def _sort(cls: type, value: int) -> int:
+        return value
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
@@ -221,8 +250,8 @@ class Release(VList):
 
     @property
     @setdoc.basic
-    def data(self: Self) -> list:
-        return list(self._data)
+    def data(self: Self) -> tuple:
+        return self._data
 
     @data.setter
     @guard
@@ -230,4 +259,4 @@ class Release(VList):
         v: list = tolist(value, slicing="always")
         while v and v[-1] == 0:
             v.pop()
-        self._data = v
+        self._data = tuple(v)

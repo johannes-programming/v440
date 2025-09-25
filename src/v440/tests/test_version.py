@@ -303,7 +303,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         # Test the 'data' property
         version: Version = Version()
         version.public.base.release = [1, 2, 3]
-        self.assertEqual(version.public.base.release.data, [1, 2, 3])
+        self.assertEqual(version.public.base.release.data, (1, 2, 3))
 
     def test_release_data_setter(self: Self) -> None:
         # Test setting the 'data' property directly
@@ -381,7 +381,7 @@ class TestVersionLocal(unittest.TestCase):
         # Test that 'data' property correctly reflects local's internal list
         version: Version = Version()
         version.local = [1, "dev", "build"]
-        self.assertEqual(version.local.data, [1, "dev", "build"])
+        self.assertEqual(version.local.data, (1, "dev", "build"))
 
     def test_local_data_setter(self: Self) -> None:
         # Test that 'data' property can be set directly

@@ -15,7 +15,7 @@ class Qual(SlotList):
 
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 
-    data: list
+    data: tuple
     pre: tuple
     prephase: Optional[str]
     presubphase: Optional[int]
@@ -64,8 +64,8 @@ class Qual(SlotList):
 
     @property
     @setdoc.basic
-    def data(self: Self) -> list:
-        return [self.prephase, self.presubphase, self.post, self.dev]
+    def data(self: Self) -> tuple:
+        return self.prephase, self.presubphase, self.post, self.dev
 
     @data.setter
     @guard
@@ -74,6 +74,7 @@ class Qual(SlotList):
 
     @property
     def dev(self: Self) -> Optional[int]:
+        "This property represents the stage of development."
         return self._dev
 
     @dev.setter

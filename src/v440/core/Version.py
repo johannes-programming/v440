@@ -42,7 +42,7 @@ def parse_data(value: str) -> tuple:
 class Version(SlotList):
     __slots__ = ("_public", "_local")
 
-    data: list
+    data: tuple
     local: Local
     public: Public
 
@@ -52,9 +52,6 @@ class Version(SlotList):
         self._local = Local()
         self.data = data
 
-    def __str__(self: Self) -> str:
-        return format(self)
-
     def _format(self: Self, format_spec: str) -> str:
         ans: str = format(self.public, format_spec)
         if self.local:
@@ -63,8 +60,8 @@ class Version(SlotList):
 
     @property
     @setdoc.basic
-    def data(self: Self) -> list:
-        return [self.public, self.local]
+    def data(self: Self) -> tuple:
+        return self.public, self.local
 
     @data.setter
     @guard
@@ -73,6 +70,7 @@ class Version(SlotList):
 
     @property
     def local(self: Self) -> Local:
+        "This property represents the local identifier."
         return self._local
 
     @local.setter
@@ -86,6 +84,7 @@ class Version(SlotList):
 
     @property
     def public(self: Self) -> Self:
+        "This property represents the public identifier."
         return self._public
 
     @public.setter

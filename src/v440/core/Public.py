@@ -42,7 +42,7 @@ class Public(SlotList):
 
     __slots__ = ("_base", "_qual")
 
-    data: list
+    data: tuple
     base: Base
     qual: Qual
 
@@ -68,7 +68,7 @@ class Public(SlotList):
     @property
     @setdoc.basic
     def data(self: Self) -> list:
-        return [self.base, self.qual]
+        return self.base, self.qual
 
     @data.setter
     @guard
