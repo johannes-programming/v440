@@ -103,7 +103,7 @@ class BaseList(collections.abc.Sized):
 
     @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> None:
-        data: list = list(self._data)
+        data: list = list(self.data)
         data[key] = value
         self.data = data
 
