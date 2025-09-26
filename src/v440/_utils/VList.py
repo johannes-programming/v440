@@ -62,7 +62,7 @@ class VList(BaseList):
         data.append(value)
         self.data = data
 
-    def clear(self: Self, /) -> None:
+    def clear(self: Self) -> None:
         "This method clears the data."
         self.data = ()
 
@@ -90,7 +90,7 @@ class VList(BaseList):
         self.data = data
         return ans
 
-    def remove(self: Self, value: Any) -> None:
+    def remove(self: Self, value: Any, /) -> None:
         "This method removes the first occurence of value."
         data: list = list(self.data)
         data.remove(value)

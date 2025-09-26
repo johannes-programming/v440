@@ -424,16 +424,5 @@ class TestDevNoGo(unittest.TestCase):
         self.assertIsNone(v.public.qual.dev)
 
 
-class TestVersionSpecifiersNoGo(unittest.TestCase):
-
-    def test_version_with_invalid_specifiers(self: Self) -> None:
-        # Test version with invalid specifiers that should raise an error
-        with self.assertRaises(VersionError):
-            Version("1.2.3--4")
-
-        with self.assertRaises(VersionError):
-            Version("1.2.3a1--4")
-
-
 if __name__ == "__main__":
     unittest.main()

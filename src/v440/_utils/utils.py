@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import functools
-import operator
 import string
 from typing import *
 
@@ -22,7 +21,7 @@ def numeral(value: Any, /) -> int:
     v: Any = segment(value)
     if type(v) is int:
         return v
-    e = "%r is not a valid numeral segment"
+    e: str = "%r is not a valid numeral segment"
     e %= v
     raise VersionError(e)
 
@@ -31,7 +30,7 @@ def segment(value: Any, /) -> Any:
     try:
         return _segment(value)
     except:
-        e = "%r is not a valid segment"
+        e: str = "%r is not a valid segment"
         e = VersionError(e % value)
         raise e from None
 

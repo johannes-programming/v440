@@ -742,6 +742,10 @@ Post-releases = [
     "1.0.0+build@sha.123",
     "1.0.0++local.version.doubleplus",
 ]
+"Test version with invalid specifiers that should raise an error" = [
+    "1.2.3--4",
+    "1.2.3a1--4",
+]
 
 [devint.test_dev_as_int]
 v_version = "1.2.3"

@@ -61,12 +61,12 @@ class Local(VList):
         return ".".join(map(str, self))
 
     @classmethod
-    def _sort(cls: type, value: Any) -> tuple[bool, Any]:
+    def _sort(cls: type, value: Any) -> tuple[bool, int | str]:
         return type(value) is int, value
 
     @property
     @setdoc.basic
-    def data(self: Self) -> list[int | str]:
+    def data(self: Self) -> tuple[int | str]:
         return self._data
 
     @data.setter
