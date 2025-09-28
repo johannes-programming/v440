@@ -105,41 +105,27 @@ class TestExample(unittest.TestCase):
         v.public.base.release.micro = 4
         self.assertEqual(str(v), "2.64.4")  # Further modified version
 
-    def test_example_3a(self: Self) -> None:
-        v1: Version = Version("1.6.3")
-        v2: str = "1.6.4"
-        self.assertEqual(str(v1), "1.6.3")  # v1
-        self.assertEqual(str(v2), "1.6.4")  # v2
-        self.assertFalse(v1 == v2)  # v1 == v2 gives False
-        self.assertTrue(v1 != v2)  # v1 != v2 gives True
-        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
-        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
-        self.assertFalse(v1 > v2)  # v1 > v2 gives False
-        self.assertTrue(v1 < v2)  # v1 < v2 gives True
-
-    def test_example_3b(self: Self) -> None:
-        v1: str = "1.6.3"
-        v2: Version = Version("1.6.4")
-        self.assertEqual(str(v1), "1.6.3")  # v1
-        self.assertEqual(str(v2), "1.6.4")  # v2
-        self.assertFalse(v1 == v2)  # v1 == v2 gives False
-        self.assertTrue(v1 != v2)  # v1 != v2 gives True
-        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
-        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
-        self.assertFalse(v1 > v2)  # v1 > v2 gives False
-        self.assertTrue(v1 < v2)  # v1 < v2 gives True
-
-    def test_example_3c(self: Self) -> None:
-        v1: Version = Version("1.6.3")
-        v2: Version = Version("1.6.4")
-        self.assertEqual(str(v1), "1.6.3")  # v1
-        self.assertEqual(str(v2), "1.6.4")  # v2
-        self.assertFalse(v1 == v2)  # v1 == v2 gives False
-        self.assertTrue(v1 != v2)  # v1 != v2 gives True
-        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
-        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
-        self.assertFalse(v1 > v2)  # v1 > v2 gives False
-        self.assertTrue(v1 < v2)  # v1 < v2 gives True
+    def test_example_3(self: Self) -> None:
+        t: list = [
+            [Version, str],
+            [str, Version],
+            [Version, Version],
+        ]
+        X: type
+        Y: type
+        x: Any
+        y: Any
+        for X, Y in t:
+            x = X("1.6.3")
+            y = Y("1.6.3")
+            self.assertEqual(str(x), "1.6.3")  # x
+            self.assertEqual(str(y), "1.6.4")  # y
+            self.assertFalse(x == y)  # x == y gives False
+            self.assertTrue(x != y)  # x != y gives True
+            self.assertFalse(x >= y)  # x >= y gives False
+            self.assertTrue(x <= y)  # x <= y gives True
+            self.assertFalse(x > y)  # x > y gives False
+            self.assertTrue(x < y)  # x < y gives True
 
     def test_example_4(self: Self) -> None:
         v: Version = Version("2.5.3.9")
