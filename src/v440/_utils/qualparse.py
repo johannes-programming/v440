@@ -7,50 +7,6 @@ from v440._utils.Cfg import Cfg
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 
-parse_leg: Digest = Digest("parse_leg")
-
-
-@parse_leg.overload()
-def parse_leg() -> tuple:
-    return None, None, None
-
-
-@parse_leg.overload(int)
-def parse_leg(value: int) -> tuple:
-    return None, abs(value), None
-
-
-@parse_leg.overload(list)
-def parse_leg(value: list) -> tuple:
-    return tuple([value[:2]] + value[2:])
-
-
-@parse_leg.overload(str)
-def parse_leg(value: str) -> tuple:
-    v = value
-    pre: tuple = None, None
-    post: Optional[str] = None
-    dev: Optional[str] = None
-    m: Any
-    x: Any
-    y: Any
-    while v:
-        m = Pattern.QUALIFIERS.leftbound.search(v)
-        v = v[m.end() :]
-        if m.group("N"):
-            post = m.group("N")
-            continue
-        x = m.group("l")
-        y = m.group("n")
-        if x == "dev":
-            dev = y
-            continue
-        if x in ("post", "r", "rev"):
-            post = y
-            continue
-        pre = x, y
-    return pre, post, dev
-
 
 parse_dev: Digest = Digest("parse_dev")
 

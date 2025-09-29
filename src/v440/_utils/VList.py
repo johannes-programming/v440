@@ -4,6 +4,7 @@ from typing import *
 import setdoc
 
 from v440._utils.BaseList import BaseList
+from datarepr import datarepr
 
 __all__ = ["VList"]
 
@@ -22,10 +23,18 @@ class VList(BaseList):
         return bool(self.data)
 
     @setdoc.basic
+    def __contains__(self: Self, other: Any) -> bool:
+        return other in self.data
+    
+    @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
         data: list = list(self.data)
         del data[key]
         self.data = data
+
+    @setdoc.basic
+    def __getitem__(self: Self, key: Any) -> Any:
+        return self.data[key]
 
     @setdoc.basic
     def __iadd__(self: Self, other: Any, /) -> Self:
@@ -38,6 +47,14 @@ class VList(BaseList):
         return self
 
     @setdoc.basic
+    def __init__(self: Self, data: Any = None) -> None:
+        self.data = data
+
+    @setdoc.basic
+    def __iter__(self: Self) -> Iterator:
+        return iter(self.data)
+
+    @setdoc.basic
     def __len__(self: Self) -> int:
         return len(self.data)
 
@@ -46,11 +63,25 @@ class VList(BaseList):
         return type(self)(self.data * other)
 
     @setdoc.basic
+    def __repr__(self: Self) -> str:
+        return datarepr(type(self).__name__, *self.data)
+    
+    @setdoc.basic
     def __rmul__(self: Self, other: Any) -> Self:
         return self * other
 
+    @setdoc.basic
+    def __setitem__(self: Self, key: Any, value: Any) -> None:
+        data: list = list(self.data)
+        data[key] = value
+        self.data = data
+
     def _cmp(self: Self) -> tuple:
         return tuple(map(self._sort, self.data))
+    
+    @classmethod
+    @abstractmethod
+    def _dataparse(cls:type, value:Any) -> Iterable:...
 
     @classmethod
     @abstractmethod
@@ -66,11 +97,27 @@ class VList(BaseList):
         "This method clears the data."
         self.data = ()
 
+    def count(self: Self, value: Any) -> int:
+        "This method counts the occurences of value."
+        return self.data.count(value)
+    
+    @property
+    @setdoc.basic
+    def data(self: Self) -> tuple:
+        return self._data
+    @data.setter
+    def data(self:Self, value:Any) ->None:
+        self._data = tuple(self._dataparse(value))
+
     def extend(self: Self, value: Self, /) -> None:
         "This method extends self by value."
         data: list = list(self.data)
         data.extend(value)
         self.data = data
+
+    def index(self: Self, *args: Any) -> None:
+        "This method returns the index of the first occurence."
+        return self.data.index(*args)
 
     def insert(
         self: Self,

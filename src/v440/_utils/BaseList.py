@@ -6,6 +6,7 @@ import scaevola
 import setdoc
 import unhash
 from datarepr import datarepr
+from v440._utils.utils import guard
 
 from v440.core.VersionError import VersionError
 
@@ -17,10 +18,6 @@ class BaseList(collections.abc.Collection):
     @abstractmethod
     @setdoc.basic
     def __bool__(self: Self) -> bool: ...
-
-    @setdoc.basic
-    def __contains__(self: Self, other: Any) -> bool:
-        return other in self.data
 
     @setdoc.basic
     def __eq__(self: Self, other: Any) -> bool:
@@ -49,10 +46,6 @@ class BaseList(collections.abc.Collection):
         return self._cmp() >= alt._cmp()
 
     @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> Any:
-        return self.data[key]
-
-    @setdoc.basic
     def __gt__(self: Self, other: Any) -> bool:
         alt: Self
         try:
@@ -62,14 +55,6 @@ class BaseList(collections.abc.Collection):
         return self._cmp() > alt._cmp()
 
     __hash__ = unhash
-
-    @setdoc.basic
-    def __init__(self: Self, data: Any = None) -> None:
-        self.data = data
-
-    @setdoc.basic
-    def __iter__(self: Self) -> Iterator:
-        return iter(self.data)
 
     @setdoc.basic
     def __le__(self: Self, other: Any) -> bool:
@@ -93,19 +78,13 @@ class BaseList(collections.abc.Collection):
     def __ne__(self: Self, other: Any) -> bool:
         return not (self == other)
 
+    @abstractmethod
     @setdoc.basic
-    def __repr__(self: Self) -> str:
-        return datarepr(type(self).__name__, self.data)
+    def __repr__(self:Self) -> str:...
 
     @setdoc.basic
     def __reversed__(self: Self) -> reversed:
         return reversed(self.data)
-
-    @setdoc.basic
-    def __setitem__(self: Self, key: Any, value: Any) -> None:
-        data: list = list(self.data)
-        data[key] = value
-        self.data = data
 
     @classmethod
     def __subclasshook__(cls: type, other: type, /) -> bool:
@@ -122,19 +101,21 @@ class BaseList(collections.abc.Collection):
     @abstractmethod
     def _format(self: Self, format_spec: str) -> str: ...
 
+    @abstractmethod
+    def _string_fset(self:Self, value:str) -> None:
+        ...
+
     @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
-
+    
     @property
-    @abstractmethod
-    @setdoc.basic
-    def data(self: Self) -> tuple: ...
+    def string(self: Self) -> str:
+        return self._format("")
+    
+    @string.setter
+    @guard
+    def string(self:Self, value:Any) -> None:
+        self._string_fset(str(value))
 
-    def count(self: Self, value: Any) -> int:
-        "This method counts the occurences of value."
-        return self.data.count(value)
 
-    def index(self: Self, *args: Any) -> None:
-        "This method returns the index of the first occurence."
-        return self.data.index(*args)

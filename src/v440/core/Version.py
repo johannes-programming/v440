@@ -42,9 +42,9 @@ def parse_data(value: str) -> tuple:
 class Version(SlotList):
     __slots__ = ("_public", "_local")
 
-    data: tuple
     local: Local
     public: Public
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
@@ -57,16 +57,6 @@ class Version(SlotList):
         if self.local:
             ans += "+" + format(self.local)
         return ans
-
-    @property
-    @setdoc.basic
-    def data(self: Self) -> tuple:
-        return self.public, self.local
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Any) -> None:
-        self.public, self.local = parse_data(value)
 
     @property
     def local(self: Self) -> Local:

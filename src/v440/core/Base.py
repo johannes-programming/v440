@@ -8,34 +8,9 @@ from v440._utils.Digest import Digest
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
 from v440.core.Release import Release
+from overloadable import Overloadable
 
 __all__ = ["Base"]
-
-
-parse_data: Digest = Digest("parse_data")
-
-
-@parse_data.overload()
-def parse_data() -> tuple:
-    return None, None
-
-
-@parse_data.overload(int)
-def parse_data(value: int) -> tuple:
-    return None, value
-
-
-@parse_data.overload(list)
-def parse_data(value: list) -> tuple:
-    return tuple(value)
-
-
-@parse_data.overload(str)
-def parse_data(value: str) -> tuple:
-    if "!" in value:
-        return tuple(value.split("!"))
-    else:
-        return 0, value
 
 
 parse_epoch: Digest = Digest("parse_epoch")
@@ -70,15 +45,31 @@ class Base(SlotList):
 
     __slots__ = ("_epoch", "_release")
 
-    data: tuple
     epoch: int
     release: Release
+    string: str
 
+
+    @Overloadable
+    def __init__(self:Self, *args:Any, **kwargs:Any) -> bool:
+        if len(args) == 1 and len(kwargs) == 0:
+            return True
+        if len(args) == 0 and "string" in kwargs.keys():
+            return True
+        return False
+    
+    @__init__.overload(True)
     @setdoc.basic
-    def __init__(self: Self, data: Any = None) -> None:
-        self._epoch = 0
-        self._release = Release()
-        self.data = data
+    def __init__(self: Self, string:Any) -> None:
+        self._init_setup()
+        self.string = string
+    
+    @__init__.overload(False)
+    @setdoc.basic
+    def __init__(self: Self, epoch:Any=None, release:Any=None)->Any:
+        self._init_setup()
+        self.epoch=epoch
+        self.release = release
 
     def _format(self: Self, format_spec: str) -> str:
         ans: str = ""
@@ -86,16 +77,17 @@ class Base(SlotList):
             ans += "%s!" % self.epoch
         ans += format(self.release, format_spec)
         return ans
+    
+    def _init_setup(self:Self) -> None:
+        self._epoch = 0
+        self._release = Release()
 
-    @property
-    @setdoc.basic
-    def data(self: Self) -> tuple:
-        return self.epoch, self.release
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Any) -> None:
-        self.epoch, self.release = parse_data(value)
+    def _string_fset(self:Self, value:str) -> None:
+        if "!" not in value:
+            self._epoch = 0
+            self.release.string = value
+            return
+        self.epoch, self.release.string=value.split("!")
 
     @property
     def epoch(self: Self) -> int:
@@ -116,3 +108,4 @@ class Base(SlotList):
     @guard
     def release(self: Self, value: Any) -> None:
         self._release.data = value
+

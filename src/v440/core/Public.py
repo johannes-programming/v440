@@ -13,38 +13,13 @@ from v440.core.Qual import Qual
 
 __all__ = ["Public"]
 
-
-parse_data: Digest = Digest("parse_data")
-
-
-@parse_data.overload()
-def parse_data() -> tuple:
-    return None, None
-
-
-@parse_data.overload(int)
-def parse_data(value: int) -> tuple:
-    return value, None
-
-
-@parse_data.overload(list)
-def parse_data(value: list) -> tuple:
-    return tuple(value)
-
-
-@parse_data.overload(str)
-def parse_data(value: str) -> tuple:
-    match: Any = Pattern.PUBLIC.leftbound.search(value)
-    return value[: match.end()], value[match.end() :]
-
-
 class Public(SlotList):
 
     __slots__ = ("_base", "_qual")
 
-    data: tuple
     base: Base
     qual: Qual
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
@@ -54,6 +29,11 @@ class Public(SlotList):
 
     def _format(self: Self, format_spec: str) -> str:
         return format(self.base, format_spec) + format(self.qual)
+    
+    def _string_fset(self:Self, value:str)->None:
+        match: Any = Pattern.PUBLIC.leftbound.search(value)
+        self.base.string = value[: match.end()]
+        self.qual.string = value[match.end() :]
 
     @property
     def base(self: Self) -> Base:
@@ -64,16 +44,6 @@ class Public(SlotList):
     @guard
     def base(self: Self, value: Any) -> None:
         self.base.data = value
-
-    @property
-    @setdoc.basic
-    def data(self: Self) -> list:
-        return self.base, self.qual
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Any) -> None:
-        self.base, self.qual = parse_data(value)
 
     @property
     def qual(self: Self) -> Qual:

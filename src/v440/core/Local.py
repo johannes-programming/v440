@@ -50,6 +50,7 @@ class Local(VList):
     __slots__ = ()
 
     data: tuple[int | str]
+    string: str
 
     @setdoc.basic
     def __init__(self: Any, data: Any = None) -> None:
