@@ -7,7 +7,7 @@ from overloadable import Overloadable
 
 from v440._utils.Digest import Digest
 from v440._utils.guarding import guard
-from v440._utils.SlotList import SlotList
+from v440._utils.SlotStringer import SlotStringer
 from v440.core.Release import Release
 
 __all__ = ["Base"]
@@ -41,7 +41,7 @@ def parse_epoch(value: str) -> int:
     return ans
 
 
-class Base(SlotList):
+class Base(SlotStringer):
 
     __slots__ = ("_epoch", "_release")
 

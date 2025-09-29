@@ -4,19 +4,15 @@ from typing import *
 import setdoc
 from datarepr import datarepr
 
-from v440._utils.BaseList import BaseList
+from v440._utils.BaseStringer import BaseStringer
 
 __all__ = ["SlotList"]
 
 
-class SlotList(BaseList):
+class SlotStringer(BaseStringer):
     __slots__ = ()
 
     string: str
-
-    @setdoc.basic
-    def __len__(self: Self) -> int:
-        return len(type(self).__slots__)
 
     @setdoc.basic
     def __repr__(self: Self) -> str:

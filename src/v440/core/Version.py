@@ -7,14 +7,14 @@ import setdoc
 from overloadable import Overloadable
 
 from v440._utils.guarding import guard
-from v440._utils.SlotList import SlotList
+from v440._utils.SlotStringer import SlotStringer
 from v440.core.Local import Local
 from v440.core.Public import Public
 
 __all__ = ["Version"]
 
 
-class Version(SlotList):
+class Version(SlotStringer):
     __slots__ = ("_public", "_local")
 
     string: str

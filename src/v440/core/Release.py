@@ -9,7 +9,7 @@ from keyalias import keyalias
 from overloadable import Overloadable
 
 from v440._utils import segmenting
-from v440._utils.VList import VList
+from v440._utils.ListStringer import ListStringer
 
 __all__ = ["Release"]
 
@@ -99,7 +99,7 @@ def torange(key: Any, length: Any) -> range:
 
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
-class Release(VList):
+class Release(ListStringer):
     __slots__ = ()
 
     string: str

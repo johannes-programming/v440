@@ -10,7 +10,7 @@ from v440.core.VersionError import VersionError
 
 
 @scaevola.auto
-class BaseList(metaclass=ABCMeta):
+class BaseStringer(metaclass=ABCMeta):
     __slots__ = ()
 
     string: str

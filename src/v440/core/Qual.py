@@ -8,12 +8,12 @@ from overloadable import Overloadable
 from v440._utils import qualparse
 from v440._utils.guarding import guard
 from v440._utils.Pattern import Pattern
-from v440._utils.SlotList import SlotList
+from v440._utils.SlotStringer import SlotStringer
 
 __all__ = ["Qual"]
 
 
-class Qual(SlotList):
+class Qual(SlotStringer):
 
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 

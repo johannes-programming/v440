@@ -5,12 +5,12 @@ from typing import *
 import setdoc
 
 from v440._utils import segmenting
-from v440._utils.VList import VList
+from v440._utils.ListStringer import ListStringer
 
 __all__ = ["Local"]
 
 
-class Local(VList):
+class Local(ListStringer):
     __slots__ = ()
 
     string: str
