@@ -43,6 +43,7 @@ class Version(SlotList):
     __slots__ = ("_public", "_local")
 
     data: tuple
+    string:str
     local: Local
     public: Public
 
@@ -57,6 +58,15 @@ class Version(SlotList):
         if self.local:
             ans += "+" + format(self.local)
         return ans
+    
+    def _string_fset(self:Self, value:str) -> None:
+        parsed:Iterable
+        if "+" in value:
+            parsed = value.split("+")
+        else:
+            parsed = value, ""
+        self.public.string, self.local.string = parsed
+
 
     @property
     @setdoc.basic

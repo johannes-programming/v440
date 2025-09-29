@@ -16,6 +16,7 @@ class Qual(SlotList):
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 
     data: tuple
+    string:str
     pre: tuple
     prephase: Optional[str]
     presubphase: Optional[int]
@@ -62,6 +63,27 @@ class Qual(SlotList):
             ans += ".dev%s" % self.dev
         return ans
 
+    def _string_fset(self:Self, value:str) -> None:
+        v:str = value
+        m: Any
+        x: Any
+        y: Any
+        while v:
+            m = Pattern.QUALIFIERS.leftbound.search(v)
+            v = v[m.end() :]
+            if m.group("N"):
+                self.post = m.group("N")
+                continue
+            x = m.group("l")
+            y = m.group("n")
+            if x == "dev":
+                self.dev = y
+                continue
+            if x in ("post", "r", "rev"):
+                self.post = y
+                continue
+            self.pre = x, y
+        
     @property
     @setdoc.basic
     def data(self: Self) -> tuple:

@@ -50,6 +50,7 @@ class Local(VList):
     __slots__ = ()
 
     data: tuple[int | str]
+    string:str
 
     @setdoc.basic
     def __init__(self: Any, data: Any = None) -> None:
@@ -63,6 +64,14 @@ class Local(VList):
     @classmethod
     def _sort(cls: type, value: Any) -> tuple[bool, int | str]:
         return type(value) is int, value
+    
+    def _string_fset(self:Self, value:str) -> None:
+        v: str = value
+        if v.startswith("+"):
+            v = v[1:]
+        v = v.replace("_", ".")
+        v = v.replace("-", ".")
+        self.data = v.split(".")
 
     @property
     @setdoc.basic

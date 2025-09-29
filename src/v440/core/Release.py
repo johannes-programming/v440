@@ -104,6 +104,7 @@ class Release(VList):
     __slots__ = ()
 
     data: tuple[int]
+    string:str
     major: int
     minor: int
     micro: int
@@ -239,6 +240,12 @@ class Release(VList):
     @classmethod
     def _sort(cls: type, value: int) -> int:
         return value
+    
+    def _string_fset(self:Self, value:str) -> None:
+        v: str = value
+        v = v.replace("_", ".")
+        v = v.replace("-", ".")
+        self.data = v.split(".")
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
