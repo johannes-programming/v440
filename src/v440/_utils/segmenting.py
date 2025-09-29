@@ -7,24 +7,6 @@ from v440._utils.Digest import Digest
 from v440.core.VersionError import VersionError
 
 
-def literal(value: Any, /) -> str:
-    v: Any = segment(value)
-    if type(v) is str:
-        return v
-    e: str = "%r is not a valid literal segment"
-    e %= v
-    raise VersionError(e)
-
-
-def numeral(value: Any, /) -> int:
-    v: Any = segment(value)
-    if type(v) is int:
-        return v
-    e: str = "%r is not a valid numeral segment"
-    e %= v
-    raise VersionError(e)
-
-
 def segment(value: Any, /) -> Any:
     try:
         return _segment(value)
