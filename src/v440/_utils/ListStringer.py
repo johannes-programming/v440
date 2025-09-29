@@ -178,9 +178,7 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         self._data = ()
 
     def _set(self: Self, value: Any) -> None:
-        if value is None:
-            self.data = ()
-        elif isinstance(value, str):
+        if isinstance(value, str):
             self.string = value
         elif hasattr(value, "__iter__"):
             self.data = value

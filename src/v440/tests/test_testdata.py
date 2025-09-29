@@ -255,14 +255,10 @@ class TestPackagingA(unittest.TestCase):
                     self.go(text=s)
 
     def go(self: Self, text: str) -> None:
-        a: packaging.version.Version
-        b: str
-        f: int
-        g: str
-        a = packaging.version.Version(text)
-        b = str(a)
-        f = len(a.release)
-        g = format(Version(text), str(f))
+        a: packaging.version.Version = packaging.version.Version(text)
+        b: str = str(a)
+        f: int = len(a.release)
+        g: str = format(Version(text), str(f))
         self.assertEqual(b, g)
 
 
@@ -289,9 +285,9 @@ class TestPackagingB(unittest.TestCase):
 class TestPackagingC(unittest.TestCase):
     def test_strings_c(self: Self) -> None:
         pure: list = list()
-        l: list
-        for l in Util.util.data["strings"]["valid"].values():
-            pure += l
+        part: list
+        for part in Util.util.data["strings"]["valid"].values():
+            pure += part
         ops: list = [
             operator.eq,
             operator.ne,
@@ -300,47 +296,68 @@ class TestPackagingC(unittest.TestCase):
             operator.le,
             operator.lt,
         ]
-        a: packaging.version.Version
-        b: packaging.version.Version
-        c: packaging.version.Version
-        d: packaging.version.Version
-        native: bool
-        convert: bool
-        msg: str
-        op: Any
-        for x, y, op in iterprod.iterprod(pure, pure, ops):
-            a = packaging.version.Version(x)
-            b = Version(x).packaging()
-            c = packaging.version.Version(y)
-            d = Version(y).packaging()
-            native = op(a, c)
-            convert = op(b, d)
-            msg = f"{op} should match for {x!r} and {y!r}"
-            self.assertEqual(native, convert, msg=msg)
+        args: tuple
+        for args in iterprod.iterprod(pure, pure, ops):
+            with self.subTest(args=args):
+                self.go(*args)
+
+    def go(self: Self, x: str, y: str, func: Callable, /) -> None:
+        a: packaging.version.Version = packaging.version.Version(x)
+        b: packaging.version.Version = Version(string=x).packaging()
+        c: packaging.version.Version = packaging.version.Version(y)
+        d: packaging.version.Version = Version(string=y).packaging()
+        native: bool = func(a, c)
+        convert: bool = func(b, d)
+        msg: str = f"{func} should match for {x!r} and {y!r}"
+        self.assertEqual(native, convert, msg=msg)
 
 
 class TestPackagingField(unittest.TestCase):
     def test_field(self: Self) -> None:
-        versionable: list = list()
+        k: str
         l: list
-        for l in Util.util.data["strings"]["valid"].values():
-            versionable += l
-        for l in Util.util.data["strings"]["incomp"].values():
-            versionable += l
-        version_obj: Version = Version()
-        v: Version
+        for k, l in Util.util.data["strings"]["valid"].items():
+            with self.subTest(key=k):
+                self.go_list(l)
+        for k, l in Util.util.data["strings"]["incomp"].items():
+            with self.subTest(key=k):
+                self.go_list(l)
+
+    def go_list(self: Self, listing: list) -> None:
         x: str
-        for x in versionable:
-            v = Version(x)
-            self.assertEqual(v.public.qual.isdevrelease(), v.packaging().is_devrelease)
-            self.assertEqual(v.public.qual.isprerelease(), v.packaging().is_prerelease)
-            self.assertEqual(
-                v.public.qual.ispostrelease(), v.packaging().is_postrelease
-            )
-            self.assertEqual(str(v.public.base), v.packaging().base_version)
-            self.assertEqual(str(v.public), v.packaging().public)
-            version_obj.local = v.packaging().local
-            self.assertEqual(str(v.local), str(version_obj.local))
+        for x in listing:
+            with self.subTest():
+                self.go(query=x)
+
+    def go(self: Self, query: str) -> None:
+        v: Version = Version(query)
+        self.assertEqual(
+            v.public.qual.isdevrelease(),
+            v.packaging().is_devrelease,
+        )
+        self.assertEqual(
+            v.public.qual.isprerelease(),
+            v.packaging().is_prerelease,
+        )
+        self.assertEqual(
+            v.public.qual.ispostrelease(),
+            v.packaging().is_postrelease,
+        )
+        self.assertEqual(
+            str(v.public.base),
+            v.packaging().base_version,
+        )
+        self.assertEqual(
+            str(v.public),
+            v.packaging().public,
+        )
+        local_packaging: Optional[str] = v.packaging().local
+        if local_packaging is None:
+            local_packaging = ""
+        self.assertEqual(
+            str(v.local),
+            str(local_packaging),
+        )
 
 
 class TestPackagingExc(unittest.TestCase):
