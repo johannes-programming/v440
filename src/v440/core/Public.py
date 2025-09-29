@@ -43,6 +43,7 @@ class Public(SlotList):
     __slots__ = ("_base", "_qual")
 
     data: tuple
+    string: str
     base: Base
     qual: Qual
 
@@ -54,6 +55,11 @@ class Public(SlotList):
 
     def _format(self: Self, format_spec: str) -> str:
         return format(self.base, format_spec) + format(self.qual)
+
+    def _string_fset(self: Self, value: str) -> None:
+        match: Any = Pattern.PUBLIC.leftbound.search(value)
+        self.base.string = value[: match.end()]
+        self.qual.string = value[match.end() :]
 
     @property
     def base(self: Self) -> Base:

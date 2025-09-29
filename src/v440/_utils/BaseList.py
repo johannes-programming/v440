@@ -7,12 +7,15 @@ import setdoc
 import unhash
 from datarepr import datarepr
 
+from v440._utils.utils import guard
 from v440.core.VersionError import VersionError
 
 
 @scaevola.auto
 class BaseList(collections.abc.Collection):
     __slots__ = ()
+
+    string: str
 
     @abstractmethod
     @setdoc.basic
@@ -122,6 +125,9 @@ class BaseList(collections.abc.Collection):
     @abstractmethod
     def _format(self: Self, format_spec: str) -> str: ...
 
+    @abstractmethod
+    def _string_fset(self: Self, value: str) -> None: ...
+
     @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
@@ -138,3 +144,12 @@ class BaseList(collections.abc.Collection):
     def index(self: Self, *args: Any) -> None:
         "This method returns the index of the first occurence."
         return self.data.index(*args)
+
+    @property
+    def string(self: Self) -> str:
+        return self._format("")
+
+    @string.setter
+    @guard
+    def string(self: Self, value: Any) -> None:
+        self._string_fset(str(value))

@@ -71,6 +71,7 @@ class Base(SlotList):
     __slots__ = ("_epoch", "_release")
 
     data: tuple
+    string: str
     epoch: int
     release: Release
 
@@ -86,6 +87,14 @@ class Base(SlotList):
             ans += "%s!" % self.epoch
         ans += format(self.release, format_spec)
         return ans
+
+    def _string_fset(self: Self, value: str) -> None:
+        parsed: Iterable
+        if "!" in value:
+            parsed = value.split("!")
+        else:
+            parsed = 0, value
+        self.epoch, self.release.string = parsed
 
     @property
     @setdoc.basic

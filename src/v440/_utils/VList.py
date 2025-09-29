@@ -12,6 +12,7 @@ class VList(BaseList):
 
     __slots__ = ("_data",)
     data: tuple
+    string: str
 
     @setdoc.basic
     def __add__(self: Self, other: Any) -> Self:

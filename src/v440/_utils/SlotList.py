@@ -12,6 +12,7 @@ class SlotList(BaseList):
     __slots__ = ()
 
     data: tuple
+    string: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
