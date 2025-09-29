@@ -5,7 +5,7 @@ from typing import *
 import setdoc
 from overloadable import Overloadable
 
-from v440._utils import qualparse, utils
+from v440._utils import qualparse
 from v440._utils.Pattern import Pattern
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard

@@ -103,8 +103,8 @@ def torange(key: Any, length: Any) -> range:
 class Release(VList):
     __slots__ = ()
 
-    data: tuple[int]
     string: str
+    data: tuple[int]
     major: int
     minor: int
     micro: int

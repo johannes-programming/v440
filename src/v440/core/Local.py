@@ -15,8 +15,8 @@ __all__ = ["Local"]
 class Local(VList):
     __slots__ = ()
 
-    data: tuple[int | str]
     string: str
+    data: tuple[int | str]
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:

@@ -5,10 +5,8 @@ from typing import *
 import setdoc
 from overloadable import Overloadable
 
-from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
 from v440._utils.SlotList import SlotList
-from v440._utils.utils import guard
 from v440.core.Base import Base
 from v440.core.Qual import Qual
 

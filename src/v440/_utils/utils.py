@@ -62,15 +62,6 @@ def _segment(value: Any, /) -> int | str:
         return int(value)
 
 
-def ishashable(value: Any) -> bool:
-    try:
-        hash(value)
-    except Exception:
-        return False
-    else:
-        return True
-
-
 def guard(old: Any) -> Any:
     @functools.wraps(old)
     def new(self: Self, value: Any) -> None:
