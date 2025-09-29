@@ -2,6 +2,7 @@ from abc import abstractmethod
 from typing import *
 
 import setdoc
+from datarepr import datarepr
 
 from v440._utils.BaseList import BaseList
 
@@ -22,11 +23,19 @@ class VList(BaseList):
         return bool(self.data)
 
     @setdoc.basic
+    def __contains__(self: Self, other: Any) -> bool:
+        return other in self.data
+    
+    @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
         data: list = list(self.data)
         del data[key]
         self.data = data
 
+    @setdoc.basic
+    def __getitem__(self: Self, key: Any) -> Any:
+        return self.data[key]
+    
     @setdoc.basic
     def __iadd__(self: Self, other: Any, /) -> Self:
         self.data = self.data + tuple(other)
@@ -38,6 +47,10 @@ class VList(BaseList):
         return self
 
     @setdoc.basic
+    def __iter__(self: Self) -> Iterator:
+        return iter(self.data)
+    
+    @setdoc.basic
     def __len__(self: Self) -> int:
         return len(self.data)
 
@@ -46,8 +59,18 @@ class VList(BaseList):
         return type(self)(self.data * other)
 
     @setdoc.basic
+    def __repr__(self: Self) -> str:
+        return datarepr(type(self).__name__, self.data)
+    
+    @setdoc.basic
     def __rmul__(self: Self, other: Any) -> Self:
         return self * other
+
+    @setdoc.basic
+    def __setitem__(self: Self, key: Any, value: Any) -> None:
+        data: list = list(self.data)
+        data[key] = value
+        self.data = data
 
     def _cmp(self: Self) -> tuple:
         return tuple(map(self._sort, self.data))
@@ -66,11 +89,19 @@ class VList(BaseList):
         "This method clears the data."
         self.data = ()
 
+    def count(self: Self, value: Any) -> int:
+        "This method counts the occurences of value."
+        return self.data.count(value)
+
     def extend(self: Self, value: Self, /) -> None:
         "This method extends self by value."
         data: list = list(self.data)
         data.extend(value)
         self.data = data
+
+    def index(self: Self, *args: Any) -> None:
+        "This method returns the index of the first occurence."
+        return self.data.index(*args)
 
     def insert(
         self: Self,

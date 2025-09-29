@@ -19,10 +19,6 @@ class BaseList(collections.abc.Collection):
     def __bool__(self: Self) -> bool: ...
 
     @setdoc.basic
-    def __contains__(self: Self, other: Any) -> bool:
-        return other in self.data
-
-    @setdoc.basic
     def __eq__(self: Self, other: Any) -> bool:
         try:
             alt: Self = type(self)(other)
@@ -49,10 +45,6 @@ class BaseList(collections.abc.Collection):
         return self._cmp() >= alt._cmp()
 
     @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> Any:
-        return self.data[key]
-
-    @setdoc.basic
     def __gt__(self: Self, other: Any) -> bool:
         alt: Self
         try:
@@ -66,10 +58,6 @@ class BaseList(collections.abc.Collection):
     @setdoc.basic
     def __init__(self: Self, data: Any = None) -> None:
         self.data = data
-
-    @setdoc.basic
-    def __iter__(self: Self) -> Iterator:
-        return iter(self.data)
 
     @setdoc.basic
     def __le__(self: Self, other: Any) -> bool:
@@ -93,19 +81,14 @@ class BaseList(collections.abc.Collection):
     def __ne__(self: Self, other: Any) -> bool:
         return not (self == other)
 
+    @abstractmethod
     @setdoc.basic
     def __repr__(self: Self) -> str:
-        return datarepr(type(self).__name__, self.data)
+        ...
 
     @setdoc.basic
     def __reversed__(self: Self) -> reversed:
         return reversed(self.data)
-
-    @setdoc.basic
-    def __setitem__(self: Self, key: Any, value: Any) -> None:
-        data: list = list(self.data)
-        data[key] = value
-        self.data = data
 
     @classmethod
     def __subclasshook__(cls: type, other: type, /) -> bool:
@@ -129,12 +112,4 @@ class BaseList(collections.abc.Collection):
     @property
     @abstractmethod
     @setdoc.basic
-    def data(self: Self) -> tuple: ...
-
-    def count(self: Self, value: Any) -> int:
-        "This method counts the occurences of value."
-        return self.data.count(value)
-
-    def index(self: Self, *args: Any) -> None:
-        "This method returns the index of the first occurence."
-        return self.data.index(*args)
+    def data(self: Self) -> Iterable: ...
