@@ -362,12 +362,19 @@ class TestPackagingField(unittest.TestCase):
 
 class TestPackagingExc(unittest.TestCase):
     def test_exc_pack(self: Self) -> None:
-        impure: list = list()
+        k: str
+        for k in ("incomp", "exc"):
+            with self.subTest(strings=k):
+                self.go_dict(Util.util.data["strings"][k])
+
+    def go_dict(self: Self, dictionary: dict, /) -> None:
+        k: str
         l: list
-        for l in Util.util.data["strings"]["incomp"].values():
-            impure += l
-        for l in Util.util.data["strings"]["exc"].values():
-            impure += l
+        for k, l in dictionary.items():
+            with self.subTest(key=k):
+                self.go_list(l)
+
+    def go_list(self: Self, impure: list, /) -> None:
         x: str
         for x in impure:
             with self.assertRaises(packaging.version.InvalidVersion):
