@@ -6,8 +6,8 @@ import packaging.version
 import setdoc
 from overloadable import Overloadable
 
+from v440._utils.guarding import guard
 from v440._utils.SlotList import SlotList
-from v440._utils.utils import guard
 from v440.core.Local import Local
 from v440.core.Public import Public
 

@@ -6,7 +6,7 @@ import scaevola
 import setdoc
 import unhash
 
-from v440._utils.utils import guard
+from v440._utils.guarding import guard
 from v440.core.VersionError import VersionError
 
 

@@ -7,7 +7,7 @@ from datarepr import datarepr
 from overloadable import Overloadable
 
 from v440._utils.BaseList import BaseList
-from v440._utils.utils import guard
+from v440._utils.guarding import guard
 
 __all__ = ["VList"]
 

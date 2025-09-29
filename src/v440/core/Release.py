@@ -9,7 +9,7 @@ from keyalias import keyalias
 from overloadable import Overloadable
 
 from v440._utils import utils
-from v440._utils.utils import guard
+from v440._utils.guarding import guard
 from v440._utils.VList import VList
 
 __all__ = ["Release"]

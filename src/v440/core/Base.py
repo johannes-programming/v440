@@ -6,8 +6,8 @@ import setdoc
 from overloadable import Overloadable
 
 from v440._utils.Digest import Digest
+from v440._utils.guarding import guard
 from v440._utils.SlotList import SlotList
-from v440._utils.utils import guard
 from v440.core.Release import Release
 
 __all__ = ["Base"]

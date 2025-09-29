@@ -6,7 +6,7 @@ import setdoc
 
 from v440._utils import utils
 from v440._utils.Digest import Digest
-from v440._utils.utils import guard
+from v440._utils.guarding import guard
 from v440._utils.VList import VList
 
 __all__ = ["Local"]
