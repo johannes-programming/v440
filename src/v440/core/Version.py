@@ -4,8 +4,8 @@ from typing import *
 
 import packaging.version
 import setdoc
+from overloadable import Overloadable
 
-from v440._utils.Digest import Digest
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
 from v440.core.Local import Local
@@ -13,45 +13,46 @@ from v440.core.Public import Public
 
 __all__ = ["Version"]
 
-parse_data: Digest = Digest("parse_data")
-
-
-@parse_data.overload()
-def parse_data() -> tuple:
-    return None, None
-
-
-@parse_data.overload(int)
-def parse_data(value: int) -> tuple:
-    return value, None
-
-
-@parse_data.overload(list)
-def parse_data(value: list) -> tuple:
-    return tuple(value)
-
-
-@parse_data.overload(str)
-def parse_data(value: str) -> tuple:
-    if "+" in value:
-        return tuple(value.split("+"))
-    else:
-        return value, None
-
 
 class Version(SlotList):
     __slots__ = ("_public", "_local")
 
-    data: tuple
     string: str
     local: Local
     public: Public
 
+    def __bool__(self: Self) -> bool:
+        return bool(self.local or self.public)
+
+    @Overloadable
     @setdoc.basic
-    def __init__(self: Self, data: Any = None) -> None:
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        if len(args) == 0 and "string" in kwargs.keys():
+            return True
+        if len(args) == 1 and len(kwargs) == 0:
+            return True
+        return False
+
+    @__init__.overload(True)
+    @setdoc.basic
+    def __init__(self: Self, string: Any) -> None:
+        self._init_setup()
+        self.string = string
+
+    @__init__.overload(False)
+    @setdoc.basic
+    def __init__(
+        self: Self,
+        public: Any = "0",
+        local: Any = "",
+    ) -> None:
+        self._init_setup()
+        self.public = public
+        self.local = local
+
+    def _init_setup(self: Self) -> None:
         self._public = Public()
         self._local = Local()
-        self.data = data
 
     def _format(self: Self, format_spec: str) -> str:
         ans: str = format(self.public, format_spec)
@@ -67,15 +68,8 @@ class Version(SlotList):
             parsed = value, ""
         self.public.string, self.local.string = parsed
 
-    @property
-    @setdoc.basic
-    def data(self: Self) -> tuple:
-        return self.public, self.local
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Any) -> None:
-        self.public, self.local = parse_data(value)
+    def _todict(self: Self) -> dict:
+        return dict(public=self.public, local=self.local)
 
     @property
     def local(self: Self) -> Local:
@@ -85,7 +79,7 @@ class Version(SlotList):
     @local.setter
     @guard
     def local(self: Self, value: Any) -> None:
-        self.local.data = value
+        self.local._set(value)
 
     def packaging(self: Self) -> packaging.version.Version:
         "This method returns an eqivalent packaging.version.Version object."
@@ -99,4 +93,4 @@ class Version(SlotList):
     @public.setter
     @guard
     def public(self: Self, value: Any) -> None:
-        self.public.data = value
+        self.public._set(value)

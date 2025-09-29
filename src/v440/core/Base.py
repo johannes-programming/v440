@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import *
 
 import setdoc
+from overloadable import Overloadable
 
 from v440._utils.Digest import Digest
 from v440._utils.SlotList import SlotList
@@ -10,32 +11,6 @@ from v440._utils.utils import guard
 from v440.core.Release import Release
 
 __all__ = ["Base"]
-
-
-parse_data: Digest = Digest("parse_data")
-
-
-@parse_data.overload()
-def parse_data() -> tuple:
-    return None, None
-
-
-@parse_data.overload(int)
-def parse_data(value: int) -> tuple:
-    return None, value
-
-
-@parse_data.overload(list)
-def parse_data(value: list) -> tuple:
-    return tuple(value)
-
-
-@parse_data.overload(str)
-def parse_data(value: str) -> tuple:
-    if "!" in value:
-        return tuple(value.split("!"))
-    else:
-        return 0, value
 
 
 parse_epoch: Digest = Digest("parse_epoch")
@@ -70,16 +45,42 @@ class Base(SlotList):
 
     __slots__ = ("_epoch", "_release")
 
-    data: tuple
     string: str
     epoch: int
     release: Release
 
+    def __bool__(self: Self) -> bool:
+        return bool(self.epoch or self.release)
+
+    @Overloadable
     @setdoc.basic
-    def __init__(self: Self, data: Any = None) -> None:
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        if len(args) == 0 and "string" in kwargs.keys():
+            return True
+        if len(args) == 1 and len(kwargs) == 0:
+            return True
+        return False
+
+    @__init__.overload(True)
+    @setdoc.basic
+    def __init__(self: Self, string: Any) -> None:
+        self._init_setup()
+        self.string = string
+
+    @__init__.overload(False)
+    @setdoc.basic
+    def __init__(
+        self: Self,
+        epoch: Any = "0",
+        release: Any = "0",
+    ) -> None:
+        self._init_setup()
+        self.epoch = epoch
+        self.release = release
+
+    def _init_setup(self: Self) -> None:
         self._epoch = 0
         self._release = Release()
-        self.data = data
 
     def _format(self: Self, format_spec: str) -> str:
         ans: str = ""
@@ -89,22 +90,18 @@ class Base(SlotList):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
+        v: str = value
+        if v.startswith("v"):
+            v = v[1:]
         parsed: Iterable
-        if "!" in value:
-            parsed = value.split("!")
+        if "!" in v:
+            parsed = v.split("!")
         else:
-            parsed = 0, value
+            parsed = 0, v
         self.epoch, self.release.string = parsed
 
-    @property
-    @setdoc.basic
-    def data(self: Self) -> tuple:
-        return self.epoch, self.release
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Any) -> None:
-        self.epoch, self.release = parse_data(value)
+    def _todict(self: Self) -> dict:
+        return dict(epoch=self.epoch, release=self.release)
 
     @property
     def epoch(self: Self) -> int:
@@ -124,4 +121,4 @@ class Base(SlotList):
     @release.setter
     @guard
     def release(self: Self, value: Any) -> None:
-        self._release.data = value
+        self.release._set(value)

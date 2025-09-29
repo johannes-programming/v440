@@ -3,8 +3,10 @@ from __future__ import annotations
 from typing import *
 
 import setdoc
+from overloadable import Overloadable
 
-from v440._utils import qualparse
+from v440._utils import qualparse, utils
+from v440._utils.Pattern import Pattern
 from v440._utils.SlotList import SlotList
 from v440._utils.utils import guard
 
@@ -15,7 +17,6 @@ class Qual(SlotList):
 
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 
-    data: tuple
     string: str
     pre: tuple
     prephase: Optional[str]
@@ -23,17 +24,42 @@ class Qual(SlotList):
     post: Optional[int]
     dev: Optional[int]
 
-    @setdoc.basic
     def __bool__(self: Self) -> bool:
-        return set(self.data) != {None}
+        return self.string == ""
 
+    @Overloadable
     @setdoc.basic
-    def __init__(self: Self, data: Any = None) -> None:
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        if len(args) == 0 and "string" in kwargs.keys():
+            return True
+        if len(args) == 1 and len(kwargs) == 0:
+            return True
+        return False
+
+    @__init__.overload(True)
+    @setdoc.basic
+    def __init__(self: Self, string: Any) -> None:
+        self._init_setup()
+        self.string = string
+
+    @__init__.overload(False)
+    @setdoc.basic
+    def __init__(
+        self: Self,
+        pre: Any = None,
+        post: Any = None,
+        dev: Any = None,
+    ) -> None:
+        self._init_setup()
+        self.pre = pre
+        self.post = post
+        self.dev = dev
+
+    def _init_setup(self: Self) -> None:
         self._prephase = None
         self._presubphase = None
         self._post = None
         self._dev = None
-        self.data = data
 
     def _cmp(self: Self) -> list:
         ans: list = list()
@@ -68,31 +94,30 @@ class Qual(SlotList):
         m: Any
         x: Any
         y: Any
+        pre: Any = (None, None)
+        post: Any = None
+        dev: Any = None
         while v:
             m = Pattern.QUALIFIERS.leftbound.search(v)
             v = v[m.end() :]
             if m.group("N"):
-                self.post = m.group("N")
+                post = m.group("N")
                 continue
             x = m.group("l")
             y = m.group("n")
             if x == "dev":
-                self.dev = y
+                dev = y
                 continue
             if x in ("post", "r", "rev"):
-                self.post = y
+                post = y
                 continue
-            self.pre = x, y
+            pre = x, y
+        self.pre = pre
+        self.post = post
+        self.dev = dev
 
-    @property
-    @setdoc.basic
-    def data(self: Self) -> tuple:
-        return self.prephase, self.presubphase, self.post, self.dev
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Any) -> None:
-        self.pre, self.post, self.dev = qualparse.parse_leg(value)
+    def _todict(self: Self) -> dict:
+        return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
     def dev(self: Self) -> Optional[int]:

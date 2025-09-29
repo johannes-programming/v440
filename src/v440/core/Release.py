@@ -157,10 +157,6 @@ class Release(VList):
         ans: list = list(m)
         return ans
 
-    @setdoc.basic
-    def __init__(self: Any, data: Any = None) -> None:
-        self.data = data
-
     @Overloadable
     @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> bool:
@@ -177,6 +173,13 @@ class Release(VList):
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
         k: range = torange(key, len(self))
         self._setitem_range(k, value)
+
+    @classmethod
+    def _data_parse(cls: type, value: list) -> Iterable:
+        v: list = tolist(value, slicing="always")
+        while v and v[-1] == 0:
+            v.pop()
+        return v
 
     def _format(self: Self, format_spec: str) -> str:
         i: Optional[int]
@@ -254,16 +257,3 @@ class Release(VList):
         self._setitem_int(i, x)
         if i != -1:
             self.data = self.data[: i + 1]
-
-    @property
-    @setdoc.basic
-    def data(self: Self) -> tuple:
-        return self._data
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Any) -> None:
-        v: list = tolist(value, slicing="always")
-        while v and v[-1] == 0:
-            v.pop()
-        self._data = tuple(v)

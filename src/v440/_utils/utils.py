@@ -74,30 +74,17 @@ def ishashable(value: Any) -> bool:
 def guard(old: Any) -> Any:
     @functools.wraps(old)
     def new(self: Self, value: Any) -> None:
-        backup: dict = dict()
-        x: Any
-        y: Any
-        for x in type(self).__slots__:
-            y = getattr(self, x)
-            backup[x] = y if ishashable(y) else y.copy()
+        backup: str = str(getattr(self, old.__name__))
         try:
             old(self, value)
         except VersionError:
-            restore(obj=self, backup=backup)
+            setattr(self, old.__name__, backup)
             raise
         except Exception:
-            restore(obj=self, backup=backup)
+            setattr(self, old.__name__, backup)
             msg: str = "%r is an invalid value for %r"
             target: str = type(self).__name__ + "." + old.__name__
             msg %= (value, target)
             raise VersionError(msg)
 
     return new
-
-
-def restore(obj: Any, backup: dict) -> None:
-    for x in type(obj).__slots__:
-        if ishashable(backup[x]):
-            setattr(obj, x, backup[x])
-        else:
-            getattr(obj, x).data = backup[x]

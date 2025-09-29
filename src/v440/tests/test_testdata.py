@@ -177,7 +177,7 @@ class TestDataProperty(unittest.TestCase):
     ) -> None:
         msg: str = "data-property %r" % key
         version: Version = Version()
-        version.data = query
+        version.string = query
         self.assertEqual(solution, str(version), msg=msg)
 
 

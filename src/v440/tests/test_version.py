@@ -59,7 +59,7 @@ class TestPre(unittest.TestCase):
 
         # Initial version, no pre-release version
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.public.qual, [None, None, None, None])
+        self.assertEqual(v.public.qual.string, "")
 
         # Set pre-release version to "a1"
         v.public.qual = "a1"
@@ -88,7 +88,7 @@ class TestPre(unittest.TestCase):
         # Set pre-release to None
         v.public.qual = None
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.public.qual, [None, None, None, None])
+        self.assertEqual(str(v.public.qual), "")
 
 
 class TestExample(unittest.TestCase):
@@ -179,7 +179,7 @@ class TestExample(unittest.TestCase):
     def test_example_7(self: Self) -> None:
         v: Version = Version("5.0.0")
         self.assertEqual(str(v), "5")  # Original version
-        v.data = None
+        v.string = ""
         self.assertEqual(str(v), "0")  # After reset
         v.public.base = "4!5.0.1"
         self.assertEqual(str(v), "4!5.0.1")  # Before error
