@@ -8,7 +8,7 @@ import setdoc
 from keyalias import keyalias
 from overloadable import Overloadable
 
-from v440._utils import segmenting
+from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
 
 __all__ = ["Release"]
@@ -40,7 +40,7 @@ def tolist(value: int, *, slicing: Any) -> list:
 
 @tolist.overload(list)
 def tolist(value: int, *, slicing: Any) -> list:
-    return list(map(segmenting.numeral, value))
+    return list(map(releaseparse.numeral, value))
 
 
 @tolist.overload(str)
@@ -63,7 +63,7 @@ def tolist(value: Any, *, slicing: Any) -> list:
     l: list = v.split(".")
     if "" in l:
         raise ValueError
-    l = list(map(segmenting.numeral, l))
+    l = list(map(releaseparse.numeral, l))
     return l
 
 
@@ -200,7 +200,7 @@ class Release(ListStringer):
             return 0
 
     def _setitem_int(self: Self, key: int, value: Any) -> Any:
-        v: int = segmenting.numeral(value)
+        v: int = releaseparse.numeral(value)
         if key < len(self):
             data = list(self.data)
             data[key] = v
