@@ -122,7 +122,4 @@ class BaseList(metaclass=ABCMeta):
     @string.setter
     @guard
     def string(self: Self, value: Any) -> None:
-        if value is None:
-            self._string_fset("")
-        else:
-            self._string_fset(str(value))
+        self._string_fset(str(value))

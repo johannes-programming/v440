@@ -961,9 +961,6 @@ solution = "9001"
 query = "1701!4.5.6.rc255+reset"
 solution = "1701!4.5.6rc255+reset"
 
-[data-property.none]
-solution = "0"
-
 [slicingmethod.test_slicing_1]
 query = "1.2.3.4.5.6.7.8.9.10"
 start = -8
@@ -1030,36 +1027,43 @@ full = "1.2.3"
 part = 0
 
 [core-non-attributes.test-0000]
+string = ""
 clsname = "Base"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0100]
+string = ""
 clsname = "Local"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0200]
+string = ""
 clsname = "Public"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0300]
+string = ""
 clsname = "Qual"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0400]
+string = ""
 clsname = "Release"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0500]
+string = ""
 clsname = "Public"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0600]
+string = ""
 clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42

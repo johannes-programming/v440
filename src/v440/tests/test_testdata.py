@@ -167,7 +167,8 @@ class TestSlicingGo(unittest.TestCase):
 class TestDataProperty(unittest.TestCase):
     def test_data(self: Self) -> None:
         for k, v in Util.util.data["data-property"].items():
-            self.go(**v, key=k)
+            with self.subTest(key=k):
+                self.go(**v, key=k)
 
     def go(
         self: Self,
@@ -384,7 +385,7 @@ class TestSlots(unittest.TestCase):
         clsname: str,
         attrname: str,
         attrvalue: Any,
-        data: Any = None,
+        string: Any = None,
         isimported: Optional[bool] = False,
     ) -> None:
         cls: type
@@ -392,7 +393,7 @@ class TestSlots(unittest.TestCase):
             cls = getattr(core, clsname)
         else:
             cls = getattr(getattr(core, clsname), clsname)
-        obj: Any = cls(data)
+        obj: Any = cls(string=string)
         with self.assertRaises(AttributeError):
             setattr(obj, attrname, attrvalue)
 
