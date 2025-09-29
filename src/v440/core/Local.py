@@ -4,9 +4,7 @@ from typing import *
 
 import setdoc
 
-from v440._utils import utils
-from v440._utils.Digest import Digest
-from v440._utils.guarding import guard
+from v440._utils import segmenting
 from v440._utils.VList import VList
 
 __all__ = ["Local"]
@@ -20,7 +18,7 @@ class Local(VList):
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
-        ans: tuple = tuple(map(utils.segment, value))
+        ans: tuple = tuple(map(segmenting.segment, value))
         if None in ans:
             raise ValueError
         return ans

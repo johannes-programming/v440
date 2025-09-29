@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import *
 
-from v440._utils import utils
+from v440._utils import segmenting
 from v440._utils.Cfg import Cfg
 from v440._utils.Digest import Digest
 from v440._utils.Pattern import Pattern
@@ -26,7 +26,7 @@ def parse_dev(value: int) -> int:
 def parse_dev(value: list) -> Optional[int]:
     x: Any
     y: Any
-    x, y = map(utils.segment, value)
+    x, y = map(segmenting.segment, value)
     if x != "dev":
         raise ValueError
     if isinstance(y, str):
@@ -66,7 +66,7 @@ def parse_post(value: int) -> int:
 
 @parse_post.overload(list)
 def parse_post(value: list) -> Optional[int]:
-    v: list = list(map(utils.segment, value))
+    v: list = list(map(segmenting.segment, value))
     if len(v) == 0:
         raise ValueError
     if len(v) > 2:
@@ -107,7 +107,7 @@ def parse_pre() -> tuple:
 def parse_pre(value: list) -> tuple:
     x: Any
     y: Any
-    x, y = map(utils.segment, value)
+    x, y = map(segmenting.segment, value)
     if (x, y) == (None, None):
         return None, None
     x = Cfg.cfg.data["phases"][x]
