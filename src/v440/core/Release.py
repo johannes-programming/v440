@@ -159,6 +159,9 @@ class Release(ListStringer):
         return value
 
     def _string_fset(self: Self, value: str) -> None:
+        if value == "":
+            self.data = ()
+            return
         v: str = value
         v = v.replace("_", ".")
         v = v.replace("-", ".")
