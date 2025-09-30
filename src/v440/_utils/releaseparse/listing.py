@@ -5,7 +5,7 @@ from typing import *
 
 from overloadable import Overloadable
 
-from v440._utils import releaseparse
+from v440._utils.releaseparse.numerals import numeral
 
 __all__ = ["tolist"]
 
@@ -36,7 +36,7 @@ def tolist(value: int, *, slicing: Any) -> list:
 
 @tolist.overload(list)
 def tolist(value: int, *, slicing: Any) -> list:
-    return list(map(releaseparse.numeral, value))
+    return list(map(numeral, value))
 
 
 @tolist.overload(str)
@@ -59,5 +59,5 @@ def tolist(value: Any, *, slicing: Any) -> list:
     l: list = v.split(".")
     if "" in l:
         raise ValueError
-    l = list(map(releaseparse.numeral, l))
+    l = list(map(numeral, l))
     return l
