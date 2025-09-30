@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import operator
 from typing import *
 
 import setdoc
@@ -82,7 +83,11 @@ class Base(SlotStringer):
     @epoch.setter
     @guard
     def epoch(self: Self, value: Any) -> None:
-        v: int = int(value)
+        v: int
+        if isinstance(value, int):
+            v = operator.index(value)
+        else:
+            v = int(str(value))
         if v < 0:
             raise ValueError
         self._epoch = v
