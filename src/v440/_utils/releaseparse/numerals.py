@@ -1,23 +1,23 @@
 from __future__ import annotations
 
-import string
 from typing import *
 
-from v440._utils.Digest import Digest
 from v440.core.VersionError import VersionError
+
+__all__ = ["numeral"]
 
 
 def numeral(value: Any, /) -> int:
     v: int
     try:
-        v = _segment(value)
+        v = numeral_(value)
     except Exception:
         e: str = "%r is not a valid numeral segment"
         raise VersionError(e % value) from None
     return v
 
 
-def _segment(value: Any, /) -> int:
+def numeral_(value: Any, /) -> int:
     if isinstance(value, int):
         return int(value)
     s: str = str(value)
