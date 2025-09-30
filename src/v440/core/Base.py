@@ -13,34 +13,6 @@ from v440.core.Release import Release
 __all__ = ["Base"]
 
 
-parse_epoch: Digest = Digest("parse_epoch")
-
-
-@parse_epoch.overload()
-def parse_epoch() -> int:
-    return 0
-
-
-@parse_epoch.overload(int)
-def parse_epoch(value: int) -> int:
-    if value < 0:
-        raise ValueError
-    return value
-
-
-@parse_epoch.overload(str)
-def parse_epoch(value: str) -> int:
-    s: str = value
-    if s.endswith("!"):
-        s = s[:-1]
-    if s == "":
-        return 0
-    ans: int = int(s)
-    if ans < 0:
-        raise ValueError
-    return ans
-
-
 class Base(SlotStringer):
 
     __slots__ = ("_epoch", "_release")

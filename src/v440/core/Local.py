@@ -4,9 +4,6 @@ import operator
 import string as string_
 from typing import *
 
-import setdoc
-
-from v440._utils import segmenting
 from v440._utils.ListStringer import ListStringer
 
 __all__ = ["Local"]
