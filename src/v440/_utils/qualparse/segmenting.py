@@ -3,7 +3,7 @@ from __future__ import annotations
 import string
 from typing import *
 
-from v440._utils.Digest import Digest
+from v440._utils.qualparse.Digest import Digest
 from v440.core.VersionError import VersionError
 
 
