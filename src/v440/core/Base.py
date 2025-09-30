@@ -111,7 +111,10 @@ class Base(SlotStringer):
     @epoch.setter
     @guard
     def epoch(self: Self, value: Any) -> None:
-        self._epoch = parse_epoch(value)
+        v: int = int(value)
+        if v < 0:
+            raise ValueError
+        self._epoch = v
 
     @property
     def release(self: Self) -> Release:
