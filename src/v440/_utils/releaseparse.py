@@ -8,7 +8,13 @@ from v440.core.VersionError import VersionError
 
 
 def numeral(value: Any, /) -> int:
-    v: Any = segment(value)
+    v: Any
+    try:
+        v = _segment(value)
+    except:
+        e: str = "%r is not a valid segment"
+        e = VersionError(e % value)
+        raise e from None
     if type(v) is int:
         return v
     e: str = "%r is not a valid numeral segment"
@@ -16,21 +22,7 @@ def numeral(value: Any, /) -> int:
     raise VersionError(e)
 
 
-def segment(value: Any, /) -> Any:
-    try:
-        return _segment(value)
-    except:
-        e: str = "%r is not a valid segment"
-        e = VersionError(e % value)
-        raise e from None
-
-
 _segment: Digest = Digest("_segment")
-
-
-@_segment.overload()
-def _segment():
-    return
 
 
 @_segment.overload(int)
