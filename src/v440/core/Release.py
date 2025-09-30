@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import operator
-import string
 from typing import *
 
 import setdoc
@@ -12,59 +11,6 @@ from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
 
 __all__ = ["Release"]
-
-
-@Overloadable
-def tolist(value: Any, *, slicing: Any) -> list:
-    if value is None:
-        return
-    if isinstance(value, int):
-        return int
-    if hasattr(value, "__iter__") and not isinstance(value, str):
-        return list
-    return str
-
-
-@tolist.overload()
-def tolist(value: None, *, slicing: Any) -> list:
-    return list()
-
-
-@tolist.overload(int)
-def tolist(value: int, *, slicing: Any) -> list:
-    v: int = int(value)
-    if value < 0:
-        raise ValueError
-    return [v]
-
-
-@tolist.overload(list)
-def tolist(value: int, *, slicing: Any) -> list:
-    return list(map(releaseparse.numeral, value))
-
-
-@tolist.overload(str)
-def tolist(value: Any, *, slicing: Any) -> list:
-    s: Any
-    if isinstance(value, str):
-        s = slicing
-    else:
-        s = "never"
-    v: str = str(value)
-    if v == "":
-        return list()
-    if "" == v.strip(string.digits) and s in (len(v), "always"):
-        return list(map(int, v))
-    v = v.lower().strip()
-    v = v.replace("_", ".")
-    v = v.replace("-", ".")
-    if v.startswith("v") or v.startswith("."):
-        v = v[1:]
-    l: list = v.split(".")
-    if "" in l:
-        raise ValueError
-    l = list(map(releaseparse.numeral, l))
-    return l
 
 
 @keyalias(major=0, minor=1, micro=2, patch=2)
@@ -144,7 +90,7 @@ class Release(ListStringer):
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
-        v: list = tolist(value, slicing="always")
+        v: list = releaseparse.tolist(value, slicing="always")
         while v and v[-1] == 0:
             v.pop()
         return v
@@ -187,7 +133,7 @@ class Release(ListStringer):
     @_setitem_range.overload(False)
     def _setitem_range(self: Self, key: range, value: Any) -> Any:
         key: list = list(key)
-        value: list = tolist(value, slicing=len(key))
+        value: list = releaseparse.tolist(value, slicing=len(key))
         if len(key) != len(value):
             e = "attempt to assign sequence of size %s to extended slice of size %s"
             e %= (len(value), len(key))
@@ -204,7 +150,7 @@ class Release(ListStringer):
         data: list = list(self.data)
         ext: int = max(0, key.start - len(data))
         data += ext * [0]
-        l: list = tolist(value, slicing="always")
+        l: list = releaseparse.tolist(value, slicing="always")
         data = data[: key.start] + l + data[key.stop :]
         self.data = data
 
