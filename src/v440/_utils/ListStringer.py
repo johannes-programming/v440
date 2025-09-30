@@ -27,10 +27,18 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         return bool(self.data)
 
     @setdoc.basic
+    def __contains__(self: Self, other: Any) -> bool:
+        return other in self.data
+
+    @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
         data: list = list(self.data)
         del data[key]
         self.data = data
+
+    @setdoc.basic
+    def __getitem__(self: Self, key: Any) -> Any:
+        return self.data[key]
 
     @setdoc.basic
     def __iadd__(self: Self, other: Any, /) -> Self:
@@ -42,6 +50,35 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         self.data = self.data * other
         return self
 
+    @Overloadable
+    @setdoc.basic
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        if len(args) == 0 and "string" in kwargs.keys():
+            return True
+        if len(args) == 1 and len(kwargs) == 0:
+            if isinstance(args[0], str):
+                return True
+            if hasattr(args[0], "__iter__"):
+                return False
+            return True
+        return False
+
+    @__init__.overload(True)
+    @setdoc.basic
+    def __init__(self: Self, string: Any) -> None:
+        self._init_setup()
+        self.string = string
+
+    @__init__.overload(False)
+    @setdoc.basic
+    def __init__(self: Self, data: Iterable = ()) -> None:
+        self._init_setup()
+        self.data = data
+
+    @setdoc.basic
+    def __iter__(self: Self) -> Iterator:
+        return iter(self.data)
+
     @setdoc.basic
     def __len__(self: Self) -> int:
         return len(self.data)
@@ -51,11 +88,40 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         return type(self)(self.data * other)
 
     @setdoc.basic
+    def __repr__(self: Self) -> str:
+        return datarepr(type(self).__name__, self.data)
+
+    @setdoc.basic
+    def __reversed__(self: Self) -> reversed:
+        return reversed(self.data)
+
+    @setdoc.basic
     def __rmul__(self: Self, other: Any) -> Self:
         return self * other
 
+    @setdoc.basic
+    def __setitem__(self: Self, key: Any, value: Any) -> None:
+        data: list = list(self.data)
+        data[key] = value
+        self.data = data
+
     def _cmp(self: Self) -> tuple:
         return tuple(map(self._sort, self.data))
+
+    @classmethod
+    @abstractmethod
+    def _data_parse(cls: type, value: list) -> Iterable: ...
+
+    def _init_setup(self: Self) -> None:
+        self._data = ()
+
+    def _set(self: Self, value: Any) -> None:
+        if isinstance(value, str):
+            self.string = value
+        elif hasattr(value, "__iter__"):
+            self.data = value
+        else:
+            self.string = value
 
     @classmethod
     @abstractmethod
@@ -74,11 +140,29 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         "This method clears the data."
         self.data = ()
 
+    def count(self: Self, value: Any) -> int:
+        "This method counts the occurences of value."
+        return self.data.count(value)
+
+    @property
+    @setdoc.basic
+    def data(self: Self) -> tuple:
+        return self._data
+
+    @data.setter
+    @guard
+    def data(self: Self, value: Iterable) -> None:
+        self._data = tuple(self._data_parse(list(value)))
+
     def extend(self: Self, value: Self, /) -> None:
         "This method extends self by value."
         data: list = list(self.data)
         data.extend(value)
         self.data = data
+
+    def index(self: Self, *args: Any) -> None:
+        "This method returns the index of the first occurence."
+        return self.data.index(*args)
 
     def insert(
         self: Self,
@@ -117,88 +201,3 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         r: bool = bool(reverse)
         data.sort(key=k, reverse=r)
         self.data = data
-
-    # data-associated
-    @setdoc.basic
-    def __contains__(self: Self, other: Any) -> bool:
-        return other in self.data
-
-    @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> Any:
-        return self.data[key]
-
-    @Overloadable
-    @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if len(args) == 0 and "string" in kwargs.keys():
-            return True
-        if len(args) == 1 and len(kwargs) == 0:
-            if isinstance(args[0], str):
-                return True
-            if hasattr(args[0], "__iter__"):
-                return False
-            return True
-        return False
-
-    @__init__.overload(True)
-    @setdoc.basic
-    def __init__(self: Self, string: Any) -> None:
-        self._init_setup()
-        self.string = string
-
-    @__init__.overload(False)
-    @setdoc.basic
-    def __init__(self: Self, data: Iterable = ()) -> None:
-        self._init_setup()
-        self.data = data
-
-    @setdoc.basic
-    def __iter__(self: Self) -> Iterator:
-        return iter(self.data)
-
-    @setdoc.basic
-    def __repr__(self: Self) -> str:
-        return datarepr(type(self).__name__, *self.data)
-
-    @setdoc.basic
-    def __reversed__(self: Self) -> reversed:
-        return reversed(self.data)
-
-    @setdoc.basic
-    def __setitem__(self: Self, key: Any, value: Any) -> None:
-        data: list = list(self.data)
-        data[key] = value
-        self.data = data
-
-    @classmethod
-    @abstractmethod
-    def _data_parse(cls: type, value: list) -> Iterable: ...
-
-    def _init_setup(self: Self) -> None:
-        self._data = ()
-
-    def _set(self: Self, value: Any) -> None:
-        if isinstance(value, str):
-            self.string = value
-        elif hasattr(value, "__iter__"):
-            self.data = value
-        else:
-            self.string = value
-
-    @property
-    @setdoc.basic
-    def data(self: Self) -> tuple:
-        return self._data
-
-    @data.setter
-    @guard
-    def data(self: Self, value: Iterable) -> None:
-        self._data = tuple(self._data_parse(list(value)))
-
-    def count(self: Self, value: Any) -> int:
-        "This method counts the occurences of value."
-        return self.data.count(value)
-
-    def index(self: Self, *args: Any) -> None:
-        "This method returns the index of the first occurence."
-        return self.data.index(*args)
