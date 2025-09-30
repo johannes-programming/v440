@@ -198,36 +198,39 @@ class TestVersionRelease(unittest.TestCase):
 
 class TestDevGo(unittest.TestCase):
     def test_dev_as_tuple(self: Self) -> None:
-        self.go(
+        self.go_key(
             key="test_dev_as_tuple",
-            v_version="1.2.3",
-            v_dev=("dev", "5000"),
-            v_str="1.2.3.dev5000",
-            v_ans=5000,
+            setup="1.2.3",
+            update=("dev", "5000"),
+            text="1.2.3.dev5000",
+            answer=5000,
         )
 
     def test_strings_a(self: Self) -> None:
         k: str
         v: dict
         for k, v in Util.util.data["devint"].items():
-            with self.subTest(key=k):
-                self.go(**v, key=k)
+            self.go_key(**v, key=k)
+
+    def go_key(self: Self, key: str, **kwargs: Any) -> None:
+        msg: str = "dev %r" % key
+        with self.subTest(key=key):
+            self.go(**kwargs, msg=msg)
 
     def go(
         self: Self,
-        key: str,
-        v_version: Any,
-        v_str: Any,
-        v_ans: Any,
-        v_dev: Any = None,
+        msg: str,
+        setup: Any,
+        text: str,
+        answer: Any,
+        update: Any = None,
         dev_type: type = int,
     ):
-        msg: str = "dev %r" % key
-        v: Version = Version(v_version)
-        v.public.qual.dev = v_dev
-        self.assertEqual(str(v), v_str, msg=msg)
+        v: Version = Version(setup)
+        v.public.qual.dev = update
+        self.assertEqual(str(v), text, msg=msg)
         self.assertIsInstance(v.public.qual.dev, dev_type, msg=msg)
-        self.assertEqual(v.public.qual.dev, v_ans, msg=msg)
+        self.assertEqual(v.public.qual.dev, answer, msg=msg)
 
 
 class TestVersionSpecifiersGo(unittest.TestCase):

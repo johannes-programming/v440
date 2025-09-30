@@ -748,82 +748,82 @@ Post-releases = [
 ]
 
 [devint.test_dev_as_int]
-v_version = "1.2.3"
-v_dev = 1
-v_str = "1.2.3.dev1"
-v_ans = 1
+setup = "1.2.3"
+update = 1
+text = "1.2.3.dev1"
+answer = 1
 
 [devint.test_dev_as_string_int]
-v_version = "1.2.3"
-v_dev = "42"
-v_str = "1.2.3.dev42"
-v_ans = 42
+setup = "1.2.3"
+update = "42"
+text = "1.2.3.dev42"
+answer = 42
 
 [devint.test_dev_as_string_with_dev_prefix]
-v_version = "1.2.3"
-v_dev = "dev1000"
-v_str = "1.2.3.dev1000"
-v_ans = 1000
+setup = "1.2.3"
+update = "dev1000"
+text = "1.2.3.dev1000"
+answer = 1000
 
 [devint.test_dev_as_string_with_dev_dot_prefix]
-v_version = "1.2.3"
-v_dev = "dev.2000"
-v_str = "1.2.3.dev2000"
-v_ans = 2000
+setup = "1.2.3"
+update = "dev.2000"
+text = "1.2.3.dev2000"
+answer = 2000
 
 [devint.test_dev_as_string_with_dot_dev_prefix]
-v_version = "1.2.3"
-v_dev = ".dev.3000"
-v_str = "1.2.3.dev3000"
-v_ans = 3000
+setup = "1.2.3"
+update = ".dev.3000"
+text = "1.2.3.dev3000"
+answer = 3000
 
 [devint.test_dev_as_string_with_dot_dev_number_prefix]
-v_version = "1.2.3"
-v_dev = ".dev4000"
-v_str = "1.2.3.dev4000"
-v_ans = 4000
+setup = "1.2.3"
+update = ".dev4000"
+text = "1.2.3.dev4000"
+answer = 4000
 
 [devint.test_dev_as_list]
-v_version = "1.2.3"
-v_dev = [
+setup = "1.2.3"
+update = [
     "dev",
     "6000",
 ]
-v_str = "1.2.3.dev6000"
-v_ans = 6000
+text = "1.2.3.dev6000"
+answer = 6000
 
 [devint.test_dev_as_uppercase_string]
-v_version = "1.2.3"
-v_dev = "DEV7000"
-v_str = "1.2.3.dev7000"
-v_ans = 7000
+setup = "1.2.3"
+update = "DEV7000"
+text = "1.2.3.dev7000"
+answer = 7000
 
 [devint.test_dev_as_mixed_case_string]
-v_version = "1.2.3"
-v_dev = "dEv8000"
-v_str = "1.2.3.dev8000"
-v_ans = 8000
+setup = "1.2.3"
+update = "dEv8000"
+text = "1.2.3.dev8000"
+answer = 8000
 
 [devint.test_dev_as_list_mixed_case]
-v_version = "1.2.3"
-v_dev = [
+setup = "1.2.3"
+update = [
     "dEV",
     "9000",
 ]
-v_str = "1.2.3.dev9000"
-v_ans = 9000
+text = "1.2.3.dev9000"
+answer = 9000
 
 [devint.test_dev_as_false]
-v_version = "1.2.3"
-v_dev = false
-v_str = "1.2.3.dev0"
-v_ans = 0
+setup = "1.2.3"
+update = false
+text = "1.2.3.dev0"
+answer = 0
 
 [devint.test_dev_as_true]
-v_version = "1.2.3"
-v_dev = true
-v_str = "1.2.3.dev1"
-v_ans = 1
+setup = "1.2.3"
+update = true
+text = "1.2.3.dev1"
+answer = 1
 
 [spec.test_basic_version_with_post_specifier]
 string_a = "1.2.3-4"
