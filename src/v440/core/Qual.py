@@ -96,13 +96,14 @@ class Qual(SlotStringer):
         m: Any
         x: Any
         y: Any
+        self.dev = None
+        self.post = None
         pre: Any = (None, None)
-        post: Any = None
         while v:
             m = Pattern.QUALIFIERS.leftbound.search(v)
             v = v[m.end() :]
             if m.group("N"):
-                post = m.group("N")
+                self.post = int(m.group("N"))
                 continue
             x = m.group("l")
             y = m.group("n")
@@ -110,11 +111,10 @@ class Qual(SlotStringer):
                 self.dev = int(y)
                 continue
             if x in ("post", "r", "rev"):
-                post = y
+                self.post = int(y)
                 continue
             pre = x, y
         self.pre = pre
-        self.post = post
 
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
@@ -152,8 +152,11 @@ class Qual(SlotStringer):
 
     @post.setter
     @guard
-    def post(self: Self, value: Any) -> None:
-        self._post = qualparse.parse_post(value)
+    def post(self: Self, value: Optional[SupportsIndex]) -> None:
+        if value is None:
+            self._post = None
+            return
+        self._post: int = abs(operator.index(value))
 
     @property
     def pre(self: Self) -> tuple:

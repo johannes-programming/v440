@@ -159,15 +159,15 @@ class TestExample(unittest.TestCase):
 
     def test_example_6(self: Self) -> None:
         v: Version = Version("1.2.3")
-        v.public.qual.post = "post1"
+        v.public.qual.post = 1
         v.local.string = "local.7.dev"
         self.assertEqual(str(v), "1.2.3.post1+local.7.dev")  # Post-release version
         self.assertEqual(format(v, "-1"), "1.2.post1+local.7.dev")  # Formatted version
-        v.public.qual.post = "post.2"
+        v.public.qual.post = 2
         self.assertEqual(str(v), "1.2.3.post2+local.7.dev")  # Modified version
         v.public.qual.post = None
         self.assertEqual(str(v), "1.2.3+local.7.dev")  # Modified without post
-        v.public.qual.post = "post", 3
+        v.public.qual.post = 3
         v.local.sort()
         self.assertEqual(str(v), "1.2.3.post3+dev.local.7")  # After sorting local
         v.local.append(8)
