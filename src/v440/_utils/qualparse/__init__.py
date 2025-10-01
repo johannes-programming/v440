@@ -90,7 +90,7 @@ class Digest:
 def segment(value: Any, /) -> Any:
     try:
         return _segment(value)
-    except:
+    except Exception:
         e: str = "%r is not a valid segment"
         e = VersionError(e % value)
         raise e from None
