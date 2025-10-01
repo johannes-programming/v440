@@ -172,13 +172,34 @@ class Qual(SlotStringer):
         return self._prephase
 
     @prephase.setter
+    @guard
     def prephase(self: Self, value: Any) -> None:
-        self.pre = value, self.presubphase
+        if value is None:
+            x = ""
+        else:
+            x = str(value)
+        if self.presubphase is None:
+            y = ""
+        else:
+            y = str(self.presubphase)
+        self.pre = x + y
 
     @property
     def presubphase(self: Self) -> Optional[int]:
         return self._presubphase
 
     @presubphase.setter
+    @guard
     def presubphase(self: Self, value: Any) -> None:
-        self.pre = self.prephase, value
+        if self.prephase is None:
+            x = ""
+        else:
+            x = self.prephase
+        if value is None:
+            y = ""
+        else:
+            y = operator.index(value)
+            if y < 0:
+                raise ValueError
+            y = str(y)
+        self.pre = x + y

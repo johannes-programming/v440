@@ -72,14 +72,12 @@ class TestPre(unittest.TestCase):
         self.assertEqual(str(v.public.qual), "rc1")
 
         # Modify subphase to "42"
-        v.public.qual.presubphase = "42"
+        v.public.qual.presubphase = 42
         self.assertEqual(str(v), "1.2.3rc42")
         self.assertEqual(str(v.public.qual), "rc42")
 
         # Change phase to a formatted string "BeTa"
-        v.public.qual.prephase = """
-        BeTa
-        """
+        v.public.qual.prephase = "BeTa"
         self.assertEqual(str(v), "1.2.3b42")
         self.assertEqual(str(v.public.qual), "b42")
         self.assertEqual(v.public.qual, backup)

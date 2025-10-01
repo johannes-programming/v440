@@ -125,34 +125,11 @@ def _segment(value: Any, /) -> int | str:
 
 # parse_pre
 def parse_pre(value: Any) -> tuple:
-    v: Any
-    if isinstance(value, str):
-        v = str(value)
-    else:
-        try:
-            v = list(value)
-        except Exception:
-            v = str(value)
-    if type(v) is str:
-        return parse_pre_str(v)
-    else:
-        return parse_pre_list(v)
-
-
-def parse_pre_list(value: list) -> tuple:
-    x: Any
-    y: Any
-    x, y = map(segment, value)
-    if (x, y) == (None, None):
-        return None, None
-    x = Cfg.cfg.data["phases"][x]
-    if not isinstance(y, int):
-        raise TypeError
-    return x, y
+    return parse_pre_str(str(value))
 
 
 def parse_pre_str(value: str) -> tuple:
-    v: str = str(value)
+    v: str = str(value).lower()
     if v == "":
         return None, None
     v = v.replace("_", ".")
