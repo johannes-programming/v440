@@ -33,7 +33,6 @@ class Release(ListStringer):
     def __getitem__(self: Self, key: Any) -> bool:
         return getting.getitem(self.data, key)
 
-    # use later for ListStringer
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:

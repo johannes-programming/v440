@@ -21,26 +21,20 @@ class Local(ListStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if len(args) == 0 and "string" in kwargs.keys():
+        if len(args) <= 1 and len(kwargs) == 0:
             return True
-        if len(args) == 1 and len(kwargs) == 0:
-            if isinstance(args[0], str):
-                return True
-            if hasattr(args[0], "__iter__"):
-                return False
+        if "string" in kwargs.keys():
             return True
         return False
 
     @__init__.overload(True)
-    @setdoc.basic
-    def __init__(self: Self, string: Any) -> None:
-        self._init_setup()
+    def __init__(self: Self, string: Any = "") -> None:
+        self._data = ()
         self.string = string
 
     @__init__.overload(False)
-    @setdoc.basic
-    def __init__(self: Self, data: Iterable = ()) -> None:
-        self._init_setup()
+    def __init__(self: Self, data: Iterable) -> None:
+        self._data = ()
         self.data = data
 
     @classmethod

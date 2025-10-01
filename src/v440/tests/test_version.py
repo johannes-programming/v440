@@ -59,7 +59,7 @@ class TestPre(unittest.TestCase):
 
         # Initial version, no pre-release version
         self.assertEqual(str(v), "1.2.3")
-        self.assertEqual(v.public.qual.string, "")
+        self.assertEqual(str(v.public.qual), "")
 
         # Set pre-release version to "a1"
         v.public.qual = "a1"
@@ -320,28 +320,32 @@ class TestVersionLocal(unittest.TestCase):
     def test_local_slice_assignment(self: Self) -> None:
         # Test assigning a slice to the local list
         version: Version = Version()
-        version.local = [1, "dev", "build"]
+        version.local.data = [1, "dev", "build"]
         version.local[1:3] = ["alpha", "beta"]
-        self.assertEqual(version.local, [1, "alpha", "beta"])
+        self.assertEqual(list(version.local), [1, "alpha", "beta"])
 
     def test_local_contains(self: Self) -> None:
         # Test 'in' keyword with local list
         version: Version = Version()
-        version.local = [1, "dev", "build"]
+        version.local.data = [1, "dev", "build"]
         self.assertIn("dev", version.local)
         self.assertNotIn("alpha", version.local)
 
     def test_local_mul(self: Self) -> None:
         # Test multiplying the local list
         version: Version = Version()
-        version.local = [1, "dev"]
-        self.assertEqual(version.local * 3, [1, "dev", 1, "dev", 1, "dev"])
+        version.local.data = [1, "dev"]
+        answer: list = list(version.local * 3)
+        solution: list = [1, "dev", 1, "dev", 1, "dev"]
+        self.assertEqual(answer, solution)
 
     def test_local_addition(self: Self) -> None:
         # Test adding another list to local
         version: Version = Version()
-        version.local = [1, "dev"]
-        self.assertEqual(version.local + ["build"], [1, "dev", "build"])
+        version.local.data = [1, "dev"]
+        answer: list = list(version.local + ["build"])
+        solution: list = [1, "dev", "build"]
+        self.assertEqual(answer, solution)
 
     def test_local_inequality_with_list(self: Self) -> None:
         # Test inequality of local with a normal list
@@ -365,7 +369,9 @@ class TestVersionLocal(unittest.TestCase):
         # Test that 'data' property can be set directly
         version: Version = Version()
         version.local.data = ["custom", "data"]
-        self.assertEqual(version.local, ["custom", "data"])
+        answer: list = list(version.local)
+        solution: list = ["custom", "data"]
+        self.assertEqual(answer, solution)
 
     def test_local_iterable(self: Self) -> None:
         # Test if local supports iteration

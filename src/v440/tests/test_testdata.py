@@ -115,7 +115,8 @@ class TestVersionLocalGo(unittest.TestCase):
             ans: Any = attr(*args, **dict(kwargs))
             self.assertEqual(ans, solution)
         if target is not None:
-            self.assertEqual(version.local, target)
+            answer: list = list(version.local)
+            self.assertEqual(answer, target)
 
 
 class TestVersionEpochGo(unittest.TestCase):
@@ -187,7 +188,7 @@ class TestVersionRelease(unittest.TestCase):
 
     def test_0(self: Self) -> None:
         k: str
-        v: Any
+        v: dict
         for k, v in Util.util.data["release"].items():
             with self.subTest(key=k):
                 self.go(**v)
