@@ -159,8 +159,8 @@ class Qual(SlotStringer):
         self._post: int = abs(operator.index(value))
 
     @property
-    def pre(self: Self) -> tuple:
-        return self._prephase, self._presubphase
+    def pre(self: Self) -> str:
+        return self._prephase + str(self._presubphase)
 
     @pre.setter
     @guard
