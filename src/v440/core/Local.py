@@ -39,7 +39,10 @@ class Local(ListStringer):
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
-        return tuple(map(cls._item_parse, value))
+        try:
+            return tuple(map(cls._item_parse, value))
+        except Exception as exc:
+            raise ValueError("_dataparse: value=%r" % value)
 
     def _format(self: Self, format_spec: str) -> str:
         if format_spec:
@@ -59,7 +62,7 @@ class Local(ListStringer):
         else:
             ans = str(value).lower()
             if ans.strip(string_.digits + string_.ascii_lowercase):
-                raise ValueError
+                raise ValueError("_item_parse: value=%r" % value)
             if not ans.strip(string_.digits):
                 ans = int(ans)
         return ans

@@ -88,7 +88,7 @@ class TestVersionLocalVersionError(unittest.TestCase):
     ) -> None:
         version: Version = Version()
         with self.assertRaises(VersionError):
-            version.local = query
+            version.local.data = query
 
 
 class TestVersionLocalGo(unittest.TestCase):

@@ -17,7 +17,7 @@ class TestVersionManipulation(unittest.TestCase):
         v.public.base.release.major = 2
         v.public.base.release.minor = 5
         v.public.qual = "beta.1"
-        v.local = "local.7.dev"
+        v.local.string = "local.7.dev"
 
         # Verify the expected output
         self.assertEqual(str(v), "2.5.3b1+local.7.dev")
@@ -161,7 +161,7 @@ class TestExample(unittest.TestCase):
     def test_example_6(self: Self) -> None:
         v: Version = Version("1.2.3")
         v.public.qual.post = "post1"
-        v.local = "local.7.dev"
+        v.local.string = "local.7.dev"
         self.assertEqual(str(v), "1.2.3.post1+local.7.dev")  # Post-release version
         self.assertEqual(format(v, "-1"), "1.2.post1+local.7.dev")  # Formatted version
         v.public.qual.post = "post.2"
@@ -173,7 +173,7 @@ class TestExample(unittest.TestCase):
         self.assertEqual(str(v), "1.2.3.post3+dev.local.7")  # After sorting local
         v.local.append(8)
         self.assertEqual(str(v), "1.2.3.post3+dev.local.7.8")  # Modified with new local
-        v.local = "3.test.19"
+        v.local.string = "3.test.19"
         self.assertEqual(str(v), "1.2.3.post3+3.test.19")  # Modified local again
 
     def test_example_7(self: Self) -> None:
@@ -314,7 +314,7 @@ class TestVersionLocal(unittest.TestCase):
     def test_local_len(self: Self) -> None:
         # Test the length of the local list
         version: Version = Version()
-        version.local = [1, "dev", "build"]
+        version.local.data = [1, "dev", "build"]
         self.assertEqual(len(version.local), 3)
 
     def test_local_slice_assignment(self: Self) -> None:
@@ -350,19 +350,19 @@ class TestVersionLocal(unittest.TestCase):
     def test_local_inequality_with_list(self: Self) -> None:
         # Test inequality of local with a normal list
         version: Version = Version()
-        version.local = [1, "dev"]
+        version.local.data = [1, "dev"]
         self.assertFalse(version.local == [1, "build"])
 
     def test_local_repr(self: Self) -> None:
         # Test repr of local list
         version: Version = Version()
-        version.local = [1, "dev", "build"]
+        version.local.data = [1, "dev", "build"]
         self.assertEqual(str(version.local), "1.dev.build")
 
     def test_local_data_property(self: Self) -> None:
         # Test that 'data' property correctly reflects local's internal list
         version: Version = Version()
-        version.local = [1, "dev", "build"]
+        version.local.data = [1, "dev", "build"]
         self.assertEqual(version.local.data, (1, "dev", "build"))
 
     def test_local_data_setter(self: Self) -> None:
@@ -376,7 +376,7 @@ class TestVersionLocal(unittest.TestCase):
     def test_local_iterable(self: Self) -> None:
         # Test if local supports iteration
         version: Version = Version()
-        version.local = "1.dev.build"
+        version.local.string = "1.dev.build"
         result: list = list(version.local)
         self.assertEqual(result, [1, "dev", "build"])
 
