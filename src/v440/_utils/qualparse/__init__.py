@@ -96,25 +96,17 @@ def segment(value: Any, /) -> Any:
         raise e from None
 
 
-_segment: Digest = Digest("_segment")
-
-
-@_segment.overload()
-def _segment():
-    return
-
-
-@_segment.overload(int)
-def _segment(value: int, /) -> Any:
-    if value < 0:
-        raise ValueError
-    return value
-
-
-@_segment.overload(str)
-def _segment(value: Any, /) -> int | str:
+def _segment(value: Any) -> Any:
+    if value is None:
+        return
+    if isinstance(value, int):
+        x = int(value)
+        if x < 0:
+            raise ValueError
+        return x
+    value = str(value).lower().strip()
     if value.strip(string.ascii_lowercase + string.digits):
-        raise ValueError(value)
+        raise ValueError
     if value.strip(string.digits):
         return value
     elif value == "":
