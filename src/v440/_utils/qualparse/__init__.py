@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import functools
+import operator
 import string
 import types
 from typing import *
@@ -123,11 +124,22 @@ def _segment(value: Any, /) -> int | str:
 
 
 # parse_pre
-parse_pre: Digest = Digest("parse_pre")
+def parse_pre(value: Any) -> tuple:
+    v: Any
+    if isinstance(value, str):
+        v = str(value)
+    else:
+        try:
+            v = list(value)
+        except Exception:
+            v = str(value)
+    if type(v) is str:
+        return parse_pre_str(v)
+    else:
+        return parse_pre_list(v)
 
 
-@parse_pre.overload(list)
-def parse_pre(value: list) -> tuple:
+def parse_pre_list(value: list) -> tuple:
     x: Any
     y: Any
     x, y = map(segment, value)
@@ -139,8 +151,7 @@ def parse_pre(value: list) -> tuple:
     return x, y
 
 
-@parse_pre.overload(str)
-def parse_pre(value: str) -> tuple:
+def parse_pre_str(value: str) -> tuple:
     v: str = str(value)
     if v == "":
         return None, None
