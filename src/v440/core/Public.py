@@ -47,7 +47,7 @@ class Public(SlotStringer):
         qual: Any = "",
     ) -> None:
         self._init_setup()
-        self.base = base
+        self.base.string = base
         self.qual = qual
 
     def _init_setup(self: Self) -> None:
@@ -69,10 +69,6 @@ class Public(SlotStringer):
     def base(self: Self) -> Base:
         "This property represents the version base."
         return self._base
-
-    @base.setter
-    def base(self: Self, value: Any) -> None:
-        self.base._set(value)
 
     @property
     def qual(self: Self) -> Qual:
