@@ -25,9 +25,9 @@ def parse_pre(value: list) -> tuple:
 
 @parse_pre.overload(str)
 def parse_pre(value: str) -> tuple:
-    if value == "":
-        return [None, None]
-    v: str = value
+    v: str = str(value)
+    if v == "":
+        return None, None
     v = v.replace("_", ".")
     v = v.replace("-", ".")
     m: Any = Pattern.PARSER.bound.search(v)
