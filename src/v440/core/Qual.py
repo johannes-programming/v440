@@ -24,6 +24,7 @@ class Qual(SlotStringer):
     post: Optional[int]
     dev: Optional[int]
 
+    @setdoc.basic
     def __bool__(self: Self) -> bool:
         return self.string == ""
 

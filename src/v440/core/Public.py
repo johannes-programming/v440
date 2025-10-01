@@ -21,6 +21,7 @@ class Public(SlotStringer):
     base: Base
     qual: Qual
 
+    @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.base or self.qual)
 

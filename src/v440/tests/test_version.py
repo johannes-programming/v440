@@ -82,7 +82,6 @@ class TestPre(unittest.TestCase):
         """
         self.assertEqual(str(v), "1.2.3b42")
         self.assertEqual(str(v.public.qual), "b42")
-
         self.assertEqual(v.public.qual, backup)
 
         # Set pre-release to None
