@@ -21,13 +21,14 @@ class Version(SlotStringer):
     local: Local
     public: Public
 
+    @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.local or self.public)
 
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if len(args) == 0 and "string" in kwargs.keys():
+        if "string" in kwargs.keys():
             return True
         if len(args) == 1 and len(kwargs) == 0:
             return True
@@ -35,8 +36,9 @@ class Version(SlotStringer):
 
     @__init__.overload(True)
     @setdoc.basic
-    def __init__(self: Self, string: Any) -> None:
-        self._init_setup()
+    def __init__(self: Self, string: Any = "0") -> None:
+        self._public = Public()
+        self._local = Local()
         self.string = string
 
     @__init__.overload(False)
@@ -46,13 +48,10 @@ class Version(SlotStringer):
         public: Any = "0",
         local: Any = "",
     ) -> None:
-        self._init_setup()
-        self.public = public
-        self.local.string = local
-
-    def _init_setup(self: Self) -> None:
         self._public = Public()
         self._local = Local()
+        self.public.string = public
+        self.local.string = local
 
     def _format(self: Self, format_spec: str) -> str:
         ans: str = format(self.public, format_spec)
@@ -84,8 +83,3 @@ class Version(SlotStringer):
     def public(self: Self) -> Self:
         "This property represents the public identifier."
         return self._public
-
-    @public.setter
-    @guard
-    def public(self: Self, value: Any) -> None:
-        self.public._set(value)
