@@ -21,9 +21,9 @@ class Local(ListStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if len(args) <= 1 and len(kwargs) == 0:
-            return True
         if "string" in kwargs.keys():
+            return True
+        if len(args) <= 1 and len(kwargs) == 0:
             return True
         return False
 
@@ -48,9 +48,6 @@ class Local(ListStringer):
         if format_spec:
             raise ValueError
         return ".".join(map(str, self))
-
-    def _init_setup(self: Self) -> None:
-        self._data = ()
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:
