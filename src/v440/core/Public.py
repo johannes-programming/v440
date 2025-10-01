@@ -74,7 +74,3 @@ class Public(SlotStringer):
     def qual(self: Self) -> Qual:
         "This property represents the qualification."
         return self._qual
-
-    @qual.setter
-    def qual(self: Self, value: Any) -> None:
-        self.qual._set(value)
