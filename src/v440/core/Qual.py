@@ -98,7 +98,7 @@ class Qual(SlotStringer):
         y: Any
         self.dev = None
         self.post = None
-        pre: Any = (None, None)
+        pre: str = ""
         while v:
             m = Pattern.QUALIFIERS.leftbound.search(v)
             v = v[m.end() :]
