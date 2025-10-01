@@ -30,7 +30,7 @@ class Version(SlotStringer):
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
         if "string" in kwargs.keys():
             return True
-        if len(args) == 1 and len(kwargs) == 0:
+        if len(args) <= 1 and len(kwargs) == 0:
             return True
         return False
 

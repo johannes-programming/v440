@@ -36,9 +36,9 @@ class Release(ListStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if len(args) <= 1 and len(kwargs) == 0:
-            return True
         if "string" in kwargs.keys():
+            return True
+        if len(args) <= 1 and len(kwargs) == 0:
             return True
         return False
 
