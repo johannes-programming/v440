@@ -30,26 +30,9 @@ class Release(ListStringer):
     def __delitem__(self: Self, key: Any) -> bool:
         self._data = deleting.delitem(self._data, key)
 
-    @Overloadable
     @setdoc.basic
     def __getitem__(self: Self, key: Any) -> bool:
-        return type(key) is slice
-
-    @__getitem__.overload(False)
-    @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> int:
-        i: int = operator.index(key)
-        ans: int = getting.getitem_int(self.data, i)
-        return ans
-
-    @__getitem__.overload(True)
-    @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> list:
-        r: range = releaseparse.torange(key, len(self))
-        f: partial = partial(getting.getitem_int, self.data)
-        m: map = map(f, r)
-        ans: list = list(m)
-        return ans
+        return getting.getitem(self.data, key)
 
     @Overloadable
     @setdoc.basic
