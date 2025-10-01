@@ -9,6 +9,7 @@ from overloadable import Overloadable
 
 from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
+from v440._utils.releaseparse.delitem import delitem
 
 __all__ = ["Release"]
 
@@ -24,32 +25,9 @@ class Release(ListStringer):
     micro: int
     patch: int
 
-    @Overloadable
     @setdoc.basic
     def __delitem__(self: Self, key: Any) -> bool:
-        return type(key) is slice
-
-    @__delitem__.overload(False)
-    @setdoc.basic
-    def __delitem__(self: Self, key: SupportsIndex) -> None:
-        i: int = operator.index(key)
-        if i >= len(self):
-            return
-        data: list = list(self.data)
-        del data[i]
-        self.data = data
-
-    @__delitem__.overload(True)
-    @setdoc.basic
-    def __delitem__(self: Self, key: Any) -> None:
-        r: range = releaseparse.torange(key, len(self))
-        k: Any
-        l: list = [k for k in r if k < len(self)]
-        l.sort(reverse=True)
-        data: list = list(self.data)
-        for k in l:
-            del data[k]
-        self.data = data
+        self._data = delitem(self._data, key)
 
     @Overloadable
     @setdoc.basic
