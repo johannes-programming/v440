@@ -31,15 +31,15 @@ class Qual(SlotStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if len(args) == 0 and "string" in kwargs.keys():
+        if "string" in kwargs.keys():
             return True
-        if len(args) == 1 and len(kwargs) == 0:
+        if len(args) <= 1 and len(kwargs) == 0:
             return True
         return False
 
     @__init__.overload(True)
     @setdoc.basic
-    def __init__(self: Self, string: Any) -> None:
+    def __init__(self: Self, string: Any = "") -> None:
         self._init_setup()
         self.string = string
 
