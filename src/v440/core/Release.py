@@ -10,7 +10,7 @@ from overloadable import Overloadable
 
 from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
-from v440._utils.releaseparse import deleting, getting
+from v440._utils.releaseparse import deleting, getting, setting
 
 __all__ = ["Release"]
 
@@ -43,13 +43,13 @@ class Release(ListStringer):
     @setdoc.basic
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
         i: int = operator.index(key)
-        self._setitem_int(i, value)
+        self._data = setting.setitem_int(self.data, i, value)
 
     @__setitem__.overload(True)
     @setdoc.basic
     def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
         k: range = releaseparse.torange(key, len(self))
-        self._setitem_range(k, value)
+        self._data = setting.setitem_range(self.data, k, value)
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
@@ -71,46 +71,6 @@ class Release(ListStringer):
         ans: str = ".".join(l)
         return ans
 
-    def _setitem_int(self: Self, key: int, value: Any) -> Any:
-        v: int = releaseparse.numeral(value)
-        if key < len(self):
-            data = list(self.data)
-            data[key] = v
-            self.data = data
-            return
-        if v == 0:
-            return
-        self._data += (0,) * (key - len(self))
-        self._data += (v,)
-
-    @Overloadable
-    def _setitem_range(self: Self, key: range, value: Any) -> bool:
-        return key.step == 1
-
-    @_setitem_range.overload(False)
-    def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        key: list = list(key)
-        value: list = releaseparse.tolist(value, slicing=len(key))
-        if len(key) != len(value):
-            e = "attempt to assign sequence of size %s to extended slice of size %s"
-            e %= (len(value), len(key))
-            raise ValueError(e)
-        ext: int = max(0, max(*key) + 1 - len(self))
-        data: list = list(self.data)
-        data += [0] * ext
-        for k, v in zip(key, value):
-            data[k] = v
-        self.data = data
-
-    @_setitem_range.overload(True)
-    def _setitem_range(self: Self, key: range, value: Any) -> Any:
-        data: list = list(self.data)
-        ext: int = max(0, key.start - len(data))
-        data += ext * [0]
-        l: list = releaseparse.tolist(value, slicing="always")
-        data = data[: key.start] + l + data[key.stop :]
-        self.data = data
-
     @classmethod
     def _sort(cls: type, value: int) -> int:
         return value
@@ -128,6 +88,6 @@ class Release(ListStringer):
         i: int = operator.index(index)
         a: int = operator.index(amount)
         x: int = getting.getitem_int(self.data, i) + a
-        self._setitem_int(i, x)
+        self._data = setting.setitem_int(self.data, i, x)
         if i != -1:
             self.data = self.data[: i + 1]
