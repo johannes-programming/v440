@@ -21,6 +21,7 @@ class Base(SlotStringer):
     epoch: int
     release: Release
 
+    @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.epoch or self.release)
 
@@ -36,7 +37,8 @@ class Base(SlotStringer):
     @__init__.overload(True)
     @setdoc.basic
     def __init__(self: Self, string: Any) -> None:
-        self._init_setup()
+        self._epoch = 0
+        self._release = Release()
         self.string = string
 
     @__init__.overload(False)
@@ -46,13 +48,10 @@ class Base(SlotStringer):
         epoch: Any = 0,
         release: Any = "0",
     ) -> None:
-        self._init_setup()
-        self.epoch = epoch
-        self.release.string = release
-
-    def _init_setup(self: Self) -> None:
         self._epoch = 0
         self._release = Release()
+        self.epoch = epoch
+        self.release.string = release
 
     def _format(self: Self, format_spec: str) -> str:
         ans: str = ""

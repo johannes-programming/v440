@@ -73,7 +73,8 @@ class Local(ListStringer):
 
     def _string_fset(self: Self, value: str) -> None:
         if value == "":
-            return ()
+            self.data = ()
+            return
         v: str = value
         if v.startswith("+"):
             v = v[1:]
