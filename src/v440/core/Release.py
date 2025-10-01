@@ -9,7 +9,7 @@ from overloadable import Overloadable
 
 from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
-from v440._utils.releaseparse.delitem import delitem
+from v440._utils.releaseparse import deleting
 
 __all__ = ["Release"]
 
@@ -27,7 +27,7 @@ class Release(ListStringer):
 
     @setdoc.basic
     def __delitem__(self: Self, key: Any) -> bool:
-        self._data = delitem(self._data, key)
+        self._data = deleting.delitem(self._data, key)
 
     @Overloadable
     @setdoc.basic
