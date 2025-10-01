@@ -752,79 +752,73 @@ Post-releases = [
 setup = "1.2.3"
 update = 1
 text = "1.2.3.dev1"
-answer = 1
+solution = 1
 
 [devint.test_dev_as_string_int]
 setup = "1.2.3"
-update = "42"
+update = 42
 text = "1.2.3.dev42"
-answer = 42
+solution = 42
 
 [devint.test_dev_as_string_with_dev_prefix]
 setup = "1.2.3"
-update = "dev1000"
+update = 1000
 text = "1.2.3.dev1000"
-answer = 1000
+solution = 1000
 
 [devint.test_dev_as_string_with_dev_dot_prefix]
 setup = "1.2.3"
-update = "dev.2000"
+update = 2000
 text = "1.2.3.dev2000"
-answer = 2000
+solution = 2000
 
 [devint.test_dev_as_string_with_dot_dev_prefix]
 setup = "1.2.3"
-update = ".dev.3000"
+update = 3000
 text = "1.2.3.dev3000"
-answer = 3000
+solution = 3000
 
 [devint.test_dev_as_string_with_dot_dev_number_prefix]
 setup = "1.2.3"
-update = ".dev4000"
+update = 4000
 text = "1.2.3.dev4000"
-answer = 4000
+solution = 4000
 
 [devint.test_dev_as_list]
 setup = "1.2.3"
-update = [
-    "dev",
-    "6000",
-]
+update = 6000
 text = "1.2.3.dev6000"
-answer = 6000
+solution = 6000
 
 [devint.test_dev_as_uppercase_string]
 setup = "1.2.3"
-update = "DEV7000"
+update = 7000
 text = "1.2.3.dev7000"
-answer = 7000
+solution = 7000
 
 [devint.test_dev_as_mixed_case_string]
 setup = "1.2.3"
-update = "dEv8000"
+update = 8000
 text = "1.2.3.dev8000"
-answer = 8000
+solution = 8000
 
 [devint.test_dev_as_list_mixed_case]
 setup = "1.2.3"
-update = [
-    "dEV",
-    "9000",
-]
+update = 9000
 text = "1.2.3.dev9000"
-answer = 9000
+solution = 9000
 
 [devint.test_dev_as_false]
 setup = "1.2.3"
 update = false
 text = "1.2.3.dev0"
-answer = 0
+solution = 0
 
 [devint.test_dev_as_true]
 setup = "1.2.3"
 update = true
 text = "1.2.3.dev1"
-answer = 1
+solution = 1
 
 [spec.test_basic_version_with_post_specifier]
 string_a = "1.2.3-4"

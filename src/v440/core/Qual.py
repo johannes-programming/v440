@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import operator
 from typing import *
 
 import setdoc
@@ -97,7 +98,6 @@ class Qual(SlotStringer):
         y: Any
         pre: Any = (None, None)
         post: Any = None
-        dev: Any = None
         while v:
             m = Pattern.QUALIFIERS.leftbound.search(v)
             v = v[m.end() :]
@@ -107,7 +107,7 @@ class Qual(SlotStringer):
             x = m.group("l")
             y = m.group("n")
             if x == "dev":
-                dev = y
+                self.dev = int(y)
                 continue
             if x in ("post", "r", "rev"):
                 post = y
@@ -115,7 +115,6 @@ class Qual(SlotStringer):
             pre = x, y
         self.pre = pre
         self.post = post
-        self.dev = dev
 
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
@@ -127,8 +126,13 @@ class Qual(SlotStringer):
 
     @dev.setter
     @guard
-    def dev(self: Self, value: Any) -> None:
-        self._dev = qualparse.parse_dev(value)
+    def dev(self: Self, value: Optional[SupportsIndex]) -> None:
+        if value is None:
+            self._dev = None
+            return
+        self._dev: int = operator.index(value)
+        if self._dev < 0:
+            raise ValueError
 
     def isdevrelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a dev-release."

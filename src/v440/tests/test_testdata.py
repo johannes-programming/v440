@@ -202,11 +202,12 @@ class TestVersionRelease(unittest.TestCase):
 class TestDevGo(unittest.TestCase):
     def test_dev_as_tuple(self: Self) -> None:
         self.go_key(
-            key="test_dev_as_tuple",
-            setup="1.2.3",
-            update=("dev", "5000"),
-            text="1.2.3.dev5000",
-            answer=5000,
+            key="test_dev_as_list_mixed_case",
+            setup="1.2.3.dev9000",
+            update=None,
+            text="1.2.3",
+            solution=None,
+            dev_type=type(None),
         )
 
     def test_strings_a(self: Self) -> None:
@@ -225,7 +226,7 @@ class TestDevGo(unittest.TestCase):
         msg: str,
         setup: Any,
         text: str,
-        answer: Any,
+        solution: Any = None,
         update: Any = None,
         dev_type: type = int,
     ):
@@ -233,7 +234,7 @@ class TestDevGo(unittest.TestCase):
         v.public.qual.dev = update
         self.assertEqual(str(v), text, msg=msg)
         self.assertIsInstance(v.public.qual.dev, dev_type, msg=msg)
-        self.assertEqual(v.public.qual.dev, answer, msg=msg)
+        self.assertEqual(v.public.qual.dev, solution, msg=msg)
 
 
 class TestVersionSpecifiersGo(unittest.TestCase):
