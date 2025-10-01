@@ -48,7 +48,7 @@ class Version(SlotStringer):
     ) -> None:
         self._init_setup()
         self.public = public
-        self.local = local
+        self.local.string = local
 
     def _init_setup(self: Self) -> None:
         self._public = Public()
@@ -75,11 +75,6 @@ class Version(SlotStringer):
     def local(self: Self) -> Local:
         "This property represents the local identifier."
         return self._local
-
-    @local.setter
-    @guard
-    def local(self: Self, value: Any) -> None:
-        self.local._set(value)
 
     def packaging(self: Self) -> packaging.version.Version:
         "This method returns an eqivalent packaging.version.Version object."

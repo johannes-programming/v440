@@ -110,7 +110,7 @@ class TestVersionLocalGo(unittest.TestCase):
         solution: Any = None,
     ) -> None:
         version: Version = Version()
-        version.local = query
+        version.local.data = query
         if attrname is not None:
             attr: Any = getattr(version.local, attrname)
             ans: Any = attr(*args, **dict(kwargs))
