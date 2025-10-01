@@ -10,11 +10,6 @@ from v440._utils.qualparse.Digest import Digest
 parse_pre: Digest = Digest("parse_pre")
 
 
-@parse_pre.overload()
-def parse_pre() -> tuple:
-    return None, None
-
-
 @parse_pre.overload(list)
 def parse_pre(value: list) -> tuple:
     x: Any
