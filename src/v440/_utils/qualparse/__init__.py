@@ -125,10 +125,6 @@ def _segment(value: Any, /) -> int | str:
 
 # parse_pre
 def parse_pre(value: Any) -> tuple:
-    return parse_pre_str(str(value))
-
-
-def parse_pre_str(value: str) -> tuple:
     v: str = str(value).lower()
     if v == "":
         return None, None
