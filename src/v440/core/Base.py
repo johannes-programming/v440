@@ -84,11 +84,7 @@ class Base(SlotStringer):
     @epoch.setter
     @guard
     def epoch(self: Self, value: Any) -> None:
-        v: int
-        if isinstance(value, int):
-            v = operator.index(value)
-        else:
-            v = int(str(value))
+        v: int = operator.index(value)
         if v < 0:
             raise ValueError
         self._epoch = v

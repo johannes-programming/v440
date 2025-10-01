@@ -1004,12 +1004,12 @@ full = "1!1.2.3"
 part = 1
 
 [epoch.test_epoch_as_string_number]
-query = "42"
+query = 42
 full = "42!1.2.3"
 part = 42
 
 [epoch.test_epoch_as_string_with_non_digit]
-query = "9001"
+query = 9001
 full = "9001!1.2.3"
 part = 9001
 
