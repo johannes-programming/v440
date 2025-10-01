@@ -43,7 +43,7 @@ class Base(SlotStringer):
     @setdoc.basic
     def __init__(
         self: Self,
-        epoch: Any = "0",
+        epoch: Any = 0,
         release: Any = "0",
     ) -> None:
         self._init_setup()
@@ -65,12 +65,13 @@ class Base(SlotStringer):
         v: str = value
         if v.startswith("v"):
             v = v[1:]
-        parsed: Iterable
-        if "!" in v:
-            parsed = v.split("!")
-        else:
-            parsed = 0, v
-        self.epoch, self.release.string = parsed
+        if "!" not in v:
+            self.epoch = 0
+            self.release.string = v
+            return
+        parsed: Iterable = v.split("!")
+        self.epoch = int(parsed.pop(0))
+        (self.release.string,) = parsed
 
     def _todict(self: Self) -> dict:
         return dict(epoch=self.epoch, release=self.release)
