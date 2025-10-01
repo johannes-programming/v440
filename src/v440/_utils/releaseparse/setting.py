@@ -1,12 +1,30 @@
 from __future__ import annotations
 
 import operator
-from functools import partial
 from typing import *
 
 from overloadable import Overloadable
 
 from v440._utils.releaseparse import listing, numerals, ranging
+
+
+@Overloadable
+def setitem(data: tuple, key: Any, value: Any) -> bool:
+    return type(key) is slice
+
+
+@setitem.overload(False)
+def setitem(data: tuple, key: SupportsIndex, value: Any) -> tuple:
+    i: int = operator.index(key)
+    data = setitem_int(data, i, value)
+    return data
+
+
+@setitem.overload(True)
+def setitem(data: tuple, key: slice, value: Any) -> tuple:
+    k: range = ranging.torange(key, len(data))
+    data = setitem_range(data, k, value)
+    return data
 
 
 def setitem_int(data: tuple, key: int, value: Any) -> tuple:

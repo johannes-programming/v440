@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 import operator
-from functools import partial
 from typing import *
 
 import setdoc
 from keyalias import keyalias
-from overloadable import Overloadable
 
 from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
@@ -28,28 +26,15 @@ class Release(ListStringer):
 
     @setdoc.basic
     def __delitem__(self: Self, key: Any) -> bool:
-        self._data = deleting.delitem(self._data, key)
+        self._data = deleting.delitem(self.data, key)
 
     @setdoc.basic
     def __getitem__(self: Self, key: Any) -> bool:
         return getting.getitem(self.data, key)
 
-    @Overloadable
     @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> bool:
-        return type(key) is slice
-
-    @__setitem__.overload(False)
-    @setdoc.basic
-    def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        i: int = operator.index(key)
-        self._data = setting.setitem_int(self.data, i, value)
-
-    @__setitem__.overload(True)
-    @setdoc.basic
-    def __setitem__(self: Self, key: SupportsIndex, value: Any) -> Any:
-        k: range = releaseparse.torange(key, len(self))
-        self._data = setting.setitem_range(self.data, k, value)
+        self._data = setting.setitem(self.data, key, value)
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
