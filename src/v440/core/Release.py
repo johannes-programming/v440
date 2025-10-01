@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import operator
+from functools import partial
 from typing import *
 
 import setdoc
@@ -9,7 +10,7 @@ from overloadable import Overloadable
 
 from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
-from v440._utils.releaseparse import deleting
+from v440._utils.releaseparse import deleting, getting
 
 __all__ = ["Release"]
 
@@ -38,14 +39,15 @@ class Release(ListStringer):
     @setdoc.basic
     def __getitem__(self: Self, key: Any) -> int:
         i: int = operator.index(key)
-        ans: int = self._getitem_int(i)
+        ans: int = getting.getitem_int(self.data, i)
         return ans
 
     @__getitem__.overload(True)
     @setdoc.basic
     def __getitem__(self: Self, key: Any) -> list:
         r: range = releaseparse.torange(key, len(self))
-        m: map = map(self._getitem_int, r)
+        f: partial = partial(getting.getitem_int, self.data)
+        m: map = map(f, r)
         ans: list = list(m)
         return ans
 
@@ -85,12 +87,6 @@ class Release(ListStringer):
         l = list(map(str, l))
         ans: str = ".".join(l)
         return ans
-
-    def _getitem_int(self: Self, key: int) -> int:
-        if key < len(self):
-            return self.data[key]
-        else:
-            return 0
 
     def _setitem_int(self: Self, key: int, value: Any) -> Any:
         v: int = releaseparse.numeral(value)
@@ -148,7 +144,7 @@ class Release(ListStringer):
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
         a: int = operator.index(amount)
-        x: int = self._getitem_int(i) + a
+        x: int = getting.getitem_int(self.data, i) + a
         self._setitem_int(i, x)
         if i != -1:
             self.data = self.data[: i + 1]
