@@ -48,7 +48,7 @@ class Base(SlotStringer):
     ) -> None:
         self._init_setup()
         self.epoch = epoch
-        self.release = release
+        self.release.string = release
 
     def _init_setup(self: Self) -> None:
         self._epoch = 0
@@ -96,8 +96,3 @@ class Base(SlotStringer):
     def release(self: Self) -> Release:
         "This property represents the release."
         return self._release
-
-    @release.setter
-    @guard
-    def release(self: Self, value: Any) -> None:
-        self.release._set(value)

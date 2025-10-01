@@ -30,11 +30,14 @@ class TestVersionReleaseAttrs(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["release-attr"].items():
+        for k, v in Util.util.data["release-data"].items():
             with self.subTest(key=k):
-                self.go(**v)
+                self.go_data(**v)
+        for k, v in Util.util.data["release-string"].items():
+            with self.subTest(key=k):
+                self.go_string(**v)
 
-    def go(
+    def go_data(
         self: Self,
         query: list,
         attrname: Optional[str] = None,
@@ -45,7 +48,27 @@ class TestVersionReleaseAttrs(unittest.TestCase):
     ) -> None:
         # Test the append method of the release list-like object
         version: Version = Version()
-        version.public.base.release = query
+        version.public.base.release.data = query
+        if attrname is not None:
+            attr: Any = getattr(version.public.base.release, attrname)
+            ans: Any = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, solution)
+        if target is not None:
+            ans: list = list(version.public.base.release)
+            self.assertEqual(ans, target)
+
+    def go_string(
+        self: Self,
+        query: str,
+        attrname: Optional[str] = None,
+        args: list | tuple = (),
+        kwargs: dict | tuple = (),
+        target: Optional[list] = None,
+        solution: Any = None,
+    ) -> None:
+        # Test the append method of the release list-like object
+        version: Version = Version()
+        version.public.base.release.string = query
         if attrname is not None:
             attr: Any = getattr(version.public.base.release, attrname)
             ans: Any = attr(*args, **dict(kwargs))
@@ -70,7 +93,7 @@ class TestVersionReleaseVersionError(unittest.TestCase):
     ) -> None:
         version: Version = Version()
         with self.assertRaises(VersionError):
-            version.public.base.release = query
+            version.public.base.release.data = query
 
 
 class TestVersionLocalVersionError(unittest.TestCase):

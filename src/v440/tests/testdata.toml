@@ -46,7 +46,7 @@ query = [
     "test",
 ]
 
-[release-attr.test_example_8]
+[release-string.test_example_8]
 query = "1.2.3.4.5.6.7.8.9.10"
 attrname = "bump"
 target = [
@@ -60,11 +60,11 @@ target = [
     13,
 ]
 
-[release-attr.test_example_8.kwargs]
+[release-string.test_example_8.kwargs]
 index = 7
 amount = 5
 
-[release-attr.test_release_assignment_with_bool_conversion]
+[release-data.test_release_assignment_with_bool_conversion]
 query = [
     true,
     false,
@@ -76,7 +76,7 @@ target = [
     3,
 ]
 
-[release-attr.test_release_large_numbers]
+[release-data.test_release_large_numbers]
 query = [
     1000000000,
     2000000000,
@@ -88,7 +88,7 @@ target = [
     3000000000,
 ]
 
-[release-attr.test_release_max_integer]
+[release-data.test_release_max_integer]
 query = [
     1000000000000000000,
 ]
@@ -96,11 +96,11 @@ target = [
     1000000000000000000,
 ]
 
-[release-attr.test_release_data_property_empty]
+[release-data.test_release_data_property_empty]
 query = []
 target = []
 
-[release-attr.test_release_append]
+[release-data.test_release_append]
 query = [
     1,
     2,
@@ -117,9 +117,9 @@ target = [
     4,
 ]
 
-[release-attr.test_release_append.kwargs]
+[release-data.test_release_append.kwargs]
 
-[release-attr.test_release_extend]
+[release-data.test_release_extend]
 query = [
     1,
     2,
@@ -140,9 +140,9 @@ target = [
     5,
 ]
 
-[release-attr.test_release_extend.kwargs]
+[release-data.test_release_extend.kwargs]
 
-[release-attr.test_release_insert]
+[release-data.test_release_insert]
 query = [
     1,
     2,
@@ -160,9 +160,9 @@ target = [
     4,
 ]
 
-[release-attr.test_release_insert.kwargs]
+[release-data.test_release_insert.kwargs]
 
-[release-attr.test_release_pop]
+[release-data.test_release_pop]
 query = [
     1,
     2,
@@ -176,9 +176,9 @@ target = [
     2,
 ]
 
-[release-attr.test_release_pop.kwargs]
+[release-data.test_release_pop.kwargs]
 
-[release-attr.test_release_pop_with_index]
+[release-data.test_release_pop_with_index]
 query = [
     1,
     2,
@@ -194,9 +194,9 @@ target = [
     3,
 ]
 
-[release-attr.test_release_pop_with_index.kwargs]
+[release-data.test_release_pop_with_index.kwargs]
 
-[release-attr.test_release_remove]
+[release-data.test_release_remove]
 query = [
     1,
     2,
@@ -211,9 +211,9 @@ target = [
     3,
 ]
 
-[release-attr.test_release_remove.kwargs]
+[release-data.test_release_remove.kwargs]
 
-[release-attr.test_release_clear]
+[release-data.test_release_clear]
 query = [
     1,
     2,
@@ -223,9 +223,9 @@ attrname = "clear"
 args = []
 target = []
 
-[release-attr.test_release_clear.kwargs]
+[release-data.test_release_clear.kwargs]
 
-[release-attr.test_release_count]
+[release-data.test_release_count]
 query = [
     1,
     2,
@@ -238,9 +238,9 @@ args = [
 attrname = "count"
 solution = 2
 
-[release-attr.test_release_count.kwargs]
+[release-data.test_release_count.kwargs]
 
-[release-attr.test_release_index]
+[release-data.test_release_index]
 query = [
     1,
     2,
@@ -252,9 +252,9 @@ args = [
 ]
 solution = 1
 
-[release-attr.test_release_index.kwargs]
+[release-data.test_release_index.kwargs]
 
-[release-attr.test_release_reverse]
+[release-data.test_release_reverse]
 query = [
     1,
     2,
@@ -267,7 +267,7 @@ target = [
     1,
 ]
 
-[release-attr.test_release_sort]
+[release-data.test_release_sort]
 query = [
     3,
     1,
@@ -280,7 +280,7 @@ target = [
     3,
 ]
 
-[release-attr.test_release_integer_float]
+[release-data.test_release_integer_float]
 query = [
     true,
     false,
@@ -292,7 +292,7 @@ target = [
     3,
 ]
 
-[release-attr.test_release_boolean_assignment]
+[release-data.test_release_boolean_assignment]
 query = [
     true,
     false,
@@ -304,7 +304,7 @@ target = [
     1,
 ]
 
-[release-attr.test_release_equality_with_list]
+[release-data.test_release_equality_with_list]
 query = [
     1,
     2,
