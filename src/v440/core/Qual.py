@@ -113,7 +113,7 @@ class Qual(SlotStringer):
             if x in ("post", "r", "rev"):
                 self.post = int(y)
                 continue
-            pre = x, y
+            pre = x + y
         self.pre = pre
 
     def _todict(self: Self) -> dict:
