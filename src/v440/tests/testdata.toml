@@ -1064,3 +1064,30 @@ clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42
 isimported = true
+
+[release-key.test-major]
+steps = [
+    {name = "major", value = 10, solution = [10]}
+]
+
+[release-key.test-minor]
+steps = [
+    {name = "minor", value = 1, solution = [0, 1] }
+]
+
+[release-key.test-micro]
+steps = [
+    {name = "micro",value = 1, solution = [0, 0, 1] }
+]
+
+[release-key.test-patch]
+steps = [
+    {name = "patch", value = 5, solution = [0, 0, 5]}
+]
+
+[release-key.modify-increase-length]
+steps = [
+    { name = "data", value = [1], solution = [1] },
+    { name = "minor", value = 5, solution = [1, 5] },
+    { name = "micro", value = 3, solution = [1, 5, 3] }
+]

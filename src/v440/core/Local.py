@@ -4,6 +4,9 @@ import operator
 import string as string_
 from typing import *
 
+import setdoc
+from overloadable import Overloadable
+
 from v440._utils.ListStringer import ListStringer
 
 __all__ = ["Local"]
@@ -15,6 +18,31 @@ class Local(ListStringer):
     string: str
     data: tuple[int | str]
 
+    @Overloadable
+    @setdoc.basic
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        if len(args) == 0 and "string" in kwargs.keys():
+            return True
+        if len(args) == 1 and len(kwargs) == 0:
+            if isinstance(args[0], str):
+                return True
+            if hasattr(args[0], "__iter__"):
+                return False
+            return True
+        return False
+
+    @__init__.overload(True)
+    @setdoc.basic
+    def __init__(self: Self, string: Any) -> None:
+        self._init_setup()
+        self.string = string
+
+    @__init__.overload(False)
+    @setdoc.basic
+    def __init__(self: Self, data: Iterable = ()) -> None:
+        self._init_setup()
+        self.data = data
+
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
         return tuple(map(cls._item_parse, value))
@@ -23,6 +51,9 @@ class Local(ListStringer):
         if format_spec:
             raise ValueError
         return ".".join(map(str, self))
+
+    def _init_setup(self: Self) -> None:
+        self._data = ()
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:

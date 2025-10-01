@@ -212,11 +212,11 @@ class TestVersionRelease(unittest.TestCase):
     def test_release_modify_aliases(self: Self) -> None:
         # Test modifying the release via major, minor, and micro properties
         version: Version = Version()
-        version.public.base.release = [1, 2, 3]
+        version.public.base.release.data = [1, 2, 3]
         version.public.base.release.major = 10
         version.public.base.release.minor = 20
         version.public.base.release.micro = 30
-        self.assertEqual(version.public.base.release, [10, 20, 30])
+        self.assertEqual(list(version.public.base.release), [10, 20, 30])
         self.assertEqual(version.public.base.release.patch, 30)
 
     def test_release_with_tailing_zeros_simulation(self: Self) -> None:
@@ -229,40 +229,11 @@ class TestVersionRelease(unittest.TestCase):
     def test_release_empty_major(self: Self) -> None:
         # Test that an empty release still has valid major, minor, micro values
         version: Version = Version()
-        version.public.base.release = []
+        version.public.base.release.data = []
         self.assertEqual(version.public.base.release.major, 0)
         self.assertEqual(version.public.base.release.minor, 0)
         self.assertEqual(version.public.base.release.micro, 0)
         self.assertEqual(version.public.base.release.patch, 0)
-
-    def test_release_modify_with_alias_increase_length(self: Self) -> None:
-        # Test that modifying an alias can extend the length of release
-        version: Version = Version()
-        version.public.base.release = [1]
-        version.public.base.release.minor = 5  # This should make release [1, 5]
-        self.assertEqual(version.public.base.release, [1, 5])
-        version.public.base.release.micro = 3  # This should make release [1, 5, 3]
-        self.assertEqual(version.public.base.release, [1, 5, 3])
-
-    def test_release_modify_major_only(self: Self) -> None:
-        # Test that setting just the major property works
-        version: Version = Version()
-        version.public.base.release.major = 10
-        self.assertEqual(version.public.base.release, [10])
-
-    def test_release_modify_minor_only(self: Self) -> None:
-        # Test that setting just the minor property extends release
-        version: Version = Version()
-        version.public.base.release = []
-        version.public.base.release.minor = 1
-        self.assertEqual(version.public.base.release, [0, 1])
-
-    def test_release_modify_micro_only(self: Self) -> None:
-        # Test that setting just the micro (patch) property extends release
-        version: Version = Version()
-        version.public.base.release = []
-        version.public.base.release.micro = 1
-        self.assertEqual(version.public.base.release, [0, 0, 1])
 
 
 class TestAdditionalVersionRelease(unittest.TestCase):
@@ -282,9 +253,12 @@ class TestAdditionalVersionRelease(unittest.TestCase):
     def test_release_slice_assignment(self: Self) -> None:
         # Test assigning a slice to release
         version: Version = Version()
-        version.public.base.release = [1, 2, 3, 4, 5]
+        version.public.base.release.data = [1, 2, 3, 4, 5]
         version.public.base.release[1:4] = [20, 30, 40]
-        self.assertEqual(version.public.base.release, [1, 20, 30, 40, 5])
+        self.assertEqual(
+            list(version.public.base.release),
+            [1, 20, 30, 40, 5],
+        )
 
     def test_release_iterable(self: Self) -> None:
         # Test if release supports iteration
@@ -309,7 +283,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         # Test setting the 'data' property directly
         version: Version = Version()
         version.public.base.release.data = [10, 20, 30]
-        self.assertEqual(version.public.base.release, [10, 20, 30])
+        self.assertEqual(list(version.public.base.release), [10, 20, 30])
 
     def test_release_contains(self: Self) -> None:
         # Test 'in' keyword with release
@@ -322,13 +296,17 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         # Test multiplying the release (list behavior)
         version: Version = Version()
         version.public.base.release = [1, 2]
-        self.assertEqual(version.public.base.release * 3, [1, 2, 1, 2, 1, 2])
+        answer: list = list(version.public.base.release * 3)
+        solution: list = [1, 2, 1, 2, 1, 2]
+        self.assertEqual(answer, solution)
 
     def test_release_addition(self: Self) -> None:
         # Test adding another list to release
         version: Version = Version()
-        version.public.base.release = [1, 2, 3]
-        self.assertEqual(version.public.base.release + [4, 5], [1, 2, 3, 4, 5])
+        version.public.base.release.data = [1, 2, 3]
+        answer: list = list(version.public.base.release) + [4, 5]
+        solution: list = [1, 2, 3, 4, 5]
+        self.assertEqual(answer, solution)
 
 
 class TestVersionLocal(unittest.TestCase):

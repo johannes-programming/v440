@@ -51,7 +51,8 @@ class TestVersionReleaseAttrs(unittest.TestCase):
             ans: Any = attr(*args, **dict(kwargs))
             self.assertEqual(ans, solution)
         if target is not None:
-            self.assertEqual(version.public.base.release, target)
+            ans: list = list(version.public.base.release)
+            self.assertEqual(ans, target)
 
 
 class TestVersionReleaseVersionError(unittest.TestCase):
@@ -191,9 +192,9 @@ class TestVersionRelease(unittest.TestCase):
             with self.subTest(key=k):
                 self.go(**v)
 
-    def go(self: Self, query: Any, solution: Any) -> None:
-        release: Release = Release(query)
-        self.assertEqual(release, solution)
+    def go(self: Self, query: list, solution: list) -> None:
+        release: Release = Release(data=query)
+        self.assertEqual(list(release), solution)
 
 
 class TestDevGo(unittest.TestCase):
@@ -423,6 +424,34 @@ class TestSlots(unittest.TestCase):
         obj: Any = cls(string=string)
         with self.assertRaises(AttributeError):
             setattr(obj, attrname, attrvalue)
+
+
+class TestReleaseAlias(unittest.TestCase):
+    def test_0(self: Self) -> None:
+        x: Any
+        y: Any
+        for x, y in Util.util.data["release-key"].items():
+            with self.subTest(test_label=x):
+                self.go(**y)
+
+    def go(self: Self, steps: list) -> None:
+        version: Version = Version()
+        step: dict
+        for step in steps:
+            self.modify(version=version, **step)
+
+    def modify(
+        self: Self,
+        version: Version,
+        name: str,
+        value: Any,
+        solution: Optional[list] = None,
+    ) -> None:
+        setattr(version.public.base.release, name, value)
+        if solution is None:
+            return
+        answer: list = list(version.public.base.release)
+        self.assertEqual(answer, solution)
 
 
 if __name__ == "__main__":

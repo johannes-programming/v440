@@ -5,6 +5,7 @@ from typing import *
 
 import setdoc
 from keyalias import keyalias
+from overloadable import Overloadable
 
 from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
@@ -32,6 +33,26 @@ class Release(ListStringer):
     def __getitem__(self: Self, key: Any) -> bool:
         return getting.getitem(self.data, key)
 
+    # use later for ListStringer
+    @Overloadable
+    @setdoc.basic
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        if len(args) <= 1 and len(kwargs) == 0:
+            return True
+        if "string" in kwargs.keys():
+            return True
+        return False
+
+    @__init__.overload(True)
+    def __init__(self: Self, string: Any = "0") -> None:
+        self._data = ()
+        self.string = string
+
+    @__init__.overload(False)
+    def __init__(self: Self, data: Iterable) -> None:
+        self._data = ()
+        self.data = data
+
     @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> bool:
         self._data = setting.setitem(self.data, key, value)
@@ -55,6 +76,9 @@ class Release(ListStringer):
         l = list(map(str, l))
         ans: str = ".".join(l)
         return ans
+
+    def _init_setup(self: Self) -> None:
+        self._data = ()
 
     @classmethod
     def _sort(cls: type, value: int) -> int:

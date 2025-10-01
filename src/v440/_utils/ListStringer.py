@@ -9,7 +9,7 @@ from overloadable import Overloadable
 from v440._utils.BaseStringer import BaseStringer
 from v440._utils.guarding import guard
 
-__all__ = ["VList"]
+__all__ = ["ListStringer"]
 
 
 class ListStringer(BaseStringer, collections.abc.MutableSequence):
@@ -20,7 +20,12 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
 
     @setdoc.basic
     def __add__(self: Self, other: Any) -> Self:
-        return type(self)(self.data + tuple(other))
+        alt: tuple
+        try:
+            alt = tuple(other)
+        except Exception:
+            return NotImplemented
+        return type(self)(data=self.data + alt)
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
@@ -50,31 +55,6 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         self.data = self.data * other
         return self
 
-    @Overloadable
-    @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if len(args) == 0 and "string" in kwargs.keys():
-            return True
-        if len(args) == 1 and len(kwargs) == 0:
-            if isinstance(args[0], str):
-                return True
-            if hasattr(args[0], "__iter__"):
-                return False
-            return True
-        return False
-
-    @__init__.overload(True)
-    @setdoc.basic
-    def __init__(self: Self, string: Any) -> None:
-        self._init_setup()
-        self.string = string
-
-    @__init__.overload(False)
-    @setdoc.basic
-    def __init__(self: Self, data: Iterable = ()) -> None:
-        self._init_setup()
-        self.data = data
-
     @setdoc.basic
     def __iter__(self: Self) -> Iterator:
         return iter(self.data)
@@ -85,11 +65,20 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
 
     @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
-        return type(self)(self.data * other)
+        return type(self)(data=self.data * other)
+
+    @setdoc.basic
+    def __radd__(self: Self, other: Any) -> Self:
+        alt: tuple
+        try:
+            alt = tuple(other)
+        except Exception:
+            return NotImplemented
+        return type(self)(data=alt + self.data)
 
     @setdoc.basic
     def __repr__(self: Self) -> str:
-        return datarepr(type(self).__name__, self.data)
+        return datarepr(type(self).__name__, list(self))
 
     @setdoc.basic
     def __reversed__(self: Self) -> reversed:
@@ -111,9 +100,6 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
     @classmethod
     @abstractmethod
     def _data_parse(cls: type, value: list) -> Iterable: ...
-
-    def _init_setup(self: Self) -> None:
-        self._data = ()
 
     def _set(self: Self, value: Any) -> None:
         if isinstance(value, str):
