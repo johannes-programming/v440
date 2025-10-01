@@ -16,7 +16,7 @@ class TestVersionManipulation(unittest.TestCase):
         # Modify individual parts of the version
         v.public.base.release.major = 2
         v.public.base.release.minor = 5
-        v.public.qual = "beta.1"
+        v.public.qual.string = "beta.1"
         v.local.string = "local.7.dev"
 
         # Verify the expected output
@@ -62,7 +62,7 @@ class TestPre(unittest.TestCase):
         self.assertEqual(str(v.public.qual), "")
 
         # Set pre-release version to "a1"
-        v.public.qual = "a1"
+        v.public.qual.string = "a1"
         self.assertEqual(str(v), "1.2.3a1")
         self.assertEqual(str(v.public.qual), "a1")
 

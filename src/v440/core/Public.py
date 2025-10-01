@@ -48,7 +48,7 @@ class Public(SlotStringer):
     ) -> None:
         self._init_setup()
         self.base.string = base
-        self.qual = qual
+        self.qual.string = qual
 
     def _init_setup(self: Self) -> None:
         self._base = Base()
