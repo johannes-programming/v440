@@ -31,7 +31,7 @@ class Qual(SlotStringer):
 
     @Overloadable
     @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
         self._prephase = ""
         self._presubphase = 0
         self._post = None

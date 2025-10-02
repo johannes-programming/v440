@@ -35,7 +35,7 @@ class Release(ListStringer):
 
     @Overloadable
     @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
         self._data = ()
         argc: int = len(args) + len(kwargs)
         keys: set = set(kwargs.keys())
