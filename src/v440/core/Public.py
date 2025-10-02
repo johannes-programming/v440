@@ -28,16 +28,15 @@ class Public(SlotStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if "string" in kwargs.keys():
-            return True
-        if len(args) <= 1 and len(kwargs) == 0:
-            return True
-        return False
+        self._base = Base()
+        self._qual = Qual()
+        if len(args) + len(kwargs) > 1:
+            return False
+        return set(kwargs.keys()) <= {"string"}
 
     @__init__.overload(True)
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
-        self._init_setup()
         self.string = string
 
     @__init__.overload(False)
@@ -47,13 +46,8 @@ class Public(SlotStringer):
         base: Any = "0",
         qual: Any = "",
     ) -> None:
-        self._init_setup()
         self.base.string = base
         self.qual.string = qual
-
-    def _init_setup(self: Self) -> None:
-        self._base = Base()
-        self._qual = Qual()
 
     def _format(self: Self, format_spec: str) -> str:
         return format(self.base, format_spec) + format(self.qual)
