@@ -36,20 +36,19 @@ class Release(ListStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if "string" in kwargs.keys():
-            return True
-        if len(args) <= 1 and len(kwargs) == 0:
-            return True
-        return False
-
-    @__init__.overload(True)
-    def __init__(self: Self, string: Any = "0") -> None:
         self._data = ()
+        argc: int = len(args) + len(kwargs)
+        keys: set = set(kwargs.keys())
+        if argc <= 1 and keys <= {"string"}:
+            return "string"
+        return "data"
+
+    @__init__.overload("string")
+    def __init__(self: Self, string: Any = "0") -> None:
         self.string = string
 
-    @__init__.overload(False)
+    @__init__.overload("data")
     def __init__(self: Self, data: Iterable) -> None:
-        self._data = ()
         self.data = data
 
     @setdoc.basic
