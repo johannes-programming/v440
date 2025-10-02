@@ -337,26 +337,32 @@ class TestPackagingField(unittest.TestCase):
                 self.go(query=x)
 
     def go(self: Self, query: str) -> None:
+        msg: str = "query=%r" % query
         v: Version = Version(query)
         self.assertEqual(
             v.public.qual.isdevrelease(),
             v.packaging().is_devrelease,
+            msg=msg,
         )
         self.assertEqual(
             v.public.qual.isprerelease(),
             v.packaging().is_prerelease,
+            msg=msg,
         )
         self.assertEqual(
             v.public.qual.ispostrelease(),
             v.packaging().is_postrelease,
+            msg=msg,
         )
         self.assertEqual(
             str(v.public.base),
             v.packaging().base_version,
+            msg=msg,
         )
         self.assertEqual(
             str(v.public),
             v.packaging().public,
+            msg=msg,
         )
         local_packaging: Optional[str] = v.packaging().local
         if local_packaging is None:
@@ -364,6 +370,7 @@ class TestPackagingField(unittest.TestCase):
         self.assertEqual(
             str(v.local),
             str(local_packaging),
+            msg=msg,
         )
 
 

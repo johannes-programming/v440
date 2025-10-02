@@ -141,7 +141,7 @@ class Qual(SlotStringer):
 
     def isprerelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a pre-release."
-        return {self.prephase, self.presubphase, self.dev} != {None}
+        return self.prephase != "" or self.dev is not None
 
     def ispostrelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a post-release."
@@ -161,6 +161,8 @@ class Qual(SlotStringer):
 
     @property
     def pre(self: Self) -> str:
+        if "" == self._prephase:
+            return ""
         return self._prephase + str(self._presubphase)
 
     @pre.setter
@@ -179,31 +181,26 @@ class Qual(SlotStringer):
         p: bool = x.startswith(".")
         if p:
             x = x[1:]
-        if not x:
-            if p or v:
-                raise ValueError
-            self._prephase = None
+        if x:
+            self._prephase = Cfg.cfg.data["phases"][x]
+            self._presubphase = int("0" + v)
+        elif p or v:
+            raise ValueError
+        else:
+            self._prephase = ""
             self._presubphase = None
-            return
-        self._prephase = Cfg.cfg.data["phases"][x]
-        self._presubphase = int("0" + v)
 
     @property
-    def prephase(self: Self) -> Optional[str]:
+    def prephase(self: Self) -> str:
         return self._prephase
 
     @prephase.setter
     @guard
     def prephase(self: Self, value: Any) -> None:
-        if value is None:
-            x = ""
-        else:
-            x = str(value)
         if self.presubphase is None:
-            y = ""
+            self.pre = str(value)
         else:
-            y = str(self.presubphase)
-        self.pre = x + y
+            self.pre = str(value) + str(self.presubphase)
 
     @property
     def presubphase(self: Self) -> Optional[int]:
@@ -212,15 +209,10 @@ class Qual(SlotStringer):
     @presubphase.setter
     @guard
     def presubphase(self: Self, value: Any) -> None:
-        if self.prephase is None:
-            x = ""
-        else:
-            x = self.prephase
         if value is None:
-            y = ""
-        else:
-            y = operator.index(value)
-            if y < 0:
-                raise ValueError
-            y = str(y)
-        self.pre = x + y
+            self.pre = self.prephase
+            return
+        y: int = operator.index(value)
+        if y < 0:
+            raise ValueError
+        self.pre = self.prephase + str(y)
