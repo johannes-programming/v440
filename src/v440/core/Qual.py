@@ -33,6 +33,10 @@ class Qual(SlotStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        self._prephase = ""
+        self._presubphase = None
+        self._post = None
+        self._dev = None
         if "string" in kwargs.keys():
             return True
         if len(args) <= 1 and len(kwargs) == 0:
@@ -42,10 +46,6 @@ class Qual(SlotStringer):
     @__init__.overload(True)
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
-        self._prephase = ""
-        self._presubphase = None
-        self._post = None
-        self._dev = None
         self.string = string
 
     @__init__.overload(False)
@@ -56,10 +56,6 @@ class Qual(SlotStringer):
         post: Any = None,
         dev: Any = None,
     ) -> None:
-        self._prephase = ""
-        self._presubphase = None
-        self._post = None
-        self._dev = None
         self.pre = pre
         self.post = post
         self.dev = dev
