@@ -177,7 +177,7 @@ class Qual(SlotStringer):
         v: str = str(value).lower()
         v = v.replace("_", ".")
         v = v.replace("-", ".")
-        x: str = v.strip(string_.digits)
+        x: str = v.rstrip(string_.digits)
         v = v[len(x) :]
         q: bool = x.endswith(".")
         if q:
