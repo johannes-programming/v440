@@ -28,6 +28,8 @@ class Base(SlotStringer):
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
+        self._epoch = 0
+        self._release = Release()
         if "string" in kwargs.keys():
             return True
         if len(args) <= 1 and len(kwargs) == 0:
@@ -37,8 +39,6 @@ class Base(SlotStringer):
     @__init__.overload(True)
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
-        self._epoch = 0
-        self._release = Release()
         self.string = string
 
     @__init__.overload(False)
@@ -48,8 +48,6 @@ class Base(SlotStringer):
         epoch: Any = 0,
         release: Any = "0",
     ) -> None:
-        self._epoch = 0
-        self._release = Release()
         self.epoch = epoch
         self.release.string = release
 
