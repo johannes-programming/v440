@@ -19,13 +19,6 @@ class Qual(SlotStringer):
 
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 
-    string: str
-    pre: str
-    prephase: str
-    presubphase: Optional[int]
-    post: Optional[int]
-    dev: Optional[int]
-
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return self.string == ""
@@ -34,7 +27,7 @@ class Qual(SlotStringer):
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
         self._prephase = ""
-        self._presubphase = None
+        self._presubphase = 0
         self._post = None
         self._dev = None
         if "string" in kwargs.keys():
@@ -77,11 +70,7 @@ class Qual(SlotStringer):
     def _format(self: Self, format_spec: str) -> str:
         if format_spec:
             raise ValueError
-        ans: str = ""
-        if self.prephase is not None:
-            ans += self.prephase
-        if self.presubphase is not None:
-            ans += str(self.presubphase)
+        ans: str = self.pre
         if self.post is not None:
             ans += ".post%s" % self.post
         if self.dev is not None:
@@ -115,6 +104,8 @@ class Qual(SlotStringer):
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
+    dev: Optional[int]
+
     @property
     def dev(self: Self) -> Optional[int]:
         "This property represents the stage of development."
@@ -142,6 +133,8 @@ class Qual(SlotStringer):
         "This method returns whether the current instance denotes a post-release."
         return self.post is not None
 
+    post: Optional[int]
+
     @property
     def post(self: Self) -> Optional[int]:
         return self._post
@@ -154,11 +147,13 @@ class Qual(SlotStringer):
             return
         self._post: int = abs(operator.index(value))
 
+    pre: str
+
     @property
     def pre(self: Self) -> str:
-        if "" == self._prephase:
+        if "" == self.prephase:
             return ""
-        return self._prephase + str(self._presubphase)
+        return self.prephase + str(self.presubphase)
 
     @pre.setter
     @guard
@@ -183,7 +178,9 @@ class Qual(SlotStringer):
             raise ValueError
         else:
             self._prephase = ""
-            self._presubphase = None
+            self._presubphase = 0
+
+    prephase: str
 
     @property
     def prephase(self: Self) -> str:
@@ -192,10 +189,13 @@ class Qual(SlotStringer):
     @prephase.setter
     @guard
     def prephase(self: Self, value: Any) -> None:
-        if self.presubphase is None:
-            self.pre = str(value)
-        else:
-            self.pre = str(value) + str(self.presubphase)
+        x: str = str(value).lower()
+        if x != "":
+            self._prephase = Cfg.cfg.data["phases"][x]
+        elif self.presubphase:
+            self.pre = self.presubphase  # raises error
+
+    presubphase: int
 
     @property
     def presubphase(self: Self) -> Optional[int]:
@@ -204,10 +204,10 @@ class Qual(SlotStringer):
     @presubphase.setter
     @guard
     def presubphase(self: Self, value: Any) -> None:
-        if value is None:
-            self.pre = self.prephase
-            return
         y: int = operator.index(value)
         if y < 0:
             raise ValueError
-        self.pre = self.prephase + str(y)
+        if self.prephase:
+            self._presubphase = y
+        else:
+            self.pre = y  # raises error
