@@ -42,27 +42,27 @@ class Qual(SlotStringer):
     @__init__.overload(True)
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
-        self._init_setup()
+        self._prephase = ""
+        self._presubphase = None
+        self._post = None
+        self._dev = None
         self.string = string
 
     @__init__.overload(False)
     @setdoc.basic
     def __init__(
         self: Self,
-        pre: Any = None,
+        pre: Any = "",
         post: Any = None,
         dev: Any = None,
     ) -> None:
-        self._init_setup()
-        self.pre = pre
-        self.post = post
-        self.dev = dev
-
-    def _init_setup(self: Self) -> None:
-        self._prephase = None
+        self._prephase = ""
         self._presubphase = None
         self._post = None
         self._dev = None
+        self.pre = pre
+        self.post = post
+        self.dev = dev
 
     def _cmp(self: Self) -> list:
         ans: list = list()
