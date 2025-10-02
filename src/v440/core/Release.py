@@ -48,10 +48,12 @@ class Release(ListStringer):
         return "data"
 
     @__init__.overload("string")
+    @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self.string = string
 
     @__init__.overload("micro")
+    @setdoc.basic
     def __init__(
         self: Self,
         major: SupportsIndex = 0,
@@ -61,6 +63,7 @@ class Release(ListStringer):
         self.data = (major, minor, micro)
 
     @__init__.overload("patch")
+    @setdoc.basic
     def __init__(
         self: Self,
         major: SupportsIndex = 0,
@@ -70,6 +73,7 @@ class Release(ListStringer):
         self.data = (major, minor, patch)
 
     @__init__.overload("data")
+    @setdoc.basic
     def __init__(self: Self, data: Iterable) -> None:
         self.data = data
 

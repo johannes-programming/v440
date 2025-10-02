@@ -29,10 +29,12 @@ class Local(ListStringer):
         return "data"
 
     @__init__.overload("string")
+    @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
         self.string = string
 
     @__init__.overload("data")
+    @setdoc.basic
     def __init__(self: Self, data: Iterable) -> None:
         self.data = data
 
