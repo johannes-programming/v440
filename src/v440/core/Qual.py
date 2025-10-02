@@ -20,8 +20,8 @@ class Qual(SlotStringer):
     __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
 
     string: str
-    pre: tuple
-    prephase: Optional[str]
+    pre: str
+    prephase: str
     presubphase: Optional[int]
     post: Optional[int]
     dev: Optional[int]
