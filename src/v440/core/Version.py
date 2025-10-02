@@ -27,29 +27,27 @@ class Version(SlotStringer):
 
     @Overloadable
     @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> bool:
-        if "string" in kwargs.keys():
-            return True
-        if len(args) <= 1 and len(kwargs) == 0:
-            return True
-        return False
-
-    @__init__.overload(True)
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "0") -> None:
+    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
         self._public = Public()
         self._local = Local()
+        argc: int = len(args) + len(kwargs)
+        keys: set = set(kwargs.keys())
+        if argc <= 1 and keys <= {"string"}:
+            return "string"
+        return "slots"
+
+    @__init__.overload("string")
+    @setdoc.basic
+    def __init__(self: Self, string: Any = "0") -> None:
         self.string = string
 
-    @__init__.overload(False)
+    @__init__.overload("slots")
     @setdoc.basic
     def __init__(
         self: Self,
         public: Any = "0",
         local: Any = "",
     ) -> None:
-        self._public = Public()
-        self._local = Local()
         self.public.string = public
         self.local.string = local
 
