@@ -38,9 +38,9 @@ class Qual(SlotStringer):
         self._dev = None
         argc: int = len(args) + len(kwargs)
         keys: set = set(kwargs.keys())
-        if argc <= 1 and keys.issubset({"string"}):
+        if argc <= 1 and keys <= {"string"}:
             return "string"
-        if argc <= 3 and keys.issubset({"pre", "post", "dev"}):
+        if argc <= 3 and keys <= {"pre", "post", "dev"}:
             return "pre"
         return "slots"
 
