@@ -36,18 +36,20 @@ class Qual(SlotStringer):
         self._presubphase = 0
         self._post = None
         self._dev = None
-        if "string" in kwargs.keys():
-            return True
-        if len(args) <= 1 and len(kwargs) == 0:
-            return True
-        return False
+        argc: int = len(args) + len(kwargs)
+        keys: set = set(kwargs.keys())
+        if argc <= 1 and keys.issubset({"string"}):
+            return "string"
+        if argc <= 3 and keys.issubset({"pre", "post", "dev"}):
+            return "pre"
+        return "slots"
 
-    @__init__.overload(True)
+    @__init__.overload("string")
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
         self.string = string
 
-    @__init__.overload(False)
+    @__init__.overload("pre")
     @setdoc.basic
     def __init__(
         self: Self,
@@ -56,6 +58,20 @@ class Qual(SlotStringer):
         dev: Any = None,
     ) -> None:
         self.pre = pre
+        self.post = post
+        self.dev = dev
+
+    @__init__.overload("slots")
+    @setdoc.basic
+    def __init__(
+        self: Self,
+        prephase: Any = "",
+        presubphase: Any = 0,
+        post: Any = None,
+        dev: Any = None,
+    ) -> None:
+        self.prephase = prephase
+        self.presubphase = presubphase
         self.post = post
         self.dev = dev
 
