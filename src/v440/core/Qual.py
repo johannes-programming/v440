@@ -99,7 +99,7 @@ class Qual(SlotStringer):
         y: Any
         self.dev = None
         self.post = None
-        pre: str = ""
+        self.pre = ""
         while v:
             m = Pattern.QUALIFIERS.leftbound.search(v)
             v = v[m.end() :]
@@ -114,8 +114,7 @@ class Qual(SlotStringer):
             if x in ("post", "r", "rev"):
                 self.post = int(y)
                 continue
-            pre = x + y
-        self.pre = pre
+            self.pre = x + y
 
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
