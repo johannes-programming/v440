@@ -77,8 +77,8 @@ class Qual(SlotStringer):
 
     def _cmp(self: Self) -> list:
         ans: list = list()
-        if not self.pre.isempty():
-            ans += list(self.pre)
+        if self.prephase:
+            ans += [self.prephase, self.presubphase]
         elif self.post is not None:
             ans += ["z", float("inf")]
         elif self.dev is None:
