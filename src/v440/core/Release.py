@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import operator
-import sys
 from typing import *
 
 import setdoc
@@ -9,7 +8,7 @@ from keyalias import keyalias
 from overloadable import Overloadable
 
 from v440._utils.ListStringer import ListStringer
-from v440._utils.releaseparse import deleting, getting, listing, setting
+from v440._utils.releaseparse import deleting, getting, setting
 
 __all__ = ["Release"]
 
@@ -134,7 +133,7 @@ class Release(ListStringer):
 
     @setdoc.basic
     def index(self: Self, value: Any, *args: Any) -> None:
-        i: Optional[int]
+        i: int
         try:
             i = operator.index(value)
         except Exception:
