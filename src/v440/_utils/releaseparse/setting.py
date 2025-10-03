@@ -9,14 +9,15 @@ from v440._utils.releaseparse import listing, numerals, ranging
 
 
 def setitem(data: tuple, key: Any, value: Any) -> tuple:
-    ans: tuple
+    f: Callable
+    k: int | range
     if type(key) is slice:
-        k: range = ranging.torange(key, len(data))
-        ans = setitem_range(data, k, value)
+        k = ranging.torange(key, len(data))
+        f = setitem_range
     else:
-        i: int = operator.index(key)
-        ans = setitem_int(data, i, value)
-    return ans
+        k = operator.index(key)
+        f = setitem_int
+    return f(data, k, value)
 
 
 def setitem_int(data: tuple, key: int, value: Any) -> tuple:
