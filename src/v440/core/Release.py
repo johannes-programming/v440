@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import operator
+import sys
 from typing import *
 
 import setdoc
@@ -82,7 +83,7 @@ class Release(ListStringer):
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
-        v: list = listing.tolist(value, slicing="always")
+        v: list = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
             v.pop()
         return v
@@ -104,6 +105,13 @@ class Release(ListStringer):
         self._data = ()
 
     @classmethod
+    def _item_parse(cls: type, value: SupportsIndex) -> int:
+        ans: int = operator.index(value)
+        if ans < 0:
+            raise ValueError
+        return ans
+
+    @classmethod
     def _sort(cls: type, value: int) -> int:
         return value
 
@@ -114,7 +122,7 @@ class Release(ListStringer):
         v: str = value
         v = v.replace("_", ".")
         v = v.replace("-", ".")
-        self.data = v.split(".")
+        self.data = map(int, v.split("."))
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)

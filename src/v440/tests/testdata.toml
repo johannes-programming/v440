@@ -916,30 +916,6 @@ solution = []
 query = []
 solution = []
 
-[release.test_release_conversion_string]
-query = [
-    "1",
-    "2",
-    "3",
-]
-solution = [
-    1,
-    2,
-    3,
-]
-
-[release.test_release_conversion_mixed]
-query = [
-    "1",
-    2,
-    "3",
-]
-solution = [
-    1,
-    2,
-    3,
-]
-
 [data-property.local]
 query = "42!1.2.3.dev1337+5.nov"
 solution = "42!1.2.3.dev1337+5.nov"
