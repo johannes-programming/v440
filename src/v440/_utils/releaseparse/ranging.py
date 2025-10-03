@@ -6,8 +6,8 @@ from typing import *
 __all__ = ["torange"]
 
 
-def torange(key: Any, length: int) -> range:
-    step: Any = calcstep(key.step)
+def torange(key: slice, length: int) -> range:
+    step: int = calcstep(key.step)
     start: int = calcstart(key.start, length=length, fwd=step > 0)
     stop: int = calcstop(key.stop, length=length, fwd=step > 0)
     ans: range = range(start, stop, step)
@@ -17,10 +17,7 @@ def torange(key: Any, length: int) -> range:
 def calcstep(value: Optional[SupportsIndex]) -> int:
     if value is None:
         return 1
-    ans: int = operator.index(value)
-    if ans == 0:
-        raise ValueError
-    return ans
+    return operator.index(value)
 
 
 def calcstart(value: Optional[SupportsIndex], *, length: int, fwd: bool) -> int:
