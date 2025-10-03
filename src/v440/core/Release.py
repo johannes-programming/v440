@@ -146,6 +146,4 @@ class Release(ListStringer):
         value: Any,
         /,
     ) -> None:
-        data: list = list(self.data)
-        data.insert(index, value)
-        self.data = data
+        self.data = self[:index] + [value] + self[index:]
