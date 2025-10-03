@@ -7,9 +7,8 @@ import setdoc
 from keyalias import keyalias
 from overloadable import Overloadable
 
-from v440._utils import releaseparse
 from v440._utils.ListStringer import ListStringer
-from v440._utils.releaseparse import deleting, getting, setting
+from v440._utils.releaseparse import deleting, getting, listing, setting
 
 __all__ = ["Release"]
 
@@ -83,7 +82,7 @@ class Release(ListStringer):
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
-        v: list = releaseparse.tolist(value, slicing="always")
+        v: list = listing.tolist(value, slicing="always")
         while v and v[-1] == 0:
             v.pop()
         return v
