@@ -72,7 +72,7 @@ class TestPre(unittest.TestCase):
         self.assertEqual(str(v.public.qual), "rc1")
 
         # Modify subphase to "42"
-        v.public.qual.presubphase = 42
+        v.public.qual.prenum = 42
         self.assertEqual(str(v), "1.2.3rc42")
         self.assertEqual(str(v.public.qual), "rc42")
 

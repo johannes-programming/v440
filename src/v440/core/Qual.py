@@ -17,11 +17,11 @@ __all__ = ["Qual"]
 
 class Qual(SlotStringer):
 
-    __slots__ = ("_prephase", "_presubphase", "_post", "_dev")
+    __slots__ = ("_prephase", "_prenum", "_post", "_dev")
     string: str
     pre: str
     prephase: str
-    presubphase: int
+    prenum: int
     post: Optional[int]
     dev: Optional[int]
 
@@ -33,7 +33,7 @@ class Qual(SlotStringer):
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
         self._prephase = ""
-        self._presubphase = 0
+        self._prenum = 0
         self._post = None
         self._dev = None
         argc: int = len(args) + len(kwargs)
@@ -66,19 +66,19 @@ class Qual(SlotStringer):
     def __init__(
         self: Self,
         prephase: Any = "",
-        presubphase: Any = 0,
+        prenum: Any = 0,
         post: Any = None,
         dev: Any = None,
     ) -> None:
         self.prephase = prephase
-        self.presubphase = presubphase
+        self.prenum = prenum
         self.post = post
         self.dev = dev
 
     def _cmp(self: Self) -> list:
         ans: list = list()
         if self.prephase:
-            ans += [self.prephase, self.presubphase]
+            ans += [self.prephase, self.prenum]
         elif self.post is not None:
             ans += ["z", float("inf")]
         elif self.dev is None:
@@ -169,7 +169,7 @@ class Qual(SlotStringer):
     def pre(self: Self) -> str:
         if "" == self.prephase:
             return ""
-        return self.prephase + str(self.presubphase)
+        return self.prephase + str(self.prenum)
 
     @pre.setter
     @guard
@@ -189,12 +189,12 @@ class Qual(SlotStringer):
             x = x[1:]
         if x:
             self._prephase = Cfg.cfg.data["phases"][x]
-            self._presubphase = int("0" + v)
+            self._prenum = int("0" + v)
         elif p or v:
             raise ValueError
         else:
             self._prephase = ""
-            self._presubphase = 0
+            self._prenum = 0
 
     @property
     def prephase(self: Self) -> str:
@@ -206,20 +206,20 @@ class Qual(SlotStringer):
         x: str = str(value).lower()
         if x != "":
             self._prephase = Cfg.cfg.data["phases"][x]
-        elif self.presubphase:
-            self.pre = self.presubphase  # raises error
+        elif self.prenum:
+            self.pre = self.prenum  # raises error
 
     @property
-    def presubphase(self: Self) -> Optional[int]:
-        return self._presubphase
+    def prenum(self: Self) -> Optional[int]:
+        return self._prenum
 
-    @presubphase.setter
+    @prenum.setter
     @guard
-    def presubphase(self: Self, value: Any) -> None:
+    def prenum(self: Self, value: Any) -> None:
         y: int = operator.index(value)
         if y < 0:
             raise ValueError
         if self.prephase:
-            self._presubphase = y
+            self._prenum = y
         else:
             self.pre = y  # raises error
