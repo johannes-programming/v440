@@ -4,6 +4,7 @@ import operator
 from typing import *
 
 import setdoc
+import setsig
 from keyalias import keyalias
 from overloadable import Overloadable
 
@@ -131,6 +132,7 @@ class Release(ListStringer):
         if i != -1:
             self.data = self.data[: i + 1]
 
+    @setsig.SetSig(list.index)
     @setdoc.basic
     def index(self: Self, value: Any, *args: Any) -> None:
         i: int
