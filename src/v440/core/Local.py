@@ -40,10 +40,7 @@ class Local(ListStringer):
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
-        try:
-            return tuple(map(cls._item_parse, value))
-        except Exception as exc:
-            raise ValueError("_dataparse: value=%r" % value)
+        return tuple(map(cls._item_parse, value))
 
     def _format(self: Self, format_spec: str) -> str:
         if format_spec:
