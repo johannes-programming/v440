@@ -146,17 +146,17 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
         data.extend(value)
         self.data = data
 
+    @setdoc.basic
     def index(self: Self, *args: Any) -> None:
-        "This method returns the index of the first occurence."
         return self.data.index(*args)
 
+    @setdoc.basic
     def insert(
         self: Self,
         index: SupportsIndex,
         value: Any,
         /,
     ) -> None:
-        "This method inserts value at index."
         data: list = list(self.data)
         data.insert(index, value)
         self.data = data

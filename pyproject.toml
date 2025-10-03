@@ -27,7 +27,7 @@ dependencies = [
     "overloadable>=1.0.5,<2.0",
     "packaging>=23.2",
     "scaevola>=1.1,<2.0",
-    "setdoc>=1.2,<2",
+    "setdoc>=1.2.6,<2",
     "tofunc>=1.0.0,<2",
     "unhash>=1.0.1,<2",
 ]
@@ -36,7 +36,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "2.0.0.dev151"
+version = "2.0.0.dev152"
 
 [project.license]
 file = "LICENSE.txt"
