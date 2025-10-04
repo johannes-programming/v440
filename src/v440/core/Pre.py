@@ -23,9 +23,9 @@ class Pre(QualStringer):
     def _format_cls(
         cls: type,
         *,
-        format_spec: str,
         phase: str,
         num: int,
+        format_spec: str = "",
     ) -> str:
         if format_spec:
             raise ValueError

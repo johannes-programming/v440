@@ -65,9 +65,9 @@ class QualStringer(BaseStringer):
     def _format_cls(
         cls: type,
         *,
-        format_spec: str,
         phase: str,
         num: int,
+        format_spec: str = "",
     ) -> str: ...
 
     @abstractmethod
