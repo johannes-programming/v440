@@ -16,7 +16,7 @@ class Pre(QualStringer):
     phase: str
     num: int
 
-    def _cmp(self: Self) -> list:
+    def _cmp(self: Self) -> tuple:
         return {bool(self)}, self.phase, self.num
 
     def _format(self: Self, format_spec: str) -> str:
