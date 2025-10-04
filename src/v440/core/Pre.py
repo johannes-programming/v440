@@ -19,11 +19,18 @@ class Pre(QualStringer):
     def _cmp(self: Self) -> tuple:
         return {bool(self)}, self.phase, self.num
 
-    def _format(self: Self, format_spec: str) -> str:
+    @classmethod
+    def _format_cls(
+        cls: type,
+        *,
+        format_spec: str,
+        phase: str,
+        num: int,
+    ) -> str:
         if format_spec:
             raise ValueError
-        if self:
-            return self.phase + str(self.num)
+        if phase:
+            return phase + str(num)
         else:
             return ""
 

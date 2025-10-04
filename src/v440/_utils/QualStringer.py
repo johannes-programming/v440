@@ -53,6 +53,23 @@ class QualStringer(BaseStringer):
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, phase=self.phase, num=self.num)
 
+    def _format(self: Self, format_spec: str) -> str:
+        return self._format_cls(
+            format_spec=format_spec,
+            phase=self.phase,
+            num=self.num,
+        )
+
+    @classmethod
+    @abstractmethod
+    def _format_cls(
+        cls: type,
+        *,
+        format_spec: str,
+        phase: str,
+        num: int,
+    ) -> str: ...
+
     @abstractmethod
     def _num_fset(self: Self, value: int) -> None: ...
 
