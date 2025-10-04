@@ -1,3 +1,6 @@
+[dev]
+dev = "dev"
+
 [pre]
 alpha = "a"
 a = "a"

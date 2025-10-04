@@ -6,18 +6,21 @@ from typing import *
 from v440._utils.Cfg import Cfg
 from v440._utils.QualStringer import QualStringer
 
-__all__ = ["Pre"]
+__all__ = ["Dev"]
 
 
-class Pre(QualStringer):
+class Dev(QualStringer):
 
     __slots__ = ()
     string: str
     phase: str
     num: int
 
-    def _cmp(self: Self) -> tuple:
-        return {bool(self)}, self.phase, self.num
+    def _cmp(self: Self) -> float | int:
+        if self.phase:
+            return self.num
+        else:
+            return float("inf")
 
     @classmethod
     def _format_cls(
@@ -30,7 +33,7 @@ class Pre(QualStringer):
         if format_spec:
             raise ValueError
         if phase:
-            return phase + str(num)
+            return "." + phase + str(num)
         else:
             return ""
 
@@ -41,7 +44,7 @@ class Pre(QualStringer):
 
     @classmethod
     def _phasedict(cls: type) -> dict:
-        return Cfg.cfg.data["pre"]
+        return Cfg.cfg.data["dev"]
 
     def _string_fset(self: Self, value: str) -> None:
         self._phase, self._num = self._string_parse_common(value)

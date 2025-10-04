@@ -23,7 +23,7 @@ class QualStringer(BaseStringer):
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
-        return bool(self.phase or self.num)
+        return bool(self.phase)
 
     @Overloadable
     @setdoc.basic

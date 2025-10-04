@@ -231,7 +231,7 @@ class TestDevGo(unittest.TestCase):
         dev_type: type = int,
     ):
         v: Version = Version(setup)
-        v.public.qual.dev = update
+        v.public.qual.dev.num = update
         self.assertEqual(str(v), text, msg=msg)
         self.assertIsInstance(v.public.qual.dev, dev_type, msg=msg)
         self.assertEqual(v.public.qual.dev, solution, msg=msg)

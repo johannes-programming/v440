@@ -396,13 +396,13 @@ class TestDevNoGo(unittest.TestCase):
     def test_initial_none_dev(self: Self) -> None:
         v: Version = Version("1.2.3")
         self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qual.dev)
+        self.assertFalse(v.public.qual.dev)
 
     def test_dev_as_none(self: Self) -> None:
         v: Version = Version("1.2.3")
-        v.public.qual.dev = None
+        v.public.qual.dev.string = ""
         self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qual.dev)
+        self.assertFalse(v.public.qual.dev)
 
 
 if __name__ == "__main__":
