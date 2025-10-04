@@ -34,18 +34,14 @@ class Pre(QualStringer):
         else:
             return ""
 
+    @classmethod
+    def _name(cls: type) -> str:
+        return "pre"
+
     def _num_fset(self: Self, value: int) -> None:
         if value < 0:
             raise ValueError
         self.string = self.phase + str(value)
-
-    def _phase_fset(self: Self, value: str) -> None:
-        if value:
-            self._phase = Cfg.cfg.data["pre"][value.lower()]
-        elif self.num:
-            self.string = str(self.num)
-        else:
-            self._phase = ""
 
     def _string_fset(self: Self, value: str) -> None:
         v: str = value.lower()

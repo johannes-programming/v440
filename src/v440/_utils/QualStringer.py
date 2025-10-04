@@ -7,6 +7,7 @@ from datarepr import datarepr
 from overloadable import Overloadable
 
 from v440._utils.BaseStringer import BaseStringer
+from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 
 __all__ = ["QualStringer"]
@@ -70,11 +71,12 @@ class QualStringer(BaseStringer):
         format_spec: str = "",
     ) -> str: ...
 
+    @classmethod
     @abstractmethod
-    def _num_fset(self: Self, value: int) -> None: ...
+    def _name(cls: type) -> str: ...
 
     @abstractmethod
-    def _phase_fset(self: Self, value: str) -> None: ...
+    def _num_fset(self: Self, value: int) -> None: ...
 
     @property
     def num(self: Self) -> int:
@@ -92,4 +94,10 @@ class QualStringer(BaseStringer):
     @phase.setter
     @guard
     def phase(self: Self, value: Any) -> None:
-        self._phase_fset(str(value))
+        v: str = str(value).lower()
+        if v:
+            self._phase = Cfg.cfg.data[self._name()][v]
+        elif self.num:
+            self.string = str(self.num)
+        else:
+            self._phase = ""
