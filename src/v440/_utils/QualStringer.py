@@ -6,10 +6,10 @@ from datarepr import datarepr
 
 from v440._utils.BaseStringer import BaseStringer
 
-__all__ = ["SlotStringer"]
+__all__ = ["QualStringer"]
 
 
-class SlotStringer(BaseStringer):
+class QualStringer(BaseStringer):
     __slots__ = ()
 
     string: str
