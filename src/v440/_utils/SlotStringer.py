@@ -6,7 +6,7 @@ from datarepr import datarepr
 
 from v440._utils.BaseStringer import BaseStringer
 
-__all__ = ["SlotList"]
+__all__ = ["SlotStringer"]
 
 
 class SlotStringer(BaseStringer):
