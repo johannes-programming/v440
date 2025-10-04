@@ -101,14 +101,6 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
     @abstractmethod
     def _data_parse(cls: type, value: list) -> Iterable: ...
 
-    def _set(self: Self, value: Any) -> None:
-        if isinstance(value, str):
-            self.string = value
-        elif hasattr(value, "__iter__"):
-            self.data = value
-        else:
-            self.string = value
-
     @classmethod
     @abstractmethod
     def _sort(cls: type, value: Any): ...

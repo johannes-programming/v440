@@ -20,9 +20,3 @@ class SlotStringer(BaseStringer):
 
     def _cmp(self: Self) -> tuple:
         return tuple(map(partial(getattr, self), type(self).__slots__))
-
-    def _set(self: Self, value: Any) -> None:
-        if value is None:
-            self.string = ""
-        else:
-            self.string = value
