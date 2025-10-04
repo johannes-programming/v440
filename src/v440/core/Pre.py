@@ -34,34 +34,14 @@ class Pre(QualStringer):
         else:
             return ""
 
-    @classmethod
-    def _name(cls: type) -> str:
-        return "pre"
-
     def _num_fset(self: Self, value: int) -> None:
         if value < 0:
             raise ValueError
         self.string = self.phase + str(value)
 
+    @classmethod
+    def _phasedict(cls: type) -> dict:
+        return Cfg.cfg.data["pre"]
+
     def _string_fset(self: Self, value: str) -> None:
-        v: str = value.lower()
-        v = v.replace("_", ".")
-        v = v.replace("-", ".")
-        x: str = v.rstrip(string_.digits)
-        v = v[len(x) :]
-        q: bool = x.endswith(".")
-        if q:
-            if not v:
-                raise ValueError
-            x = x[:-1]
-        p: bool = x.startswith(".")
-        if p:
-            x = x[1:]
-        if x:
-            self._phase = Cfg.cfg.data["pre"][x]
-            self._num = int("0" + v)
-        elif p or v:
-            raise ValueError
-        else:
-            self._phase = ""
-            self._num = 0
+        self._phase, self._num = self._string_parse_common(value)

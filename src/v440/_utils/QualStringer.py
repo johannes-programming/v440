@@ -1,4 +1,5 @@
 import operator
+import string as string_
 from abc import abstractmethod
 from typing import *
 
@@ -71,12 +72,34 @@ class QualStringer(BaseStringer):
         format_spec: str = "",
     ) -> str: ...
 
-    @classmethod
-    @abstractmethod
-    def _name(cls: type) -> str: ...
-
     @abstractmethod
     def _num_fset(self: Self, value: int) -> None: ...
+
+    @classmethod
+    @abstractmethod
+    def _phasedict(cls: type) -> dict: ...
+
+    @classmethod
+    def _string_parse_common(cls: type, value: str) -> tuple:
+        y: str = value.lower()
+        y = y.replace("_", ".")
+        y = y.replace("-", ".")
+        x: str = y.rstrip(string_.digits)
+        y = y[len(x) :]
+        if x.endswith("."):
+            x = x[:-1]
+            if not y:
+                raise ValueError
+        if x.startswith("."):
+            x = x[1:]
+            if not x:
+                raise ValueError
+        if x:
+            return cls._phasedict()[x], int("0" + y)
+        elif y:
+            raise ValueError
+        else:
+            return "", 0
 
     @property
     def num(self: Self) -> int:
@@ -96,7 +119,7 @@ class QualStringer(BaseStringer):
     def phase(self: Self, value: Any) -> None:
         v: str = str(value).lower()
         if v:
-            self._phase = Cfg.cfg.data[self._name()][v]
+            self._phase = self._phasedict()[v]
         elif self.num:
             self.string = str(self.num)
         else:
