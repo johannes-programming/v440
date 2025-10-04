@@ -67,17 +67,17 @@ class TestPre(unittest.TestCase):
         self.assertEqual(str(v.public.qual), "a1")
 
         # Modify pre-release phase to "preview"
-        v.public.qual.prephase = "preview"
+        v.public.qual.pre.phase = "preview"
         self.assertEqual(str(v), "1.2.3rc1")
         self.assertEqual(str(v.public.qual), "rc1")
 
         # Modify subphase to "42"
-        v.public.qual.prenum = 42
+        v.public.qual.pre.num = 42
         self.assertEqual(str(v), "1.2.3rc42")
         self.assertEqual(str(v.public.qual), "rc42")
 
         # Change phase to a formatted string "BeTa"
-        v.public.qual.prephase = "BeTa"
+        v.public.qual.pre.phase = "BeTa"
         self.assertEqual(str(v), "1.2.3b42")
         self.assertEqual(str(v.public.qual), "b42")
         self.assertEqual(v.public.qual, backup)
@@ -147,12 +147,12 @@ class TestExample(unittest.TestCase):
     def test_example_5(self: Self) -> None:
         v: Version = Version("2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
-        v.public.qual.pre = "beta.2"
+        v.public.qual.pre.string = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
         with self.assertRaises(Exception):
             v.public.qual.pre[1] = 4
         self.assertEqual(str(v), "2b2")  # Further modified pre-release version
-        v.public.qual.prephase = "PrEvIeW"
+        v.public.qual.pre.phase = "PrEvIeW"
         self.assertEqual(str(v), "2rc2")  # Even further modified pre-release version
 
     def test_example_6(self: Self) -> None:

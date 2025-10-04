@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from functools import partial
 from typing import *
 
@@ -20,3 +21,6 @@ class SlotStringer(BaseStringer):
 
     def _cmp(self: Self) -> tuple:
         return tuple(map(partial(getattr, self), type(self).__slots__))
+
+    @abstractmethod
+    def _todict(self: Self) -> dict: ...

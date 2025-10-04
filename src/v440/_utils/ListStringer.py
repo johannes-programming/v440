@@ -105,9 +105,6 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
     @abstractmethod
     def _sort(cls: type, value: Any): ...
 
-    def _todict(self: Self) -> dict:
-        return dict(data=self.data)
-
     def append(self: Self, value: Self, /) -> None:
         "This method appends value to self."
         data: list = list(self.data)

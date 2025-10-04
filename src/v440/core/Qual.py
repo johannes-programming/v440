@@ -11,38 +11,34 @@ from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440._utils.Pattern import Pattern
 from v440._utils.SlotStringer import SlotStringer
+from v440.core.Pre import Pre
 
 __all__ = ["Qual"]
 
 
 class Qual(SlotStringer):
 
-    __slots__ = ("_prephase", "_prenum", "_post", "_dev")
+    __slots__ = ("_pre", "_post", "_dev")
     string: str
-    pre: str
-    prephase: str
-    prenum: int
+    pre: Pre
     post: Optional[int]
     dev: Optional[int]
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
-        return self.string == ""
+        return bool(self.string)
 
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
-        self._prephase = ""
-        self._prenum = 0
+        self._pre = Pre()
         self._post = None
         self._dev = None
         argc: int = len(args) + len(kwargs)
         keys: set = set(kwargs.keys())
         if argc <= 1 and keys <= {"string"}:
             return "string"
-        if argc <= 3 and keys <= {"pre", "post", "dev"}:
-            return "pre"
-        return "slots"
+        return "pre"
 
     @__init__.overload("string")
     @setdoc.basic
@@ -57,21 +53,7 @@ class Qual(SlotStringer):
         post: Any = None,
         dev: Any = None,
     ) -> None:
-        self.pre = pre
-        self.post = post
-        self.dev = dev
-
-    @__init__.overload("slots")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        prephase: Any = "",
-        prenum: Any = 0,
-        post: Any = None,
-        dev: Any = None,
-    ) -> None:
-        self.prephase = prephase
-        self.prenum = prenum
+        self.pre.string = pre
         self.post = post
         self.dev = dev
 
@@ -92,7 +74,7 @@ class Qual(SlotStringer):
     def _format(self: Self, format_spec: str) -> str:
         if format_spec:
             raise ValueError
-        ans: str = self.pre
+        ans: str = self.pre.string
         if self.post is not None:
             ans += ".post%s" % self.post
         if self.dev is not None:
@@ -106,7 +88,7 @@ class Qual(SlotStringer):
         y: Any
         self.dev = None
         self.post = None
-        self.pre = ""
+        self.pre.string = ""
         while v:
             m = Pattern.QUALIFIERS.leftbound.search(v)
             v = v[m.end() :]
@@ -121,7 +103,7 @@ class Qual(SlotStringer):
             if x in ("post", "r", "rev"):
                 self.post = int(y)
                 continue
-            self.pre = x + y
+            self.pre.string = x + y
 
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
@@ -147,7 +129,7 @@ class Qual(SlotStringer):
 
     def isprerelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a pre-release."
-        return self.prephase != "" or self.dev is not None
+        return self.pre.phase != "" or self.dev is not None
 
     def ispostrelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a post-release."
@@ -167,59 +149,4 @@ class Qual(SlotStringer):
 
     @property
     def pre(self: Self) -> str:
-        if "" == self.prephase:
-            return ""
-        return self.prephase + str(self.prenum)
-
-    @pre.setter
-    @guard
-    def pre(self: Self, value: Any) -> None:
-        v: str = str(value).lower()
-        v = v.replace("_", ".")
-        v = v.replace("-", ".")
-        x: str = v.rstrip(string_.digits)
-        v = v[len(x) :]
-        q: bool = x.endswith(".")
-        if q:
-            if not v:
-                raise ValueError
-            x = x[:-1]
-        p: bool = x.startswith(".")
-        if p:
-            x = x[1:]
-        if x:
-            self._prephase = Cfg.cfg.data["phases"][x]
-            self._prenum = int("0" + v)
-        elif p or v:
-            raise ValueError
-        else:
-            self._prephase = ""
-            self._prenum = 0
-
-    @property
-    def prephase(self: Self) -> str:
-        return self._prephase
-
-    @prephase.setter
-    @guard
-    def prephase(self: Self, value: Any) -> None:
-        x: str = str(value).lower()
-        if x != "":
-            self._prephase = Cfg.cfg.data["phases"][x]
-        elif self.prenum:
-            self.pre = self.prenum  # raises error
-
-    @property
-    def prenum(self: Self) -> Optional[int]:
-        return self._prenum
-
-    @prenum.setter
-    @guard
-    def prenum(self: Self, value: Any) -> None:
-        y: int = operator.index(value)
-        if y < 0:
-            raise ValueError
-        if self.prephase:
-            self._prenum = y
-        else:
-            self.pre = y  # raises error
+        return self._pre

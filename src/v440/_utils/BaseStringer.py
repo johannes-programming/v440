@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import *
 
-import scaevola
 import setdoc
 import unhash
 
@@ -102,9 +101,6 @@ class BaseStringer(metaclass=ABCMeta):
 
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
-
-    @abstractmethod
-    def _todict(self: Self) -> dict: ...
 
     @setdoc.basic
     def copy(self: Self) -> Self:
