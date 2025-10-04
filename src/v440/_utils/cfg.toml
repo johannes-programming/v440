@@ -1,4 +1,4 @@
-[phases]
+[pre]
 alpha = "a"
 a = "a"
 beta = "b"

@@ -33,7 +33,7 @@ class Pre(QualStringer):
         self.string = self.phase + str(value)
 
     def _phase_fset(self: Self, value: str) -> None:
-        self._phase = Cfg.cfg.data["phases"][value.lower()]
+        self._phase = Cfg.cfg.data["pre"][value.lower()]
 
     def _string_fset(self: Self, value: str) -> None:
         v: str = value.lower()
@@ -50,7 +50,7 @@ class Pre(QualStringer):
         if p:
             x = x[1:]
         if x:
-            self._phase = Cfg.cfg.data["phases"][x]
+            self._phase = Cfg.cfg.data["pre"][x]
             self._num = int("0" + v)
         elif p or v:
             raise ValueError
