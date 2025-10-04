@@ -101,9 +101,6 @@ class BaseStringer(metaclass=ABCMeta):
     def _format(self: Self, format_spec: str) -> str: ...
 
     @abstractmethod
-    def _set(self: Self, value: Any) -> None: ...
-
-    @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
 
     @abstractmethod
