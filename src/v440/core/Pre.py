@@ -33,7 +33,12 @@ class Pre(QualStringer):
         self.string = self.phase + str(value)
 
     def _phase_fset(self: Self, value: str) -> None:
-        self._phase = Cfg.cfg.data["pre"][value.lower()]
+        if value:
+            self._phase = Cfg.cfg.data["pre"][value.lower()]
+        elif self.num:
+            self.string = str(self.num)
+        else:
+            self._phase = ""
 
     def _string_fset(self: Self, value: str) -> None:
         v: str = value.lower()
