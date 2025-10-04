@@ -1,4 +1,12 @@
-[phases]
+[dev]
+dev = "dev"
+
+[post]
+post = "post"
+r = "post"
+rev = "post"
+
+[pre]
 alpha = "a"
 a = "a"
 beta = "b"
