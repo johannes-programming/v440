@@ -89,17 +89,22 @@ class Release(ListStringer):
         return v
 
     def _format(self: Self, format_spec: str) -> str:
-        i: Optional[int]
-        if format_spec:
-            i = int(format_spec)
-        else:
-            i = None
-        l: list = self[:i]
-        if len(l) == 0:
-            l += [0]
-        l = list(map(str, l))
-        ans: str = ".".join(l)
+        i: int = self._format_r(format_spec)
+        i = max(i, 1, len(self))
+        ans: str = ".".join(map(str, self[:i]))
         return ans
+
+    @classmethod
+    def _format_r(cls: type, format_spec: str) -> Optional[int]:
+        if format_spec == "":
+            return 0
+        if not format_spec.startswith("0"):
+            raise ValueError
+        if not format_spec.endswith("r"):
+            raise ValueError
+        if set(format_spec[:-1]) <= set("0123456789"):
+            return int(format_spec[:-1])
+        raise ValueError
 
     def _init_setup(self: Self) -> None:
         self._data = ()

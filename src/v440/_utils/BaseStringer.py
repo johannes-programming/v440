@@ -29,9 +29,9 @@ class BaseStringer(metaclass=ABCMeta):
         try:
             return self._format(str(format_spec))
         except Exception:
-            msg: str = "unsupported format string passed to %s.__format__"
-            msg %= type(self).__name__
-            raise TypeError(msg)  # from None
+            msg: str = "Invalid format specifier %r for object of type %r"
+            msg %= (format_spec, type(self).__name__)
+            raise TypeError(msg) from None
 
     @setdoc.basic
     def __ge__(self: Self, other: Any) -> bool:

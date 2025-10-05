@@ -264,8 +264,8 @@ class TestPackagingA(unittest.TestCase):
     def go(self: Self, text: str) -> None:
         a: packaging.version.Version = packaging.version.Version(text)
         b: str = str(a)
-        f: int = len(a.release)
-        g: str = format(Version(text), str(f))
+        f: str = "0%sr" % len(a.release)
+        g: str = format(Version(text), f)
         self.assertEqual(b, g)
 
 
