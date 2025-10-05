@@ -27,7 +27,7 @@ class Qual(SlotStringer):
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
-        return self.string == ""
+        return self.string != ""
 
     @Overloadable
     @setdoc.basic
