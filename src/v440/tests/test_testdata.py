@@ -145,12 +145,13 @@ class TestVersionEpochGo(unittest.TestCase):
 
 
 class TestSlicingGo(unittest.TestCase):
-    def test_slicing_3(self: Self) -> None:
+    def test_slicingmethod(self: Self) -> None:
         sli: dict = Util.util.data["slicingmethod"]
         k: str
         v: dict
         for k, v in sli.items():
-            self.go(**v, key=k)
+            with self.subTest(key=k):
+                self.go(**v)
 
     def go(
         self: Self,
@@ -160,11 +161,10 @@ class TestSlicingGo(unittest.TestCase):
         start: Any = None,
         stop: Any = None,
         step: Any = None,
-        key: str = "",
     ) -> None:
         v: Version = Version(query)
         v.public.base.release[start:stop:step] = change
-        self.assertEqual(str(v), solution, "slicingmethod %s" % key)
+        self.assertEqual(str(v), solution)
 
 
 class TestDataProperty(unittest.TestCase):

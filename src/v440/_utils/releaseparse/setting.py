@@ -3,43 +3,52 @@ from __future__ import annotations
 import operator
 from typing import *
 
-from overloadable import Overloadable
+from v440._utils.releaseparse import listing, ranging
 
-from v440._utils.releaseparse import listing, numerals, ranging
+
+def numeral(value: SupportsIndex) -> int:
+    ans: int = operator.index(value)
+    if ans < 0:
+        raise ValueError
+    else:
+        return ans
 
 
 def setitem(data: tuple, key: Any, value: Any) -> tuple:
     f: Callable
     k: int | range
+    v: int | tuple[int]
     if type(key) is slice:
-        k = ranging.torange(key, len(data))
         f = setitem_range
+        k = ranging.torange(key, len(data))
+        v = tuple(map(numeral, value))
     else:
-        k = operator.index(key)
         f = setitem_int
-    return f(data, k, value)
+        k = operator.index(key)
+        v = numeral(value)
+    return f(data, k, v)
 
 
-def setitem_int(data: tuple, key: int, value: Any) -> tuple:
-    v: int = numerals.numeral(value)
+def setitem_int(data: tuple, key: int, value: int) -> tuple:
     if key < len(data):
         edit: list = list(data)
-        edit[key] = v
+        edit[key] = value
         return tuple(edit)
-    if v == 0:
+    if value == 0:
         return data
     data += (0,) * (key - len(data))
-    data += (v,)
+    data += (value,)
     return data
 
 
-@Overloadable
-def setitem_range(data: tuple, key: range, value: Any) -> bool:
-    return key.step == 1
+def setitem_range(data: tuple, key: range, value: tuple[int]) -> tuple:
+    if key.step == 1:
+        return setitem_range_1(data, key, value)
+    else:
+        return setitem_range_align(data, key, value)
 
 
-@setitem_range.overload(False)
-def setitem_range(data: tuple, key: range, value: Any) -> tuple:
+def setitem_range_align(data: tuple, key: range, value: Any) -> tuple:
     key: list = list(key)
     value: list = listing.tolist(value, slicing=len(key))
     if len(key) != len(value):
@@ -54,8 +63,7 @@ def setitem_range(data: tuple, key: range, value: Any) -> tuple:
     return tuple(edit)
 
 
-@setitem_range.overload(True)
-def setitem_range(data: tuple, key: range, value: Any) -> tuple:
+def setitem_range_1(data: tuple, key: range, value: Any) -> tuple:
     edit: list = list(data)
     ext: int = max(0, key.start - len(data))
     edit += ext * [0]

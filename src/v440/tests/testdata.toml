@@ -937,35 +937,35 @@ query = "1.2.3.4.5.6.7.8.9.10"
 start = -8
 stop = 15
 step = 5
-change = "777"
+change = [7, 7, 7]
 solution = "1.2.7.4.5.6.7.7.9.10.0.0.7"
 
 [slicingmethod.test_slicing_3]
 query = "1.2.3.4.5.6.7.8.9.10"
 start = 3
 stop = 4
-change = 777
+change = [777]
 solution = "1.2.3.777.5.6.7.8.9.10"
 
 [slicingmethod.test_slicing_4]
 query = "1.2.3.4.5.6.7.8.9.10"
 start = 3
 stop = 4
-change = "777"
+change = [7, 7, 7]
 solution = "1.2.3.7.7.7.5.6.7.8.9.10"
 
 [slicingmethod.test_slicing_5]
 query = "1"
 start = 3
 stop = 4
-change = "777"
+change = [7, 7, 7]
 solution = "1.0.0.7.7.7"
 
 [slicingmethod.test_slicing_6]
 query = "1"
 start = 3
 stop = 4
-change = 777
+change = [777]
 solution = "1.0.0.777"
 
 [epoch.test_epoch_as_int]
