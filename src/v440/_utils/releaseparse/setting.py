@@ -43,12 +43,17 @@ def setitem_int(data: tuple, key: int, value: int) -> tuple:
 
 def setitem_range(data: tuple, key: range, value: tuple[int]) -> tuple:
     if key.step == 1:
-        return setitem_range_1(data, key, value)
+        return setitem_range_1(
+            data=data,
+            start=key.start,
+            stop=key.stop,
+            value=value,
+        )
     else:
         return setitem_range_align(data, key, value)
 
 
-def setitem_range_align(data: tuple, key: range, value: Any) -> tuple:
+def setitem_range_align(data: tuple, key: range, value: tuple[int]) -> tuple:
     key: list = list(key)
     value: list = listing.tolist(value, slicing=len(key))
     if len(key) != len(value):
@@ -63,10 +68,9 @@ def setitem_range_align(data: tuple, key: range, value: Any) -> tuple:
     return tuple(edit)
 
 
-def setitem_range_1(data: tuple, key: range, value: Any) -> tuple:
+def setitem_range_1(data: tuple, start: int, stop: int, value: tuple[int]) -> tuple:
     edit: list = list(data)
-    ext: int = max(0, key.start - len(data))
-    edit += ext * [0]
-    l: list = listing.tolist(value, slicing="always")
-    edit = edit[: key.start] + l + edit[key.stop :]
-    return tuple(edit)
+    edit += [0] * max(0, start - len(data))
+    edit[start:stop] = value
+    ans: tuple = tuple(edit)
+    return ans
