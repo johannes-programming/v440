@@ -3,7 +3,7 @@ from __future__ import annotations
 import operator
 from typing import *
 
-from v440._utils.releaseparse import listing, ranging
+from v440._utils.releaseparse import ranging
 
 
 def numeral(value: SupportsIndex) -> int:
