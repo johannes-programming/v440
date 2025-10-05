@@ -368,7 +368,7 @@ class TestPackagingField(unittest.TestCase):
         if local_packaging is None:
             local_packaging = ""
         self.assertEqual(
-            str(v.local),
+            str(v.local).lstrip("+"),
             str(local_packaging),
             msg=msg,
         )

@@ -386,7 +386,7 @@ class TestVersionLocal(unittest.TestCase):
         # Test repr of local list
         version: Version = Version()
         version.local.data = [1, "dev", "build"]
-        self.assertEqual(str(version.local), "1.dev.build")
+        self.assertEqual(str(version.local), "+1.dev.build")
 
     def test_local_data_property(self: Self) -> None:
         # Test that 'data' property correctly reflects local's internal list

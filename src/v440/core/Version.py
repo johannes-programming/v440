@@ -56,8 +56,7 @@ class Version(SlotStringer):
 
     def _format(self: Self, format_spec: str) -> str:
         ans: str = format(self.public, format_spec)
-        if self.local:
-            ans += "+" + format(self.local)
+        ans += format(self.local)
         return ans
 
     def _string_fset(self: Self, value: str) -> None:

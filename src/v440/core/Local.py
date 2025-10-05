@@ -45,7 +45,9 @@ class Local(ListStringer):
     def _format(self: Self, format_spec: str) -> str:
         if format_spec:
             raise ValueError
-        return ".".join(map(str, self))
+        if not self:
+            return ""
+        return "+" + ".".join(map(str, self))
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:
