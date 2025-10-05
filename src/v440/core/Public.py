@@ -51,6 +51,9 @@ class Public(SlotStringer):
         self.base.string = base
         self.qual.string = qual
 
+    def _cmp(self: Self) -> tuple:
+        return self.base, self.qual
+
     def _format(self: Self, format_spec: str) -> str:
         return format(self.base, format_spec) + format(self.qual)
 

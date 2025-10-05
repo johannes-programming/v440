@@ -51,6 +51,9 @@ class Version(SlotStringer):
         self.public.string = public
         self.local.string = local
 
+    def _cmp(self: Self) -> tuple:
+        return self.public, self.local
+
     def _format(self: Self, format_spec: str) -> str:
         ans: str = format(self.public, format_spec)
         if self.local:

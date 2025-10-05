@@ -51,6 +51,9 @@ class Base(SlotStringer):
         self.epoch = epoch
         self.release.string = release
 
+    def _cmp(self: Self) -> tuple:
+        return self.epoch, self.release
+
     def _format(self: Self, format_spec: str) -> str:
         ans: str = ""
         if self.epoch:

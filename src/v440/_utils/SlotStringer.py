@@ -17,6 +17,3 @@ class SlotStringer(BaseStringer):
     @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, **self._todict())
-
-    def _cmp(self: Self) -> tuple:
-        return tuple(map(partial(getattr, self), type(self).__slots__))
