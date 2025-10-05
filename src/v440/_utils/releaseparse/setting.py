@@ -42,35 +42,11 @@ def setitem_int(data: tuple, key: int, value: int) -> tuple:
 
 
 def setitem_range(data: tuple, key: range, value: tuple[int]) -> tuple:
-    if key.step == 1:
-        return setitem_range_1(
-            data=data,
-            start=key.start,
-            stop=key.stop,
-            value=value,
-        )
-    else:
-        return setitem_range_align(data, key, value)
-
-
-def setitem_range_align(data: tuple, key: range, value: tuple[int]) -> tuple:
-    key: list = list(key)
-    value: list = listing.tolist(value, slicing=len(key))
-    if len(key) != len(value):
-        e = "attempt to assign sequence of size %s to extended slice of size %s"
-        e %= (len(value), len(key))
-        raise ValueError(e)
-    ext: int = max(0, max(*key) + 1 - len(data))
     edit: list = list(data)
-    edit += [0] * ext
-    for k, v in zip(key, value):
-        edit[k] = v
-    return tuple(edit)
-
-
-def setitem_range_1(data: tuple, start: int, stop: int, value: tuple[int]) -> tuple:
-    edit: list = list(data)
-    edit += [0] * max(0, start - len(data))
-    edit[start:stop] = value
+    while len(edit) < max(key.start + 1, key.stop):
+        edit.append(0)
+    edit[key.start : key.stop : key.step] = value
+    while len(edit) and not edit[-1]:
+        edit.pop()
     ans: tuple = tuple(edit)
     return ans
