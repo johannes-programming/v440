@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import *
 
-import scaevola
 import setdoc
 import unhash
 
@@ -20,11 +19,10 @@ class BaseStringer(metaclass=ABCMeta):
 
     @setdoc.basic
     def __eq__(self: Self, other: Any) -> bool:
-        try:
-            alt: Self = type(self)(other)
-        except VersionError:
+        if type(self) is type(other):
+            return self._cmp() == other._cmp()
+        else:
             return False
-        return self.string == alt.string
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
@@ -37,21 +35,17 @@ class BaseStringer(metaclass=ABCMeta):
 
     @setdoc.basic
     def __ge__(self: Self, other: Any) -> bool:
-        alt: Self
-        try:
-            alt = type(self)(other)
-        except VersionError:
+        if type(self) is type(other):
+            return self._cmp() >= other._cmp()
+        else:
             return NotImplemented
-        return self._cmp() >= alt._cmp()
 
     @setdoc.basic
     def __gt__(self: Self, other: Any) -> bool:
-        alt: Self
-        try:
-            alt = type(self)(other)
-        except VersionError:
+        if type(self) is type(other):
+            return self._cmp() > other._cmp()
+        else:
             return NotImplemented
-        return self._cmp() > alt._cmp()
 
     __hash__ = unhash
 
@@ -61,21 +55,17 @@ class BaseStringer(metaclass=ABCMeta):
 
     @setdoc.basic
     def __le__(self: Self, other: Any) -> bool:
-        alt: Self
-        try:
-            alt = type(self)(other)
-        except VersionError:
+        if type(self) is type(other):
+            return self._cmp() <= other._cmp()
+        else:
             return NotImplemented
-        return self._cmp() <= alt._cmp()
 
     @setdoc.basic
     def __lt__(self: Self, other: Any) -> bool:
-        alt: Self
-        try:
-            alt = type(self)(other)
-        except VersionError:
+        if type(self) is type(other):
+            return self._cmp() < other._cmp()
+        else:
             return NotImplemented
-        return self._cmp() < alt._cmp()
 
     @setdoc.basic
     def __ne__(self: Self, other: Any) -> bool:

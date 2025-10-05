@@ -102,41 +102,73 @@ class TestExample(unittest.TestCase):
         v.public.base.release.micro = 4
         self.assertEqual(str(v), "2.64.4")  # Further modified version
 
-    def test_example_3a(self: Self) -> None:
-        v1: Version = Version("1.6.3")
-        v2: str = "1.6.4"
-        self.assertEqual(str(v1), "1.6.3")  # v1
-        self.assertEqual(str(v2), "1.6.4")  # v2
-        self.assertFalse(v1 == v2)  # v1 == v2 gives False
-        self.assertTrue(v1 != v2)  # v1 != v2 gives True
-        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
-        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
-        self.assertFalse(v1 > v2)  # v1 > v2 gives False
-        self.assertTrue(v1 < v2)  # v1 < v2 gives True
-
-    def test_example_3b(self: Self) -> None:
-        v1: str = "1.6.3"
-        v2: Version = Version("1.6.4")
-        self.assertEqual(str(v1), "1.6.3")  # v1
-        self.assertEqual(str(v2), "1.6.4")  # v2
-        self.assertFalse(v1 == v2)  # v1 == v2 gives False
-        self.assertTrue(v1 != v2)  # v1 != v2 gives True
-        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
-        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
-        self.assertFalse(v1 > v2)  # v1 > v2 gives False
-        self.assertTrue(v1 < v2)  # v1 < v2 gives True
-
-    def test_example_3c(self: Self) -> None:
+    def test_example_3(self: Self) -> None:
         v1: Version = Version("1.6.3")
         v2: Version = Version("1.6.4")
         self.assertEqual(str(v1), "1.6.3")  # v1
         self.assertEqual(str(v2), "1.6.4")  # v2
-        self.assertFalse(v1 == v2)  # v1 == v2 gives False
-        self.assertTrue(v1 != v2)  # v1 != v2 gives True
-        self.assertFalse(v1 >= v2)  # v1 >= v2 gives False
-        self.assertTrue(v1 <= v2)  # v1 <= v2 gives True
-        self.assertFalse(v1 > v2)  # v1 > v2 gives False
-        self.assertTrue(v1 < v2)  # v1 < v2 gives True
+        # eq
+        self.assertFalse(v1 == v2)
+        self.assertFalse(v2 == v1)
+        self.assertFalse(v1 == str(v1))
+        self.assertFalse(v2 == str(v2))
+        self.assertTrue(v1 == v1)
+        self.assertTrue(v2 == v2)
+        self.assertFalse(str(v1) == v1)
+        self.assertFalse(str(v2) == v2)
+        # ne
+        self.assertTrue(v1 != v2)
+        self.assertTrue(v2 != v1)
+        self.assertTrue(v1 != str(v1))
+        self.assertTrue(v2 != str(v2))
+        self.assertFalse(v1 != v1)
+        self.assertFalse(v2 != v2)
+        self.assertTrue(str(v1) != v1)
+        self.assertTrue(str(v2) != v2)
+        # ge
+        self.assertFalse(v1 >= v2)
+        self.assertTrue(v2 >= v1)
+        with self.assertRaises(Exception):
+            v1 >= str(v2)
+        with self.assertRaises(Exception):
+            str(v1) >= v2
+        with self.assertRaises(Exception):
+            v2 >= str(v1)
+        with self.assertRaises(Exception):
+            str(v2) >= v1
+        # le
+        self.assertFalse(v2 <= v1)
+        self.assertTrue(v1 <= v2)
+        with self.assertRaises(Exception):
+            v1 <= str(v2)
+        with self.assertRaises(Exception):
+            str(v1) <= v2
+        with self.assertRaises(Exception):
+            v2 <= str(v1)
+        with self.assertRaises(Exception):
+            str(v2) <= v1
+        # gt
+        self.assertFalse(v1 > v2)
+        self.assertTrue(v2 > v1)
+        with self.assertRaises(Exception):
+            v1 > str(v2)
+        with self.assertRaises(Exception):
+            str(v1) > v2
+        with self.assertRaises(Exception):
+            v2 > str(v1)
+        with self.assertRaises(Exception):
+            str(v2) > v1
+        # lt
+        self.assertFalse(v2 < v1)
+        self.assertTrue(v1 < v2)
+        with self.assertRaises(Exception):
+            v1 < str(v2)
+        with self.assertRaises(Exception):
+            str(v1) < v2
+        with self.assertRaises(Exception):
+            v2 < str(v1)
+        with self.assertRaises(Exception):
+            str(v2) < v1
 
     def test_example_4(self: Self) -> None:
         v: Version = Version("2.5.3.9")
