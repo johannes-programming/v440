@@ -124,6 +124,8 @@ class Release(ListStringer):
         if value == "":
             self.data = ()
             return
+        if value.strip("0123456789_-."):
+            raise ValueError
         v: str = value
         v = v.replace("_", ".")
         v = v.replace("-", ".")

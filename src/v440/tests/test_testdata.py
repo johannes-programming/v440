@@ -199,56 +199,18 @@ class TestVersionRelease(unittest.TestCase):
         self.assertEqual(list(release), solution)
 
 
-class TestDevGo(unittest.TestCase):
-    def test_dev_as_tuple(self: Self) -> None:
-        self.go_key(
-            key="test_dev_as_list_mixed_case",
-            setup="1.2.3.dev9000",
-            update=None,
-            text="1.2.3",
-            solution=None,
-            dev_type=type(None),
-        )
-
-    def test_strings_a(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["devint"].items():
-            self.go_key(**v, key=k)
-
-    def go_key(self: Self, key: str, **kwargs: Any) -> None:
-        msg: str = "dev %r" % key
-        with self.subTest(key=key):
-            self.go(**kwargs, msg=msg)
-
-    def go(
-        self: Self,
-        msg: str,
-        setup: Any,
-        text: str,
-        solution: Any = None,
-        update: Any = None,
-        dev_type: type = int,
-    ):
-        v: Version = Version(setup)
-        v.public.qual.dev = update
-        self.assertEqual(str(v), text, msg=msg)
-        self.assertIsInstance(v.public.qual.dev, dev_type, msg=msg)
-        self.assertEqual(v.public.qual.dev, solution, msg=msg)
-
-
 class TestVersionSpecifiersGo(unittest.TestCase):
 
     def test_spec_toml(self: Self) -> None:
         k: str
         v: dict
         for k, v in Util.util.data["spec"].items():
-            self.go(**v, key=k)
+            with self.subTest(key=k):
+                self.go(**v)
 
-    def go(self: Self, string_a: str, string_b: str, key: str = "") -> None:
-        msg: str = "spec %r" % key
+    def go(self: Self, string_a: str, string_b: str) -> None:
         version: Version = Version(string_a)
-        self.assertEqual(str(version), string_b, msg=msg)
+        self.assertEqual(str(version), string_b)
 
 
 class TestPackagingA(unittest.TestCase):

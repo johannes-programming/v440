@@ -671,6 +671,7 @@ Post-releases = [
     "1.2.3a1.post11.dev7+sha256.abc123def456",
     "0!0.0.0a1.post9999.dev8888+local-build.0",
     "42!1.0.0rc999.post999.dev9999+exp.build.local1",
+    "1!1.2.3a1.post6.dev5+local",
 ]
 "Combining epochs with local versions" = [
     "2!1.0.0+local.version.1234",
@@ -716,26 +717,26 @@ Post-releases = [
 ]
 "Difficult Qualification Relations" = ['1.2.3', '1.2.3.dev0', '1.2.3.dev1', '1.2.3.dev2', '1.2.3.post0', '1.2.3.post0.dev0', '1.2.3.post0.dev1', '1.2.3.post0.dev2', '1.2.3.post10', '1.2.3.post10.dev0', '1.2.3.post10.dev1', '1.2.3.post10.dev2', '1.2.3a0', '1.2.3a0.dev0', '1.2.3a0.dev1', '1.2.3a0.dev2', '1.2.3a0.post0', '1.2.3a0.post0.dev0', '1.2.3a0.post0.dev1', '1.2.3a0.post0.dev2', '1.2.3a0.post10', '1.2.3a0.post10.dev0', '1.2.3a0.post10.dev1', '1.2.3a0.post10.dev2', '1.2.3a4', '1.2.3a4.dev0', '1.2.3a4.dev1', '1.2.3a4.dev2', '1.2.3a4.post0', '1.2.3a4.post0.dev0', '1.2.3a4.post0.dev1', '1.2.3a4.post0.dev2', '1.2.3a4.post10', '1.2.3a4.post10.dev0', '1.2.3a4.post10.dev1', '1.2.3a4.post10.dev2', '1.2.3b1', '1.2.3b1.dev0', '1.2.3b1.dev1', '1.2.3b1.dev2', '1.2.3b1.post0', '1.2.3b1.post0.dev0', '1.2.3b1.post0.dev1', '1.2.3b1.post0.dev2', '1.2.3b1.post10', '1.2.3b1.post10.dev0', '1.2.3b1.post10.dev1', '1.2.3b1.post10.dev2']
 [strings.incomp]
-"Increasing complexity with more combinations" = [
-    "1!1.0.0.dev4567.post9+20190101",
-]
 "Invalid cases (testing error handling for extreme cases)" = [
-    "1.0.0alpha_beta",
     "1!2.0.0+",
 ]
+
+[strings.exc]
 "Cases with inconsistent pre-release and post-release ordering" = [
     "1.0.0.post1a1",
     "1.0.0.dev1rc1",
     "2!1.0.0rc1.post1a1",
     "3!1.0.0a1.dev1rc1+build123",
 ]
-
-[strings.exc]
+"Increasing complexity with more combinations" = [
+    "1!1.0.0.dev4567.post9+20190101",
+]
 "Invalid or Potentially Problematic Cases (for error handling)" = [
     "1..0",
     "1.0.0+@build",
 ]
 "Invalid cases (testing error handling for extreme cases)" = [
+    "1.0.0alpha_beta",
     "1.0.0...dev",
     "0.0.0a1.post0.dev0+local.build.invalid_character#",
     "1.0.0a1..post2",
@@ -746,99 +747,23 @@ Post-releases = [
 "Test version with invalid specifiers that should raise an error" = [
     "1.2.3--4",
     "1.2.3a1--4",
+    "1!1.2.3a1-4-dev5-6+local",
+    "1.2.3-dev1-dev2",
+    "1.2.3-4-5",
+    "1.2.3a1-4-5",
+    "2!1.2.3-4-5",
+    "1.2.3-4a1-dev5-6",
+    "1.2.3-dev1-post2-dev3",
+    "1.2.3-4a1",
 ]
-
-[devint.test_dev_as_int]
-setup = "1.2.3"
-update = 1
-text = "1.2.3.dev1"
-solution = 1
-
-[devint.test_dev_as_string_int]
-setup = "1.2.3"
-update = 42
-text = "1.2.3.dev42"
-solution = 42
-
-[devint.test_dev_as_string_with_dev_prefix]
-setup = "1.2.3"
-update = 1000
-text = "1.2.3.dev1000"
-solution = 1000
-
-[devint.test_dev_as_string_with_dev_dot_prefix]
-setup = "1.2.3"
-update = 2000
-text = "1.2.3.dev2000"
-solution = 2000
-
-[devint.test_dev_as_string_with_dot_dev_prefix]
-setup = "1.2.3"
-update = 3000
-text = "1.2.3.dev3000"
-solution = 3000
-
-[devint.test_dev_as_string_with_dot_dev_number_prefix]
-setup = "1.2.3"
-update = 4000
-text = "1.2.3.dev4000"
-solution = 4000
-
-[devint.test_dev_as_list]
-setup = "1.2.3"
-update = 6000
-text = "1.2.3.dev6000"
-solution = 6000
-
-[devint.test_dev_as_uppercase_string]
-setup = "1.2.3"
-update = 7000
-text = "1.2.3.dev7000"
-solution = 7000
-
-[devint.test_dev_as_mixed_case_string]
-setup = "1.2.3"
-update = 8000
-text = "1.2.3.dev8000"
-solution = 8000
-
-[devint.test_dev_as_list_mixed_case]
-setup = "1.2.3"
-update = 9000
-text = "1.2.3.dev9000"
-solution = 9000
-
-[devint.test_dev_as_false]
-setup = "1.2.3"
-update = false
-text = "1.2.3.dev0"
-solution = 0
-
-[devint.test_dev_as_true]
-setup = "1.2.3"
-update = true
-text = "1.2.3.dev1"
-solution = 1
 
 [spec.test_basic_version_with_post_specifier]
 string_a = "1.2.3-4"
 string_b = "1.2.3.post4"
 
-[spec.test_version_with_multiple_post_specifiers]
-string_a = "1.2.3-4-5"
-string_b = "1.2.3.post5"
-
-[spec.test_version_with_mixed_post_and_dev_specifiers]
-string_a = "1.2.3-dev1-post2-dev3"
-string_b = "1.2.3.post2.dev3"
-
 [spec.test_version_with_pre_release_and_post_specifiers]
 string_a = "1.2.3a1-4"
 string_b = "1.2.3a1.post4"
-
-[spec.test_version_with_multiple_pre_and_post_specifiers]
-string_a = "1.2.3a1-4-5"
-string_b = "1.2.3a1.post5"
 
 [spec.test_version_with_post_and_local_specifiers]
 string_a = "1.2.3-4+local"
@@ -848,14 +773,6 @@ string_b = "1.2.3.post4+local"
 string_a = "1!1.2.3-4"
 string_b = "1!1.2.3.post4"
 
-[spec.test_version_with_wrong_order_specifiers]
-string_a = "1.2.3-4a1"
-string_b = "1.2.3a1.post4"
-
-[spec.test_version_with_multiple_misordered_specifiers]
-string_a = "1.2.3-4a1-dev5-6"
-string_b = "1.2.3a1.post6.dev5"
-
 [spec.test_version_with_dev_specifier_after_post]
 string_a = "1.2.3-4-dev5"
 string_b = "1.2.3.post4.dev5"
@@ -864,21 +781,9 @@ string_b = "1.2.3.post4.dev5"
 string_a = "1!1.2.3-4-dev2"
 string_b = "1!1.2.3.post4.dev2"
 
-[spec.test_version_with_multiple_epoch_and_specifiers]
-string_a = "2!1.2.3-4-5"
-string_b = "2!1.2.3.post5"
-
-[spec.test_version_with_repeated_dev_specifier]
-string_a = "1.2.3-dev1-dev2"
-string_b = "1.2.3.dev2"
-
 [spec.test_version_with_complex_specifiers_and_local]
 string_a = "1.2.3a1-4-dev5+local"
 string_b = "1.2.3a1.post4.dev5+local"
-
-[spec.test_version_with_multiple_releases_and_epoch]
-string_a = "1!1.2.3a1-4-dev5-6+local"
-string_b = "1!1.2.3a1.post6.dev5+local"
 
 [release.test_release_basic_assignment]
 query = [

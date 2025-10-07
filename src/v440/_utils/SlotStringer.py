@@ -1,4 +1,4 @@
-from functools import partial
+from abc import abstractmethod
 from typing import *
 
 import setdoc
@@ -17,3 +17,6 @@ class SlotStringer(BaseStringer):
     @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, **self._todict())
+
+    @abstractmethod
+    def _todict(self: Self) -> dict: ...

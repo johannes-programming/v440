@@ -67,17 +67,17 @@ class TestPre(unittest.TestCase):
         self.assertEqual(str(v.public.qual), "a1")
 
         # Modify pre-release phase to "preview"
-        v.public.qual.prephase = "preview"
+        v.public.qual.pre.phase = "preview"
         self.assertEqual(str(v), "1.2.3rc1")
         self.assertEqual(str(v.public.qual), "rc1")
 
         # Modify subphase to "42"
-        v.public.qual.prenum = 42
+        v.public.qual.pre.num = 42
         self.assertEqual(str(v), "1.2.3rc42")
         self.assertEqual(str(v.public.qual), "rc42")
 
         # Change phase to a formatted string "BeTa"
-        v.public.qual.prephase = "BeTa"
+        v.public.qual.pre.phase = "BeTa"
         self.assertEqual(str(v), "1.2.3b42")
         self.assertEqual(str(v.public.qual), "b42")
         self.assertEqual(v.public.qual, backup)
@@ -179,27 +179,27 @@ class TestExample(unittest.TestCase):
     def test_example_5(self: Self) -> None:
         v: Version = Version("2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
-        v.public.qual.pre = "beta.2"
+        v.public.qual.pre.string = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
         with self.assertRaises(Exception):
             v.public.qual.pre[1] = 4
         self.assertEqual(str(v), "2b2")  # Further modified pre-release version
-        v.public.qual.prephase = "PrEvIeW"
+        v.public.qual.pre.phase = "PrEvIeW"
         self.assertEqual(str(v), "2rc2")  # Even further modified pre-release version
 
     def test_example_6(self: Self) -> None:
         v: Version = Version("1.2.3")
-        v.public.qual.post = 1
+        v.public.qual.post.string = -1
         v.local.string = "local.7.dev"
         self.assertEqual(str(v), "1.2.3.post1+local.7.dev")  # Post-release version
         self.assertEqual(
             format(v, "02r"), "1.2.3.post1+local.7.dev"
         )  # Formatted version
-        v.public.qual.post = 2
+        v.public.qual.post.string = -2
         self.assertEqual(str(v), "1.2.3.post2+local.7.dev")  # Modified version
-        v.public.qual.post = None
+        v.public.qual.post.string = ""
         self.assertEqual(str(v), "1.2.3+local.7.dev")  # Modified without post
-        v.public.qual.post = 3
+        v.public.qual.post.string = -3
         v.local.sort()
         self.assertEqual(str(v), "1.2.3.post3+dev.local.7")  # After sorting local
         v.local.append(8)
@@ -430,13 +430,13 @@ class TestDevNoGo(unittest.TestCase):
     def test_initial_none_dev(self: Self) -> None:
         v: Version = Version("1.2.3")
         self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qual.dev)
+        self.assertFalse(v.public.qual.dev)
 
     def test_dev_as_none(self: Self) -> None:
         v: Version = Version("1.2.3")
-        v.public.qual.dev = None
+        v.public.qual.dev.string = ""
         self.assertEqual(str(v), "1.2.3")
-        self.assertIsNone(v.public.qual.dev)
+        self.assertFalse(v.public.qual.dev)
 
 
 if __name__ == "__main__":

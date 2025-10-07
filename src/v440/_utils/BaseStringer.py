@@ -93,9 +93,6 @@ class BaseStringer(metaclass=ABCMeta):
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
 
-    @abstractmethod
-    def _todict(self: Self) -> dict: ...
-
     @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
