@@ -40,7 +40,9 @@ class Version(SlotStringer):
 
     def _string_fset(self: Self, value: str) -> None:
         parsed: Iterable
-        if "+" in value:
+        if value.endswith("+"):
+            raise ValueError
+        elif "+" in value:
             parsed = value.split("+")
         else:
             parsed = value, ""

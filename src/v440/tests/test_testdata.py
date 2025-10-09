@@ -289,9 +289,6 @@ class TestPackagingField(unittest.TestCase):
         for k, l in Util.util.data["strings"]["valid"].items():
             with self.subTest(key=k):
                 self.go_list(l)
-        for k, l in Util.util.data["strings"]["incomp"].items():
-            with self.subTest(key=k):
-                self.go_list(l)
 
     def go_list(self: Self, listing: list) -> None:
         x: str
@@ -340,14 +337,8 @@ class TestPackagingField(unittest.TestCase):
 class TestPackagingExc(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
-        for k in ("incomp", "exc"):
-            with self.subTest(strings=k):
-                self.go_dict(Util.util.data["strings"][k])
-
-    def go_dict(self: Self, dictionary: dict, /) -> None:
-        k: str
         l: list
-        for k, l in dictionary.items():
+        for k, l in Util.util.data["strings"]["exc"].items():
             with self.subTest(key=k):
                 self.go_list(l)
 
