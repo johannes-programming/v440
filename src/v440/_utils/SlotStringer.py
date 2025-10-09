@@ -15,6 +15,10 @@ class SlotStringer(BaseStringer):
     string: str
 
     @setdoc.basic
+    def __bool__(self: Self) -> bool:
+        return any(map(bool, self._todict().values()))
+
+    @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, **self._todict())
 

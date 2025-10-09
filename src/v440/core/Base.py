@@ -21,10 +21,6 @@ class Base(SlotStringer):
     release: Release
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
-        return bool(self.epoch or self.release)
-
-    @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._epoch = 0
         self._release = Release()

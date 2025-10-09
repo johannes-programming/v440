@@ -22,10 +22,6 @@ class Qual(SlotStringer):
     dev: Dev
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
-        return bool(self.pre or self.post or self.dev)
-
-    @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
         self._pre = Pre()
         self._post = Post()

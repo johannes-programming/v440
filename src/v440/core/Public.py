@@ -21,10 +21,6 @@ class Public(SlotStringer):
     qual: Qual
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
-        return bool(self.base or self.qual)
-
-    @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._base = Base()
         self._qual = Qual()

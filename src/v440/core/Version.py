@@ -20,10 +20,6 @@ class Version(SlotStringer):
     public: Public
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
-        return bool(self.local or self.public)
-
-    @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._public = Public()
         self._local = Local()
