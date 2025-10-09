@@ -3,18 +3,17 @@ from __future__ import annotations
 import operator
 from typing import *
 
-from overloadable import Overloadable
-
 from v440._utils.releaseparse import ranging
 
 
-@Overloadable
 def delitem(data: tuple, key: Any) -> bool:
-    return type(key) is slice
+    if type(key) is slice:
+        return delitem_slice(data, key)
+    else:
+        return delitem_index(data, key)
 
 
-@delitem.overload(False)
-def delitem(data: tuple, key: SupportsIndex) -> tuple:
+def delitem_index(data: tuple, key: SupportsIndex) -> tuple:
     i: int = operator.index(key)
     if i >= len(data):
         return data
@@ -23,8 +22,7 @@ def delitem(data: tuple, key: SupportsIndex) -> tuple:
     return tuple(l)
 
 
-@delitem.overload(True)
-def delitem(data: tuple, key: slice) -> tuple:
+def delitem_slice(data: tuple, key: slice) -> tuple:
     r: range = ranging.torange(key, len(data))
     k: Any
     keys: list = list()
