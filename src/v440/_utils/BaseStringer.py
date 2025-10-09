@@ -6,6 +6,8 @@ import unhash
 
 from v440._utils.guarding import guard
 
+__all__ = ["BaseStringer"]
+
 
 class BaseStringer(metaclass=ABCMeta):
     __slots__ = ()
@@ -104,4 +106,4 @@ class BaseStringer(metaclass=ABCMeta):
     @string.setter
     @guard
     def string(self: Self, value: Any) -> None:
-        self._string_fset(str(value))
+        self._string_fset(str(value).lower())

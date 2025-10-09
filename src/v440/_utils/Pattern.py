@@ -3,6 +3,8 @@ import functools
 import re
 from typing import *
 
+__all__ = ["Pattern"]
+
 
 class Pattern(enum.StrEnum):
 

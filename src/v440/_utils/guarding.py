@@ -5,6 +5,8 @@ from typing import *
 
 from v440.core.VersionError import VersionError
 
+__all__ = ["guard"]
+
 
 def guard(old: Any) -> Any:
     @functools.wraps(old)
