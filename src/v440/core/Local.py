@@ -49,17 +49,18 @@ class Local(ListStringer):
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:
-        ans: int | str
-        if isinstance(value, int):
+        ans: Optional[int | str]
+        try:
             ans = operator.index(value)
-            if ans < 0:
-                raise ValueError
-        else:
+        except Exception:
             ans = str(value).lower()
             if ans.strip(string_.digits + string_.ascii_lowercase):
-                raise ValueError("_item_parse: value=%r" % value)
+                raise
             if not ans.strip(string_.digits):
                 ans = int(ans)
+        else:
+            if ans < 0:
+                raise ValueError
         return ans
 
     @classmethod
