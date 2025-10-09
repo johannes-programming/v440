@@ -195,7 +195,8 @@ class TestVersionRelease(unittest.TestCase):
                 self.go(**v)
 
     def go(self: Self, query: list, solution: list) -> None:
-        release: Release = Release(data=query)
+        release: Release = Release()
+        release.data = query
         self.assertEqual(list(release), solution)
 
 

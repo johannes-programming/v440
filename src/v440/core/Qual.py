@@ -1,14 +1,9 @@
 from __future__ import annotations
 
-import operator
-import string as string_
 from typing import *
 
 import setdoc
-from overloadable import Overloadable
 
-from v440._utils.Cfg import Cfg
-from v440._utils.guarding import guard
 from v440._utils.Pattern import Pattern
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
@@ -30,34 +25,12 @@ class Qual(SlotStringer):
     def __bool__(self: Self) -> bool:
         return bool(self.pre or self.post or self.dev)
 
-    @Overloadable
     @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
+    def __init__(self: Self, string: Any = "") -> None:
         self._pre = Pre()
         self._post = Post()
         self._dev = Dev()
-        argc: int = len(args) + len(kwargs)
-        keys: set = set(kwargs.keys())
-        if argc <= 1 and keys <= {"string"}:
-            return "string"
-        return "slots"
-
-    @__init__.overload("string")
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "") -> None:
         self.string = string
-
-    @__init__.overload("slots")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        pre: Any = "",
-        post: Any = "",
-        dev: Any = "",
-    ) -> None:
-        self.pre = pre
-        self.post = post
-        self.dev = dev
 
     def _cmp(self: Self) -> tuple:
         ans: tuple = ()

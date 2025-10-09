@@ -6,7 +6,6 @@ from typing import *
 import setdoc
 import setsig
 from keyalias import keyalias
-from overloadable import Overloadable
 
 from v440._utils.ListStringer import ListStringer
 from v440._utils.releaseparse import deleting, getting, setting
@@ -33,49 +32,10 @@ class Release(ListStringer):
     def __getitem__(self: Self, key: Any) -> bool:
         return getting.getitem(self.data, key)
 
-    @Overloadable
-    @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
-        self._data = ()
-        argc: int = len(args) + len(kwargs)
-        keys: set = set(kwargs.keys())
-        if argc <= 1 and keys <= {"string"}:
-            return "string"
-        if argc <= 3 and keys <= {"major", "minor", "micro"}:
-            return "micro"
-        if argc <= 3 and keys <= {"major", "minor", "patch"}:
-            return "patch"
-        return "data"
-
-    @__init__.overload("string")
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
+        self._data = ()
         self.string = string
-
-    @__init__.overload("micro")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        major: SupportsIndex = 0,
-        minor: SupportsIndex = 0,
-        micro: SupportsIndex = 0,
-    ) -> None:
-        self.data = (major, minor, micro)
-
-    @__init__.overload("patch")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        major: SupportsIndex = 0,
-        minor: SupportsIndex = 0,
-        patch: SupportsIndex = 0,
-    ) -> None:
-        self.data = (major, minor, patch)
-
-    @__init__.overload("data")
-    @setdoc.basic
-    def __init__(self: Self, data: Iterable) -> None:
-        self.data = data
 
     @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> bool:

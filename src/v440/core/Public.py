@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import *
 
 import setdoc
-from overloadable import Overloadable
 
 from v440._utils.Pattern import Pattern
 from v440._utils.SlotStringer import SlotStringer
@@ -25,31 +24,11 @@ class Public(SlotStringer):
     def __bool__(self: Self) -> bool:
         return bool(self.base or self.qual)
 
-    @Overloadable
-    @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
-        self._base = Base()
-        self._qual = Qual()
-        argc: int = len(args) + len(kwargs)
-        keys: set = set(kwargs.keys())
-        if argc <= 1 and keys <= {"string"}:
-            return "string"
-        return "slots"
-
-    @__init__.overload("string")
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
+        self._base = Base()
+        self._qual = Qual()
         self.string = string
-
-    @__init__.overload("slots")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        base: Any = "0",
-        qual: Any = "",
-    ) -> None:
-        self.base.string = base
-        self.qual.string = qual
 
     def _cmp(self: Self) -> tuple:
         return self.base, self.qual

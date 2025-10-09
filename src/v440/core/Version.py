@@ -4,7 +4,6 @@ from typing import *
 
 import packaging.version
 import setdoc
-from overloadable import Overloadable
 
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Local import Local
@@ -24,31 +23,11 @@ class Version(SlotStringer):
     def __bool__(self: Self) -> bool:
         return bool(self.local or self.public)
 
-    @Overloadable
-    @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
-        self._public = Public()
-        self._local = Local()
-        argc: int = len(args) + len(kwargs)
-        keys: set = set(kwargs.keys())
-        if argc <= 1 and keys <= {"string"}:
-            return "string"
-        return "slots"
-
-    @__init__.overload("string")
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
+        self._public = Public()
+        self._local = Local()
         self.string = string
-
-    @__init__.overload("slots")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        public: Any = "0",
-        local: Any = "",
-    ) -> None:
-        self.public.string = public
-        self.local.string = local
 
     def _cmp(self: Self) -> tuple:
         return self.public, self.local

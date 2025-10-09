@@ -4,7 +4,6 @@ from typing import *
 
 import setdoc
 from datarepr import datarepr
-from overloadable import Overloadable
 
 from v440._utils.BaseStringer import BaseStringer
 from v440._utils.guarding import guard
@@ -25,7 +24,9 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
             alt = tuple(other)
         except Exception:
             return NotImplemented
-        return type(self)(data=self.data + alt)
+        ans: Self = type(self)()
+        ans.data = self.data + alt
+        return ans
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
@@ -65,7 +66,9 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
 
     @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
-        return type(self)(data=self.data * other)
+        ans: Self = type(self)()
+        ans.data = self.data * other
+        return ans
 
     @setdoc.basic
     def __radd__(self: Self, other: Any) -> Self:

@@ -23,31 +23,11 @@ class QualStringer(BaseStringer):
     def __bool__(self: Self) -> bool:
         return self.lit != ""
 
-    @Overloadable
-    @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
-        self._lit = ""
-        self._num = 0
-        argc: int = len(args) + len(kwargs)
-        keys: set = set(kwargs.keys())
-        if argc <= 1 and keys <= {"string"}:
-            return "string"
-        return "slots"
-
-    @__init__.overload("string")
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
+        self._lit = ""
+        self._num = 0
         self.string = string
-
-    @__init__.overload("slots")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        lit: Any = "",
-        num: Any = 0,
-    ) -> None:
-        self.lit = lit
-        self.num = num
 
     @setdoc.basic
     def __repr__(self: Self) -> str:

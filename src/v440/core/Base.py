@@ -4,7 +4,6 @@ import operator
 from typing import *
 
 import setdoc
-from overloadable import Overloadable
 
 from v440._utils.guarding import guard
 from v440._utils.SlotStringer import SlotStringer
@@ -25,31 +24,11 @@ class Base(SlotStringer):
     def __bool__(self: Self) -> bool:
         return bool(self.epoch or self.release)
 
-    @Overloadable
-    @setdoc.basic
-    def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
-        self._epoch = 0
-        self._release = Release()
-        argc: int = len(args) + len(kwargs)
-        keys: set = set(kwargs.keys())
-        if argc <= 1 and keys <= {"string"}:
-            return "string"
-        return "slots"
-
-    @__init__.overload("string")
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
+        self._epoch = 0
+        self._release = Release()
         self.string = string
-
-    @__init__.overload("slots")
-    @setdoc.basic
-    def __init__(
-        self: Self,
-        epoch: Any = 0,
-        release: Any = "0",
-    ) -> None:
-        self.epoch = epoch
-        self.release.string = release
 
     def _cmp(self: Self) -> tuple:
         return self.epoch, self.release
