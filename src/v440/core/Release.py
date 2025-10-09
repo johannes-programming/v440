@@ -66,9 +66,6 @@ class Release(ListStringer):
             return int(format_spec[:-1])
         raise ValueError
 
-    def _init_setup(self: Self) -> None:
-        self._data = ()
-
     @classmethod
     def _item_parse(cls: type, value: SupportsIndex) -> int:
         ans: int = operator.index(value)

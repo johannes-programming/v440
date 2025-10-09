@@ -4,7 +4,6 @@ from typing import *
 
 import setdoc
 from datarepr import datarepr
-from overloadable import Overloadable
 
 from v440._utils.BaseStringer import BaseStringer
 from v440._utils.guarding import guard

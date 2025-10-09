@@ -72,7 +72,7 @@ class Qual(SlotStringer):
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
-    def dev(self: Self) -> Pre:
+    def dev(self: Self) -> Dev:
         "This property represents the stage of development."
         return self._dev
 
