@@ -11,17 +11,17 @@ class Dev(QualStringer):
 
     __slots__ = ()
     string: str
-    phase: str
+    lit: str
     num: int
 
     def _cmp(self: Self) -> tuple:
-        if self.phase:
+        if self.lit:
             return 0, self.num
         else:
             return (1,)
 
     @classmethod
-    def _phase_parse(cls: type, value: str) -> str:
+    def _lit_parse(cls: type, value: str) -> str:
         if value == "dev":
             return "dev"
         else:

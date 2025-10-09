@@ -59,10 +59,10 @@ class Qual(SlotStringer):
         self.post = post
         self.dev = dev
 
-    def _cmp(self: Self) -> list:
+    def _cmp(self: Self) -> tuple:
         ans: tuple = ()
         if self.pre:
-            ans += (self.pre.phase, self.pre.num)
+            ans += (self.pre.lit, self.pre.num)
         elif self.post is not None:
             ans += ("z", 0)
         elif self.dev is None:

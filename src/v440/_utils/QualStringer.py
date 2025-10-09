@@ -13,20 +13,20 @@ __all__ = ["QualStringer"]
 
 
 class QualStringer(BaseStringer):
-    __slots__ = ("_phase", "_num")
+    __slots__ = ("_lit", "_num")
 
     string: str
-    phase: str
+    lit: str
     num: int
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
-        return self.phase != ""
+        return self.lit != ""
 
     @Overloadable
     @setdoc.basic
     def __init__(self: Self, *args: Any, **kwargs: Any) -> str:
-        self._phase = ""
+        self._lit = ""
         self._num = 0
         argc: int = len(args) + len(kwargs)
         keys: set = set(kwargs.keys())
@@ -43,35 +43,35 @@ class QualStringer(BaseStringer):
     @setdoc.basic
     def __init__(
         self: Self,
-        phase: Any = "",
+        lit: Any = "",
         num: Any = 0,
     ) -> None:
-        self.phase = phase
+        self.lit = lit
         self.num = num
 
     @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(
             type(self).__name__,
-            phase=self.phase,
+            lit=self.lit,
             num=self.num,
         )
 
     def _format(self: Self, format_spec: str) -> str:
         if format_spec:
             raise ValueError
-        if self.phase:
-            return self.phase + str(self.num)
+        if self.lit:
+            return self.lit + str(self.num)
         else:
             return ""
 
     @classmethod
     @abstractmethod
-    def _phase_parse(cls: type, value: str) -> str: ...
+    def _lit_parse(cls: type, value: str) -> str: ...
 
     def _string_fset(self: Self, value: str) -> None:
         if value == "":
-            self._phase = ""
+            self._lit = ""
             self._num = 0
             return
         x: str = value.rstrip("0123456789")
@@ -90,7 +90,7 @@ class QualStringer(BaseStringer):
             x = x[1:]
         if not x:
             raise ValueError
-        self._phase = self._phase_parse(x)
+        self._lit = self._lit_parse(x)
         self._num = int("0" + y)
 
     @abstractmethod
@@ -106,22 +106,22 @@ class QualStringer(BaseStringer):
         y: int = operator.index(value)
         if y < 0:
             raise ValueError
-        if y and not self.phase:
+        if y and not self.lit:
             self.string = y
         else:
             self._num = y
 
     @property
-    def phase(self: Self) -> str:
-        return self._phase
+    def lit(self: Self) -> str:
+        return self._lit
 
-    @phase.setter
+    @lit.setter
     @guard
-    def phase(self: Self, value: Any) -> None:
+    def lit(self: Self, value: Any) -> None:
         x: str = str(value).lower()
         if x:
-            self._phase = self._phase_parse(x)
+            self._lit = self._lit_parse(x)
         elif self.num:
             self.string = self.num
         else:
-            self._phase = ""
+            self._lit = ""
