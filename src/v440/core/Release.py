@@ -18,7 +18,7 @@ class Release(ListStringer):
     __slots__ = ()
 
     string: str
-    data: tuple[int]
+    data: tuple
     major: int
     minor: int
     micro: int

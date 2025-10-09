@@ -77,7 +77,9 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
             alt = tuple(other)
         except Exception:
             return NotImplemented
-        return type(self)(data=alt + self.data)
+        ans: Self = type(self)()
+        ans.data = alt + self.data
+        return ans
 
     @setdoc.basic
     def __repr__(self: Self) -> str:
@@ -107,9 +109,6 @@ class ListStringer(BaseStringer, collections.abc.MutableSequence):
     @classmethod
     @abstractmethod
     def _sort(cls: type, value: Any): ...
-
-    def _todict(self: Self) -> dict:
-        return dict(data=self.data)
 
     def append(self: Self, value: Self, /) -> None:
         "This method appends value to self."

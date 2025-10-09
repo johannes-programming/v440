@@ -15,7 +15,7 @@ class Local(ListStringer):
     __slots__ = ()
 
     string: str
-    data: tuple[int | str]
+    data: tuple
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:

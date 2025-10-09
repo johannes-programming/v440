@@ -5,7 +5,6 @@ import setdoc
 import unhash
 
 from v440._utils.guarding import guard
-from v440.core.VersionError import VersionError
 
 
 class BaseStringer(metaclass=ABCMeta):
