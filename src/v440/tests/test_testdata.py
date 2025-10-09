@@ -145,7 +145,7 @@ class TestVersionEpochGo(unittest.TestCase):
 
 
 class TestSlicingGo(unittest.TestCase):
-    def test_slicingmethod(self: Self) -> None:
+    def test_0(self: Self) -> None:
         sli: dict = Util.util.data["slicingmethod"]
         k: str
         v: dict
@@ -168,7 +168,7 @@ class TestSlicingGo(unittest.TestCase):
 
 
 class TestDataProperty(unittest.TestCase):
-    def test_data(self: Self) -> None:
+    def test_0(self: Self) -> None:
         for k, v in Util.util.data["data-property"].items():
             with self.subTest(key=k):
                 self.go(**v, key=k)
@@ -202,7 +202,7 @@ class TestVersionRelease(unittest.TestCase):
 
 class TestVersionSpecifiersGo(unittest.TestCase):
 
-    def test_spec_toml(self: Self) -> None:
+    def test_0(self: Self) -> None:
         k: str
         v: dict
         for k, v in Util.util.data["spec"].items():
@@ -215,7 +215,7 @@ class TestVersionSpecifiersGo(unittest.TestCase):
 
 
 class TestPackagingA(unittest.TestCase):
-    def test_strings_a(self: Self) -> None:
+    def test_0(self: Self) -> None:
         s: str
         x: str
         y: list
@@ -233,7 +233,7 @@ class TestPackagingA(unittest.TestCase):
 
 
 class TestPackagingB(unittest.TestCase):
-    def test_strings_b(self: Self) -> None:
+    def test_0(self: Self) -> None:
         x: str
         y: list
         for x, y in Util.util.data["strings"]["valid"].items():
@@ -253,7 +253,7 @@ class TestPackagingB(unittest.TestCase):
 
 
 class TestPackagingC(unittest.TestCase):
-    def test_strings_c(self: Self) -> None:
+    def test_0(self: Self) -> None:
         pure: list = list()
         part: list
         for part in Util.util.data["strings"]["valid"].values():
@@ -283,7 +283,7 @@ class TestPackagingC(unittest.TestCase):
 
 
 class TestPackagingField(unittest.TestCase):
-    def test_field(self: Self) -> None:
+    def test_0(self: Self) -> None:
         k: str
         l: list
         for k, l in Util.util.data["strings"]["valid"].items():
@@ -338,7 +338,7 @@ class TestPackagingField(unittest.TestCase):
 
 
 class TestPackagingExc(unittest.TestCase):
-    def test_exc_pack(self: Self) -> None:
+    def test_0(self: Self) -> None:
         k: str
         for k in ("incomp", "exc"):
             with self.subTest(strings=k):
@@ -359,7 +359,7 @@ class TestPackagingExc(unittest.TestCase):
 
 
 class TestExc(unittest.TestCase):
-    def test_exc(self: Self) -> None:
+    def test_0(self: Self) -> None:
         x: str
         y: list
         for x, y in Util.util.data["strings"]["exc"].items():
@@ -374,7 +374,7 @@ class TestExc(unittest.TestCase):
 
 
 class TestSlots(unittest.TestCase):
-    def test_slots(self: Self) -> None:
+    def test_0(self: Self) -> None:
         x: Any
         y: Any
         for x, y in Util.util.data["core-non-attributes"].items():
