@@ -7,8 +7,8 @@ from typing import *
 from v440._utils.releaseparse import ranging
 
 
-def getitem(data: tuple, key: SupportsIndex | slice) -> list:
-    ans: int | tuple
+def getitem(data: tuple, key: SupportsIndex | slice) -> int | list:
+    ans: int | list
     if type(key) is slice:
         r: range = ranging.torange(key, len(data))
         f: partial = partial(getitem_int, data)

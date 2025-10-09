@@ -25,11 +25,11 @@ class Release(ListStringer):
     patch: int
 
     @setdoc.basic
-    def __delitem__(self: Self, key: Any) -> bool:
+    def __delitem__(self: Self, key: Any) -> None:
         self._data = deleting.delitem(self.data, key)
 
     @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> bool:
+    def __getitem__(self: Self, key: Any) -> int | list:
         return getting.getitem(self.data, key)
 
     @setdoc.basic
@@ -38,7 +38,7 @@ class Release(ListStringer):
         self.string = string
 
     @setdoc.basic
-    def __setitem__(self: Self, key: Any, value: Any) -> bool:
+    def __setitem__(self: Self, key: Any, value: Any) -> None:
         self._data = setting.setitem(self.data, key, value)
 
     @classmethod
@@ -55,7 +55,7 @@ class Release(ListStringer):
         return ans
 
     @classmethod
-    def _format_r(cls: type, format_spec: str) -> Optional[int]:
+    def _format_r(cls: type, format_spec: str) -> int:
         if format_spec == "":
             return 0
         if not format_spec.startswith("0"):

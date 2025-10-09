@@ -57,6 +57,6 @@ class Version(SlotStringer):
         return packaging.version.Version(str(self))
 
     @property
-    def public(self: Self) -> Self:
+    def public(self: Self) -> Public:
         "This property represents the public identifier."
         return self._public
