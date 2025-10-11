@@ -61,6 +61,10 @@ class ListStringer(BaseStringer, DataList):
         return iter(self.data)
 
     @setdoc.basic
+    def __len__(self: Self) -> int:
+        return len(self.data)
+
+    @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
         ans: Self = type(self)()
         ans.data = self.data * other
@@ -80,6 +84,10 @@ class ListStringer(BaseStringer, DataList):
     @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, list(self))
+
+    @setdoc.basic
+    def __reversed__(self: Self) -> reversed:
+        return reversed(self.data)
 
     @setdoc.basic
     def __rmul__(self: Self, other: Any) -> Self:
@@ -102,6 +110,20 @@ class ListStringer(BaseStringer, DataList):
     @abstractmethod
     def _sort(cls: type, value: Any): ...
 
+    def append(self: Self, value: Self, /) -> None:
+        "This method appends value to self."
+        data: list = list(self.data)
+        data.append(value)
+        self.data = data
+
+    def clear(self: Self) -> None:
+        "This method clears the data."
+        self.data = ()
+
+    def count(self: Self, value: Any) -> int:
+        "This method counts the occurences of value."
+        return self.data.count(value)
+
     @property
     @setdoc.basic
     def data(self: Self) -> tuple:
@@ -111,6 +133,46 @@ class ListStringer(BaseStringer, DataList):
     @guard
     def data(self: Self, value: Iterable) -> None:
         self._data = tuple(self._data_parse(list(value)))
+
+    def extend(self: Self, value: Self, /) -> None:
+        "This method extends self by value."
+        data: list = list(self.data)
+        data.extend(value)
+        self.data = data
+
+    @setdoc.basic
+    def index(self: Self, *args: Any) -> None:
+        return self.data.index(*args)
+
+    @setdoc.basic
+    def insert(
+        self: Self,
+        index: SupportsIndex,
+        value: Any,
+        /,
+    ) -> None:
+        data: list = list(self.data)
+        data.insert(index, value)
+        self.data = data
+
+    def pop(self: Self, index: SupportsIndex = -1, /) -> Any:
+        "This method pops an item."
+        data: list = list(self.data)
+        ans: Any = data.pop(index)
+        self.data = data
+        return ans
+
+    def remove(self: Self, value: Any, /) -> None:
+        "This method removes the first occurence of value."
+        data: list = list(self.data)
+        data.remove(value)
+        self.data = data
+
+    def reverse(self: Self) -> None:
+        "This method reverses the order of the data."
+        data: list = list(self.data)
+        data.reverse()
+        self.data = data
 
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
         "This method sorts the data."
