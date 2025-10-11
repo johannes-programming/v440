@@ -82,10 +82,6 @@ class ListStringer(BaseStringer, DataList):
         return datarepr(type(self).__name__, list(self))
 
     @setdoc.basic
-    def __reversed__(self: Self) -> reversed:
-        return reversed(self.data)
-
-    @setdoc.basic
     def __rmul__(self: Self, other: Any) -> Self:
         return self * other
 
