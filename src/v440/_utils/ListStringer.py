@@ -57,10 +57,6 @@ class ListStringer(BaseStringer, OkayList):
         return self
 
     @setdoc.basic
-    def __iter__(self: Self) -> Iterator:
-        return iter(self.data)
-
-    @setdoc.basic
     def __len__(self: Self) -> int:
         return len(self.data)
 
