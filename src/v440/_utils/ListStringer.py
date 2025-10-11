@@ -2,7 +2,7 @@ from abc import abstractmethod
 from typing import *
 
 import setdoc
-from datahold import DataList
+from datahold import OkayList
 from datarepr import datarepr
 
 from v440._utils.BaseStringer import BaseStringer
@@ -11,7 +11,7 @@ from v440._utils.guarding import guard
 __all__ = ["ListStringer"]
 
 
-class ListStringer(BaseStringer, DataList):
+class ListStringer(BaseStringer, OkayList):
 
     __slots__ = ("_data",)
     data: tuple
