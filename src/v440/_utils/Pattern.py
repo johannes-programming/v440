@@ -8,12 +8,12 @@ __all__ = ["Pattern"]
 
 class Pattern(enum.StrEnum):
 
-    BASE = r"(?:[0-9]+!)?[0-9]+(?:\.[0-9]+)+"
+    BASE = r"v?(?:[0-9]+!)?[0-9]+(?:\.[0-9]+)*"
     PRE = r"[-_\.]?(?:alpha|a|beta|b|preview|pre|c|rc)(?:[-_\.]?[0-9]+)?"
     POST = r"(?:-(?:[0-9]+))|(?:(?:[-_\.]?(?:post|rev|r))(?:[-_\.]?(?:[0-9]+))?)"
     DEV = r"[-_\.]?dev(?:[-_\.]?[0-9]+)?"
     QUAL = r"(?P<pre>%s)?(?P<post>%s)?(?P<dev>%s)?" % (PRE, POST, DEV)
-    PUBLIC = r"(v?([0-9]+!)?[0-9]+(\.[0-9]+)*)?"
+    PUBLIC = r"(?P<base>%s)(?P<qual>%s)" % (BASE, QUAL)
 
     @staticmethod
     def compile(value: Any, /) -> re.Pattern:

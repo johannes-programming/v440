@@ -909,7 +909,7 @@ attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0200]
-string = ""
+string = "0"
 clsname = "Public"
 attrname = "fdsfvdsff"
 attrvalue = 42
@@ -921,19 +921,19 @@ attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0400]
-string = ""
+string = "0"
 clsname = "Release"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0500]
-string = ""
+string = "0"
 clsname = "Public"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
 [core-non-attributes.test-0600]
-string = ""
+string = "0"
 clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42

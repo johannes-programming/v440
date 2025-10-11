@@ -32,10 +32,19 @@ class Public(SlotStringer):
     def _format(self: Self, format_spec: str) -> str:
         return format(self.base, format_spec) + format(self.qual)
 
+    @classmethod
+    def _none_empty(cls: type, value: Optional[str]) -> str:
+        if value is None:
+            return ""
+        else:
+            return value
+
     def _string_fset(self: Self, value: str) -> None:
-        match: Any = Pattern.PUBLIC.leftbound.search(value)
-        self.base.string = value[: match.end()]
-        self.qual.string = value[match.end() :]
+        m: Any = Pattern.PUBLIC.bound.search(value)
+        self.base.string = m.group("base")
+        self.qual.pre.string = self._none_empty(m.group("pre"))
+        self.qual.post.string = self._none_empty(m.group("post"))
+        self.qual.dev.string = self._none_empty(m.group("dev"))
 
     def _todict(self: Self) -> dict:
         return dict(base=self.base, qual=self.qual)
