@@ -43,16 +43,6 @@ class ListStringer(BaseStringer, OkayList):
         return self.data[key]
 
     @setdoc.basic
-    def __iadd__(self: Self, other: Any, /) -> Self:
-        self.data = self.data + tuple(other)
-        return self
-
-    @setdoc.basic
-    def __imul__(self: Self, other: Any, /) -> Self:
-        self.data = self.data * other
-        return self
-
-    @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
         ans: Self = type(self)()
         ans.data = self.data * other
