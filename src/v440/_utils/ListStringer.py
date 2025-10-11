@@ -33,16 +33,6 @@ class ListStringer(BaseStringer, OkayList):
         return bool(self.data)
 
     @setdoc.basic
-    def __delitem__(self: Self, key: Any) -> None:
-        data: list = list(self.data)
-        del data[key]
-        self.data = data
-
-    @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> Any:
-        return self.data[key]
-
-    @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
         ans: Self = type(self)()
         ans.data = self.data * other
