@@ -114,46 +114,6 @@ class ListStringer(BaseStringer, OkayList):
     def data(self: Self, value: Iterable) -> None:
         self._data = tuple(self._data_parse(list(value)))
 
-    def extend(self: Self, value: Self, /) -> None:
-        "This method extends self by value."
-        data: list = list(self.data)
-        data.extend(value)
-        self.data = data
-
-    @setdoc.basic
-    def index(self: Self, *args: Any) -> None:
-        return self.data.index(*args)
-
-    @setdoc.basic
-    def insert(
-        self: Self,
-        index: SupportsIndex,
-        value: Any,
-        /,
-    ) -> None:
-        data: list = list(self.data)
-        data.insert(index, value)
-        self.data = data
-
-    def pop(self: Self, index: SupportsIndex = -1, /) -> Any:
-        "This method pops an item."
-        data: list = list(self.data)
-        ans: Any = data.pop(index)
-        self.data = data
-        return ans
-
-    def remove(self: Self, value: Any, /) -> None:
-        "This method removes the first occurence of value."
-        data: list = list(self.data)
-        data.remove(value)
-        self.data = data
-
-    def reverse(self: Self) -> None:
-        "This method reverses the order of the data."
-        data: list = list(self.data)
-        data.reverse()
-        self.data = data
-
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
         "This method sorts the data."
         data: list = list(self.data)
