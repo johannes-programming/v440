@@ -64,10 +64,6 @@ class ListStringer(BaseStringer, OkayList):
         return datarepr(type(self).__name__, list(self))
 
     @setdoc.basic
-    def __reversed__(self: Self) -> reversed:
-        return reversed(self.data)
-
-    @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> None:
         data: list = list(self.data)
         data[key] = value
