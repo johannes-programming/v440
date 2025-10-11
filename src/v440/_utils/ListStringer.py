@@ -106,20 +106,6 @@ class ListStringer(BaseStringer, DataList):
     @abstractmethod
     def _sort(cls: type, value: Any): ...
 
-    def append(self: Self, value: Self, /) -> None:
-        "This method appends value to self."
-        data: list = list(self.data)
-        data.append(value)
-        self.data = data
-
-    def clear(self: Self) -> None:
-        "This method clears the data."
-        self.data = ()
-
-    def count(self: Self, value: Any) -> int:
-        "This method counts the occurences of value."
-        return self.data.count(value)
-
     @property
     @setdoc.basic
     def data(self: Self) -> tuple:
