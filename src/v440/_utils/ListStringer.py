@@ -1,8 +1,8 @@
-import collections
 from abc import abstractmethod
 from typing import *
 
 import setdoc
+from datahold import DataList
 from datarepr import datarepr
 
 from v440._utils.BaseStringer import BaseStringer
@@ -11,7 +11,7 @@ from v440._utils.guarding import guard
 __all__ = ["ListStringer"]
 
 
-class ListStringer(BaseStringer, collections.abc.MutableSequence):
+class ListStringer(BaseStringer, DataList):
 
     __slots__ = ("_data",)
     data: tuple

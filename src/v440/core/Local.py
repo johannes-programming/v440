@@ -33,7 +33,7 @@ class Local(ListStringer):
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:
-        ans: Optional[int | str]
+        ans: int | str
         try:
             ans = operator.index(value)
         except Exception:
