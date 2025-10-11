@@ -63,12 +63,6 @@ class ListStringer(BaseStringer, OkayList):
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, list(self))
 
-    @setdoc.basic
-    def __setitem__(self: Self, key: Any, value: Any) -> None:
-        data: list = list(self.data)
-        data[key] = value
-        self.data = data
-
     def _cmp(self: Self) -> tuple:
         return tuple(map(self._sort, self.data))
 
