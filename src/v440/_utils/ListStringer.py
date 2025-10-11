@@ -82,10 +82,6 @@ class ListStringer(BaseStringer, OkayList):
         return reversed(self.data)
 
     @setdoc.basic
-    def __rmul__(self: Self, other: Any) -> Self:
-        return self * other
-
-    @setdoc.basic
     def __setitem__(self: Self, key: Any, value: Any) -> None:
         data: list = list(self.data)
         data[key] = value
@@ -107,14 +103,6 @@ class ListStringer(BaseStringer, OkayList):
         data: list = list(self.data)
         data.append(value)
         self.data = data
-
-    def clear(self: Self) -> None:
-        "This method clears the data."
-        self.data = ()
-
-    def count(self: Self, value: Any) -> int:
-        "This method counts the occurences of value."
-        return self.data.count(value)
 
     @property
     @setdoc.basic
