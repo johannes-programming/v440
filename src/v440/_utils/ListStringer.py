@@ -98,12 +98,6 @@ class ListStringer(BaseStringer, OkayList):
     @abstractmethod
     def _sort(cls: type, value: Any): ...
 
-    def append(self: Self, value: Self, /) -> None:
-        "This method appends value to self."
-        data: list = list(self.data)
-        data.append(value)
-        self.data = data
-
     @property
     @setdoc.basic
     def data(self: Self) -> tuple:
