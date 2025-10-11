@@ -57,10 +57,6 @@ class ListStringer(BaseStringer, OkayList):
         return self
 
     @setdoc.basic
-    def __len__(self: Self) -> int:
-        return len(self.data)
-
-    @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
         ans: Self = type(self)()
         ans.data = self.data * other
