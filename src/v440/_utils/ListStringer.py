@@ -33,10 +33,6 @@ class ListStringer(BaseStringer, OkayList):
         return bool(self.data)
 
     @setdoc.basic
-    def __contains__(self: Self, other: Any) -> bool:
-        return other in self.data
-
-    @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
         data: list = list(self.data)
         del data[key]
