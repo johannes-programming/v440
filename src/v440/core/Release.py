@@ -49,9 +49,11 @@ class Release(ListStringer):
         return v
 
     def _format(self: Self, format_spec: str) -> str:
+        data: list = list(self.data)
         i: int = self._format_r(format_spec)
-        i = max(i, 1, len(self))
-        ans: str = ".".join(map(str, self[:i]))
+        i = max(max(i, 1) - len(data), 0)
+        data += [0] * i
+        ans: str = ".".join(map(str, data))
         return ans
 
     @classmethod
