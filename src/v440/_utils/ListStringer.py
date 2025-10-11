@@ -13,7 +13,7 @@ __all__ = ["ListStringer"]
 
 class ListStringer(BaseStringer, OkayList):
 
-    __slots__ = ("_data",)
+    __slots__ = ()
     data: tuple
     string: str
 
