@@ -9,6 +9,7 @@ from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
 from v440.core.Post import Post
 from v440.core.Pre import Pre
+import string as string_
 
 __all__ = ["Qual"]
 
@@ -42,15 +43,43 @@ class Qual(SlotStringer):
         ans += (self.post, self.dev)
         return ans
 
-    def _format(self: Self, format_spec: str) -> str:
-        if format_spec:
+    def _format(self: Self, spec: str) -> str:
+        if spec.strip(string_.ascii_letters + "0.-_"):
             raise ValueError
-        ans: str = str(self.pre)
-        if self.post:
-            ans += "." + str(self.post)
-        if self.dev:
-            ans += "." + str(self.dev)
+        j:int = self._format_parse_j(spec)
+        i:int = self._format_parse_i(spec[:j])
+        ans:str = format(self.pre, spec[:i])
+        ans += format(self.post, spec[i:j])
+        ans += format(self.dev, spec[j:])
         return ans
+
+    @classmethod
+    def _format_parse_i(cls:type, spec:str) -> tuple:
+        i:int = -1
+        x:str
+        for x in ("post", "r", "rev"):
+            i = spec.lower().find(x)
+            if i != -1:
+                break
+        if i > 0 and spec[i] in ".-_":
+            i -= 1
+        if i != -1:
+            return i
+        x = spec.rstrip(string_.digits)
+        if x == "-" or x.endswith("0-"):
+            i = spec.rindex("-")
+        else:
+            i = len(spec)
+        return i
+    
+    @classmethod
+    def _format_parse_j(cls:type, spec:str) -> tuple:
+        j:int = spec.lower().find("dev")
+        if j == -1:
+            j = len(spec)
+        elif j and (spec[j - 1] in ".-_"):
+            j -= 1
+        return j
 
     def _string_fset(self: Self, value: str) -> None:
         m: Any = Pattern.QUAL.bound.search(value)
