@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import operator
+import string as string_
 from typing import *
 
 import setdoc
@@ -64,7 +65,7 @@ class Release(ListStringer):
             raise ValueError
         if not format_spec.endswith("r"):
             raise ValueError
-        if set(format_spec[:-1]) <= set("0123456789"):
+        if set(format_spec[:-1]) <= set(string_.digits):
             return int(format_spec[:-1])
         raise ValueError
 
@@ -83,12 +84,9 @@ class Release(ListStringer):
         if value == "":
             self.data = ()
             return
-        if value.strip("0123456789_-."):
+        if value.strip(string_.digits + "."):
             raise ValueError
-        v: str = value
-        v = v.replace("_", ".")
-        v = v.replace("-", ".")
-        self.data = map(int, v.split("."))
+        self.data = map(int, value.split("."))
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
