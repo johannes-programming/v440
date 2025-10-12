@@ -42,8 +42,8 @@ class Qual(SlotStringer):
         ans += (self.post, self.dev)
         return ans
 
-    def _format(self: Self, format_spec: str, /) -> str:
-        if format_spec:
+    def _format(self: Self, spec: str, /) -> str:
+        if spec:
             raise ValueError
         ans: str = str(self.pre)
         if self.post:

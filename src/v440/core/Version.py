@@ -29,13 +29,13 @@ class Version(SlotStringer):
     def _cmp(self: Self) -> tuple:
         return self.public, self.local
 
-    def _format(self: Self, format_spec: str, /) -> str:
+    def _format(self: Self, spec: str, /) -> str:
         f: str
         g: str
-        if "+" in format_spec:
-            f, g = format_spec.split("+")
+        if "+" in spec:
+            f, g = spec.split("+")
         else:
-            f = format_spec
+            f = spec
             g = ""
         f = format(self.public, f)
         g = format(self.local, g)

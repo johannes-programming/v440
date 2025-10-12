@@ -49,10 +49,10 @@ class Release(ListStringer):
             v.pop()
         return v
 
-    def _format(self: Self, format_spec: str, /) -> str:
-        if format_spec.strip("0."):
+    def _format(self: Self, spec: str, /) -> str:
+        if spec.strip("0."):
             raise ValueError
-        specs: list = format_spec.split(".")
+        specs: list = spec.split(".")
         specs = list(map(len, specs))
         data: list = list(self.data)
         data += [0] * max(0, len(specs) - len(data))

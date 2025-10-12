@@ -29,15 +29,15 @@ class Local(ListStringer):
     def _data_parse(cls: type, value: list) -> Iterable:
         return tuple(map(cls._item_parse, value))
 
-    def _format(self: Self, format_spec: str, /) -> str:
-        if not set(format_spec).issubset("0.-_"):
+    def _format(self: Self, spec: str, /) -> str:
+        if not set(spec).issubset("0.-_"):
             raise ValueError
         ans: str = ""
         data: list = list(self.data)
-        spec: str = format_spec
+        tail: str = spec
         part: str
         while len(data):
-            part, spec = self._format_item(data.pop(0), spec)
+            part, tail = self._format_item(data.pop(0), tail)
             ans += part
         ans = ans[:-1]
         return ans
