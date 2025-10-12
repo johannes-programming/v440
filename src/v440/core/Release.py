@@ -4,11 +4,9 @@ import operator
 from typing import *
 
 import setdoc
-import setsig
 from keyalias import keyalias
 
 from v440._utils.ListStringer import ListStringer
-from v440._utils.releaseparse import deleting, getting, setting
 
 __all__ = ["Release"]
 
@@ -25,21 +23,9 @@ class Release(ListStringer):
     patch: int
 
     @setdoc.basic
-    def __delitem__(self: Self, key: Any) -> None:
-        self._data = deleting.delitem(self.data, key)
-
-    @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> int | list:
-        return getting.getitem(self.data, key)
-
-    @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._data = ()
         self.string = string
-
-    @setdoc.basic
-    def __setitem__(self: Self, key: Any, value: Any) -> None:
-        self._data = setting.setitem(self.data, key, value)
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
@@ -93,32 +79,8 @@ class Release(ListStringer):
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
         i: int = operator.index(index)
         a: int = operator.index(amount)
-        x: int = getting.getitem_int(self.data, i) + a
-        self._data = setting.setitem_int(self.data, i, x)
-        if i != -1:
-            self.data = self.data[: i + 1]
-
-    @setsig.SetSig(list.index)
-    @setdoc.basic
-    def index(self: Self, value: Any, *args: Any) -> None:
-        i: int
-        try:
-            i = operator.index(value)
-        except Exception:
-            i = 1
-        try:
-            return self.data.index(value, *args)
-        except Exception:
-            if i:
-                raise
-            else:
-                return len(self)
-
-    @setdoc.basic
-    def insert(
-        self: Self,
-        index: SupportsIndex,
-        value: Any,
-        /,
-    ) -> None:
-        self.data = self[:index] + [value] + self[index:]
+        d: list = list(self.data)
+        if 0 <= i:
+            d += [0] * max(0, i + 1 - len(d))
+        d[i] += a
+        self.data = d
