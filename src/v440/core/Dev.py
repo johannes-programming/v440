@@ -35,7 +35,7 @@ class Dev(QualStringer):
         t: str = x.lower().replace("_", ".").replace("-", ".")
         if t not in ("dev", ".dev", "dev.", ".dev."):
             raise ValueError
-        if t.endswith("."):
+        if t.endswith(".") and not n:
             n = 1
         ans: str
         if self.lit == "":
