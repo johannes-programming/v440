@@ -6,6 +6,7 @@ from typing import *
 
 import setdoc
 
+from v440._utils.guarding import guard
 from v440._utils.ListStringer import ListStringer
 from v440._utils.Pattern import Pattern
 
@@ -105,3 +106,18 @@ class Local(ListStringer):
         v = v.replace("_", ".")
         v = v.replace("-", ".")
         self.data = v.split(".")
+
+    @property
+    def packaging(self: Self) -> Optional[str]:
+        if self:
+            return str(self)
+        else:
+            return
+
+    @packaging.setter
+    @guard
+    def packaging(self: Self, value: Any) -> None:
+        if value is None:
+            self.string = ""
+        else:
+            self.string = value

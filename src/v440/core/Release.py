@@ -4,9 +4,9 @@ import operator
 import string as string_
 from typing import *
 
+import keyalias
 import setdoc
 import setsig
-from keyalias import keyalias
 
 from v440._utils.ListStringer import ListStringer
 from v440._utils.releaseparse import deleting, getting, setting
@@ -14,7 +14,7 @@ from v440._utils.releaseparse import deleting, getting, setting
 __all__ = ["Release"]
 
 
-@keyalias(major=0, minor=1, micro=2, patch=2)
+@keyalias.getdecorator(major=0, minor=1, micro=2, patch=2)
 class Release(ListStringer):
     __slots__ = ()
 
@@ -88,3 +88,5 @@ class Release(ListStringer):
         self._data = setting.setitem_int(self.data, i, x)
         if i != -1:
             self.data = self.data[: i + 1]
+
+    packaging = ListStringer.data

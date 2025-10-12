@@ -13,6 +13,7 @@ class BaseStringer(metaclass=ABCMeta):
     __slots__ = ()
 
     string: str
+    packaging: Any
 
     @abstractmethod
     @setdoc.basic
@@ -97,6 +98,10 @@ class BaseStringer(metaclass=ABCMeta):
     @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
+
+    @property
+    @abstractmethod
+    def packaging(self: Self) -> Any: ...
 
     @property
     def string(self: Self) -> str:

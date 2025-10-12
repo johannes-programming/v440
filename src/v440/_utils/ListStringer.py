@@ -14,8 +14,9 @@ __all__ = ["ListStringer"]
 class ListStringer(BaseStringer, OkayList):
 
     __slots__ = ()
-    data: tuple
     string: str
+    packaging: Any
+    data: tuple
 
     @setdoc.basic
     def __add__(self: Self, other: Any) -> Self:

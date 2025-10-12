@@ -13,6 +13,7 @@ class SlotStringer(BaseStringer):
     __slots__ = ()
 
     string: str
+    packaging: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
@@ -24,3 +25,5 @@ class SlotStringer(BaseStringer):
 
     @abstractmethod
     def _todict(self: Self) -> dict: ...
+
+    packaging = BaseStringer.string

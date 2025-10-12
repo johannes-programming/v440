@@ -15,6 +15,7 @@ class QualStringer(BaseStringer):
     __slots__ = ("_lit", "_num")
 
     string: str
+    packaging: Any
     lit: str
     num: int
 
