@@ -46,8 +46,7 @@ class Qual(SlotStringer):
         if spec:
             raise ValueError
         ans: str = str(self.pre)
-        if self.post:
-            ans += "." + str(self.post)
+        ans += str(self.post)
         ans += str(self.dev)
         return ans
 

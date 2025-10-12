@@ -27,7 +27,7 @@ class Post(QualStringer):
         if spec:
             raise ValueError
         if self.lit:
-            return self.lit + str(self.num)
+            return "." + self.lit + str(self.num)
         else:
             return ""
 
