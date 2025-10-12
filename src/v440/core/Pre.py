@@ -14,6 +14,7 @@ class Pre(QualStringer):
 
     __slots__ = ()
     string: str
+    packaging: Optional[tuple[str, int]]
     lit: str
     num: int
 

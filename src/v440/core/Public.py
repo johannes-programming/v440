@@ -19,6 +19,7 @@ class Public(SlotStringer):
     __slots__ = ("_base", "_qual")
 
     string: str
+    packaging: str
     base: Base
     qual: Qual
 

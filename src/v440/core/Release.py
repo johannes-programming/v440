@@ -6,7 +6,6 @@ from typing import *
 
 import keyalias
 import setdoc
-import setsig
 
 from v440._utils.ListStringer import ListStringer
 from v440._utils.releaseparse import deleting, getting, setting
@@ -19,6 +18,7 @@ class Release(ListStringer):
     __slots__ = ()
 
     string: str
+    packaging: tuple
     data: tuple
     major: int
     minor: int

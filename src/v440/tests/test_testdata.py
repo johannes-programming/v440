@@ -248,7 +248,7 @@ class TestPackagingB(unittest.TestCase):
         msg: str
         for s in y:
             a = packaging.version.Version(s)
-            b = Version(s).packaging()
+            b = Version(s).packaging
             msg = f"{s} should match packaging.version.Version"
             self.assertEqual(a, b, msg=msg)
 
@@ -274,9 +274,9 @@ class TestPackagingC(unittest.TestCase):
 
     def go(self: Self, x: str, y: str, func: Callable, /) -> None:
         a: packaging.version.Version = packaging.version.Version(x)
-        b: packaging.version.Version = Version(string=x).packaging()
+        b: packaging.version.Version = Version(string=x).packaging
         c: packaging.version.Version = packaging.version.Version(y)
-        d: packaging.version.Version = Version(string=y).packaging()
+        d: packaging.version.Version = Version(string=y).packaging
         native: bool = func(a, c)
         convert: bool = func(b, d)
         msg: str = f"{func} should match for {x!r} and {y!r}"
@@ -302,30 +302,30 @@ class TestPackagingField(unittest.TestCase):
         v: Version = Version(query)
         self.assertEqual(
             v.public.qual.isdevrelease(),
-            v.packaging().is_devrelease,
+            v.packaging.is_devrelease,
             msg=msg,
         )
         self.assertEqual(
             v.public.qual.isprerelease(),
-            v.packaging().is_prerelease,
+            v.packaging.is_prerelease,
             msg=msg,
         )
         self.assertEqual(
             v.public.qual.ispostrelease(),
-            v.packaging().is_postrelease,
+            v.packaging.is_postrelease,
             msg=msg,
         )
         self.assertEqual(
             str(v.public.base),
-            v.packaging().base_version,
+            v.packaging.base_version,
             msg=msg,
         )
         self.assertEqual(
             str(v.public),
-            v.packaging().public,
+            v.packaging.public,
             msg=msg,
         )
-        local_packaging: Optional[str] = v.packaging().local
+        local_packaging: Optional[str] = v.packaging.local
         if local_packaging is None:
             local_packaging = ""
         self.assertEqual(

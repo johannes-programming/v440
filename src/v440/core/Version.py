@@ -5,6 +5,7 @@ from typing import *
 import packaging.version
 import setdoc
 
+from v440._utils.guarding import guard
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Local import Local
 from v440.core.Public import Public
@@ -59,9 +60,15 @@ class Version(SlotStringer):
         "This property represents the local identifier."
         return self._local
 
+    @property
     def packaging(self: Self) -> packaging.version.Version:
         "This method returns an eqivalent packaging.version.Version object."
         return packaging.version.Version(str(self))
+
+    @packaging.setter
+    @guard
+    def packaging(self: Self, value: Any) -> None:
+        self.string = value
 
     @property
     def public(self: Self) -> Public:

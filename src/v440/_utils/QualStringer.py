@@ -77,21 +77,6 @@ class QualStringer(BaseStringer):
     def _string_fset_minus(self: Self, value: str) -> None: ...
 
     @property
-    def num(self: Self) -> int:
-        return self._num
-
-    @num.setter
-    @guard
-    def num(self: Self, value: SupportsIndex) -> None:
-        y: int = operator.index(value)
-        if y < 0:
-            raise ValueError
-        if y and not self.lit:
-            self.string = y
-        else:
-            self._num = y
-
-    @property
     def lit(self: Self) -> str:
         return self._lit
 
@@ -105,3 +90,18 @@ class QualStringer(BaseStringer):
             self.string = self.num
         else:
             self._lit = ""
+
+    @property
+    def num(self: Self) -> int:
+        return self._num
+
+    @num.setter
+    @guard
+    def num(self: Self, value: SupportsIndex) -> None:
+        y: int = operator.index(value)
+        if y < 0:
+            raise ValueError
+        if y and not self.lit:
+            self.string = y
+        else:
+            self._num = y

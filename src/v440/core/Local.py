@@ -17,6 +17,7 @@ class Local(ListStringer):
     __slots__ = ()
 
     string: str
+    packaging: Optional[str]
     data: tuple
 
     @setdoc.basic

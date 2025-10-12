@@ -17,6 +17,7 @@ class Base(SlotStringer):
     __slots__ = ("_epoch", "_release")
 
     string: str
+    packaging: str
     epoch: int
     release: Release
 

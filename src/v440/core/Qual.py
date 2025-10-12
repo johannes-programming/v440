@@ -17,6 +17,7 @@ class Qual(SlotStringer):
 
     __slots__ = ("_pre", "_post", "_dev")
     string: str
+    packaging: str
     pre: Pre
     post: Post
     dev: Dev
