@@ -7,6 +7,7 @@ from typing import *
 import setdoc
 
 from v440._utils.ListStringer import ListStringer
+from v440._utils.Pattern import Pattern
 
 __all__ = ["Local"]
 
@@ -61,12 +62,7 @@ class Local(ListStringer):
 
     @classmethod
     def _format_l(cls: type, value: str, chars: str):
-        i: int = 0
-        while i < len(value):
-            if value[i] in chars:
-                i += 1
-            else:
-                break
+        i: int = Pattern.skip(value, chars)
         return value[:i], value[i:]
 
     @classmethod
