@@ -39,7 +39,9 @@ class Base(SlotStringer):
         x: str = ""
         if "!" in spec:
             x, spec = spec.split("!")
-            if x.strip("0"):
+            if x == "":
+                x = "0"
+            elif x.strip("0"):
                 raise ValueError
         if x or self.epoch:
             ans += format(self.epoch, "0%sd" % len(x))
