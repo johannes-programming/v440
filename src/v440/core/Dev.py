@@ -24,9 +24,12 @@ class Dev(QualStringer):
             return (1,)
 
     def _format(self: Self, spec: str, /) -> str:
-        x: str = spec.rstrip("0")
-        n: int = len(spec) - len(x)
-        if spec == "":
+        x: str
+        n: int
+        if spec:
+            x = spec.rstrip("0")
+            n = len(spec) - len(x)
+        else:
             x = ".dev"
             n = 1
         if x.endswith("."):
