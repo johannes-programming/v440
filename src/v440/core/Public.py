@@ -8,6 +8,7 @@ from v440._utils.Pattern import Pattern
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Base import Base
 from v440.core.Qual import Qual
+import string as string_
 
 __all__ = ["Public"]
 
@@ -33,11 +34,16 @@ class Public(SlotStringer):
         return format(self.base, format_spec) + format(self.qual)
 
     def _string_fset(self: Self, value: str) -> None:
-        m: Any = Pattern.PUBLIC.bound.search(value)
-        self.base.string = m.group("base")
-        self.qual.pre.string = Pattern.none_empty(m.group("pre"))
-        self.qual.post.string = Pattern.none_empty(m.group("post"))
-        self.qual.dev.string = Pattern.none_empty(m.group("dev"))
+        i:int = int(value.startswith("v"))
+        while i < len(value):
+            if value[i] in (string_.digits + "!."):
+                i += 1
+            else:
+                break
+        if i and (value[i] == "."):
+            i -= 1
+        self.base.string = value[:i]
+        self.qual.string = value[i:]
 
     def _todict(self: Self) -> dict:
         return dict(base=self.base, qual=self.qual)
