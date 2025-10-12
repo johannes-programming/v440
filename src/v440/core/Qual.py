@@ -52,7 +52,7 @@ class Qual(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        m: Any = Pattern.QUAL.bound.search(value.lower())
+        m: Any = Pattern.QUAL.bound.search(value)
         self.pre.string = Pattern.none_empty(m.group("pre"))
         self.post.string = Pattern.none_empty(m.group("post"))
         self.dev.string = Pattern.none_empty(m.group("dev"))
