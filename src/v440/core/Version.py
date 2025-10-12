@@ -29,10 +29,18 @@ class Version(SlotStringer):
         return self.public, self.local
 
     def _format(self: Self, format_spec: str) -> str:
-        ans: str = format(self.public, format_spec)
-        if self.local:
-            ans += "+" + format(self.local)
-        return ans
+        f: str
+        g: str
+        if "+" in format_spec:
+            f, g = format_spec.split("+")
+        else:
+            f = format_spec
+            g = ""
+        f = format(self.public, f)
+        g = format(self.local, g)
+        if g:
+            f = f + "+" + g
+        return f
 
     def _string_fset(self: Self, value: str) -> None:
         if value.endswith("+"):
