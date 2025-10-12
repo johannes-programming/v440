@@ -24,12 +24,38 @@ class Post(QualStringer):
             return -1
 
     def _format(self: Self, spec: str, /) -> str:
+        x: str
+        n: int
         if spec:
-            raise ValueError
-        if self.lit:
-            return "." + self.lit + str(self.num)
+            x = spec.rstrip("0")
+            n = len(spec) - len(x)
         else:
-            return ""
+            x = ".post"
+            n = 1
+        if self._format_test_lit(x) and not n:
+            n = 1
+        ans: str
+        if self.lit == "":
+            ans = ""
+        elif self.num or n:
+            ans = x + format(self.num, "0%sd" % n)
+        else:
+            ans = x
+        return ans
+
+    @classmethod
+    def _format_test_lit(cls: type, spec: str, /) -> bool:
+        if spec == "-":
+            return True
+        t: str = spec.lower().replace("_", ".").replace("-", ".")
+        if t.startswith("."):
+            t = t[1:]
+        ans: bool = t.endswith(".")
+        if ans:
+            t = t[:-1]
+        if t in ("post", "r", "rev"):
+            return ans
+        raise ValueError
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
