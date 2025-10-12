@@ -50,24 +50,20 @@ class Release(ListStringer):
         return v
 
     def _format(self: Self, format_spec: str) -> str:
+        if format_spec.strip("0."):
+            raise ValueError
+        specs: list = format_spec.split(".")
+        specs = list(map(len, specs))
         data: list = list(self.data)
-        i: int = self._format_r(format_spec)
-        i = max(max(i, 1) - len(data), 0)
-        data += [0] * i
-        ans: str = ".".join(map(str, data))
-        return ans
-
-    @classmethod
-    def _format_r(cls: type, format_spec: str) -> int:
-        if format_spec == "":
-            return 0
-        if not format_spec.startswith("0"):
-            raise ValueError
-        if not format_spec.endswith("r"):
-            raise ValueError
-        if set(format_spec[:-1]) <= set(string_.digits):
-            return int(format_spec[:-1])
-        raise ValueError
+        data += [0] * max(0, len(specs) - len(data))
+        i: int = 0
+        while i < len(data):
+            if i < len(specs):
+                data[i] = format(data[i], "0%sd" % specs[i])
+            else:
+                data[i] = str(data[i])
+            i += 1
+        return ".".join(data)
 
     @classmethod
     def _item_parse(cls: type, value: SupportsIndex) -> int:

@@ -31,9 +31,19 @@ class Base(SlotStringer):
 
     def _format(self: Self, format_spec: str) -> str:
         ans: str = ""
-        if self.epoch:
-            ans += "%s!" % self.epoch
-        ans += format(self.release, format_spec)
+        spec: str = format_spec
+        if spec[:1] in tuple("Vv"):
+            ans += spec[0]
+            spec = spec[1:]
+        x: str = ""
+        if "!" in spec:
+            x, spec = spec.split("!")
+            if x.strip("0"):
+                raise ValueError
+        if x or self.epoch:
+            ans += format(self.epoch, "0%sd" % len(x))
+            ans += "!"
+        ans += format(self.release, spec)
         return ans
 
     def _string_fset(self: Self, value: str) -> None:

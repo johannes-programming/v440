@@ -32,9 +32,12 @@ class Public(SlotStringer):
         return self.base, self.qual
 
     def _format(self: Self, format_spec: str) -> str:
-        return format(self.base, format_spec) + format(self.qual)
+        f: tuple = self._split(format_spec)
+        ans: str = format(self.base, f[0]) + format(self.qual, f[1])
+        return ans
 
-    def _string_fset(self: Self, value: str) -> None:
+    @classmethod
+    def _split(cls: type, value: str) -> tuple[str, str]:
         i: int = int(value.startswith("v"))
         while i < len(value):
             if value[i] in (string_.digits + "!."):
@@ -43,8 +46,10 @@ class Public(SlotStringer):
                 break
         if value[:i].endswith("."):
             i -= 1
-        self.base.string = value[:i]
-        self.qual.string = value[i:]
+        return value[:i], value[i:]
+
+    def _string_fset(self: Self, value: str) -> None:
+        self.base.string, self.qual.string = self._split(value)
 
     def _todict(self: Self) -> dict:
         return dict(base=self.base, qual=self.qual)
