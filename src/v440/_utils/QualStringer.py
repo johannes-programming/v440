@@ -50,6 +50,8 @@ class QualStringer(BaseStringer):
         y: str = value[len(x) :]
         if x == "-":
             self._lit = self._lit_parse("-")
+            if not y:
+                raise ValueError
             self._num = int(y)
             return
         x = x.replace("-", ".")
