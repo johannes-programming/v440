@@ -29,7 +29,7 @@ class Local(ListStringer):
     def _data_parse(cls: type, value: list) -> Iterable:
         return tuple(map(cls._item_parse, value))
 
-    def _format(self: Self, format_spec: str) -> str:
+    def _format(self: Self, format_spec: str, /) -> str:
         if not set(format_spec).issubset("0.-_"):
             raise ValueError
         ans: str = ""

@@ -37,8 +37,8 @@ class QualStringer(BaseStringer):
             num=self.num,
         )
 
-    def _format(self: Self, format_spec: str) -> str:
-        if format_spec:
+    def _format(self: Self, spec: str, /) -> str:
+        if spec:
             raise ValueError
         if self.lit:
             return self.lit + str(self.num)

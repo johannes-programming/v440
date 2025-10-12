@@ -49,7 +49,7 @@ class Release(ListStringer):
             v.pop()
         return v
 
-    def _format(self: Self, format_spec: str) -> str:
+    def _format(self: Self, format_spec: str, /) -> str:
         if format_spec.strip("0."):
             raise ValueError
         specs: list = format_spec.split(".")

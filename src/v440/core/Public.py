@@ -32,7 +32,7 @@ class Public(SlotStringer):
     def _cmp(self: Self) -> tuple:
         return self.base, self.qual
 
-    def _format(self: Self, format_spec: str) -> str:
+    def _format(self: Self, format_spec: str, /) -> str:
         f: tuple = self._split(format_spec)
         ans: str = format(self.base, f[0]) + format(self.qual, f[1])
         return ans

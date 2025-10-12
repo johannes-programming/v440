@@ -30,15 +30,15 @@ class Base(SlotStringer):
     def _cmp(self: Self) -> tuple:
         return self.epoch, self.release
 
-    def _format(self: Self, format_spec: str) -> str:
+    def _format(self: Self, spec: str, /) -> str:
         ans: str = ""
-        spec: str = format_spec
-        if spec[:1] in tuple("Vv"):
-            ans += spec[0]
-            spec = spec[1:]
+        y: str = spec
+        if y[:1] in tuple("Vv"):
+            ans += y[0]
+            y = y[1:]
         x: str = ""
-        if "!" in spec:
-            x, spec = spec.split("!")
+        if "!" in y:
+            x, y = y.split("!")
             if x == "":
                 x = "0"
             elif x.strip("0"):
@@ -46,7 +46,7 @@ class Base(SlotStringer):
         if x or self.epoch:
             ans += format(self.epoch, "0%sd" % len(x))
             ans += "!"
-        ans += format(self.release, spec)
+        ans += format(self.release, y)
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
