@@ -48,8 +48,7 @@ class Qual(SlotStringer):
         ans: str = str(self.pre)
         if self.post:
             ans += "." + str(self.post)
-        if self.dev:
-            ans += "." + str(self.dev)
+        ans += str(self.dev)
         return ans
 
     def _string_fset(self: Self, value: str) -> None:

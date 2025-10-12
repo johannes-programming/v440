@@ -24,12 +24,23 @@ class Dev(QualStringer):
             return (1,)
 
     def _format(self: Self, spec: str, /) -> str:
-        if spec:
+        x: str = spec.rstrip("0")
+        n: int = len(spec) - len(x)
+        if spec == "":
+            x = ".dev"
+            n = 1
+        if x.endswith("."):
+            n = 1
+        if x.lower() not in ("dev", ".dev", "dev.", ".dev."):
             raise ValueError
-        if self.lit:
-            return self.lit + str(self.num)
+        ans: str
+        if self.lit == "":
+            ans = ""
+        elif self.num or n:
+            ans = x + format(self.num, "0%sd" % n)
         else:
-            return ""
+            ans = x
+        return ans
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
