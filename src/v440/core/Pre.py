@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import operator
 from typing import *
 
 from v440._utils.Cfg import Cfg
@@ -44,7 +43,7 @@ class Pre(QualStringer):
 
     @packaging.setter
     @guard
-    def packaging(self: Self, value: Any) -> None:
+    def packaging(self: Self, value: Optional[Iterable]) -> None:
         if value is None:
             self.num = 0
             self.lit = ""

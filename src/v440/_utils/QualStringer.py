@@ -21,7 +21,7 @@ class QualStringer(BaseStringer):
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
-        return self.lit != ""
+        return bool(self.lit)
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
@@ -49,9 +49,9 @@ class QualStringer(BaseStringer):
         x: str = value.rstrip("0123456789")
         y: str = value[len(x) :]
         if x == "-":
-            self._lit = self._lit_parse("-")
             if not y:
                 raise ValueError
+            self._lit = self._lit_parse("-")
             self._num = int(y)
             return
         x = x.replace("-", ".")
