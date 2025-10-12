@@ -95,28 +95,3 @@ class Release(ListStringer):
         self._data = setting.setitem_int(self.data, i, x)
         if i != -1:
             self.data = self.data[: i + 1]
-
-    @setsig.SetSig(list.index)
-    @setdoc.basic
-    def index(self: Self, value: Any, *args: Any) -> None:
-        i: int
-        try:
-            i = operator.index(value)
-        except Exception:
-            i = 1
-        try:
-            return self.data.index(value, *args)
-        except Exception:
-            if i:
-                raise
-            else:
-                return len(self)
-
-    @setdoc.basic
-    def insert(
-        self: Self,
-        index: SupportsIndex,
-        value: Any,
-        /,
-    ) -> None:
-        self.data = self[:index] + [value] + self[index:]
