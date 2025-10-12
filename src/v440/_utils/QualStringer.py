@@ -49,9 +49,9 @@ class QualStringer(BaseStringer):
         x: str = value.rstrip("0123456789")
         y: str = value[len(x) :]
         if x == "-":
-            self._string_fset_minus(y)
+            self._lit = self._lit_parse("-")
+            self._num = int(y)
             return
-        x = x.lower()
         x = x.replace("-", ".")
         x = x.replace("_", ".")
         if x.endswith("."):
@@ -64,9 +64,6 @@ class QualStringer(BaseStringer):
             raise ValueError
         self._lit = self._lit_parse(x)
         self._num = int("0" + y)
-
-    @abstractmethod
-    def _string_fset_minus(self: Self, value: str) -> None: ...
 
     @property
     def lit(self: Self) -> str:

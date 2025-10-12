@@ -38,9 +38,6 @@ class Dev(QualStringer):
         else:
             raise ValueError
 
-    def _string_fset_minus(self: Self, value: str) -> None:
-        raise ValueError
-
     @property
     def packaging(self: Self) -> Optional[int]:
         if self:

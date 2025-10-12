@@ -33,14 +33,10 @@ class Post(QualStringer):
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
-        if value in ("post", "r", "rev"):
+        if value in ("-", "post", "r", "rev"):
             return "post"
         else:
             raise ValueError
-
-    def _string_fset_minus(self: Self, value: str) -> None:
-        self._lit = "post"
-        self._num = int(value)
 
     @property
     def packaging(self: Self) -> Optional[int]:

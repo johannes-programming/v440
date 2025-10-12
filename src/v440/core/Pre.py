@@ -35,9 +35,6 @@ class Pre(QualStringer):
     def _lit_parse(cls: type, value: str) -> str:
         return Cfg.cfg.data["phases"][value]
 
-    def _string_fset_minus(self: Self, value: str) -> None:
-        raise ValueError
-
     @property
     def packaging(self: Self) -> Optional[tuple[str, int]]:
         if self:
