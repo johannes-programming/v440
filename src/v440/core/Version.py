@@ -35,14 +35,13 @@ class Version(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        parsed: Iterable
         if value.endswith("+"):
             raise ValueError
-        elif "+" in value:
-            parsed = value.split("+")
-        else:
-            parsed = value, ""
-        self.public.string, self.local.string = parsed
+        if "+" not in value:
+            self.public.string = value
+            self.local.string = ""
+            return
+        self.public.string, self.local.string = value.split("+")
 
     def _todict(self: Self) -> dict:
         return dict(public=self.public, local=self.local)
