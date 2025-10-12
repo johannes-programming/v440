@@ -23,6 +23,14 @@ class Dev(QualStringer):
         else:
             return (1,)
 
+    def _format(self: Self, spec: str, /) -> str:
+        if spec:
+            raise ValueError
+        if self.lit:
+            return self.lit + str(self.num)
+        else:
+            return ""
+
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
         if value == "dev":
