@@ -41,19 +41,43 @@ class Local(ListStringer):
 
     @classmethod
     def _format_item(cls: type, item: int | str, spec: str) -> tuple[str, str]:
-        a: str
-        b: str = spec.lstrip("0")
-        n: int = len(spec) - len(b)
+        zeros: str
+        mask: str
+        sep: str
+        right: str = spec
+        zeros, right = cls._format_l(spec, "0")
+        mask, right = cls._format_l(spec, "Aa")
+        if right:
+            sep = right[0]
+            right = right[1:]
+        else:
+            sep = "."
+        part: str
         if isinstance(item, int):
-            a = format(item, "0%sd" % n)
+            part = format(item, "0%sd" % len(zeros))
         else:
-            a = item
-        if b:
-            a += b[0]
-            b = b[1:]
-        else:
-            a += "."
-        return a, b
+            part = cls._format_mask(item, mask)
+        return part + sep, right
+
+    @classmethod
+    def _format_l(cls: type, value: str, chars: str):
+        i: int = 0
+        while i < len(value):
+            if value[i] in chars:
+                i += 1
+            else:
+                break
+        return value[:i], value[i:]
+
+    @classmethod
+    def _format_mask(cls: type, item: str, mask: str):
+        ans: list = list(item)
+        i: int = 0
+        while i < len(ans) and i < len(mask):
+            if mask[i] == "A":
+                ans[i] = ans[i].upper()
+            i += 1
+        return "".join(ans)
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:
