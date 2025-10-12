@@ -897,7 +897,7 @@ full = "1!1.2.3"
 part = 1
 
 [core-non-attributes.test-0000]
-string = ""
+string = "0"
 clsname = "Base"
 attrname = "fdsfvdsff"
 attrvalue = 42

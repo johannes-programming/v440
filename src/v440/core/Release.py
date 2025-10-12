@@ -81,9 +81,6 @@ class Release(ListStringer):
         return value
 
     def _string_fset(self: Self, value: str) -> None:
-        if value == "":
-            self.data = ()
-            return
         if value.strip(string_.digits + "."):
             raise ValueError
         self.data = map(int, value.split("."))
