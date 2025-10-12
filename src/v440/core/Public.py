@@ -35,12 +35,12 @@ class Public(SlotStringer):
         return format(self.base, format_spec) + format(self.qual)
 
     def _string_fset(self: Self, value: str) -> None:
-        m: Any = Pattern.PUBLIC.bound.search(value)
         i: int = int(value.startswith("v"))
         while i < len(value):
-            if value[i] not in (string_.digits + "!."):
+            if value[i] in (string_.digits + "!."):
+                i += 1
+            else:
                 break
-            i += 1
         if value[:i].endswith("."):
             i -= 1
         self.base.string = value[:i]
