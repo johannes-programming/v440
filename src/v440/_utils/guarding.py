@@ -18,7 +18,7 @@ def guard(old: Any) -> Any:
             self.string = backup
             raise
         except Exception:
-            self.string = backup
+            self._string_fset(backup.lower())
             msg: str = "%r is an invalid value for %r"
             target: str = type(self).__name__ + "." + old.__name__
             msg %= (value, target)

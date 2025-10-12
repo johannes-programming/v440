@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import string as string_
+import sys
 from typing import *
 
 import setdoc
@@ -34,10 +36,15 @@ class Public(SlotStringer):
 
     def _string_fset(self: Self, value: str) -> None:
         m: Any = Pattern.PUBLIC.bound.search(value)
-        self.base.string = m.group("base")
-        self.qual.pre.string = Pattern.none_empty(m.group("pre"))
-        self.qual.post.string = Pattern.none_empty(m.group("post"))
-        self.qual.dev.string = Pattern.none_empty(m.group("dev"))
+        i: int = int(value.startswith("v"))
+        while i < len(value):
+            if value[i] not in (string_.digits + "!."):
+                break
+            i += 1
+        if value[:i].endswith("."):
+            i -= 1
+        self.base.string = value[:i]
+        self.qual.string = value[i:]
 
     def _todict(self: Self) -> dict:
         return dict(base=self.base, qual=self.qual)
