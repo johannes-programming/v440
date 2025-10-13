@@ -32,10 +32,7 @@ class Dev(QualStringer):
         else:
             x = ".dev"
             n = 1
-        t: str = x.lower().replace("_", ".").replace("-", ".")
-        if t not in ("dev", ".dev", "dev.", ".dev."):
-            raise ValueError
-        if t.endswith(".") and not n:
+        if self._format_test_lit(x) and not n:
             n = 1
         ans: str
         if self.lit == "":
@@ -45,6 +42,13 @@ class Dev(QualStringer):
         else:
             ans = x
         return ans
+
+    @classmethod
+    def _format_test_lit(cls: type, lit: str) -> bool:
+        t: str = lit.lower().replace("_", ".").replace("-", ".")
+        if t not in ("dev", ".dev", "dev.", ".dev."):
+            raise ValueError
+        return t.endswith(".")
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
