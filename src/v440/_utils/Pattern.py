@@ -15,14 +15,14 @@ class Pattern(enum.StrEnum):
     QUAL = r"(?P<pre>%s)?(?P<post>%s)?(?P<dev>%s)?" % (PRE, POST, DEV)
     PUBLIC = r"(?P<base>%s)(?P<qual>%s)" % (BASE, QUAL)
 
+    @functools.cached_property
+    def bound(self: Self) -> re.Pattern:
+        return self.compile(r"^" + self.value + r"$")
+
     @staticmethod
     def compile(value: Any, /) -> re.Pattern:
         "This staticmethod compiles the given value into a pattern."
         return re.compile(value, re.VERBOSE)
-
-    @functools.cached_property
-    def bound(self: Self) -> re.Pattern:
-        return self.compile(r"^" + self.value + r"$")
 
     @functools.cached_property
     def leftbound(self: Self) -> re.Pattern:
