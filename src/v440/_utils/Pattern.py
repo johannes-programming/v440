@@ -35,16 +35,6 @@ class Pattern(enum.StrEnum):
         else:
             return value
 
-    @classmethod
-    def skip(cls: type, value: str, chars: str) -> int:
-        i: int = 0
-        while i < len(value):
-            if value[i] in chars:
-                i += 1
-            else:
-                break
-        return i
-
     @functools.cached_property
     def unbound(self: Self) -> re.Pattern:
         return self.compile(self.value)

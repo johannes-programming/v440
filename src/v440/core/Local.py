@@ -63,8 +63,13 @@ class Local(ListStringer):
         return part + sep, right
 
     @classmethod
-    def _format_l(cls: type, value: str, chars: str):
-        i: int = Pattern.skip(value, chars)
+    def _format_l(cls: type, value: str, chars: str) -> tuple:
+        i: int = 0
+        while i < len(value):
+            if value[i] in chars:
+                i += 1
+            else:
+                break
         return value[:i], value[i:]
 
     @classmethod
