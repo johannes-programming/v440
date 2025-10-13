@@ -28,13 +28,6 @@ class Pattern(enum.StrEnum):
     def leftbound(self: Self) -> re.Pattern:
         return self.compile(r"^" + self.value)
 
-    @classmethod
-    def none_empty(cls: type, value: Optional[str]) -> str:
-        if value is None:
-            return ""
-        else:
-            return value
-
     @functools.cached_property
     def unbound(self: Self) -> re.Pattern:
         return self.compile(self.value)

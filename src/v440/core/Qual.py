@@ -50,11 +50,18 @@ class Qual(SlotStringer):
         ans += str(self.dev)
         return ans
 
+    @classmethod
+    def _none_empty(cls: type, value: Optional[str]) -> str:
+        if value is None:
+            return ""
+        else:
+            return value
+
     def _string_fset(self: Self, value: str) -> None:
         m: Any = Pattern.QUAL.bound.search(value)
-        self.pre.string = Pattern.none_empty(m.group("pre"))
-        self.post.string = Pattern.none_empty(m.group("post"))
-        self.dev.string = Pattern.none_empty(m.group("dev"))
+        self.pre.string = self._none_empty(m.group("pre"))
+        self.post.string = self._none_empty(m.group("post"))
+        self.dev.string = self._none_empty(m.group("dev"))
 
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
