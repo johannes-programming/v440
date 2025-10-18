@@ -1,6 +1,6 @@
 [patterns.atoms]
-pre = "[-_\\.]?(?:alpha|a|beta|b|preview|pre|c|rc)(?:[-_\\.]?[0-9]+)?"
-post = "(?:-(?:[0-9]+))|(?:(?:[-_\\.]?(?:post|rev|r))(?:[-_\\.]?(?:[0-9]+))?)"
+pre = "[-_\\.]?(alpha|a|beta|b|preview|pre|c|rc)([-_\\.]?[0-9]+)?"
+post = "(-([0-9]+))|(([-_\\.]?(post|rev|r))([-_\\.]?([0-9]+))?)"
 dev = "[-_\\.]?dev([-_\\.]?[0-9]+)?"
 
 [patterns.forms]
