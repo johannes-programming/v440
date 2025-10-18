@@ -52,7 +52,7 @@ class Qual(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict = Cfg.cfg.patterns["qual"].fullmatch(value).groupdict()
+        matches: dict = Cfg.fullmatches("qual", value)
         self.pre.string = forms.none_empty(matches, "pre")
         self.post.string = forms.none_empty(matches, "post")
         self.dev.string = forms.none_empty(matches, "dev")

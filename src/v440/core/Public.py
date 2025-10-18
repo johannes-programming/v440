@@ -34,11 +34,11 @@ class Public(SlotStringer):
     def _format(self: Self, spec: str, /) -> str:
         i: int = int((spec != "") and (spec[0] in "vV"))
         while i < len(spec):
-            if spec[i] in ("#!._-"):
+            if spec[i] in ("#!."):
                 i += 1
             else:
                 break
-        if spec[:i][:-1] in tuple(".-_"):
+        if i and spec[i - 1] == ".":
             i -= 1
         ans: str = ""
         ans += format(self.base, spec[:i])
