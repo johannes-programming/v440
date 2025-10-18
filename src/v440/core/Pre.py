@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import *
 
+from v440._utils import forms
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440._utils.QualStringer import QualStringer
@@ -23,12 +24,16 @@ class Pre(QualStringer):
         return frozenset("1"), self.lit, self.num
 
     def _format(self: Self, spec: str, /) -> str:
-        if spec:
-            raise ValueError
-        if self.lit:
-            return self.lit + str(self.num)
-        else:
+        matches: dict = Cfg.cfg.patterns["pre_f"].fullmatch(spec).groupdict()
+        if not self:
             return ""
+        match: Optional[str] = matches[f"pre_{self.lit}_f"]
+        ans: str
+        if match is None:
+            ans = self.lit + str(self.num)
+        else:
+            ans = forms.qualform(match, self.num)
+        return ans
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:

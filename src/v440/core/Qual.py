@@ -5,6 +5,7 @@ from typing import *
 
 import setdoc
 
+from v440._utils import forms
 from v440._utils.Cfg import Cfg
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
@@ -52,10 +53,10 @@ class Qual(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        m: Optional[re.Match] = Cfg.cfg.patterns["qual"].fullmatch(value)
-        self.pre.string = Cfg.none_empty(m.group("pre"))
-        self.post.string = Cfg.none_empty(m.group("post"))
-        self.dev.string = Cfg.none_empty(m.group("dev"))
+        matches: dict = Cfg.cfg.patterns["qual"].fullmatch(value).groupdict()
+        self.pre.string = forms.none_empty(matches, "pre")
+        self.post.string = forms.none_empty(matches, "post")
+        self.dev.string = forms.none_empty(matches, "dev")
 
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)

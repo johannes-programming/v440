@@ -18,13 +18,6 @@ class Cfg(enum.Enum):
         ans: dict = tomllib.loads(text)
         return ans
 
-    @classmethod
-    def none_empty(cls: type, value: Any) -> Any:
-        if value is None:
-            return ""
-        else:
-            return value
-
     @functools.cached_property
     def patterns(self: Self) -> dict[str, re.Pattern]:
         ans: dict = dict()
