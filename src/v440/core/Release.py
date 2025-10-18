@@ -53,8 +53,8 @@ class Release(ListStringer):
     def _format_parse(cls: type, spec: str, /) -> str:
         if spec.strip("#."):
             raise ValueError
-        return tuple(map(cls._format_spec, spec.split(".")))
-    
+        return dict(specs=tuple(map(cls._format_parse_spec, spec.split("."))))
+
     @classmethod
     def _format_parse_spec(cls: type, value: str) -> str:
         return f"0{len(value)}d"
@@ -66,7 +66,6 @@ class Release(ListStringer):
         parts += [""] * max(0, len(self) - len(specs))
         ans: str = ".".join(map(format, data, parts))
         return ans
-
 
     @classmethod
     def _item_parse(cls: type, value: SupportsIndex) -> int:

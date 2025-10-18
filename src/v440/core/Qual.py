@@ -46,8 +46,8 @@ class Qual(SlotStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        return Cfg.cfg.fullmatches("qual_f", spec)
-    
+        return dict(matches=Cfg.fullmatches("qual_f", spec))
+
     def _format_parsed(self: Self, *, matches: dict) -> str:
         ans: str = format(self.pre, matches["pre_f"])
         ans += format(self.post, matches["post_f"])

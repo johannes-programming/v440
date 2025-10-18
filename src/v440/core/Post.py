@@ -29,7 +29,7 @@ class Post(QualStringer):
     def _format_parse(cls: type, spec: str, /) -> str:
         Cfg.cfg.fullmatches("post_f", spec)
         return dict(spec=spec)
-        
+
     def _format_parsed(self: Self, *, spec: str) -> str:
         if not self:
             return ""

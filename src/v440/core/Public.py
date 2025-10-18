@@ -41,10 +41,10 @@ class Public(SlotStringer):
                 break
         if i and spec[i - 1] == ".":
             i -= 1
-        ans:dict= dict(base_f=spec[:i], qual_f=spec[i:])
+        ans: dict = dict(base_f=spec[:i], qual_f=spec[i:])
         return ans
 
-    def _format_parsed(self: Self, *, base_f:str, qual_f:str) -> str:
+    def _format_parsed(self: Self, *, base_f: str, qual_f: str) -> str:
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod

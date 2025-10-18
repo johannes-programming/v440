@@ -39,12 +39,12 @@ class Version(SlotStringer):
         else:
             f = spec
             g = ""
-        ans:dict = dict(public_f=f, local_f=g)
+        ans: dict = dict(public_f=f, local_f=g)
         return ans
 
     def _format_parsed(self: Self, *, public_f: str, local_f: str) -> str:
         f: str = format(self.public, public_f)
-        g :str= format(self.local, local_f)
+        g: str = format(self.local, local_f)
         if g:
             f += "+" + g
         return f

@@ -47,10 +47,10 @@ class Base(SlotStringer):
                 x = "#"
             elif x.strip("#"):
                 raise ValueError
-        ans:dict= dict(prefix=p, epoch_n=len(x), release_f=y)
+        ans: dict = dict(prefix=p, epoch_n=len(x), release_f=y)
         return ans
 
-    def _format_parsed(self: Self, *, prefix:str, epoch_n:int, release_f:str) -> str:
+    def _format_parsed(self: Self, *, prefix: str, epoch_n: int, release_f: str) -> str:
         ans: str = prefix
         if epoch_n or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_n)

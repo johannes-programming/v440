@@ -28,14 +28,14 @@ class BaseStringer(metaclass=ABCMeta):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
-        parsed:dict
+        parsed: dict
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
             msg: str = "Invalid format specifier %r for object of type %r."
             msg %= (format_spec, type(self).__name__)
             raise TypeError(msg) from None
-        ans:str = str(self._format_parsed(**parsed))
+        ans: str = str(self._format_parsed(**parsed))
         return ans
 
     @setdoc.basic
@@ -97,7 +97,7 @@ class BaseStringer(metaclass=ABCMeta):
     def _format_parse(self: Self, spec: str, /) -> dict: ...
 
     @abstractmethod
-    def _format_parsed(self: Self, **kwargs:Any) -> Any: ...
+    def _format_parsed(self: Self, **kwargs: Any) -> Any: ...
 
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
