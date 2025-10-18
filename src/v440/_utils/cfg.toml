@@ -1,10 +1,8 @@
-[patterns.atoms]
-pre = "[-_\\.]?(alpha|a|beta|b|preview|pre|c|rc)([-_\\.]?[0-9]+)?"
-post = "(-([0-9]+))|(([-_\\.]?(post|rev|r))([-_\\.]?([0-9]+))?)"
-dev = "[-_\\.]?dev([-_\\.]?[0-9]+)?"
-
-[patterns.forms]
-qual = "(?P<pre>{pre})?(?P<post>{post})?(?P<dev>{dev})?"
+[patterns]
+PRE = "[-_\\.]?(alpha|a|beta|b|preview|pre|c|rc)([-_\\.]?[0-9]+)?"
+POST = "(-([0-9]+))|(([-_\\.]?(post|rev|r))([-_\\.]?([0-9]+))?)"
+DEV = "[-_\\.]?dev([-_\\.]?[0-9]+)?"
+QUAL = "(?P<pre>{PRE})?(?P<post>{POST})?(?P<dev>{DEV})?"
 
 [phases]
 alpha = "a"
