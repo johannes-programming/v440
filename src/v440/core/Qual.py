@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import *
 
 import setdoc
@@ -58,7 +59,7 @@ class Qual(SlotStringer):
             return value
 
     def _string_fset(self: Self, value: str) -> None:
-        m: Any = QUAL.fullmatch(value)
+        m: Optional[re.Match] = QUAL.fullmatch(value)
         self.pre.string = self._none_empty(m.group("pre"))
         self.post.string = self._none_empty(m.group("post"))
         self.dev.string = self._none_empty(m.group("dev"))
