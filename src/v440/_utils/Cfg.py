@@ -34,19 +34,6 @@ class Cfg(enum.Enum):
         z: str
         for x, y in self.data["patterns"].items():
             z = y.format(**parts)
-            ans[x] = re.compile(z, re.VERBOSE)
-            parts[x] = y
-        return ans
-
-    @functools.cached_property
-    def patterns_ignorecase(self: Self) -> dict[str, re.Pattern]:
-        ans: dict = dict()
-        parts: dict = dict()
-        x: str
-        y: str
-        z: str
-        for x, y in self.data["patterns"].items():
-            z = y.format(**parts)
             ans[x] = re.compile(z, re.VERBOSE | re.IGNORECASE)
             parts[x] = y
         return ans

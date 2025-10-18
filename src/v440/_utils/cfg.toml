@@ -1,4 +1,7 @@
 [patterns]
+PRE_A_F = "[-_\\.]?(alpha|a)[-_\\.]?#*"
+PRE_B_F = "[-_\\.]?(beta|b)[-_\\.]?#*"
+PRE_C_F = "[-_\\.]?(preview|pre|c|rc)[-_\\.]?#*"
 PRE = "[-_\\.]?(alpha|a|beta|b|preview|pre|c|rc)([-_\\.]?[0-9]+)?"
 POST = "(-([0-9]+))|(([-_\\.]?(post|rev|r))([-_\\.]?([0-9]+))?)"
 DEV = "[-_\\.]?dev([-_\\.]?[0-9]+)?"
