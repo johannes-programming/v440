@@ -3,6 +3,8 @@ from __future__ import annotations
 import operator
 from typing import *
 
+from v440._utils import forms
+from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440._utils.QualStringer import QualStringer
 
@@ -24,31 +26,13 @@ class Dev(QualStringer):
             return (1,)
 
     def _format(self: Self, spec: str, /) -> str:
-        x: str
-        n: int
-        if spec:
-            x = spec.rstrip("#")
-            n = len(spec) - len(x)
+        Cfg.cfg.patterns["dev_f"].fullmatch(spec).groupdict()
+        if not self:
+            return ""
+        elif not spec:
+            return ".dev" + str(self.num)
         else:
-            x = ".dev"
-            n = 1
-        if self._format_test_lit(x) and not n:
-            n = 1
-        ans: str
-        if self.lit == "":
-            ans = ""
-        elif self.num or n:
-            ans = x + format(self.num, "0%sd" % n)
-        else:
-            ans = x
-        return ans
-
-    @classmethod
-    def _format_test_lit(cls: type, lit: str) -> bool:
-        t: str = lit.lower().replace("_", ".").replace("-", ".")
-        if t not in ("dev", ".dev", "dev.", ".dev."):
-            raise ValueError
-        return t.endswith(".")
+            return forms.qualform(spec, self.num)
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:

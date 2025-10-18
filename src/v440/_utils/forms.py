@@ -11,5 +11,6 @@ def none_empty(groupdict: dict, key: str) -> Any:
 def qualform(mask: str, num: int) -> str:
     x: str = mask.rstrip("#")
     n: int = len(mask) - len(x)
-    x += format(num, f"0{n}d")
+    if n or (x[-1:] in tuple(".-_")):
+        x += format(num, f"0{n}d")
     return x
