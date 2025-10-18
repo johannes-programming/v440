@@ -8,7 +8,6 @@ import setdoc
 
 from v440._utils.guarding import guard
 from v440._utils.ListStringer import ListStringer
-from v440._utils.Pattern import Pattern
 
 __all__ = ["Local"]
 
