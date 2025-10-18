@@ -30,12 +30,16 @@ class Base(SlotStringer):
     def _cmp(self: Self) -> tuple:
         return self.epoch, self.release
 
-    def _format(self: Self, spec: str, /) -> str:
-        ans: str = ""
-        y: str = spec
-        if y[:1] in tuple("Vv"):
-            ans += y[0]
-            y = y[1:]
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> dict:
+        p: str
+        y: str
+        if spec[:1] in tuple("Vv"):
+            p = spec[0]
+            y = spec[1:]
+        else:
+            p = ""
+            y = spec
         x: str = ""
         if "!" in y:
             x, y = y.split("!")
@@ -43,10 +47,15 @@ class Base(SlotStringer):
                 x = "#"
             elif x.strip("#"):
                 raise ValueError
-        if x or self.epoch:
-            ans += format(self.epoch, "0%sd" % len(x))
+        ans:dict= dict(prefix=p, epoch_n=len(x), release_f=y)
+        return ans
+
+    def _format_parsed(self: Self, prefix:str, epoch_n:int, release_f:str) -> str:
+        ans: str = prefix
+        if epoch_n or self.epoch:
+            ans += format(self.epoch, "0%sd" % epoch_n)
             ans += "!"
-        ans += format(self.release, y)
+        ans += format(self.release, release_f)
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
