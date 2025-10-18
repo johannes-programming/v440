@@ -23,8 +23,11 @@ class Pre(QualStringer):
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
 
-    def _format(self: Self, spec: str, /) -> str:
-        matches: dict = Cfg.cfg.fullmatches("pre_f", spec)
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> dict:
+        return dict(matches=Cfg.cfg.fullmatches("pre_f", spec))
+
+    def _format_parsed(self: Self, *, matches: dict) -> str:
         if not self:
             return ""
         match: Optional[str] = matches[f"pre_{self.lit}_f"]

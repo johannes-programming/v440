@@ -30,7 +30,8 @@ class Version(SlotStringer):
     def _cmp(self: Self) -> tuple:
         return self.public, self.local
 
-    def _format(self: Self, spec: str, /) -> str:
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> str:
         f: str
         g: str
         if "+" in spec:
@@ -38,10 +39,14 @@ class Version(SlotStringer):
         else:
             f = spec
             g = ""
-        f = format(self.public, f)
-        g = format(self.local, g)
+        ans: dict = dict(public_f=f, local_f=g)
+        return ans
+
+    def _format_parsed(self: Self, *, public_f: str, local_f: str) -> str:
+        f: str = format(self.public, public_f)
+        g: str = format(self.local, local_f)
         if g:
-            f = f + "+" + g
+            f += "+" + g
         return f
 
     def _string_fset(self: Self, value: str) -> None:

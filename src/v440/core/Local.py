@@ -28,9 +28,13 @@ class Local(ListStringer):
     def _data_parse(cls: type, value: list) -> Iterable:
         return tuple(map(cls._item_parse, value))
 
-    def _format(self: Self, spec: str, /) -> str:
-        if not set(spec).issubset("#^~.-_"):
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> dict:
+        if spec.strip("#^~.-_"):
             raise ValueError
+        return dict(spec=spec)
+
+    def _format_parsed(self: Self, *, spec: str) -> str:
         ans: str = ""
         data: list = list(self.data)
         tail: str = spec
