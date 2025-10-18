@@ -32,8 +32,17 @@ class Public(SlotStringer):
         return self.base, self.qual
 
     def _format(self: Self, spec: str, /) -> str:
-        f: tuple = self._split(spec)
-        ans: str = format(self.base, f[0]) + format(self.qual, f[1])
+        i: int = int((spec != "") and (spec[0] in "vV"))
+        while i < len(spec):
+            if spec[i] in ("#!._-"):
+                i += 1
+            else:
+                break
+        if spec[:i][:-1] in tuple(".-_"):
+            i -= 1
+        ans: str = ""
+        ans += format(self.base, spec[:i])
+        ans += format(self.qual, spec[i:])
         return ans
 
     @classmethod

@@ -27,7 +27,7 @@ class Post(QualStringer):
         x: str
         n: int
         if spec:
-            x = spec.rstrip("0")
+            x = spec.rstrip("#")
             n = len(spec) - len(x)
         else:
             x = ".post"

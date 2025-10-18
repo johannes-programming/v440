@@ -50,19 +50,18 @@ class Release(ListStringer):
         return v
 
     def _format(self: Self, spec: str, /) -> str:
-        if spec.strip("0."):
+        if spec.strip("#."):
             raise ValueError
         specs: list = spec.split(".")
         specs = list(map(len, specs))
         data: list = list(self.data)
         data += [0] * max(0, len(specs) - len(data))
-        i: int = 0
-        while i < len(data):
+        i: int
+        for i in range(len(data)):
             if i < len(specs):
                 data[i] = format(data[i], "0%sd" % specs[i])
             else:
                 data[i] = str(data[i])
-            i += 1
         return ".".join(data)
 
     @classmethod

@@ -40,8 +40,8 @@ class Base(SlotStringer):
         if "!" in y:
             x, y = y.split("!")
             if x == "":
-                x = "0"
-            elif x.strip("0"):
+                x = "#"
+            elif x.strip("#"):
                 raise ValueError
         if x or self.epoch:
             ans += format(self.epoch, "0%sd" % len(x))

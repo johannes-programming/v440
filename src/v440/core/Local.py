@@ -29,7 +29,7 @@ class Local(ListStringer):
         return tuple(map(cls._item_parse, value))
 
     def _format(self: Self, spec: str, /) -> str:
-        if not set(spec).issubset("0.-_"):
+        if not set(spec).issubset("#^~.-_"):
             raise ValueError
         ans: str = ""
         data: list = list(self.data)
@@ -43,12 +43,12 @@ class Local(ListStringer):
 
     @classmethod
     def _format_item(cls: type, item: int | str, spec: str) -> tuple[str, str]:
-        zeros: str
+        sharps: str
         mask: str
         sep: str
         right: str = spec
-        zeros, right = cls._format_l(spec, "0")
-        mask, right = cls._format_l(spec, "Aa")
+        sharps, right = cls._format_l(right, "#")
+        mask, right = cls._format_l(right, "^~")
         if right:
             sep = right[0]
             right = right[1:]
@@ -56,7 +56,7 @@ class Local(ListStringer):
             sep = "."
         part: str
         if isinstance(item, int):
-            part = format(item, "0%sd" % len(zeros))
+            part = format(item, "0%sd" % len(sharps))
         else:
             part = cls._format_mask(item, mask)
         return part + sep, right
@@ -76,7 +76,7 @@ class Local(ListStringer):
         ans: list = list(item)
         i: int = 0
         while i < len(ans) and i < len(mask):
-            if mask[i] == "A":
+            if mask[i] == "^":
                 ans[i] = ans[i].upper()
             i += 1
         return "".join(ans)

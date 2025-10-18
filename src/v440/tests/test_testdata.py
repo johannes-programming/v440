@@ -227,7 +227,7 @@ class TestPackagingA(unittest.TestCase):
     def go(self: Self, text: str) -> None:
         a: packaging.version.Version = packaging.version.Version(text)
         b: str = str(a)
-        f: str = "0." * len(a.release)
+        f: str = "#." * len(a.release)
         f = f[:-1]
         g: str = format(Version(text), f)
         self.assertEqual(b, g)
