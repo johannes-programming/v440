@@ -5,7 +5,7 @@ pre_c_f = "[-_\\.]?(PREVIEW|PRE|C|RC)[-_\\.]?#*"
 pre = "[-_\\.]?(ALPHA|A|BETA|B|PREVIEW|PRE|C|RC)([-_\\.]?[0-9]+)?"
 post = "(-([0-9]+))|(([-_\\.]?(POST|REV|R))([-_\\.]?([0-9]+))?)"
 dev = "[-_\\.]?DEV([-_\\.]?[0-9]+)?"
-qual = "(?P<pre>{pre})?(?P<post>{post})?(?P<dev>{dev})?"
+qual = "{pre}?{post}?{dev}?"
 
 [phases]
 alpha = "a"

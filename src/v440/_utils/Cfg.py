@@ -35,5 +35,5 @@ class Cfg(enum.Enum):
         for x, y in self.data["patterns"].items():
             z = y.format(**parts)
             ans[x] = re.compile(z, re.VERBOSE | re.IGNORECASE)
-            parts[x] = y
+            parts[x] = f"(?P<{x}>{y})"
         return ans
