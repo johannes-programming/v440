@@ -35,20 +35,6 @@ class Post(QualStringer):
             return forms.qualform(spec, self.num)
 
     @classmethod
-    def _format_test_lit(cls: type, spec: str, /) -> bool:
-        if spec == "-":
-            return True
-        t: str = spec.lower().replace("_", ".").replace("-", ".")
-        if t.startswith("."):
-            t = t[1:]
-        ans: bool = t.endswith(".")
-        if ans:
-            t = t[:-1]
-        if t in ("post", "r", "rev"):
-            return ans
-        raise ValueError
-
-    @classmethod
     def _lit_parse(cls: type, value: str) -> str:
         if value in ("-", "post", "r", "rev"):
             return "post"
