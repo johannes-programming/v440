@@ -89,6 +89,10 @@ class BaseStringer(metaclass=ABCMeta):
     @abstractmethod
     def _cmp(self: Self) -> Any: ...
 
+    # @abstractmethod
+    def _deformat(self: Self, original: str) -> str:
+        return ""
+
     @abstractmethod
     def _format(self: Self, spec: str, /) -> str: ...
 
@@ -98,6 +102,10 @@ class BaseStringer(metaclass=ABCMeta):
     @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
+
+    @classmethod
+    def deformat(cls: type, string: str) -> str:
+        return cls(string)._deformat(string)
 
     @property
     @abstractmethod
