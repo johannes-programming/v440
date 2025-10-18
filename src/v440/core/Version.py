@@ -17,6 +17,7 @@ class Version(SlotStringer):
     __slots__ = ("_public", "_local")
 
     string: str
+    packaging: packaging.version.Version
     local: Local
     public: Public
 

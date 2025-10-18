@@ -6,6 +6,9 @@ __all__ = ["VersionError"]
 
 
 class VersionError(ValueError):
+
+    args: tuple
+
     @setdoc.basic
     def __init__(self: Self, *args: Any) -> None:
         super().__init__(*args)

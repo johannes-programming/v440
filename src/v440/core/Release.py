@@ -53,16 +53,16 @@ class Release(ListStringer):
         if spec.strip("#."):
             raise ValueError
         specs: list = spec.split(".")
-        specs = list(map(len, specs))
+        specs = list(map(self._format_spec, specs))
         data: list = list(self.data)
+        specs += [""] * max(0, len(data) - len(specs))
         data += [0] * max(0, len(specs) - len(data))
-        i: int
-        for i in range(len(data)):
-            if i < len(specs):
-                data[i] = format(data[i], "0%sd" % specs[i])
-            else:
-                data[i] = str(data[i])
-        return ".".join(data)
+        ans: str = ".".join(map(format, data, specs))
+        return ans
+
+    @classmethod
+    def _format_spec(cls: type, value: str) -> str:
+        return f"0{len(value)}d"
 
     @classmethod
     def _item_parse(cls: type, value: SupportsIndex) -> int:
