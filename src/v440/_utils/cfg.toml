@@ -1,11 +1,11 @@
 [patterns]
-PRE_A_F = "[-_\\.]?(alpha|a)[-_\\.]?#*"
-PRE_B_F = "[-_\\.]?(beta|b)[-_\\.]?#*"
-PRE_C_F = "[-_\\.]?(preview|pre|c|rc)[-_\\.]?#*"
-PRE = "[-_\\.]?(alpha|a|beta|b|preview|pre|c|rc)([-_\\.]?[0-9]+)?"
-POST = "(-([0-9]+))|(([-_\\.]?(post|rev|r))([-_\\.]?([0-9]+))?)"
-DEV = "[-_\\.]?dev([-_\\.]?[0-9]+)?"
-QUAL = "(?P<pre>{PRE})?(?P<post>{POST})?(?P<dev>{DEV})?"
+pre_a_f = "[-_\\.]?(ALPHA|A)[-_\\.]?#*"
+pre_b_f = "[-_\\.]?(BETA|B)[-_\\.]?#*"
+pre_c_f = "[-_\\.]?(PREVIEW|PRE|C|RC)[-_\\.]?#*"
+pre = "[-_\\.]?(ALPHA|A|BETA|B|PREVIEW|PRE|C|RC)([-_\\.]?[0-9]+)?"
+post = "(-([0-9]+))|(([-_\\.]?(POST|REV|R))([-_\\.]?([0-9]+))?)"
+dev = "[-_\\.]?DEV([-_\\.]?[0-9]+)?"
+qual = "(?P<pre>{pre})?(?P<post>{post})?(?P<dev>{dev})?"
 
 [phases]
 alpha = "a"
