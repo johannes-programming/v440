@@ -4,7 +4,7 @@ from typing import *
 
 import setdoc
 
-from v440._utils.Pattern import Pattern
+from v440._utils.patterns import QUAL
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
 from v440.core.Post import Post
@@ -58,7 +58,7 @@ class Qual(SlotStringer):
             return value
 
     def _string_fset(self: Self, value: str) -> None:
-        m: Any = Pattern.QUAL.bound.search(value)
+        m: Any = QUAL.search(value)
         self.pre.string = self._none_empty(m.group("pre"))
         self.post.string = self._none_empty(m.group("post"))
         self.dev.string = self._none_empty(m.group("dev"))
