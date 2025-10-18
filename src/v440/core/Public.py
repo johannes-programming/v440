@@ -6,7 +6,6 @@ from typing import *
 
 import setdoc
 
-from v440._utils.Pattern import Pattern
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Base import Base
 from v440.core.Qual import Qual
