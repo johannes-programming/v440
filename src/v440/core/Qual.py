@@ -45,11 +45,10 @@ class Qual(SlotStringer):
         return ans
 
     def _format(self: Self, spec: str, /) -> str:
-        if spec:
-            raise ValueError
-        ans: str = str(self.pre)
-        ans += str(self.post)
-        ans += str(self.dev)
+        matches: dict = Cfg.cfg.fullmatches("qual_f", spec)
+        ans: str = format(self.pre, matches["pre_f"])
+        ans += format(self.post, matches["post_f"])
+        ans += format(self.dev, matches["dev_f"])
         return ans
 
     def _string_fset(self: Self, value: str) -> None:

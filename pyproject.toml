@@ -34,7 +34,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "2.0.0+local.69.packaging"
+version = "2.0.0+local.70.packaging"
 
 [project.license]
 file = "LICENSE.txt"

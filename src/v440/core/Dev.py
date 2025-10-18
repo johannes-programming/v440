@@ -26,7 +26,7 @@ class Dev(QualStringer):
             return (1,)
 
     def _format(self: Self, spec: str, /) -> str:
-        Cfg.cfg.patterns["dev_f"].fullmatch(spec).groupdict()
+        Cfg.cfg.fullmatches("dev_f", spec)
         if not self:
             return ""
         elif not spec:

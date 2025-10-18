@@ -18,6 +18,10 @@ class Cfg(enum.Enum):
         ans: dict = tomllib.loads(text)
         return ans
 
+    @classmethod
+    def fullmatches(cls: type, key: str, value: str) -> dict:
+        return cls.cfg.patterns[key].fullmatch(value).groupdict()
+
     @functools.cached_property
     def patterns(self: Self) -> dict[str, re.Pattern]:
         ans: dict = dict()
@@ -27,6 +31,6 @@ class Cfg(enum.Enum):
         z: str
         for x, y in self.data["patterns"].items():
             z = y.format(**parts)
-            ans[x] = re.compile(z, re.VERBOSE | re.IGNORECASE)
-            parts[x] = f"(?P<{x}>{y})"
+            parts[x] = f"(?P<{x}>{z})"
+            ans[x] = re.compile(z, re.IGNORECASE | re.VERBOSE)
         return ans

@@ -24,7 +24,7 @@ class Pre(QualStringer):
         return frozenset("1"), self.lit, self.num
 
     def _format(self: Self, spec: str, /) -> str:
-        matches: dict = Cfg.cfg.patterns["pre_f"].fullmatch(spec).groupdict()
+        matches: dict = Cfg.cfg.fullmatches("pre_f", spec)
         if not self:
             return ""
         match: Optional[str] = matches[f"pre_{self.lit}_f"]

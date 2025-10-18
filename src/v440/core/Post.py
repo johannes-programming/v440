@@ -26,7 +26,7 @@ class Post(QualStringer):
             return -1
 
     def _format(self: Self, spec: str, /) -> str:
-        Cfg.cfg.patterns["post_f"].fullmatch(spec).groupdict()
+        Cfg.cfg.fullmatches("post_f", spec)
         if not self:
             return ""
         elif not spec:
