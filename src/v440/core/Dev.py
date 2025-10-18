@@ -25,8 +25,12 @@ class Dev(QualStringer):
         else:
             return (1,)
 
-    def _format(self: Self, spec: str, /) -> str:
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> dict:
         Cfg.cfg.fullmatches("dev_f", spec)
+        return dict(spec=spec)
+    
+    def _format_parsed(self: Self, *, spec: str) -> str:
         if not self:
             return ""
         elif not spec:

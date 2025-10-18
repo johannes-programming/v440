@@ -44,15 +44,18 @@ class Qual(SlotStringer):
         ans += (self.post, self.dev)
         return ans
 
-    def _format(self: Self, spec: str, /) -> str:
-        matches: dict = Cfg.cfg.fullmatches("qual_f", spec)
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> dict:
+        return Cfg.cfg.fullmatches("qual_f", spec)
+    
+    def _format_parsed(self: Self, *, matches: dict) -> str:
         ans: str = format(self.pre, matches["pre_f"])
         ans += format(self.post, matches["post_f"])
         ans += format(self.dev, matches["dev_f"])
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict = Cfg.cfg.patterns["qual"].fullmatch(value).groupdict()
+        matches: dict = Cfg.fullmatches("qual", value)
         self.pre.string = forms.none_empty(matches, "pre")
         self.post.string = forms.none_empty(matches, "post")
         self.dev.string = forms.none_empty(matches, "dev")

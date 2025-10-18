@@ -31,19 +31,21 @@ class Public(SlotStringer):
     def _cmp(self: Self) -> tuple:
         return self.base, self.qual
 
-    def _format(self: Self, spec: str, /) -> str:
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> dict:
         i: int = int((spec != "") and (spec[0] in "vV"))
         while i < len(spec):
-            if spec[i] in ("#!._-"):
+            if spec[i] in ("#!."):
                 i += 1
             else:
                 break
-        if spec[:i][:-1] in tuple(".-_"):
+        if i and spec[i - 1] == ".":
             i -= 1
-        ans: str = ""
-        ans += format(self.base, spec[:i])
-        ans += format(self.qual, spec[i:])
+        ans:dict= dict(base_f=spec[:i], qual_f=spec[i:])
         return ans
+
+    def _format_parsed(self: Self, *, base_f:str, qual_f:str) -> str:
+        return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
     def _split(cls: type, value: str) -> tuple[str, str]:

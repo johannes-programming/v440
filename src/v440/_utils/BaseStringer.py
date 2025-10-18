@@ -28,12 +28,15 @@ class BaseStringer(metaclass=ABCMeta):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
+        parsed:dict
         try:
-            return self._format(str(format_spec))
+            parsed = self._format_parse(str(format_spec))
         except Exception:
-            msg: str = "Invalid format specifier %r for object of type %r"
+            msg: str = "Invalid format specifier %r for object of type %r."
             msg %= (format_spec, type(self).__name__)
             raise TypeError(msg) from None
+        ans:str = str(self._format_parsed(**parsed))
+        return ans
 
     @setdoc.basic
     def __ge__(self: Self, other: Any) -> bool:
@@ -84,17 +87,17 @@ class BaseStringer(metaclass=ABCMeta):
 
     @setdoc.basic
     def __str__(self: Self) -> str:
-        return self._format("")
+        return format(self, "")
 
     @abstractmethod
     def _cmp(self: Self) -> Any: ...
 
-    # @abstractmethod
-    def _deformat(self: Self, original: str) -> str:
-        return ""
+    @classmethod
+    @abstractmethod
+    def _format_parse(self: Self, spec: str, /) -> dict: ...
 
     @abstractmethod
-    def _format(self: Self, spec: str, /) -> str: ...
+    def _format_parsed(self: Self, **kwargs:Any) -> Any: ...
 
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
@@ -102,10 +105,6 @@ class BaseStringer(metaclass=ABCMeta):
     @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
-
-    @classmethod
-    def deformat(cls: type, string: str) -> str:
-        return cls(string)._deformat(string)
 
     @property
     @abstractmethod

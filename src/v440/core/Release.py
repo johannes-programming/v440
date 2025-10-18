@@ -49,20 +49,24 @@ class Release(ListStringer):
             v.pop()
         return v
 
-    def _format(self: Self, spec: str, /) -> str:
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> str:
         if spec.strip("#."):
             raise ValueError
-        specs: list = spec.split(".")
-        specs = list(map(len, specs))
-        data: list = list(self.data)
-        data += [0] * max(0, len(specs) - len(data))
-        i: int
-        for i in range(len(data)):
-            if i < len(specs):
-                data[i] = format(data[i], "0%sd" % specs[i])
-            else:
-                data[i] = str(data[i])
-        return ".".join(data)
+        return tuple(map(cls._format_spec, spec.split(".")))
+    
+    @classmethod
+    def _format_parse_spec(cls: type, value: str) -> str:
+        return f"0{len(value)}d"
+
+    def _format_parsed(self: Self, *, specs: tuple) -> str:
+        data: list = list(self)
+        data += [0] * max(0, len(specs) - len(self))
+        parts: list = list(specs)
+        parts += [""] * max(0, len(self) - len(specs))
+        ans: str = ".".join(map(format, data, parts))
+        return ans
+
 
     @classmethod
     def _item_parse(cls: type, value: SupportsIndex) -> int:
