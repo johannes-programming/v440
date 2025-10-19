@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import string as string_
 from typing import *
 
 from v440._utils import forms
@@ -37,6 +38,48 @@ class Pre(QualStringer):
         else:
             ans = forms.qualform(match, self.num)
         return ans
+
+    @classmethod
+    def deformat(cls: type, *strings: str) -> str:
+        a: dict[str, str] = dict.fromkeys(("a", "b", "rc"), "")
+        f: dict[str, int] = dict.fromkeys(("a", "b", "rc"), -1)
+        u: dict[str, int] = dict.fromkeys(("a", "b", "rc"), -1)
+        o: Self
+        s: str
+        x: str
+        y: str
+        for s in strings:
+            if s == "":
+                continue
+            o = cls(s)
+            x = s.rstrip(string_.digits)
+            if a == "":
+                a = x
+            elif a != x:
+                raise ValueError
+            y = s[len(x) :]
+            if u[o.lit] == -1 or u[o.lit] > len(y):
+                u[o.lit] = len(y)
+            if not y.startswith("0"):
+                continue
+            if y == "0" and x[-1] in ".-_":
+                continue
+            if f[o.lit] == -1:
+                f[o.lit] = len(y)
+                continue
+            if f[o.lit] != len(y):
+                raise ValueError
+        y = ""
+        for x in ("a", "b", "rc"):
+            if f[x] > u[x]:
+                raise ValueError
+            if a[x] == "":
+                continue
+            if f[x] == -1:
+                f[x] = 0
+            y += a[x]
+            y += "#" * f[x]
+        return y
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:

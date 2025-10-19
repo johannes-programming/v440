@@ -62,6 +62,24 @@ class Qual(SlotStringer):
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
+    @classmethod
+    def deformat(cls: type, *strings: str) -> str:
+        pres: list = list()
+        posts: list = list()
+        devs: list = list()
+        matches: dict
+        s: str
+        for s in strings:
+            cls(s)
+            matches = Cfg.fullmatches("qual", s)
+            pres.append(forms.none_empty(matches, "pre"))
+            posts.append(forms.none_empty(matches, "posts"))
+            devs.append(forms.none_empty(matches, "devs"))
+        s = Pre.deformat(*pres)
+        s += Post.deformat(*posts)
+        s += Dev.deformat(*devs)
+        return s
+
     @property
     def dev(self: Self) -> Dev:
         "This property represents the stage of development."
