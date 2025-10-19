@@ -45,6 +45,11 @@ class Post(QualStringer):
         else:
             raise ValueError
 
+    @classmethod
+    def deformat(cls: type, *strings: str) -> str:
+        tuple(map(cls, strings))
+        return forms.qualdeform(*strings)
+
     @property
     def packaging(self: Self) -> Optional[int]:
         if self:
