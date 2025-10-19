@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import string as string_
-import sys
 from typing import *
 
 import setdoc
