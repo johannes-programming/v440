@@ -265,23 +265,8 @@ class TestDataProperty(unittest.TestCase):
         self.assertEqual(solution, str(version), msg=msg)
 
 
-class TestVersionSpecifiersGo(unittest.TestCase):
-
-    def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["spec"].items():
-            with self.subTest(key=k):
-                self.go(**v)
-
-    def go(self: Self, string_a: str, string_b: str) -> None:
-        version: Version = Version(string_a)
-        self.assertEqual(str(version), string_b)
-
-
 class TestPackagingA(unittest.TestCase):
     def test_0(self: Self) -> None:
-        s: str
         x: str
         y: list
         for x, y in Util.util.data["examples"]["Version"].items():

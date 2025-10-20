@@ -37,22 +37,6 @@ query = [
     "3",
 ]
 
-[data-setter.Local.test_local_invalid_value]
-valid = false
-query = [
-    "a",
-    {},
-    "3",
-]
-
-[data-setter.Local.test_local_non_string_elements]
-valid = false
-query = [
-    1,
-    [],
-    "test",
-]
-
 [data-setter.Release.test_release_basic_assignment]
 valid = true
 query = [
@@ -92,6 +76,22 @@ solution = []
 valid = true
 query = []
 solution = []
+
+[data-setter.Local.test_local_invalid_value]
+valid = false
+query = [
+    "a",
+    {},
+    "3",
+]
+
+[data-setter.Local.test_local_non_string_elements]
+valid = false
+query = [
+    1,
+    [],
+    "test",
+]
 
 [release-data.test_example_8]
 queryname = "string"
@@ -625,34 +625,6 @@ target = [
     1,
     "dev",
 ]
-
-[spec.test_basic_version_with_post_specifier]
-string_a = "1.2.3-4"
-string_b = "1.2.3.post4"
-
-[spec.test_version_with_pre_release_and_post_specifiers]
-string_a = "1.2.3a1-4"
-string_b = "1.2.3a1.post4"
-
-[spec.test_version_with_post_and_local_specifiers]
-string_a = "1.2.3-4+local"
-string_b = "1.2.3.post4+local"
-
-[spec.test_version_with_post_specifier_and_epoch]
-string_a = "1!1.2.3-4"
-string_b = "1!1.2.3.post4"
-
-[spec.test_version_with_dev_specifier_after_post]
-string_a = "1.2.3-4-dev5"
-string_b = "1.2.3.post4.dev5"
-
-[spec.test_version_with_epoch_and_wrong_order_specifiers]
-string_a = "1!1.2.3-4-dev2"
-string_b = "1!1.2.3.post4.dev2"
-
-[spec.test_version_with_complex_specifiers_and_local]
-string_a = "1.2.3a1-4-dev5+local"
-string_b = "1.2.3a1.post4.dev5+local"
 
 [data-property.local]
 query = "42!1.2.3.dev1337+5.nov"
@@ -1889,3 +1861,39 @@ legacy = "Test version with invalid specifiers that should raise an error"
 [examples.Version."1.2.3-4a1"]
 valid = false
 legacy = "Test version with invalid specifiers that should raise an error"
+
+[examples.Version."1.2.3-4"]
+valid = true
+normed = "1.2.3.post4"
+deformat = "-"
+legacy = "spec.test_basic_version_with_post_specifier"
+
+[examples.Version."1.2.3a1-4"]
+valid = true
+normed = "1.2.3a1.post4"
+legacy = "spec.test_version_with_pre_release_and_post_specifiers"
+
+[examples.Version."1.2.3-4+local"]
+valid = true
+normed = "1.2.3.post4+local"
+legacy = "spec.test_version_with_post_and_local_specifiers"
+
+[examples.Version."1!1.2.3-4"]
+valid = true
+normed = "1!1.2.3.post4"
+legacy = "spec.test_version_with_post_specifier_and_epoch"
+
+[examples.Version."1.2.3-4-dev5"]
+valid = true
+normed = "1.2.3.post4.dev5"
+legacy = "spec.test_version_with_dev_specifier_after_post"
+
+[examples.Version."1!1.2.3-4-dev2"]
+valid = true
+normed = "1!1.2.3.post4.dev2"
+legacy = "spec.test_version_with_epoch_and_wrong_order_specifiers"
+
+[examples.Version."1.2.3a1-4-dev5+local"]
+valid = true
+normed = "1.2.3a1.post4.dev5+local"
+legacy = "spec.test_version_with_complex_specifiers_and_local"
