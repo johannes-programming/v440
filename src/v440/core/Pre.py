@@ -26,44 +26,12 @@ class Pre(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        a: dict[str, str] = dict.fromkeys(("a", "b", "rc"), "")
-        f: dict[str, int] = dict.fromkeys(("a", "b", "rc"), -1)
-        u: dict[str, int] = dict.fromkeys(("a", "b", "rc"), -1)
-        o: Self
-        s: str
-        x: str
-        y: str
-        for s, o in info.items():
-            if s == "":
-                continue
-            x = s.rstrip(string_.digits)
-            if a == "":
-                a = x
-            elif a != x:
-                raise ValueError
-            y = s[len(x) :]
-            if u[o.lit] == -1 or u[o.lit] > len(y):
-                u[o.lit] = len(y)
-            if not y.startswith("0"):
-                continue
-            if y == "0" and x[-1] in ".-_":
-                continue
-            if f[o.lit] == -1:
-                f[o.lit] = len(y)
-                continue
-            if f[o.lit] != len(y):
-                raise ValueError
-        y = ""
+        ans: str = ""
+        strings: set
         for x in ("a", "b", "rc"):
-            if f[x] > u[x]:
-                raise ValueError
-            if a[x] == "":
-                continue
-            if f[x] == -1:
-                f[x] = 0
-            y += a[x]
-            y += "#" * f[x]
-        return y
+            strings = {s for s, o in info.items() if o.lit == x}
+            ans += forms.qualdeform(*strings, hollow=x + "#")
+        return ans
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:

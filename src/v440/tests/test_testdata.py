@@ -81,6 +81,13 @@ class TestStringExamples(unittest.TestCase):
         obj: Any = cls(example)
         if normed is not None:
             self.assertEqual(obj.string, normed)
+        spec: str = cls.deformat(example)
+        remake: str = format(obj, spec)
+        self.assertEqual(
+            example,
+            remake,
+            msg="example=%r, remake=%r, spec=%r" % (example, remake, spec),
+        )
 
 
 class TestVersionReleaseAttrs(unittest.TestCase):

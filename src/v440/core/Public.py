@@ -41,19 +41,21 @@ class Public(SlotStringer):
             x, y = cls._split(s)
             bases.append(x)
             quals.append(y)
-        s = Base.deformat(*bases)
-        s += Qual.deformat(*quals)
-        return s
+        x = Base.deformat(*bases)
+        y = Qual.deformat(*quals)
+        if x.endswith(".") and y and y[0] not in ".-_":
+            x += "#"
+        return x + y
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        i: int = int((spec != "") and (spec[0] in "vV"))
+        i: int = int(spec.lower().startswith("v"))
         while i < len(spec):
             if spec[i] in ("#!."):
                 i += 1
             else:
                 break
-        if i and spec[i - 1] == ".":
+        if i not in (0, len(spec)) and spec[i - 1] == ".":
             i -= 1
         ans: dict = dict(base_f=spec[:i], qual_f=spec[i:])
         return ans

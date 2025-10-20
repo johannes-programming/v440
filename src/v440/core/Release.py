@@ -52,15 +52,19 @@ class Release(ListStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        m: int = max(*map(len, info.values()))
+        m: int = 0
         s: str
+        for s in info.keys():
+            m = max(m, 1 + s.count("."))
         i: int
         t: str
         table: list[set] = list(map(set, [""] * m))
         for s in info.keys():
+            if s == "":
+                continue
             for i, t in enumerate(s.split(".")):
                 table[i].add(t)
-        ans: str = ".".join(map(table, cls._deformat_parts))
+        ans: str = ".".join(map(cls._deformat_parts, table))
         while ans.endswith(".0"):
             ans = ans[:-2]
         ans = ans.replace("0", "")
@@ -78,7 +82,7 @@ class Release(ListStringer):
                 continue
             if f != len(x):
                 raise ValueError
-        if f > min(*map(len, parts)):
+        if len(parts) and f > min(map(len, parts)):
             raise ValueError
         if f == -1:
             return "0"
@@ -98,9 +102,9 @@ class Release(ListStringer):
 
     def _format_parsed(self: Self, *, specs: tuple) -> str:
         data: list = list(self)
-        data += [0] * max(0, len(specs) - len(self))
+        data += [0] * max(0, 0, len(specs) - len(self))
         parts: list = list(specs)
-        parts += [""] * max(0, len(self) - len(specs))
+        parts += [""] * max(0, 0, len(self) - len(specs))
         ans: str = ".".join(map(format, data, parts))
         return ans
 

@@ -9,39 +9,34 @@ def none_empty(groupdict: dict, key: str) -> Any:
         return groupdict[key]
 
 
-def qualdeform(*strings: str) -> str:
-    a: str = ""
-    f: int = -1
-    u: int = -1
-    s: str
-    x: str
-    y: str
+def qualdeform(*strings: str, hollow: str) -> str:
+    lits: set = set()
+    nums: set = set()
     for s in strings:
-        if s == "":
-            continue
         x = s.rstrip(string_.digits)
-        if a == "":
-            a = x
-        elif a != x:
-            raise ValueError
         y = s[len(x) :]
-        if u == -1 or u > len(y):
-            u = len(y)
-        if not y.startswith("0"):
-            continue
-        if y == "0" and x[-1] in ".-_":
-            continue
-        if f == -1:
-            f = len(y)
-            continue
-        if f != len(y):
+        lits.add(x)
+        nums.add(y)
+    lits.discard("")
+    if len(lits) == 0:
+        return ""
+    (x,) = lits
+    u: int = min(1, *map(len, nums))
+    nums = set(len(y) for y in nums if y.startswith("0"))
+    f: int
+    if len(nums):
+        (f,) = nums
+        if f > u:
             raise ValueError
-    if f > u:
-        raise ValueError
-    if f == -1:
+    elif u == 0 or x[-1] in ".-_":
         f = 0
-    a += "#" * f
-    return a
+    else:
+        f = 1
+    x += f * "#"
+    if x == hollow:
+        return ""
+    else:
+        return x
 
 
 def qualform(mask: str, num: int) -> str:

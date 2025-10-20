@@ -122,7 +122,7 @@ class BaseStringer(metaclass=ABCMeta):
         except Exception:
             msg: str = Cfg.cfg.data["errors"]["deformat"]
             msg %= oxford(*strings)
-            raise TypeError(msg) from None
+            raise TypeError(msg)
         return ans
 
     @property

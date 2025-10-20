@@ -32,6 +32,7 @@ class Base(SlotStringer):
     def _cmp(self: Self) -> tuple:
         return self.epoch, self.release
 
+    @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
         table: dict = dict()
         table["basev"] = set()
@@ -43,7 +44,7 @@ class Base(SlotStringer):
         for s in info.keys():
             matches = Cfg.fullmatches("base", s)
             for t in ("basev", "epoch", "release"):
-                table[t].add(forms.none_empty(matches[t]))
+                table[t].add(forms.none_empty(matches, t))
         s = cls._deformat_basev(table["basev"])
         s += cls._deformat_epoch(table["epoch"])
         s += Release.deformat(*table["release"])

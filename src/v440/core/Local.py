@@ -32,38 +32,47 @@ class Local(ListStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self]) -> str:
-        m: int = max(*map(len, info.values()))
+        m: int = max(0, 0, *map(len, info.values()))
+        if m == 0:
+            return ""
         s: str
         t: str
         i: int
-        parts: list = list(map(set, [""] * m))
+        parts: list = list(map(set, [""] * (2 * m - 1)))
         for s in info.keys():
+            if s == "":
+                continue
             for i, t in enumerate(Cfg.cfg.patterns["local_splitter"].split(s)):
                 parts[i].add(t)
-        for i in range(0, m, 2):
+        print(parts)
+        for i in range(len(parts)):
             if i % 2:
                 (parts[i],) = parts[i]
             else:
                 parts[i] = cls._deformat_part(parts[i])
+        print(parts)
         s = "".join(parts)
         return s
 
     @classmethod
     def _deformat_part(cls: type, part: set[str]) -> str:
+        lits: set[str] = set()
+        nums: set[str] = set()
         s: str
-        data: set[int] = set(
-            len(s) for s in part if s.startswith("0") and not s.strip(string_.digits)
-        )
-        f: int
-        if len(data):
-            (f,) = data
-            if f > min(*map(len, part)):
-                raise ValueError
-        else:
-            f = 0
+        for s in part:
+            if s.strip(string_.digits):
+                lits.add(s)
+            else:
+                nums.add(s)
+        s = "#" * cls._deformat_nums(nums)
+        s += cls._deformat_lits(lits)
+        return s
+
+    @classmethod
+    def _deformat_lits(cls: type, part: set[str]) -> str:
         i: int
         n: int
-        cases: list = ["#"] * max(0, *map(len, part))
+        cases: list = ["#"] * max(0, 0, *map(len, part))
         for i, s in itertools.chain(*map(enumerate, part)):
             if s in string_.digits:
                 continue
@@ -75,9 +84,21 @@ class Local(ListStringer):
                 cases[i] = n
             elif n != cases[i]:
                 raise ValueError
-        s += "".join(cases).replace("#", "~").rstrip("~")
-        s = "#" * f + s
+        s = "".join(cases).replace("#", "~").rstrip("~")
         return s
+
+    @classmethod
+    def _deformat_nums(cls: type, part: set[str]) -> int:
+        if len(part) == 0:
+            return 0
+        t: Iterator = (len(s) for s in part if s.startswith("0"))
+        f: int = max(1, 1, *t)
+        if f > min(map(len, part)):
+            raise ValueError
+        elif f == 1:
+            return 0
+        else:
+            return f
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
