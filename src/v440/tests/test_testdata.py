@@ -76,12 +76,15 @@ class TestStringExamples(unittest.TestCase):
         /,
         *,
         normed: Optional[str] = None,
+        deformat: Optional[str] = None,
         **kwargs: Any,
     ) -> None:
         obj: Any = cls(example)
         if normed is not None:
             self.assertEqual(obj.string, normed)
         spec: str = cls.deformat(example)
+        if deformat is not None:
+            self.assertEqual(spec, deformat)
         remake: str = format(obj, spec)
         self.assertEqual(
             example,
@@ -124,37 +127,49 @@ class TestVersionReleaseAttrs(unittest.TestCase):
 class TestVersionReleaseVersionError(unittest.TestCase):
 
     def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["data-error"]["Release"].items():
-            with self.subTest(key=k):
-                self.go(**v)
+        x: str
+        y: dict
+        for x, y in Util.util.data["data-setter"].items():
+            with self.subTest(clsname=x):
+                self.go_clsname(x, y)
 
-    def go(
+    def go_clsname(
         self: Self,
-        query: list,
+        clsname: str,
+        legacy_table: dict,
+        /,
     ) -> None:
-        version: Version = Version()
+        cls: type = getattr(getattr(core, clsname), clsname)
+        x: str
+        y: dict
+        for x, y in legacy_table.items():
+            with self.subTest(legacy_name=x):
+                self.go_task(cls, **y)
+
+    def go_task(self: Self, *args: Any, valid: bool, **kwargs: Any) -> None:
+        if valid:
+            self.go_valid(*args, **kwargs)
+        else:
+            self.go_invalid(*args, **kwargs)
+
+    def go_invalid(self: Self, cls: type, /, *, query: list, **kwargs: Any) -> None:
+        obj: Any = cls()
         with self.assertRaises(VersionError):
-            version.public.base.release.data = query
+            obj.data = query
 
-
-class TestVersionLocalVersionError(unittest.TestCase):
-
-    def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["data-error"]["Local"].items():
-            with self.subTest(key=k):
-                self.go(**v)
-
-    def go(
+    def go_valid(
         self: Self,
+        cls: type,
+        /,
+        *,
         query: list,
+        solution: Optional[list] = None,
+        **kwargs: Any,
     ) -> None:
-        version: Version = Version()
-        with self.assertRaises(VersionError):
-            version.local.data = query
+        obj: Any = cls()
+        obj.data = query
+        if solution is not None:
+            self.assertListEqual(list(obj), solution)
 
 
 class TestVersionLocalGo(unittest.TestCase):
@@ -248,21 +263,6 @@ class TestDataProperty(unittest.TestCase):
         version: Version = Version()
         version.string = query
         self.assertEqual(solution, str(version), msg=msg)
-
-
-class TestVersionRelease(unittest.TestCase):
-
-    def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["release"].items():
-            with self.subTest(key=k):
-                self.go(**v)
-
-    def go(self: Self, query: list, solution: list) -> None:
-        release: Release = Release()
-        release.data = query
-        self.assertEqual(list(release), solution)
 
 
 class TestVersionSpecifiersGo(unittest.TestCase):

@@ -1,50 +1,97 @@
-[data-error.Release.test_release_invalid_assignment]
+[data-setter.Release.test_release_invalid_assignment]
+valid = false
 query = [
     "1",
     "invalid",
     "3",
 ]
 
-[data-error.Release.test_release_non_integer_elements]
+[data-setter.Release.test_release_non_integer_elements]
+valid = false
 query = [
     "invalid",
     2,
     3,
 ]
 
-[data-error.Release.test_release_invalid_float_value]
+[data-setter.Release.test_release_invalid_float_value]
+valid = false
 query = [
     1,
     2.5,
     3,
 ]
 
-[data-error.Release.test_release_invalid_boolean_assignment]
+[data-setter.Release.test_release_invalid_boolean_assignment]
+valid = false
 query = [
     "true",
     "false",
 ]
 
-[data-error.Release.test_release_invalid_value]
+[data-setter.Release.test_release_invalid_value]
+valid = false
 query = [
     "a",
     2,
     "3",
 ]
 
-[data-error.Local.test_local_invalid_value]
+[data-setter.Local.test_local_invalid_value]
+valid = false
 query = [
     "a",
     {},
     "3",
 ]
 
-[data-error.Local.test_local_non_string_elements]
+[data-setter.Local.test_local_non_string_elements]
+valid = false
 query = [
     1,
     [],
     "test",
 ]
+
+[data-setter.Release.test_release_basic_assignment]
+valid = true
+query = [
+    1,
+    2,
+    3,
+]
+solution = [
+    1,
+    2,
+    3,
+]
+
+[data-setter.Release.test_release_trailing_zeros]
+valid = true
+query = [
+    1,
+    2,
+    3,
+    0,
+    0,
+]
+solution = [
+    1,
+    2,
+    3,
+]
+
+[data-setter.Release.test_release_zero]
+valid = true
+query = [
+    0,
+]
+solution = []
+
+[data-setter.Release.test_release_empty_list]
+valid = true
+query = []
+solution = []
 
 [release-data.test_example_8]
 queryname = "string"
@@ -607,42 +654,6 @@ string_b = "1!1.2.3.post4.dev2"
 string_a = "1.2.3a1-4-dev5+local"
 string_b = "1.2.3a1.post4.dev5+local"
 
-[release.test_release_basic_assignment]
-query = [
-    1,
-    2,
-    3,
-]
-solution = [
-    1,
-    2,
-    3,
-]
-
-[release.test_release_trailing_zeros]
-query = [
-    1,
-    2,
-    3,
-    0,
-    0,
-]
-solution = [
-    1,
-    2,
-    3,
-]
-
-[release.test_release_zero]
-query = [
-    0,
-]
-solution = []
-
-[release.test_release_empty_list]
-query = []
-solution = []
-
 [data-property.local]
 query = "42!1.2.3.dev1337+5.nov"
 solution = "42!1.2.3.dev1337+5.nov"
@@ -983,12 +994,15 @@ valid = true
 
 [examples.Pre.rc1]
 valid = true
+normed = "rc1"
 
 [examples.Pre.c3]
 valid = true
+normed = "rc3"
 
 [examples.Pre.a]
 valid = true
+normed = "a0"
 
 [examples.Pre.alpha]
 valid = true
@@ -1166,6 +1180,8 @@ valid = false
 
 [examples.Version."1.0a"]
 valid = true
+normed = "1a0"
+deformat = ".#a"
 
 [examples.Version."1!"]
 valid = false
