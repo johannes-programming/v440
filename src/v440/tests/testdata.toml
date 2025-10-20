@@ -1,45 +1,45 @@
-[release-VersionError.test_release_invalid_assignment]
+[data-error.Release.test_release_invalid_assignment]
 query = [
     "1",
     "invalid",
     "3",
 ]
 
-[release-VersionError.test_release_non_integer_elements]
+[data-error.Release.test_release_non_integer_elements]
 query = [
     "invalid",
     2,
     3,
 ]
 
-[release-VersionError.test_release_invalid_float_value]
+[data-error.Release.test_release_invalid_float_value]
 query = [
     1,
     2.5,
     3,
 ]
 
-[release-VersionError.test_release_invalid_boolean_assignment]
+[data-error.Release.test_release_invalid_boolean_assignment]
 query = [
     "true",
     "false",
 ]
 
-[release-VersionError.test_release_invalid_value]
+[data-error.Release.test_release_invalid_value]
 query = [
     "a",
     2,
     "3",
 ]
 
-[local-VersionError.test_local_invalid_value]
+[data-error.Local.test_local_invalid_value]
 query = [
     "a",
     {},
     "3",
 ]
 
-[local-VersionError.test_local_non_string_elements]
+[data-error.Local.test_local_non_string_elements]
 query = [
     1,
     [],

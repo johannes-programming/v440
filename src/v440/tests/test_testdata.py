@@ -126,7 +126,7 @@ class TestVersionReleaseVersionError(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["release-VersionError"].items():
+        for k, v in Util.util.data["data-error"]["Release"].items():
             with self.subTest(key=k):
                 self.go(**v)
 
@@ -144,7 +144,7 @@ class TestVersionLocalVersionError(unittest.TestCase):
     def test_0(self: Self) -> None:
         k: str
         v: dict
-        for k, v in Util.util.data["local-VersionError"].items():
+        for k, v in Util.util.data["data-error"]["Local"].items():
             with self.subTest(key=k):
                 self.go(**v)
 
