@@ -76,15 +76,15 @@ class TestStringExamples(unittest.TestCase):
         /,
         *,
         normed: Optional[str] = None,
-        deformat: Optional[str] = None,
+        deformatted: Optional[str] = None,
         **kwargs: Any,
     ) -> None:
         obj: Any = cls(example)
         if normed is not None:
             self.assertEqual(obj.string, normed)
         spec: str = cls.deformat(example)
-        if deformat is not None:
-            self.assertEqual(spec, deformat)
+        if deformatted is not None:
+            self.assertEqual(spec, deformatted)
         remake: str = format(obj, spec)
         self.assertEqual(
             example,

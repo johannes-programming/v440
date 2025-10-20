@@ -1153,7 +1153,7 @@ valid = false
 [examples.Version."1.0a"]
 valid = true
 normed = "1a0"
-deformat = ".#a"
+deformatted = ".#a"
 
 [examples.Version."1!"]
 valid = false
@@ -1865,7 +1865,7 @@ legacy = "Test version with invalid specifiers that should raise an error"
 [examples.Version."1.2.3-4"]
 valid = true
 normed = "1.2.3.post4"
-deformat = "-"
+deformatted = "-"
 legacy = "spec.test_basic_version_with_post_specifier"
 
 [examples.Version."1.2.3a1-4"]
@@ -1881,6 +1881,7 @@ legacy = "spec.test_version_with_post_and_local_specifiers"
 [examples.Version."1!1.2.3-4"]
 valid = true
 normed = "1!1.2.3.post4"
+deformatted = "-"
 legacy = "spec.test_version_with_post_specifier_and_epoch"
 
 [examples.Version."1.2.3-4-dev5"]
