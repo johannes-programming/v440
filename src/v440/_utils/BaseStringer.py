@@ -132,7 +132,7 @@ class BaseStringer(metaclass=ABCMeta):
     @property
     def string(self: Self) -> str:
         "This property represents self as str."
-        return self._format("")
+        return format(self, "")
 
     @string.setter
     @guard

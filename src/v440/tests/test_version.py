@@ -1,8 +1,14 @@
 import unittest
 from typing import *
 
+from v440.core.Base import Base
+from v440.core.Dev import Dev
 from v440.core.Local import Local
+from v440.core.Post import Post
+from v440.core.Pre import Pre
+from v440.core.Public import Public
 from v440.core.Qual import Qual
+from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 

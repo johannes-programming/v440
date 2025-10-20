@@ -25,6 +25,64 @@ class Util(enum.Enum):
         return data
 
 
+class TestStringExamples(unittest.TestCase):
+    def test_versions(self: Self) -> None:
+        x: str
+        y: dict
+        for x, y in Util.util.data["examples"]["Version"].items():
+            with self.subTest(example=x):
+                self.go_version(x, **y)
+
+    def go_version(self: Self, example: str, /, *, valid: bool, **kwargs: Any) -> None:
+        if valid:
+            self.assertEqual(
+                packaging.version.Version(example), Version(example).packaging
+            )
+        else:
+            with self.assertRaises(packaging.version.InvalidVersion):
+                packaging.version.Version(example)
+
+    def test_0(self: Self) -> None:
+        x: str
+        y: dict
+        for x, y in Util.util.data["examples"].items():
+            with self.subTest(clsname=x):
+                self.go_examples(x, y)
+
+    def go_examples(self: Self, clsname: str, tables: dict) -> None:
+        cls: type = getattr(getattr(core, clsname), clsname)
+        x: str
+        y: dict
+        for x, y in tables.items():
+            with self.subTest(example=x):
+                self.go_example(cls, x, **y)
+
+    def go_example(self: Self, *args: Any, valid: bool, **kwargs: Any) -> None:
+        if valid:
+            self.go_valid_example(*args, **kwargs)
+        else:
+            self.go_invalid_example(*args, **kwargs)
+
+    def go_invalid_example(
+        self: Self, cls: type, example: str, /, **kwargs: Any
+    ) -> None:
+        with self.assertRaises(VersionError):
+            cls(example)
+
+    def go_valid_example(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        *,
+        normed: Optional[str] = None,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any = cls(example)
+        if normed is not None:
+            self.assertEqual(obj.string, normed)
+
+
 class TestVersionReleaseAttrs(unittest.TestCase):
 
     def test_0(self: Self) -> None:
@@ -219,12 +277,16 @@ class TestPackagingA(unittest.TestCase):
         s: str
         x: str
         y: list
-        for x, y in Util.util.data["strings"]["valid"].items():
-            for s in y:
-                with self.subTest(key=x):
-                    self.go(text=s)
+        for x, y in Util.util.data["examples"]["Version"].items():
+            with self.subTest(example=x):
+                self.go(x, **y)
 
-    def go(self: Self, text: str) -> None:
+    def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
+        if not valid:
+            return
+        self.go_format(text)
+
+    def go_format(self: Self, text: str) -> None:
         a: packaging.version.Version = packaging.version.Version(text)
         b: str = str(a)
         f: str = "#." * len(a.release)
@@ -232,72 +294,7 @@ class TestPackagingA(unittest.TestCase):
         g: str = format(Version(text), f)
         self.assertEqual(b, g)
 
-
-class TestPackagingB(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        x: str
-        y: list
-        for x, y in Util.util.data["strings"]["valid"].items():
-            with self.subTest(key=x):
-                self.go(y)
-
-    def go(self: Self, y: list) -> None:
-        a: packaging.version.Version
-        b: packaging.version.Version
-        s: str
-        msg: str
-        for s in y:
-            a = packaging.version.Version(s)
-            b = Version(s).packaging
-            msg = f"{s} should match packaging.version.Version"
-            self.assertEqual(a, b, msg=msg)
-
-
-class TestPackagingC(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        pure: list = list()
-        part: list
-        for part in Util.util.data["strings"]["valid"].values():
-            pure += part
-        ops: list = [
-            operator.eq,
-            operator.ne,
-            operator.gt,
-            operator.ge,
-            operator.le,
-            operator.lt,
-        ]
-        args: tuple
-        for args in iterprod.iterprod(pure, pure, ops):
-            with self.subTest(args=args):
-                self.go(*args)
-
-    def go(self: Self, x: str, y: str, func: Callable, /) -> None:
-        a: packaging.version.Version = packaging.version.Version(x)
-        b: packaging.version.Version = Version(string=x).packaging
-        c: packaging.version.Version = packaging.version.Version(y)
-        d: packaging.version.Version = Version(string=y).packaging
-        native: bool = func(a, c)
-        convert: bool = func(b, d)
-        msg: str = f"{func} should match for {x!r} and {y!r}"
-        self.assertEqual(native, convert, msg=msg)
-
-
-class TestPackagingField(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        k: str
-        l: list
-        for k, l in Util.util.data["strings"]["valid"].items():
-            with self.subTest(key=k):
-                self.go_list(l)
-
-    def go_list(self: Self, listing: list) -> None:
-        x: str
-        for x in listing:
-            with self.subTest():
-                self.go(query=x)
-
-    def go(self: Self, query: str) -> None:
+    def go_query(self: Self, query: str) -> None:
         msg: str = "query=%r" % query
         v: Version = Version(query)
         self.assertEqual(
@@ -335,34 +332,34 @@ class TestPackagingField(unittest.TestCase):
         )
 
 
-class TestPackagingExc(unittest.TestCase):
+class TestPackagingC(unittest.TestCase):
     def test_0(self: Self) -> None:
-        k: str
-        l: list
-        for k, l in Util.util.data["strings"]["exc"].items():
-            with self.subTest(key=k):
-                self.go_list(l)
+        pure: list = list()
+        for x, y in Util.util.data["examples"]["Version"].items():
+            if y["valid"]:
+                pure.append(x)
+        ops: list = [
+            operator.eq,
+            operator.ne,
+            operator.gt,
+            operator.ge,
+            operator.le,
+            operator.lt,
+        ]
+        args: tuple
+        for args in iterprod.iterprod(pure, pure, ops):
+            with self.subTest(args=args):
+                self.go(*args)
 
-    def go_list(self: Self, impure: list, /) -> None:
-        x: str
-        for x in impure:
-            with self.assertRaises(packaging.version.InvalidVersion):
-                packaging.version.Version(x)
-
-
-class TestExc(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        x: str
-        y: list
-        for x, y in Util.util.data["strings"]["exc"].items():
-            with self.subTest(test_label=x):
-                self.go(queries=y)
-
-    def go(self: Self, queries: list) -> None:
-        x: str
-        for x in queries:
-            with self.assertRaises(VersionError):
-                Version(x)
+    def go(self: Self, x: str, y: str, func: Callable, /) -> None:
+        a: packaging.version.Version = packaging.version.Version(x)
+        b: packaging.version.Version = Version(string=x).packaging
+        c: packaging.version.Version = packaging.version.Version(y)
+        d: packaging.version.Version = Version(string=y).packaging
+        native: bool = func(a, c)
+        convert: bool = func(b, d)
+        msg: str = f"{func} should match for {x!r} and {y!r}"
+        self.assertEqual(native, convert, msg=msg)
 
 
 class TestSlots(unittest.TestCase):
@@ -381,11 +378,7 @@ class TestSlots(unittest.TestCase):
         string: Any = None,
         isimported: Optional[bool] = False,
     ) -> None:
-        cls: type
-        if isimported:
-            cls = getattr(core, clsname)
-        else:
-            cls = getattr(getattr(core, clsname), clsname)
+        cls: type = getattr(getattr(core, clsname), clsname)
         obj: Any = cls(string=string)
         with self.assertRaises(AttributeError):
             setattr(obj, attrname, attrvalue)
