@@ -1,7 +1,7 @@
 [release-VersionError.test_release_invalid_assignment]
 query = [
-    "1", 
-    "invalid", 
+    "1",
+    "invalid",
     "3",
 ]
 
@@ -664,35 +664,51 @@ query = "1.2.3.4.5.6.7.8.9.10"
 start = -8
 stop = 15
 step = 5
-change = [7, 7, 7]
+change = [
+    7,
+    7,
+    7,
+]
 solution = "1.2.7.4.5.6.7.7.9.10.0.0.7"
 
 [slicingmethod.test_slicing_3]
 query = "1.2.3.4.5.6.7.8.9.10"
 start = 3
 stop = 4
-change = [777]
+change = [
+    777,
+]
 solution = "1.2.3.777.5.6.7.8.9.10"
 
 [slicingmethod.test_slicing_4]
 query = "1.2.3.4.5.6.7.8.9.10"
 start = 3
 stop = 4
-change = [7, 7, 7]
+change = [
+    7,
+    7,
+    7,
+]
 solution = "1.2.3.7.7.7.5.6.7.8.9.10"
 
 [slicingmethod.test_slicing_5]
 query = "1"
 start = 3
 stop = 4
-change = [7, 7, 7]
+change = [
+    7,
+    7,
+    7,
+]
 solution = "1.0.0.7.7.7"
 
 [slicingmethod.test_slicing_6]
 query = "1"
 start = 3
 stop = 4
-change = [777]
+change = [
+    777,
+]
 solution = "1.0.0.777"
 
 [epoch.test_epoch_as_int]
@@ -762,265 +778,398 @@ clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[release-key.test-major]
-steps = [
-    {name = "major", value = 10, solution = [10]}
+[[release-key.test-major.steps]]
+name = "major"
+value = 10
+solution = [
+    10,
 ]
 
-[release-key.test-minor]
-steps = [
-    {name = "minor", value = 1, solution = [0, 1] }
+[[release-key.test-minor.steps]]
+name = "minor"
+value = 1
+solution = [
+    0,
+    1,
 ]
 
-[release-key.test-micro]
-steps = [
-    {name = "micro",value = 1, solution = [0, 0, 1] }
+[[release-key.test-micro.steps]]
+name = "micro"
+value = 1
+solution = [
+    0,
+    0,
+    1,
 ]
 
-[release-key.test-patch]
-steps = [
-    {name = "patch", value = 5, solution = [0, 0, 5]}
+[[release-key.test-patch.steps]]
+name = "patch"
+value = 5
+solution = [
+    0,
+    0,
+    5,
 ]
 
-[release-key.modify-increase-length]
-steps = [
-    { name = "data", value = [1], solution = [1] },
-    { name = "minor", value = 5, solution = [1, 5] },
-    { name = "micro", value = 3, solution = [1, 5, 3] }
+[[release-key.modify-increase-length.steps]]
+name = "data"
+value = [
+    1,
+]
+solution = [
+    1,
+]
+
+[[release-key.modify-increase-length.steps]]
+name = "minor"
+value = 5
+solution = [
+    1,
+    5,
+]
+
+[[release-key.modify-increase-length.steps]]
+name = "micro"
+value = 3
+solution = [
+    1,
+    5,
+    3,
 ]
 
 [examples.Base.""]
 valid = false
+
 [examples.Base."0!0"]
 valid = true
+
 [examples.Base."1!1.2.3"]
 valid = true
+
 [examples.Base."2!0"]
 valid = true
+
 [examples.Base."3!10.0.7"]
 valid = true
+
 [examples.Base."1!"]
 valid = false
+
 [examples.Base."!1.2"]
 valid = false
+
 [examples.Base."1!-1"]
 valid = false
+
 [examples.Base."1!1.2.a"]
 valid = false
+
 [examples.Base."1.2.3"]
 valid = true
 
 [examples.Dev.""]
 valid = true
-[examples.Dev."dev0"]
+
+[examples.Dev.dev0]
 valid = true
 normed = ".dev0"
-[examples.Dev."dev1"]
+
+[examples.Dev.dev1]
 valid = true
-[examples.Dev."dev2"]
+
+[examples.Dev.dev2]
 valid = true
-[examples.Dev."dev01"]
+
+[examples.Dev.dev01]
 valid = true
-[examples.Dev."dev10"]
+
+[examples.Dev.dev10]
 valid = true
-[examples.Dev."dev"]
+
+[examples.Dev.dev]
 valid = true
 normed = ".dev0"
-[examples.Dev."dev-1"]
+
+[examples.Dev.dev-1]
 valid = true
 normed = ".dev1"
-[examples.Dev."deva"]
+
+[examples.Dev.deva]
 valid = false
-[examples.Dev."dev1a"]
+
+[examples.Dev.dev1a]
 valid = false
-[examples.Dev."d1"]
+
+[examples.Dev.d1]
 valid = false
 
 [examples.Local.""]
 valid = true
-[examples.Local."abc"]
+
+[examples.Local.abc]
 valid = true
+
 [examples.Local."abc.1"]
 valid = true
+
 [examples.Local."a1.b2"]
 valid = true
-[examples.Local."001"]
+
+[examples.Local.001]
 valid = true
+
 [examples.Local."abc.001.def"]
 valid = true
+
 [examples.Local."x1.y2.3"]
 valid = true
+
 [examples.Local."a..b"]
 valid = false
+
 [examples.Local.".abc"]
 valid = false
+
 [examples.Local."abc."]
 valid = false
+
 [examples.Local."a b"]
 valid = false
+
 [examples.Local."abc..1"]
 valid = false
 
 [examples.Post.""]
 valid = true
-[examples.Post."post0"]
+
+[examples.Post.post0]
 valid = true
-[examples.Post."post1"]
+
+[examples.Post.post1]
 valid = true
-[examples.Post."post2"]
+
+[examples.Post.post2]
 valid = true
-[examples.Post."post10"]
+
+[examples.Post.post10]
 valid = true
-[examples.Post."post01"]
+
+[examples.Post.post01]
 valid = true
-[examples.Post."post"]
+
+[examples.Post.post]
 valid = true
-[examples.Post."post-1"]
+
+[examples.Post.post-1]
 valid = true
-[examples.Post."p1"]
+
+[examples.Post.p1]
 valid = false
-[examples.Post."post1a"]
+
+[examples.Post.post1a]
 valid = false
 
 [examples.Pre.""]
 valid = true
-[examples.Pre."a1"]
+
+[examples.Pre.a1]
 valid = true
-[examples.Pre."alpha1"]
+
+[examples.Pre.alpha1]
 valid = true
-[examples.Pre."b2"]
+
+[examples.Pre.b2]
 valid = true
-[examples.Pre."rc1"]
+
+[examples.Pre.rc1]
 valid = true
-[examples.Pre."c3"]
+
+[examples.Pre.c3]
 valid = true
-[examples.Pre."a"]
+
+[examples.Pre.a]
 valid = true
-[examples.Pre."alpha"]
+
+[examples.Pre.alpha]
 valid = true
 normed = "a0"
-[examples.Pre."aLPha"]
+
+[examples.Pre.aLPha]
 valid = true
 normed = "a0"
-[examples.Pre."x1"]
+
+[examples.Pre.x1]
 valid = false
-[examples.Pre."pre1"]
+
+[examples.Pre.pre1]
 valid = true
-[examples.Pre."rc"]
+
+[examples.Pre.rc]
 valid = true
 normed = "rc0"
 
 [examples.Public.""]
 valid = false
+
 [examples.Public."0!0"]
 valid = true
+
 [examples.Public."1.2.3"]
 valid = true
+
 [examples.Public."1.2.3a1"]
 valid = true
+
 [examples.Public."1.2.3.post1"]
 valid = true
+
 [examples.Public."1.2.3a1.post1.dev2"]
 valid = true
+
 [examples.Public."1!1.0rc1.post2"]
 valid = true
+
 [examples.Public."1.0+loc"]
 valid = false
+
 [examples.Public."1.0.post1a1"]
 valid = false
+
 [examples.Public."1.0.post"]
 valid = true
+
 [examples.Public."1!"]
 valid = false
 
 [examples.Qual.""]
 valid = true
-[examples.Qual."a1"]
+
+[examples.Qual.a1]
 valid = true
-[examples.Qual."alpha1"]
+
+[examples.Qual.alpha1]
 valid = true
-[examples.Qual."post1"]
+
+[examples.Qual.post1]
 valid = true
-[examples.Qual."dev1"]
+
+[examples.Qual.dev1]
 valid = true
+
 [examples.Qual."a1.post1"]
 valid = true
+
 [examples.Qual."a1.post2.dev3"]
 valid = true
+
 [examples.Qual."rc1.dev2"]
 valid = true
-[examples.Qual."alpha"]
+
+[examples.Qual.alpha]
 valid = true
-[examples.Qual."post"]
+
+[examples.Qual.post]
 valid = true
-[examples.Qual."dev"]
+
+[examples.Qual.dev]
 valid = true
-[examples.Qual."alpha-1"]
+
+[examples.Qual.alpha-1]
 valid = true
-[examples.Qual."_AlPhA"]
+
+[examples.Qual._AlPhA]
 valid = true
-[examples.Qual."_AlPhA_0"]
+
+[examples.Qual._AlPhA_0]
 valid = true
-[examples.Qual."_AlPhA_"]
+
+[examples.Qual._AlPhA_]
 valid = false
-[examples.Qual."post-1"]
+
+[examples.Qual.post-1]
 valid = true
-[examples.Qual."_post-1"]
+
+[examples.Qual._post-1]
 valid = true
-[examples.Qual."a"]
+
+[examples.Qual.a]
 valid = true
 
 [examples.Release.""]
 valid = false
-[examples.Release."0"]
+
+[examples.Release.0]
 valid = true
-[examples.Release."1"]
+
+[examples.Release.1]
 valid = true
+
 [examples.Release."1.2"]
 valid = true
+
 [examples.Release."1.2.3"]
 valid = true
+
 [examples.Release."10.0.0"]
 valid = true
+
 [examples.Release."3.4.5.6"]
 valid = true
+
 [examples.Release."1."]
 valid = false
+
 [examples.Release.".1"]
 valid = false
+
 [examples.Release."1.-1"]
 valid = false
+
 [examples.Release."1.a"]
 valid = false
 
 [examples.Version.""]
 valid = false
-[examples.Version."0"]
+
+[examples.Version.0]
 valid = true
+
 [examples.Version."1.2.3a1"]
 valid = true
+
 [examples.Version."1.2.3a1.post1.dev2"]
 valid = true
+
 [examples.Version."1.2.3+abc"]
 valid = true
+
 [examples.Version."1.2.3+abc.1"]
 valid = true
+
 [examples.Version."1!1.0"]
 valid = true
+
 [examples.Version."0!1.0rc1+1.abc"]
 valid = true
+
 [examples.Version."2.0.post1"]
 valid = true
+
 [examples.Version."2.0.post1+local.1"]
 valid = true
+
 [examples.Version."not a version"]
 valid = false
+
 [examples.Version."1.0..1"]
 valid = false
+
 [examples.Version."1.0a"]
 valid = true
+
 [examples.Version."1!"]
 valid = false
+
 [examples.Version."1.0++a"]
 valid = false
 
@@ -1724,4 +1873,3 @@ legacy = "Test version with invalid specifiers that should raise an error"
 [examples.Version."1.2.3-4a1"]
 valid = false
 legacy = "Test version with invalid specifiers that should raise an error"
-
