@@ -761,7 +761,6 @@ string = "0"
 clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42
-isimported = true
 
 [release-key.test-major]
 steps = [
@@ -1511,6 +1510,7 @@ legacy = "Difficult Qualification Relations"
 
 [examples.Version."1.2.3a0.post10"]
 valid = true
+normed = "1.2.3a0.post10"
 legacy = "Difficult Qualification Relations"
 
 [examples.Version."1.2.3a0.post10.dev0"]
@@ -1520,6 +1520,10 @@ legacy = "Difficult Qualification Relations"
 [examples.Version."1.2.3a0.post10.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+
+[examples.Version."1.2.3a0.post_10"]
+valid = true
+normed = "1.2.3a0.post10"
 
 [examples.Version."1.2.3a0.post10.dev2"]
 valid = true

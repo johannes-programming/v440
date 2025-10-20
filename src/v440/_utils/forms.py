@@ -20,10 +20,8 @@ def qualdeform(*strings: str, hollow: str) -> str:
         (f,) = nums
         if f > u:
             raise ValueError
-    elif u == 0 or x[-1] in ".-_":
-        f = 0
     else:
-        f = 1
+        f = int(u != 0 and x[-1] not in ".-_")
     (x,) = lits
     x += f * "#"
     if x == hollow:

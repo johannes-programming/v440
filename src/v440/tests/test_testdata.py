@@ -383,7 +383,6 @@ class TestSlots(unittest.TestCase):
         attrname: str,
         attrvalue: Any,
         string: Any = None,
-        isimported: Optional[bool] = False,
     ) -> None:
         cls: type = getattr(getattr(core, clsname), clsname)
         obj: Any = cls(string=string)
