@@ -25,22 +25,7 @@ class Pre(QualStringer):
         return frozenset("1"), self.lit, self.num
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
-        return dict(matches=Cfg.cfg.fullmatches("pre_f", spec))
-
-    def _format_parsed(self: Self, *, matches: dict) -> str:
-        if not self:
-            return ""
-        match: Optional[str] = matches[f"pre_{self.lit}_f"]
-        ans: str
-        if match is None:
-            ans = self.lit + str(self.num)
-        else:
-            ans = forms.qualform(match, self.num)
-        return ans
-
-    @classmethod
-    def deformat(cls: type, *strings: str) -> str:
+    def _deformat(cls: type, info: dict[str, Self], /) -> str:
         a: dict[str, str] = dict.fromkeys(("a", "b", "rc"), "")
         f: dict[str, int] = dict.fromkeys(("a", "b", "rc"), -1)
         u: dict[str, int] = dict.fromkeys(("a", "b", "rc"), -1)
@@ -48,10 +33,9 @@ class Pre(QualStringer):
         s: str
         x: str
         y: str
-        for s in strings:
+        for s, o in info.items():
             if s == "":
                 continue
-            o = cls(s)
             x = s.rstrip(string_.digits)
             if a == "":
                 a = x
@@ -80,6 +64,21 @@ class Pre(QualStringer):
             y += a[x]
             y += "#" * f[x]
         return y
+
+    @classmethod
+    def _format_parse(cls: type, spec: str, /) -> dict:
+        return dict(matches=Cfg.cfg.fullmatches("pre_f", spec))
+
+    def _format_parsed(self: Self, *, matches: dict) -> str:
+        if not self:
+            return ""
+        match: Optional[str] = matches[f"pre_{self.lit}_f"]
+        ans: str
+        if match is None:
+            ans = self.lit + str(self.num)
+        else:
+            ans = forms.qualform(match, self.num)
+        return ans
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:

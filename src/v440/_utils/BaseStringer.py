@@ -3,7 +3,9 @@ from typing import *
 
 import setdoc
 import unhash
+from datarepr import oxford
 
+from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 
 __all__ = ["BaseStringer"]
@@ -32,7 +34,7 @@ class BaseStringer(metaclass=ABCMeta):
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
-            msg: str = "Invalid format specifier %r for object of type %r."
+            msg: str = Cfg.cfg.data["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise TypeError(msg) from None
         ans: str = str(self._format_parsed(**parsed))
@@ -94,6 +96,10 @@ class BaseStringer(metaclass=ABCMeta):
 
     @classmethod
     @abstractmethod
+    def _deformat(cls: type, info: dict[str, Self], /) -> Any: ...
+
+    @classmethod
+    @abstractmethod
     def _format_parse(self: Self, spec: str, /) -> dict: ...
 
     @abstractmethod
@@ -105,6 +111,19 @@ class BaseStringer(metaclass=ABCMeta):
     @setdoc.basic
     def copy(self: Self) -> Self:
         return type(self)(self)
+
+    @classmethod
+    def deformat(cls: type, *strings: Any) -> str:
+        keys: tuple = tuple(map(str, strings))
+        values: tuple = tuple(map(cls, keys))
+        info: dict = dict(zip(keys, values))
+        try:
+            ans: str = cls._deformat(info)
+        except Exception:
+            msg: str = Cfg.cfg.data["errors"]["deformat"]
+            msg %= oxford(*strings)
+            raise TypeError(msg) from None
+        return ans
 
     @property
     @abstractmethod

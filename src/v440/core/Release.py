@@ -6,6 +6,7 @@ from typing import *
 
 import keyalias
 import setdoc
+from iterprod import iterprod
 
 from v440._utils.ListStringer import ListStringer
 from v440._utils.releaseparse import deleting, getting, setting
@@ -48,6 +49,42 @@ class Release(ListStringer):
         while v and v[-1] == 0:
             v.pop()
         return v
+
+    @classmethod
+    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+        m: int = max(*map(len, info.values()))
+        s: str
+        i: int
+        t: str
+        table: list[set] = list(map(set, [""] * m))
+        for s in info.keys():
+            for i, t in enumerate(s.split(".")):
+                table[i].add(t)
+        ans: str = ".".join(map(table, cls._deformat_parts))
+        while ans.endswith(".0"):
+            ans = ans[:-2]
+        ans = ans.replace("0", "")
+        return ans
+
+    @classmethod
+    def _deformat_parts(cls: type, parts: set[str]) -> str:
+        f: int = -1
+        x: str
+        for x in parts:
+            if not x.startswith("0"):
+                continue
+            if f == -1:
+                f = len(x)
+                continue
+            if f != len(x):
+                raise ValueError
+        if f > min(*map(len, parts)):
+            raise ValueError
+        if f == -1:
+            return "0"
+        if f == 1:
+            return ""
+        return "#" * f
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:

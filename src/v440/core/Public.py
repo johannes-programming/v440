@@ -31,6 +31,21 @@ class Public(SlotStringer):
         return self.base, self.qual
 
     @classmethod
+    def _deformat(cls: type, info: dict[str, Self]) -> str:
+        bases: list = list()
+        quals: list = list()
+        s: str
+        x: str
+        y: str
+        for s in info.keys():
+            x, y = cls._split(s)
+            bases.append(x)
+            quals.append(y)
+        s = Base.deformat(*bases)
+        s += Qual.deformat(*quals)
+        return s
+
+    @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
         i: int = int((spec != "") and (spec[0] in "vV"))
         while i < len(spec):
@@ -48,13 +63,13 @@ class Public(SlotStringer):
 
     @classmethod
     def _split(cls: type, value: str) -> tuple[str, str]:
-        i: int = int(value.startswith("v"))
+        i: int = int(value.lower().startswith("v"))
         while i < len(value):
             if value[i] in (string_.digits + "!."):
                 i += 1
             else:
                 break
-        if value[:i].endswith("."):
+        if i and (value[i - 1] == "."):
             i -= 1
         return value[:i], value[i:]
 

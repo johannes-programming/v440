@@ -5,6 +5,8 @@ from typing import *
 
 import setdoc
 
+from v440._utils import forms
+from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Release import Release
@@ -29,6 +31,40 @@ class Base(SlotStringer):
 
     def _cmp(self: Self) -> tuple:
         return self.epoch, self.release
+
+    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+        table: dict = dict()
+        table["basev"] = set()
+        table["epoch"] = set()
+        table["release"] = set()
+        matches: dict
+        s: str
+        t: str
+        for s in info.keys():
+            matches = Cfg.fullmatches("base", s)
+            for t in ("basev", "epoch", "release"):
+                table[t].add(forms.none_empty(matches[t]))
+        s = cls._deformat_basev(table["basev"])
+        s += cls._deformat_epoch(table["epoch"])
+        s += Release.deformat(*table["release"])
+        return s
+
+    @classmethod
+    def _deformat_basev(cls: type, table: set) -> str:
+        if len(table) <= 1:
+            return next(iter(table), "")
+        raise ValueError
+
+    @classmethod
+    def _deformat_epoch(cls: type, table: set[str]) -> str:
+        data: set = set(len(x) for x in table if x.startswith("0") or x == "")
+        if data == set() or data == {0}:
+            return ""
+        if data == {1}:
+            return "!"
+        if len(data) == 1:
+            return "#" * data.pop() + "!"
+        raise ValueError
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
@@ -59,16 +95,12 @@ class Base(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        v: str = value
-        if v.startswith("v"):
-            v = v[1:]
-        if "!" not in v:
+        matches: dict = Cfg.fullmatches("base", value)
+        if matches["epoch"] is None:
             self.epoch = 0
-            self.release.string = v
-            return
-        parsed: Iterable = v.split("!")
-        self.epoch = int(parsed.pop(0))
-        (self.release.string,) = parsed
+        else:
+            self.epoch = int(matches["epoch"])
+        self.release.string = matches["release"]
 
     def _todict(self: Self) -> dict:
         return dict(epoch=self.epoch, release=self.release)

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import itertools
 import operator
 import string as string_
 from typing import *
 
 import setdoc
 
+from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440._utils.ListStringer import ListStringer
 
@@ -27,6 +29,55 @@ class Local(ListStringer):
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
         return tuple(map(cls._item_parse, value))
+
+    @classmethod
+    def _deformat(cls: type, info: dict[str, Self]) -> str:
+        m: int = max(*map(len, info.values()))
+        s: str
+        t: str
+        i: int
+        parts: list = list(map(set, [""] * m))
+        for s in info.keys():
+            for i, t in enumerate(Cfg.cfg.patterns["local_splitter"].split(s)):
+                parts[i].add(t)
+        for i in range(0, m, 2):
+            if i % 2:
+                (parts[i],) = parts[i]
+            else:
+                parts[i] = cls._deformat_part(parts[i])
+        s = "".join(parts)
+        return s
+
+    @classmethod
+    def _deformat_part(cls: type, part: set[str]) -> str:
+        s: str
+        data: set[int] = set(
+            len(s) for s in part if s.startswith("0") and not s.strip(string_.digits)
+        )
+        f: int
+        if len(data):
+            (f,) = data
+            if f > min(*map(len, part)):
+                raise ValueError
+        else:
+            f = 0
+        i: int
+        n: int
+        cases: list = ["#"] * max(0, *map(len, part))
+        for i, s in itertools.chain(*map(enumerate, part)):
+            if s in string_.digits:
+                continue
+            if s in string_.ascii_uppercase:
+                n = "^"
+            else:
+                n = "~"
+            if "#" == cases[i]:
+                cases[i] = n
+            elif n != cases[i]:
+                raise ValueError
+        s += "".join(cases).replace("#", "~").rstrip("~")
+        s = "#" * f + s
+        return s
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:

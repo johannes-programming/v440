@@ -1,3 +1,7 @@
+[errors]
+deformat = "No common format specifier for %s."
+format = "Invalid format specifier %r for object of type %r."
+
 [patterns]
 pre_a_f = "[-_\\.]?(ALPHA|A)[-_\\.]?\\#*"
 pre_b_f = "[-_\\.]?(BETA|B)[-_\\.]?\\#*"
@@ -8,10 +12,15 @@ dev_lit_f = "[-_\\.]?DEV[-_\\.]?"
 dev_num_f = "\\#*"
 dev_f = "({dev_lit_f}{dev_num_f})?"
 qual_f = "{pre_f}{post_f}{dev_f}"
+basev = "v"
+epoch = "[0-9]+"
+release = "[0-9]+(\\.[0-9]+)*"
+base = "{basev}?({epoch}!)?{release}"
 pre = "[-_\\.]?(ALPHA|A|BETA|B|PREVIEW|PRE|C|RC)([-_\\.]?[0-9]+)?"
 post = "(-([0-9]+))|(([-_\\.]?(POST|REV|R))([-_\\.]?([0-9]+))?)"
 dev = "[-_\\.]?DEV([-_\\.]?[0-9]+)?"
 qual = "{pre}?{post}?{dev}?"
+local_splitter = "([-_\\.])"
 
 [phases]
 alpha = "a"

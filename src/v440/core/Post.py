@@ -26,6 +26,10 @@ class Post(QualStringer):
             return -1
 
     @classmethod
+    def _deformat(cls: type, info: dict, /) -> str:
+        return forms.qualdeform(*info.keys())
+
+    @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:
         Cfg.cfg.fullmatches("post_f", spec)
         return dict(spec=spec)
@@ -44,11 +48,6 @@ class Post(QualStringer):
             return "post"
         else:
             raise ValueError
-
-    @classmethod
-    def deformat(cls: type, *strings: str) -> str:
-        tuple(map(cls, strings))
-        return forms.qualdeform(*strings)
 
     @property
     def packaging(self: Self) -> Optional[int]:
