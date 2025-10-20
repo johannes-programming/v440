@@ -52,9 +52,9 @@ class Qual(SlotStringer):
         s: str
         for s in info.keys():
             matches = Cfg.fullmatches("qual", s)
-            pres.append(forms.none_empty(matches, "pre"))
-            posts.append(forms.none_empty(matches, "post"))
-            devs.append(forms.none_empty(matches, "dev"))
+            pres.append(matches["pre"])
+            posts.append(matches["post"])
+            devs.append(matches["dev"])
         s = Pre.deformat(*pres)
         s += Post.deformat(*posts)
         s += Dev.deformat(*devs)
@@ -62,19 +62,29 @@ class Qual(SlotStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        return dict(matches=Cfg.fullmatches("qual_f", spec))
+        j: int = spec.lower().find("dev")
+        if j == -1:
+            j = len(spec)
+        elif j and spec[j - 1] in ".-_":
+            j -= 1
+        matches: dict = Cfg.fullmatches("pre_and_post_f", spec[:j])
+        return dict(
+            pre_f=matches["pre_f"],
+            post_f=matches["post_f"],
+            dev_f=spec[j:],
+        )
 
-    def _format_parsed(self: Self, *, matches: dict) -> str:
-        ans: str = format(self.pre, matches["pre_f"])
-        ans += format(self.post, matches["post_f"])
-        ans += format(self.dev, matches["dev_f"])
+    def _format_parsed(self: Self, *, pre_f: str, post_f: str, dev_f: str) -> str:
+        ans: str = format(self.pre, pre_f)
+        ans += format(self.post, post_f)
+        ans += format(self.dev, dev_f)
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
         matches: dict = Cfg.fullmatches("qual", value)
-        self.pre.string = forms.none_empty(matches, "pre")
-        self.post.string = forms.none_empty(matches, "post")
-        self.dev.string = forms.none_empty(matches, "dev")
+        self.pre.string = matches["pre"]
+        self.post.string = matches["post"]
+        self.dev.string = matches["dev"]
 
     def _todict(self: Self) -> dict:
         return dict(pre=self.pre, post=self.post, dev=self.dev)

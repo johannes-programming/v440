@@ -19,8 +19,13 @@ class Cfg(enum.Enum):
         return ans
 
     @classmethod
-    def fullmatches(cls: type, key: str, value: str) -> dict:
-        return cls.cfg.patterns[key].fullmatch(value).groupdict()
+    def fullmatches(cls: type, key: str, value: str) -> dict[str, str]:
+        ans: dict = cls.cfg.patterns[key].fullmatch(value).groupdict()
+        x: str
+        for x in ans.keys():
+            if ans[x] is None:
+                ans[x] = ""
+        return ans
 
     @functools.cached_property
     def patterns(self: Self) -> dict[str, re.Pattern]:

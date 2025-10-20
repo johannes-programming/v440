@@ -41,12 +41,10 @@ class Pre(QualStringer):
         if not self:
             return ""
         match: Optional[str] = matches[f"pre_{self.lit}_f"]
-        ans: str
-        if match is None:
-            ans = self.lit + str(self.num)
+        if match:
+            return forms.qualform(match, self.num)
         else:
-            ans = forms.qualform(match, self.num)
-        return ans
+            return self.lit + str(self.num)
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:

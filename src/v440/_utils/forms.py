@@ -2,13 +2,6 @@ import string as string_
 from typing import *
 
 
-def none_empty(groupdict: dict, key: str) -> Any:
-    if groupdict[key] is None:
-        return ""
-    else:
-        return groupdict[key]
-
-
 def qualdeform(*strings: str, hollow: str) -> str:
     lits: set = set()
     nums: set = set()
@@ -20,8 +13,7 @@ def qualdeform(*strings: str, hollow: str) -> str:
     lits.discard("")
     if len(lits) == 0:
         return ""
-    (x,) = lits
-    u: int = min(1, *map(len, nums))
+    u: int = min(map(len, nums))
     nums = set(len(y) for y in nums if y.startswith("0"))
     f: int
     if len(nums):
@@ -32,6 +24,7 @@ def qualdeform(*strings: str, hollow: str) -> str:
         f = 0
     else:
         f = 1
+    (x,) = lits
     x += f * "#"
     if x == hollow:
         return ""

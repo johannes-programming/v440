@@ -44,7 +44,7 @@ class Base(SlotStringer):
         for s in info.keys():
             matches = Cfg.fullmatches("base", s)
             for t in ("basev", "epoch", "release"):
-                table[t].add(forms.none_empty(matches, t))
+                table[t].add(matches[t])
         s = cls._deformat_basev(table["basev"])
         s += cls._deformat_epoch(table["epoch"])
         s += Release.deformat(*table["release"])
@@ -97,10 +97,10 @@ class Base(SlotStringer):
 
     def _string_fset(self: Self, value: str) -> None:
         matches: dict = Cfg.fullmatches("base", value)
-        if matches["epoch"] is None:
-            self.epoch = 0
-        else:
+        if matches["epoch"]:
             self.epoch = int(matches["epoch"])
+        else:
+            self.epoch = 0
         self.release.string = matches["release"]
 
     def _todict(self: Self) -> dict:

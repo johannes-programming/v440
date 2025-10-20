@@ -55,7 +55,7 @@ class Public(SlotStringer):
                 i += 1
             else:
                 break
-        if i not in (0, len(spec)) and spec[i - 1] == ".":
+        if i != 0 and spec[i - 1] == "." and i != len(spec) and spec[i] not in "-_":
             i -= 1
         ans: dict = dict(base_f=spec[:i], qual_f=spec[i:])
         return ans

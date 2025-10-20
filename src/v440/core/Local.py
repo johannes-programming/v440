@@ -44,13 +44,11 @@ class Local(ListStringer):
                 continue
             for i, t in enumerate(Cfg.cfg.patterns["local_splitter"].split(s)):
                 parts[i].add(t)
-        print(parts)
         for i in range(len(parts)):
             if i % 2:
                 (parts[i],) = parts[i]
             else:
                 parts[i] = cls._deformat_part(parts[i])
-        print(parts)
         s = "".join(parts)
         return s
 
