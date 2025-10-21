@@ -16,8 +16,8 @@ def qualdeform(*strings: str, hollow: str) -> str:
     (x,) = lits
     u: int = min(map(len, nums))
     nums = set(len(y) for y in nums if y.startswith("0"))
-    f: int
-    if len(nums):
+    f: int = max(-1, -1, *nums)
+    if f != -1:
         (f,) = nums
         if f > u:
             raise ValueError
