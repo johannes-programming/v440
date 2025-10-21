@@ -1130,6 +1130,13 @@ valid = false
 [examples.Release."1.a"]
 valid = false
 
+[examples.Version."v1.0.0"]
+valid = true
+legacy = "test_example_1"
+normed = "1"
+deformatted = "v.."
+formatted = { "#.#.#" = "1.0.0" }
+
 [examples.Version.""]
 valid = false
 

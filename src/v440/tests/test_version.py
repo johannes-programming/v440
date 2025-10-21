@@ -96,11 +96,6 @@ class TestPre(unittest.TestCase):
 
 class TestExample(unittest.TestCase):
 
-    def test_example_1(self: Self) -> None:
-        v: Version = Version("v1.0.0")
-        self.assertEqual(str(v), "1")  # Initial version
-        self.assertEqual(format(v, "#.#.#"), "1.0.0")  # Initial version formatted
-
     def test_example_2(self: Self) -> None:
         v: Version = Version("2.5.3")
         self.assertEqual(str(v), "2.5.3")  # Modified version
