@@ -1946,6 +1946,11 @@ valid = true
 normed = ".dev5"
 deformatted = "-dev"
 
+[examples.Dev.".dev5"]
+valid = true
+normed = ".dev5"
+deformatted = ""
+
 [examples.Version."1!1.2.3-4-dev2"]
 valid = true
 normed = "1!1.2.3.post4.dev2"
