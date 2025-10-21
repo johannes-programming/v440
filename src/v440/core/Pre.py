@@ -30,7 +30,7 @@ class Pre(QualStringer):
         strings: set
         for x in ("a", "b", "rc"):
             strings = {s for s, o in info.items() if o.lit == x}
-            ans += forms.qualdeform(*strings, hollow=x + "#")
+            ans += forms.qualdeform(*strings, hollow=x)
         return ans
 
     @classmethod

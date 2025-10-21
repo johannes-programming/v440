@@ -27,7 +27,7 @@ class Post(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict, /) -> str:
-        return forms.qualdeform(*info.keys(), hollow=".post#")
+        return forms.qualdeform(*info.keys(), hollow=".post")
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:

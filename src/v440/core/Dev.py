@@ -27,7 +27,7 @@ class Dev(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict, /) -> str:
-        return forms.qualdeform(*info.keys(), hollow=".dev#")
+        return forms.qualdeform(*info.keys(), hollow=".dev")
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:

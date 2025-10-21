@@ -22,14 +22,12 @@ def qualdeform(*strings: str, hollow: str) -> str:
         if f > u:
             raise ValueError
     else:
-        f = int(u != 0)
+        f = min(u, int(x == hollow))
+    if f == 1 and x == hollow:
+        return ""
     if f == 1 and x[-1] in ".-_":
         f = 0
-    x += f * "#"
-    if x == hollow:
-        return ""
-    else:
-        return x
+    return x + "#" * f
 
 
 def qualform(mask: str, num: int) -> str:

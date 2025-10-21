@@ -1938,7 +1938,13 @@ legacy = "spec.test_version_with_post_specifier_and_epoch"
 [examples.Version."1.2.3-4-dev5"]
 valid = true
 normed = "1.2.3.post4.dev5"
+deformatted = "--dev"
 legacy = "spec.test_version_with_dev_specifier_after_post"
+
+[examples.Dev."-dev5"]
+valid = true
+normed = ".dev5"
+deformatted = "-dev"
 
 [examples.Version."1!1.2.3-4-dev2"]
 valid = true
