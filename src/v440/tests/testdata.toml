@@ -994,6 +994,14 @@ valid = true
 valid = true
 normed = "rc0"
 
+[examples.Pre.b1]
+valid = true
+
+[examples.Pre.b1.formatted]
+"" = "b1"
+BETA = "BETA1"
+"a###" = "b1"
+
 [examples.Public.""]
 valid = false
 
@@ -1080,6 +1088,14 @@ valid = true
 
 [examples.Qual.a]
 valid = true
+
+[examples.Qual.b1]
+valid = true
+
+[examples.Qual.b1.formatted]
+"" = "b1"
+BETA = "BETA1"
+"a###" = "b1"
 
 [examples.Release.""]
 valid = false
@@ -1717,6 +1733,11 @@ legacy = "Difficult Qualification Relations"
 [examples.Version."1.2.3b1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+
+[examples.Version."1.2.3b1".formatted]
+"" = "1.2.3b1"
+BETA = "1.2.3BETA1"
+"##_dEv" = "01.2.3b1"
 
 [examples.Version."1.2.3b1.dev0"]
 valid = true

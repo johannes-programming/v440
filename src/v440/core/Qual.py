@@ -4,7 +4,6 @@ from typing import *
 
 import setdoc
 
-from v440._utils import forms
 from v440._utils.Cfg import Cfg
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
@@ -45,19 +44,19 @@ class Qual(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        pres: list = list()
-        posts: list = list()
-        devs: list = list()
-        matches: dict
+        table: dict[set[str]] = dict()
+        matches: dict[str, str]
         s: str
+        t: str
+        for t in ("pre", "post", "dev"):
+            table[t] = set()
         for s in info.keys():
             matches = Cfg.fullmatches("qual", s)
-            pres.append(matches["pre"])
-            posts.append(matches["post"])
-            devs.append(matches["dev"])
-        s = Pre.deformat(*pres)
-        s += Post.deformat(*posts)
-        s += Dev.deformat(*devs)
+            for t in ("pre", "post", "dev"):
+                table[t].add(matches[t])
+        s = Pre.deformat(*table["pre"])
+        s += Post.deformat(*table["post"])
+        s += Dev.deformat(*table["dev"])
         return s
 
     @classmethod

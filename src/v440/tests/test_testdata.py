@@ -71,20 +71,63 @@ class TestStringExamples(unittest.TestCase):
 
     def go_valid_example(
         self: Self,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
+        self.go_valid_example_normed(*args, **kwargs)
+        self.go_valid_example_formatted(*args, **kwargs)
+        self.go_valid_example_deformatted(*args, **kwargs)
+        self.go_valid_example_remake(*args, **kwargs)
+
+    def go_valid_example_normed(
+        self: Self,
         cls: type,
         example: str,
         /,
         *,
         normed: Optional[str] = None,
-        deformatted: Optional[str] = None,
         **kwargs: Any,
     ) -> None:
         obj: Any = cls(example)
         if normed is not None:
             self.assertEqual(obj.string, normed)
+
+    def go_valid_example_formatted(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        *,
+        formatted: Iterable = (),
+        **kwargs: Any,
+    ) -> None:
+        obj: Any = cls(example)
+        for x, y in dict(formatted).items():
+            with self.subTest(spec=x, target=y):
+                self.assertEqual(y, format(obj, x))
+
+    def go_valid_example_deformatted(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        *,
+        deformatted: Optional[str] = None,
+        **kwargs: Any,
+    ) -> None:
         spec: str = cls.deformat(example)
         if deformatted is not None:
             self.assertEqual(spec, deformatted)
+
+    def go_valid_example_remake(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any = cls(example)
+        spec: str = cls.deformat(example)
         remake: str = format(obj, spec)
         self.assertEqual(
             example,
