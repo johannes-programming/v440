@@ -19,10 +19,9 @@ def qualdeform(*strings: str, hollow: str) -> str:
     for y in nums:
         if y.startswith("0"):
             f = max(f, len(y))
-    if f != -1:
-        if f > u:
-            raise ValueError
-    else:
+    if f > u:
+        raise ValueError
+    if f == -1:
         f = min(u, int(x == hollow))
     if f == 1 and x == hollow:
         return ""
