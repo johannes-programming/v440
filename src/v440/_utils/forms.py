@@ -21,10 +21,10 @@ def qualdeform(*strings: str, hollow: str) -> str:
             f = max(f, len(y))
     if f > u:
         raise ValueError
-    if f == -1:
-        f = min(u, int(x == hollow))
-    if f == 1 and x == hollow:
+    if x == hollow and f in (-1, 1) and u:
         return ""
+    if f == -1:
+        f = 0
     if f == 1 and x[-1] in ".-_":
         f = 0
     return x + "#" * f
