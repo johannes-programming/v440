@@ -1122,12 +1122,15 @@ valid = true
 
 [examples.Release."1.2.3"]
 valid = true
+deformatted = ""
 
 [examples.Release."10.0.0"]
 valid = true
+deformatted = ".."
 
 [examples.Release."3.4.5.6"]
 valid = true
+deformatted = ""
 
 [examples.Release."1."]
 valid = false
@@ -1140,6 +1143,7 @@ valid = false
 
 [examples.Release."1.a"]
 valid = false
+deformatted = ".a"
 
 [examples.Version."v1.0.0"]
 valid = true
