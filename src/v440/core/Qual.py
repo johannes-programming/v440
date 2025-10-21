@@ -55,9 +55,16 @@ class Qual(SlotStringer):
             for t in ("pre", "post", "dev"):
                 table[t].add(matches[t])
         s = Pre.deformat(*table["pre"])
-        s += Post.deformat(*table["post"])
-        s += Dev.deformat(*table["dev"])
+        s = cls._deformat_join(s, Post.deformat(*table["post"]))
+        s = cls._deformat_join(s, Dev.deformat(*table["dev"]))
         return s
+
+    @classmethod
+    def _deformat_join(cls: type, left: str, right: str) -> str:
+        if left == "" or left[-1] in "#.-_" or right == "" or right[0] in "#.-_":
+            return left + right
+        else:
+            return left + "#" + right
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:

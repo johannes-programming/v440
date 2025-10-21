@@ -50,7 +50,7 @@ class TestDeformatting(unittest.TestCase):
     def go_invalid_example(
         self: Self, cls: type, example: tuple[str], /, **kwargs: Any
     ) -> None:
-        with self.assertRaises(VersionError):
+        with self.assertRaises(TypeError):
             cls.deformat(*example)
 
     def go_valid_example(

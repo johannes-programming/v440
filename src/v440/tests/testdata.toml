@@ -1964,3 +1964,10 @@ legacy = "spec.test_version_with_complex_specifiers_and_local"
 [deformatting.Version.""]
 valid = true
 solution = ""
+
+[deformatting.Version."1.2.3 v9.8"]
+valid = false
+
+[deformatting.Qual."beta1 dev.2"]
+valid = true
+solution = "beta#dev."
