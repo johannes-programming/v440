@@ -5,7 +5,6 @@ from typing import *
 
 import setdoc
 
-from v440._utils import forms
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440._utils.SlotStringer import SlotStringer

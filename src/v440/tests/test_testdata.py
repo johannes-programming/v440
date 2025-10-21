@@ -34,13 +34,69 @@ class TestStringExamples(unittest.TestCase):
                 self.go_version(x, **y)
 
     def go_version(self: Self, example: str, /, *, valid: bool, **kwargs: Any) -> None:
-        if valid:
-            self.assertEqual(
-                packaging.version.Version(example), Version(example).packaging
-            )
-        else:
+        if not valid:
             with self.assertRaises(packaging.version.InvalidVersion):
                 packaging.version.Version(example)
+            return
+        s: str
+        x: Version = Version(example)
+        y: packaging.version.Version = packaging.version.Version(example)
+        self.assertEqual(y, x.packaging)
+        s = y.base_version
+        while s.endswith(".0"):
+            s = s[:-2]
+        self.assertTrue(s, x.public.base.packaging)
+        self.assertEqual(
+            y.dev,
+            x.public.qual.dev.packaging,
+        )
+        self.assertEqual(
+            y.local,
+            x.local.packaging,
+        )
+        self.assertEqual(
+            y.is_devrelease,
+            x.public.qual.isdevrelease(),
+        )
+        self.assertEqual(
+            y.is_postrelease,
+            x.public.qual.ispostrelease(),
+        )
+        self.assertEqual(
+            y.is_prerelease,
+            x.public.qual.isprerelease(),
+        )
+        self.assertEqual(
+            y.major,
+            x.public.base.release.major,
+        )
+        self.assertEqual(
+            y.micro,
+            x.public.base.release.micro,
+        )
+        self.assertEqual(
+            y.minor,
+            x.public.base.release.minor,
+        )
+        self.assertEqual(
+            y.post,
+            x.public.qual.post.packaging,
+        )
+        self.assertEqual(
+            y.pre,
+            x.public.qual.pre.packaging,
+        )
+        s = y.public
+        self.assertTrue(s.startswith(x.public.base.packaging))
+        s = s[len(x.public.base.packaging) :]
+        self.assertTrue(s.endswith(x.public.qual.packaging))
+        if x.public.qual.packaging:
+            s = s[: -len(x.public.qual.packaging)]
+        self.assertEqual(s, ".0" * (len(s) // 2))
+        self.assertEqual(
+            y.release[: len(x.public.base.release)],
+            x.public.base.release.packaging,
+        )
 
     def test_0(self: Self) -> None:
         x: str
@@ -328,43 +384,6 @@ class TestPackagingA(unittest.TestCase):
         f = f[:-1]
         g: str = format(Version(text), f)
         self.assertEqual(b, g)
-
-    def go_query(self: Self, query: str) -> None:
-        msg: str = "query=%r" % query
-        v: Version = Version(query)
-        self.assertEqual(
-            v.public.qual.isdevrelease(),
-            v.packaging.is_devrelease,
-            msg=msg,
-        )
-        self.assertEqual(
-            v.public.qual.isprerelease(),
-            v.packaging.is_prerelease,
-            msg=msg,
-        )
-        self.assertEqual(
-            v.public.qual.ispostrelease(),
-            v.packaging.is_postrelease,
-            msg=msg,
-        )
-        self.assertEqual(
-            str(v.public.base),
-            v.packaging.base_version,
-            msg=msg,
-        )
-        self.assertEqual(
-            str(v.public),
-            v.packaging.public,
-            msg=msg,
-        )
-        local_packaging: Optional[str] = v.packaging.local
-        if local_packaging is None:
-            local_packaging = ""
-        self.assertEqual(
-            str(v.local),
-            str(local_packaging),
-            msg=msg,
-        )
 
 
 class TestPackagingC(unittest.TestCase):
