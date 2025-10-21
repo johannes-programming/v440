@@ -1007,6 +1007,8 @@ valid = false
 
 [examples.Public."0!0"]
 valid = true
+normed = "0"
+deformatted = "!"
 
 [examples.Public."1.2.3"]
 valid = true
@@ -1073,9 +1075,18 @@ valid = true
 
 [examples.Qual._AlPhA]
 valid = true
+normed = "a0"
+deformatted = "_AlPhA"
 
 [examples.Qual._AlPhA_0]
 valid = true
+normed = "a0"
+deformatted = "_AlPhA_"
+
+[examples.Pre._AlPhA_0]
+valid = true
+normed = "a0"
+deformatted = "_AlPhA_"
 
 [examples.Qual._AlPhA_]
 valid = false

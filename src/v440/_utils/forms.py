@@ -13,6 +13,7 @@ def qualdeform(*strings: str, hollow: str) -> str:
     lits.discard("")
     if len(lits) == 0:
         return ""
+    (x,) = lits
     u: int = min(map(len, nums))
     nums = set(len(y) for y in nums if y.startswith("0"))
     f: int
@@ -21,8 +22,9 @@ def qualdeform(*strings: str, hollow: str) -> str:
         if f > u:
             raise ValueError
     else:
-        f = int(u != 0 and x[-1] not in ".-_")
-    (x,) = lits
+        f = int(u != 0)
+    if f == 1 and x[-1] in ".-_":
+        f = 0
     x += f * "#"
     if x == hollow:
         return ""
