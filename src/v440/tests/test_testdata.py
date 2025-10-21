@@ -107,17 +107,17 @@ class TestStringExamples(unittest.TestCase):
 
     def go_examples(self: Self, clsname: str, tables: dict) -> None:
         cls: type = getattr(getattr(core, clsname), clsname)
+        split: dict = {False: dict(), True: dict()}
         x: str
         y: dict
         for x, y in tables.items():
-            with self.subTest(example=x):
-                self.go_example(cls, x, **y)
-
-    def go_example(self: Self, *args: Any, valid: bool, **kwargs: Any) -> None:
-        if valid:
-            self.go_valid_example(*args, **kwargs)
-        else:
-            self.go_invalid_example(*args, **kwargs)
+            split[y["valid"]][x] = y
+        for x, y in split[False].items():
+            with self.subTest(valid=False, example=x):
+                self.go_invalid_example(cls, x, **y)
+        for x, y in split[True].items():
+            with self.subTest(valid=True, example=x):
+                self.go_valid_example(cls, x, **y)
 
     def go_invalid_example(
         self: Self, cls: type, example: str, /, **kwargs: Any
@@ -130,10 +130,19 @@ class TestStringExamples(unittest.TestCase):
         *args: Any,
         **kwargs: Any,
     ) -> None:
+        self.go_valid_example_string(*args, **kwargs)
         self.go_valid_example_normed(*args, **kwargs)
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
+
+    def go_valid_example_string(
+        self: Self, cls: type, example: str, /, **kwargs
+    ) -> None:
+        obj: Any = cls(example)
+        self.assertEqual(str(obj), obj.string)
+        self.assertEqual(str(obj), format(obj))
+        self.assertEqual(str(obj), format(obj, ""))
 
     def go_valid_example_normed(
         self: Self,
