@@ -25,6 +25,47 @@ class Util(enum.Enum):
         return data
 
 
+class TestDeformatting(unittest.TestCase):
+    def test_0(self: Self) -> None:
+        x: str
+        y: dict
+        for x, y in Util.util.data["deformatting"].items():
+            with self.subTest(clsname=x):
+                self.go_examples(x, y)
+
+    def go_examples(self: Self, clsname: str, tables: dict) -> None:
+        cls: type = getattr(getattr(core, clsname), clsname)
+        split: dict = {False: dict(), True: dict()}
+        x: str
+        y: dict
+        for x, y in tables.items():
+            split[y["valid"]][tuple(x.split())] = y
+        for x, y in split[False].items():
+            with self.subTest(valid=False, example=x):
+                self.go_invalid_example(cls, x, **y)
+        for x, y in split[True].items():
+            with self.subTest(valid=True, example=x):
+                self.go_valid_example(cls, x, **y)
+
+    def go_invalid_example(
+        self: Self, cls: type, example: tuple[str], /, **kwargs: Any
+    ) -> None:
+        with self.assertRaises(VersionError):
+            cls.deformat(*example)
+
+    def go_valid_example(
+        self: Self,
+        cls: type,
+        example: tuple[str],
+        /,
+        *,
+        solution: Optional[str] = None,
+        **kwargs: Any,
+    ) -> None:
+        if solution is not None:
+            self.assertEqual(solution, cls.deformat(*example))
+
+
 class TestStringExamples(unittest.TestCase):
     def test_versions(self: Self) -> None:
         x: str

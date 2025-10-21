@@ -1960,3 +1960,7 @@ legacy = "spec.test_version_with_epoch_and_wrong_order_specifiers"
 valid = true
 normed = "1.2.3a1.post4.dev5+local"
 legacy = "spec.test_version_with_complex_specifiers_and_local"
+
+[deformatting.Version.""]
+valid = true
+solution = ""
