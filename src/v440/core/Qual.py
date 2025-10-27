@@ -5,6 +5,7 @@ from typing import *
 import setdoc
 
 from v440._utils.Cfg import Cfg
+from v440._utils.QualSpec import QualSpec
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
 from v440.core.Post import Post
@@ -65,6 +66,44 @@ class Qual(SlotStringer):
             return left + right
         else:
             return left + "#" + right
+
+    @classmethod
+    def _deformat_parse_example(
+        cls: type,
+        value: str,
+        /,
+        *,
+        phase: str,
+    ) -> dict[str, QualSpec]:
+        ans: list[QualSpec]
+        matches: dict[str, str]
+        i: int
+        matches = Cfg.fullmatches("qual", value)
+        ans = list()
+        ans.append(QualSpec("", 0))
+        ans.append(QualSpec("", 0))
+        ans.append(QualSpec("", 0))
+        if phase:
+            i = ("a", "b", "rc").index(phase)
+            ans[i] = QualSpec.by_example(matches["pre"])
+        ans.append(QualSpec.by_example(matches["post"]))
+        ans.append(QualSpec.by_example(matches["dev"]))
+        return ans
+
+    @classmethod
+    def _deformat_parse_spec(
+        cls: type,
+        value: str,
+        /,
+    ) -> dict[str, QualSpec]:
+        ans: list[QualSpec]
+        matches: dict[str, str]
+        s: str
+        matches = Cfg.fullmatches("qual_f", value)
+        ans = list()
+        for s in ("a", "b", "rc", "post", "dev"):
+            ans.append(QualSpec.by_spec(matches[s + "_f"]))
+        return ans
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
