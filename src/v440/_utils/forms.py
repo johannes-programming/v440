@@ -1,34 +1,62 @@
 import string as string_
 from typing import *
 
+class QualSpec(NamedTuple):
+    head:str
+    mag:int
 
-def qualdeform(*strings: str, hollow: str) -> str:
-    lits: set = set()
-    nums: set = set()
-    for s in strings:
-        x = s.rstrip(string_.digits)
-        y = s[len(x) :]
-        lits.add(x)
-        nums.add(y)
-    lits.discard("")
-    if len(lits) == 0:
-        return ""
-    (x,) = lits
-    u: int = min(map(len, nums))
-    f: int = -1
-    for y in nums:
+    def __and__(self:Self, other:Self) -> Self:
+        if self.head == "":
+            return other
+        if other.head == "":
+            return self
+        h:str
+        if self.head == other.head:
+            h = self.head
+        elif self.head[:-1] == other.head and self.head[-1] in ".-_":
+            h = self.head
+        elif other.head[:-1] == self.head and other.head[-1] in ".-_":
+            h = other.head
+        else:
+            raise ValueError
+        m:int = min(self.mag, other.mag)
+        n:int = max(self.mag, other.mag)
+        if 0 < m + n < n:
+            raise ValueError
+        if 0 <= m < n:
+            raise ValueError
+        return type(self)(h, n)
+            
+    @classmethod
+    def by_string(cls:type, string:str) -> Self:
+        x:str = string.rstrip(string_.digits)
+        y:str = string[len(x):]
         if y.startswith("0"):
-            f = max(f, len(y))
-    if f > u:
-        raise ValueError
-    if x == hollow and f in (-1, 1) and u:
-        return ""
-    if f == -1:
-        f = 0
-    if f == 1 and x[-1] in ".-_":
-        f = 0
-    return x + "#" * f
-
+            return cls(x, len(y))
+        else:
+            return cls(x, -len(y))
+    
+    @classmethod
+    def by_strings(cls:type, *strings:str) -> Self:
+        ans:Self = cls("", 0)
+        s:str
+        for s in strings:
+            ans &= cls.by_string(s)
+        return ans
+    
+    def options(self:Self, *, hollow:str, short:str) -> set:
+        if self.head == "":
+            return {"", short, short + "#"}
+        ans:set = set()
+        if self.head == hollow and (self.mag < 0 or self.mag == 1):
+            ans.add("")
+        if self.mag < 0:
+            ans.add(self.head)
+            ans.add(self.head + "#")
+        else:
+            ans.add(self.head + self.mag * "#")
+        return ans
+        
 
 def qualform(mask: str, num: int) -> str:
     x: str = mask.rstrip("#")

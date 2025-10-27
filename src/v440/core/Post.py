@@ -4,6 +4,7 @@ import operator
 from typing import *
 
 from v440._utils import forms
+from v440._utils.forms import QualSpec
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440._utils.QualStringer import QualStringer
@@ -27,7 +28,7 @@ class Post(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict, /) -> str:
-        return forms.qualdeform(*info.keys(), hollow=".post")
+        return QualSpec.by_strings(*info.keys()).easy(hollow=".post")
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:

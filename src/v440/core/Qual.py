@@ -9,6 +9,7 @@ from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
 from v440.core.Post import Post
 from v440.core.Pre import Pre
+from v440._utils.forms import QualSpec
 
 __all__ = ["Qual"]
 
@@ -44,16 +45,26 @@ class Qual(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        table: dict[set[str]] = dict()
+        table: dict[str, QualSpec] = dict()
         matches: dict[str, str]
+        o: Self
         s: str
         t: str
-        for t in ("pre", "post", "dev"):
-            table[t] = set()
-        for s in info.keys():
+        for t in ("a", "b", "rc", "post", "dev"):
+            table[t] = QualSpec("", 0)
+        for s, o in info.items():
             matches = Cfg.fullmatches("qual", s)
-            for t in ("pre", "post", "dev"):
-                table[t].add(matches[t])
+            if o.pre.lit:
+                table[o.pre.lit] &= QualSpec(matches["pre"])
+            table["post"]&=QualSpec(matches["post"])
+            table["dev"]&=QualSpec(matches["dev"])
+
+
+
+
+            
+        for t in ("a", "b", "rc", "post", "dev"):
+            table[t].discard("")
         s = Pre.deformat(*table["pre"])
         s = cls._deformat_join(s, Post.deformat(*table["post"]))
         s = cls._deformat_join(s, Dev.deformat(*table["dev"]))
