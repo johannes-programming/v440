@@ -36,7 +36,7 @@ class BaseStringer(metaclass=ABCMeta):
         except Exception:
             msg: str = Cfg.cfg.data["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
-            raise TypeError(msg) from None
+            raise TypeError(msg)  # from None
         ans: str = str(self._format_parsed(**parsed))
         return ans
 

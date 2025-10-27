@@ -6,6 +6,7 @@ from typing import *
 from v440._utils import forms
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
+from v440._utils.QualSpec import QualSpec
 from v440._utils.QualStringer import QualStringer
 
 __all__ = ["Pre"]
@@ -35,16 +36,30 @@ class Pre(QualStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        return dict(matches=Cfg.cfg.fullmatches("pre_f", spec))
+        m: dict = Cfg.fullmatches("pre_f", spec)
+        ans: dict = dict()
+        ans["a"] = QualSpec.by_spec(m["a_f"])
+        ans["b"] = QualSpec.by_spec(m["b_f"])
+        ans["rc"] = QualSpec.by_spec(m["rc_f"])
+        return ans
 
-    def _format_parsed(self: Self, *, matches: dict) -> str:
-        if not self:
-            return ""
-        match: Optional[str] = matches[f"pre_{self.lit}_f"]
-        if match:
-            return forms.qualform(match, self.num)
+    def _format_parsed(self: Self, *, a: QualSpec, b: QualSpec, rc: QualSpec) -> str:
+        spec: QualSpec
+        if self.lit == "a":
+            spec = a
+        elif self.lit == "b":
+            spec = b
+        elif self.lit == "rc":
+            spec = rc
         else:
+            return ""
+        if spec.head == "":
             return self.lit + str(self.num)
+        if self.num or spec.mag:
+            return spec.head + format(self.num, f"0{spec.mag}d")
+        if spec.head[-1] in ".-_":
+            return spec.head[:-1]
+        return spec.head
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
