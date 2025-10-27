@@ -29,20 +29,26 @@ class QualSpec(NamedTuple):
         return type(self)(h, n)
 
     @classmethod
-    def by_string(cls: type, string: str) -> Self:
-        x: str = string.rstrip(string_.digits)
-        y: str = string[len(x) :]
+    def by_example(cls: type, value: str, /) -> Self:
+        x: str = value.rstrip(string_.digits)
+        y: str = value[len(x) :]
         if y.startswith("0"):
             return cls(x, len(y))
         else:
             return cls(x, -len(y))
 
     @classmethod
-    def by_strings(cls: type, *strings: str) -> Self:
+    def by_examples(cls: type, *values: str) -> Self:
         ans: Self = cls("", 0)
         s: str
-        for s in strings:
+        for s in values:
             ans &= cls.by_string(s)
+        return ans
+
+    @classmethod
+    def by_spec(cls: type, value: str, /) -> Self:
+        x: str = value.rstrip("#")
+        ans: Self = cls(x, len(value) - len(x))
         return ans
 
     def options(self: Self, *, hollow: str, short: str) -> set:
