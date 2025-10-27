@@ -3,6 +3,8 @@ from __future__ import annotations
 import string as string_
 from typing import *
 
+from iterprod import iterprod
+
 from v440._utils import forms
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
@@ -27,12 +29,41 @@ class Pre(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        ans: str = ""
-        strings: set
-        for x in ("a", "b", "rc"):
-            strings = {s for s, o in info.items() if o.lit == x}
-            ans += forms.qualdeform(*strings, hollow=x)
-        return ans
+        a: str
+        b: str
+        c: str
+        s: str
+        o: Self
+        matches: dict[str, str]
+        opts: dict[str, set]
+        specs: dict[str, QualSpec]
+        sols: list
+        specs = dict()
+        for s in ("a", "b", "rc"):
+            specs[s] = QualSpec("", 0)
+        for s, o in info.items():
+            if not o:
+                continue
+            specs[o.lit] &= QualSpec.by_example(s)
+        opts = dict()
+        opts["a"] = specs["a"].options(hollow="a", short="a")
+        opts["b"] = specs["b"].options(hollow="b", short="b")
+        opts["rc"] = specs["rc"].options(hollow="rc", short="c")
+        sols = list()
+        for a, b, c in iterprod(opts["a"], opts["b"], opts["rc"]):
+            s = a + b + c
+            try:
+                matches = Cfg.fullmatches("pre_f", s)
+                specs["a"] & QualSpec.by_spec(matches["a_f"])
+                specs["b"] & QualSpec.by_spec(matches["b_f"])
+                specs["rc"] & QualSpec.by_spec(matches["rc_f"])
+            except Exception:
+                continue
+            else:
+                sols.append(s)
+        sols.sort()
+        sols.sort(key=len)
+        return sols[0]
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
