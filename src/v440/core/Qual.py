@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import *
 
 import setdoc
+from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.QualSpec import QualSpec
@@ -45,27 +46,54 @@ class Qual(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        table: dict[set[str]] = dict()
-        matches: dict[str, str]
+        i: int
         s: str
         t: str
-        for t in ("pre", "post", "dev"):
-            table[t] = set()
-        for s in info.keys():
-            matches = Cfg.fullmatches("qual", s)
-            for t in ("pre", "post", "dev"):
-                table[t].add(matches[t])
-        s = Pre.deformat(*table["pre"])
-        s = cls._deformat_join(s, Post.deformat(*table["post"]))
-        s = cls._deformat_join(s, Dev.deformat(*table["dev"]))
-        return s
+        o: Self
+        parsed: tuple[QualSpec]
+        table: tuple[QualSpec]
+        pos: list[set[str]]
+        sols: list[str]
+        way: tuple
+        table = [QualSpec("", 0) for i in range(5)]
+        for s, o in info.items():
+            parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
+            table = cls._deformat_and(table, parsed)
+        pos = list()
+        pos.append(table[0].options(hollow="a", short="a"))
+        pos.append(table[1].options(hollow="b", short="b"))
+        pos.append(table[2].options(hollow="rc", short="c"))
+        pos.append(table[3].options(hollow=".post", short="r"))
+        pos.append(table[4].options(hollow=".dev", short="dev"))
+        sols = list()
+        for way in iterprod(*pos):
+            s = ""
+            for t in way:
+                s += t
+            parsed = cls._deformat_parse_spec(s)
+            try:
+                cls._deformat_and(table, parsed)
+            except Exception:
+                continue
+            sols.append(s)
+        sols.sort()
+        sols.sort(key=len)
+        return sols[0]
 
     @classmethod
-    def _deformat_join(cls: type, left: str, right: str) -> str:
-        if left == "" or left[-1] in "#.-_" or right == "" or right[0] in "#.-_":
-            return left + right
-        else:
-            return left + "#" + right
+    def _deformat_and(
+        cls: type,
+        table: list[QualSpec],
+        parsed: list[QualSpec],
+        /,
+    ) -> list[QualSpec]:
+        x: QualSpec
+        y: QualSpec
+        ans: list[QualSpec]
+        ans: list[QualSpec] = list()
+        for x, y in zip(table, parsed, strict=True):
+            ans.append(x & y)
+        return ans
 
     @classmethod
     def _deformat_parse_example(
@@ -74,45 +102,47 @@ class Qual(SlotStringer):
         /,
         *,
         phase: str,
-    ) -> dict[str, QualSpec]:
-        ans: list[QualSpec]
+    ) -> tuple[QualSpec]:
+        specs: list[QualSpec]
         matches: dict[str, str]
         i: int
         matches = Cfg.fullmatches("qual", value)
-        ans = list()
-        ans.append(QualSpec("", 0))
-        ans.append(QualSpec("", 0))
-        ans.append(QualSpec("", 0))
+        specs = list()
+        specs.append(QualSpec("", 0))
+        specs.append(QualSpec("", 0))
+        specs.append(QualSpec("", 0))
         if phase:
             i = ("a", "b", "rc").index(phase)
-            ans[i] = QualSpec.by_example(matches["pre"])
-        ans.append(QualSpec.by_example(matches["post"]))
-        ans.append(QualSpec.by_example(matches["dev"]))
-        return ans
+            specs[i] = QualSpec.by_example(matches["pre"])
+        specs.append(QualSpec.by_example(matches["post"]))
+        specs.append(QualSpec.by_example(matches["dev"]))
+        return tuple(specs)
 
     @classmethod
     def _deformat_parse_spec(
         cls: type,
         value: str,
         /,
-    ) -> dict[str, QualSpec]:
-        ans: list[QualSpec]
+    ) -> tuple[QualSpec]:
+        specs: list[QualSpec]
         matches: dict[str, str]
         s: str
         matches = Cfg.fullmatches("qual_f", value)
-        ans = list()
+        specs = list()
         for s in ("a", "b", "rc", "post", "dev"):
-            ans.append(QualSpec.by_spec(matches[s + "_f"]))
-        return ans
+            specs.append(QualSpec.by_spec(matches[s + "_f"]))
+        return tuple(specs)
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
+        matches: dict
+        ans: dict
+        s: str
         matches: dict = Cfg.fullmatches("qual_f", spec)
-        return dict(
-            pre_f=matches["pre_f"],
-            post_f=matches["post_f"],
-            dev_f=matches["dev_f"],
-        )
+        ans: dict = dict()
+        for s in ("pre_f", "post_f", "dev_f"):
+            ans[s] = matches[s]
+        return ans
 
     def _format_parsed(self: Self, *, pre_f: str, post_f: str, dev_f: str) -> str:
         ans: str = format(self.pre, pre_f)

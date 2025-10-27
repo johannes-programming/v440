@@ -1970,4 +1970,4 @@ valid = false
 
 [deformatting.Qual."beta1 dev.2"]
 valid = true
-solution = "beta#dev."
+solution = "betadev."
