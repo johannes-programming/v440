@@ -1,5 +1,6 @@
 import string as string_
 from typing import *
+from v440._utils.Cfg import Cfg
 
 
 class QualSpec(NamedTuple):
@@ -51,10 +52,19 @@ class QualSpec(NamedTuple):
         ans: Self = cls(x, len(value) - len(x))
         return ans
 
-    def options(self: Self, *, hollow: str, short: str) -> set:
-        if self.head == "":
-            return {"", short, short + "#"}
+    def options(
+            self: Self, 
+            *, 
+            hollow: str, 
+            short: str, 
+    ) -> set:
+        s:str
         ans: set = set()
+        if self.head == "":
+            ans.add("")
+            for s in Cfg.cfg.data["consts"]["short"]:
+                ans.add(s % short)
+            return ans
         if self.head == hollow and (self.mag < 0 or self.mag == 1):
             ans.add("")
         if self.mag < 0:

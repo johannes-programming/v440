@@ -22,7 +22,19 @@ dev = "[-_\\.]?DEV([-_\\.]?[0-9]+)?"
 qual = "{pre}?{post}?{dev}?"
 local_splitter = "([-_\\.])"
 
-[phases]
+[consts]
+short = [
+    "%s",
+    ".%s",
+    "%s.",
+    ".%s.",
+    "%s#",
+    ".%s#",
+    "%s.#",
+    ".%s.#",
+]
+
+[consts.phases]
 alpha = "a"
 a = "a"
 beta = "b"
