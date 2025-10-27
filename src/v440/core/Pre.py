@@ -95,7 +95,7 @@ class Pre(QualStringer):
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
-        return Cfg.cfg.data["phases"][value]
+        return Cfg.cfg.data["consts"]["phases"][value]
 
     @property
     def packaging(self: Self) -> Optional[tuple[str, int]]:

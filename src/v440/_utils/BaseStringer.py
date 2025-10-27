@@ -34,7 +34,7 @@ class BaseStringer(metaclass=ABCMeta):
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
-            msg: str = Cfg.cfg.data["errors"]["format"]
+            msg: str = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise TypeError(msg)  # from None
         ans: str = str(self._format_parsed(**parsed))
@@ -120,7 +120,7 @@ class BaseStringer(metaclass=ABCMeta):
         try:
             ans: str = cls._deformat(info)
         except Exception:
-            msg: str = Cfg.cfg.data["errors"]["deformat"]
+            msg: str = Cfg.cfg.data["consts"]["errors"]["deformat"]
             msg %= oxford(*strings)
             raise TypeError(msg)
         return ans

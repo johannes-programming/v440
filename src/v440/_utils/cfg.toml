@@ -1,6 +1,16 @@
-[errors]
+[consts.errors]
 deformat = "No common format specifier for %s."
 format = "Invalid format specifier %r for object of type %r."
+
+[consts.phases]
+alpha = "a"
+a = "a"
+beta = "b"
+b = "b"
+preview = "rc"
+pre = "rc"
+c = "rc"
+rc = "rc"
 
 [patterns]
 a_f = "[-_\\.]?(ALPHA|A)[-_\\.]?\\#*"
@@ -21,13 +31,3 @@ post = "(-([0-9]+))|(([-_\\.]?(POST|REV|R))([-_\\.]?([0-9]+))?)"
 dev = "[-_\\.]?DEV([-_\\.]?[0-9]+)?"
 qual = "{pre}?{post}?{dev}?"
 local_splitter = "([-_\\.])"
-
-[phases]
-alpha = "a"
-a = "a"
-beta = "b"
-b = "b"
-preview = "rc"
-pre = "rc"
-c = "rc"
-rc = "rc"
