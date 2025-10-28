@@ -32,13 +32,17 @@ class Local(ListStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self]) -> str:
-        m: int = max(0, 0, *map(len, info.values()))
-        if m == 0:
-            return ""
+        m: int
         s: str
         t: str
         i: int
-        parts: list = list(map(set, [""] * (2 * m - 1)))
+        parts: list
+        if 0 == len(info):
+            return ""
+        m = max(map(len, info.values()))
+        if m == 0:
+            return ""
+        parts = list(map(set, [""] * (2 * m - 1)))
         for s in info.keys():
             if s == "":
                 continue
@@ -49,7 +53,7 @@ class Local(ListStringer):
                 (parts[i],) = parts[i]
             else:
                 parts[i] = cls._deformat_part(parts[i])
-        s = "".join(parts)
+        s = "".join(parts).rstrip(".")
         return s
 
     @classmethod
