@@ -44,16 +44,14 @@ class Base(SlotStringer):
             matches = Cfg.fullmatches("base", s)
             for t in ("basev", "epoch", "release"):
                 table[t].add(matches[t])
-        s = cls._deformat_basev(table["basev"])
+        s = cls._deformat_basev(*table["basev"])
         s += cls._deformat_epoch(table["epoch"])
         s += Release.deformat(*table["release"])
         return s
 
     @classmethod
-    def _deformat_basev(cls: type, table: set) -> str:
-        if len(table) <= 1:
-            return next(iter(table), "")
-        raise ValueError
+    def _deformat_basev(cls: type, value: str = "") -> str:
+        return value
 
     @classmethod
     def _deformat_epoch(cls: type, table: set[str]) -> str:
