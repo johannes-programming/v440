@@ -10,7 +10,6 @@ import iterprod
 import packaging.version
 
 from v440 import core
-from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 

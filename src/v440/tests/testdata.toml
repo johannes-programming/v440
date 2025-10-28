@@ -93,277 +93,6 @@ query = [
     "test",
 ]
 
-[release-data.test_example_8]
-queryname = "string"
-query = "1.2.3.4.5.6.7.8.9.10"
-attrname = "bump"
-target = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    13,
-]
-
-[release-data.test_example_8.kwargs]
-index = 7
-amount = 5
-
-[release-data.test_release_assignment_with_bool_conversion]
-query = [
-    true,
-    false,
-    3,
-]
-target = [
-    1,
-    0,
-    3,
-]
-
-[release-data.test_release_large_numbers]
-query = [
-    1000000000,
-    2000000000,
-    3000000000,
-]
-target = [
-    1000000000,
-    2000000000,
-    3000000000,
-]
-
-[release-data.test_release_max_integer]
-query = [
-    1000000000000000000,
-]
-target = [
-    1000000000000000000,
-]
-
-[release-data.test_release_data_property_empty]
-query = []
-target = []
-
-[release-data.test_release_append]
-query = [
-    1,
-    2,
-    3,
-]
-attrname = "append"
-args = [
-    4,
-]
-target = [
-    1,
-    2,
-    3,
-    4,
-]
-
-[release-data.test_release_append.kwargs]
-
-[release-data.test_release_extend]
-query = [
-    1,
-    2,
-]
-attrname = "extend"
-args = [
-    [
-        3,
-        4,
-        5,
-    ],
-]
-target = [
-    1,
-    2,
-    3,
-    4,
-    5,
-]
-
-[release-data.test_release_extend.kwargs]
-
-[release-data.test_release_insert]
-query = [
-    1,
-    2,
-    4,
-]
-attrname = "insert"
-args = [
-    2,
-    3,
-]
-target = [
-    1,
-    2,
-    3,
-    4,
-]
-
-[release-data.test_release_insert.kwargs]
-
-[release-data.test_release_pop]
-query = [
-    1,
-    2,
-    3,
-]
-attrname = "pop"
-solution = 3
-args = []
-target = [
-    1,
-    2,
-]
-
-[release-data.test_release_pop.kwargs]
-
-[release-data.test_release_pop_with_index]
-query = [
-    1,
-    2,
-    3,
-]
-attrname = "pop"
-args = [
-    1,
-]
-solution = 2
-target = [
-    1,
-    3,
-]
-
-[release-data.test_release_pop_with_index.kwargs]
-
-[release-data.test_release_remove]
-query = [
-    1,
-    2,
-    3,
-]
-attrname = "remove"
-args = [
-    2,
-]
-target = [
-    1,
-    3,
-]
-
-[release-data.test_release_remove.kwargs]
-
-[release-data.test_release_clear]
-query = [
-    1,
-    2,
-    3,
-]
-attrname = "clear"
-args = []
-target = []
-
-[release-data.test_release_clear.kwargs]
-
-[release-data.test_release_count]
-query = [
-    1,
-    2,
-    2,
-    3,
-]
-args = [
-    2,
-]
-attrname = "count"
-solution = 2
-
-[release-data.test_release_count.kwargs]
-
-[release-data.test_release_index]
-query = [
-    1,
-    2,
-    3,
-]
-attrname = "index"
-args = [
-    2,
-]
-solution = 1
-
-[release-data.test_release_index.kwargs]
-
-[release-data.test_release_reverse]
-query = [
-    1,
-    2,
-    3,
-]
-attrname = "reverse"
-target = [
-    3,
-    2,
-    1,
-]
-
-[release-data.test_release_sort]
-query = [
-    3,
-    1,
-    2,
-]
-attrname = "sort"
-target = [
-    1,
-    2,
-    3,
-]
-
-[release-data.test_release_integer_float]
-query = [
-    true,
-    false,
-    3,
-]
-target = [
-    1,
-    0,
-    3,
-]
-
-[release-data.test_release_boolean_assignment]
-query = [
-    true,
-    false,
-    1,
-]
-target = [
-    1,
-    0,
-    1,
-]
-
-[release-data.test_release_equality_with_list]
-query = [
-    1,
-    2,
-    3,
-]
-target = [
-    1,
-    2,
-    3,
-]
-
 [data-setter.Local.test_local_boolean_assignment]
 valid = true
 query = [
@@ -645,6 +374,277 @@ solution = [
     "dev",
 ]
 
+[release-data.test_example_8]
+queryname = "string"
+query = "1.2.3.4.5.6.7.8.9.10"
+attrname = "bump"
+target = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    13,
+]
+
+[release-data.test_example_8.kwargs]
+index = 7
+amount = 5
+
+[release-data.test_release_assignment_with_bool_conversion]
+query = [
+    true,
+    false,
+    3,
+]
+target = [
+    1,
+    0,
+    3,
+]
+
+[release-data.test_release_large_numbers]
+query = [
+    1000000000,
+    2000000000,
+    3000000000,
+]
+target = [
+    1000000000,
+    2000000000,
+    3000000000,
+]
+
+[release-data.test_release_max_integer]
+query = [
+    1000000000000000000,
+]
+target = [
+    1000000000000000000,
+]
+
+[release-data.test_release_data_property_empty]
+query = []
+target = []
+
+[release-data.test_release_append]
+query = [
+    1,
+    2,
+    3,
+]
+attrname = "append"
+args = [
+    4,
+]
+target = [
+    1,
+    2,
+    3,
+    4,
+]
+
+[release-data.test_release_append.kwargs]
+
+[release-data.test_release_extend]
+query = [
+    1,
+    2,
+]
+attrname = "extend"
+args = [
+    [
+        3,
+        4,
+        5,
+    ],
+]
+target = [
+    1,
+    2,
+    3,
+    4,
+    5,
+]
+
+[release-data.test_release_extend.kwargs]
+
+[release-data.test_release_insert]
+query = [
+    1,
+    2,
+    4,
+]
+attrname = "insert"
+args = [
+    2,
+    3,
+]
+target = [
+    1,
+    2,
+    3,
+    4,
+]
+
+[release-data.test_release_insert.kwargs]
+
+[release-data.test_release_pop]
+query = [
+    1,
+    2,
+    3,
+]
+attrname = "pop"
+solution = 3
+args = []
+target = [
+    1,
+    2,
+]
+
+[release-data.test_release_pop.kwargs]
+
+[release-data.test_release_pop_with_index]
+query = [
+    1,
+    2,
+    3,
+]
+attrname = "pop"
+args = [
+    1,
+]
+solution = 2
+target = [
+    1,
+    3,
+]
+
+[release-data.test_release_pop_with_index.kwargs]
+
+[release-data.test_release_remove]
+query = [
+    1,
+    2,
+    3,
+]
+attrname = "remove"
+args = [
+    2,
+]
+target = [
+    1,
+    3,
+]
+
+[release-data.test_release_remove.kwargs]
+
+[release-data.test_release_clear]
+query = [
+    1,
+    2,
+    3,
+]
+attrname = "clear"
+args = []
+target = []
+
+[release-data.test_release_clear.kwargs]
+
+[release-data.test_release_count]
+query = [
+    1,
+    2,
+    2,
+    3,
+]
+args = [
+    2,
+]
+attrname = "count"
+solution = 2
+
+[release-data.test_release_count.kwargs]
+
+[release-data.test_release_index]
+query = [
+    1,
+    2,
+    3,
+]
+attrname = "index"
+args = [
+    2,
+]
+solution = 1
+
+[release-data.test_release_index.kwargs]
+
+[release-data.test_release_reverse]
+query = [
+    1,
+    2,
+    3,
+]
+attrname = "reverse"
+target = [
+    3,
+    2,
+    1,
+]
+
+[release-data.test_release_sort]
+query = [
+    3,
+    1,
+    2,
+]
+attrname = "sort"
+target = [
+    1,
+    2,
+    3,
+]
+
+[release-data.test_release_integer_float]
+query = [
+    true,
+    false,
+    3,
+]
+target = [
+    1,
+    0,
+    3,
+]
+
+[release-data.test_release_boolean_assignment]
+query = [
+    true,
+    false,
+    1,
+]
+target = [
+    1,
+    0,
+    1,
+]
+
+[release-data.test_release_equality_with_list]
+query = [
+    1,
+    2,
+    3,
+]
+target = [
+    1,
+    2,
+    3,
+]
+
 [data-property.local]
 query = "42!1.2.3.dev1337+5.nov"
 solution = "42!1.2.3.dev1337+5.nov"
@@ -905,6 +905,16 @@ valid = false
 [examples.Dev.d1]
 valid = false
 
+[examples.Dev.-dev5]
+valid = true
+normed = ".dev5"
+deformatted = "-dev"
+
+[examples.Dev.".dev5"]
+valid = true
+normed = ".dev5"
+deformatted = ""
+
 [examples.Local.""]
 valid = true
 
@@ -1021,6 +1031,11 @@ valid = true
 BETA = "BETA1"
 "a###" = "b1"
 
+[examples.Pre._AlPhA_0]
+valid = true
+normed = "a0"
+deformatted = "_AlPhA_#"
+
 [examples.Public.""]
 valid = false
 
@@ -1102,11 +1117,6 @@ valid = true
 normed = "a0"
 deformatted = "_AlPhA_#"
 
-[examples.Pre._AlPhA_0]
-valid = true
-normed = "a0"
-deformatted = "_AlPhA_#"
-
 [examples.Qual._AlPhA_]
 valid = false
 
@@ -1169,7 +1179,9 @@ valid = true
 legacy = "test_example_1"
 normed = "1"
 deformatted = "v.."
-formatted = { "#.#.#" = "1.0.0" }
+
+[examples.Version."v1.0.0".formatted]
+"#.#.#" = "1.0.0"
 
 [examples.Version.""]
 valid = false
@@ -1959,16 +1971,6 @@ valid = true
 normed = "1.2.3.post4.dev5"
 deformatted = "--dev"
 legacy = "spec.test_version_with_dev_specifier_after_post"
-
-[examples.Dev."-dev5"]
-valid = true
-normed = ".dev5"
-deformatted = "-dev"
-
-[examples.Dev.".dev5"]
-valid = true
-normed = ".dev5"
-deformatted = ""
 
 [examples.Version."1!1.2.3-4-dev2"]
 valid = true
