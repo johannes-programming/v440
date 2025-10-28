@@ -104,60 +104,54 @@ class Local(ListStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
+        l: str
+        m: int
+        x: str
+        y: str
+        parts: list
+        split: list
         if spec.strip("#^~.-_"):
             raise ValueError
-        return dict(spec=spec)
+        parts = Cfg.cfg.patterns["local_splitter"].split(spec) + ["."]
+        split = list()
+        for x, y in zip(parts[::2], parts[1::2]):
+            l = x.lstrip("#")
+            if "#" in l:
+                raise ValueError
+            m = len(x) - len(l)
+            if m == 1:
+                m = 0
+            l = l.rstrip("~")
+            split.append((m, l, y))
+        while len(split) and split[-1] == (0, "", "."):
+            split.pop()
+        return dict(split=tuple(split))
 
-    def _format_parsed(self: Self, *, spec: str) -> str:
-        ans: str = ""
-        data: list = list(self.data)
-        tail: str = spec
-        part: str
-        while len(data):
-            part, tail = self._format_item(data.pop(0), tail)
-            ans += part
+    def _format_parsed(self: Self, *, split: tuple) -> str:
+        ans: str
+        i: int
+        x: int | str
+        m: int
+        l: str
+        s: str
+        p: str
+        q: str
+        ans = ""
+        for i, x in enumerate(self):
+            if i < len(split):
+                m, l, s = split[i]
+            else:
+                m, l, s = 0, "", "."
+            if isinstance(x, int):
+                ans += format(x, f"0{m}d")
+                ans += s
+                continue
+            for p, q in zip(x, l):
+                ans += chr(ord(p) + ord(q) - 126)
+            ans += x[len(l) :]
+            ans += s
         ans = ans[:-1]
         return ans
-
-    @classmethod
-    def _format_item(cls: type, item: int | str, spec: str) -> tuple[str, str]:
-        sharps: str
-        mask: str
-        sep: str
-        right: str = spec
-        sharps, right = cls._format_l(right, "#")
-        mask, right = cls._format_l(right, "^~")
-        if right:
-            sep = right[0]
-            right = right[1:]
-        else:
-            sep = "."
-        part: str
-        if isinstance(item, int):
-            part = format(item, "0%sd" % len(sharps))
-        else:
-            part = cls._format_mask(item, mask)
-        return part + sep, right
-
-    @classmethod
-    def _format_l(cls: type, value: str, chars: str) -> tuple:
-        i: int = 0
-        while i < len(value):
-            if value[i] in chars:
-                i += 1
-            else:
-                break
-        return value[:i], value[i:]
-
-    @classmethod
-    def _format_mask(cls: type, item: str, mask: str):
-        ans: list = list(item)
-        i: int = 0
-        while i < len(ans) and i < len(mask):
-            if mask[i] == "^":
-                ans[i] = ans[i].upper()
-            i += 1
-        return "".join(ans)
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:
