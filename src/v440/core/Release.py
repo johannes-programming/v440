@@ -52,19 +52,22 @@ class Release(ListStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        m: int = 0
+        m: int
         s: str
-        for s in info.keys():
-            m = max(m, 1 + s.count("."))
         i: int
         t: str
-        table: list[set] = list(map(set, [""] * m))
+        table: list[set]
+        ans: str
+        m = 0
+        for s in info.keys():
+            m = max(m, 1 + s.count("."))
+        table = list(map(set, [""] * m))
         for s in info.keys():
             if s == "":
                 continue
             for i, t in enumerate(s.split(".")):
                 table[i].add(t)
-        ans: str = ".".join(map(cls._deformat_parts, table))
+        ans = ".".join(map(cls._deformat_parts, table))
         while ans.endswith(".0"):
             ans = ans[:-2]
         ans = ans.replace("0", "")
@@ -74,8 +77,9 @@ class Release(ListStringer):
 
     @classmethod
     def _deformat_parts(cls: type, parts: set[str]) -> str:
-        f: int = -1
+        f: int
         x: str
+        f = -1
         for x in parts:
             if not x.startswith("0"):
                 continue
