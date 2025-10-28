@@ -1680,6 +1680,8 @@ legacy = "Extreme cases with very long versions"
 [examples.Version."0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"]
 valid = true
 legacy = "Extreme cases with very long versions"
+normed = "0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"
+deformatted = "#!..#"
 
 [examples.Version."1.2.3"]
 valid = true

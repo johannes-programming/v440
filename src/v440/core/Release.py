@@ -52,49 +52,60 @@ class Release(ListStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        m: int
-        s: str
         i: int
+        j: int
+        k: int
+        s: str
         t: str
-        table: list[set]
-        ans: str
-        m = 0
+        table: list[int]
+        if len(info) == 0:
+            return ""
+        i = 0
+        j = 0
         for s in info.keys():
-            m = max(m, 1 + s.count("."))
-        table = list(map(set, [""] * m))
+            k = s.count(".")
+            i = max(i, k + 1)
+            t = s.rstrip("0")
+            if t.endswith(".") or t == "":
+                j = max(j, k)
+        if j == 0:
+            j = -1
+        table = [0] * i
         for s in info.keys():
             if s == "":
                 continue
             for i, t in enumerate(s.split(".")):
-                table[i].add(t)
-        ans = ".".join(map(cls._deformat_parts, table))
-        while ans.endswith(".0"):
-            ans = ans[:-2]
-        ans = ans.replace("0", "")
-        if ans.endswith("."):
-            ans += "#"
-        return ans
+                k = cls._deformat_force(t)
+                table[i] = cls._deformat_comb(table[i], k)
+        s = ""
+        for i, k in enumerate(table):
+            if k > 1:
+                s += "#" * k
+            elif i == j:
+                s += "#"
+            s += "."
+        s = s.rstrip(".")
+        return s
 
     @classmethod
-    def _deformat_parts(cls: type, parts: set[str]) -> str:
-        f: int
-        x: str
-        f = -1
-        for x in parts:
-            if not x.startswith("0"):
-                continue
-            if f == -1:
-                f = len(x)
-                continue
-            if f != len(x):
-                raise ValueError
-        if len(parts) and f > min(map(len, parts)):
-            raise ValueError
-        if f == -1:
-            return "0"
-        if f == 1:
-            return ""
-        return "#" * f
+    def _deformat_force(cls: type, part: str) -> int:
+        if part == "0":
+            return -1
+        if part.startswith("0"):
+            return len(part)
+        return -len(part)
+
+    @classmethod
+    def _deformat_comb(cls: type, x: int, y: int) -> int:
+        a: int
+        b: int
+        a = min(x, y)
+        b = max(x, y)
+        if 0 == a * b:
+            return a + b
+        if 0 < a == b or a < 0 <= a + b:
+            return b
+        raise ValueError
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:
