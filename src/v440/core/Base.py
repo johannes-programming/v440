@@ -45,7 +45,7 @@ class Base(SlotStringer):
             for t in ("basev", "epoch", "release"):
                 table[t].add(matches[t])
         s = cls._deformat_basev(*table["basev"])
-        s += cls._deformat_epoch(table["epoch"])
+        s += cls._deformat_epoch(*table["epoch"])
         s += Release.deformat(*table["release"])
         return s
 
@@ -54,12 +54,10 @@ class Base(SlotStringer):
         return value
 
     @classmethod
-    def _deformat_epoch(cls: type, table: set[str]) -> str:
+    def _deformat_epoch(cls: type, *table: str) -> str:
         data: set = set(len(x) for x in table if x.startswith("0") or x == "")
         if data == set() or data == {0}:
             return ""
-        if data == {1}:
-            return "!"
         if len(data) == 1:
             return "#" * data.pop() + "!"
         raise ValueError
