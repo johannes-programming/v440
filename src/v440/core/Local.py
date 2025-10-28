@@ -129,27 +129,27 @@ class Local(ListStringer):
 
     def _format_parsed(self: Self, *, split: tuple) -> str:
         ans: str
+        item: int | str
         i: int
-        x: int | str
         m: int
         l: str
-        s: str
+        y: str
         p: str
         q: str
         ans = ""
-        for i, x in enumerate(self):
+        for i, item in enumerate(self):
             if i < len(split):
-                m, l, s = split[i]
+                m, l, y = split[i]
             else:
-                m, l, s = 0, "", "."
-            if isinstance(x, int):
-                ans += format(x, f"0{m}d")
-                ans += s
+                m, l, y = 0, "", "."
+            if isinstance(item, int):
+                ans += format(item, f"0{m}d")
+                ans += y
                 continue
-            for p, q in zip(x, l):
+            for p, q in zip(item, l):
                 ans += chr(ord(p) + ord(q) - 126)
-            ans += x[len(l) :]
-            ans += s
+            ans += item[len(l) :]
+            ans += y
         ans = ans[:-1]
         return ans
 
