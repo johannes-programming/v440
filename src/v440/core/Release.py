@@ -68,6 +68,8 @@ class Release(ListStringer):
         while ans.endswith(".0"):
             ans = ans[:-2]
         ans = ans.replace("0", "")
+        if ans.endswith("."):
+            ans += "#"
         return ans
 
     @classmethod
@@ -94,7 +96,9 @@ class Release(ListStringer):
     def _format_parse(cls: type, spec: str, /) -> str:
         if spec.strip("#."):
             raise ValueError
-        return dict(specs=tuple(map(cls._format_parse_spec, spec.split("."))))
+        return dict(
+            specs=tuple(map(cls._format_parse_spec, spec.rstrip(".").split(".")))
+        )
 
     @classmethod
     def _format_parse_spec(cls: type, value: str) -> str:
