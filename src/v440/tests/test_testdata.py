@@ -294,16 +294,29 @@ class TestDataSetter(unittest.TestCase):
             with self.subTest(legacy_name=x):
                 self.go_task(cls, **y)
 
-    def go_task(self: Self, *args: Any, valid: bool, **kwargs: Any) -> None:
+    def go_task(
+        self: Self,
+        *args: Any,
+        valid: bool,
+        **kwargs: Any,
+    ) -> None:
         if valid:
             self.go_valid(*args, **kwargs)
         else:
             self.go_invalid(*args, **kwargs)
 
-    def go_invalid(self: Self, cls: type, /, *, query: list, **kwargs: Any) -> None:
+    def go_invalid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list,
+        queryname: str = "data",
+        **kwargs: Any,
+    ) -> None:
         obj: Any = cls()
         with self.assertRaises(VersionError):
-            obj.data = query
+            setattr(obj, queryname, query)
 
     def go_valid(
         self: Self,
@@ -311,6 +324,7 @@ class TestDataSetter(unittest.TestCase):
         /,
         *,
         query: list,
+        queryname: str = "data",
         check: Optional[list] = None,
         attrname: Optional[str] = None,
         args: list | tuple = (),
@@ -322,7 +336,7 @@ class TestDataSetter(unittest.TestCase):
         attr: Any
         obj: Any
         obj = cls()
-        obj.data = query
+        setattr(obj, queryname, query)
         if attrname is not None:
             attr = getattr(obj, attrname)
             ans = attr(*args, **dict(kwargs))
