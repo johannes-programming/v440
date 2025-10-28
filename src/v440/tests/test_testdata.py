@@ -273,7 +273,7 @@ class TestVersionReleaseAttrs(unittest.TestCase):
             self.assertEqual(ans, target)
 
 
-class TestVersionReleaseVersionError(unittest.TestCase):
+class TestDataSetter(unittest.TestCase):
 
     def test_0(self: Self) -> None:
         x: str
@@ -312,41 +312,25 @@ class TestVersionReleaseVersionError(unittest.TestCase):
         /,
         *,
         query: list,
-        solution: Optional[list] = None,
-        **kwargs: Any,
-    ) -> None:
-        obj: Any = cls()
-        obj.data = query
-        if solution is not None:
-            self.assertListEqual(list(obj), solution)
-
-
-class TestVersionLocalGo(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["local-attr"].items():
-            with self.subTest(key=k):
-                self.go(**v)
-
-    def go(
-        self: Self,
-        query: list,
+        check: Optional[list] = None,
         attrname: Optional[str] = None,
         args: list | tuple = (),
         kwargs: dict | tuple = (),
-        target: Optional[list] = None,
-        solution: Any = None,
+        solution: Optional[list] = None,
+        **_kwargs: Any,
     ) -> None:
-        version: Version = Version()
-        version.local.data = query
+        ans: Any
+        attr: Any
+        obj: Any
+        obj = cls()
+        obj.data = query
         if attrname is not None:
-            attr: Any = getattr(version.local, attrname)
-            ans: Any = attr(*args, **dict(kwargs))
+            attr = getattr(obj, attrname)
+            ans = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, check)
+        if solution is not None:
+            ans = list(obj)
             self.assertEqual(ans, solution)
-        if target is not None:
-            answer: list = list(version.local)
-            self.assertEqual(answer, target)
 
 
 class TestVersionEpochGo(unittest.TestCase):

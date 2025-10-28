@@ -364,57 +364,63 @@ target = [
     3,
 ]
 
-[local-attr.test_local_boolean_assignment]
+[data-setter.Local.test_local_boolean_assignment]
+valid = true
 query = [
     true,
     false,
     "dev",
 ]
-target = [
+solution = [
     1,
     0,
     "dev",
 ]
 
-[local-attr.test_local_large_integers]
+[data-setter.Local.test_local_large_integers]
+valid = true
 query = [
     1000000000000000000,
 ]
-target = [
+solution = [
     1000000000000000000,
 ]
 
-[local-attr.test_local_basic_assignment]
+[data-setter.Local.test_local_basic_assignment]
+valid = true
 query = [
     1,
     "local",
     "dev",
 ]
-target = [
+solution = [
     1,
     "local",
     "dev",
 ]
 
-[local-attr.test_local_empty_list]
+[data-setter.Local.test_local_empty_list]
+valid = true
 query = []
-target = []
+solution = []
 
-[local-attr.test_local_conversion_string]
+[data-setter.Local.test_local_conversion_string]
+valid = true
 query = [
     "1",
     "2",
     "local",
     "test",
 ]
-target = [
+solution = [
     1,
     2,
     "local",
     "test",
 ]
 
-[local-attr.test_local_append]
+[data-setter.Local.test_local_append]
+valid = true
 attrname = "append"
 query = [
     1,
@@ -423,13 +429,14 @@ query = [
 args = [
     "build",
 ]
-target = [
+solution = [
     1,
     "dev",
     "build",
 ]
 
-[local-attr.test_local_extend]
+[data-setter.Local.test_local_extend]
+valid = true
 query = [
     1,
     "dev",
@@ -441,14 +448,15 @@ args = [
         123,
     ],
 ]
-target = [
+solution = [
     1,
     "dev",
     "test",
     123,
 ]
 
-[local-attr.test_local_insert]
+[data-setter.Local.test_local_insert]
+valid = true
 query = [
     1,
     "dev",
@@ -458,26 +466,28 @@ args = [
     1,
     "alpha",
 ]
-target = [
+solution = [
     1,
     "alpha",
     "dev",
 ]
 
-[local-attr.test_local_pop]
+[data-setter.Local.test_local_pop]
+valid = true
 query = [
     1,
     "dev",
     "build",
 ]
 attrname = "pop"
-solution = "build"
-target = [
+check = "build"
+solution = [
     1,
     "dev",
 ]
 
-[local-attr.test_local_pop_with_index]
+[data-setter.Local.test_local_pop_with_index]
+valid = true
 query = [
     1,
     "dev",
@@ -487,13 +497,14 @@ attrname = "pop"
 args = [
     1,
 ]
-solution = "dev"
-target = [
+check = "dev"
+solution = [
     1,
     "build",
 ]
 
-[local-attr.test_local_remove]
+[data-setter.Local.test_local_remove]
+valid = true
 attrname = "remove"
 query = [
     1,
@@ -503,21 +514,23 @@ query = [
 args = [
     "dev",
 ]
-target = [
+solution = [
     1,
     "build",
 ]
 
-[local-attr.test_local_clear]
+[data-setter.Local.test_local_clear]
+valid = true
 query = [
     1,
     "dev",
     "build",
 ]
 attrname = "clear"
-target = []
+solution = []
 
-[local-attr.test_local_count]
+[data-setter.Local.test_local_count]
+valid = true
 query = [
     1,
     "dev",
@@ -528,9 +541,10 @@ attrname = "count"
 args = [
     "dev",
 ]
-solution = 2
+check = 2
 
-[local-attr.test_local_index]
+[data-setter.Local.test_local_index]
+valid = true
 query = [
     1,
     "dev",
@@ -540,22 +554,24 @@ attrname = "index"
 args = [
     "dev",
 ]
-solution = 1
+check = 1
 
-[local-attr.test_local_reverse]
+[data-setter.Local.test_local_reverse]
+valid = true
 query = [
     1,
     "dev",
     "build",
 ]
 attrname = "reverse"
-target = [
+solution = [
     "build",
     "dev",
     1,
 ]
 
-[local-attr.test_local_sort]
+[data-setter.Local.test_local_sort]
+valid = true
 query = [
     3,
     1,
@@ -566,7 +582,7 @@ query = [
     "a4",
 ]
 attrname = "sort"
-target = [
+solution = [
     "4a",
     "a4",
     "dev",
@@ -576,7 +592,8 @@ target = [
     3,
 ]
 
-[local-attr.test_local_sort_reverse]
+[data-setter.Local.test_local_sort_reverse]
+valid = true
 query = [
     3,
     1,
@@ -587,7 +604,7 @@ query = [
     "a4",
 ]
 attrname = "sort"
-target = [
+solution = [
     3,
     2,
     2,
@@ -597,10 +614,11 @@ target = [
     "4a",
 ]
 
-[local-attr.test_local_sort_reverse.kwargs]
+[data-setter.Local.test_local_sort_reverse.kwargs]
 reverse = true
 
-[local-attr.test_local_conversion_mixed]
+[data-setter.Local.test_local_conversion_mixed]
+valid = true
 query = [
     "1",
     2,
@@ -608,7 +626,7 @@ query = [
     4,
     true,
 ]
-target = [
+solution = [
     1,
     2,
     "local",
@@ -616,12 +634,13 @@ target = [
     1,
 ]
 
-[local-attr.test_local_equality_with_list]
+[data-setter.Local.test_local_equality_with_list]
+valid = true
 query = [
     1,
     "dev",
 ]
-target = [
+solution = [
     1,
     "dev",
 ]
