@@ -311,7 +311,7 @@ class TestDataSetter(unittest.TestCase):
         /,
         *,
         query: list,
-        queryname: str = "data",
+        queryname: str,
         **kwargs: Any,
     ) -> None:
         obj: Any = cls()
@@ -324,7 +324,7 @@ class TestDataSetter(unittest.TestCase):
         /,
         *,
         query: list,
-        queryname: str = "data",
+        queryname: str,
         check: Optional[list] = None,
         attrname: Optional[str] = None,
         args: list | tuple = (),

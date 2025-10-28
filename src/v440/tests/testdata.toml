@@ -5,6 +5,7 @@ query = [
     "invalid",
     "3",
 ]
+queryname = "data"
 
 [data-setter.Release.test_release_non_integer_elements]
 valid = false
@@ -13,6 +14,7 @@ query = [
     2,
     3,
 ]
+queryname = "data"
 
 [data-setter.Release.test_release_invalid_float_value]
 valid = false
@@ -21,6 +23,7 @@ query = [
     2.5,
     3,
 ]
+queryname = "data"
 
 [data-setter.Release.test_release_invalid_boolean_assignment]
 valid = false
@@ -28,6 +31,7 @@ query = [
     "true",
     "false",
 ]
+queryname = "data"
 
 [data-setter.Release.test_release_invalid_value]
 valid = false
@@ -36,6 +40,7 @@ query = [
     2,
     "3",
 ]
+queryname = "data"
 
 [data-setter.Release.test_release_basic_assignment]
 valid = true
@@ -49,6 +54,7 @@ solution = [
     2,
     3,
 ]
+queryname = "data"
 
 [data-setter.Release.test_release_trailing_zeros]
 valid = true
@@ -64,6 +70,7 @@ solution = [
     2,
     3,
 ]
+queryname = "data"
 
 [data-setter.Release.test_release_zero]
 valid = true
@@ -71,11 +78,13 @@ query = [
     0,
 ]
 solution = []
+queryname = "data"
 
 [data-setter.Release.test_release_empty_list]
 valid = true
 query = []
 solution = []
+queryname = "data"
 
 [data-setter.Local.test_local_invalid_value]
 valid = false
@@ -84,6 +93,7 @@ query = [
     {},
     "3",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_non_string_elements]
 valid = false
@@ -92,6 +102,7 @@ query = [
     [],
     "test",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_boolean_assignment]
 valid = true
@@ -105,6 +116,7 @@ solution = [
     0,
     "dev",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_large_integers]
 valid = true
@@ -114,6 +126,7 @@ query = [
 solution = [
     1000000000000000000,
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_basic_assignment]
 valid = true
@@ -127,11 +140,13 @@ solution = [
     "local",
     "dev",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_empty_list]
 valid = true
 query = []
 solution = []
+queryname = "data"
 
 [data-setter.Local.test_local_conversion_string]
 valid = true
@@ -147,6 +162,7 @@ solution = [
     "local",
     "test",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_append]
 valid = true
@@ -163,6 +179,7 @@ solution = [
     "dev",
     "build",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_extend]
 valid = true
@@ -183,6 +200,7 @@ solution = [
     "test",
     123,
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_insert]
 valid = true
@@ -200,6 +218,7 @@ solution = [
     "alpha",
     "dev",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_pop]
 valid = true
@@ -214,6 +233,7 @@ solution = [
     1,
     "dev",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_pop_with_index]
 valid = true
@@ -231,6 +251,7 @@ solution = [
     1,
     "build",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_remove]
 valid = true
@@ -247,6 +268,7 @@ solution = [
     1,
     "build",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_clear]
 valid = true
@@ -257,6 +279,7 @@ query = [
 ]
 attrname = "clear"
 solution = []
+queryname = "data"
 
 [data-setter.Local.test_local_count]
 valid = true
@@ -271,6 +294,7 @@ args = [
     "dev",
 ]
 check = 2
+queryname = "data"
 
 [data-setter.Local.test_local_index]
 valid = true
@@ -284,6 +308,7 @@ args = [
     "dev",
 ]
 check = 1
+queryname = "data"
 
 [data-setter.Local.test_local_reverse]
 valid = true
@@ -298,6 +323,7 @@ solution = [
     "dev",
     1,
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_sort]
 valid = true
@@ -320,6 +346,7 @@ solution = [
     2,
     3,
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_sort_reverse]
 valid = true
@@ -342,6 +369,7 @@ solution = [
     "a4",
     "4a",
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_sort_reverse.kwargs]
 reverse = true
@@ -362,6 +390,7 @@ solution = [
     4,
     1,
 ]
+queryname = "data"
 
 [data-setter.Local.test_local_equality_with_list]
 valid = true
@@ -373,6 +402,7 @@ solution = [
     1,
     "dev",
 ]
+queryname = "data"
 
 [release-data.test_example_8]
 queryname = "string"
