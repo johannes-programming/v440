@@ -6,7 +6,6 @@ from typing import *
 
 import keyalias
 import setdoc
-from iterprod import iterprod
 
 from v440._utils.ListStringer import ListStringer
 from v440._utils.releaseparse import deleting, getting, setting
@@ -97,15 +96,18 @@ class Release(ListStringer):
 
     @classmethod
     def _deformat_comb(cls: type, x: int, y: int) -> int:
-        a: int
-        b: int
-        a = min(x, y)
-        b = max(x, y)
-        if 0 == a * b:
-            return a + b
-        if 0 < a == b or a < 0 <= a + b:
-            return b
-        raise ValueError
+        if 0 > x * y:
+            if x + y <= 0:
+                return max(x, y)
+            raise ValueError
+        elif 0 < x * y:
+            if x < 0:
+                return max(x, y)
+            if x == y:
+                return x
+            raise ValueError
+        else:
+            return x + y
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:

@@ -2060,15 +2060,43 @@ valid = true
 normed = "1.2.3a1.post4.dev5+local"
 legacy = "spec.test_version_with_complex_specifiers_and_local"
 
+[deformatting.Base.""]
+valid = true
+solution = ""
+
 [deformatting.Base."1.2.3 v4.5"]
 valid = false
 
 [deformatting.Base."V1.2.3 4.5"]
 valid = false
 
+[deformatting.Dev.""]
+valid = true
+solution = ""
+
+[deformatting.Local.""]
+valid = true
+solution = ""
+
+[deformatting.Post.""]
+valid = true
+solution = ""
+
+[deformatting.Pre.""]
+valid = true
+solution = ""
+
 [deformatting.Pre."alpha alpha4 .pre5"]
 valid = true
 solution = 'alphab#.pre'
+
+[deformatting.Public.""]
+valid = true
+solution = ""
+
+[deformatting.Qual.""]
+valid = true
+solution = ""
 
 [deformatting.Qual."beta1 dev.2"]
 valid = true
@@ -2077,6 +2105,10 @@ solution = "betadev."
 [deformatting.Qual."a b c r dev"]
 valid = true
 solution = "abcrdev"
+
+[deformatting.Release."1.2.0 9.8.7.6.0.5"]
+valid = true
+solution = "..#"
 
 [deformatting.Version.""]
 valid = true
