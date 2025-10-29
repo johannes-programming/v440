@@ -10,6 +10,7 @@ import iterprod
 import packaging.version
 
 from v440 import core
+from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
@@ -261,17 +262,17 @@ class TestVersionReleaseAttrs(unittest.TestCase):
         queryname: str = "data",
     ) -> None:
         # Test the append method of the release list-like object
-        version: Version
+        release: Release
         attr: Any
         ans: Any
-        version = Version()
-        setattr(version.public.base.release, queryname, query)
+        release = Release()
+        setattr(release, queryname, query)
         if attrname is not None:
-            attr = getattr(version.public.base.release, attrname)
+            attr = getattr(release, attrname)
             ans = attr(*args, **dict(kwargs))
             self.assertEqual(ans, solution)
         if target is not None:
-            ans = list(version.public.base.release)
+            ans = list(release)
             self.assertEqual(ans, target)
 
 
