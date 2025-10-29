@@ -1301,6 +1301,8 @@ deformatted = ""
 
 [examples.Version."1.2.3a1.post1.dev2"]
 valid = true
+normed = "1.2.3a1.post1.dev2"
+deformatted = ""
 
 [examples.Version."1.2.3+abc"]
 valid = true
@@ -1329,9 +1331,13 @@ deformatted = "#!.#"
 
 [examples.Version."2.0.post1"]
 valid = true
+normed = "2.post1"
+deformatted = ".#"
 
 [examples.Version."2.0.post1+local.1"]
 valid = true
+normed = "2.post1+local.1"
+deformatted = ".#"
 
 [examples.Version."not a version"]
 valid = false
@@ -1353,14 +1359,20 @@ valid = false
 [examples.Version."1.0.0"]
 valid = true
 legacy = "Basic Versioning"
+normed = "1"
+deformatted = "..#"
 
 [examples.Version."0.9.1"]
 valid = true
 legacy = "Basic Versioning"
+normed = "0.9.1"
+deformatted = ""
 
 [examples.Version."2.1.0"]
 valid = true
 legacy = "Basic Versioning"
+normed = "2.1"
+deformatted = "..#"
 
 [examples.Version."10.5.3"]
 valid = true
