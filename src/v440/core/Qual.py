@@ -46,7 +46,6 @@ class Qual(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        i: int
         s: str
         t: str
         o: Self
@@ -138,14 +137,15 @@ class Qual(SlotStringer):
         matches: dict
         ans: dict
         s: str
-        matches: dict = Cfg.fullmatches("qual_f", spec)
-        ans: dict = dict()
+        matches = Cfg.fullmatches("qual_f", spec)
+        ans = dict()
         for s in ("pre_f", "post_f", "dev_f"):
             ans[s] = matches[s]
         return ans
 
     def _format_parsed(self: Self, *, pre_f: str, post_f: str, dev_f: str) -> str:
-        ans: str = format(self.pre, pre_f)
+        ans: str
+        ans = format(self.pre, pre_f)
         ans += format(self.post, post_f)
         ans += format(self.dev, dev_f)
         return ans
