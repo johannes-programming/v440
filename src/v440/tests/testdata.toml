@@ -1162,21 +1162,33 @@ deformatted = "post"
 
 [examples.Qual.dev1]
 valid = true
+normed = ".dev1"
+deformatted = "dev"
 
 [examples.Qual."a1.post1"]
 valid = true
+normed = "a1.post1"
+deformatted = ""
 
 [examples.Qual."a1.post2.dev3"]
 valid = true
+normed = "a1.post2.dev3"
+deformatted = ""
 
 [examples.Qual."rc1.dev2"]
 valid = true
+normed = "rc1.dev2"
+deformatted = ""
 
 [examples.Qual.alpha]
 valid = true
+normed = "a0"
+deformatted = "alpha"
 
 [examples.Qual.post]
 valid = true
+normed = ".post0"
+deformatted = "post"
 
 [examples.Qual.dev]
 valid = true
