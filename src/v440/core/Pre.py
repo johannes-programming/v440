@@ -6,8 +6,8 @@ from typing import *
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
+from v440._utils.Eden import Eden
 from v440._utils.guarding import guard
-from v440._utils.QualSpec import Eden
 from v440._utils.QualStringer import QualStringer
 
 __all__ = ["Pre"]

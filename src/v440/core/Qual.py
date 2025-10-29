@@ -6,7 +6,7 @@ import setdoc
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
-from v440._utils.QualSpec import Eden
+from v440._utils.Eden import Eden
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
 from v440.core.Post import Post
