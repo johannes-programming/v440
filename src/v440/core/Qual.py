@@ -55,7 +55,7 @@ class Qual(SlotStringer):
         pos: list[set[str]]
         sols: list[str]
         way: tuple
-        table = [QualSpec("", 0)] * 5
+        table = [QualSpec()] * 5
         for s, o in info.items():
             parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
             table = cls._deformat_and(table, parsed)
@@ -108,9 +108,9 @@ class Qual(SlotStringer):
         i: int
         matches = Cfg.fullmatches("qual", value)
         specs = list()
-        specs.append(QualSpec("", 0))
-        specs.append(QualSpec("", 0))
-        specs.append(QualSpec("", 0))
+        specs.append(QualSpec())
+        specs.append(QualSpec())
+        specs.append(QualSpec())
         if phase:
             i = ("a", "b", "rc").index(phase)
             specs[i] = QualSpec.by_example(matches["pre"])

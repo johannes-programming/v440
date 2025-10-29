@@ -3,8 +3,8 @@ from typing import *
 
 
 class QualSpec(NamedTuple):
-    head: str
-    mag: int
+    head: str = ""
+    mag: int = 0
 
     def __and__(self: Self, other: Self) -> Self:
         if self.head == "":
@@ -39,7 +39,7 @@ class QualSpec(NamedTuple):
 
     @classmethod
     def by_examples(cls: type, *values: str) -> Self:
-        ans: Self = cls("", 0)
+        ans: Self = cls()
         s: str
         for s in values:
             ans &= cls.by_string(s)

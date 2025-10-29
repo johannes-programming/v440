@@ -39,9 +39,9 @@ class Pre(QualStringer):
         specs: dict[str, QualSpec]
         sols: list
         specs = dict()
-        specs["a"] = QualSpec("", 0)
-        specs["b"] = QualSpec("", 0)
-        specs["rc"] = QualSpec("", 0)
+        specs["a"] = QualSpec()
+        specs["b"] = QualSpec()
+        specs["rc"] = QualSpec()
         for s, o in info.items():
             if not o:
                 continue
