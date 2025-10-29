@@ -55,7 +55,7 @@ class Qual(SlotStringer):
         pos: list[set[str]]
         sols: list[str]
         way: tuple
-        table = [QualSpec("", 0) for i in range(5)]
+        table = [QualSpec("", 0)] * 5
         for s, o in info.items():
             parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
             table = cls._deformat_and(table, parsed)
