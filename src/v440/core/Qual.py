@@ -90,7 +90,7 @@ class Qual(SlotStringer):
         x: Eden
         y: Eden
         ans: list[Eden]
-        ans: list[Eden] = list()
+        ans = list()
         for x, y in zip(table, parsed, strict=True):
             ans.append(x & y)
         return ans
