@@ -1142,15 +1142,23 @@ valid = false
 
 [examples.Qual.""]
 valid = true
+normed = ""
+deformatted = ""
 
 [examples.Qual.a1]
 valid = true
+normed = "a1"
+deformatted = ""
 
 [examples.Qual.alpha1]
 valid = true
+normed = "a1"
+deformatted = "alpha"
 
 [examples.Qual.post1]
 valid = true
+normed = ".post1"
+deformatted = "post"
 
 [examples.Qual.dev1]
 valid = true
@@ -2081,6 +2089,10 @@ solution = ""
 [deformatting.Local."qwERty 0123_aBcD"]
 valid = true
 solution = "####~~^^_~^~^"
+
+[deformatting.Local."qwERty 0.0.0"]
+valid = true
+solution = "~~^^"
 
 [deformatting.Post.""]
 valid = true
