@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import string as string_
 from typing import *
 
 from iterprod import iterprod
@@ -64,8 +63,10 @@ class Pre(QualStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        m: dict = Cfg.fullmatches("pre_f", spec)
-        ans: dict = dict()
+        m: dict
+        ans: dict
+        m = Cfg.fullmatches("pre_f", spec)
+        ans = dict()
         ans["a"] = Eden.by_spec(m["a_f"])
         ans["b"] = Eden.by_spec(m["b_f"])
         ans["rc"] = Eden.by_spec(m["rc_f"])

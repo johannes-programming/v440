@@ -31,7 +31,7 @@ class Dev(QualStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        Cfg.cfg.fullmatches("dev_f", spec)
+        Cfg.fullmatches("dev_f", spec)
         return dict(spec=spec)
 
     def _format_parsed(self: Self, *, spec: str) -> str:

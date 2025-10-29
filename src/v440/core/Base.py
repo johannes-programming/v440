@@ -33,13 +33,14 @@ class Base(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        table: dict = dict()
-        table["basev"] = set()
-        table["epoch"] = set()
-        table["release"] = set()
+        table: dict
         matches: dict
         s: str
         t: str
+        table = dict()
+        table["basev"] = set()
+        table["epoch"] = set()
+        table["release"] = set()
         for s in info.keys():
             matches = Cfg.fullmatches("base", s)
             for t in ("basev", "epoch", "release"):
@@ -55,7 +56,8 @@ class Base(SlotStringer):
 
     @classmethod
     def _deformat_epoch(cls: type, *table: str) -> str:
-        data: set = set(len(x) for x in table if x.startswith("0") or x == "")
+        data: set
+        data = set(len(x) for x in table if x.startswith("0") or x == "")
         if data == set() or data == {0}:
             return ""
         if len(data) == 1:
@@ -64,7 +66,9 @@ class Base(SlotStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
+        ans: dict
         p: str
+        x: str
         y: str
         if spec[:1] in tuple("Vv"):
             p = spec[0]
@@ -72,14 +76,14 @@ class Base(SlotStringer):
         else:
             p = ""
             y = spec
-        x: str = ""
+        x = ""
         if "!" in y:
             x, y = y.split("!")
             if x == "":
                 x = "#"
             elif x.strip("#"):
                 raise ValueError
-        ans: dict = dict(prefix=p, epoch_n=len(x), release_f=y)
+        ans = dict(prefix=p, epoch_n=len(x), release_f=y)
         return ans
 
     def _format_parsed(self: Self, *, prefix: str, epoch_n: int, release_f: str) -> str:
@@ -91,7 +95,8 @@ class Base(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict = Cfg.fullmatches("base", value)
+        matches: dict
+        matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
             self.epoch = int(matches["epoch"])
         else:
@@ -109,7 +114,8 @@ class Base(SlotStringer):
     @epoch.setter
     @guard
     def epoch(self: Self, value: Any) -> None:
-        v: int = operator.index(value)
+        v: int
+        v = operator.index(value)
         if v < 0:
             raise ValueError
         self._epoch = v
