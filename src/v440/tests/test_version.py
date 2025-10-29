@@ -397,21 +397,6 @@ class TestVersionLocal(unittest.TestCase):
         version.local.data = [1, "dev", "build"]
         self.assertEqual(version.local.data, (1, "dev", "build"))
 
-    def test_local_data_setter(self: Self) -> None:
-        # Test that 'data' property can be set directly
-        version: Version = Version()
-        version.local.data = ["custom", "data"]
-        answer: list = list(version.local)
-        solution: list = ["custom", "data"]
-        self.assertEqual(answer, solution)
-
-    def test_local_iterable(self: Self) -> None:
-        # Test if local supports iteration
-        version: Version = Version()
-        version.local.string = "1.dev.build"
-        result: list = list(version.local)
-        self.assertEqual(result, [1, "dev", "build"])
-
 
 class TestSlicingNoGo(unittest.TestCase):
 

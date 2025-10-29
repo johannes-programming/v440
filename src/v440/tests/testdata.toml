@@ -404,6 +404,18 @@ solution = [
 ]
 queryname = "data"
 
+[data-setter.Local.test_local_iterable]
+valid = true
+queryname = "string"
+query = "1.dev.build"
+solution = [1, "dev", "build"]
+
+[data-setter.Local.test_local_data_setter]
+valid = true
+query = ["custom", "data"]
+queryname = "data"
+solution = ["custom", "data"]
+
 [data-setter.Release.test_example_8]
 valid = true
 queryname = "string"
