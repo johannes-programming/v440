@@ -113,19 +113,16 @@ class Release(ListStringer):
     def _format_parse(cls: type, spec: str, /) -> str:
         if spec.strip("#."):
             raise ValueError
-        return dict(
-            specs=tuple(map(cls._format_parse_spec, spec.rstrip(".").split(".")))
-        )
+        return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
 
-    @classmethod
-    def _format_parse_spec(cls: type, value: str) -> str:
-        return f"0{len(value)}d"
-
-    def _format_parsed(self: Self, *, specs: tuple) -> str:
-        data: list = list(self)
-        data += [0] * max(0, 0, len(specs) - len(self))
-        parts: list = list(specs)
-        parts += [""] * max(0, 0, len(self) - len(specs))
+    def _format_parsed(self: Self, *, mags: tuple) -> str:
+        m: int
+        data: list[int]
+        parts: list[int]
+        data = list(self)
+        data += [0] * max(0, len(mags) - len(self))
+        parts = [f"0{m}d" for m in mags]
+        parts += [""] * max(0, len(self) - len(mags))
         ans: str = ".".join(map(format, data, parts))
         return ans
 
