@@ -408,7 +408,7 @@ queryname = "data"
 queryname = "string"
 query = "1.2.3.4.5.6.7.8.9.10"
 attrname = "bump"
-target = [
+solution = [
     1,
     2,
     3,
@@ -430,7 +430,7 @@ query = [
     false,
     3,
 ]
-target = [
+solution = [
     1,
     0,
     3,
@@ -443,7 +443,7 @@ query = [
     2000000000,
     3000000000,
 ]
-target = [
+solution = [
     1000000000,
     2000000000,
     3000000000,
@@ -454,14 +454,14 @@ queryname = "data"
 query = [
     1000000000000000000,
 ]
-target = [
+solution = [
     1000000000000000000,
 ]
 
 [release-data.test_release_data_property_empty]
 queryname = "data"
 query = []
-target = []
+solution = []
 
 [release-data.test_release_append]
 queryname = "data"
@@ -474,7 +474,7 @@ attrname = "append"
 args = [
     4,
 ]
-target = [
+solution = [
     1,
     2,
     3,
@@ -497,7 +497,7 @@ args = [
         5,
     ],
 ]
-target = [
+solution = [
     1,
     2,
     3,
@@ -519,7 +519,7 @@ args = [
     2,
     3,
 ]
-target = [
+solution = [
     1,
     2,
     3,
@@ -538,7 +538,7 @@ query = [
 attrname = "pop"
 check = 3
 args = []
-target = [
+solution = [
     1,
     2,
 ]
@@ -557,7 +557,7 @@ args = [
     1,
 ]
 check = 2
-target = [
+solution = [
     1,
     3,
 ]
@@ -575,7 +575,7 @@ attrname = "remove"
 args = [
     2,
 ]
-target = [
+solution = [
     1,
     3,
 ]
@@ -591,7 +591,7 @@ query = [
 ]
 attrname = "clear"
 args = []
-target = []
+solution = []
 
 [release-data.test_release_clear.kwargs]
 
@@ -634,7 +634,7 @@ query = [
     3,
 ]
 attrname = "reverse"
-target = [
+solution = [
     3,
     2,
     1,
@@ -648,7 +648,7 @@ query = [
     2,
 ]
 attrname = "sort"
-target = [
+solution = [
     1,
     2,
     3,
@@ -661,7 +661,7 @@ query = [
     false,
     3,
 ]
-target = [
+solution = [
     1,
     0,
     3,
@@ -674,7 +674,7 @@ query = [
     false,
     1,
 ]
-target = [
+solution = [
     1,
     0,
     1,
@@ -687,7 +687,7 @@ query = [
     2,
     3,
 ]
-target = [
+solution = [
     1,
     2,
     3,

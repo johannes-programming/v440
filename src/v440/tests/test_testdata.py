@@ -258,7 +258,7 @@ class TestVersionReleaseAttrs(unittest.TestCase):
         attrname: Optional[str] = None,
         args: list | tuple = (),
         kwargs: dict | tuple = (),
-        target: Optional[list] = None,
+        solution: Optional[list] = None,
         check: Any = None,
     ) -> None:
         # Test the append method of the release list-like object
@@ -271,9 +271,9 @@ class TestVersionReleaseAttrs(unittest.TestCase):
             attr = getattr(release, attrname)
             ans = attr(*args, **dict(kwargs))
             self.assertEqual(ans, check)
-        if target is not None:
+        if solution is not None:
             ans = list(release)
-            self.assertEqual(ans, target)
+            self.assertEqual(ans, solution)
 
 
 class TestDataSetter(unittest.TestCase):
