@@ -254,12 +254,12 @@ class TestVersionReleaseAttrs(unittest.TestCase):
     def go_data(
         self: Self,
         query: list,
+        queryname: str,
         attrname: Optional[str] = None,
         args: list | tuple = (),
         kwargs: dict | tuple = (),
         target: Optional[list] = None,
         solution: Any = None,
-        queryname: str = "data",
     ) -> None:
         # Test the append method of the release list-like object
         release: Release
