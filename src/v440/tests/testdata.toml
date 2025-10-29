@@ -404,7 +404,8 @@ solution = [
 ]
 queryname = "data"
 
-[release-data.test_example_8]
+[data-setter.Release.test_example_8]
+valid = true
 queryname = "string"
 query = "1.2.3.4.5.6.7.8.9.10"
 attrname = "bump"
@@ -419,11 +420,12 @@ solution = [
     13,
 ]
 
-[release-data.test_example_8.kwargs]
+[data-setter.Release.test_example_8.kwargs]
 index = 7
 amount = 5
 
-[release-data.test_release_assignment_with_bool_conversion]
+[data-setter.Release.test_release_assignment_with_bool_conversion]
+valid = true
 queryname = "data"
 query = [
     true,
@@ -436,7 +438,8 @@ solution = [
     3,
 ]
 
-[release-data.test_release_large_numbers]
+[data-setter.Release.test_release_large_numbers]
+valid = true
 queryname = "data"
 query = [
     1000000000,
@@ -449,7 +452,8 @@ solution = [
     3000000000,
 ]
 
-[release-data.test_release_max_integer]
+[data-setter.Release.test_release_max_integer]
+valid = true
 queryname = "data"
 query = [
     1000000000000000000,
@@ -458,12 +462,14 @@ solution = [
     1000000000000000000,
 ]
 
-[release-data.test_release_data_property_empty]
+[data-setter.Release.test_release_data_property_empty]
+valid = true
 queryname = "data"
 query = []
 solution = []
 
-[release-data.test_release_append]
+[data-setter.Release.test_release_append]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -481,9 +487,10 @@ solution = [
     4,
 ]
 
-[release-data.test_release_append.kwargs]
+[data-setter.Release.test_release_append.kwargs]
 
-[release-data.test_release_extend]
+[data-setter.Release.test_release_extend]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -505,9 +512,10 @@ solution = [
     5,
 ]
 
-[release-data.test_release_extend.kwargs]
+[data-setter.Release.test_release_extend.kwargs]
 
-[release-data.test_release_insert]
+[data-setter.Release.test_release_insert]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -526,9 +534,10 @@ solution = [
     4,
 ]
 
-[release-data.test_release_insert.kwargs]
+[data-setter.Release.test_release_insert.kwargs]
 
-[release-data.test_release_pop]
+[data-setter.Release.test_release_pop]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -543,9 +552,10 @@ solution = [
     2,
 ]
 
-[release-data.test_release_pop.kwargs]
+[data-setter.Release.test_release_pop.kwargs]
 
-[release-data.test_release_pop_with_index]
+[data-setter.Release.test_release_pop_with_index]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -562,9 +572,10 @@ solution = [
     3,
 ]
 
-[release-data.test_release_pop_with_index.kwargs]
+[data-setter.Release.test_release_pop_with_index.kwargs]
 
-[release-data.test_release_remove]
+[data-setter.Release.test_release_remove]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -580,9 +591,10 @@ solution = [
     3,
 ]
 
-[release-data.test_release_remove.kwargs]
+[data-setter.Release.test_release_remove.kwargs]
 
-[release-data.test_release_clear]
+[data-setter.Release.test_release_clear]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -593,9 +605,10 @@ attrname = "clear"
 args = []
 solution = []
 
-[release-data.test_release_clear.kwargs]
+[data-setter.Release.test_release_clear.kwargs]
 
-[release-data.test_release_count]
+[data-setter.Release.test_release_count]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -609,9 +622,10 @@ args = [
 attrname = "count"
 check = 2
 
-[release-data.test_release_count.kwargs]
+[data-setter.Release.test_release_count.kwargs]
 
-[release-data.test_release_index]
+[data-setter.Release.test_release_index]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -624,9 +638,10 @@ args = [
 ]
 check = 1
 
-[release-data.test_release_index.kwargs]
+[data-setter.Release.test_release_index.kwargs]
 
-[release-data.test_release_reverse]
+[data-setter.Release.test_release_reverse]
+valid = true
 queryname = "data"
 query = [
     1,
@@ -640,7 +655,8 @@ solution = [
     1,
 ]
 
-[release-data.test_release_sort]
+[data-setter.Release.test_release_sort]
+valid = true
 queryname = "data"
 query = [
     3,
@@ -654,7 +670,8 @@ solution = [
     3,
 ]
 
-[release-data.test_release_integer_float]
+[data-setter.Release.test_release_integer_float]
+valid = true
 queryname = "data"
 query = [
     true,
@@ -667,7 +684,8 @@ solution = [
     3,
 ]
 
-[release-data.test_release_boolean_assignment]
+[data-setter.Release.test_release_boolean_assignment]
+valid = true
 queryname = "data"
 query = [
     true,
@@ -680,7 +698,8 @@ solution = [
     1,
 ]
 
-[release-data.test_release_equality_with_list]
+[data-setter.Release.test_release_equality_with_list]
+valid = true
 queryname = "data"
 query = [
     1,

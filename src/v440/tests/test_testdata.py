@@ -242,40 +242,6 @@ class TestStringExamples(unittest.TestCase):
         )
 
 
-class TestVersionReleaseAttrs(unittest.TestCase):
-
-    def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["release-data"].items():
-            with self.subTest(key=k):
-                self.go_data(**v)
-
-    def go_data(
-        self: Self,
-        query: list,
-        queryname: str,
-        attrname: Optional[str] = None,
-        args: list | tuple = (),
-        kwargs: dict | tuple = (),
-        solution: Optional[list] = None,
-        check: Any = None,
-    ) -> None:
-        # Test the append method of the release list-like object
-        release: Release
-        attr: Any
-        ans: Any
-        release = Release()
-        setattr(release, queryname, query)
-        if attrname is not None:
-            attr = getattr(release, attrname)
-            ans = attr(*args, **dict(kwargs))
-            self.assertEqual(ans, check)
-        if solution is not None:
-            ans = list(release)
-            self.assertEqual(ans, solution)
-
-
 class TestDataSetter(unittest.TestCase):
 
     def test_0(self: Self) -> None:
