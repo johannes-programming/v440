@@ -261,14 +261,17 @@ class TestVersionReleaseAttrs(unittest.TestCase):
         queryname: str = "data",
     ) -> None:
         # Test the append method of the release list-like object
-        version: Version = Version()
+        version: Version
+        attr: Any
+        ans: Any
+        version = Version()
         setattr(version.public.base.release, queryname, query)
         if attrname is not None:
-            attr: Any = getattr(version.public.base.release, attrname)
-            ans: Any = attr(*args, **dict(kwargs))
+            attr = getattr(version.public.base.release, attrname)
+            ans = attr(*args, **dict(kwargs))
             self.assertEqual(ans, solution)
         if target is not None:
-            ans: list = list(version.public.base.release)
+            ans = list(version.public.base.release)
             self.assertEqual(ans, target)
 
 
