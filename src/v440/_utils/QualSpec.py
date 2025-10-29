@@ -1,41 +1,58 @@
 import string as string_
 from typing import *
 
+from v440._utils.Cfg import Cfg
 
-class QualSpec(NamedTuple):
+
+class Eden(NamedTuple):
     head: str = ""
+    sep: str = "?"
     mag: int = 0
 
     def __and__(self: Self, other: Self) -> Self:
+        s: str
+        m: int
         if self.head == "":
             return other
         if other.head == "":
             return self
-        h: str
-        if self.head == other.head:
-            h = self.head
-        elif self.head[:-1] == other.head and self.head[-1] in ".-_":
-            h = self.head
-        elif other.head[:-1] == self.head and other.head[-1] in ".-_":
-            h = other.head
+        if self.head != other.head:
+            raise ValueError
+        if self.sep == "?":
+            s = other.sep
+        elif other.sep == "?":
+            s = self.sep
+        elif self.sep == other.sep:
+            s = self.sep
         else:
             raise ValueError
-        m: int = min(self.mag, other.mag)
-        n: int = max(self.mag, other.mag)
-        if 0 < m + n < n:
-            raise ValueError
-        if 0 <= m < n:
-            raise ValueError
-        return type(self)(h, n)
+        if self.mag < 0 and other.mag < 0:
+            m = max(self.mag, other.mag)
+        elif self.mag < 0 or other.mag < 0:
+            if 0 < self.mag + other.mag:
+                raise ValueError
+            m = max(self.mag, other.mag)
+        else:
+            if self.mag != other.mag:
+                raise ValueError
+            m = self.mag
+        return type(self)(self.head, s, m)
 
     @classmethod
     def by_example(cls: type, value: str, /) -> Self:
-        x: str = value.rstrip(string_.digits)
-        y: str = value[len(x) :]
-        if y.startswith("0"):
-            return cls(x, len(y))
+        sep: str
+        mag: int
+        matches: dict[str, str]
+        matches = Cfg.fullmatches("eden", value)
+        if matches["sep"] or matches["num"]:
+            sep = matches["sep"]
         else:
-            return cls(x, -len(y))
+            sep = "?"
+        if matches["num"].startswith("0"):
+            mag = len(matches["num"])
+        else:
+            mag = -len(matches["num"])
+        return cls(matches["head"], sep, mag)
 
     @classmethod
     def by_examples(cls: type, *values: str) -> Self:
@@ -47,19 +64,36 @@ class QualSpec(NamedTuple):
 
     @classmethod
     def by_spec(cls: type, value: str, /) -> Self:
-        x: str = value.rstrip("#")
-        ans: Self = cls(x, len(value) - len(x))
-        return ans
+        matches: dict[str, str]
+        matches = Cfg.fullmatches("eden_f", value)
+        return cls(matches["head_f"], matches["sep_f"], len(matches["num_f"]))
 
     def options(self: Self, *, hollow: str, short: str) -> set:
+        s: str
+        n: str
+        seps: set[str]
+        nums: set[str]
+        ans: set
+        ans = set()
         if self.head == "":
-            return {"", short, short + "#"}
-        ans: set = set()
-        if self.head == hollow and (self.mag < 0 or self.mag == 1):
             ans.add("")
-        if self.mag < 0:
-            ans.add(self.head)
-            ans.add(self.head + "#")
+            ans.add(short)
+            ans.add(short + ".")
+            ans.add(short + "#")
+            ans.add(short + ".#")
+            return ans
+        if self.sep != "?":
+            seps = {self.sep}
         else:
-            ans.add(self.head + self.mag * "#")
+            seps = {"", "."}
+        if self.mag < 0:
+            nums = {"", "#"}
+        else:
+            nums = {"#" * self.mag}
+        ans = set()
+        for s in seps:
+            for n in nums:
+                ans.add(self.head + s + n)
+        if (hollow + "#") in ans:
+            ans.add("")
         return ans

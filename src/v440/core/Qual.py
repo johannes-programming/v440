@@ -6,7 +6,7 @@ import setdoc
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
-from v440._utils.QualSpec import QualSpec
+from v440._utils.QualSpec import Eden
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
 from v440.core.Post import Post
@@ -50,12 +50,12 @@ class Qual(SlotStringer):
         s: str
         t: str
         o: Self
-        parsed: tuple[QualSpec]
-        table: tuple[QualSpec]
+        parsed: tuple[Eden]
+        table: tuple[Eden]
         pos: list[set[str]]
         sols: list[str]
         way: tuple
-        table = [QualSpec()] * 5
+        table = [Eden()] * 5
         for s, o in info.items():
             parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
             table = cls._deformat_and(table, parsed)
@@ -83,14 +83,14 @@ class Qual(SlotStringer):
     @classmethod
     def _deformat_and(
         cls: type,
-        table: list[QualSpec],
-        parsed: list[QualSpec],
+        table: list[Eden],
+        parsed: list[Eden],
         /,
-    ) -> list[QualSpec]:
-        x: QualSpec
-        y: QualSpec
-        ans: list[QualSpec]
-        ans: list[QualSpec] = list()
+    ) -> list[Eden]:
+        x: Eden
+        y: Eden
+        ans: list[Eden]
+        ans: list[Eden] = list()
         for x, y in zip(table, parsed, strict=True):
             ans.append(x & y)
         return ans
@@ -102,20 +102,20 @@ class Qual(SlotStringer):
         /,
         *,
         phase: str,
-    ) -> tuple[QualSpec]:
-        specs: list[QualSpec]
+    ) -> tuple[Eden]:
+        specs: list[Eden]
         matches: dict[str, str]
         i: int
         matches = Cfg.fullmatches("qual", value)
         specs = list()
-        specs.append(QualSpec())
-        specs.append(QualSpec())
-        specs.append(QualSpec())
+        specs.append(Eden())
+        specs.append(Eden())
+        specs.append(Eden())
         if phase:
             i = ("a", "b", "rc").index(phase)
-            specs[i] = QualSpec.by_example(matches["pre"])
-        specs.append(QualSpec.by_example(matches["post"]))
-        specs.append(QualSpec.by_example(matches["dev"]))
+            specs[i] = Eden.by_example(matches["pre"])
+        specs.append(Eden.by_example(matches["post"]))
+        specs.append(Eden.by_example(matches["dev"]))
         return tuple(specs)
 
     @classmethod
@@ -123,14 +123,14 @@ class Qual(SlotStringer):
         cls: type,
         value: str,
         /,
-    ) -> tuple[QualSpec]:
-        specs: list[QualSpec]
+    ) -> tuple[Eden]:
+        specs: list[Eden]
         matches: dict[str, str]
         s: str
         matches = Cfg.fullmatches("qual_f", value)
         specs = list()
         for s in ("a", "b", "rc", "post", "dev"):
-            specs.append(QualSpec.by_spec(matches[s + "_f"]))
+            specs.append(Eden.by_spec(matches[s + "_f"]))
         return tuple(specs)
 
     @classmethod

@@ -5,10 +5,9 @@ from typing import *
 
 from iterprod import iterprod
 
-from v440._utils import forms
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
-from v440._utils.QualSpec import QualSpec
+from v440._utils.QualSpec import Eden
 from v440._utils.QualStringer import QualStringer
 
 __all__ = ["Pre"]
@@ -36,13 +35,13 @@ class Pre(QualStringer):
         o: Self
         matches: dict[str, str]
         opts: list[set]
-        specs: list[QualSpec]
+        specs: list[Eden]
         sols: list
-        specs = [QualSpec()] * 3
+        specs = [Eden()] * 3
         for s, o in info.items():
             if not o:
                 continue
-            specs[("a", "b", "rc").index(o.lit)] &= QualSpec.by_example(s)
+            specs[("a", "b", "rc").index(o.lit)] &= Eden.by_example(s)
         opts = list()
         opts.append(specs[0].options(hollow="a", short="a"))
         opts.append(specs[1].options(hollow="b", short="b"))
@@ -52,9 +51,9 @@ class Pre(QualStringer):
             s = a + b + c
             try:
                 matches = Cfg.fullmatches("pre_f", s)
-                specs[0] & QualSpec.by_spec(matches["a_f"])
-                specs[1] & QualSpec.by_spec(matches["b_f"])
-                specs[2] & QualSpec.by_spec(matches["rc_f"])
+                specs[0] & Eden.by_spec(matches["a_f"])
+                specs[1] & Eden.by_spec(matches["b_f"])
+                specs[2] & Eden.by_spec(matches["rc_f"])
             except Exception:
                 continue
             else:
@@ -67,28 +66,30 @@ class Pre(QualStringer):
     def _format_parse(cls: type, spec: str, /) -> dict:
         m: dict = Cfg.fullmatches("pre_f", spec)
         ans: dict = dict()
-        ans["a"] = QualSpec.by_spec(m["a_f"])
-        ans["b"] = QualSpec.by_spec(m["b_f"])
-        ans["rc"] = QualSpec.by_spec(m["rc_f"])
+        ans["a"] = Eden.by_spec(m["a_f"])
+        ans["b"] = Eden.by_spec(m["b_f"])
+        ans["rc"] = Eden.by_spec(m["rc_f"])
         return ans
 
-    def _format_parsed(self: Self, *, a: QualSpec, b: QualSpec, rc: QualSpec) -> str:
-        spec: QualSpec
+    def _format_parsed(self: Self, *, a: Eden, b: Eden, rc: Eden) -> str:
+        ans: str
+        eden: Eden
         if self.lit == "a":
-            spec = a
+            eden = a
         elif self.lit == "b":
-            spec = b
+            eden = b
         elif self.lit == "rc":
-            spec = rc
+            eden = rc
         else:
             return ""
-        if spec.head == "":
+        if eden.head == "":
             return self.lit + str(self.num)
-        if self.num or spec.mag:
-            return spec.head + format(self.num, f"0{spec.mag}d")
-        if spec.head[-1] in ".-_":
-            return spec.head[:-1]
-        return spec.head
+        ans = eden.head
+        if eden.sep != "?":
+            ans += eden.sep
+        if self.num or eden.mag:
+            ans += format(self.num, f"0{eden.mag}d")
+        return ans
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
