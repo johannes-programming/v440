@@ -995,24 +995,38 @@ deformatted = ""
 
 [examples.Local.""]
 valid = true
+normed = ""
+deformatted = ""
 
 [examples.Local.abc]
 valid = true
+normed = "abc"
+deformatted = ""
 
 [examples.Local."abc.1"]
 valid = true
+normed = "abc.1"
+deformatted = ""
 
 [examples.Local."a1.b2"]
 valid = true
+normed = "a1.b2"
+deformatted = ""
 
 [examples.Local.001]
 valid = true
+normed = "1"
+deformatted = "###"
 
 [examples.Local."abc.001.def"]
 valid = true
+normed = "abc.1.def"
+deformatted = ".###"
 
 [examples.Local."x1.y2.3"]
 valid = true
+normed = "x1.y2.3"
+deformatted = ""
 
 [examples.Local."a..b"]
 valid = false
@@ -1036,15 +1050,23 @@ deformatted = ""
 
 [examples.Post.post0]
 valid = true
+normed = ".post0"
+deformatted = "post#"
 
 [examples.Post.post1]
 valid = true
+normed = ".post1"
+deformatted = "post"
 
 [examples.Post.post2]
 valid = true
+normed = ".post2"
+deformatted = "post"
 
 [examples.Post.post10]
 valid = true
+normed = ".post10"
+deformatted = "post"
 
 [examples.Post.post01]
 valid = true
@@ -1209,6 +1231,21 @@ valid = true
 normed = "a1.post1"
 deformatted = ""
 
+[examples.Qual."a1-2-dev-3"]
+valid = true
+normed = "a1.post2.dev3"
+deformatted = "--dev-"
+
+[examples.Qual."a1-2"]
+valid = true
+normed = "a1.post2"
+deformatted = "-"
+
+[examples.Qual."-2"]
+valid = true
+normed = ".post2"
+deformatted = "-"
+
 [examples.Qual."a1.post2.dev3"]
 valid = true
 normed = "a1.post2.dev3"
@@ -1231,9 +1268,13 @@ deformatted = "post"
 
 [examples.Qual.dev]
 valid = true
+normed = ".dev0"
+deformatted = "dev"
 
 [examples.Qual.alpha-1]
 valid = true
+normed = "a1"
+deformatted = "alpha-"
 
 [examples.Qual._AlPhA]
 valid = true
@@ -1257,6 +1298,7 @@ deformatted = "post-"
 valid = true
 normed = ".post1"
 deformatted = "_post-"
+formatted = { "-DEV#" = "-1" }
 
 [examples.Qual.a]
 valid = true
@@ -1283,6 +1325,8 @@ deformatted = ""
 
 [examples.Release.1]
 valid = true
+normed = "1"
+deformatted = ""
 
 [examples.Release."1.2"]
 valid = true
@@ -2194,6 +2238,17 @@ solution = ""
 valid = true
 solution = ""
 
+[deformatting.Pre."a alpha"]
+valid = false
+
+[deformatting.Pre."a10 a01"]
+valid = true
+solution = "a##"
+
+[deformatting.Pre."beTA a12 beTA.19"]
+valid = true
+solution = "beTA."
+
 [deformatting.Pre."alpha alpha4 .pre5"]
 valid = true
 solution = 'alphab#.pre'
@@ -2201,6 +2256,29 @@ solution = 'alphab#.pre'
 [deformatting.Public.""]
 valid = true
 solution = ""
+
+[deformatting.Qual."-2"]
+valid = true
+solution = "-"
+
+[deformatting.Qual."c c1"]
+valid = true
+solution = "c"
+
+[deformatting.Qual."c c1 -2"]
+valid = false
+
+[deformatting.Qual."c1 -2"]
+valid = true
+solution = "c#-"
+
+[deformatting.Qual."c c-1"]
+valid = true
+solution = "c-"
+
+[deformatting.Qual."c c-1 -2"]
+valid = true
+solution = "c--"
 
 [deformatting.Qual.""]
 valid = true
