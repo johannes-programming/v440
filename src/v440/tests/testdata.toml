@@ -1052,12 +1052,18 @@ valid = false
 
 [examples.Pre.""]
 valid = true
+normed = ""
+deformatted = ""
 
 [examples.Pre.a1]
 valid = true
+normed = "a1"
+deformatted = ""
 
 [examples.Pre.alpha1]
 valid = true
+normed = "a1"
+deformatted = "alpha"
 
 [examples.Pre.b2]
 valid = true
@@ -1065,35 +1071,45 @@ valid = true
 [examples.Pre.rc1]
 valid = true
 normed = "rc1"
+deformatted = ""
 
 [examples.Pre.c3]
 valid = true
 normed = "rc3"
+deformatted = "c"
 
 [examples.Pre.a]
 valid = true
 normed = "a0"
+deformatted = "a"
 
 [examples.Pre.alpha]
 valid = true
 normed = "a0"
+deformatted = "alpha"
 
 [examples.Pre.aLPha]
 valid = true
 normed = "a0"
+deformatted = "aLPha"
 
 [examples.Pre.x1]
 valid = false
 
 [examples.Pre.pre1]
 valid = true
+normed = "rc1"
+deformatted = "pre"
 
 [examples.Pre.rc]
 valid = true
 normed = "rc0"
+deformatted = "rc"
 
 [examples.Pre.b1]
 valid = true
+normed = "b1"
+deformatted = ""
 
 [examples.Pre.b1.formatted]
 "" = "b1"
