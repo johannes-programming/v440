@@ -944,26 +944,35 @@ valid = true
 [examples.Dev.dev0]
 valid = true
 normed = ".dev0"
+deformatted = "dev#"
 
 [examples.Dev.dev1]
 valid = true
+deformatted = "dev"
 
 [examples.Dev.dev2]
 valid = true
+deformatted = "dev"
 
 [examples.Dev.dev01]
 valid = true
+normed = ".dev1"
+deformatted = "dev##"
 
 [examples.Dev.dev10]
 valid = true
+normed = ".dev10"
+deformatted = "dev"
 
 [examples.Dev.dev]
 valid = true
 normed = ".dev0"
+deformatted = "dev"
 
 [examples.Dev.dev-1]
 valid = true
 normed = ".dev1"
+deformatted = "dev-"
 
 [examples.Dev.deva]
 valid = false
@@ -1022,6 +1031,8 @@ valid = false
 
 [examples.Post.""]
 valid = true
+normed = ""
+deformatted = ""
 
 [examples.Post.post0]
 valid = true
@@ -1037,12 +1048,18 @@ valid = true
 
 [examples.Post.post01]
 valid = true
+normed = ".post1"
+deformatted = "post##"
 
 [examples.Post.post]
 valid = true
+normed = ".post0"
+deformatted = "post"
 
 [examples.Post.post-1]
 valid = true
+normed = ".post1"
+deformatted = "post-"
 
 [examples.Post.p1]
 valid = false
@@ -1067,6 +1084,8 @@ deformatted = "alpha"
 
 [examples.Pre.b2]
 valid = true
+normed = "b2"
+deformatted = ""
 
 [examples.Pre.rc1]
 valid = true
@@ -1143,6 +1162,8 @@ valid = true
 
 [examples.Public."1!1.0rc1.post2"]
 valid = true
+normed = "1!1rc1.post2"
+deformatted = ".#"
 
 [examples.Public."1.0+loc"]
 valid = false
@@ -1152,6 +1173,8 @@ valid = false
 
 [examples.Public."1.0.post"]
 valid = true
+normed = "1.post0"
+deformatted = ".#.post"
 
 [examples.Public."1!"]
 valid = false
