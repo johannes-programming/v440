@@ -35,29 +35,26 @@ class Pre(QualStringer):
         s: str
         o: Self
         matches: dict[str, str]
-        opts: dict[str, set]
-        specs: dict[str, QualSpec]
+        opts: list[set]
+        specs: list[QualSpec]
         sols: list
-        specs = dict()
-        specs["a"] = QualSpec()
-        specs["b"] = QualSpec()
-        specs["rc"] = QualSpec()
+        specs = [QualSpec()] * 3
         for s, o in info.items():
             if not o:
                 continue
-            specs[o.lit] &= QualSpec.by_example(s)
-        opts = dict()
-        opts["a"] = specs["a"].options(hollow="a", short="a")
-        opts["b"] = specs["b"].options(hollow="b", short="b")
-        opts["rc"] = specs["rc"].options(hollow="rc", short="c")
+            specs[("a", "b", "rc").index(o.lit)] &= QualSpec.by_example(s)
+        opts = list()
+        opts.append(specs[0].options(hollow="a", short="a"))
+        opts.append(specs[1].options(hollow="b", short="b"))
+        opts.append(specs[2].options(hollow="rc", short="c"))
         sols = list()
-        for a, b, c in iterprod(opts["a"], opts["b"], opts["rc"]):
+        for a, b, c in iterprod(*opts):
             s = a + b + c
             try:
                 matches = Cfg.fullmatches("pre_f", s)
-                specs["a"] & QualSpec.by_spec(matches["a_f"])
-                specs["b"] & QualSpec.by_spec(matches["b_f"])
-                specs["rc"] & QualSpec.by_spec(matches["rc_f"])
+                specs[0] & QualSpec.by_spec(matches["a_f"])
+                specs[1] & QualSpec.by_spec(matches["b_f"])
+                specs[2] & QualSpec.by_spec(matches["rc_f"])
             except Exception:
                 continue
             else:
