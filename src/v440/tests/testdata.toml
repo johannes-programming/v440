@@ -1211,15 +1211,23 @@ valid = false
 
 [examples.Qual.post-1]
 valid = true
+normed = ".post1"
+deformatted = "post-"
 
 [examples.Qual._post-1]
 valid = true
+normed = ".post1"
+deformatted = "_post-"
 
 [examples.Qual.a]
 valid = true
+normed = "a0"
+deformatted = "a"
 
 [examples.Qual.b1]
 valid = true
+normed = "b1"
+deformatted = ""
 
 [examples.Qual.b1.formatted]
 "" = "b1"
@@ -1231,23 +1239,30 @@ valid = false
 
 [examples.Release.0]
 valid = true
+normed = "0"
+deformatted = ""
 
 [examples.Release.1]
 valid = true
 
 [examples.Release."1.2"]
 valid = true
+normed = "1.2"
+deformatted = ""
 
 [examples.Release."1.2.3"]
 valid = true
+normed = "1.2.3"
 deformatted = ""
 
 [examples.Release."10.0.0"]
 valid = true
+normed = "10"
 deformatted = "..#"
 
 [examples.Release."3.4.5.6"]
 valid = true
+normed = "3.4.5.6"
 deformatted = ""
 
 [examples.Release."1."]
@@ -1261,7 +1276,6 @@ valid = false
 
 [examples.Release."1.a"]
 valid = false
-deformatted = ".a"
 
 [examples.Version."v1.0.0"]
 valid = true
@@ -1277,10 +1291,12 @@ valid = false
 
 [examples.Version.0]
 valid = true
+normed = "0"
 deformatted = ""
 
 [examples.Version."1.2.3a1"]
 valid = true
+normed = "1.2.3a1"
 deformatted = ""
 
 [examples.Version."1.2.3a1.post1.dev2"]
@@ -1289,6 +1305,7 @@ valid = true
 [examples.Version."1.2.3+abc"]
 valid = true
 normed = "1.2.3+abc"
+deformatted = ""
 
 [examples.Version."1.2.3+aBc"]
 valid = true
@@ -1297,12 +1314,18 @@ deformatted = "+~^"
 
 [examples.Version."1.2.3+abc.1"]
 valid = true
+normed = "1.2.3+abc.1"
+deformatted = ""
 
 [examples.Version."1!1.0"]
 valid = true
+normed = "1!1"
+deformatted = ".#"
 
 [examples.Version."0!1.0rc1+1.abc"]
 valid = true
+normed = "1rc1+1.abc"
+deformatted = "#!.#"
 
 [examples.Version."2.0.post1"]
 valid = true
