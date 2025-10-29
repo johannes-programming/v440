@@ -1327,6 +1327,12 @@ deformatted = ""
 BETA = "BETA1"
 "a###" = "b1"
 
+[examples.Qual."beta1.post2.dev3"]
+valid = true
+normed = "b1.post2.dev3"
+deformatted = "beta"
+formatted = { "r#-dev" = "b1r2-dev3", "-dev" = "b1-2dev3" }
+
 [examples.Release.""]
 valid = false
 
@@ -1574,6 +1580,9 @@ legacy = "Post-releases"
 [examples.Version."0.9.0post5"]
 valid = true
 legacy = "Post-releases"
+normed = "0.9.post5"
+deformatted = "..#post"
+formatted = { "-" = "0.9-5" }
 
 [examples.Version."1.0.0.dev1"]
 valid = true
@@ -1594,18 +1603,31 @@ legacy = "Development releases"
 [examples.Version."1.0dev5"]
 valid = true
 legacy = "Development releases"
+normed = "1.dev5"
+deformatted = ".#dev"
 
 [examples.Version."1.1.0-dev3"]
 valid = true
 legacy = "Development releases"
+normed = "1.1.dev3"
+deformatted = "..#r#-dev"
 
 [examples.Version."0.5.0.dev4"]
 valid = true
 legacy = "Development releases"
+normed = "0.5.dev4"
+deformatted = "..#"
+
+[examples.Version."00.5.0.dev4"]
+valid = true
+normed = "0.5.dev4"
+deformatted = "##..#"
 
 [examples.Version."1.0.0+local"]
 valid = true
 legacy = "Local Versions"
+normed = "1+local"
+deformatted = "..#"
 
 [examples.Version."2.0.1+20130313144700"]
 valid = true
@@ -1638,10 +1660,14 @@ legacy = "Local Versions"
 [examples.Version."1!0.1.0"]
 valid = true
 legacy = "Epoch Versions"
+normed = "1!0.1"
+deformatted = "..#"
 
 [examples.Version."2!1.0.0"]
 valid = true
 legacy = "Epoch Versions"
+normed = "2!1"
+deformatted = "..#"
 
 [examples.Version."1!2.3.4"]
 valid = true
@@ -1654,8 +1680,8 @@ deformatted = ""
 
 [examples.Version."0!0.0.1"]
 valid = true
-normed = "0.0.1"
 legacy = "Epoch Versions"
+normed = "0.0.1"
 deformatted = "#!"
 
 [examples.Version."3!1.2.0"]
@@ -1677,42 +1703,62 @@ legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
 [examples.Version."1!1.0.0a1.dev1"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+normed = "1!1a1.dev1"
+deformatted = "..#"
 
 [examples.Version."1.2.3.post4+exp.sha.5114f85"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+normed = "1.2.3.post4+exp.sha.5114f85"
+deformatted = ""
 
 [examples.Version."3.2.1rc2.post1.dev3"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+normed = "3.2.1rc2.post1.dev3"
+deformatted = ""
 
 [examples.Version."0!0.9.0.post5.dev7+local.5"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+normed = "0.9.post5.dev7+local.5"
+deformatted = "#!..#"
 
 [examples.Version."2!3.4.5a2+ubuntu1"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+normed = "2!3.4.5a2+ubuntu1"
+deformatted = ""
 
 [examples.Version."1.0"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+normed = "1"
+deformatted = ".#"
 
 [examples.Version."v2.0"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+normed = "2"
+deformatted = "v.#"
 
 [examples.Version."1.2.3-456"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+normed = "1.2.3.post456"
+deformatted = "-"
 
 [examples.Version."2.0.0-beta"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+normed = "2b0"
+deformatted = "..#-beta"
 
 [examples.Version."1.0.0.dev1234567"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+normed = "1.dev1234567"
+deformatted = "..#"
 
 [examples.Version."1.0.0.post123456789"]
 valid = true
