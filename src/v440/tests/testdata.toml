@@ -2257,6 +2257,10 @@ solution = 'alphab#.pre'
 valid = true
 solution = ""
 
+[deformatting.Qual.""]
+valid = true
+solution = ""
+
 [deformatting.Qual."-2"]
 valid = true
 solution = "-"
@@ -2280,10 +2284,6 @@ solution = "c-"
 valid = true
 solution = "c--"
 
-[deformatting.Qual.""]
-valid = true
-solution = ""
-
 [deformatting.Qual."beta1 dev.2"]
 valid = true
 solution = "betadev."
@@ -2293,6 +2293,18 @@ valid = true
 solution = "abcrdev"
 
 [deformatting.Release."1.2.0 9.8.7.6.0.5"]
+valid = true
+solution = "..#"
+
+[deformatting.Release."4.0 1.2.0 9.8.7.6.0.5"]
+valid = true
+solution = "..#"
+
+[deformatting.Release."4.0 9.8.7.6.0.5"]
+valid = true
+solution = ".#"
+
+[deformatting.Release."4.0 1.2.0"]
 valid = true
 solution = "..#"
 
