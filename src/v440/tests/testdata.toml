@@ -2078,6 +2078,10 @@ solution = ""
 valid = true
 solution = ""
 
+[deformatting.Local."qwERty 0123_aBcD"]
+valid = true
+solution = "####~~^^_~^~^"
+
 [deformatting.Post.""]
 valid = true
 solution = ""
