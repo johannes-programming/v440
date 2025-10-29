@@ -58,9 +58,11 @@ class Local(ListStringer):
 
     @classmethod
     def _deformat_part(cls: type, part: set[str]) -> str:
-        lits: set[str] = set()
-        nums: set[str] = set()
+        lits: set[str]
+        nums: set[str]
         s: str
+        lits = set()
+        nums = set()
         for s in part:
             if s.strip(string_.digits):
                 lits.add(s)
@@ -74,7 +76,8 @@ class Local(ListStringer):
     def _deformat_lits(cls: type, part: set[str]) -> str:
         i: int
         n: int
-        cases: list = ["#"] * max(0, 0, *map(len, part))
+        cases: list
+        cases = ["#"] * max(0, 0, *map(len, part))
         for i, s in itertools.chain(*map(enumerate, part)):
             if s in string_.digits:
                 continue
@@ -91,10 +94,12 @@ class Local(ListStringer):
 
     @classmethod
     def _deformat_nums(cls: type, part: set[str]) -> int:
+        t: Iterator
+        f: int
         if len(part) == 0:
             return 0
-        t: Iterator = (len(s) for s in part if s.startswith("0"))
-        f: int = max(1, 1, *t)
+        t = (len(s) for s in part if s.startswith("0"))
+        f = max(1, 1, *t)
         if f > min(map(len, part)):
             raise ValueError
         elif f == 1:
@@ -174,10 +179,11 @@ class Local(ListStringer):
         return type(value) is int, value
 
     def _string_fset(self: Self, value: str) -> None:
+        v: str
         if value == "":
             self.data = ()
             return
-        v: str = value
+        v = value
         if v.startswith("+"):
             v = v[1:]
         v = v.replace("_", ".")

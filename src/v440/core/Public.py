@@ -49,7 +49,9 @@ class Public(SlotStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        i: int = int(spec.lower().startswith("v"))
+        i: int
+        ans: dict
+        i = int(spec.lower().startswith("v"))
         while i < len(spec):
             if spec[i] in ("#!."):
                 i += 1
@@ -57,7 +59,7 @@ class Public(SlotStringer):
                 break
         if i != 0 and spec[i - 1] == "." and i != len(spec) and spec[i] not in "-_":
             i -= 1
-        ans: dict = dict(base_f=spec[:i], qual_f=spec[i:])
+        ans = dict(base_f=spec[:i], qual_f=spec[i:])
         return ans
 
     def _format_parsed(self: Self, *, base_f: str, qual_f: str) -> str:
@@ -65,7 +67,8 @@ class Public(SlotStringer):
 
     @classmethod
     def _split(cls: type, value: str) -> tuple[str, str]:
-        i: int = int(value.lower().startswith("v"))
+        i: int
+        i = int(value.lower().startswith("v"))
         while i < len(value):
             if value[i] in (string_.digits + "!."):
                 i += 1

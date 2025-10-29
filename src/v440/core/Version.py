@@ -32,10 +32,12 @@ class Version(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict, /) -> str:
-        publics: set = set()
-        locals: set = set()
+        publics: set
+        locals: set
         x: str
         y: str
+        publics = set()
+        locals = set()
         for x, y in map(cls._split, info.keys()):
             publics.add(x)
             locals.add(y)
