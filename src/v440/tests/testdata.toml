@@ -1421,14 +1421,20 @@ legacy = "Pre-releases (alpha, beta, release candidate)"
 [examples.Version."4.1.0-rc.1"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+normed = "4.1rc1"
+deformatted = "..#-rc."
 
 [examples.Version."1.1a0"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+normed = "1.1a0"
+deformatted = ""
 
 [examples.Version."1.1.0-alpha.2"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+normed = "1.1a2"
+deformatted = "..#-alpha."
 
 [examples.Version."5.0rc1"]
 valid = true
