@@ -1338,6 +1338,22 @@ valid = true
 normed = "1.2.3"
 deformatted = ""
 
+[examples.Release."1.02.3"]
+valid = true
+normed = "1.2.3"
+deformatted = ".##"
+formatted = { "....#" = "1.2.3.0.0" }
+
+[examples.Release."1.002.3"]
+valid = true
+normed = "1.2.3"
+deformatted = ".###"
+
+[examples.Release."1.042.3"]
+valid = true
+normed = "1.42.3"
+deformatted = ".###"
+
 [examples.Release."10.0.0"]
 valid = true
 normed = "10"
