@@ -1498,42 +1498,52 @@ legacy = "Basic Versioning"
 [examples.Version."0.0.1"]
 valid = true
 legacy = "Basic Versioning"
+deformatted = ""
 
 [examples.Version."0.0.0"]
 valid = true
 legacy = "Basic Versioning"
+deformatted = "..#"
 
 [examples.Version."0.1"]
 valid = true
 legacy = "Basic Versioning"
+deformatted = ""
 
 [examples.Version."1.2"]
 valid = true
 legacy = "Basic Versioning"
+deformatted = ""
 
 [examples.Version."2.4"]
 valid = true
 legacy = "Basic Versioning"
+deformatted = ""
 
 [examples.Version."1.0.0a1"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+deformatted = "..#"
 
 [examples.Version."2.0b3"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+deformatted = ".#"
 
 [examples.Version."0.9.1rc4"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+deformatted = ""
 
 [examples.Version."1.1.0-alpha"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+deformatted = "..#-alpha"
 
 [examples.Version."3.0.0b2"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+deformatted = "..#"
 
 [examples.Version."4.1.0-rc.1"]
 valid = true
@@ -1657,6 +1667,7 @@ deformatted = "..#"
 [examples.Version."1.0.1+2019.10.22"]
 valid = true
 legacy = "Local Versions"
+deformatted = ""
 
 [examples.Version."0.9.0+ubuntu1"]
 valid = true
@@ -1671,6 +1682,7 @@ deformatted = "..#"
 [examples.Version."3.2.1+dfsg1"]
 valid = true
 legacy = "Local Versions"
+deformatted = ""
 
 [examples.Version."1!0.1.0"]
 valid = true
@@ -1687,6 +1699,7 @@ deformatted = "..#"
 [examples.Version."1!2.3.4"]
 valid = true
 legacy = "Epoch Versions"
+deformatted = ""
 
 [examples.Release."0.0.1"]
 valid = true
@@ -1717,6 +1730,7 @@ deformatted = "..#"
 [examples.Version."1.2.3rc1+build123"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+deformatted = ""
 
 [examples.Version."1!1.0.0a1.dev1"]
 valid = true
@@ -2075,39 +2089,48 @@ deformatted = ""
 [examples.Version."1.2.3a0.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post0.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post0.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post0.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post10"]
 valid = true
 normed = "1.2.3a0.post10"
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post10.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post10.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a0.post_10"]
 valid = true
@@ -2117,58 +2140,72 @@ deformatted = ".post_"
 [examples.Version."1.2.3a0.post10.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post0.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post0.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post0.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post10"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post10.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post10.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3a4.post10.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1".formatted]
 "" = "1.2.3b1"
@@ -2178,46 +2215,57 @@ BETA = "1.2.3BETA1"
 [examples.Version."1.2.3b1.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post0.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post0.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post0.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post10"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post10.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post10.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3b1.post10.dev2"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.0.0.post1a1"]
 valid = false
@@ -2328,11 +2376,13 @@ legacy = "spec.test_basic_version_with_post_specifier"
 [examples.Version."1.2.3a1-4"]
 valid = true
 normed = "1.2.3a1.post4"
+deformatted = "-"
 legacy = "spec.test_version_with_pre_release_and_post_specifiers"
 
 [examples.Version."1.2.3-4+local"]
 valid = true
 normed = "1.2.3.post4+local"
+deformatted = "-"
 legacy = "spec.test_version_with_post_and_local_specifiers"
 
 [examples.Version."1!1.2.3-4"]
@@ -2350,11 +2400,13 @@ legacy = "spec.test_version_with_dev_specifier_after_post"
 [examples.Version."1!1.2.3-4-dev2"]
 valid = true
 normed = "1!1.2.3.post4.dev2"
+deformatted = "--dev"
 legacy = "spec.test_version_with_epoch_and_wrong_order_specifiers"
 
 [examples.Version."1.2.3a1-4-dev5+local"]
 valid = true
 normed = "1.2.3a1.post4.dev5+local"
+deformatted = "--dev"
 legacy = "spec.test_version_with_complex_specifiers_and_local"
 
 [deformatting.Base.""]
