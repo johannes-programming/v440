@@ -1812,7 +1812,7 @@ deformatted = "..#"
 [examples.Version."0.9.0.post99.dev1000+ubuntu12.04.5"]
 valid = true
 legacy = "Increasing complexity with more combinations"
-deformatted = "..#"
+deformatted = "..#+.##"
 
 [examples.Version."3!2.1.0-alpha.5+build.34567abcd"]
 valid = true
