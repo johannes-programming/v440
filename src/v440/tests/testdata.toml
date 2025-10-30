@@ -1556,26 +1556,32 @@ deformatted = "..#-alpha."
 [examples.Version."5.0rc1"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
+deformatted = ".#"
 
 [examples.Version."1.0.0.post1"]
 valid = true
 legacy = "Post-releases"
+deformatted = "..#"
 
 [examples.Version."2.1.0.post4"]
 valid = true
 legacy = "Post-releases"
+deformatted = "..#"
 
 [examples.Version."3.2.1.post7"]
 valid = true
 legacy = "Post-releases"
+deformatted = ""
 
 [examples.Version."1.2.post.3"]
 valid = true
 legacy = "Post-releases"
+deformatted = ".post."
 
 [examples.Version."1.2.0-post4"]
 valid = true
 legacy = "Post-releases"
+deformatted = "..#-post"
 
 [examples.Version."0.9.0post5"]
 valid = true
@@ -1587,18 +1593,22 @@ formatted = { "-" = "0.9-5" }
 [examples.Version."1.0.0.dev1"]
 valid = true
 legacy = "Development releases"
+deformatted = "..#"
 
 [examples.Version."2.0.0.dev2"]
 valid = true
 legacy = "Development releases"
+deformatted = "..#"
 
 [examples.Version."0.9.1.dev10"]
 valid = true
 legacy = "Development releases"
+deformatted = ""
 
 [examples.Version."2.1.dev0"]
 valid = true
 legacy = "Development releases"
+deformatted = ""
 
 [examples.Version."1.0dev5"]
 valid = true
@@ -1632,14 +1642,17 @@ deformatted = "..#"
 [examples.Version."2.0.1+20130313144700"]
 valid = true
 legacy = "Local Versions"
+deformatted = ""
 
 [examples.Version."1.0.0+exp.sha.5114f85"]
 valid = true
 legacy = "Local Versions"
+deformatted = "..#"
 
 [examples.Version."1.0.0+abc.5.1"]
 valid = true
 legacy = "Local Versions"
+deformatted = "..#"
 
 [examples.Version."1.0.1+2019.10.22"]
 valid = true
@@ -1648,10 +1661,12 @@ legacy = "Local Versions"
 [examples.Version."0.9.0+ubuntu1"]
 valid = true
 legacy = "Local Versions"
+deformatted = "..#"
 
 [examples.Version."2.1.0+build.12345"]
 valid = true
 legacy = "Local Versions"
+deformatted = "..#"
 
 [examples.Version."3.2.1+dfsg1"]
 valid = true
@@ -1687,14 +1702,17 @@ deformatted = "#!"
 [examples.Version."3!1.2.0"]
 valid = true
 legacy = "Epoch Versions"
+deformatted = "..#"
 
 [examples.Version."1.0.0a1.post2"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+deformatted = "..#"
 
 [examples.Version."2.1.0b2.dev3"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+deformatted = "..#"
 
 [examples.Version."1.2.3rc1+build123"]
 valid = true
