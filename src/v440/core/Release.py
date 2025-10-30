@@ -123,12 +123,12 @@ class Release(ListStringer):
         data += [0] * max(0, len(mags) - len(self))
         parts = [f"0{m}d" for m in mags]
         parts += [""] * max(0, len(self) - len(mags))
-        ans: str = ".".join(map(format, data, parts))
-        return ans
+        return ".".join(map(format, data, parts))
 
     @classmethod
     def _item_parse(cls: type, value: SupportsIndex) -> int:
-        ans: int = operator.index(value)
+        ans: int
+        ans = operator.index(value)
         if ans < 0:
             raise ValueError
         return ans
