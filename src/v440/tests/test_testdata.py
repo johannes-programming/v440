@@ -1,3 +1,4 @@
+import builtins
 import enum
 import functools
 import operator
@@ -299,7 +300,8 @@ class TestDataSetter(unittest.TestCase):
         attrname: Optional[str] = None,
         args: list | tuple = (),
         kwargs: dict | tuple = (),
-        solution: Optional[list] = None,
+        solution: Optional[Any] = None,
+        solutionname: Optional[str] = None,
         **_kwargs: Any,
     ) -> None:
         ans: Any
@@ -311,8 +313,8 @@ class TestDataSetter(unittest.TestCase):
             attr = getattr(obj, attrname)
             ans = attr(*args, **dict(kwargs))
             self.assertEqual(ans, check)
-        if solution is not None:
-            ans = list(obj)
+        if solutionname is not None:
+            ans = getattr(builtins, solutionname)(obj)
             self.assertEqual(ans, solution)
 
 
