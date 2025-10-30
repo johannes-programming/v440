@@ -87,7 +87,8 @@ class Base(SlotStringer):
         return ans
 
     def _format_parsed(self: Self, *, prefix: str, epoch_n: int, release_f: str) -> str:
-        ans: str = prefix
+        ans: str
+        ans = prefix
         if epoch_n or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_n)
             ans += "!"
