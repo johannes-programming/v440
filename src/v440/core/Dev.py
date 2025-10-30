@@ -5,6 +5,7 @@ from typing import *
 
 from v440._utils import forms
 from v440._utils.Cfg import Cfg
+from v440._utils.Eden import Eden
 from v440._utils.guarding import guard
 from v440._utils.QualStringer import QualStringer
 
@@ -31,16 +32,24 @@ class Dev(QualStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        Cfg.fullmatches("dev_f", spec)
-        return dict(spec=spec)
+        m: dict
+        e: Eden
+        m = Cfg.fullmatches("dev_f", spec)
+        e = Eden(
+            head=m["dev_head_f"],
+            sep=m["dev_sep_f"],
+            mag=len(m["dev_num_f"]),
+        )
+        return dict(eden=e)
 
-    def _format_parsed(self: Self, *, spec: str) -> str:
+    def _format_parsed(self: Self, *, eden: Eden) -> str:
         if not self:
             return ""
-        elif not spec:
+        if "" == eden.head:
             return ".dev" + str(self.num)
-        else:
-            return forms.qualform(spec, self.num)
+        if 0 == eden.mag and 0 == self.num:
+            return eden.head
+        return eden.head + eden.sep + format(self.num, f"0{eden.mag}d")
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:
