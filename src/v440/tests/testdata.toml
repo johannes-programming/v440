@@ -734,21 +734,33 @@ solution = [
     "data",
 ]
 
-[data-property.local]
+[data-setter.Version."data-property.local"]
 query = "42!1.2.3.dev1337+5.nov"
 solution = "42!1.2.3.dev1337+5.nov"
+queryname = "string"
+solutionname = "str"
+valid = true
 
-[data-property.hitch]
+[data-setter.Version."data-property.hitch"]
 query = 4.2
 solution = "4.2"
+queryname = "string"
+solutionname = "str"
+valid = true
 
-[data-property.dragon]
+[data-setter.Version."data-property.dragon"]
 query = 9001
 solution = "9001"
+queryname = "string"
+solutionname = "str"
+valid = true
 
-[data-property.local_again]
+[data-setter.Version."data-property.local_again"]
 query = "1701!4.5.6.rc255+reset"
 solution = "1701!4.5.6rc255+reset"
+queryname = "string"
+solutionname = "str"
+valid = true
 
 [slicingmethod.test_slicing_1]
 query = "1.2.3.4.5.6.7.8.9.10"

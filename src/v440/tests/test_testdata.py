@@ -365,24 +365,6 @@ class TestSlicingGo(unittest.TestCase):
         self.assertEqual(str(v), solution)
 
 
-class TestDataProperty(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        for k, v in Util.util.data["data-property"].items():
-            with self.subTest(key=k):
-                self.go(**v, key=k)
-
-    def go(
-        self: Self,
-        query: Any = None,
-        solution: Any = None,
-        key: str = "",
-    ) -> None:
-        msg: str = "data-property %r" % key
-        version: Version = Version()
-        version.string = query
-        self.assertEqual(solution, str(version), msg=msg)
-
-
 class TestPackagingA(unittest.TestCase):
     def test_0(self: Self) -> None:
         x: str
