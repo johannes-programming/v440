@@ -1820,6 +1820,7 @@ deformatted = ".#"
 [examples.Version."0.1+build.1"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+deformatted = ""
 
 [examples.Version."1.2.3-beta"]
 valid = true
