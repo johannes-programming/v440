@@ -6,6 +6,7 @@ import string as string_
 from typing import *
 
 import setdoc
+from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
@@ -75,19 +76,21 @@ class Local(ListStringer):
     @classmethod
     def _deformat_lits(cls: type, part: set[str]) -> str:
         i: int
-        n: int
+        s: str
+        t: str
         cases: list
         cases = ["#"] * max(0, 0, *map(len, part))
-        for i, s in itertools.chain(*map(enumerate, part)):
+        for i, s in iterflat(map(enumerate, part)):
             if s in string_.digits:
                 continue
             if s in string_.ascii_uppercase:
-                n = "^"
+                t = "^"
             else:
-                n = "~"
+                t = "~"
             if "#" == cases[i]:
-                cases[i] = n
-            elif n != cases[i]:
+                cases[i] = t
+                continue
+            if t != cases[i]:
                 raise ValueError
         s = "".join(cases).replace("#", "~").rstrip("~")
         return s
