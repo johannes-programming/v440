@@ -1781,14 +1781,17 @@ deformatted = "..#"
 [examples.Version."1.0.0.post123456789"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+deformatted = "..#"
 
 [examples.Version."1.2.3+abc.123"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+deformatted = ""
 
 [examples.Version."1.0+deadbeef"]
 valid = true
 legacy = "Edge Cases / Special Forms"
+deformatted = ".#"
 
 [examples.Version."0.1+build.1"]
 valid = true
@@ -1797,6 +1800,7 @@ legacy = "Edge Cases / Special Forms"
 [examples.Version."1.2.3-beta"]
 valid = true
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+deformatted = "-beta"
 
 [examples.Version."01.0.0"]
 valid = true
@@ -1835,6 +1839,7 @@ deformatted = "..#+.##"
 [examples.Version."3!2.1.0-alpha.5+build.34567abcd"]
 valid = true
 legacy = "Increasing complexity with more combinations"
+deformatted = "..#-alpha."
 
 [examples.Version."1.2.3a1.post11.dev7+sha256.abc123def456"]
 valid = true
@@ -1849,18 +1854,22 @@ deformatted = "#!..#+-"
 [examples.Version."42!1.0.0rc999.post999.dev9999+exp.build.local1"]
 valid = true
 legacy = "Increasing complexity with more combinations"
+deformatted = "..#"
 
 [examples.Version."1!1.2.3a1.post6.dev5+local"]
 valid = true
 legacy = "Increasing complexity with more combinations"
+deformatted = ""
 
 [examples.Version."2!1.0.0+local.version.1234"]
 valid = true
 legacy = "Combining epochs with local versions"
+deformatted = "..#"
 
 [examples.Version."1!2.0.1.post3.dev1+local.hash.deadbeef"]
 valid = true
 legacy = "Combining epochs with local versions"
+deformatted = ""
 
 [examples.Version."3!4.5.6a2.post8.dev9+build.sha.abcdef123456"]
 valid = true
@@ -1877,90 +1886,112 @@ legacy = "Advanced pre-release + post-release + development combinations"
 [examples.Version."1.0.0b99.post8888.dev7777+local.version.abcdef"]
 valid = true
 legacy = "Advanced pre-release + post-release + development combinations"
+deformatted = "..#"
 
 [examples.Version."0.5.0rc1.post1111.dev987+local.build.exp123"]
 valid = true
 legacy = "Advanced pre-release + post-release + development combinations"
+deformatted = "..#"
 
 [examples.Version."0!1.1a1.post1.dev100+local.build.hash99999"]
 valid = true
 legacy = "Advanced pre-release + post-release + development combinations"
+deformatted = "#!"
 
 [examples.Version."1.0.0.post999999.dev9999999+build.1234567890"]
 valid = true
 legacy = "Very large versions with long numeric parts"
+deformatted = "..#"
 
 [examples.Version."0!99999999.99999.99999+local.version.9876543210"]
 valid = true
 legacy = "Very large versions with long numeric parts"
+deformatted = "#!"
 
 [examples.Version."100!0.0.0a0.post0.dev0+exp.sha.0"]
 valid = true
 legacy = "Very large versions with long numeric parts"
+deformatted = "..#"
 
 [examples.Version."2!999.999.999a999.post9999.dev9999+local.build.9"]
 valid = true
 legacy = "Very large versions with long numeric parts"
+deformatted = ""
 
 [examples.Version."10!9999.8888.7777a6666.post5555.dev4444+build.hash123abc"]
 valid = true
 legacy = "Complex strings with multiple epochs, large numbers, and combinations"
+deformatted = ""
 
 [examples.Version."1!1.1a1000000000.post1000000000.dev1000000000+local.0"]
 valid = true
 legacy = "Complex strings with multiple epochs, large numbers, and combinations"
+deformatted = ""
 
 [examples.Version."1.0.0a1.post2+ubuntu16.04"]
 valid = true
 legacy = "Mixed use of pre-release and post-release with complex local versions"
+deformatted = "..#+.##"
 
 [examples.Version."2.0.0-rc.1.post2+build.sha.e91e63f0"]
 valid = true
 legacy = "Mixed use of pre-release and post-release with complex local versions"
+deformatted = "..#-rc."
 
 [examples.Version."1.0.0-alpha+linux-x86_64"]
 valid = true
 legacy = "Mixed use of pre-release and post-release with complex local versions"
+deformatted = "..#-alpha+-_"
 
 [examples.Version."0.1.0-beta+20190506.commit.gdeadbeef"]
 valid = true
 legacy = "Mixed use of pre-release and post-release with complex local versions"
+deformatted = "..#-beta"
 
 [examples.Version."1.0.0-alpha_1"]
 valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
+deformatted = "..#-alpha_"
 
 [examples.Version."v1.0.0.post0.dev0"]
 valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
+deformatted = "v..#"
 
 [examples.Version."1.0.0.a1"]
 valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
+deformatted = "..#.a"
 
 [examples.Version."1.2.3alpha1.post2"]
 valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
+deformatted = "alpha"
 
 [examples.Version."00!1.0.0"]
 valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
+deformatted = "##!..#"
 
 [examples.Version."1.0.0a01.post00.dev01+build00"]
 valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
+deformatted = "..#a##.post##.dev##"
 
 [examples.Version."v1.0.0-0"]
 valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
+deformatted = "v..#-"
 
 [examples.Version."0.1.0a12345678901234567890.post12345678901234567890.dev12345678901234567890+build12345678901234567890"]
 valid = true
 legacy = "Extreme cases with very long versions"
+deformatted = "..#"
 
 [examples.Version."1.2.3+local.version.with.extremely.long.identifier.123456789012345678901234567890"]
 valid = true
 legacy = "Extreme cases with very long versions"
+deformatted = ""
 
 [examples.Version."0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"]
 valid = true
@@ -1971,14 +2002,17 @@ deformatted = "#!..#"
 [examples.Version."1.2.3"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3.dev0"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3.dev1"]
 valid = true
 legacy = "Difficult Qualification Relations"
+deformatted = ""
 
 [examples.Version."1.2.3.dev2"]
 valid = true
@@ -2064,6 +2098,7 @@ legacy = "Difficult Qualification Relations"
 [examples.Version."1.2.3a0.post_10"]
 valid = true
 normed = "1.2.3a0.post10"
+deformatted = ".post_"
 
 [examples.Version."1.2.3a0.post10.dev2"]
 valid = true

@@ -43,6 +43,8 @@ class Eden(NamedTuple):
         sep: str
         mag: int
         matches: dict[str, str]
+        if value == "-0":
+            return cls("-", "", -1)
         matches = Cfg.fullmatches("eden", value)
         if matches["sep"] or matches["num"]:
             sep = matches["sep"]
