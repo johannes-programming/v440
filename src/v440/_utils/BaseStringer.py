@@ -7,6 +7,7 @@ from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
+from v440.core.VersionError import VersionError
 
 __all__ = ["BaseStringer"]
 
@@ -31,13 +32,15 @@ class BaseStringer(metaclass=ABCMeta):
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
         parsed: dict
+        ans: str
+        msg: str
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
-            msg: str = Cfg.cfg.data["consts"]["errors"]["format"]
+            msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
-            raise TypeError(msg)  # from None
-        ans: str = str(self._format_parsed(**parsed))
+            raise VersionError(msg)  # from None
+        ans = str(self._format_parsed(**parsed))
         return ans
 
     @setdoc.basic
