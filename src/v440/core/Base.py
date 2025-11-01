@@ -56,13 +56,21 @@ class Base(SlotStringer):
 
     @classmethod
     def _deformat_epoch(cls: type, *table: str) -> str:
-        data: set
-        data = set(len(x) for x in table if x.startswith("0") or x == "")
-        if data == set() or data == {0}:
+        f: int
+        g: Iterable
+        u: int
+        if len(table) == 0:
             return ""
-        if len(data) == 1:
-            return "#" * data.pop() + "!"
-        raise ValueError
+        u = min(map(len, table))
+        g = (len(x) for x in table if (x.startswith("0") or not x))
+        f = max(0, 0, *g)
+        if f > u:
+            raise ValueError
+        return "#" * f + "!" * bool(f)
+
+    @classmethod
+    def _deformat_epoch_filter(cls: type, x: str) -> bool:
+        return
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
