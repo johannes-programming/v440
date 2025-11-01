@@ -34,25 +34,24 @@ class Pre(QualStringer):
         o: Self
         matches: dict[str, str]
         opts: list[set]
-        specs: list[Eden]
+        edens: list[Eden]
         sols: list
-        specs = [Eden()] * 3
+        edens = [Eden()] * 3
         for s, o in info.items():
             if not o:
                 continue
-            specs[("a", "b", "rc").index(o.lit)] &= Eden.by_example(s)
+            edens[("a", "b", "rc").index(o.lit)] &= Eden.by_example(s)
         opts = list()
-        opts.append(specs[0].options(hollow="a", short="a"))
-        opts.append(specs[1].options(hollow="b", short="b"))
-        opts.append(specs[2].options(hollow="rc", short="c"))
+        opts.append(edens[0].options(hollow="a", short="a"))
+        opts.append(edens[1].options(hollow="b", short="b"))
+        opts.append(edens[2].options(hollow="rc", short="c"))
         sols = list()
-        for a, b, c in iterprod(*opts):
-            s = a + b + c
+        for s in map("".join, iterprod(*opts)):
             try:
                 matches = Cfg.fullmatches("pre_f", s)
-                specs[0] & Eden.by_spec(matches["a_f"])
-                specs[1] & Eden.by_spec(matches["b_f"])
-                specs[2] & Eden.by_spec(matches["rc_f"])
+                edens[0] & Eden.by_spec(matches["a_f"])
+                edens[1] & Eden.by_spec(matches["b_f"])
+                edens[2] & Eden.by_spec(matches["rc_f"])
             except Exception:
                 continue
             else:
