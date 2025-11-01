@@ -83,6 +83,10 @@ class Eden(NamedTuple):
             ans.add(short + ".")
             ans.add(short + "#")
             ans.add(short + ".#")
+            # ans.add("." + short)
+            # ans.add("." + short + ".")
+            # ans.add("." + short + "#")
+            # ans.add("." + short + ".#")
             return ans
         if self.sep != "?":
             seps = {self.sep}

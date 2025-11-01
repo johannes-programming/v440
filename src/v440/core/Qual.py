@@ -102,20 +102,20 @@ class Qual(SlotStringer):
         *,
         phase: str,
     ) -> tuple[Eden]:
-        specs: list[Eden]
+        edens: list[Eden]
         matches: dict[str, str]
         i: int
         matches = Cfg.fullmatches("qual", value)
-        specs = list()
-        specs.append(Eden())
-        specs.append(Eden())
-        specs.append(Eden())
+        edens = list()
+        edens.append(Eden())
+        edens.append(Eden())
+        edens.append(Eden())
         if phase:
             i = ("a", "b", "rc").index(phase)
-            specs[i] = Eden.by_example(matches["pre"])
-        specs.append(Eden.by_example(matches["post"]))
-        specs.append(Eden.by_example(matches["dev"]))
-        return tuple(specs)
+            edens[i] = Eden.by_example(matches["pre"])
+        edens.append(Eden.by_example(matches["post"]))
+        edens.append(Eden.by_example(matches["dev"]))
+        return tuple(edens)
 
     @classmethod
     def _deformat_parse_spec(
@@ -123,14 +123,14 @@ class Qual(SlotStringer):
         value: str,
         /,
     ) -> tuple[Eden]:
-        specs: list[Eden]
+        edens: list[Eden]
         matches: dict[str, str]
         s: str
         matches = Cfg.fullmatches("qual_f", value)
-        specs = list()
+        edens = list()
         for s in ("a", "b", "rc", "post", "dev"):
-            specs.append(Eden.by_spec(matches[s + "_f"]))
-        return tuple(specs)
+            edens.append(Eden.by_spec(matches[s + "_f"]))
+        return tuple(edens)
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:

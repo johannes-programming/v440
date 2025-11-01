@@ -27,9 +27,6 @@ class Pre(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        a: str
-        b: str
-        c: str
         s: str
         o: Self
         matches: dict[str, str]
