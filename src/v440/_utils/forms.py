@@ -28,11 +28,3 @@ def qualdeform(*strings: str, hollow: str) -> str:
     if f == 1 and x[-1] in ".-_":
         f = 0
     return x + "#" * f
-
-
-def qualform(mask: str, num: int) -> str:
-    x: str = mask.rstrip("#")
-    n: int = len(mask) - len(x)
-    if n or num or (x[-1:] in tuple(".-_")):
-        x += format(num, f"0{n}d")
-    return x
