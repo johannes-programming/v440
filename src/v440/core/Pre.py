@@ -33,6 +33,7 @@ class Pre(QualStringer):
         opts: list[set]
         clues: list[Clue]
         sols: list
+        way: tuple
         clues = [Clue()] * 3
         for s, o in info.items():
             if not o:
@@ -43,15 +44,10 @@ class Pre(QualStringer):
         opts.append(clues[1].options(hollow="b", short="b"))
         opts.append(clues[2].options(hollow="rc", short="c"))
         sols = list()
-        for s in map("".join, iterprod(*opts)):
-            try:
-                matches = Cfg.fullmatches("pre_f", s)
-                clues[0] & Clue.by_spec(matches["a_f"])
-                clues[1] & Clue.by_spec(matches["b_f"])
-                clues[2] & Clue.by_spec(matches["rc_f"])
-            except Exception:
-                continue
-            else:
+        for way in iterprod(*opts):
+            s = "".join(way)
+            matches = Cfg.fullmatches("pre_f", s)
+            if way == (matches["a_f"], matches["b_f"], matches["rc_f"]):
                 sols.append(s)
         sols.sort()
         sols.sort(key=len)
