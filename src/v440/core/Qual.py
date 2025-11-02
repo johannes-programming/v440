@@ -118,21 +118,6 @@ class Qual(SlotStringer):
         return tuple(clues)
 
     @classmethod
-    def _deformat_parse_spec(
-        cls: type,
-        value: str,
-        /,
-    ) -> tuple[Clue]:
-        clues: list[Clue]
-        matches: dict[str, str]
-        s: str
-        matches = Cfg.fullmatches("qual_f", value)
-        clues = list()
-        for s in ("a", "b", "rc", "post", "dev"):
-            clues.append(Clue.by_spec(matches[s + "_f"]))
-        return tuple(clues)
-
-    @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
         matches: dict
         ans: dict
