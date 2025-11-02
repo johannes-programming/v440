@@ -21,11 +21,12 @@ class ListStringer(BaseStringer, OkayList):
     @setdoc.basic
     def __add__(self: Self, other: Any) -> Self:
         alt: tuple
+        ans: Self
         try:
             alt = tuple(other)
         except Exception:
             return NotImplemented
-        ans: Self = type(self)()
+        ans = type(self)()
         ans.data = self.data + alt
         return ans
 
@@ -35,18 +36,20 @@ class ListStringer(BaseStringer, OkayList):
 
     @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
-        ans: Self = type(self)()
+        ans: Self
+        ans = type(self)()
         ans.data = self.data * other
         return ans
 
     @setdoc.basic
     def __radd__(self: Self, other: Any) -> Self:
         alt: tuple
+        ans: Self
         try:
             alt = tuple(other)
         except Exception:
             return NotImplemented
-        ans: Self = type(self)()
+        ans = type(self)()
         ans.data = alt + self.data
         return ans
 
@@ -77,8 +80,11 @@ class ListStringer(BaseStringer, OkayList):
 
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
         "This method sorts the data."
-        data: list = list(self.data)
-        k: Any = self._sort if key is None else key
-        r: bool = bool(reverse)
+        data: list
+        k: Any
+        r: bool
+        data = list(self.data)
+        k = self._sort if key is None else key
+        r = bool(reverse)
         data.sort(key=k, reverse=r)
         self.data = data

@@ -11,7 +11,10 @@ __all__ = ["guard"]
 def guard(old: Any) -> Any:
     @functools.wraps(old)
     def new(self: Self, value: Any) -> None:
-        backup: str = str(self)
+        backup: str
+        msg: str
+        target: str
+        backup = str(self)
         try:
             old(self, value)
         except VersionError:
@@ -19,8 +22,8 @@ def guard(old: Any) -> Any:
             raise
         except Exception:
             self._string_fset(backup.lower())
-            msg: str = "%r is an invalid value for %r"
-            target: str = type(self).__name__ + "." + old.__name__
+            msg = "%r is an invalid value for %r"
+            target = type(self).__name__ + "." + old.__name__
             msg %= (value, target)
             raise VersionError(msg)
 

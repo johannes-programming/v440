@@ -42,12 +42,14 @@ class QualStringer(BaseStringer):
     def _lit_parse(cls: type, value: str) -> str: ...
 
     def _string_fset(self: Self, value: str) -> None:
+        x: str
+        y: str
         if value == "":
             self._lit = ""
             self._num = 0
             return
-        x: str = value.rstrip("0123456789")
-        y: str = value[len(x) :]
+        x = value.rstrip("0123456789")
+        y = value[len(x) :]
         if x == "-":
             if not y:
                 raise ValueError
@@ -74,7 +76,8 @@ class QualStringer(BaseStringer):
     @lit.setter
     @guard
     def lit(self: Self, value: Any) -> None:
-        x: str = str(value).lower()
+        x: str
+        x = str(value).lower()
         if x:
             self._lit = self._lit_parse(x)
         elif self.num:
@@ -89,7 +92,8 @@ class QualStringer(BaseStringer):
     @num.setter
     @guard
     def num(self: Self, value: SupportsIndex) -> None:
-        y: int = operator.index(value)
+        y: int
+        y = operator.index(value)
         if y < 0:
             raise ValueError
         if y and not self.lit:
