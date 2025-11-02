@@ -2,6 +2,7 @@ import builtins
 import enum
 import functools
 import operator
+import shlex
 import tomllib
 import unittest
 from importlib import resources
@@ -40,7 +41,7 @@ class TestDeformatting(unittest.TestCase):
         x: str
         y: dict
         for x, y in tables.items():
-            split[y["valid"]][tuple(x.split())] = y
+            split[y["valid"]][tuple(shlex.split(x))] = y
         for x, y in split[False].items():
             with self.subTest(valid=False, example=x):
                 self.go_invalid_example(cls, x, **y)
