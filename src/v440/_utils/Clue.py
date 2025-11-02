@@ -4,7 +4,7 @@ from typing import *
 from v440._utils.Cfg import Cfg
 
 
-class Eden(NamedTuple):
+class Clue(NamedTuple):
     head: str = ""
     sep: str = "?"
     mag: int = 0
@@ -45,7 +45,7 @@ class Eden(NamedTuple):
         matches: dict[str, str]
         if value == "-0":
             return cls("-", "", -1)
-        matches = Cfg.fullmatches("eden", value)
+        matches = Cfg.fullmatches("clue", value)
         if matches["sep"] or matches["num"]:
             sep = matches["sep"]
         else:
@@ -67,7 +67,7 @@ class Eden(NamedTuple):
     @classmethod
     def by_spec(cls: type, value: str, /) -> Self:
         matches: dict[str, str]
-        matches = Cfg.fullmatches("eden_f", value)
+        matches = Cfg.fullmatches("clue_f", value)
         return cls(matches["head_f"], matches["sep_f"], len(matches["num_f"]))
 
     def options(self: Self, *, hollow: str, short: str) -> set:

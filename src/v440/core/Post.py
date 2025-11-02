@@ -5,7 +5,7 @@ from typing import *
 
 from v440._utils import forms
 from v440._utils.Cfg import Cfg
-from v440._utils.Eden import Eden
+from v440._utils.Clue import Clue
 from v440._utils.guarding import guard
 from v440._utils.QualStringer import QualStringer
 
@@ -33,23 +33,23 @@ class Post(QualStringer):
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:
         m: dict
-        e: Eden
+        e: Clue
         m = Cfg.fullmatches("post_f", spec)
-        e = Eden(
+        e = Clue(
             head=m["post_head_f"] or m["post_hyphen_f"],
             sep=m["post_sep_f"],
             mag=len(m["post_num_f"]),
         )
-        return dict(eden=e)
+        return dict(clue=e)
 
-    def _format_parsed(self: Self, *, eden: Eden) -> str:
+    def _format_parsed(self: Self, *, clue: Clue) -> str:
         if not self:
             return ""
-        if "" == eden.head:
+        if "" == clue.head:
             return ".post" + str(self.num)
-        if 0 == eden.mag and 0 == self.num and "-" != eden.head:
-            return eden.head
-        return eden.head + eden.sep + format(self.num, f"0{eden.mag}d")
+        if 0 == clue.mag and 0 == self.num and "-" != clue.head:
+            return clue.head
+        return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
     def _lit_parse(cls: type, value: str) -> str:

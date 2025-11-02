@@ -6,7 +6,7 @@ import setdoc
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
-from v440._utils.Eden import Eden
+from v440._utils.Clue import Clue
 from v440._utils.SlotStringer import SlotStringer
 from v440.core.Dev import Dev
 from v440.core.Post import Post
@@ -49,12 +49,12 @@ class Qual(SlotStringer):
         s: str
         t: str
         o: Self
-        parsed: tuple[Eden]
-        table: tuple[Eden]
+        parsed: tuple[Clue]
+        table: tuple[Clue]
         pos: list[set[str]]
         sols: list[str]
         way: tuple
-        table = [Eden()] * 5
+        table = [Clue()] * 5
         for s, o in info.items():
             parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
             table = cls._deformat_and(table, parsed)
@@ -79,13 +79,13 @@ class Qual(SlotStringer):
     @classmethod
     def _deformat_and(
         cls: type,
-        table: list[Eden],
-        parsed: list[Eden],
+        table: list[Clue],
+        parsed: list[Clue],
         /,
-    ) -> list[Eden]:
-        x: Eden
-        y: Eden
-        ans: list[Eden]
+    ) -> list[Clue]:
+        x: Clue
+        y: Clue
+        ans: list[Clue]
         ans = list()
         for x, y in zip(table, parsed, strict=True):
             ans.append(x & y)
@@ -99,35 +99,35 @@ class Qual(SlotStringer):
         *,
         phase: str,
     ) -> tuple:
-        edens: list[Eden]
+        clues: list[Clue]
         matches: dict[str, str]
         i: int
         matches = Cfg.fullmatches("qual", value)
-        edens = list()
-        edens.append(Eden())
-        edens.append(Eden())
-        edens.append(Eden())
+        clues = list()
+        clues.append(Clue())
+        clues.append(Clue())
+        clues.append(Clue())
         if phase:
             i = ("a", "b", "rc").index(phase)
-            edens[i] = Eden.by_example(matches["pre"])
-        edens.append(Eden.by_example(matches["post"]))
-        edens.append(Eden.by_example(matches["dev"]))
-        return tuple(edens)
+            clues[i] = Clue.by_example(matches["pre"])
+        clues.append(Clue.by_example(matches["post"]))
+        clues.append(Clue.by_example(matches["dev"]))
+        return tuple(clues)
 
     @classmethod
     def _deformat_parse_spec(
         cls: type,
         value: str,
         /,
-    ) -> tuple[Eden]:
-        edens: list[Eden]
+    ) -> tuple[Clue]:
+        clues: list[Clue]
         matches: dict[str, str]
         s: str
         matches = Cfg.fullmatches("qual_f", value)
-        edens = list()
+        clues = list()
         for s in ("a", "b", "rc", "post", "dev"):
-            edens.append(Eden.by_spec(matches[s + "_f"]))
-        return tuple(edens)
+            clues.append(Clue.by_spec(matches[s + "_f"]))
+        return tuple(clues)
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:

@@ -5,7 +5,7 @@ from typing import *
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
-from v440._utils.Eden import Eden
+from v440._utils.Clue import Clue
 from v440._utils.guarding import guard
 from v440._utils.QualStringer import QualStringer
 
@@ -31,24 +31,24 @@ class Pre(QualStringer):
         o: Self
         matches: dict[str, str]
         opts: list[set]
-        edens: list[Eden]
+        clues: list[Clue]
         sols: list
-        edens = [Eden()] * 3
+        clues = [Clue()] * 3
         for s, o in info.items():
             if not o:
                 continue
-            edens[("a", "b", "rc").index(o.lit)] &= Eden.by_example(s)
+            clues[("a", "b", "rc").index(o.lit)] &= Clue.by_example(s)
         opts = list()
-        opts.append(edens[0].options(hollow="a", short="a"))
-        opts.append(edens[1].options(hollow="b", short="b"))
-        opts.append(edens[2].options(hollow="rc", short="c"))
+        opts.append(clues[0].options(hollow="a", short="a"))
+        opts.append(clues[1].options(hollow="b", short="b"))
+        opts.append(clues[2].options(hollow="rc", short="c"))
         sols = list()
         for s in map("".join, iterprod(*opts)):
             try:
                 matches = Cfg.fullmatches("pre_f", s)
-                edens[0] & Eden.by_spec(matches["a_f"])
-                edens[1] & Eden.by_spec(matches["b_f"])
-                edens[2] & Eden.by_spec(matches["rc_f"])
+                clues[0] & Clue.by_spec(matches["a_f"])
+                clues[1] & Clue.by_spec(matches["b_f"])
+                clues[2] & Clue.by_spec(matches["rc_f"])
             except Exception:
                 continue
             else:
@@ -63,29 +63,29 @@ class Pre(QualStringer):
         ans: dict
         m = Cfg.fullmatches("pre_f", spec)
         ans = dict()
-        ans["a"] = Eden.by_spec(m["a_f"])
-        ans["b"] = Eden.by_spec(m["b_f"])
-        ans["rc"] = Eden.by_spec(m["rc_f"])
+        ans["a"] = Clue.by_spec(m["a_f"])
+        ans["b"] = Clue.by_spec(m["b_f"])
+        ans["rc"] = Clue.by_spec(m["rc_f"])
         return ans
 
-    def _format_parsed(self: Self, *, a: Eden, b: Eden, rc: Eden) -> str:
+    def _format_parsed(self: Self, *, a: Clue, b: Clue, rc: Clue) -> str:
         ans: str
-        eden: Eden
+        clue: Clue
         if self.lit == "a":
-            eden = a
+            clue = a
         elif self.lit == "b":
-            eden = b
+            clue = b
         elif self.lit == "rc":
-            eden = rc
+            clue = rc
         else:
             return ""
-        if eden.head == "":
+        if clue.head == "":
             return self.lit + str(self.num)
-        ans = eden.head
-        if eden.sep != "?":
-            ans += eden.sep
-        if self.num or eden.mag:
-            ans += format(self.num, f"0{eden.mag}d")
+        ans = clue.head
+        if clue.sep != "?":
+            ans += clue.sep
+        if self.num or clue.mag:
+            ans += format(self.num, f"0{clue.mag}d")
         return ans
 
     @classmethod
