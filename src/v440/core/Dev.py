@@ -29,35 +29,11 @@ class Dev(QualStringer):
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
         s: str
-        x: str
-        y: str
-        lits: set
-        u: int
-        f: int
-        f = -1
-        u = -1
-        lits = set()
+        clue: Clue
+        clue = Clue()
         for s in info.keys():
-            x = s.rstrip(string_.digits)
-            y = s[len(x) :]
-            lits.add(x)
-            if y.startswith("0"):
-                f = max(f, len(y))
-            if u == -1 or u > len(y):
-                u = len(y)
-        if f > u:
-            raise ValueError
-        lits.discard("")
-        if len(lits) == 0:
-            return ""
-        (x,) = lits
-        if x == ".dev" and f in (-1, 1) and u:
-            return ""
-        if f == -1:
-            f = 0
-        if f == 1 and x[-1] in ".-_":
-            f = 0
-        return x + "#" * f
+            clue &= Clue.by_example(s)
+        return clue.solo(".dev")
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:

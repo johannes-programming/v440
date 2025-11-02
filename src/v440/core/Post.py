@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import operator
-import string as string_
 from typing import *
 
 from v440._utils.Cfg import Cfg
