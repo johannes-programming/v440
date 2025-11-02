@@ -69,11 +69,7 @@ class Base(SlotStringer):
         return "#" * f + "!" * bool(f)
 
     @classmethod
-    def _deformat_epoch_filter(cls: type, x: str) -> bool:
-        return
-
-    @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
+    def _format_parse(cls: type, spec: str, /) -> dict[str, Any]:
         ans: dict
         p: str
         x: str
