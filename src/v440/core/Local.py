@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import itertools
 import operator
 import string as string_
 from typing import *
