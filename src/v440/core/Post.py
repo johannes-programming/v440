@@ -28,8 +28,12 @@ class Post(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict, /) -> str:
-        lits: set = set()
-        nums: set = set()
+        lits: set
+        nums: set
+        f: int
+        u: int
+        lits = set()
+        nums = set()
         for s in info.keys():
             x = s.rstrip(string_.digits)
             y = s[len(x) :]
@@ -39,8 +43,8 @@ class Post(QualStringer):
         if len(lits) == 0:
             return ""
         (x,) = lits
-        u: int = min(map(len, nums))
-        f: int = -1
+        u = min(map(len, nums))
+        f = -1
         for y in nums:
             if y.startswith("0"):
                 f = max(f, len(y))
