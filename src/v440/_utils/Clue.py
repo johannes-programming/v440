@@ -80,7 +80,6 @@ class Clue(NamedTuple):
         if self.head == "":
             ans.add("")
             ans.add(short)
-            ans.add(short + ".")
             ans.add(short + "#")
             return ans
         if self.sep != "?":
