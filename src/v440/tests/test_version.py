@@ -171,12 +171,6 @@ class TestExample(unittest.TestCase):
         with self.assertRaises(Exception):
             str(v2) < v1
 
-    def test_example_4(self: Self) -> None:
-        v: Version = Version("2.5.3.9")
-        self.assertEqual(str(v), "2.5.3.9")  # before sorting
-        v.public.base.release.sort()
-        self.assertEqual(str(v), "2.3.5.9")  # after sorting
-
     def test_example_5(self: Self) -> None:
         v: Version = Version("2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version

@@ -86,6 +86,13 @@ query = []
 solution = []
 queryname = "data"
 
+[data-setter.Release.test_example_4]
+valid = true
+query = "2.5.3.9"
+queryname = "string"
+attrname = "sort"
+solution = [2, 3, 5, 9]
+
 [data-setter.Release.test_example_8]
 valid = true
 queryname = "string"
