@@ -50,16 +50,34 @@ class Qual(SlotStringer):
         s: str
         t: str
         o: Self
-        parsed: tuple[Clue]
         table: tuple[Clue]
         pos: list[set[str]]
         sols: list[str]
         way: tuple
         parts: list[str]
-        table = [Clue()] * 5
+        table = (Clue(),) * 5
         for s, o in info.items():
-            parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
-            table = tuple(map(operator.and_, parsed, table))
+            matches = Cfg.fullmatches("qual", s)
+            parts = list()
+            if o.pre.lit == "":
+                parts.append(Clue())
+                parts.append(Clue())
+                parts.append(Clue())
+            if o.pre.lit == "a":
+                parts.append(Clue.by_example(matches["pre"]))
+                parts.append(Clue())
+                parts.append(Clue())
+            if o.pre.lit == "b":
+                parts.append(Clue())
+                parts.append(Clue.by_example(matches["pre"]))
+                parts.append(Clue())
+            if o.pre.lit == "rc":
+                parts.append(Clue())
+                parts.append(Clue())
+                parts.append(Clue.by_example(matches["pre"]))
+            parts.append(Clue.by_example(matches["post"]))
+            parts.append(Clue.by_example(matches["dev"]))
+            table = tuple(map(operator.and_, parts, table))
         pos = list()
         pos.append(table[0].options(hollow="a", short="a"))
         pos.append(table[1].options(hollow="b", short="b"))
@@ -78,29 +96,6 @@ class Qual(SlotStringer):
         sols.sort()
         sols.sort(key=len)
         return sols[0]
-
-    @classmethod
-    def _deformat_parse_example(
-        cls: type,
-        value: str,
-        /,
-        *,
-        phase: str,
-    ) -> tuple:
-        clues: list[Clue]
-        matches: dict[str, str]
-        i: int
-        matches = Cfg.fullmatches("qual", value)
-        clues = list()
-        clues.append(Clue())
-        clues.append(Clue())
-        clues.append(Clue())
-        if phase:
-            i = ("a", "b", "rc").index(phase)
-            clues[i] = Clue.by_example(matches["pre"])
-        clues.append(Clue.by_example(matches["post"]))
-        clues.append(Clue.by_example(matches["dev"]))
-        return tuple(clues)
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
