@@ -27,7 +27,10 @@ class Dev(QualStringer):
             return (1,)
 
     @classmethod
-    def _deformat(cls: type, info: dict, /) -> str:
+    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+        s: str
+        x: str
+        y: str
         lits: set = set()
         nums: set = set()
         for s in info.keys():
