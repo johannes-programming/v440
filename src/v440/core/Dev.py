@@ -31,8 +31,12 @@ class Dev(QualStringer):
         s: str
         x: str
         y: str
-        lits: set = set()
-        nums: set = set()
+        lits: set
+        nums: set
+        u: int
+        f: int
+        lits = set()
+        nums = set()
         for s in info.keys():
             x = s.rstrip(string_.digits)
             y = s[len(x) :]
@@ -42,8 +46,8 @@ class Dev(QualStringer):
         if len(lits) == 0:
             return ""
         (x,) = lits
-        u: int = min(map(len, nums))
-        f: int = -1
+        u = min(map(len, nums))
+        f = -1
         for y in nums:
             if y.startswith("0"):
                 f = max(f, len(y))
