@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import operator
 from typing import *
 
 import setdoc
@@ -54,6 +55,7 @@ class Qual(SlotStringer):
         pos: list[set[str]]
         sols: list[str]
         way: tuple
+        parts: list[str]
         table = [Clue()] * 5
         for s, o in info.items():
             parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
@@ -65,13 +67,14 @@ class Qual(SlotStringer):
         pos.append(table[3].options(hollow=".post", short="r"))
         pos.append(table[4].options(hollow=".dev", short="dev"))
         sols = list()
-        for s in map("".join, iterprod(*pos)):
-            parsed = cls._deformat_parse_spec(s)
-            try:
-                cls._deformat_and(table, parsed)
-            except Exception:
-                continue
-            sols.append(s)
+        for way in iterprod(*pos):
+            s = "".join(way)
+            matches = Cfg.fullmatches("qual_f", s)
+            parts = list()
+            for t in ("a", "b", "rc", "post", "dev"):
+                parts.append(matches[t + "_f"])
+            if way == tuple(parts):
+                sols.append(s)
         sols.sort()
         sols.sort(key=len)
         return sols[0]
