@@ -59,7 +59,7 @@ class Qual(SlotStringer):
         table = [Clue()] * 5
         for s, o in info.items():
             parsed = cls._deformat_parse_example(s, phase=o.pre.lit)
-            table = cls._deformat_and(table, parsed)
+            table = tuple(map(operator.and_, parsed, table))
         pos = list()
         pos.append(table[0].options(hollow="a", short="a"))
         pos.append(table[1].options(hollow="b", short="b"))
@@ -78,21 +78,6 @@ class Qual(SlotStringer):
         sols.sort()
         sols.sort(key=len)
         return sols[0]
-
-    @classmethod
-    def _deformat_and(
-        cls: type,
-        table: list[Clue],
-        parsed: list[Clue],
-        /,
-    ) -> list[Clue]:
-        x: Clue
-        y: Clue
-        ans: list[Clue]
-        ans = list()
-        for x, y in zip(table, parsed, strict=True):
-            ans.append(x & y)
-        return ans
 
     @classmethod
     def _deformat_parse_example(
