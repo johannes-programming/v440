@@ -69,32 +69,31 @@ class Base(SlotStringer):
         return "#" * f + "!" * bool(f)
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict[str, Any]:
+    def _format_parse(
+        cls: type,
+        spec: str,
+        /,
+    ) -> dict[str, Any]:
         ans: dict
-        p: str
-        x: str
-        y: str
-        if spec[:1] in tuple("Vv"):
-            p = spec[0]
-            y = spec[1:]
-        else:
-            p = ""
-            y = spec
-        x = ""
-        if "!" in y:
-            x, y = y.split("!")
-            if x == "":
-                x = "#"
-            elif x.strip("#"):
-                raise ValueError
-        ans = dict(prefix=p, epoch_n=len(x), release_f=y)
+        matches: dict
+        matches = Cfg.fullmatches("base_f", spec)
+        ans = dict()
+        ans["basev_f"] = matches["basev_f"]
+        ans["epoch_mag"] = len(matches["epoch_f"])
+        ans["release_f"] = matches["release_f"]
         return ans
 
-    def _format_parsed(self: Self, *, prefix: str, epoch_n: int, release_f: str) -> str:
+    def _format_parsed(
+        self: Self,
+        *,
+        basev_f: str,
+        epoch_mag: int,
+        release_f: str,
+    ) -> str:
         ans: str
-        ans = prefix
-        if epoch_n or self.epoch:
-            ans += format(self.epoch, "0%sd" % epoch_n)
+        ans = basev_f
+        if epoch_mag or self.epoch:
+            ans += format(self.epoch, "0%sd" % epoch_mag)
             ans += "!"
         ans += format(self.release, release_f)
         return ans
