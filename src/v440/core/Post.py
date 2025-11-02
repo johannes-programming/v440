@@ -12,34 +12,6 @@ from v440._utils.QualStringer import QualStringer
 __all__ = ["Post"]
 
 
-def qualdeform(*strings: str, hollow: str) -> str:
-    lits: set = set()
-    nums: set = set()
-    for s in strings:
-        x = s.rstrip(string_.digits)
-        y = s[len(x) :]
-        lits.add(x)
-        nums.add(y)
-    lits.discard("")
-    if len(lits) == 0:
-        return ""
-    (x,) = lits
-    u: int = min(map(len, nums))
-    f: int = -1
-    for y in nums:
-        if y.startswith("0"):
-            f = max(f, len(y))
-    if f > u:
-        raise ValueError
-    if x == hollow and f in (-1, 1) and u:
-        return ""
-    if f == -1:
-        f = 0
-    if f == 1 and x[-1] in ".-_":
-        f = 0
-    return x + "#" * f
-
-
 class Post(QualStringer):
 
     __slots__ = ()
@@ -56,7 +28,31 @@ class Post(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict, /) -> str:
-        return qualdeform(*info.keys(), hollow=".post")
+        lits: set = set()
+        nums: set = set()
+        for s in info.keys():
+            x = s.rstrip(string_.digits)
+            y = s[len(x) :]
+            lits.add(x)
+            nums.add(y)
+        lits.discard("")
+        if len(lits) == 0:
+            return ""
+        (x,) = lits
+        u: int = min(map(len, nums))
+        f: int = -1
+        for y in nums:
+            if y.startswith("0"):
+                f = max(f, len(y))
+        if f > u:
+            raise ValueError
+        if x == ".post" and f in (-1, 1) and u:
+            return ""
+        if f == -1:
+            f = 0
+        if f == 1 and x[-1] in ".-_":
+            f = 0
+        return x + "#" * f
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:
