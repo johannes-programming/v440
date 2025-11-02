@@ -28,36 +28,12 @@ class Post(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        lits: set
-        nums: set
         s: str
-        f: int
-        u: int
-        lits = set()
-        nums = set()
+        clue: Clue
+        clue = Clue()
         for s in info.keys():
-            x = s.rstrip(string_.digits)
-            y = s[len(x) :]
-            lits.add(x)
-            nums.add(y)
-        lits.discard("")
-        if len(lits) == 0:
-            return ""
-        (x,) = lits
-        u = min(map(len, nums))
-        f = -1
-        for y in nums:
-            if y.startswith("0"):
-                f = max(f, len(y))
-        if f > u:
-            raise ValueError
-        if x == ".post" and f in (-1, 1) and u:
-            return ""
-        if f == -1:
-            f = 0
-        if f == 1 and x[-1] in ".-_":
-            f = 0
-        return x + "#" * f
+            clue &= Clue.by_example(s)
+        return clue.solo(".post")
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> str:

@@ -70,6 +70,22 @@ class Clue(NamedTuple):
         matches = Cfg.fullmatches("clue_f", value)
         return cls(matches["head_f"], matches["sep_f"], len(matches["num_f"]))
 
+    def seal(self: Self) -> Self:
+        mag: int
+        mag = self.mag if self.mag >= -1 else -1
+        return type(self)(self.head, self.sep, mag)
+
+    def solo(self: Self, hollow: str) -> str:
+        sep: str
+        mag: int
+        if self.head == "":
+            return ""
+        mag = self.mag if self.mag >= -1 else -1
+        sep = self.sep.replace("?", "")
+        if self.head == hollow and sep == "" and mag in (-1, 1):
+            return ""
+        return self.head + sep + max(0, mag) * "#"
+
     def options(self: Self, *, hollow: str, short: str) -> set:
         s: str
         n: str
