@@ -65,10 +65,7 @@ class Qual(SlotStringer):
         pos.append(table[3].options(hollow=".post", short="r"))
         pos.append(table[4].options(hollow=".dev", short="dev"))
         sols = list()
-        for way in iterprod(*pos):
-            s = ""
-            for t in way:
-                s += t
+        for s in map("".join, iterprod(*pos)):
             parsed = cls._deformat_parse_spec(s)
             try:
                 cls._deformat_and(table, parsed)
@@ -101,7 +98,7 @@ class Qual(SlotStringer):
         /,
         *,
         phase: str,
-    ) -> tuple[Eden]:
+    ) -> tuple:
         edens: list[Eden]
         matches: dict[str, str]
         i: int
