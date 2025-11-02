@@ -32,19 +32,17 @@ class Public(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self]) -> str:
-        bases: list = list()
-        quals: list = list()
-        s: str
+        bases: set
+        quals: set
         x: str
         y: str
-        for s in info.keys():
-            x, y = cls._split(s)
-            bases.append(x)
-            quals.append(y)
+        bases = set()
+        quals = set()
+        for x, y in map(cls._split, info.keys()):
+            bases.add(x)
+            quals.add(y)
         x = Base.deformat(*bases)
         y = Qual.deformat(*quals)
-        if x.endswith(".") and y and y[0] not in ".-_":
-            x += "#"
         return x + y
 
     @classmethod
