@@ -32,27 +32,25 @@ class Dev(QualStringer):
         x: str
         y: str
         lits: set
-        nums: set
         u: int
         f: int
+        f = -1
+        u = -1
         lits = set()
-        nums = set()
         for s in info.keys():
             x = s.rstrip(string_.digits)
             y = s[len(x) :]
             lits.add(x)
-            nums.add(y)
+            if y.startswith("0"):
+                f = max(f, len(y))
+            if u == -1 or u > len(y):
+                u = len(y)
+        if f > u:
+            raise ValueError
         lits.discard("")
         if len(lits) == 0:
             return ""
         (x,) = lits
-        u = min(map(len, nums))
-        f = -1
-        for y in nums:
-            if y.startswith("0"):
-                f = max(f, len(y))
-        if f > u:
-            raise ValueError
         if x == ".dev" and f in (-1, 1) and u:
             return ""
         if f == -1:
