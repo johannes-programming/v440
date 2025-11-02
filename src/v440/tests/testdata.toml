@@ -2485,6 +2485,10 @@ solution = ""
 valid = true
 solution = "r."
 
+[deformatting.Post."r r_1"]
+valid = true
+solution = "r_"
+
 [deformatting.Pre.""]
 valid = true
 solution = ""
