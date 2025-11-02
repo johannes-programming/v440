@@ -154,7 +154,8 @@ class Local(ListStringer):
                 ans += format(item, f"0{m}d")
                 ans += y
                 continue
-            ans += "".join((p.upper() if q == "^" else p) for p, q in zip(item, l))
+            for q, p in zip(l, item):
+                ans += p.upper() if q == "^" else p
             ans += item[len(l) :]
             ans += y
         ans = ans[:-1]
