@@ -27,9 +27,10 @@ class Post(QualStringer):
             return -1
 
     @classmethod
-    def _deformat(cls: type, info: dict, /) -> str:
+    def _deformat(cls: type, info: dict[str, Self], /) -> str:
         lits: set
         nums: set
+        s: str
         f: int
         u: int
         lits = set()
