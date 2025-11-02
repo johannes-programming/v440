@@ -2465,6 +2465,17 @@ valid = false
 valid = true
 solution = ""
 
+[deformatting.Dev."dev dev.1"]
+valid = true
+solution = "dev."
+
+[deformatting.Dev."deV deV_1"]
+valid = true
+solution = "deV_"
+
+[deformatting.Dev."dev deV_1"]
+valid = false
+
 [deformatting.Local.""]
 valid = true
 solution = ""
