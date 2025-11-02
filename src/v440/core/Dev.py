@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import operator
 import string as string_
+from functools import reduce
 from typing import *
 
 from v440._utils.Cfg import Cfg
@@ -28,12 +29,9 @@ class Dev(QualStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        s: str
-        clue: Clue
-        clue = Clue()
-        for s in info.keys():
-            clue &= Clue.by_example(s)
-        return clue.solo(".dev")
+        clues: Iterable[Clue]
+        clues = map(Clue.by_example, info.keys())
+        return reduce(operator.and_, clues, Clue()).solo(".dev")
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
