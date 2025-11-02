@@ -142,8 +142,6 @@ class Local(ListStringer):
         m: int
         l: str
         y: str
-        p: str
-        q: str
         ans = ""
         for i, item in enumerate(self):
             if i < len(split):
@@ -154,11 +152,18 @@ class Local(ListStringer):
                 ans += format(item, f"0{m}d")
                 ans += y
                 continue
-            ans += "".join((p.upper() if q == "^" else p) for p, q in zip(item, l))
+            ans += "".join(map(self._format_parsed_char, l, item))
             ans += item[len(l) :]
             ans += y
         ans = ans[:-1]
         return ans
+    
+    @classmethod
+    def _format_parsed_char(cls: type, key:str, value:str) -> str:
+        if key == "^":
+            return value.upper()
+        else:
+            return value
 
     @classmethod
     def _item_parse(cls: type, value: Any) -> int | str:
