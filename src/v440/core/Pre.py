@@ -40,9 +40,9 @@ class Pre(QualStringer):
                 continue
             clues[("a", "b", "rc").index(o.lit)] &= Clue.by_example(s)
         opts = list()
-        opts.append(clues[0].options(hollow="a", short="a"))
-        opts.append(clues[1].options(hollow="b", short="b"))
-        opts.append(clues[2].options(hollow="rc", short="c"))
+        opts.append(clues[0].options(hollow="a", short="A"))
+        opts.append(clues[1].options(hollow="b", short="B"))
+        opts.append(clues[2].options(hollow="rc", short="C"))
         sols = list()
         for way in iterprod(*opts):
             s = "".join(way)

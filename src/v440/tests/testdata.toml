@@ -1676,7 +1676,7 @@ deformatted = ".#dev"
 valid = true
 legacy = "Development releases"
 normed = "1.1.dev3"
-deformatted = "..#r#-dev"
+deformatted = "..#R#-dev"
 
 [examples.Version."0.5.0.dev4"]
 valid = true
@@ -2517,7 +2517,7 @@ solution = "beTA."
 
 [deformatting.Pre."alpha alpha4 .pre5"]
 valid = true
-solution = "alphab#.pre"
+solution = "alphaB#.pre"
 
 [deformatting.Public.""]
 valid = true
@@ -2560,11 +2560,11 @@ solution = "abcrdev"
 
 [deformatting.Qual."a a1 -9"]
 valid = true
-solution = "ab#-"
+solution = "aB#-"
 
 [deformatting.Qual."b b1 -9"]
 valid = true
-solution = "bc#-"
+solution = "bC#-"
 
 [deformatting.Qual."rc rc1 -9"]
 valid = false
