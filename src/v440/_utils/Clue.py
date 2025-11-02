@@ -86,7 +86,7 @@ class Clue(NamedTuple):
             return ""
         return self.head + sep + max(0, mag) * "#"
 
-    def options(self: Self, *, hollow: str, short: str) -> set:
+    def possible(self: Self, *, hollow: str, short: str) -> set:
         s: str
         n: str
         seps: set[str]

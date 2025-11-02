@@ -30,7 +30,7 @@ class Pre(QualStringer):
         s: str
         o: Self
         matches: dict[str, str]
-        opts: list[set]
+        pos: list[set]
         clues: list[Clue]
         sols: list
         way: tuple
@@ -39,12 +39,12 @@ class Pre(QualStringer):
             if not o:
                 continue
             clues[("a", "b", "rc").index(o.lit)] &= Clue.by_example(s)
-        opts = list()
-        opts.append(clues[0].options(hollow="a", short="A"))
-        opts.append(clues[1].options(hollow="b", short="B"))
-        opts.append(clues[2].options(hollow="rc", short="C"))
+        pos = list()
+        pos.append(clues[0].possible(hollow="a", short="A"))
+        pos.append(clues[1].possible(hollow="b", short="B"))
+        pos.append(clues[2].possible(hollow="rc", short="C"))
         sols = list()
-        for way in iterprod(*opts):
+        for way in iterprod(*pos):
             s = "".join(way)
             matches = Cfg.fullmatches("pre_f", s)
             if way == (matches["a_f"], matches["b_f"], matches["rc_f"]):
