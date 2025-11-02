@@ -2543,6 +2543,13 @@ solution = "abcrdev"
 valid = true
 solution = "ab#-"
 
+[deformatting.Qual."b b1 -9"]
+valid = true
+solution = "bc#-"
+
+[deformatting.Qual."rc rc1 -9"]
+valid = false
+
 [deformatting.Release."1.2.0 9.8.7.6.0.5"]
 valid = true
 solution = "..#"
