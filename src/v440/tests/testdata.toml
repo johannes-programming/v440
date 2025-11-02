@@ -2539,6 +2539,10 @@ solution = "betadev."
 valid = true
 solution = "abcrdev"
 
+[deformatting.Qual."a a1 -9"]
+valid = true
+solution = "ab#-"
+
 [deformatting.Release."1.2.0 9.8.7.6.0.5"]
 valid = true
 solution = "..#"
