@@ -17,11 +17,6 @@ class Base(SlotStringer):
 
     __slots__ = ("_epoch", "_release")
 
-    string: str
-    packaging: str
-    epoch: int
-    release: Release
-
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._epoch = 0
@@ -110,6 +105,8 @@ class Base(SlotStringer):
     def _todict(self: Self) -> dict:
         return dict(epoch=self.epoch, release=self.release)
 
+    epoch: int
+
     @property
     def epoch(self: Self) -> int:
         "This property represents the epoch."
@@ -124,7 +121,13 @@ class Base(SlotStringer):
             raise ValueError
         self._epoch = v
 
+    packaging: str  # inherited property
+
+    release: Release
+
     @property
     def release(self: Self) -> Release:
         "This property represents the release."
         return self._release
+
+    string: str  # inherited property
