@@ -17,7 +17,7 @@ class Dev(QualStringer):
 
     __slots__ = ()
     string: str
-    packaging: str
+    packaging: Optional[int]
     lit: str
     num: int
 
