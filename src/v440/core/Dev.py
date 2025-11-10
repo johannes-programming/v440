@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import operator
-import string as string_
 from functools import reduce
 from typing import *
 
@@ -16,10 +15,6 @@ __all__ = ["Dev"]
 class Dev(QualStringer):
 
     __slots__ = ()
-    string: str
-    packaging: Optional[int]
-    lit: str
-    num: int
 
     def _cmp(self: Self) -> tuple:
         if self.lit:
@@ -61,6 +56,10 @@ class Dev(QualStringer):
         else:
             raise ValueError
 
+    lit: str  # inherited property
+    num: int  # inherited property
+    packaging: Optional[int]
+
     @property
     def packaging(self: Self) -> Optional[int]:
         if self:
@@ -77,3 +76,5 @@ class Dev(QualStringer):
         else:
             self.lit = "dev"
             self.num = operator.index(value)
+
+    string: str  # inherited property
