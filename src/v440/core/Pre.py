@@ -15,10 +15,6 @@ __all__ = ["Pre"]
 class Pre(QualStringer):
 
     __slots__ = ()
-    string: str
-    packaging: Optional[tuple[str, int]]
-    lit: str
-    num: int
 
     def _cmp(self: Self) -> tuple:
         if not self:
@@ -88,6 +84,10 @@ class Pre(QualStringer):
     def _lit_parse(cls: type, value: str) -> str:
         return Cfg.cfg.data["consts"]["phases"][value]
 
+    lit: str  # inherited property
+    num: int  # inherited property
+    packaging: Optional[tuple[str, int]]
+
     @property
     def packaging(self: Self) -> Optional[tuple[str, int]]:
         if self:
@@ -104,3 +104,5 @@ class Pre(QualStringer):
         else:
             self.num = 0
             self.lit, self.num = value
+
+    string: str  # inherited property
