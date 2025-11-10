@@ -1,14 +1,8 @@
 import unittest
 from typing import *
 
-from v440.core.Base import Base
-from v440.core.Dev import Dev
 from v440.core.Local import Local
-from v440.core.Post import Post
-from v440.core.Pre import Pre
-from v440.core.Public import Public
 from v440.core.Qual import Qual
-from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.core.VersionError import VersionError
 
@@ -34,8 +28,9 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_version_operations(self: Self) -> None:
         v: Version
+        backup: Local
         v = Version("1.2.3")
-        backup: Local = v.local
+        backup = v.local
         v.local = "local.1.2.3"
         self.assertEqual(str(v), "1.2.3+local.1.2.3")
         self.assertEqual(str(v.local), "local.1.2.3")
@@ -63,8 +58,9 @@ class TestPre(unittest.TestCase):
 
     def test_pre(self: Self) -> None:
         v: Version
+        backup: Qual
         v = Version("1.2.3")
-        backup: Qual = v.public.qual
+        backup = v.public.qual
 
         # Initial version, no pre-release version
         self.assertEqual(str(v), "1.2.3")
@@ -100,15 +96,18 @@ class TestPre(unittest.TestCase):
 class TestExample(unittest.TestCase):
 
     def test_example_2(self: Self) -> None:
-        v: Version = Version("2.5.3")
+        v: Version
+        v = Version("2.5.3")
         self.assertEqual(str(v), "2.5.3")  # Modified version
         v.public.base.release[1] = 64
         v.public.base.release.micro = 4
         self.assertEqual(str(v), "2.64.4")  # Further modified version
 
     def test_example_3(self: Self) -> None:
-        v1: Version = Version("1.6.3")
-        v2: Version = Version("1.6.4")
+        v1: Version
+        v2: Version
+        v1 = Version("1.6.3")
+        v2 = Version("1.6.4")
         self.assertEqual(str(v1), "1.6.3")  # v1
         self.assertEqual(str(v2), "1.6.4")  # v2
         # eq
@@ -175,7 +174,8 @@ class TestExample(unittest.TestCase):
             str(v2) < v1
 
     def test_example_5(self: Self) -> None:
-        v: Version = Version("2.0.0-alpha.1")
+        v: Version
+        v = Version("2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
         v.public.qual.pre.string = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
@@ -207,7 +207,8 @@ class TestExample(unittest.TestCase):
         self.assertEqual(str(v), "1.2.3.post3+3.test.19")  # Modified local again
 
     def test_example_7(self: Self) -> None:
-        v: Version = Version("5.0.0")
+        v: Version
+        v = Version("5.0.0")
         self.assertEqual(str(v), "5")  # Original version
         v.string = "00000000.0000.00.0"
         self.assertEqual(str(v), "0")  # After reset
@@ -220,8 +221,10 @@ class TestExample(unittest.TestCase):
 
 class TestPatch(unittest.TestCase):
     def test_example_0(self: Self) -> None:
-        x: Qual = Qual("a1")
-        y: Qual = Qual("b2")
+        x: Qual
+        y: Qual
+        x = Qual("a1")
+        y = Qual("b2")
         with self.assertRaises(Exception):
             x += y
 
@@ -300,6 +303,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
     def test_release_iterable(self: Self) -> None:
         # Test if release supports iteration
         version: Version
+        result: list
         version = Version()
         version.public.base.release.data = [1, 2, 3]
         result = list(version.public.base.release)
@@ -337,19 +341,23 @@ class TestAdditionalVersionRelease(unittest.TestCase):
     def test_release_mul(self: Self) -> None:
         # Test multiplying the release (list behavior)
         version: Version
+        answer: list[int]
+        solution: list[int]
         version = Version()
         version.public.base.release.data = [1, 2]
-        answer: list = list(version.public.base.release * 3)
-        solution: list = [1, 2, 1, 2, 1, 2]
+        answer = list(version.public.base.release * 3)
+        solution = [1, 2, 1, 2, 1, 2]
         self.assertEqual(answer, solution)
 
     def test_release_addition(self: Self) -> None:
         # Test adding another list to release
         version: Version
+        answer: list
+        solution: list
         version = Version()
         version.public.base.release.data = [1, 2, 3]
-        answer: list = list(version.public.base.release) + [4, 5]
-        solution: list = [1, 2, 3, 4, 5]
+        answer = list(version.public.base.release) + [4, 5]
+        solution = [1, 2, 3, 4, 5]
         self.assertEqual(answer, solution)
 
 
