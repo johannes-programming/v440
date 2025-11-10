@@ -29,16 +29,6 @@
                                 <dl class="heading4">
                                     <dt id="Version.local">local: Local</dt>
                                     <dd></dd>
-                                    <dt id="Version.packaging">packaging: packaging.version.Version</dt>
-                                    <dd></dd>
-                                    <dt id="Version.public">public: Public</dt>
-                                    <dd></dd>
-                                    <dt id="Version.string">string: str</dt>
-                                    <dd>
-                                        <p>
-                                            This property represents the <a href="#Version"><code>Version</code></a> object as a string.
-                                        </p>
-                                    </dd>
                                     <dt id="Local">class v440.Version.Local(string: Any = "")</dt>
                                     <dd>
                                         <dl class="heading4">
@@ -55,28 +45,15 @@
                                             </dd>
                                         </dl>
                                     </dd>
+                                    <dt id="Version.packaging">packaging: packaging.version.Version</dt>
+                                    <dd></dd>
+                                    <dt id="Version.public">public: Public</dt>
+                                    <dd></dd>
                                     <dt id="Public">class v440.Version.Public(string: Any = "0")</dt>
                                     <dd>
                                         <dl class="heading4">
                                             <dt id="Public.base">base: Base</dt>
                                             <dd></dd>
-                                            <dt id="Public.packaging">packaging: str</dt>
-                                            <dd>
-                                                <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.public</code> value.
-                                                </p>
-                                                <p>
-                                                    It is defined as an alias of <a href="#Public.string"><code>Public.string</code></a>.
-                                                </p>
-                                            </dd>
-                                            <dt id="Public.qual">qual: Qual</dt>
-                                            <dd></dd>
-                                            <dt id="Public.string">string: str</dt>
-                                            <dd>
-                                                <p>
-                                                    This property represents the <a href="#Public"><code>Public</code></a> object as a string.
-                                                </p>
-                                            </dd>
                                             <dt id="Base">class v440.Version.Public.Base(string: Any = "0")</dt>
                                             <dd>
                                                 <dl class="heading4">
@@ -97,13 +74,6 @@
                                                     <dd>
                                                         <p>This property represents the release.</p>
                                                     </dd>
-                                                    <dt id="Base.string">string: str</dt>
-                                                    <dd>
-                                                        <p>
-                                                            This property represents the <a href="#Base"><code>Base</code></a> object as a string.
-                                                        </p>
-                                                    </dd>
-
                                                     <dt id="Release">class v440.Version.Public.Base.Release(string: Any = "0")</dt>
                                                     <dd>
                                                         <dl class="heading4">
@@ -131,13 +101,51 @@
                                                             </dd>
                                                         </dl>
                                                     </dd>
+                                                    <dt id="Base.string">string: str</dt>
+                                                    <dd>
+                                                        <p>
+                                                            This property represents the <a href="#Base"><code>Base</code></a> object as a string.
+                                                        </p>
+                                                    </dd>
                                                 </dl>
                                             </dd>
+                                            <dt id="Public.packaging">packaging: str</dt>
+                                            <dd>
+                                                <p>
+                                                    This property represents the equivalent <code>packaging.version.Version.public</code> value.
+                                                </p>
+                                                <p>
+                                                    It is defined as an alias of <a href="#Public.string"><code>Public.string</code></a>.
+                                                </p>
+                                            </dd>
+                                            <dt id="Public.qual">qual: Qual</dt>
+                                            <dd></dd>
                                             <dt id="Qual">class v440.Version.Public.Qual(string: Any = "")</dt>
                                             <dd>
                                                 <dl class="heading4">
                                                     <dt id="Qual.dev">dev: Dev</dt>
                                                     <dd></dd>
+                                                    <dt id="Dev">class v440.Version.Public.Qual.Dev(string: Any = "")</dt>
+                                                    <dd>
+                                                        <dl class="heading4">
+                                                            <dt id="Dev.lit">lit: str</dt>
+                                                            <dd></dd>
+                                                            <dt id="Dev.num">num: int</dt>
+                                                            <dd></dd>
+                                                            <dt id="Dev.packaging">packaging: Optional[int]</dt>
+                                                            <dd>
+                                                                <p>
+                                                                    This property represents the equivalent <code>packaging.version.Version.dev</code> value.
+                                                                </p>
+                                                            </dd>
+                                                            <dt id="Dev.string">string: str</dt>
+                                                            <dd>
+                                                                <p>
+                                                                    This property represents the <a href="#Dev"><code>Dev</code></a> object as a string.
+                                                                </p>
+                                                            </dd>
+                                                        </dl>
+                                                    </dd>
                                                     <dt id="Qual.isdevrelease">isdevrelease() -> bool</dt>
                                                     <dd>
                                                         <p>
@@ -164,35 +172,6 @@
                                                     </dd>
                                                     <dt id="Qual.post">post: Post</dt>
                                                     <dd></dd>
-                                                    <dt id="Qual.pre">pre: Pre</dt>
-                                                    <dd></dd>
-                                                    <dt id="Qual.string">string: str</dt>
-                                                    <dd>
-                                                        <p>
-                                                            This property represents the <a href="#Qual"><code>Qual</code></a> object as a string.
-                                                        </p>
-                                                    </dd>
-                                                    <dt id="Dev">class v440.Version.Public.Qual.Dev(string: Any = "")</dt>
-                                                    <dd>
-                                                        <dl class="heading4">
-                                                            <dt id="Dev.lit">lit: str</dt>
-                                                            <dd></dd>
-                                                            <dt id="Dev.num">num: int</dt>
-                                                            <dd></dd>
-                                                            <dt id="Dev.packaging">packaging: Optional[int]</dt>
-                                                            <dd>
-                                                                <p>
-                                                                    This property represents the equivalent <code>packaging.version.Version.dev</code> value.
-                                                                </p>
-                                                            </dd>
-                                                            <dt id="Dev.string">string: str</dt>
-                                                            <dd>
-                                                                <p>
-                                                                    This property represents the <a href="#Dev"><code>Dev</code></a> object as a string.
-                                                                </p>
-                                                            </dd>
-                                                        </dl>
-                                                    </dd>
                                                     <dt id="Post">class v440.Version.Public.Qual.Post(string: Any = "")</dt>
                                                     <dd>
                                                         <dl class="heading4">
@@ -210,6 +189,8 @@
                                                             </dd>
                                                         </dl>
                                                     </dd>
+                                                    <dt id="Qual.pre">pre: Pre</dt>
+                                                    <dd></dd>
                                                     <dt id="Pre">class v440.Version.Public.Qual.Pre(string: Any = "")</dt>
                                                     <dd>
                                                         <dl class="heading4">
@@ -227,9 +208,27 @@
                                                             </dd>
                                                         </dl>
                                                     </dd>
+                                                    <dt id="Qual.string">string: str</dt>
+                                                    <dd>
+                                                        <p>
+                                                            This property represents the <a href="#Qual"><code>Qual</code></a> object as a string.
+                                                        </p>
+                                                    </dd>
                                                 </dl>
                                             </dd>
+                                            <dt id="Public.string">string: str</dt>
+                                            <dd>
+                                                <p>
+                                                    This property represents the <a href="#Public"><code>Public</code></a> object as a string.
+                                                </p>
+                                            </dd>
                                         </dl>
+                                    </dd>
+                                    <dt id="Version.string">string: str</dt>
+                                    <dd>
+                                        <p>
+                                            This property represents the <a href="#Version"><code>Version</code></a> object as a string.
+                                        </p>
                                     </dd>
                                 </dl>
                             </dd>
