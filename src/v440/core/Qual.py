@@ -116,12 +116,13 @@ class Qual(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict = Cfg.fullmatches("qual", value)
+        matches: dict
+        matches = Cfg.fullmatches("qual", value)
         self.pre.string = matches["pre"]
         self.post.string = matches["post"]
         self.dev.string = matches["dev"]
 
-    def _todict(self: Self) -> dict:
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
