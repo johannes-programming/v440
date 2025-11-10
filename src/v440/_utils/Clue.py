@@ -58,8 +58,9 @@ class Clue(NamedTuple):
 
     @classmethod
     def by_examples(cls: type, *values: str) -> Self:
-        ans: Self = cls()
+        ans: Self
         s: str
+        ans = cls()
         for s in values:
             ans &= cls.by_string(s)
         return ans

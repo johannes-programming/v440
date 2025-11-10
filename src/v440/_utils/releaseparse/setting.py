@@ -45,12 +45,10 @@ def setitem_int(data: tuple, key: int, value: int) -> tuple:
 
 def setitem_range(data: tuple, key: range, value: tuple[int]) -> tuple:
     edit: list
-    ans: tuple
     edit = list(data)
     while len(edit) < max(key.start + 1, key.stop):
         edit.append(0)
     edit[key.start : key.stop : key.step] = value
     while len(edit) and not edit[-1]:
         edit.pop()
-    ans = tuple(edit)
-    return ans
+    return tuple(edit)
