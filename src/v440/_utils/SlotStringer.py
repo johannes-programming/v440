@@ -12,9 +12,6 @@ __all__ = ["SlotStringer"]
 class SlotStringer(BaseStringer):
     __slots__ = ()
 
-    string: str
-    packaging: str
-
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return any(map(bool, self._todict().values()))
@@ -26,4 +23,6 @@ class SlotStringer(BaseStringer):
     @abstractmethod
     def _todict(self: Self) -> dict: ...
 
+    packaging: str
     packaging = BaseStringer.string
+    string: str  # inherited property

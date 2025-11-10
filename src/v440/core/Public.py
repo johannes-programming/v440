@@ -91,3 +91,7 @@ class Public(SlotStringer):
     def qual(self: Self) -> Qual:
         "This property represents the qualification."
         return self._qual
+
+
+Public.Base = Base
+Public.Qual = Qual
