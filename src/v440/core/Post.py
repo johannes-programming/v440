@@ -15,10 +15,6 @@ __all__ = ["Post"]
 class Post(QualStringer):
 
     __slots__ = ()
-    string: str
-    packaging: Optional[int]
-    lit: str
-    num: int
 
     def _cmp(self: Self) -> int:
         if self.lit:
@@ -60,6 +56,10 @@ class Post(QualStringer):
         else:
             raise ValueError
 
+    lit: str  # inherited property
+    num: int  # inherited property
+    packaging: Optional[int]
+
     @property
     def packaging(self: Self) -> Optional[int]:
         if self:
@@ -76,3 +76,5 @@ class Post(QualStringer):
         else:
             self.lit = "post"
             self.num = operator.index(value)
+
+    string: str  # inherited property
