@@ -1,23 +1,23 @@
 import operator
+import string as string_
 from abc import abstractmethod
 from typing import *
 
 import setdoc
 from datarepr import datarepr
 
-from v440._utils.BaseStringer import BaseStringer
-from v440._utils.guarding import guard
+from v440.abc.CoreABC import CoreABC
 
-__all__ = ["QualStringer"]
+__all__ = ["QualABC"]
 
 
-class QualStringer(BaseStringer):
+class QualABC(CoreABC):
     __slots__ = ("_lit", "_num")
 
-    string: str
-    packaging: Any
     lit: str
     num: int
+    packaging: Any
+    string: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
@@ -39,7 +39,7 @@ class QualStringer(BaseStringer):
 
     @classmethod
     @abstractmethod
-    def _lit_parse(cls: type, value: str) -> str: ...
+    def _lit_parse(cls: type[Self], value: str) -> str: ...
 
     def _string_fset(self: Self, value: str) -> None:
         x: str
@@ -48,7 +48,7 @@ class QualStringer(BaseStringer):
             self._lit = ""
             self._num = 0
             return
-        x = value.rstrip("0123456789")
+        x = value.rstrip(string_.digits)
         y = value[len(x) :]
         if x == "-":
             if not y:
@@ -74,7 +74,6 @@ class QualStringer(BaseStringer):
         return self._lit
 
     @lit.setter
-    @guard
     def lit(self: Self, value: Any) -> None:
         x: str
         x = str(value).lower()
@@ -90,7 +89,6 @@ class QualStringer(BaseStringer):
         return self._num
 
     @num.setter
-    @guard
     def num(self: Self, value: SupportsIndex) -> None:
         y: int
         y = operator.index(value)
