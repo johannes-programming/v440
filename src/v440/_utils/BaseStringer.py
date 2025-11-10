@@ -31,8 +31,7 @@ class BaseStringer(metaclass=ABCMeta):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
-        parsed: dict
-        ans: str
+        parsed: dict[str, Any]
         msg: str
         try:
             parsed = self._format_parse(str(format_spec))
@@ -40,8 +39,7 @@ class BaseStringer(metaclass=ABCMeta):
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        ans = str(self._format_parsed(**parsed))
-        return ans
+        return str(self._format_parsed(**parsed))
 
     @setdoc.basic
     def __ge__(self: Self, other: Any) -> bool:
@@ -103,7 +101,7 @@ class BaseStringer(metaclass=ABCMeta):
 
     @classmethod
     @abstractmethod
-    def _format_parse(self: Self, spec: str, /) -> dict: ...
+    def _format_parse(self: Self, spec: str, /) -> dict[str, Any]: ...
 
     @abstractmethod
     def _format_parsed(self: Self, **kwargs: Any) -> Any: ...
@@ -117,16 +115,19 @@ class BaseStringer(metaclass=ABCMeta):
 
     @classmethod
     def deformat(cls: type, *strings: Any) -> str:
-        keys: tuple = tuple(map(str, strings))
-        values: tuple = tuple(map(cls, keys))
-        info: dict = dict(zip(keys, values))
+        msg: str
+        keys: tuple
+        values: tuple
+        info: dict[str, Self]
+        keys = tuple(map(str, strings))
+        values = tuple(map(cls, keys))
+        info = dict(zip(keys, values))
         try:
-            ans: str = cls._deformat(info)
+            return cls._deformat(info)
         except Exception:
-            msg: str = Cfg.cfg.data["consts"]["errors"]["deformat"]
+            msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
             msg %= oxford(*strings)
             raise TypeError(msg)
-        return ans
 
     @property
     @abstractmethod
