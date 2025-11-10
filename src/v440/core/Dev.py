@@ -1,25 +1,24 @@
 from __future__ import annotations
 
 import operator
-import string as string_
 from functools import reduce
 from typing import *
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.guarding import guard
-from v440._utils.QualStringer import QualStringer
+from v440.abc.QualABC import QualABC
 
 __all__ = ["Dev"]
 
 
-class Dev(QualStringer):
+class Dev(QualABC):
 
     __slots__ = ()
-    string: str
-    packaging: str
+
     lit: str
     num: int
+    packaging: Optional[int]
+    string: str
 
     def _cmp(self: Self) -> tuple:
         if self.lit:
@@ -28,22 +27,22 @@ class Dev(QualStringer):
             return (1,)
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         clues: Iterable[Clue]
         clues = map(Clue.by_example, info.keys())
         return reduce(operator.and_, clues, Clue()).solo(".dev")
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
-        m: dict
-        e: Clue
-        m = Cfg.fullmatches("dev_f", spec)
-        e = Clue(
-            head=m["dev_head_f"],
-            sep=m["dev_sep_f"],
-            mag=len(m["dev_num_f"]),
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
+        matches: dict[str, str]
+        clue: Clue
+        matches = Cfg.fullmatches("dev_f", spec)
+        clue = Clue(
+            head=matches["dev_head_f"],
+            sep=matches["dev_sep_f"],
+            mag=len(matches["dev_num_f"]),
         )
-        return dict(clue=e)
+        return dict(clue=clue)
 
     def _format_parsed(self: Self, *, clue: Clue) -> str:
         if not self:
@@ -55,7 +54,7 @@ class Dev(QualStringer):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type, value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str) -> str:
         if value == "dev":
             return "dev"
         else:
@@ -69,7 +68,6 @@ class Dev(QualStringer):
             return
 
     @packaging.setter
-    @guard
     def packaging(self: Self, value: Optional[SupportsIndex]) -> None:
         if value is None:
             self.num = 0

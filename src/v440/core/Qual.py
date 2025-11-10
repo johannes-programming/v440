@@ -8,7 +8,7 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.SlotStringer import SlotStringer
+from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev
 from v440.core.Post import Post
 from v440.core.Pre import Pre
@@ -16,14 +16,14 @@ from v440.core.Pre import Pre
 __all__ = ["Qual"]
 
 
-class Qual(SlotStringer):
+class Qual(NestedABC):
 
     __slots__ = ("_pre", "_post", "_dev")
-    string: str
-    packaging: str
-    pre: Pre
-    post: Post
     dev: Dev
+    packaging: str
+    post: Post
+    pre: Pre
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
@@ -33,7 +33,8 @@ class Qual(SlotStringer):
         self.string = string
 
     def _cmp(self: Self) -> tuple:
-        ans: tuple = ()
+        ans: tuple[int | str, ...]
+        ans = ()
         if self.pre:
             ans += (self.pre.lit, self.pre.num)
         elif self.post is not None:
@@ -46,15 +47,16 @@ class Qual(SlotStringer):
         return ans
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         s: str
         t: str
         o: Self
-        table: tuple[Clue]
+        table: tuple[Clue, ...]
         pos: list[set[str]]
         sols: list[str]
         way: tuple
         parts: list[str]
+        matches: dict[str, str]
         table = (Clue(),) * 5
         for s, o in info.items():
             matches = Cfg.fullmatches("qual", s)
@@ -98,9 +100,9 @@ class Qual(SlotStringer):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
-        matches: dict
-        ans: dict
+    def _format_parse(cls: type[Self], spec: str, /) -> dict:
+        matches: dict[str, str]
+        ans: dict[str, str]
         s: str
         matches = Cfg.fullmatches("qual_f", spec)
         ans = dict()
@@ -116,12 +118,13 @@ class Qual(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict = Cfg.fullmatches("qual", value)
+        matches: dict[str, str]
+        matches = Cfg.fullmatches("qual", value)
         self.pre.string = matches["pre"]
         self.post.string = matches["post"]
         self.dev.string = matches["dev"]
 
-    def _todict(self: Self) -> dict:
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
@@ -148,3 +151,8 @@ class Qual(SlotStringer):
     @property
     def pre(self: Self) -> Pre:
         return self._pre
+
+
+Qual.Dev = Dev
+Qual.Post = Post
+Qual.Pre = Pre
