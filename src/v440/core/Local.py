@@ -17,10 +17,6 @@ __all__ = ["Local"]
 class Local(ListStringer):
     __slots__ = ()
 
-    string: str
-    packaging: Optional[str]
-    data: tuple
-
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
         self._data = ()
@@ -192,6 +188,9 @@ class Local(ListStringer):
         v = v.replace("-", ".")
         self.data = v.split(".")
 
+    data: tuple  # inherited property
+    packaging: Optional[str]
+
     @property
     def packaging(self: Self) -> Optional[str]:
         if self:
@@ -206,3 +205,5 @@ class Local(ListStringer):
             self.string = ""
         else:
             self.string = value
+
+    string: str  # inherited property
