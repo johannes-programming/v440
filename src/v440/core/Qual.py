@@ -148,3 +148,8 @@ class Qual(SlotStringer):
     @property
     def pre(self: Self) -> Pre:
         return self._pre
+
+
+Qual.Dev = Dev
+Qual.Post = Post
+Qual.Pre = Pre

@@ -7,7 +7,7 @@ __all__ = ["VersionError"]
 
 class VersionError(ValueError):
 
-    args: tuple
+    args: tuple  # inherited property
 
     @setdoc.basic
     def __init__(self: Self, *args: Any) -> None:
