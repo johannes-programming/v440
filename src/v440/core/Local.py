@@ -8,14 +8,17 @@ import setdoc
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
-from v440._utils.guarding import guard
-from v440._utils.ListStringer import ListStringer
+from v440.abc.ListABC import ListABC
 
 __all__ = ["Local"]
 
 
-class Local(ListStringer):
+class Local(ListABC[int | str]):
     __slots__ = ()
+
+    data: tuple[int | str, ...]
+    packaging: Optional[str]
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
@@ -23,7 +26,7 @@ class Local(ListStringer):
         self.string = string
 
     @classmethod
-    def _data_parse(cls: type, value: list) -> Iterable:
+    def _data_parse(cls: type, value: list) -> tuple[int | str, ...]:
         return tuple(map(cls._item_parse, value))
 
     @classmethod
@@ -32,7 +35,7 @@ class Local(ListStringer):
         s: str
         t: str
         i: int
-        parts: list
+        parts: list[set]
         if 0 == len(info):
             return ""
         m = max(map(len, info.values()))
@@ -106,7 +109,7 @@ class Local(ListStringer):
             return f
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
+    def _format_parse(cls: type, spec: str, /) -> dict[str, Any]:
         l: str
         m: int
         x: str
@@ -188,9 +191,6 @@ class Local(ListStringer):
         v = v.replace("-", ".")
         self.data = v.split(".")
 
-    data: tuple  # inherited property
-    packaging: Optional[str]
-
     @property
     def packaging(self: Self) -> Optional[str]:
         if self:
@@ -199,11 +199,8 @@ class Local(ListStringer):
             return
 
     @packaging.setter
-    @guard
     def packaging(self: Self, value: Any) -> None:
         if value is None:
             self.string = ""
         else:
             self.string = value
-
-    string: str  # inherited property

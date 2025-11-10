@@ -6,15 +6,19 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.guarding import guard
-from v440._utils.QualStringer import QualStringer
+from v440.abc.QualABC import QualABC
 
 __all__ = ["Pre"]
 
 
-class Pre(QualStringer):
+class Pre(QualABC):
 
     __slots__ = ()
+
+    lit: str
+    num: int
+    packaging: Optional[tuple[str, int]]
+    string: str
 
     def _cmp(self: Self) -> tuple:
         if not self:
@@ -28,8 +32,8 @@ class Pre(QualStringer):
         matches: dict[str, str]
         pos: list[set]
         clues: list[Clue]
-        sols: list
-        way: tuple
+        sols: list[str]
+        way: tuple[set[str], set[str], set[str]]
         clues = [Clue()] * 3
         for s, o in info.items():
             if not o:
@@ -50,9 +54,9 @@ class Pre(QualStringer):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
-        m: dict
-        ans: dict
+    def _format_parse(cls: type, spec: str, /) -> dict[str, Clue]:
+        m: dict[str, str]
+        ans: dict[str, Clue]
         m = Cfg.fullmatches("pre_f", spec)
         ans = dict()
         ans["a"] = Clue.by_spec(m["a_f"])
@@ -84,10 +88,6 @@ class Pre(QualStringer):
     def _lit_parse(cls: type, value: str) -> str:
         return Cfg.cfg.data["consts"]["phases"][value]
 
-    lit: str  # inherited property
-    num: int  # inherited property
-    packaging: Optional[tuple[str, int]]
-
     @property
     def packaging(self: Self) -> Optional[tuple[str, int]]:
         if self:
@@ -96,7 +96,6 @@ class Pre(QualStringer):
             return
 
     @packaging.setter
-    @guard
     def packaging(self: Self, value: Optional[Iterable]) -> None:
         if value is None:
             self.num = 0
@@ -104,5 +103,3 @@ class Pre(QualStringer):
         else:
             self.num = 0
             self.lit, self.num = value
-
-    string: str  # inherited property

@@ -4,16 +4,15 @@ from typing import *
 import setdoc
 from datarepr import datarepr
 
-from v440._utils.BaseStringer import BaseStringer
+from v440.abc.CoreABC import CoreABC
 
-__all__ = ["SlotStringer"]
+__all__ = ["NestedABC"]
 
 
-class SlotStringer(BaseStringer):
+class NestedABC(CoreABC):
     __slots__ = ()
-
-    string: str
     packaging: str
+    string: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
@@ -26,4 +25,4 @@ class SlotStringer(BaseStringer):
     @abstractmethod
     def _todict(self: Self) -> dict: ...
 
-    packaging = BaseStringer.string
+    packaging = CoreABC.string

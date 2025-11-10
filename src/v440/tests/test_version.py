@@ -4,7 +4,7 @@ from typing import *
 from v440.core.Local import Local
 from v440.core.Qual import Qual
 from v440.core.Version import Version
-from v440.core.VersionError import VersionError
+from v440.errors.VersionError import VersionError
 
 
 class TestVersionManipulation(unittest.TestCase):
@@ -260,7 +260,7 @@ class TestVersionRelease(unittest.TestCase):
         version = Version()
         version.public.base.release.data = [1, 2]
         simulated_release = version.public.base.release[:5]
-        self.assertEqual(simulated_release, [1, 2, 0, 0, 0])
+        self.assertEqual(simulated_release, [1, 2])
 
     def test_release_empty_major(self: Self) -> None:
         # Test that an empty release still has valid major, minor, micro values

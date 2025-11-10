@@ -2,49 +2,35 @@ from __future__ import annotations
 
 import operator
 import string as string_
+from functools import partialmethod
 from typing import *
 
-import keyalias
 import setdoc
 
-from v440._utils.ListStringer import ListStringer
-from v440._utils.releaseparse import deleting, getting, setting
+from v440.abc.ListABC import ListABC
 
 __all__ = ["Release"]
 
 
-@keyalias.getdecorator(major=0, minor=1, micro=2, patch=2)
-class Release(ListStringer):
+class Release(ListABC[int]):
     __slots__ = ()
-
-    string: str
-    packaging: tuple
-    data: tuple
+    data: tuple[int, ...]
     major: int
-    minor: int
     micro: int
+    minor: int
+    packaging: tuple[int, ...]
     patch: int
-
-    @setdoc.basic
-    def __delitem__(self: Self, key: Any) -> None:
-        self._data = deleting.delitem(self.data, key)
-
-    @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> int | list:
-        return getting.getitem(self.data, key)
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._data = ()
         self.string = string
 
-    @setdoc.basic
-    def __setitem__(self: Self, key: Any, value: Any) -> None:
-        self._data = setting.setitem(self.data, key, value)
-
     @classmethod
-    def _data_parse(cls: type, value: list) -> Iterable:
-        v: list = list(map(cls._item_parse, value))
+    def _data_parse(cls: type, value: list) -> list[int]:
+        v: list[int]
+        v = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
             v.pop()
         return v
@@ -109,14 +95,19 @@ class Release(ListStringer):
         else:
             return x + y
 
+    def _delitem(self: Self, key: Any, *, minlen: Any = None) -> None:
+        data: list[int]
+        data = self._list(minlen=minlen)
+        del data[key]
+        self.data = data
+
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> str:
+    def _format_parse(cls: type, spec: str, /) -> dict[str, tuple[int, ...]]:
         if spec.strip("#."):
             raise ValueError
         return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
 
-    def _format_parsed(self: Self, *, mags: tuple) -> str:
-        m: int
+    def _format_parsed(self: Self, *, mags: tuple[int, ...]) -> str:
         data: list[int]
         parts: list[int]
         data = list(self)
@@ -125,6 +116,19 @@ class Release(ListStringer):
         parts += [""] * max(0, len(self) - len(mags))
         return ".".join(map(format, data, parts))
 
+    def _getitem(self: Self, key: Any, *, minlen: Any = None) -> Any:
+        return self._list(minlen=minlen)[key]
+
+    def _list(self: Self, minlen: Optional[SupportsIndex] = None) -> list[int]:
+        i: Any
+        data: list
+        data = list(self)
+        if minlen is None:
+            return data
+        i = operator.index(minlen)
+        data.extend([0] * max(0, i - len(self)))
+        return data
+
     @classmethod
     def _item_parse(cls: type, value: SupportsIndex) -> int:
         ans: int
@@ -132,6 +136,12 @@ class Release(ListStringer):
         if ans < 0:
             raise ValueError
         return ans
+
+    def _setitem(self: Self, key: Any, value: Any, *, minlen: Any = None) -> None:
+        data: list[int]
+        data = self._list(minlen=minlen)
+        data[key] = value
+        self.data = data
 
     @classmethod
     def _sort(cls: type, value: int) -> int:
@@ -143,11 +153,57 @@ class Release(ListStringer):
         self.data = map(int, value.split("."))
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
-        i: int = operator.index(index)
-        a: int = operator.index(amount)
-        x: int = getting.getitem_int(self.data, i) + a
-        self._data = setting.setitem_int(self.data, i, x)
-        if i != -1:
-            self.data = self.data[: i + 1]
+        data: list
+        a: int
+        i: int
+        a = operator.index(amount)
+        i = operator.index(index)
+        if i < len(self):
+            self[i] += a
+            return
+        data = list(self)
+        data.extend([0] * (i - len(self)))
+        data.append(a)
+        self.data = data
 
-    packaging = ListStringer.data
+    @property
+    def major(self: Self) -> int:
+        "This property represents the version major."
+        return self._getitem(key=0, minlen=1)
+
+    @major.setter
+    def major(self: Self, value: Any) -> None:
+        self._setitem(key=0, value=value, minlen=1)
+
+    @major.deleter
+    def major(self: Self) -> None:
+        self._delitem(key=0, minlen=1)
+
+    @property
+    def minor(self: Self) -> int:
+        "This property represents the version minor."
+        return self._getitem(key=1, minlen=2)
+
+    @minor.setter
+    def minor(self: Self, value: Any) -> None:
+        self._setitem(key=1, value=value, minlen=2)
+
+    @minor.deleter
+    def minor(self: Self) -> None:
+        self._delitem(key=1, minlen=2)
+
+    @property
+    def micro(self: Self) -> int:
+        "This property represents the version micro."
+        return self._getitem(key=2, minlen=3)
+
+    @micro.setter
+    def micro(self: Self, value: Any) -> None:
+        self._setitem(key=2, value=value, minlen=3)
+
+    @micro.deleter
+    def micro(self: Self) -> None:
+        self._delitem(key=2, minlen=3)
+
+    packaging = ListABC.data
+    patch = micro

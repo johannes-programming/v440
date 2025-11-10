@@ -5,21 +5,21 @@ from typing import *
 
 import setdoc
 
-from v440._utils.SlotStringer import SlotStringer
+from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base
 from v440.core.Qual import Qual
 
 __all__ = ["Public"]
 
 
-class Public(SlotStringer):
+class Public(NestedABC):
 
     __slots__ = ("_base", "_qual")
 
-    string: str
-    packaging: str
     base: Base
+    packaging: str
     qual: Qual
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
@@ -27,13 +27,13 @@ class Public(SlotStringer):
         self._qual = Qual()
         self.string = string
 
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self) -> tuple[Base, Qual]:
         return self.base, self.qual
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self]) -> str:
-        bases: set
-        quals: set
+        bases: set[str]
+        quals: set[str]
         x: str
         y: str
         bases = set()
@@ -46,9 +46,8 @@ class Public(SlotStringer):
         return x + y
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
+    def _format_parse(cls: type, spec: str, /) -> dict[str, str]:
         i: int
-        ans: dict
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
             if spec[i] in ("#!."):
@@ -57,8 +56,7 @@ class Public(SlotStringer):
                 break
         if i != 0 and spec[i - 1] == "." and i != len(spec) and spec[i] not in "-_":
             i -= 1
-        ans = dict(base_f=spec[:i], qual_f=spec[i:])
-        return ans
+        return dict(base_f=spec[:i], qual_f=spec[i:])
 
     def _format_parsed(self: Self, *, base_f: str, qual_f: str) -> str:
         return format(self.base, base_f) + format(self.qual, qual_f)
@@ -79,7 +77,7 @@ class Public(SlotStringer):
     def _string_fset(self: Self, value: str) -> None:
         self.base.string, self.qual.string = self._split(value)
 
-    def _todict(self: Self) -> dict:
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(base=self.base, qual=self.qual)
 
     @property
@@ -91,3 +89,7 @@ class Public(SlotStringer):
     def qual(self: Self) -> Qual:
         "This property represents the qualification."
         return self._qual
+
+
+Public.Base = Base
+Public.Qual = Qual

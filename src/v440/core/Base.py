@@ -6,16 +6,20 @@ from typing import *
 import setdoc
 
 from v440._utils.Cfg import Cfg
-from v440._utils.guarding import guard
-from v440._utils.SlotStringer import SlotStringer
+from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release
 
 __all__ = ["Base"]
 
 
-class Base(SlotStringer):
+class Base(NestedABC):
 
     __slots__ = ("_epoch", "_release")
+
+    epoch: int
+    packaging: str
+    release: Release
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
@@ -23,13 +27,13 @@ class Base(SlotStringer):
         self._release = Release()
         self.string = string
 
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self) -> tuple[int, Release]:
         return self.epoch, self.release
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        table: dict
-        matches: dict
+        table: dict[str, dict]
+        matches: dict[str, str]
         s: str
         t: str
         table = dict()
@@ -52,7 +56,7 @@ class Base(SlotStringer):
     @classmethod
     def _deformat_epoch(cls: type, *table: str) -> str:
         f: int
-        g: Iterable
+        g: Iterator[int]
         u: int
         if len(table) == 0:
             return ""
@@ -69,8 +73,8 @@ class Base(SlotStringer):
         spec: str,
         /,
     ) -> dict[str, Any]:
-        ans: dict
-        matches: dict
+        ans: dict[str, int | str]
+        matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         ans = dict()
         ans["basev_f"] = matches["basev_f"]
@@ -94,7 +98,7 @@ class Base(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict
+        matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
             self.epoch = int(matches["epoch"])
@@ -102,10 +106,8 @@ class Base(SlotStringer):
             self.epoch = 0
         self.release.string = matches["release"]
 
-    def _todict(self: Self) -> dict:
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(epoch=self.epoch, release=self.release)
-
-    epoch: int
 
     @property
     def epoch(self: Self) -> int:
@@ -113,7 +115,6 @@ class Base(SlotStringer):
         return self._epoch
 
     @epoch.setter
-    @guard
     def epoch(self: Self, value: Any) -> None:
         v: int
         v = operator.index(value)
@@ -121,13 +122,10 @@ class Base(SlotStringer):
             raise ValueError
         self._epoch = v
 
-    packaging: str  # inherited property
-
-    release: Release
-
     @property
     def release(self: Self) -> Release:
         "This property represents the release."
         return self._release
 
-    string: str  # inherited property
+
+Base.Release = Release
