@@ -16,18 +16,13 @@ __all__ = ["Version"]
 class Version(SlotStringer):
     __slots__ = ("_public", "_local")
 
-    string: str
-    packaging: packaging.version.Version
-    local: Local
-    public: Public
-
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._public = Public()
         self._local = Local()
         self.string = string
 
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self) -> tuple[Public, Local]:
         return self.public, self.local
 
     @classmethod
@@ -73,7 +68,7 @@ class Version(SlotStringer):
         self.public.string, self.local.string = self._split(value)
 
     @classmethod
-    def _split(cls: type, string: str, /) -> tuple:
+    def _split(cls: type, string: str, /) -> Iterable:
         if string.endswith("+"):
             raise ValueError
         if "+" in string:
@@ -81,13 +76,17 @@ class Version(SlotStringer):
         else:
             return string, ""
 
-    def _todict(self: Self) -> dict:
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(public=self.public, local=self.local)
+
+    local: Local
 
     @property
     def local(self: Self) -> Local:
         "This property represents the local identifier."
         return self._local
+
+    packaging: packaging.version.Version
 
     @property
     def packaging(self: Self) -> packaging.version.Version:
@@ -99,7 +98,15 @@ class Version(SlotStringer):
     def packaging(self: Self, value: Any) -> None:
         self.string = value
 
+    public: Public
+
     @property
     def public(self: Self) -> Public:
         "This property represents the public identifier."
         return self._public
+
+    string: str  # inherited property
+
+
+Version.Local = Local
+Version.Public = Public

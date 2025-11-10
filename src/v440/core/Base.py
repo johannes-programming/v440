@@ -28,8 +28,8 @@ class Base(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self], /) -> str:
-        table: dict
-        matches: dict
+        table: dict[str, dict]
+        matches: dict[str, str]
         s: str
         t: str
         table = dict()
@@ -69,8 +69,8 @@ class Base(SlotStringer):
         spec: str,
         /,
     ) -> dict[str, Any]:
-        ans: dict
-        matches: dict
+        ans: dict[str, int | str]
+        matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         ans = dict()
         ans["basev_f"] = matches["basev_f"]
@@ -131,3 +131,6 @@ class Base(SlotStringer):
         return self._release
 
     string: str  # inherited property
+
+
+Base.Release = Release

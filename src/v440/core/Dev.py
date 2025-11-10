@@ -29,8 +29,8 @@ class Dev(QualStringer):
         return reduce(operator.and_, clues, Clue()).solo(".dev")
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
-        m: dict
+    def _format_parse(cls: type, spec: str, /) -> dict[str, Clue]:
+        m: dict[str, str]
         e: Clue
         m = Cfg.fullmatches("dev_f", spec)
         e = Clue(

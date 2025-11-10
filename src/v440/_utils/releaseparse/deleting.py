@@ -14,23 +14,28 @@ def delitem(data: tuple, key: Any) -> bool:
 
 
 def delitem_index(data: tuple, key: SupportsIndex) -> tuple:
-    i: int = operator.index(key)
+    i: int
+    l: list
+    i = operator.index(key)
     if i >= len(data):
         return data
-    l: list = list(data)
+    l = list(data)
     del l[i]
     return tuple(l)
 
 
 def delitem_slice(data: tuple, key: slice) -> tuple:
-    r: range = ranging.torange(key, len(data))
+    keys: list
+    editable: list
     k: Any
-    keys: list = list()
+    r: range
+    r = ranging.torange(key, len(data))
+    keys = list()
     for k in r:
         if k < len(data):
             keys.append(k)
     keys.sort(reverse=True)
-    editable: list = list(data)
+    editable = list(data)
     for k in keys:
         del editable[k]
     return tuple(editable)

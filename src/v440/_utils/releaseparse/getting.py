@@ -9,9 +9,11 @@ from v440._utils.releaseparse import ranging
 
 def getitem(data: tuple, key: SupportsIndex | slice) -> int | list:
     ans: int | list
+    r: range
+    f: partial
     if type(key) is slice:
-        r: range = ranging.torange(key, len(data))
-        f: partial = partial(getitem_int, data)
+        r = ranging.torange(key, len(data))
+        f = partial(getitem_int, data)
         ans = list(map(f, r))
     else:
         ans = getitem_int(data, operator.index(key))
