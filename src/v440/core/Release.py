@@ -17,14 +17,6 @@ __all__ = ["Release"]
 class Release(ListStringer):
     __slots__ = ()
 
-    string: str
-    packaging: tuple
-    data: tuple
-    major: int
-    minor: int
-    micro: int
-    patch: int
-
     @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
         self._data = deleting.delitem(self.data, key)
@@ -44,7 +36,8 @@ class Release(ListStringer):
 
     @classmethod
     def _data_parse(cls: type, value: list) -> Iterable:
-        v: list = list(map(cls._item_parse, value))
+        v: list
+        v = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
             v.pop()
         return v
@@ -116,7 +109,6 @@ class Release(ListStringer):
         return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
 
     def _format_parsed(self: Self, *, mags: tuple) -> str:
-        m: int
         data: list[int]
         parts: list[int]
         data = list(self)
@@ -143,11 +135,23 @@ class Release(ListStringer):
         self.data = map(int, value.split("."))
 
     def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
-        i: int = operator.index(index)
-        a: int = operator.index(amount)
-        x: int = getting.getitem_int(self.data, i) + a
+        a: int
+        i: int
+        x: int
+        i = operator.index(index)
+        a = operator.index(amount)
+        x = getting.getitem_int(self.data, i) + a
         self._data = setting.setitem_int(self.data, i, x)
         if i != -1:
             self.data = self.data[: i + 1]
 
+    data: tuple
+    major: int
+    micro: int
+    minor: int
+
+    packaging: tuple
     packaging = ListStringer.data
+    patch: int
+
+    string: str
