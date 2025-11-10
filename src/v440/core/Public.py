@@ -46,9 +46,8 @@ class Public(SlotStringer):
         return x + y
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
+    def _format_parse(cls: type, spec: str, /) -> dict[str, str]:
         i: int
-        ans: dict
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
             if spec[i] in ("#!."):
@@ -57,8 +56,7 @@ class Public(SlotStringer):
                 break
         if i != 0 and spec[i - 1] == "." and i != len(spec) and spec[i] not in "-_":
             i -= 1
-        ans = dict(base_f=spec[:i], qual_f=spec[i:])
-        return ans
+        return dict(base_f=spec[:i], qual_f=spec[i:])
 
     def _format_parsed(self: Self, *, base_f: str, qual_f: str) -> str:
         return format(self.base, base_f) + format(self.qual, qual_f)
@@ -79,7 +77,7 @@ class Public(SlotStringer):
     def _string_fset(self: Self, value: str) -> None:
         self.base.string, self.qual.string = self._split(value)
 
-    def _todict(self: Self) -> dict:
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(base=self.base, qual=self.qual)
 
     @property
