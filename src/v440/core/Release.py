@@ -138,8 +138,8 @@ class Release(ListStringer):
         a: int
         i: int
         x: int
-        i = operator.index(index)
         a = operator.index(amount)
+        i = operator.index(index)
         x = getting.getitem_int(self.data, i) + a
         self._data = setting.setitem_int(self.data, i, x)
         if i != -1:
