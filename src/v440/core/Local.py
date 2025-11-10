@@ -8,18 +8,17 @@ import setdoc
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
-from v440._utils.guarding import guard
-from v440._utils.ListStringer import ListStringer
+from v440.abc.ListABC import ListABC
 
 __all__ = ["Local"]
 
 
-class Local(ListStringer):
+class Local(ListABC[int | str]):
     __slots__ = ()
 
-    string: str
+    data: tuple[int | str, ...]
     packaging: Optional[str]
-    data: tuple
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
@@ -27,16 +26,16 @@ class Local(ListStringer):
         self.string = string
 
     @classmethod
-    def _data_parse(cls: type, value: list) -> Iterable:
+    def _data_parse(cls: type[Self], value: list) -> tuple[int | str, ...]:
         return tuple(map(cls._item_parse, value))
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self]) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self]) -> str:
         m: int
         s: str
         t: str
         i: int
-        parts: list
+        parts: list[set]
         if 0 == len(info):
             return ""
         m = max(map(len, info.values()))
@@ -57,7 +56,7 @@ class Local(ListStringer):
         return s
 
     @classmethod
-    def _deformat_part(cls: type, part: set[str]) -> str:
+    def _deformat_part(cls: type[Self], part: set[str]) -> str:
         lits: set[str]
         nums: set[str]
         s: str
@@ -73,7 +72,7 @@ class Local(ListStringer):
         return s
 
     @classmethod
-    def _deformat_lits(cls: type, part: set[str]) -> str:
+    def _deformat_lits(cls: type[Self], part: set[str]) -> str:
         i: int
         s: str
         t: str
@@ -95,7 +94,7 @@ class Local(ListStringer):
         return s
 
     @classmethod
-    def _deformat_nums(cls: type, part: set[str]) -> int:
+    def _deformat_nums(cls: type[Self], part: set[str]) -> int:
         t: Iterator
         f: int
         if len(part) == 0:
@@ -110,7 +109,7 @@ class Local(ListStringer):
             return f
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Any]:
         l: str
         m: int
         x: str
@@ -161,7 +160,7 @@ class Local(ListStringer):
         return ans
 
     @classmethod
-    def _item_parse(cls: type, value: Any) -> int | str:
+    def _item_parse(cls: type[Self], value: Any) -> int | str:
         ans: int | str
         try:
             ans = operator.index(value)
@@ -177,7 +176,7 @@ class Local(ListStringer):
         return ans
 
     @classmethod
-    def _sort(cls: type, value: Any) -> tuple[bool, int | str]:
+    def _sort(cls: type[Self], value: Any) -> tuple[bool, int | str]:
         return type(value) is int, value
 
     def _string_fset(self: Self, value: str) -> None:
@@ -196,11 +195,8 @@ class Local(ListStringer):
     def packaging(self: Self) -> Optional[str]:
         if self:
             return str(self)
-        else:
-            return
 
     @packaging.setter
-    @guard
     def packaging(self: Self, value: Any) -> None:
         if value is None:
             self.string = ""

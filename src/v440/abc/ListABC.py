@@ -2,21 +2,22 @@ from abc import abstractmethod
 from typing import *
 
 import setdoc
-from datahold import OkayList
+from datahold import HoldList
 from datarepr import datarepr
 
-from v440._utils.BaseStringer import BaseStringer
-from v440._utils.guarding import guard
+from v440.abc.CoreABC import CoreABC
 
-__all__ = ["ListStringer"]
+__all__ = ["ListABC"]
+
+Item = TypeVar("Item")
 
 
-class ListStringer(BaseStringer, OkayList):
+class ListABC(CoreABC, HoldList[Item]):
 
     __slots__ = ()
-    string: str
+    data: tuple[Item, ...]
     packaging: Any
-    data: tuple
+    string: str
 
     @setdoc.basic
     def __add__(self: Self, other: Any) -> Self:
@@ -57,30 +58,33 @@ class ListStringer(BaseStringer, OkayList):
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, list(self))
 
+    @setdoc.basic
+    def __rmul__(self: Self, other: SupportsIndex) -> Self:
+        return self * other
+
     def _cmp(self: Self) -> tuple:
         return tuple(map(self._sort, self.data))
 
     @classmethod
     @abstractmethod
-    def _data_parse(cls: type, value: list) -> Iterable: ...
+    def _data_parse(cls: type[Self], value: list) -> Iterable[Item]: ...
 
     @classmethod
     @abstractmethod
-    def _sort(cls: type, value: Any): ...
+    def _sort(cls: type[Self], value: Any) -> Any: ...
 
     @property
     @setdoc.basic
-    def data(self: Self) -> tuple:
+    def data(self: Self) -> tuple[Item, ...]:
         return self._data
 
     @data.setter
-    @guard
     def data(self: Self, value: Iterable) -> None:
         self._data = tuple(self._data_parse(list(value)))
 
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
         "This method sorts the data."
-        data: list
+        data: list[Item]
         k: Any
         r: bool
         data = list(self.data)
