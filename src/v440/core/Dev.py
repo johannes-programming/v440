@@ -16,6 +16,12 @@ class Dev(QualStringer):
 
     __slots__ = ()
 
+    lit: str
+    num: int
+    packaging: Optional[int]
+
+    string: str
+
     def _cmp(self: Self) -> tuple:
         if self.lit:
             return 0, self.num
@@ -56,10 +62,6 @@ class Dev(QualStringer):
         else:
             raise ValueError
 
-    lit: str  # inherited property
-    num: int  # inherited property
-    packaging: Optional[int]
-
     @property
     def packaging(self: Self) -> Optional[int]:
         if self:
@@ -76,5 +78,3 @@ class Dev(QualStringer):
         else:
             self.lit = "dev"
             self.num = operator.index(value)
-
-    string: str  # inherited property

@@ -13,7 +13,7 @@ import packaging.version
 
 from v440 import core
 from v440.core.Version import Version
-from v440.core.VersionError import VersionError
+from v440.errors.VersionError import VersionError
 
 
 class Util(enum.Enum):
@@ -400,21 +400,30 @@ class TestPackagingA(unittest.TestCase):
         self.go_format(text)
 
     def go_format(self: Self, text: str) -> None:
-        a: packaging.version.Version = packaging.version.Version(text)
-        b: str = str(a)
-        f: str = "#." * len(a.release)
+        a: packaging.version.Version
+        b: str
+        f: str
+        g: str
+        a = packaging.version.Version(text)
+        b = str(a)
+        f = "#." * len(a.release)
         f = f[:-1]
-        g: str = format(Version(text), f)
+        g = format(Version(text), f)
         self.assertEqual(b, g)
 
 
 class TestPackagingC(unittest.TestCase):
     def test_0(self: Self) -> None:
-        pure: list = list()
+        pure: list
+        ops: list
+        args: tuple
+        x: Any
+        y: Any
+        pure = list()
         for x, y in Util.util.data["examples"]["Version"].items():
             if y["valid"]:
                 pure.append(x)
-        ops: list = [
+        ops = [
             operator.eq,
             operator.ne,
             operator.gt,
@@ -422,19 +431,25 @@ class TestPackagingC(unittest.TestCase):
             operator.le,
             operator.lt,
         ]
-        args: tuple
         for args in iterprod.iterprod(pure, pure, ops):
             with self.subTest(args=args):
                 self.go(*args)
 
     def go(self: Self, x: str, y: str, func: Callable, /) -> None:
-        a: packaging.version.Version = packaging.version.Version(x)
-        b: packaging.version.Version = Version(string=x).packaging
-        c: packaging.version.Version = packaging.version.Version(y)
-        d: packaging.version.Version = Version(string=y).packaging
-        native: bool = func(a, c)
-        convert: bool = func(b, d)
-        msg: str = f"{func} should match for {x!r} and {y!r}"
+        a: packaging.version.Version
+        b: packaging.version.Version
+        c: packaging.version.Version
+        d: packaging.version.Version
+        native: bool
+        convert: bool
+        msg: str
+        a = packaging.version.Version(x)
+        b = Version(string=x).packaging
+        c = packaging.version.Version(y)
+        d = Version(string=y).packaging
+        native = func(a, c)
+        convert = func(b, d)
+        msg = f"{func} should match for {x!r} and {y!r}"
         self.assertEqual(native, convert, msg=msg)
 
 
@@ -453,8 +468,10 @@ class TestSlots(unittest.TestCase):
         attrvalue: Any,
         string: Any = None,
     ) -> None:
-        cls: type = getattr(getattr(core, clsname), clsname)
-        obj: Any = cls(string=string)
+        cls: type
+        obj: Any
+        cls = getattr(getattr(core, clsname), clsname)
+        obj = cls(string=string)
         with self.assertRaises(AttributeError):
             setattr(obj, attrname, attrvalue)
 
@@ -468,8 +485,9 @@ class TestReleaseAlias(unittest.TestCase):
                 self.go(**y)
 
     def go(self: Self, steps: list) -> None:
-        version: Version = Version()
-        step: dict
+        version: Version
+        step: dict[str, Any]
+        version = Version()
         for step in steps:
             self.modify(version=version, **step)
 
@@ -480,10 +498,11 @@ class TestReleaseAlias(unittest.TestCase):
         value: Any,
         solution: Optional[list] = None,
     ) -> None:
+        answer: list
         setattr(version.public.base.release, name, value)
         if solution is None:
             return
-        answer: list = list(version.public.base.release)
+        answer = list(version.public.base.release)
         self.assertEqual(answer, solution)
 
 

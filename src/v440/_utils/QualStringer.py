@@ -1,4 +1,5 @@
 import operator
+import string as string_
 from abc import abstractmethod
 from typing import *
 
@@ -14,10 +15,10 @@ __all__ = ["QualStringer"]
 class QualStringer(BaseStringer):
     __slots__ = ("_lit", "_num")
 
-    string: str
-    packaging: Any
     lit: str
     num: int
+    packaging: Any
+    string: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
@@ -48,7 +49,7 @@ class QualStringer(BaseStringer):
             self._lit = ""
             self._num = 0
             return
-        x = value.rstrip("0123456789")
+        x = value.rstrip(string_.digits)
         y = value[len(x) :]
         if x == "-":
             if not y:

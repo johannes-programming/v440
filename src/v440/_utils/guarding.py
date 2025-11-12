@@ -3,7 +3,7 @@ from __future__ import annotations
 import functools
 from typing import *
 
-from v440.core.VersionError import VersionError
+from v440.errors.VersionError import VersionError
 
 __all__ = ["guard"]
 
