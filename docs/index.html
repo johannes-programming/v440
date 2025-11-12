@@ -141,7 +141,11 @@
                                             <dt id="Post.num">num: int</dt>
                                             <dd></dd>
                                             <dt id="Post.packaging">packaging: Optional[int]</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>
+                                                    This property represents the equivalent <code>packaging.version.Version.post</code> value.
+                                                </p>
+                                            </dd>
                                             <dt id="Post.string">string: str</dt>
                                             <dd>
                                                 <p>
@@ -158,7 +162,11 @@
                                             <dt id="Pre.num">num: int</dt>
                                             <dd></dd>
                                             <dt id="Pre.packaging">packaging: Optional[tuple[str, int]]</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>
+                                                    This property represents the equivalent <code>packaging.version.Version.pre</code> value.
+                                                </p>
+                                            </dd>
                                             <dt id="Pre.string">string: str</dt>
                                             <dd>
                                                 <p>
@@ -219,7 +227,8 @@
                                                 <p>
                                                     Strictly speaking, the <a href="#Qual">Qual</a> class does not have 
                                                     a counterpart in <a href="https://packaging.pypa.io/en/stable/">packaging</a>.
-                                                    From inference this property is defined as an alias of <a href="#Qual.string"><code>Qual.string</code></a>.
+                                                    From inference this property is defined as an alias 
+                                                    of <a href="#Qual.string"><code>Qual.string</code></a>.
                                                 </p>
                                             </dd>
                                             <dt id="Qual.post">post: Post</dt>
@@ -250,7 +259,11 @@
                                             <dt id="Release.minor">minor: int</dt>
                                             <dd></dd>
                                             <dt id="Release.packaging">packaging: tuple</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>
+                                                    This property represents the equivalent <code>packaging.version.Version.release</code> value.
+                                                </p>
+                                            </dd>
                                             <dt id="Release.patch">patch: int</dt>
                                             <dd></dd>
                                             <dt id="Release.string">string: str</dt>
