@@ -50,7 +50,13 @@
                                     The empty string is valid for all classes and provides the standardized <code>string</code>.
                                     The <code>format</code> function always returns a PEP400-conforming string notation of the formatted object.
                                     Each possible PEP400-conforming notation of an object has at least one valid format spec 
-                                    that allows for its recreation in formatting.
+                                    that allows for its recreation in formatting. 
+                                    Each class also provides a <code>deformat</code> classmethod
+                                    that takes PEP400-conforming strings as positional arguments
+                                    and returns the shorted possible format spec 
+                                    that can recreate all of them in formatting.
+                                    The classmethod raises a <a href="#VersionError">VersionError</a>
+                                    iff an argument is not actually PEP400-conforming or no common format spec exists.
                                 </p>
                                 <dl class="heading4">
                                     <dt id="Base">class v440.core.Base.Base(string: Any = "0")</dt>
