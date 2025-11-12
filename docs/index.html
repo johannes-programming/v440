@@ -31,18 +31,23 @@
                                     or nested inside of another <a href="#core">core</a> class 
                                     for which it provides a single irreplacable specialized member.
                                 </p>
-                                <p>
+                                <p id="core.order">
                                     Each class implements a total order of all of its possible instances 
                                     - with the sole exception of <code>Pre("")</code>
                                     which is neither greater than nor lesser than 
                                     any instances of <code><a href="#Pre">Pre</a></code>.
                                 </p>
-                                <p id="string">
+                                <p id="core.string">
                                     Each class has a <code>string</code> property. It returns the same value as the builtin <code>str</code> type.
                                     Setting the property allows to change the object in question to the state represented by the provided value.
-                                    The <code>string</code> property accepts any PEP400-conforming string.
+                                    The <code>string</code> property accepts any value iff that value provides a PEP400-conforming string.
                                     It (and therefore also calling <code>str</code>) always returns a standardized PEP400-conforming string.
                                     Two objects of the same type are equal iff their <code>string</code> properties are equal.
+                                </p>
+                                <p>
+                                    The instances of each class can be formatted. 
+                                    A format spec is always either valid or invalid for a certain class. 
+                                    The empty string is valid for all classes and provides the standardized <code>string</code>.
                                 </p>
                                 <dl class="heading4">
                                     <dt id="Base">class v440.core.Base.Base(string: Any = "0")</dt>
