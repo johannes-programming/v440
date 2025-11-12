@@ -4,7 +4,7 @@ from typing import *
 from v440.core.Local import Local
 from v440.core.Qual import Qual
 from v440.core.Version import Version
-from v440.core.VersionError import VersionError
+from v440.errors.VersionError import VersionError
 
 
 class TestVersionManipulation(unittest.TestCase):

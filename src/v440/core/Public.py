@@ -16,10 +16,10 @@ class Public(SlotStringer):
 
     __slots__ = ("_base", "_qual")
 
-    string: str
-    packaging: str
     base: Base
+    packaging: str
     qual: Qual
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
@@ -27,7 +27,7 @@ class Public(SlotStringer):
         self._qual = Qual()
         self.string = string
 
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self) -> tuple[Base, Qual]:
         return self.base, self.qual
 
     @classmethod

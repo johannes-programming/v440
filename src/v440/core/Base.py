@@ -17,13 +17,21 @@ class Base(SlotStringer):
 
     __slots__ = ("_epoch", "_release")
 
+    epoch: int
+
+    packaging: str
+
+    release: Release
+
+    string: str
+
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._epoch = 0
         self._release = Release()
         self.string = string
 
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self) -> tuple[int, Release]:
         return self.epoch, self.release
 
     @classmethod
@@ -52,7 +60,7 @@ class Base(SlotStringer):
     @classmethod
     def _deformat_epoch(cls: type, *table: str) -> str:
         f: int
-        g: Iterable
+        g: Iterator[int]
         u: int
         if len(table) == 0:
             return ""
@@ -94,7 +102,7 @@ class Base(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict
+        matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
             self.epoch = int(matches["epoch"])
@@ -102,10 +110,8 @@ class Base(SlotStringer):
             self.epoch = 0
         self.release.string = matches["release"]
 
-    def _todict(self: Self) -> dict:
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(epoch=self.epoch, release=self.release)
-
-    epoch: int
 
     @property
     def epoch(self: Self) -> int:
@@ -121,16 +127,10 @@ class Base(SlotStringer):
             raise ValueError
         self._epoch = v
 
-    packaging: str  # inherited property
-
-    release: Release
-
     @property
     def release(self: Self) -> Release:
         "This property represents the release."
         return self._release
-
-    string: str  # inherited property
 
 
 Base.Release = Release
