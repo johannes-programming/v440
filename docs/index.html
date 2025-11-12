@@ -36,6 +36,7 @@
                                     - with the sole exception of <code>Pre("")</code>
                                     which is neither greater than nor lesser than 
                                     any instances of <code><a href="#Pre">Pre</a></code>.
+                                    Each class is ordered in accordance with PEP440.
                                 </p>
                                 <p id="core.string">
                                     Each class has a <code>string</code> property. It returns the same value as the builtin <code>str</code> type.
@@ -216,7 +217,9 @@
                                             <dt id="Qual.packaging">packaging: str</dt>
                                             <dd>
                                                 <p>
-                                                    This property is defined as an alias of <a href="#Qual.string"><code>Qual.string</code></a>.
+                                                    Strictly speaking, the <a href="#Qual">Qual</a> class does not have 
+                                                    a counterpart in <a href="https://packaging.pypa.io/en/stable/">packaging</a>.
+                                                    From inference this property is defined as an alias of <a href="#Qual.string"><code>Qual.string</code></a>.
                                                 </p>
                                             </dd>
                                             <dt id="Qual.post">post: Post</dt>
