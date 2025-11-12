@@ -7,7 +7,7 @@ from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
-from v440.core.VersionError import VersionError
+from v440.errors.VersionError import VersionError
 
 __all__ = ["BaseStringer"]
 
@@ -15,8 +15,8 @@ __all__ = ["BaseStringer"]
 class BaseStringer(metaclass=ABCMeta):
     __slots__ = ()
 
-    string: str
     packaging: Any
+    string: str
 
     @abstractmethod
     @setdoc.basic

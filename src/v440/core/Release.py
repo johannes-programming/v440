@@ -15,6 +15,15 @@ __all__ = ["Release"]
 
 @keyalias.getdecorator(major=0, minor=1, micro=2, patch=2)
 class Release(ListStringer):
+    data: tuple
+    major: int
+    micro: int
+    minor: int
+
+    packaging: tuple
+    patch: int
+
+    string: str
     __slots__ = ()
 
     @setdoc.basic
@@ -35,8 +44,8 @@ class Release(ListStringer):
         self._data = setting.setitem(self.data, key, value)
 
     @classmethod
-    def _data_parse(cls: type, value: list) -> Iterable:
-        v: list
+    def _data_parse(cls: type, value: list) -> list[int]:
+        v: list[int]
         v = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
             v.pop()
@@ -145,13 +154,4 @@ class Release(ListStringer):
         if i != -1:
             self.data = self.data[: i + 1]
 
-    data: tuple
-    major: int
-    micro: int
-    minor: int
-
-    packaging: tuple
     packaging = ListStringer.data
-    patch: int
-
-    string: str

@@ -14,6 +14,13 @@ __all__ = ["Version"]
 
 
 class Version(SlotStringer):
+    local: Local
+
+    packaging: packaging.version.Version
+
+    public: Public
+
+    string: str
     __slots__ = ("_public", "_local")
 
     @setdoc.basic
@@ -27,8 +34,8 @@ class Version(SlotStringer):
 
     @classmethod
     def _deformat(cls: type, info: dict, /) -> str:
-        publics: set
-        locals: set
+        publics: set[str]
+        locals: set[str]
         x: str
         y: str
         publics = set()
@@ -68,7 +75,7 @@ class Version(SlotStringer):
         self.public.string, self.local.string = self._split(value)
 
     @classmethod
-    def _split(cls: type, string: str, /) -> Iterable:
+    def _split(cls: type, string: str, /) -> Iterable[str]:
         if string.endswith("+"):
             raise ValueError
         if "+" in string:
@@ -79,14 +86,10 @@ class Version(SlotStringer):
     def _todict(self: Self) -> dict[str, Any]:
         return dict(public=self.public, local=self.local)
 
-    local: Local
-
     @property
     def local(self: Self) -> Local:
         "This property represents the local identifier."
         return self._local
-
-    packaging: packaging.version.Version
 
     @property
     def packaging(self: Self) -> packaging.version.Version:
@@ -98,14 +101,10 @@ class Version(SlotStringer):
     def packaging(self: Self, value: Any) -> None:
         self.string = value
 
-    public: Public
-
     @property
     def public(self: Self) -> Public:
         "This property represents the public identifier."
         return self._public
-
-    string: str  # inherited property
 
 
 Version.Local = Local
