@@ -15,16 +15,14 @@ __all__ = ["Release"]
 
 @keyalias.getdecorator(major=0, minor=1, micro=2, patch=2)
 class Release(ListStringer):
+    __slots__ = ()
     data: tuple
     major: int
     micro: int
     minor: int
-
     packaging: tuple
     patch: int
-
     string: str
-    __slots__ = ()
 
     @setdoc.basic
     def __delitem__(self: Self, key: Any) -> None:
