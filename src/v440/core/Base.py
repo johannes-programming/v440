@@ -18,11 +18,8 @@ class Base(SlotStringer):
     __slots__ = ("_epoch", "_release")
 
     epoch: int
-
     packaging: str
-
     release: Release
-
     string: str
 
     @setdoc.basic
