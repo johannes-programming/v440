@@ -32,10 +32,17 @@
                                     for which it provides a single irreplacable specialized member.
                                 </p>
                                 <p>
-                                    Each class also implements a total order of all possible instances 
+                                    Each class implements a total order of all of its possible instances 
                                     - with the sole exception of <code>Pre("")</code>
                                     which is neither greater than nor lesser than 
                                     any instances of <code><a href="#Pre">Pre</a></code>.
+                                </p>
+                                <p id="string">
+                                    Each class has a <code>string</code> property. It returns the same value as the builtin <code>str</code> type.
+                                    Setting the property allows to change the object in question to the state represented by the provided value.
+                                    The <code>string</code> property accepts any PEP400-conforming string.
+                                    It (and therefore also calling <code>str</code>) always returns a standardized PEP400-conforming string.
+                                    Two objects of the same type are equal iff their <code>string</code> properties are equal.
                                 </p>
                                 <dl class="heading4">
                                     <dt id="Base">class v440.core.Base.Base(string: Any = "0")</dt>
