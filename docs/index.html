@@ -24,7 +24,19 @@
                         <dl class="heading4">
                             <dt id="core">v440.core</dt>
                             <dd id="coreCorpus">
-                                <p>This subpackage</p>
+                                <p>
+                                    This subpackage contains the principle classes of the project.
+                                    Each of these classes has a dedicated module inside of <a href="#core">core</a>.
+                                    Each of the classes also has an alternative path of access either as a direct member of <a>v440</a> in the case of <a href="#Version">Version</a> 
+                                    or nested inside of another <a href="#core">core</a> class 
+                                    for which it provides a single irreplacable specialized member.
+                                </p>
+                                <p>
+                                    Each class also implements a total order of all possible instances 
+                                    - with the sole exception of <code>Pre("")</code>
+                                    which is neither greater than nor lesser than 
+                                    any instances of <code><a href="#Pre">Pre</a></code>.
+                                </p>
                                 <dl class="heading4">
                                     <dt id="Base">class v440.core.Base.Base(string: Any = "0")</dt>
                                     <dd>
