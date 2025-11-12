@@ -74,7 +74,7 @@
                                             <dt id="Base.packaging">packaging: str</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.base_version</code> value.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.base_version</code> value.
                                                 </p>
                                                 <p>
                                                     It is defined as an alias of <a href="#Base.string"><code>Base.string</code></a>.
@@ -96,13 +96,15 @@
                                     <dd>
                                         <dl class="heading4">
                                             <dt id="Dev.lit">lit: str</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>This property can take the values <code>""</code> or <code>"dev"</code>.</p>
+                                            </dd>
                                             <dt id="Dev.num">num: int</dt>
                                             <dd></dd>
                                             <dt id="Dev.packaging">packaging: Optional[int]</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.dev</code> value.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.dev</code> value.
                                                 </p>
                                             </dd>
                                             <dt id="Dev.string">string: str</dt>
@@ -122,7 +124,7 @@
                                             <dt id="Local.packaging">packaging: Optional[str]</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.local</code> value.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.local</code> value.
                                                 </p>
                                             </dd>
                                             <dt id="Local.string">string: str</dt>
@@ -143,7 +145,7 @@
                                             <dt id="Post.packaging">packaging: Optional[int]</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.post</code> value.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.post</code> value.
                                                 </p>
                                             </dd>
                                             <dt id="Post.string">string: str</dt>
@@ -164,7 +166,7 @@
                                             <dt id="Pre.packaging">packaging: Optional[tuple[str, int]]</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.pre</code> value.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.pre</code> value.
                                                 </p>
                                             </dd>
                                             <dt id="Pre.string">string: str</dt>
@@ -183,7 +185,7 @@
                                             <dt id="Public.packaging">packaging: str</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.public</code> value.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.public</code> value.
                                                 </p>
                                                 <p>
                                                     It is defined as an alias of <a href="#Public.string"><code>Public.string</code></a>.
@@ -261,7 +263,7 @@
                                             <dt id="Release.packaging">packaging: tuple</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version.release</code> value.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.release</code> value.
                                                 </p>
                                             </dd>
                                             <dt id="Release.patch">patch: int</dt>
@@ -280,12 +282,15 @@
                                     <dd>
                                         <dl class="heading4">
                                             <dt id="Version.local">local: Local</dt>
-                                            <dd></dd>
-
+                                            <dd>
+                                                <p>
+                                                    This property represents the local part of the version identifier.
+                                                </p>
+                                            </dd>
                                             <dt id="Version.packaging">packaging: packaging.version.Version</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the equivalent <code>packaging.version.Version</code>.
+                                                    This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version</code>.
                                                 </p>
                                             </dd>
                                             <dt id="Version.public">public: Public</dt>
