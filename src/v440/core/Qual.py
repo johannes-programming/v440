@@ -19,11 +19,11 @@ __all__ = ["Qual"]
 class Qual(SlotStringer):
 
     __slots__ = ("_pre", "_post", "_dev")
-    string: str
-    packaging: str
-    pre: Pre
-    post: Post
     dev: Dev
+    packaging: str
+    post: Post
+    pre: Pre
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
@@ -33,7 +33,8 @@ class Qual(SlotStringer):
         self.string = string
 
     def _cmp(self: Self) -> tuple:
-        ans: tuple = ()
+        ans: tuple[int | str, ...]
+        ans = ()
         if self.pre:
             ans += (self.pre.lit, self.pre.num)
         elif self.post is not None:
@@ -50,11 +51,12 @@ class Qual(SlotStringer):
         s: str
         t: str
         o: Self
-        table: tuple[Clue]
+        table: tuple[Clue, ...]
         pos: list[set[str]]
         sols: list[str]
         way: tuple
         parts: list[str]
+        matches: dict[str, str]
         table = (Clue(),) * 5
         for s, o in info.items():
             matches = Cfg.fullmatches("qual", s)
@@ -99,8 +101,8 @@ class Qual(SlotStringer):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict:
-        matches: dict
-        ans: dict
+        matches: dict[str, str]
+        ans: dict[str, str]
         s: str
         matches = Cfg.fullmatches("qual_f", spec)
         ans = dict()
@@ -116,7 +118,7 @@ class Qual(SlotStringer):
         return ans
 
     def _string_fset(self: Self, value: str) -> None:
-        matches: dict
+        matches: dict[str, str]
         matches = Cfg.fullmatches("qual", value)
         self.pre.string = matches["pre"]
         self.post.string = matches["post"]

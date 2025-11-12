@@ -10,6 +10,8 @@ __all__ = ["SlotStringer"]
 
 
 class SlotStringer(BaseStringer):
+    packaging: str
+    string: str
     __slots__ = ()
 
     @setdoc.basic
@@ -23,6 +25,4 @@ class SlotStringer(BaseStringer):
     @abstractmethod
     def _todict(self: Self) -> dict: ...
 
-    packaging: str
     packaging = BaseStringer.string
-    string: str  # inherited property
