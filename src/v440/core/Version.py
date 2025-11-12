@@ -14,14 +14,11 @@ __all__ = ["Version"]
 
 
 class Version(SlotStringer):
-    local: Local
-
-    packaging: packaging.version.Version
-
-    public: Public
-
-    string: str
     __slots__ = ("_public", "_local")
+    local: Local
+    packaging: packaging.version.Version
+    public: Public
+    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
