@@ -182,6 +182,9 @@
                                     </dd>
                                     <dt id="Post">class v440.core.Post.Post(string: Any = "")</dt>
                                     <dd>
+                                        <p>
+                                            This class represents the post-release information.
+                                        </p>
                                         <dl class="heading4">
                                             <dt id="Post.lit">lit: str</dt>
                                             <dd>
@@ -215,9 +218,22 @@
                                     </dd>
                                     <dt id="Pre">class v440.core.Pre.Pre(string: Any = "")</dt>
                                     <dd>
+                                        <p>
+                                            This class represents the pre-release information.
+                                        </p>
                                         <dl class="heading4">
                                             <dt id="Pre.lit">lit: str</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>
+                                                    This property represents the literal part of the information.
+                                                    It can take the values <code>""</code>, <code>"a"</code>, <code>"b"</code>, and <code>"rc"</code>.
+                                                    The value <code>""</code> demands the numeral <code>0</code>.
+                                                    It signifies that we are not dealing with a pre-release.
+                                                    All other values tolerate any non-negative numeral.
+                                                    Each of them represents another phase of the pre-release process: 
+                                                    alpha-releases, beta-releases, and previews.
+                                                </p>
+                                            </dd>
                                             <dt id="Pre.num">num: int</dt>
                                             <dd></dd>
                                             <dt id="Pre.packaging">packaging: Optional[tuple[str, int]]</dt>
