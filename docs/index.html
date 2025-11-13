@@ -30,9 +30,11 @@
                                         <p>
                                             This subpackage contains the principle classes of the project.
                                             Each of these classes has a dedicated module inside of <a href="#core"><code>core</code></a>.
-                                            Each of the classes also has an alternative path of access either as a direct member of <a>v440</a> in the case of <a href="#Version">Version</a> 
-                                            or nested inside of another <a href="#core"><code>core</code></a> class 
-                                            for which it provides a single irreplacable specialized member.
+                                        </p>
+                                        <p>
+                                            The properties of each core class are all either immutable values that can be replaced 
+                                            or mutable objects that can never be replaced. 
+                                            Each irreplacable property has as its type another core class specific to the property.
                                         </p>
                                     </dd>
                                     <dt id="core.order">Order</dt>
