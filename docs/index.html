@@ -184,9 +184,21 @@
                                     <dd>
                                         <dl class="heading4">
                                             <dt id="Post.lit">lit: str</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>
+                                                    This property represents the literal part of the information.
+                                                    It can take the values <code>""</code> (with the numeral <code>0</code>)
+                                                    and <code>"post"</code> (with any non-negative numeral).
+                                                </p>
+                                            </dd>
                                             <dt id="Post.num">num: int</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>
+                                                    This property represents the numeral part of the information.
+                                                    It can only take non-negative values and is restricted to <code>0</code>
+                                                    if <a href="#Post.lit"><code>lit</code></a> is <code>""</code>.
+                                                </p>
+                                            </dd>
                                             <dt id="Post.packaging">packaging: Optional[int]</dt>
                                             <dd>
                                                 <p>
