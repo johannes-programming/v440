@@ -8,7 +8,7 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.SlotStringer import SlotStringer
+from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev
 from v440.core.Post import Post
 from v440.core.Pre import Pre
@@ -16,7 +16,7 @@ from v440.core.Pre import Pre
 __all__ = ["Qual"]
 
 
-class Qual(SlotStringer):
+class Qual(NestedABC):
 
     __slots__ = ("_pre", "_post", "_dev")
     dev: Dev

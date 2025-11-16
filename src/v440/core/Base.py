@@ -7,13 +7,13 @@ import setdoc
 
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
-from v440._utils.SlotStringer import SlotStringer
+from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release
 
 __all__ = ["Base"]
 
 
-class Base(SlotStringer):
+class Base(NestedABC):
 
     __slots__ = ("_epoch", "_release")
 

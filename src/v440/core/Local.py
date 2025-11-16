@@ -9,12 +9,12 @@ from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
-from v440._utils.ListStringer import ListStringer
+from v440.abc.ListABC import ListABC
 
 __all__ = ["Local"]
 
 
-class Local(ListStringer):
+class Local(ListABC):
     __slots__ = ()
 
     data: tuple[int | str, ...]
