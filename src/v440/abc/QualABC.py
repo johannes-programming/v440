@@ -6,13 +6,13 @@ from typing import *
 import setdoc
 from datarepr import datarepr
 
-from v440._utils.BaseStringer import BaseStringer
 from v440._utils.guarding import guard
+from v440.abc.CoreABC import CoreABC
 
 __all__ = ["QualStringer"]
 
 
-class QualStringer(BaseStringer):
+class QualStringer(CoreABC):
     __slots__ = ("_lit", "_num")
 
     lit: str

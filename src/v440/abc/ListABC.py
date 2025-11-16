@@ -5,13 +5,13 @@ import setdoc
 from datahold import OkayList
 from datarepr import datarepr
 
-from v440._utils.BaseStringer import BaseStringer
 from v440._utils.guarding import guard
+from v440.abc.CoreABC import CoreABC
 
-__all__ = ["ListStringer"]
+__all__ = ["ListABC"]
 
 
-class ListStringer(BaseStringer, OkayList):
+class ListABC(CoreABC, OkayList):
 
     __slots__ = ()
     data: tuple
