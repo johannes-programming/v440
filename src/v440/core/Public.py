@@ -5,14 +5,14 @@ from typing import *
 
 import setdoc
 
-from v440._utils.SlotStringer import SlotStringer
+from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base
 from v440.core.Qual import Qual
 
 __all__ = ["Public"]
 
 
-class Public(SlotStringer):
+class Public(NestedABC):
 
     __slots__ = ("_base", "_qual")
 

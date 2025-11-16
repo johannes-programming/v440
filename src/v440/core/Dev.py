@@ -7,12 +7,12 @@ from typing import *
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
 from v440._utils.guarding import guard
-from v440._utils.QualStringer import QualStringer
+from v440.abc.QualABC import QualABC
 
 __all__ = ["Dev"]
 
 
-class Dev(QualStringer):
+class Dev(QualABC):
 
     __slots__ = ()
 

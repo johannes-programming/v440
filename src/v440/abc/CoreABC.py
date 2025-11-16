@@ -9,10 +9,10 @@ from v440._utils.Cfg import Cfg
 from v440._utils.guarding import guard
 from v440.errors.VersionError import VersionError
 
-__all__ = ["BaseStringer"]
+__all__ = ["CoreABC"]
 
 
-class BaseStringer(metaclass=ABCMeta):
+class CoreABC(metaclass=ABCMeta):
     __slots__ = ()
 
     packaging: Any

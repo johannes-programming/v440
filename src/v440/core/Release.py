@@ -7,14 +7,14 @@ from typing import *
 import keyalias
 import setdoc
 
-from v440._utils.ListStringer import ListStringer
 from v440._utils.releaseparse import deleting, getting, setting
+from v440.abc.ListABC import ListABC
 
 __all__ = ["Release"]
 
 
 @keyalias.getdecorator(major=0, minor=1, micro=2, patch=2)
-class Release(ListStringer):
+class Release(ListABC):
     __slots__ = ()
     data: tuple
     major: int
@@ -152,4 +152,4 @@ class Release(ListStringer):
         if i != -1:
             self.data = self.data[: i + 1]
 
-    packaging = ListStringer.data
+    packaging = ListABC.data

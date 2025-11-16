@@ -6,14 +6,14 @@ import packaging.version
 import setdoc
 
 from v440._utils.guarding import guard
-from v440._utils.SlotStringer import SlotStringer
+from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local
 from v440.core.Public import Public
 
 __all__ = ["Version"]
 
 
-class Version(SlotStringer):
+class Version(NestedABC):
     __slots__ = ("_public", "_local")
     local: Local
     packaging: packaging.version.Version
