@@ -9,10 +9,10 @@ from datarepr import datarepr
 from v440._utils.guarding import guard
 from v440.abc.CoreABC import CoreABC
 
-__all__ = ["QualStringer"]
+__all__ = ["QualABC"]
 
 
-class QualStringer(CoreABC):
+class QualABC(CoreABC):
     __slots__ = ("_lit", "_num")
 
     lit: str
