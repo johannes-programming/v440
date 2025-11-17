@@ -54,18 +54,38 @@
                                             any instances of <code><a href="#Pre">Pre</a></code>.
                                             Each class is ordered in accordance with <a href="https://peps.python.org/pep-0440/">PEP440</a>.
                                         </p>
-                                        <p>
-                                            The instances of each class can be formatted. 
-                                            A format spec is always either valid or invalid for a certain class. 
-                                            The empty string is valid for all classes and provides the standardized <code>string</code>.
-                                            The <code>format</code> function always returns 
-                                            a <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string notation 
-                                            of the formatted object.
-                                            Each possible <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming notation 
-                                            of an object has at least one valid format spec 
-                                            that allows for its recreation in formatting. 
-                                        </p>
                                         <dl class="heading4">
+                                            <dt id="__bool__">__bool__() -> bool</dt>
+                                            <dd>
+                                                <p>This magic method implements <code>bool(self)</code>.</p>
+                                                <p>
+                                                    It is defined as equivalent to <code>self == type(self)()</code>.
+                                                </p>
+                                            </dd>
+                                            <dt id="__eq__">__eq__(other: Any) -> bool</dt>
+                                            <dd>
+                                                <p>
+                                                    This magic method implements <code>self == other</code>.
+                                                </p>
+                                                <p>
+                                                    It is defined as equivalent 
+                                                    to <code>type(self) is type(other) and self.string == other.string</code>.
+                                                </p>
+                                            </dd>
+                                            <dt id="__format__">__format__(format_spec: Any) -> str</dt>
+                                            <dd>
+                                                <p>
+                                                    The instances of each class can be formatted. 
+                                                    A format spec is always either valid or invalid for a certain class. 
+                                                    The empty string is valid for all classes and provides the standardized <code>string</code>.
+                                                    The <code>format</code> function always returns 
+                                                    a <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string notation 
+                                                    of the formatted object.
+                                                    Each possible <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming notation 
+                                                    of an object has at least one valid format spec 
+                                                    that allows for its recreation in formatting. 
+                                                </p>
+                                            </dd>
                                             <dt id="deformat">deformat(*strings: str) -> str</dt>
                                             <dd>
                                                 <p>
