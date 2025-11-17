@@ -47,13 +47,6 @@
                                             then a <a href="#VersionError"><code>VersionError</code></a>
                                             is raised and the instance is left unchanged.
                                         </p>
-                                        <p>
-                                            Each class implements a total order of all of its possible instances 
-                                            - with the sole exception of <code><a href="#Pre">Pre</a>("")</code>
-                                            which is neither greater than nor lesser than 
-                                            any instances of <code><a href="#Pre">Pre</a></code>.
-                                            Each class is ordered in accordance with <a href="https://peps.python.org/pep-0440/">PEP440</a>.
-                                        </p>
                                         <dl class="heading4">
                                             <dt id="__bool__">__bool__() -> bool</dt>
                                             <dd>
@@ -87,13 +80,31 @@
                                                 </p>
                                             </dd>
                                             <dt id="__ge__">__ge__(other: Any) -> bool</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>This magic method implements <code>self >= other</code>.</p>
+                                                <p>See also <code><a href="#__le__">__le__</a></code>.</p>
+                                            </dd>
                                             <dt id="__gt__">__gt__(other: Any) -> bool</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>This magic method implements <code>self > other</code>.</p>
+                                                <p>See also <code><a href="#__le__">__le__</a></code>.</p>
+                                            </dd>
                                             <dt id="__le__">__le__(other: Any) -> bool</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>This magic method implements <code>self <= other</code>.</p>
+                                                <p>
+                                                    Each class implements a total order of all of its possible instances 
+                                                    - with the sole exception of <code><a href="#Pre">Pre</a>("")</code>
+                                                    which is neither greater than nor lesser than 
+                                                    any instances of <code><a href="#Pre">Pre</a></code>.
+                                                    Each class is ordered in accordance with <a href="https://peps.python.org/pep-0440/">PEP440</a>.
+                                                </p>
+                                            </dd>
                                             <dt id="__lt__">__lt__(other: Any) -> bool</dt>
-                                            <dd></dd>
+                                            <dd>
+                                                <p>This magic method implements <code>self < other</code>.</p>
+                                                <p>See also <code><a href="#__le__">__le__</a></code>.</p>
+                                            </dd>
                                             <dt id="__ne__">__ne__(other: Any) -> bool</dt>
                                             <dd></dd>
                                             <dt id="__repr__">__repr__() -> str</dt>
@@ -109,8 +120,6 @@
                                             <dd></dd>
                                             <dt id="copy">copy() -> Self</dt>
                                             <dd></dd>
-        return NotImplemented
-        </dd>
                                             <dt id="deformat">deformat(*strings: str) -> str</dt>
                                             <dd>
                                                 <p>
