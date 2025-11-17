@@ -25,10 +25,10 @@
                     <dt id="features">Features</dt>
                     <dd id="featuresCorpus">
                         <dl class="heading4">
-                            <dt id="v440.abc">v440.abc</dt>
+                            <dt id="abc">v440.abc</dt>
                             <dd>
                                 <dl class="heading4">
-                                    <dt id="v440.abc.CoreABC">class v440.abc.CoreABC.CoreABC</dt>
+                                    <dt id="CoreABC">class v440.abc.CoreABC.CoreABC(string: str)</dt>
                                     <dd>
                                         <p>
                                             This abstract base class 
@@ -39,12 +39,12 @@
                                             All properties have always a getter, never a deleter, 
                                             and sometimes a setter.
                                             The property without setter are explained under 
-                                            <a href="#abc.NestedABC"><code>NestedABC</code></a>.
+                                            <a href="#NestedABC"><code>NestedABC</code></a>.
                                             The properties with setter are of an immutable builtin type.
                                             The setter allows allows 
                                             for replacing the value with another.
                                             If the setter receives an invalid value
-                                            then a <a href="#errors.VersionError"><code>VersionError</code></a>
+                                            then a <a href="#VersionError"><code>VersionError</code></a>
                                             is raised and the instance is left unchanged.
                                         </p>
                                         <p>
@@ -58,83 +58,95 @@
                                             The instances of each class can be formatted. 
                                             A format spec is always either valid or invalid for a certain class. 
                                             The empty string is valid for all classes and provides the standardized <code>string</code>.
-                                            The <code>format</code> function always returns a <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string notation of the formatted object.
-                                            Each possible <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming notation of an object has at least one valid format spec 
+                                            The <code>format</code> function always returns 
+                                            a <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string notation 
+                                            of the formatted object.
+                                            Each possible <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming notation 
+                                            of an object has at least one valid format spec 
                                             that allows for its recreation in formatting. 
                                         </p>
                                         <dl class="heading4">
-                                            <dt id="#abc.CoreABC.deformat">deformat(*strings: str) -> str</dt>
+                                            <dt id="deformat">deformat(*strings: str) -> str</dt>
                                             <dd>
                                                 <p>
-                                                    This classmethod takes <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming strings as positional arguments
+                                                    This classmethod takes 
+                                                    <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming <code>strings</code> 
                                                     and returns the shorted possible format spec 
                                                     that can recreate all of them in formatting.
                                                     The classmethod raises a <a href="#VersionError">VersionError</a>
-                                                    iff an argument is not actually <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming or no common format spec exists.
+                                                    iff an argument is not actually <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming 
+                                                    or no common format spec exists.
                                                 </p>
                                             </dd>
-                                            <dt id="#abc.CoreABC.packaging">packaging: Any</dt>
+                                            <dt id="packaging">packaging: Any</dt>
                                             <dd>
                                                 <p>
-                                                    This property connects <a>v440</a> with the <a href="https://packaging.pypa.io/en/stable/">packaging</a> project.
-                                                    Its getter converts <code>self</code> to an appropriate value for the <a href="https://packaging.pypa.io/en/stable/">packaging</a> project.
+                                                    This property connects <a>v440</a> 
+                                                    with the <a href="https://packaging.pypa.io/en/stable/">packaging</a> project.
+                                                    Its getter converts <code>self</code> 
+                                                    to an appropriate value 
+                                                    for the <a href="https://packaging.pypa.io/en/stable/">packaging</a> project.
                                                     Its setter takes such a value and configures <code>self</code> to match.
                                                 </p>
                                             </dd>
-                                            <dt id="#abc.CoreABC.string">string: str</dt>
+                                            <dt id="string">string: str</dt>
                                             <dd>
                                                 <p>
                                                     This property represents <code>self</code> as a string.
                                                     <code>self.string</code> returns the same value as <code>str(self)</code>.
-                                                    Setting this property allows to change the object in question to the state represented by the provided value.
-                                                    The <code>string</code> property accepts any value iff that value provides a <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string.
-                                                    It (and therefore also calling <code>str</code>) always returns a standardized <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string.
+                                                    Setting this property allows to change the object in question 
+                                                    to the state represented by the provided value.
+                                                    The <code>string</code> property accepts any value 
+                                                    iff that value provides a <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string.
+                                                    It (and therefore also calling <code>str</code>) always returns 
+                                                    a standardized <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string.
                                                     Two objects of the same type are equal iff their <code>string</code> properties are equal.
                                                 </p>
                                             </dd>
                                         </dl>
                                     </dd>
-                                    <dt id="v440.abc.ListABC">class v440.abc.ListABC.ListABC</dt>
+                                    <dt id="ListABC">class v440.abc.ListABC.ListABC(string: str)</dt>
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
-                                            from <a href="#v440.abc.CoreABC"><code>CoreABC</code></a>
+                                            from <a href="#CoreABC"><code>CoreABC</code></a>
                                             and from <code><a href="https://datahold.johannes-programming.online/">datahold</a>.OkayList</code>.
                                         </p>
                                     </dd>
-                                    <dt id="v440.abc.NestedABC">class v440.abc.NestedABC.NestedABC</dt>
+                                    <dt id="NestedABC">class v440.abc.NestedABC.NestedABC(string: str)</dt>
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
-                                            from <a href="#v440.abc.CoreABC"><code>CoreABC</code></a>.
+                                            from <a href="#CoreABC"><code>CoreABC</code></a>.
                                         </p>
                                     </dd>
-                                    <dt id="v440.abc.QualABC">class v440.abc.QualABC.QualABC</dt>
+                                    <dt id="QualABC">class v440.abc.QualABC.QualABC(string: str)</dt>
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
-                                            from <a href="#v440.abc.CoreABC"><code>CoreABC</code></a>.
+                                            from <a href="#CoreABC"><code>CoreABC</code></a>.
                                         </p>
                                         <dl class="heading4">
-                                            <dt id="#v440.abc.QualABC.deformat">deformat(*strings: str) -> str</dt>
+                                            <dt>deformat(*strings: str) -> str</dt>
                                             <dd></dd>
-                                            <dt id="#v440.abc.QualABC.lit">lit: str</dt>
+                                            <dt id="lit">lit: str</dt>
                                             <dd></dd>
-                                            <dt id="#v440.abc.QualABC.num">num: int</dt>
+                                            <dt id="num">num: int</dt>
                                             <dd></dd>
-                                            <dt id="#v440.abc.QualABC.packaging">packaging: Any</dt>
+                                            <dt>packaging: Any</dt>
                                             <dd></dd>
-                                            <dt id="#v440.abc.QualABC.string">string: str</dt>
+                                            <dt>string: str</dt>
                                             <dd></dd>
                                         </dl>
                                     </dd>
                                 </dl>
                             </dd>
                             <dt id="core">v440.core</dt>
-                            <dd id="coreCorpus">
+                            <dd>
                                 <p>
                                     This subpackage contains the principle classes of the project.
-                                    Each of these classes has a dedicated module inside of <a href="#core"><code>core</code></a>.
+                                    Each of these classes has a dedicated module 
+                                    inside of <a href="#v440.core"><code>core</code></a>.
                                 </p>
                                 <dl class="heading4">
                                     <dt id="Base">class v440.core.Base.Base(string: Any = "0")</dt>
@@ -143,11 +155,11 @@
                                             This class represents the base part of a public version identifier.
                                         </p>
                                         <dl class="heading4">
-                                            <dt id="Base.epoch">epoch: int</dt>
+                                            <dt id="epoch">epoch: int</dt>
                                             <dd>
                                                 <p>This property represents the epoch.</p>
                                             </dd>
-                                            <dt id="Base.packaging">packaging: str</dt>
+                                            <dt id="packaging">packaging: str</dt>
                                             <dd>
                                                 <p>
                                                     This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.base_version</code> value.
@@ -156,7 +168,7 @@
                                                     It is defined as an alias of <a href="#Base.string"><code>Base.string</code></a>.
                                                 </p>
                                             </dd>
-                                            <dt id="Base.release">release: Release</dt>
+                                            <dt id="release">release: Release</dt>
                                             <dd>
                                                 <p>This property represents the release.</p>
                                             </dd>
