@@ -28,7 +28,7 @@
                             <dt id="abc">v440.abc</dt>
                             <dd>
                                 <dl class="heading4">
-                                    <dt id="CoreABC">class v440.abc.CoreABC.CoreABC(string: str)</dt>
+                                    <dt id="CoreABC">class v440.abc.CoreABC.CoreABC</dt>
                                     <dd>
                                         <p>
                                             This abstract base class 
@@ -105,7 +105,7 @@
                                             </dd>
                                         </dl>
                                     </dd>
-                                    <dt id="ListABC">class v440.abc.ListABC.ListABC(string: str)</dt>
+                                    <dt id="ListABC">class v440.abc.ListABC.ListABC</dt>
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
@@ -113,14 +113,22 @@
                                             and from <code><a href="https://datahold.johannes-programming.online/">datahold</a>.OkayList</code>.
                                         </p>
                                     </dd>
-                                    <dt id="NestedABC">class v440.abc.NestedABC.NestedABC(string: str)</dt>
+                                    <dt id="NestedABC">class v440.abc.NestedABC.NestedABC</dt>
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
                                             from <a href="#CoreABC"><code>CoreABC</code></a>.
                                         </p>
+                                        <dl class="heading4">
+                                            <dt>deformat(*strings: str) -> str</dt>
+                                            <dd></dd>
+                                            <dt>packaging: Any</dt>
+                                            <dd></dd>
+                                            <dt>string: str</dt>
+                                            <dd></dd>
+                                        </dl>
                                     </dd>
-                                    <dt id="QualABC">class v440.abc.QualABC.QualABC(string: str)</dt>
+                                    <dt id="QualABC">class v440.abc.QualABC.QualABC</dt>
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
@@ -172,12 +180,8 @@
                                             <dd>
                                                 <p>This property represents the release.</p>
                                             </dd>
-                                            <dt id="Base.string">string: str</dt>
-                                            <dd>
-                                                <p>
-                                                    This property represents the <a href="#Base"><code>Base</code></a> object as a string.
-                                                </p>
-                                            </dd>
+                                            <dt>string: str</dt>
+                                            <dd></dd>
                                         </dl>
                                     </dd>
                                     <dt id="Dev">class v440.core.Dev.Dev(string: Any = "")</dt>
@@ -208,18 +212,15 @@
                                                     This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.dev</code> value.
                                                 </p>
                                             </dd>
-                                            <dt id="Dev.string">string: str</dt>
-                                            <dd>
-                                                <p>
-                                                    This property represents the <a href="#Dev"><code>Dev</code></a> object as a string.
-                                                </p>
-                                            </dd>
+                                            <dt>string: str</dt>
+                                            <dd></dd>
                                         </dl>
                                     </dd>
                                     <dt id="Local">class v440.core.Local.Local(string: Any = "")</dt>
                                     <dd>
                                         <p>
-                                            This list-like class represents the local part of version identifiers.
+                                            This list-like class represents 
+                                            the local part of version identifiers.
                                             Its items are integers and strings.
                                             Asside from the members listed below it also implements indeces and methods 
                                             exactly as <code>list</code> does.
@@ -239,11 +240,7 @@
                                                 </p>
                                             </dd>
                                             <dt id="Local.string">string: str</dt>
-                                            <dd>
-                                                <p>
-                                                    This property represents the <a href="#Local"><code>Local</code></a> object as a string.
-                                                </p>
-                                            </dd>
+                                            <dd></dd>
                                         </dl>
                                     </dd>
                                     <dt id="Post">class v440.core.Post.Post(string: Any = "")</dt>
