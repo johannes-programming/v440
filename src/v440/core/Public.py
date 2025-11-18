@@ -32,8 +32,8 @@ class Public(NestedABC):
 
     @classmethod
     def _deformat(cls: type, info: dict[str, Self]) -> str:
-        bases: set
-        quals: set
+        bases: set[str]
+        quals: set[str]
         x: str
         y: str
         bases = set()

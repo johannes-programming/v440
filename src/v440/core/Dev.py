@@ -19,7 +19,6 @@ class Dev(QualABC):
     lit: str
     num: int
     packaging: Optional[int]
-
     string: str
 
     def _cmp(self: Self) -> tuple:
@@ -36,15 +35,15 @@ class Dev(QualABC):
 
     @classmethod
     def _format_parse(cls: type, spec: str, /) -> dict[str, Clue]:
-        m: dict[str, str]
-        e: Clue
-        m = Cfg.fullmatches("dev_f", spec)
-        e = Clue(
-            head=m["dev_head_f"],
-            sep=m["dev_sep_f"],
-            mag=len(m["dev_num_f"]),
+        matches: dict[str, str]
+        clue: Clue
+        matches = Cfg.fullmatches("dev_f", spec)
+        clue = Clue(
+            head=matches["dev_head_f"],
+            sep=matches["dev_sep_f"],
+            mag=len(matches["dev_num_f"]),
         )
-        return dict(clue=e)
+        return dict(clue=clue)
 
     def _format_parsed(self: Self, *, clue: Clue) -> str:
         if not self:

@@ -33,8 +33,8 @@ class Pre(QualABC):
         matches: dict[str, str]
         pos: list[set]
         clues: list[Clue]
-        sols: list
-        way: tuple
+        sols: list[str]
+        way: tuple[set[str], set[str], set[str]]
         clues = [Clue()] * 3
         for s, o in info.items():
             if not o:
