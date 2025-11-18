@@ -14,13 +14,13 @@ __all__ = ["Release"]
 
 
 @keyalias.getdecorator(major=0, minor=1, micro=2, patch=2)
-class Release(ListABC):
+class Release(ListABC[int]):
     __slots__ = ()
-    data: tuple
+    data: tuple[int, ...]
     major: int
     micro: int
     minor: int
-    packaging: tuple
+    packaging: tuple[int, ...]
     patch: int
     string: str
 
@@ -29,7 +29,7 @@ class Release(ListABC):
         self._data = deleting.delitem(self.data, key)
 
     @setdoc.basic
-    def __getitem__(self: Self, key: Any) -> int | list:
+    def __getitem__(self: Self, key: Any) -> int | list[int]:
         return getting.getitem(self.data, key)
 
     @setdoc.basic
@@ -110,12 +110,12 @@ class Release(ListABC):
             return x + y
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> str:
+    def _format_parse(cls: type, spec: str, /) -> dict[str, tuple[int, ...]]:
         if spec.strip("#."):
             raise ValueError
         return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
 
-    def _format_parsed(self: Self, *, mags: tuple) -> str:
+    def _format_parsed(self: Self, *, mags: tuple[int, ...]) -> str:
         data: list[int]
         parts: list[int]
         data = list(self)
