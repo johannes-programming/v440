@@ -10,11 +10,13 @@ from v440.abc.CoreABC import CoreABC
 
 __all__ = ["ListABC"]
 
+Item = TypeVar("Item")
 
-class ListABC(CoreABC, OkayList):
+
+class ListABC(CoreABC, OkayList[Item]):
 
     __slots__ = ()
-    data: tuple
+    data: tuple[Item, ...]
     packaging: Any
     string: str
 
@@ -62,15 +64,15 @@ class ListABC(CoreABC, OkayList):
 
     @classmethod
     @abstractmethod
-    def _data_parse(cls: type, value: list) -> Iterable: ...
+    def _data_parse(cls: type, value: list) -> Iterable[Item]: ...
 
     @classmethod
     @abstractmethod
-    def _sort(cls: type, value: Any): ...
+    def _sort(cls: type, value: Any) -> Any: ...
 
     @property
     @setdoc.basic
-    def data(self: Self) -> tuple:
+    def data(self: Self) -> tuple[Item, ...]:
         return self._data
 
     @data.setter
@@ -80,7 +82,7 @@ class ListABC(CoreABC, OkayList):
 
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
         "This method sorts the data."
-        data: list
+        data: list[Item]
         k: Any
         r: bool
         data = list(self.data)

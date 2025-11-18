@@ -14,7 +14,7 @@ from v440.abc.ListABC import ListABC
 __all__ = ["Local"]
 
 
-class Local(ListABC):
+class Local(ListABC[int | str]):
     __slots__ = ()
 
     data: tuple[int | str, ...]
