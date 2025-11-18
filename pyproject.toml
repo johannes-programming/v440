@@ -27,7 +27,6 @@ dependencies = [
     "keyalias>=1.0.3,<2.0",
     "packaging>=25.0,<26",
     "setdoc>=1.2.6,<2",
-    "setsig>=1.0,<2",
     "unhash>=1.0.1,<2",
 ]
 description = "This project provides mutable version objects in accordance with PEP440."
@@ -35,7 +34,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "2.0.0.dev200+generic"
+version = "2.0.0.dev200+generic.1"
 
 [project.license]
 file = "LICENSE.txt"
