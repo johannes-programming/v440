@@ -89,6 +89,10 @@
                                                 <p>This magic method implements <code>self > other</code>.</p>
                                                 <p>See also <code><a href="#__le__">__le__</a></code>.</p>
                                             </dd>
+                                            <dt id="__hash__">__hash__() -> int</dt>
+                                            <dd>
+                                                <p>See <a>unhash</a>.</p>
+                                            </dd>
                                             <dt id="__le__">__le__(other: Any) -> bool</dt>
                                             <dd>
                                                 <p>This magic method implements <code>self <= other</code>.</p>
@@ -166,6 +170,90 @@
                                             from <a href="#CoreABC"><code>CoreABC</code></a>
                                             and from <code><a href="https://datahold.johannes-programming.online/">datahold</a>.OkayList</code>.
                                         </p>
+                                        <dl class="heading4">
+                                            '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__module__', '__mul__', '__ne__', '__new__', '__radd__', '__rand__', '__rdivmod__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rfloordiv__', '__rlshift__', '__rmatmul__', '__rmod__', '__rmul__', '__ror__', '__rpow__', '__rrshift__', '__rsub__', '__rtruediv__', '__rxor__', '__setattr__', '__setitem__', '__sizeof__', '__slots__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_data', 'append', 'clear', 'copy', 'count', 'data', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+                                            <dt id="__add__">__add__(other: Any) -> Self</dt>
+                                            <dd></dd>
+                                            <dt id="__bool__">__bool__() -> bool</dt>
+                                            <dd></dd>
+                                            <dt id="__contains__">__contains__(other: Any) -> bool</dt>
+                                            <dd></dd>
+                                            <dt id="__delitem__">__delitem__(key: Any) -> None</dt>
+                                            <dd></dd>
+                                            <dt id="__eq__">__eq__(other: Any) -> bool</dt>
+                                            <dd></dd>
+                                            <dt id="__format__">__format__(format_spec: Any) -> str</dt>
+                                            <dd></dd>
+                                            <dt id="__ge__">__ge__(other: Any) -> bool</dt>
+                                            <dd></dd>
+                                            <dt id="__getitem__">__getitem__(key: Any) -> Any</dt>
+                                            <dd></dd>
+                                            <dt id="__gt__">__gt__(other: Any) -> bool</dt>
+                                            <dd></dd>
+                                            <dt id="__hash__">__hash__() -> int</dt>
+                                            <dd></dd>
+                                            <dt id="__iadd__">__iadd__(value: Any) -> Any</dt>
+                                            <dd></dd>
+                                            <dt id="__le__">__le__(other: Any) -> bool</dt>
+                                            <dd></dd>
+                                            <dt id="__lt__">__lt__(other: Any) -> bool</dt>
+                                            <dd>
+                                                <p>This magic method implements <code>self < other</code>.</p>
+                                                <p>See also <code><a href="#__le__">__le__</a></code>.</p>
+                                            </dd>
+                                            <dt id="__ne__">__ne__(other: Any) -> bool</dt>
+                                            <dd></dd>
+                                            <dt id="__repr__">__repr__() -> str</dt>
+                                            <dd></dd>
+                                            <dt id="__subclasshook__">__subclasshook__(cls: type, other: type, /) -> bool</dt>
+                                            <dd>
+                                                <p>
+                                                    This magic classmethod always 
+                                                    returns <code>NotImplemented</code>.
+                                                </p>
+                                            </dd>
+                                            <dt id="__str__">__str__() -> str</dt>
+                                            <dd></dd>
+                                            <dt id="copy">copy() -> Self</dt>
+                                            <dd></dd>
+                                            <dt id="deformat">deformat(*strings: str) -> str</dt>
+                                            <dd>
+                                                <p>
+                                                    This classmethod takes 
+                                                    <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming <code>strings</code> 
+                                                    and returns the shorted possible format spec 
+                                                    that can recreate all of them in formatting.
+                                                    The classmethod raises a <a href="#VersionError">VersionError</a>
+                                                    iff an argument is not actually <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming 
+                                                    or no common format spec exists.
+                                                </p>
+                                            </dd>
+                                            <dt id="packaging">packaging: Any</dt>
+                                            <dd>
+                                                <p>
+                                                    This property connects <a>v440</a> 
+                                                    with the <a href="https://packaging.pypa.io/en/stable/">packaging</a> project.
+                                                    Its getter converts <code>self</code> 
+                                                    to an appropriate value 
+                                                    for the <a href="https://packaging.pypa.io/en/stable/">packaging</a> project.
+                                                    Its setter takes such a value and configures <code>self</code> to match.
+                                                </p>
+                                            </dd>
+                                            <dt id="string">string: str</dt>
+                                            <dd>
+                                                <p>
+                                                    This property represents <code>self</code> as a string.
+                                                    <code>self.string</code> returns the same value as <code>str(self)</code>.
+                                                    Setting this property allows to change the object in question 
+                                                    to the state represented by the provided value.
+                                                    The <code>string</code> property accepts any value 
+                                                    iff that value provides a <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string.
+                                                    It (and therefore also calling <code>str</code>) always returns 
+                                                    a standardized <a href="https://peps.python.org/pep-0440/">PEP440</a>-conforming string.
+                                                    Two objects of the same type are equal iff their <code>string</code> properties are equal.
+                                                </p>
+                                            </dd>
+                                        </dl>
                                     </dd>
                                     <dt id="NestedABC">class v440.abc.NestedABC.NestedABC</dt>
                                     <dd>
