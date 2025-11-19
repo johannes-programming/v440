@@ -5,7 +5,6 @@ from typing import *
 import packaging.version
 import setdoc
 
-from v440._utils.guarding import guard
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local
 from v440.core.Public import Public
@@ -94,7 +93,6 @@ class Version(NestedABC):
         return packaging.version.Version(str(self))
 
     @packaging.setter
-    @guard
     def packaging(self: Self, value: Any) -> None:
         self.string = value
 
