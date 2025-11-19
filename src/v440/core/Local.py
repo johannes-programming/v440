@@ -8,7 +8,6 @@ import setdoc
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
-from v440._utils.guarding import guard
 from v440.abc.ListABC import ListABC
 
 __all__ = ["Local"]
@@ -200,7 +199,6 @@ class Local(ListABC[int | str]):
             return
 
     @packaging.setter
-    @guard
     def packaging(self: Self, value: Any) -> None:
         if value is None:
             self.string = ""
