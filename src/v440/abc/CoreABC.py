@@ -6,7 +6,6 @@ import unhash
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
-from v440._utils.guarding import guard
 from v440.errors.VersionError import VersionError
 
 __all__ = ["CoreABC"]
@@ -83,6 +82,28 @@ class CoreABC(metaclass=ABCMeta):
     @setdoc.basic
     def __repr__(self: Self) -> str: ...
 
+    def __setattr__(self: Self, name: str, value: Any) -> None:
+        a: Any
+        backup: str
+        msg: str
+        target: str
+        a = getattr(type(self), name, None)
+        if (not isinstance(a, property)) or not hasattr(a, "fset"):
+            super().__setattr__(name, value)
+            return
+        backup = str(self)
+        try:
+            super().__setattr__(name, value)
+        except VersionError:
+            self.string = backup
+            raise
+        except Exception:
+            self._string_fset(backup.lower())
+            msg = "%r is an invalid value for %r"
+            target = type(self).__name__ + "." + name
+            msg %= (value, target)
+            raise VersionError(msg)
+
     @classmethod
     def __subclasshook__(cls: type, other: type, /) -> bool:
         "This magic classmethod can be overwritten for a custom subclass check."
@@ -139,6 +160,5 @@ class CoreABC(metaclass=ABCMeta):
         return format(self, "")
 
     @string.setter
-    @guard
     def string(self: Self, value: Any) -> None:
         self._string_fset(str(value).lower())

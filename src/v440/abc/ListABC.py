@@ -5,7 +5,6 @@ import setdoc
 from datahold import OkayList
 from datarepr import datarepr
 
-from v440._utils.guarding import guard
 from v440.abc.CoreABC import CoreABC
 
 __all__ = ["ListABC"]
@@ -76,7 +75,6 @@ class ListABC(CoreABC, OkayList[Item]):
         return self._data
 
     @data.setter
-    @guard
     def data(self: Self, value: Iterable) -> None:
         self._data = tuple(self._data_parse(list(value)))
 

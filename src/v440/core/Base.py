@@ -6,7 +6,6 @@ from typing import *
 import setdoc
 
 from v440._utils.Cfg import Cfg
-from v440._utils.guarding import guard
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release
 
@@ -116,7 +115,6 @@ class Base(NestedABC):
         return self._epoch
 
     @epoch.setter
-    @guard
     def epoch(self: Self, value: Any) -> None:
         v: int
         v = operator.index(value)

@@ -6,7 +6,6 @@ from typing import *
 import setdoc
 from datarepr import datarepr
 
-from v440._utils.guarding import guard
 from v440.abc.CoreABC import CoreABC
 
 __all__ = ["QualABC"]
@@ -75,7 +74,6 @@ class QualABC(CoreABC):
         return self._lit
 
     @lit.setter
-    @guard
     def lit(self: Self, value: Any) -> None:
         x: str
         x = str(value).lower()
@@ -91,7 +89,6 @@ class QualABC(CoreABC):
         return self._num
 
     @num.setter
-    @guard
     def num(self: Self, value: SupportsIndex) -> None:
         y: int
         y = operator.index(value)
