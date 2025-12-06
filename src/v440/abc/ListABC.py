@@ -2,7 +2,7 @@ from abc import abstractmethod
 from typing import *
 
 import setdoc
-from datahold import OkayList
+from datahold import HoldList
 from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
@@ -12,7 +12,7 @@ __all__ = ["ListABC"]
 Item = TypeVar("Item")
 
 
-class ListABC(CoreABC, OkayList[Item]):
+class ListABC(CoreABC, HoldList[Item]):
 
     __slots__ = ()
     data: tuple[Item, ...]
@@ -57,6 +57,10 @@ class ListABC(CoreABC, OkayList[Item]):
     @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, list(self))
+
+    @setdoc.basic
+    def __rmul__(self: Self, other: SupportsIndex) -> Self:
+        return self * other
 
     def _cmp(self: Self) -> tuple:
         return tuple(map(self._sort, self.data))
