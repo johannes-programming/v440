@@ -9,7 +9,7 @@
                 <p>
                     Version:
                     <select id="version">
-                        <option>1.0.16</option>
+                        <option>1.0.36</option>
                         <option>2.0.0.dev201</option>
                     </select>
                 </p>
@@ -18,7 +18,7 @@
                 <dl class="heading1">
                     <dt>Overview</dt>
                     <dd>
-                        <p version="1.0.16">
+                        <p version="1.0.36">
                             The project <code><a href="#v440">v440</a></code> 
                             is a <code><a href="https://pypi.org/">PyPI</a></code> 
                             project that provides mutable version objects 
@@ -35,8 +35,8 @@
                     </dd>
                     <dt id="install">Installation</dt>
                     <dd id="installCorpus"></dd>
-                    <dt id="1.0.16-intro" version="1.0.16">Introduction</dt>
-                    <dd id="1.0.16-introCorpus" version="1.0.16">
+                    <dt id="1.0.36-intro" version="1.0.36">Introduction</dt>
+                    <dd id="1.0.36-introCorpus" version="1.0.36">
                         <dl class="heading2">
                             <dt>Core Components</dt>
                             <dd>
@@ -110,7 +110,7 @@ print(v)  # Output: 2.5.3b1+local.7.dev</code></pre>
                                             <td><a href="#Version.local">local</a></td>
                                             <td>Represents the local part of the version identifier.</td>
                                             <td>
-                                                Gives an object of the class <code><a href="#Local">Local</a></code>.
+                                                Gives an object of the class <code><a href="#1.0.36-Local">Local</a></code>.
                                             </td>
                                             <td>
                                                 Converts the value and saves it inside 
@@ -167,10 +167,10 @@ print(str(v))  # Output: 1.5.0</code></pre>
                             </dd>
                         </dl>
                     </dd>
-                    <dt id="1.0.16-features" version="1.0.16">Features</dt>
-                    <dd id="1.0.16-featuresCorpus" version="1.0.16">
-                        <dl class="heading4">
-                            <dt id="Local">class v440.core.Local.Local(data: Any = None)</dt>
+                    <dt id="features">Features</dt>
+                    <dd id="featuresCorpus">
+                        <dl class="heading4" version="1.0.36">
+                            <dt id="1.0.36-Local">class v440.core.Local.Local(data: Any = None)</dt>
                             <dd>
                                 <p>
                                     This class is a list-like subclass 
@@ -181,12 +181,12 @@ print(str(v))  # Output: 1.5.0</code></pre>
                                     All items are are nonnegative integers or nonempty strings.
                                 </p>
                                 <p> 
-                                    Calling the class creates a new <code><a href="#Local">Local</a></code> instance. 
+                                    Calling the class creates a new <code><a href="#1.0.36-Local">Local</a></code> instance. 
                                     The one (non required) positional argument 
-                                    is passed to its <code><a href="#Local.data">data</a></code> property. 
+                                    is passed to its <code><a href="#1.0.36-Local.data">data</a></code> property. 
                                 </p>
                                 <dl class="heading4">
-                                    <dt id="Local.data">data:list[int|str]</dt>
+                                    <dt id="1.0.36-Local.data">data:list[int|str]</dt>
                                     <dd>
                                         <p>
                                             This property represents the entire instance. 
@@ -990,10 +990,7 @@ print(v, v.pre)
                                 </p>
                             </dd>
                         </dl>
-                    </dd>
-                    <dt id="2.0.0.dev201-features" version="2.0.0.dev201">Features</dt>
-                    <dd id="2.0.0.dev201-featuresCorpus" version="2.0.0.dev201">
-                        <dl class="heading4">
+                        <dl class="heading4" version="2.0.0.dev201">
                             <dt id="2.0.0.dev201-abc">v440.abc</dt>
                             <dd>
                                 <dl class="heading4">
@@ -1338,7 +1335,7 @@ print(v, v.pre)
                                             <dd></dd>
                                         </dl>
                                     </dd>
-                                    <dt id="Local">class v440.core.Local.Local(string: Any = "")</dt>
+                                    <dt id="2.0.0.dev201-Local">class v440.core.Local.Local(string: Any = "")</dt>
                                     <dd>
                                         <p>
                                             This list-like class represents 
@@ -1348,20 +1345,20 @@ print(v, v.pre)
                                             exactly as <code>list</code> does.
                                         </p>
                                         <dl class="heading4">
-                                            <dt id="Local.data">data: tuple[int | str, ...]</dt>
+                                            <dt id="2.0.0.dev201-Local.data">data: tuple[int | str, ...]</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the respective <a href="#Local"><code>Local</code></a> instance
+                                                    This property represents the respective <a href="#2.0.0.dev201-Local"><code>Local</code></a> instance
                                                     as a <code>tuple</code>.
                                                 </p>
                                             </dd>
-                                            <dt id="Local.packaging">packaging: Optional[str]</dt>
+                                            <dt id="2.0.0.dev201-Local.packaging">packaging: Optional[str]</dt>
                                             <dd>
                                                 <p>
                                                     This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.local</code> value.
                                                 </p>
                                             </dd>
-                                            <dt id="Local.string">string: str</dt>
+                                            <dt id="2.0.0.dev201-Local.string">string: str</dt>
                                             <dd></dd>
                                         </dl>
                                     </dd>
@@ -1596,8 +1593,8 @@ print(v, v.pre)
                             </dd>
                         </dl>
                     </dd>
-                    <dt id="1.0.16-testing">Testing</dt>
-                    <dd id="1.0.16-testingCorpus"></dd>
+                    <dt id="1.0.36-testing" version="1.0.36">Testing</dt>
+                    <dd id="1.0.36-testingCorpus" version="1.0.36"></dd>
                     <dt id="license">License</dt>
                     <dd id="licenseCorpus"></dd>
                     <dt id="links">Links</dt>
