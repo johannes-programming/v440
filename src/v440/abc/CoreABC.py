@@ -2,7 +2,6 @@ from abc import ABCMeta, abstractmethod
 from typing import *
 
 import setdoc
-import unhash
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
@@ -54,7 +53,7 @@ class CoreABC(metaclass=ABCMeta):
         else:
             return NotImplemented
 
-    __hash__ = unhash
+    __hash__ = None
 
     @abstractmethod
     @setdoc.basic
@@ -82,6 +81,7 @@ class CoreABC(metaclass=ABCMeta):
     @setdoc.basic
     def __repr__(self: Self) -> str: ...
 
+    @setdoc.basic
     def __setattr__(self: Self, name: str, value: Any) -> None:
         a: Any
         backup: str

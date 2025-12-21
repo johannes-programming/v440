@@ -373,6 +373,34 @@ class TestSlicingGo(unittest.TestCase):
 
     def go(
         self: Self,
+        *,
+        valid: bool,
+        **kwargs: Any,
+    ) -> None:
+        if valid:
+            self.go_valid(**kwargs)
+        else:
+            self.go_invalid(**kwargs)
+
+    def go_invalid(
+        self: Self,
+        *,
+        query: Any,
+        change: Any,
+        solution: str,
+        start: Any = None,
+        stop: Any = None,
+        step: Any = None,
+    ) -> None:
+        v: Version
+        v = Version(query)
+        with self.assertRaises(Exception):
+            v.public.base.release[start:stop:step] = change
+        self.assertEqual(str(v), solution)
+
+    def go_valid(
+        self: Self,
+        *,
         query: Any,
         change: Any,
         solution: str,
