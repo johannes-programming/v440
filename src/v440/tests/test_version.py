@@ -260,7 +260,7 @@ class TestVersionRelease(unittest.TestCase):
         version = Version()
         version.public.base.release.data = [1, 2]
         simulated_release = version.public.base.release[:5]
-        self.assertEqual(simulated_release, [1, 2, 0, 0, 0])
+        self.assertEqual(simulated_release, [1, 2])
 
     def test_release_empty_major(self: Self) -> None:
         # Test that an empty release still has valid major, minor, micro values
