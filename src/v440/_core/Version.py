@@ -5,7 +5,8 @@ import re
 import typing
 
 import packaging.version
-import scaevola
+from protectedclasses import Protected
+from scaevola import Scaevola
 
 from v440._core.Local import Local
 from v440._core.Pre import Pre
@@ -31,7 +32,7 @@ class _Version:
         return dataclasses.replace(self)
 
 
-class Version(scaevola.Scaevola):
+class Version(Protected, Scaevola):
     def __bool__(self):
         return self._data != _Version()
 
