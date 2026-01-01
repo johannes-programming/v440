@@ -3,7 +3,7 @@ import unittest
 
 import packaging.version
 
-from v440 import Version
+from v440 import Version, VersionError
 
 VERSION_STRINGS = [
     # Basic Versioning
@@ -326,6 +326,114 @@ class TestPackaging(unittest.TestCase):
                         op(b, d),
                         f"{op} should match for {x!r} and {y!r}",
                     )
+
+
+class TestVersionRelease(unittest.TestCase):
+
+    def setUp(self):
+        # Create a version class instance
+        self.version = Version()
+
+    def test_release_basic_assignment(self):
+        # Test simple assignment of a list of non-negative integers
+        self.version.release = [1, 2, 3]
+        self.assertEqual(self.version.release, [1, 2, 3])
+
+    def test_release_trailing_zeros(self):
+        # Test that trailing zeros are removed
+        self.version.release = [1, 2, 3, 0, 0]
+        self.assertEqual(self.version.release, [1, 2, 3])
+
+    def test_release_zero(self):
+        # Test that a single zero is allowed
+        self.version.release = [0]
+        self.assertEqual(self.version.release, [])
+
+    def test_release_empty_list(self):
+        # Test empty list assignment
+        self.version.release = []
+        self.assertEqual(self.version.release, [])
+
+    def test_release_conversion_string(self):
+        # Test assignment of string that can be converted to numbers
+        self.version.release = ["1", "2", "3"]
+        self.assertEqual(self.version.release, [1, 2, 3])
+
+    def test_release_conversion_mixed(self):
+        # Test assignment of mixed string and integer values
+        self.version.release = ["1", 2, "3"]
+        self.assertEqual(self.version.release, [1, 2, 3])
+
+    def test_release_invalid_value(self):
+        # Test that invalid values raise an appropriate error
+        with self.assertRaises(VersionError):
+            self.version.release = ["a", 2, "3"]
+
+    def test_major_minor_micro_aliases(self):
+        # Test major, minor, and micro aliases for the first three indices
+        self.version.release = [1, 2, 3]
+        self.assertEqual(self.version.release.major, 1)
+        self.assertEqual(self.version.release.minor, 2)
+        self.assertEqual(self.version.release.micro, 3)
+        # self.assertEqual(self.version.release.patch, 3)  # 'patch' is an alias for micro
+
+    def test_release_modify_aliases(self):
+        # Test modifying the release via major, minor, and micro properties
+        self.version.release = [1, 2, 3]
+        self.version.release.major = 10
+        self.version.release.minor = 20
+        self.version.release.micro = 30
+        self.assertEqual(self.version.release, [10, 20, 30])
+        # self.assertEqual(self.version.release.patch, 30)
+
+    def test_release_with_tailing_zeros_simulation(self):
+        # Test that the release can simulate arbitrary high number of tailing zeros
+        self.version.release = [1, 2]
+        simulated_release = self.version.release[:5]
+        self.assertEqual(simulated_release, [1, 2, 0, 0, 0])
+
+    def test_release_assignment_with_bool_conversion(self):
+        # Test that boolean values get converted properly to integers
+        self.version.release = [True, False, 3]
+        self.assertEqual(self.version.release, [1, 0, 3])
+
+    def test_release_empty_major(self):
+        # Test that an empty release still has valid major, minor, micro values
+        self.version.release = []
+        self.assertEqual(self.version.release.major, 0)
+        self.assertEqual(self.version.release.minor, 0)
+        self.assertEqual(self.version.release.micro, 0)
+        # self.assertEqual(self.version.release.patch, 0)
+
+    def test_release_modify_with_alias_increase_length(self):
+        # Test that modifying an alias can extend the length of release
+        self.version.release = [1]
+        self.version.release.minor = 5  # This should make release [1, 5]
+        self.assertEqual(self.version.release, [1, 5])
+        self.version.release.micro = 3  # This should make release [1, 5, 3]
+        self.assertEqual(self.version.release, [1, 5, 3])
+
+    def test_release_modify_major_only(self):
+        # Test that setting just the major property works
+        self.version.release.major = 10
+        self.assertEqual(self.version.release, [10])
+
+    def test_release_modify_minor_only(self):
+        # Test that setting just the minor property extends release
+        self.version.release = []
+        self.version.release.minor = 1
+        self.assertEqual(self.version.release, [0, 1])
+
+    def test_release_modify_micro_only(self):
+        # Test that setting just the micro (patch) property extends release
+        self.version.release = []
+        self.version.release.micro = 1
+        self.assertEqual(self.version.release, [0, 0, 1])
+
+    def test_release_large_numbers(self):
+        # Test that release can handle large integers
+        self.version.release = [1000000000, 2000000000, 3000000000]
+        self.assertEqual(self.version.release, [1000000000, 2000000000, 3000000000])
 
 
 if __name__ == "__main__":
