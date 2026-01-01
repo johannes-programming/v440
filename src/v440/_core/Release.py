@@ -11,7 +11,7 @@ import scaevola
 from . import utils
 
 
-@keyalias.keyalias(major=0, minor=1, micro=2)
+@keyalias.keyalias(major=0, minor=1, micro=2, patch=2)
 class Release(datahold.OkayList, scaevola.Scaevola):
     def __add__(self, other, /):
         other = type(self)(other)
