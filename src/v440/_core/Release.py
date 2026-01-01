@@ -43,8 +43,6 @@ class Release(datahold.OkayList, scaevola.Scaevola):
 
     __repr__ = utils.Base.__repr__
 
-    __setattr__ = utils.Base.__setattr__
-
     def __setitem__(self, key, value):
         if type(key) is slice:
             self._setitem_slice(key, value)
