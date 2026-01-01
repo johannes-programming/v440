@@ -59,8 +59,6 @@ class Version(scaevola.Scaevola):
 
     __repr__ = utils.Base.__repr__
 
-    __setattr__ = utils.Base.__setattr__
-
     def __str__(self) -> str:
         return self.data
 
