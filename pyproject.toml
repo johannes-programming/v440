@@ -20,6 +20,7 @@ dependencies = [
     "datahold>=1.0",
     "keyalias>=1.0",
     "packaging>=23.2",
+    "protectedclasses>=1.0",
     "scaevola>=1.0.7",
 ]
 description = "mutable version objects in accordance with PEP440"
@@ -27,7 +28,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.0.13"
+version = "1.0.14"
 
 [project.license]
 file = "LICENSE.txt"
