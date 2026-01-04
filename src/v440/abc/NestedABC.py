@@ -23,6 +23,6 @@ class NestedABC(CoreABC):
         return datarepr(type(self).__name__, **self._todict())
 
     @abstractmethod
-    def _todict(self: Self) -> dict: ...
+    def _todict(self: Self) -> dict[str, Any]: ...
 
     packaging = CoreABC.string
