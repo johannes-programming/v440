@@ -1,7 +1,8 @@
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 from typing import *
 
 import setdoc
+from cmp3 import CmpABC
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
@@ -10,7 +11,7 @@ from v440.errors.VersionError import VersionError
 __all__ = ["CoreABC"]
 
 
-class CoreABC(metaclass=ABCMeta):
+class CoreABC(CmpABC):
     __slots__ = ()
 
     packaging: Any
@@ -20,12 +21,16 @@ class CoreABC(metaclass=ABCMeta):
     @setdoc.basic
     def __bool__(self: Self) -> bool: ...
 
-    @setdoc.basic
-    def __eq__(self: Self, other: Any) -> bool:
-        if type(self) is type(other):
-            return self._cmp() == other._cmp()
-        else:
-            return False
+    def __cmp__(self: Self, other: Any) -> float | int | tuple:
+        if type(self) is not type(other):
+            return ()
+        if self._cmp() == other._cmp():
+            return 0
+        if self._cmp() > other._cmp():
+            return 1
+        if self._cmp() < other._cmp():
+            return -1
+        return float("nan")
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
@@ -39,43 +44,11 @@ class CoreABC(metaclass=ABCMeta):
             raise VersionError(msg)  # from None
         return str(self._format_parsed(**parsed))
 
-    @setdoc.basic
-    def __ge__(self: Self, other: Any) -> bool:
-        if type(self) is type(other):
-            return self._cmp() >= other._cmp()
-        else:
-            return NotImplemented
-
-    @setdoc.basic
-    def __gt__(self: Self, other: Any) -> bool:
-        if type(self) is type(other):
-            return self._cmp() > other._cmp()
-        else:
-            return NotImplemented
-
     __hash__ = None
 
     @abstractmethod
     @setdoc.basic
     def __init__(self: Self, string: Any) -> None: ...
-
-    @setdoc.basic
-    def __le__(self: Self, other: Any) -> bool:
-        if type(self) is type(other):
-            return self._cmp() <= other._cmp()
-        else:
-            return NotImplemented
-
-    @setdoc.basic
-    def __lt__(self: Self, other: Any) -> bool:
-        if type(self) is type(other):
-            return self._cmp() < other._cmp()
-        else:
-            return NotImplemented
-
-    @setdoc.basic
-    def __ne__(self: Self, other: Any) -> bool:
-        return not (self == other)
 
     @abstractmethod
     @setdoc.basic
