@@ -27,13 +27,13 @@ class Post(QualABC):
             return -1
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         clues: Iterable[Clue]
         clues = map(Clue.by_example, info.keys())
         return reduce(operator.and_, clues, Clue()).solo(".post")
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> str:
+    def _format_parse(cls: type[Self], spec: str, /) -> str:
         matches: dict[str, str]
         clue: Clue
         matches = Cfg.fullmatches("post_f", spec)
@@ -54,7 +54,7 @@ class Post(QualABC):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type, value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str) -> str:
         if value in ("-", "post", "r", "rev"):
             return "post"
         else:
@@ -64,8 +64,6 @@ class Post(QualABC):
     def packaging(self: Self) -> Optional[int]:
         if self:
             return self.num
-        else:
-            return
 
     @packaging.setter
     def packaging(self: Self, value: Optional[SupportsIndex]) -> None:
