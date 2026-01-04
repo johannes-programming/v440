@@ -26,11 +26,11 @@ class Local(ListABC[int | str]):
         self.string = string
 
     @classmethod
-    def _data_parse(cls: type, value: list) -> tuple[int | str, ...]:
+    def _data_parse(cls: type[Self], value: list) -> tuple[int | str, ...]:
         return tuple(map(cls._item_parse, value))
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self]) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self]) -> str:
         m: int
         s: str
         t: str
@@ -56,7 +56,7 @@ class Local(ListABC[int | str]):
         return s
 
     @classmethod
-    def _deformat_part(cls: type, part: set[str]) -> str:
+    def _deformat_part(cls: type[Self], part: set[str]) -> str:
         lits: set[str]
         nums: set[str]
         s: str
@@ -72,7 +72,7 @@ class Local(ListABC[int | str]):
         return s
 
     @classmethod
-    def _deformat_lits(cls: type, part: set[str]) -> str:
+    def _deformat_lits(cls: type[Self], part: set[str]) -> str:
         i: int
         s: str
         t: str
@@ -94,7 +94,7 @@ class Local(ListABC[int | str]):
         return s
 
     @classmethod
-    def _deformat_nums(cls: type, part: set[str]) -> int:
+    def _deformat_nums(cls: type[Self], part: set[str]) -> int:
         t: Iterator
         f: int
         if len(part) == 0:
@@ -109,7 +109,7 @@ class Local(ListABC[int | str]):
             return f
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict[str, Any]:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Any]:
         l: str
         m: int
         x: str
@@ -160,7 +160,7 @@ class Local(ListABC[int | str]):
         return ans
 
     @classmethod
-    def _item_parse(cls: type, value: Any) -> int | str:
+    def _item_parse(cls: type[Self], value: Any) -> int | str:
         ans: int | str
         try:
             ans = operator.index(value)
@@ -176,7 +176,7 @@ class Local(ListABC[int | str]):
         return ans
 
     @classmethod
-    def _sort(cls: type, value: Any) -> tuple[bool, int | str]:
+    def _sort(cls: type[Self], value: Any) -> tuple[bool, int | str]:
         return type(value) is int, value
 
     def _string_fset(self: Self, value: str) -> None:
@@ -195,8 +195,6 @@ class Local(ListABC[int | str]):
     def packaging(self: Self) -> Optional[str]:
         if self:
             return str(self)
-        else:
-            return
 
     @packaging.setter
     def packaging(self: Self, value: Any) -> None:
