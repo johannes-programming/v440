@@ -21,7 +21,7 @@ class Cfg(enum.Enum):
         return ans
 
     @classmethod
-    def fullmatches(cls: type, key: str, value: str) -> dict[str, str]:
+    def fullmatches(cls: type[Self], key: str, value: str) -> dict[str, str]:
         ans: dict
         x: str
         ans = cls.cfg.patterns[key].fullmatch(value).groupdict()

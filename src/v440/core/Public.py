@@ -31,7 +31,7 @@ class Public(NestedABC):
         return self.base, self.qual
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self]) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self]) -> str:
         bases: set[str]
         quals: set[str]
         x: str
@@ -46,7 +46,7 @@ class Public(NestedABC):
         return x + y
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict[str, str]:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, str]:
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
@@ -62,7 +62,7 @@ class Public(NestedABC):
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
-    def _split(cls: type, value: str) -> tuple[str, str]:
+    def _split(cls: type[Self], value: str) -> tuple[str, str]:
         i: int
         i = int(value.lower().startswith("v"))
         while i < len(value):
