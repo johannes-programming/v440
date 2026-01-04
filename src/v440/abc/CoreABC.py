@@ -78,7 +78,7 @@ class CoreABC(CmpABC):
             raise VersionError(msg)
 
     @classmethod
-    def __subclasshook__(cls: type, other: type, /) -> bool:
+    def __subclasshook__(cls: type[Self], other: type, /) -> bool:
         "This magic classmethod can be overwritten for a custom subclass check."
         return NotImplemented
 
@@ -91,7 +91,7 @@ class CoreABC(CmpABC):
 
     @classmethod
     @abstractmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> Any: ...
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> Any: ...
 
     @classmethod
     @abstractmethod
@@ -108,7 +108,7 @@ class CoreABC(CmpABC):
         return type(self)(self)
 
     @classmethod
-    def deformat(cls: type, *strings: Any) -> str:
+    def deformat(cls: type[Self], *strings: Any) -> str:
         msg: str
         keys: tuple
         values: tuple

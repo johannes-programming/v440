@@ -39,7 +39,7 @@ class QualABC(CoreABC):
 
     @classmethod
     @abstractmethod
-    def _lit_parse(cls: type, value: str) -> str: ...
+    def _lit_parse(cls: type[Self], value: str) -> str: ...
 
     def _string_fset(self: Self, value: str) -> None:
         x: str

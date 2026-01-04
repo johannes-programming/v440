@@ -31,7 +31,7 @@ class Base(NestedABC):
         return self.epoch, self.release
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         table: dict[str, dict]
         matches: dict[str, str]
         s: str
@@ -50,11 +50,11 @@ class Base(NestedABC):
         return s
 
     @classmethod
-    def _deformat_basev(cls: type, value: str = "") -> str:
+    def _deformat_basev(cls: type[Self], value: str = "") -> str:
         return value
 
     @classmethod
-    def _deformat_epoch(cls: type, *table: str) -> str:
+    def _deformat_epoch(cls: type[Self], *table: str) -> str:
         f: int
         g: Iterator[int]
         u: int
@@ -69,7 +69,7 @@ class Base(NestedABC):
 
     @classmethod
     def _format_parse(
-        cls: type,
+        cls: type[Self],
         spec: str,
         /,
     ) -> dict[str, Any]:

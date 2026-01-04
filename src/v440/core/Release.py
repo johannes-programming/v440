@@ -28,7 +28,7 @@ class Release(ListABC[int]):
         self.string = string
 
     @classmethod
-    def _data_parse(cls: type, value: list) -> list[int]:
+    def _data_parse(cls: type[Self], value: list) -> list[int]:
         v: list[int]
         v = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
@@ -36,7 +36,7 @@ class Release(ListABC[int]):
         return v
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         i: int
         j: int
         k: int
@@ -73,7 +73,7 @@ class Release(ListABC[int]):
         return s
 
     @classmethod
-    def _deformat_force(cls: type, part: str) -> int:
+    def _deformat_force(cls: type[Self], part: str) -> int:
         if part == "0":
             return -1
         if part.startswith("0"):
@@ -81,7 +81,7 @@ class Release(ListABC[int]):
         return -len(part)
 
     @classmethod
-    def _deformat_comb(cls: type, x: int, y: int) -> int:
+    def _deformat_comb(cls: type[Self], x: int, y: int) -> int:
         if 0 > x * y:
             if x + y <= 0:
                 return max(x, y)
@@ -102,7 +102,7 @@ class Release(ListABC[int]):
         self.data = data
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict[str, tuple[int, ...]]:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, tuple[int, ...]]:
         if spec.strip("#."):
             raise ValueError
         return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
@@ -130,7 +130,7 @@ class Release(ListABC[int]):
         return data
 
     @classmethod
-    def _item_parse(cls: type, value: SupportsIndex) -> int:
+    def _item_parse(cls: type[Self], value: SupportsIndex) -> int:
         ans: int
         ans = operator.index(value)
         if ans < 0:
@@ -144,7 +144,7 @@ class Release(ListABC[int]):
         self.data = data
 
     @classmethod
-    def _sort(cls: type, value: int) -> int:
+    def _sort(cls: type[Self], value: int) -> int:
         return value
 
     def _string_fset(self: Self, value: str) -> None:

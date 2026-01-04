@@ -27,13 +27,13 @@ class Dev(QualABC):
             return (1,)
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         clues: Iterable[Clue]
         clues = map(Clue.by_example, info.keys())
         return reduce(operator.and_, clues, Clue()).solo(".dev")
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict[str, Clue]:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
         matches: dict[str, str]
         clue: Clue
         matches = Cfg.fullmatches("dev_f", spec)
@@ -54,7 +54,7 @@ class Dev(QualABC):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type, value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str) -> str:
         if value == "dev":
             return "dev"
         else:

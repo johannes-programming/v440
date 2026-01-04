@@ -26,7 +26,7 @@ class Pre(QualABC):
         return frozenset("1"), self.lit, self.num
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         s: str
         o: Self
         matches: dict[str, str]
@@ -54,7 +54,7 @@ class Pre(QualABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict[str, Clue]:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
         m: dict[str, str]
         ans: dict[str, Clue]
         m = Cfg.fullmatches("pre_f", spec)
@@ -85,15 +85,13 @@ class Pre(QualABC):
         return ans
 
     @classmethod
-    def _lit_parse(cls: type, value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str) -> str:
         return Cfg.cfg.data["consts"]["phases"][value]
 
     @property
     def packaging(self: Self) -> Optional[tuple[str, int]]:
         if self:
             return self.lit, self.num
-        else:
-            return
 
     @packaging.setter
     def packaging(self: Self, value: Optional[Iterable]) -> None:

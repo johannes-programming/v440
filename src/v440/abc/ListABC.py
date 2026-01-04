@@ -67,11 +67,11 @@ class ListABC(CoreABC, HoldList[Item]):
 
     @classmethod
     @abstractmethod
-    def _data_parse(cls: type, value: list) -> Iterable[Item]: ...
+    def _data_parse(cls: type[Self], value: list) -> Iterable[Item]: ...
 
     @classmethod
     @abstractmethod
-    def _sort(cls: type, value: Any) -> Any: ...
+    def _sort(cls: type[Self], value: Any) -> Any: ...
 
     @property
     @setdoc.basic
