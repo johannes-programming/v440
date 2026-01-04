@@ -10,7 +10,7 @@
                     Version:
                     <select id="version">
                         <option>1.0.36</option>
-                        <option>2.0.0.dev201</option>
+                        <option>2.0.0a0</option>
                     </select>
                 </p>
             </dt>
@@ -25,7 +25,7 @@
                             that allow flexible manipulation of version identifiers 
                             following the <a href="https://peps.python.org/pep-0440/">PEP440</a> standard. 
                         </p>
-                        <p version="2.0.0.dev201">
+                        <p version="2.0.0a0">
                             The project <code><a href="#v440">v440</a></code> 
                             is a <code><a href="https://pypi.org/">PyPI</a></code> 
                             project that provides mutable version objects 
@@ -990,15 +990,15 @@ print(v, v.pre)
                                 </p>
                             </dd>
                         </dl>
-                        <dl class="heading4" version="2.0.0.dev201">
-                            <dt id="2.0.0.dev201-abc">v440.abc</dt>
+                        <dl class="heading4" version="2.0.0a0">
+                            <dt id="2.0.0a0-abc">v440.abc</dt>
                             <dd>
                                 <dl class="heading4">
-                                    <dt id="2.0.0.dev201-CoreABC">class v440.abc.CoreABC.CoreABC(string: Any)</dt>
+                                    <dt id="2.0.0a0-CoreABC">class v440.abc.CoreABC.CoreABC(string: Any)</dt>
                                     <dd>
                                         <p>
                                             This abstract base class 
-                                            is the ancestor of all <a href="#2.0.0.dev201-core"><code>core</code></a> classes.
+                                            is the ancestor of all <a href="#2.0.0a0-core"><code>core</code></a> classes.
                                             It enforces some standards in its decendents.
                                         </p>
                                         <p>
@@ -1133,7 +1133,7 @@ print(v, v.pre)
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
-                                            from <a href="#2.0.0.dev201-CoreABC"><code>CoreABC</code></a>
+                                            from <a href="#2.0.0a0-CoreABC"><code>CoreABC</code></a>
                                             and from <code><a href="https://datahold.johannes-programming.online/">datahold</a>.OkayList</code>.
                                         </p>
                                         <dl class="heading4">
@@ -1236,7 +1236,7 @@ print(v, v.pre)
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
-                                            from <a href="#2.0.0.dev201-CoreABC"><code>CoreABC</code></a>.
+                                            from <a href="#2.0.0a0-CoreABC"><code>CoreABC</code></a>.
                                         </p>
                                         <dl class="heading4">
                                             <dt>deformat(*strings: str) -> str</dt>
@@ -1251,7 +1251,7 @@ print(v, v.pre)
                                     <dd>
                                         <p>
                                             This abstract base class inherits 
-                                            from <a href="#2.0.0.dev201-CoreABC"><code>CoreABC</code></a>.
+                                            from <a href="#2.0.0a0-CoreABC"><code>CoreABC</code></a>.
                                         </p>
                                         <dl class="heading4">
                                             <dt>deformat(*strings: str) -> str</dt>
@@ -1268,12 +1268,12 @@ print(v, v.pre)
                                     </dd>
                                 </dl>
                             </dd>
-                            <dt id="2.0.0.dev201-core">v440.core</dt>
+                            <dt id="2.0.0a0-core">v440.core</dt>
                             <dd>
                                 <p>
                                     This subpackage contains the principle classes of the project.
                                     Each of these classes has a dedicated module 
-                                    inside of <a href="#2.0.0.dev201-core"><code>core</code></a>.
+                                    inside of <a href="#2.0.0a0-core"><code>core</code></a>.
                                 </p>
                                 <dl class="heading4">
                                     <dt id="Base">class v440.core.Base.Base(string: Any = "0")</dt>
@@ -1335,7 +1335,7 @@ print(v, v.pre)
                                             <dd></dd>
                                         </dl>
                                     </dd>
-                                    <dt id="2.0.0.dev201-Local">class v440.core.Local.Local(string: Any = "")</dt>
+                                    <dt id="2.0.0a0-Local">class v440.core.Local.Local(string: Any = "")</dt>
                                     <dd>
                                         <p>
                                             This list-like class represents 
@@ -1345,20 +1345,20 @@ print(v, v.pre)
                                             exactly as <code>list</code> does.
                                         </p>
                                         <dl class="heading4">
-                                            <dt id="2.0.0.dev201-Local.data">data: tuple[int | str, ...]</dt>
+                                            <dt id="2.0.0a0-Local.data">data: tuple[int | str, ...]</dt>
                                             <dd>
                                                 <p>
-                                                    This property represents the respective <a href="#2.0.0.dev201-Local"><code>Local</code></a> instance
+                                                    This property represents the respective <a href="#2.0.0a0-Local"><code>Local</code></a> instance
                                                     as a <code>tuple</code>.
                                                 </p>
                                             </dd>
-                                            <dt id="2.0.0.dev201-Local.packaging">packaging: Optional[str]</dt>
+                                            <dt id="2.0.0a0-Local.packaging">packaging: Optional[str]</dt>
                                             <dd>
                                                 <p>
                                                     This property represents the equivalent <code><a href="https://packaging.pypa.io/en/stable/">packaging</a>.version.Version.local</code> value.
                                                 </p>
                                             </dd>
-                                            <dt id="2.0.0.dev201-Local.string">string: str</dt>
+                                            <dt id="2.0.0a0-Local.string">string: str</dt>
                                             <dd></dd>
                                         </dl>
                                     </dd>
@@ -1588,7 +1588,7 @@ print(v, v.pre)
                                 <p>This subpackage allows for testing with <code>unittest</code>.</p>
                                 <dl class="heading4">
                                     <dt id="test">v440.tests.test() -> unittest.TextTestResult</dt>
-                                    <dd class="testingCorpus" id="2.0.0.dev201-testingCorpus"></dd>
+                                    <dd class="testingCorpus"></dd>
                                 </dl>
                             </dd>
                         </dl>
