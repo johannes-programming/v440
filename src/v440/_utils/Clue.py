@@ -38,7 +38,7 @@ class Clue(NamedTuple):
         return type(self)(self.head, s, m)
 
     @classmethod
-    def by_example(cls: type, value: str, /) -> Self:
+    def by_example(cls: type[Self], value: str, /) -> Self:
         sep: str
         mag: int
         matches: dict[str, str]
@@ -56,7 +56,7 @@ class Clue(NamedTuple):
         return cls(matches["head"], sep, mag)
 
     @classmethod
-    def by_examples(cls: type, *values: str) -> Self:
+    def by_examples(cls: type[Self], *values: str) -> Self:
         ans: Self
         s: str
         ans = cls()
@@ -65,7 +65,7 @@ class Clue(NamedTuple):
         return ans
 
     @classmethod
-    def by_spec(cls: type, value: str, /) -> Self:
+    def by_spec(cls: type[Self], value: str, /) -> Self:
         matches: dict[str, str]
         matches = Cfg.fullmatches("clue_f", value)
         return cls(matches["head_f"], matches["sep_f"], len(matches["num_f"]))

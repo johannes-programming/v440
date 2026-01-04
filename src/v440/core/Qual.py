@@ -47,7 +47,7 @@ class Qual(NestedABC):
         return ans
 
     @classmethod
-    def _deformat(cls: type, info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         s: str
         t: str
         o: Self
@@ -100,7 +100,7 @@ class Qual(NestedABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> dict:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict:
         matches: dict[str, str]
         ans: dict[str, str]
         s: str

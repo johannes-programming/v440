@@ -29,7 +29,7 @@ class Version(NestedABC):
         return self.public, self.local
 
     @classmethod
-    def _deformat(cls: type, info: dict, /) -> str:
+    def _deformat(cls: type[Self], info: dict, /) -> str:
         publics: set[str]
         locals: set[str]
         x: str
@@ -45,7 +45,7 @@ class Version(NestedABC):
         return x
 
     @classmethod
-    def _format_parse(cls: type, spec: str, /) -> str:
+    def _format_parse(cls: type[Self], spec: str, /) -> str:
         return dict(
             zip(
                 ("public_f", "local_f"),
@@ -61,7 +61,7 @@ class Version(NestedABC):
         )
 
     @classmethod
-    def _join(cls: type, public: str, local: str = "") -> str:
+    def _join(cls: type[Self], public: str, local: str = "") -> str:
         if local:
             return public + "+" + local
         else:
@@ -71,7 +71,7 @@ class Version(NestedABC):
         self.public.string, self.local.string = self._split(value)
 
     @classmethod
-    def _split(cls: type, string: str, /) -> Iterable[str]:
+    def _split(cls: type[Self], string: str, /) -> Iterable[str]:
         if string.endswith("+"):
             raise ValueError
         if "+" in string:
