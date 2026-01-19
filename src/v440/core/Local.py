@@ -76,8 +76,8 @@ class Local(ListABC[int | str]):
         i: int
         s: str
         t: str
-        cases: list
-        cases = ["#"] * max(0, 0, *map(len, part))
+        cases: list[str]
+        cases = ["#"] * max(map(len, part), default=0)
         for i, s in iterflat(map(enumerate, part)):
             if s in string_.digits:
                 continue
@@ -100,7 +100,7 @@ class Local(ListABC[int | str]):
         if len(part) == 0:
             return 0
         t = (len(s) for s in part if s.startswith("0"))
-        f = max(1, 1, *t)
+        f = max(t, default=1)
         if f > min(map(len, part)):
             raise ValueError
         elif f == 1:

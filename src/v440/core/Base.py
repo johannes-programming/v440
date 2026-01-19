@@ -61,7 +61,7 @@ class Base(NestedABC):
             return ""
         g = (len(x) for x in table if x.startswith("0"))
         f = max(g, default=0)
-        if f > min(map(len, table)):
+        if f > min(map(len, table), default=0):
             raise ValueError
         return "#" * f + "!" * bool(f)
 
