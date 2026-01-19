@@ -3,6 +3,7 @@ from typing import *
 
 import setdoc
 from cmp3 import CmpABC
+from copyable import Copyable
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
@@ -11,7 +12,7 @@ from v440.errors.VersionError import VersionError
 __all__ = ["CoreABC"]
 
 
-class CoreABC(CmpABC):
+class CoreABC(CmpABC, Copyable):
     __slots__ = ()
 
     packaging: Any
@@ -21,6 +22,7 @@ class CoreABC(CmpABC):
     @setdoc.basic
     def __bool__(self: Self) -> bool: ...
 
+    @setdoc.basic
     def __cmp__(self: Self, other: Any) -> float | int | tuple:
         if type(self) is not type(other):
             return ()
