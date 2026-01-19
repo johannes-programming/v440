@@ -115,11 +115,11 @@ class Local(ListABC[int | str]):
         x: str
         y: str
         parts: list
-        split: list
+        split: list[tuple[int, str, str]]
         if spec.strip("#^~.-_"):
             raise ValueError
         parts = Cfg.cfg.patterns["local_splitter"].split(spec) + ["."]
-        split = list()
+        split = []
         for x, y in zip(parts[::2], parts[1::2]):
             l = x.lstrip("#")
             if "#" in l:
@@ -133,7 +133,7 @@ class Local(ListABC[int | str]):
             split.pop()
         return dict(split=tuple(split))
 
-    def _format_parsed(self: Self, *, split: tuple) -> str:
+    def _format_parsed(self: Self, *, split: tuple[tuple[int, str, str], ...]) -> str:
         ans: str
         item: int | str
         index: int

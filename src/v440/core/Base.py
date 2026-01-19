@@ -56,7 +56,6 @@ class Base(NestedABC):
     @classmethod
     def _deformat_epoch(cls: type[Self], *table: str) -> str:
         f: int
-        g: Iterator[int]
         x: str
         f = 0
         for x in table:
