@@ -50,7 +50,7 @@ class Public(NestedABC):
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
-            if spec[i] in ("#!."):
+            if spec[i] in "#!.":
                 i += 1
             else:
                 break

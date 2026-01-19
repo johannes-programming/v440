@@ -34,8 +34,8 @@ class Post(QualABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> str:
-        matches: dict[str, str]
         clue: Clue
+        matches: dict[str, str]
         matches = Cfg.fullmatches("post_f", spec)
         clue = Clue(
             head=matches["post_head_f"] or matches["post_hyphen_f"],
