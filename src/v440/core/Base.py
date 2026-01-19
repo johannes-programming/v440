@@ -32,8 +32,8 @@ class Base(NestedABC):
 
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        table: dict[str, dict]
         matches: dict[str, str]
+        table: dict[str, set]
         s: str
         t: str
         table = dict()
@@ -57,10 +57,11 @@ class Base(NestedABC):
     def _deformat_epoch(cls: type[Self], *table: str) -> str:
         f: int
         g: Iterator[int]
-        if len(table) == 0:
-            return ""
-        g = (len(x) for x in table if x.startswith("0"))
-        f = max(g, default=0)
+        x: str
+        f = 0
+        for x in table:
+            if x.startswith("0"):
+                f = max(f, len(x))
         if f > min(map(len, table), default=0):
             raise ValueError
         return "#" * f + "!" * bool(f)

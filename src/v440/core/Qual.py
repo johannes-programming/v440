@@ -51,12 +51,12 @@ class Qual(NestedABC):
         s: str
         t: str
         o: Self
-        table: tuple[Clue, ...]
+        matches: dict[str, str]
+        parts: list[str]
         pos: list[set[str]]
         sols: list[str]
+        table: tuple[Clue, ...]
         way: tuple
-        parts: list[str]
-        matches: dict[str, str]
         table = (Clue(),) * 5
         for s, o in info.items():
             matches = Cfg.fullmatches("qual", s)

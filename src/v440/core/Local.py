@@ -136,26 +136,26 @@ class Local(ListABC[int | str]):
     def _format_parsed(self: Self, *, split: tuple) -> str:
         ans: str
         item: int | str
-        i: int
-        m: int
-        l: str
+        index: int
+        s: str
+        t: str
+        x: int
         y: str
-        p: str
-        q: str
+        z: str
         ans = ""
-        for i, item in enumerate(self):
-            if i < len(split):
-                m, l, y = split[i]
+        for index, item in enumerate(self):
+            if index < len(split):
+                x, y, z = split[index]
             else:
-                m, l, y = 0, "", "."
+                x, y, z = 0, "", "."
             if isinstance(item, int):
-                ans += format(item, f"0{m}d")
-                ans += y
+                ans += format(item, f"0{x}d")
+                ans += z
                 continue
-            for q, p in zip(l, item):
-                ans += p.upper() if q == "^" else p
-            ans += item[len(l) :]
-            ans += y
+            for s, t in zip(y, item):
+                ans += t.upper() if s == "^" else t
+            ans += item[len(y) :]
+            ans += z
         ans = ans[:-1]
         return ans
 
