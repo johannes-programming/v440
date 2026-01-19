@@ -29,9 +29,9 @@ class Pre(QualABC):
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         s: str
         o: Self
+        clues: list[Clue]
         matches: dict[str, str]
         pos: list[set]
-        clues: list[Clue]
         sols: list[str]
         way: tuple[set[str], set[str], set[str]]
         clues = [Clue()] * 3

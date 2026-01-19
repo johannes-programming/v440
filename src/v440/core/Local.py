@@ -95,13 +95,13 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _deformat_nums(cls: type[Self], part: set[str]) -> int:
-        t: Iterator
         f: int
-        if len(part) == 0:
-            return 0
-        t = (len(s) for s in part if s.startswith("0"))
-        f = max(t, default=1)
-        if f > min(map(len, part)):
+        s: str
+        f = 1
+        for s in part:
+            if s.startswith("0"):
+                f = max(f, len(s))
+        if f > min(map(len, part), default=1):
             raise ValueError
         elif f == 1:
             return 0
