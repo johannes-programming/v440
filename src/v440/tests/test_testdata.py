@@ -20,12 +20,10 @@ class Util(enum.Enum):
     util = None
 
     @functools.cached_property
-    def data(self: Self) -> dict:
+    def data(self: Self) -> dict[str, Any]:
         text: str
-        data: dict
         text = resources.read_text("v440.tests", "testdata.toml")
-        data = tomllib.loads(text)
-        return data
+        return tomllib.loads(text)
 
 
 class TestDeformatting(unittest.TestCase):
@@ -38,7 +36,7 @@ class TestDeformatting(unittest.TestCase):
 
     def go_examples(self: Self, clsname: str, tables: dict) -> None:
         cls: type
-        split: dict
+        split: dict[bool, dict]
         x: str
         y: dict
         cls = getattr(getattr(core, clsname), clsname)
@@ -246,8 +244,8 @@ class TestStringExamples(unittest.TestCase):
         **kwargs: Any,
     ) -> None:
         obj: Any
-        spec: str
         remake: str
+        spec: str
         obj = cls(example)
         spec = cls.deformat(example)
         remake = format(obj, spec)
@@ -338,11 +336,11 @@ class TestDataSetter(unittest.TestCase):
 class TestVersionEpochGo(unittest.TestCase):
 
     def test_0(self: Self) -> None:
-        k: str
-        v: dict
-        for k, v in Util.util.data["epoch"].items():
-            with self.subTest(key=k):
-                self.go(**v)
+        x: str
+        y: dict[str, Any]
+        for x, y in Util.util.data["epoch"].items():
+            with self.subTest(key=x):
+                self.go(**y)
 
     def go(
         self: Self,
@@ -363,13 +361,11 @@ class TestVersionEpochGo(unittest.TestCase):
 
 class TestSlicingGo(unittest.TestCase):
     def test_0(self: Self) -> None:
-        sli: dict
-        k: str
-        v: dict
-        sli = Util.util.data["slicingmethod"]
-        for k, v in sli.items():
-            with self.subTest(key=k):
-                self.go(**v)
+        x: str
+        y: dict[str, Any]
+        for x, y in Util.util.data["slicingmethod"].items():
+            with self.subTest(key=x):
+                self.go(**y)
 
     def go(
         self: Self,
@@ -417,7 +413,7 @@ class TestSlicingGo(unittest.TestCase):
 class TestPackagingA(unittest.TestCase):
     def test_0(self: Self) -> None:
         x: str
-        y: list
+        y: dict[str, Any]
         for x, y in Util.util.data["examples"]["Version"].items():
             with self.subTest(example=x):
                 self.go(x, **y)
@@ -442,12 +438,12 @@ class TestPackagingA(unittest.TestCase):
 
 class TestPackagingC(unittest.TestCase):
     def test_0(self: Self) -> None:
-        pure: list
-        ops: list
-        args: tuple
-        x: Any
-        y: Any
-        pure = list()
+        args: tuple[str, str, Callable]
+        ops: list[Callable]
+        pure: list[str]
+        x: str
+        y: dict[str, Any]
+        pure = []
         for x, y in Util.util.data["examples"]["Version"].items():
             if y["valid"]:
                 pure.append(x)

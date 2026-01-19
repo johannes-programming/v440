@@ -120,13 +120,13 @@ class Release(ListABC[int]):
         return self._list(minlen=minlen)[key]
 
     def _list(self: Self, minlen: Optional[SupportsIndex] = None) -> list[int]:
-        i: Any
         data: list
+        index: Any
         data = list(self)
         if minlen is None:
             return data
-        i = operator.index(minlen)
-        data.extend([0] * max(0, i - len(self)))
+        index = operator.index(minlen)
+        data.extend([0] * max(0, index - len(self)))
         return data
 
     @classmethod
