@@ -76,8 +76,8 @@ class Local(ListABC[int | str]):
         i: int
         s: str
         t: str
-        cases: list
-        cases = ["#"] * max(0, 0, *map(len, part))
+        cases: list[str]
+        cases = ["#"] * max(map(len, part), default=0)
         for i, s in iterflat(map(enumerate, part)):
             if s in string_.digits:
                 continue
@@ -95,18 +95,18 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _deformat_nums(cls: type[Self], part: set[str]) -> int:
-        t: Iterator
-        f: int
-        if len(part) == 0:
-            return 0
-        t = (len(s) for s in part if s.startswith("0"))
-        f = max(1, 1, *t)
-        if f > min(map(len, part)):
+        n: int
+        s: str
+        n = 1
+        for s in part:
+            if s.startswith("0"):
+                n = max(n, len(s))
+        if n > min(map(len, part), default=1):
             raise ValueError
-        elif f == 1:
+        elif n == 1:
             return 0
         else:
-            return f
+            return n
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Any]:
@@ -115,11 +115,11 @@ class Local(ListABC[int | str]):
         x: str
         y: str
         parts: list
-        split: list
+        split: list[tuple[int, str, str]]
         if spec.strip("#^~.-_"):
             raise ValueError
         parts = Cfg.cfg.patterns["local_splitter"].split(spec) + ["."]
-        split = list()
+        split = []
         for x, y in zip(parts[::2], parts[1::2]):
             l = x.lstrip("#")
             if "#" in l:
@@ -133,29 +133,29 @@ class Local(ListABC[int | str]):
             split.pop()
         return dict(split=tuple(split))
 
-    def _format_parsed(self: Self, *, split: tuple) -> str:
+    def _format_parsed(self: Self, *, split: tuple[tuple[int, str, str], ...]) -> str:
         ans: str
         item: int | str
-        i: int
-        m: int
-        l: str
+        index: int
+        s: str
+        t: str
+        x: int
         y: str
-        p: str
-        q: str
+        z: str
         ans = ""
-        for i, item in enumerate(self):
-            if i < len(split):
-                m, l, y = split[i]
+        for index, item in enumerate(self):
+            if index < len(split):
+                x, y, z = split[index]
             else:
-                m, l, y = 0, "", "."
+                x, y, z = 0, "", "."
             if isinstance(item, int):
-                ans += format(item, f"0{m}d")
-                ans += y
+                ans += format(item, f"0{x}d")
+                ans += z
                 continue
-            for q, p in zip(l, item):
-                ans += p.upper() if q == "^" else p
-            ans += item[len(l) :]
-            ans += y
+            for s, t in zip(y, item):
+                ans += t.upper() if s == "^" else t
+            ans += item[len(y) :]
+            ans += z
         ans = ans[:-1]
         return ans
 

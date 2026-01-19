@@ -34,8 +34,8 @@ class Dev(QualABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
-        matches: dict[str, str]
         clue: Clue
+        matches: dict[str, str]
         matches = Cfg.fullmatches("dev_f", spec)
         clue = Clue(
             head=matches["dev_head_f"],
