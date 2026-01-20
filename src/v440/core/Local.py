@@ -95,18 +95,18 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _deformat_nums(cls: type[Self], part: set[str]) -> int:
-        f: int
+        n: int
         s: str
-        f = 1
+        n = 1
         for s in part:
             if s.startswith("0"):
-                f = max(f, len(s))
-        if f > min(map(len, part), default=1):
+                n = max(n, len(s))
+        if n > min(map(len, part), default=1):
             raise ValueError
-        elif f == 1:
+        elif n == 1:
             return 0
         else:
-            return f
+            return n
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Any]:

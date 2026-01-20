@@ -55,13 +55,13 @@ class Pre(QualABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
-        m: dict[str, str]
         ans: dict[str, Clue]
-        m = Cfg.fullmatches("pre_f", spec)
+        matches: dict[str, str]
+        matches = Cfg.fullmatches("pre_f", spec)
         ans = dict()
-        ans["a"] = Clue.by_spec(m["a_f"])
-        ans["b"] = Clue.by_spec(m["b_f"])
-        ans["rc"] = Clue.by_spec(m["rc_f"])
+        ans["a"] = Clue.by_spec(matches["a_f"])
+        ans["b"] = Clue.by_spec(matches["b_f"])
+        ans["rc"] = Clue.by_spec(matches["rc_f"])
         return ans
 
     def _format_parsed(self: Self, *, a: Clue, b: Clue, rc: Clue) -> str:

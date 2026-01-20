@@ -101,13 +101,13 @@ class Qual(NestedABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> dict:
-        matches: dict[str, str]
         ans: dict[str, str]
-        s: str
+        matches: dict[str, str]
+        x: str
         matches = Cfg.fullmatches("qual_f", spec)
         ans = dict()
-        for s in ("pre_f", "post_f", "dev_f"):
-            ans[s] = matches[s]
+        for x in ("pre_f", "post_f", "dev_f"):
+            ans[x] = matches[x]
         return ans
 
     def _format_parsed(self: Self, *, pre_f: str, post_f: str, dev_f: str) -> str:

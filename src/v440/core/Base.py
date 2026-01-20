@@ -55,15 +55,15 @@ class Base(NestedABC):
 
     @classmethod
     def _deformat_epoch(cls: type[Self], *table: str) -> str:
-        f: int
-        x: str
-        f = 0
-        for x in table:
-            if x.startswith("0"):
-                f = max(f, len(x))
-        if f > min(map(len, table), default=0):
+        n: int
+        s: str
+        n = 0
+        for s in table:
+            if s.startswith("0"):
+                n = max(n, len(s))
+        if n > min(map(len, table), default=0):
             raise ValueError
-        return "#" * f + "!" * bool(f)
+        return "#" * n + "!" * bool(n)
 
     @classmethod
     def _format_parse(
