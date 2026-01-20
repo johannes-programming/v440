@@ -41,8 +41,7 @@ class Version(NestedABC):
             locals.add(y)
         x = Public.deformat(*publics)
         y = Local.deformat(*locals)
-        x = cls._join(x, y)
-        return x
+        return cls._join(x, y)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> str:
