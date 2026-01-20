@@ -31,20 +31,20 @@ class Version(NestedABC):
     @classmethod
     def _deformat(cls: type[Self], info: dict, /) -> str:
         publics: set[str]
-        locals: set[str]
+        locals_: set[str]
         x: str
         y: str
         publics = set()
-        locals = set()
+        locals_ = set()
         for x, y in map(cls._split, info.keys()):
             publics.add(x)
-            locals.add(y)
+            locals_.add(y)
         x = Public.deformat(*publics)
-        y = Local.deformat(*locals)
+        y = Local.deformat(*locals_)
         return cls._join(x, y)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> str:
+    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, str]:
         return dict(
             zip(
                 ("public_f", "local_f"),
