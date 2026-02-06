@@ -27,8 +27,8 @@ class TestVersionManipulation(unittest.TestCase):
 class TestVersionLocal(unittest.TestCase):
 
     def test_version_operations(self: Self) -> None:
-        v: Version
         backup: Local
+        v: Version
         v = Version("1.2.3")
         backup = v.local
         v.local = "local.1.2.3"
@@ -57,8 +57,8 @@ class TestVersionLocal(unittest.TestCase):
 class TestPre(unittest.TestCase):
 
     def test_pre(self: Self) -> None:
-        v: Version
         backup: Qual
+        v: Version
         v = Version("1.2.3")
         backup = v.public.qual
 
@@ -340,9 +340,9 @@ class TestAdditionalVersionRelease(unittest.TestCase):
 
     def test_release_mul(self: Self) -> None:
         # Test multiplying the release (list behavior)
-        version: Version
         answer: list[int]
         solution: list[int]
+        version: Version
         version = Version()
         version.public.base.release.data = [1, 2]
         answer = list(version.public.base.release * 3)
@@ -351,9 +351,9 @@ class TestAdditionalVersionRelease(unittest.TestCase):
 
     def test_release_addition(self: Self) -> None:
         # Test adding another list to release
-        version: Version
         answer: list
         solution: list
+        version: Version
         version = Version()
         version.public.base.release.data = [1, 2, 3]
         answer = list(version.public.base.release) + [4, 5]
