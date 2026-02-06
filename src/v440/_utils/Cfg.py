@@ -3,6 +3,7 @@ import functools
 import re
 import tomllib
 from importlib import resources
+from importlib.resources.abc import Traversable
 from typing import *
 
 __all__ = ["Cfg"]
@@ -12,13 +13,11 @@ class Cfg(enum.Enum):
     cfg = None
 
     @functools.cached_property
-    def data(self: Self) -> dict:
+    def data(self: Self) -> dict[str, Any]:
         "This cached property holds the cfg data."
-        text: str
-        ans: dict[str, Any]
-        text = resources.read_text("v440._utils", "cfg.toml")
-        ans = tomllib.loads(text)
-        return ans
+        file: Traversable
+        file = resources.files("v440._utils").joinpath("cfg.toml")
+        return tomllib.loads(file.read_text(encoding="utf-8"))
 
     @classmethod
     def fullmatches(cls: type[Self], key: str, value: str) -> dict[str, str]:
