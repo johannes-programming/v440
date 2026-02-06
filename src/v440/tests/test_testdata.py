@@ -6,6 +6,7 @@ import shlex
 import tomllib
 import unittest
 from importlib import resources
+from importlib.resources.abc import Traversable
 from typing import *
 
 import iterprod
@@ -15,15 +16,27 @@ from v440 import core
 from v440.core.Version import Version
 from v440.errors.VersionError import VersionError
 
+__all__ = [
+    "TestDataSetter",
+    "TestDeformatting",
+    "TestPackagingA",
+    "TestPackagingC",
+    "TestReleaseAlias",
+    "TestSlicingGo",
+    "TestSlots",
+    "TestStringExamples",
+    "TestVersionEpochGo",
+]
+
 
 class Util(enum.Enum):
     util = None
 
     @functools.cached_property
     def data(self: Self) -> dict[str, Any]:
-        text: str
-        text = resources.read_text("v440.tests", "testdata.toml")
-        return tomllib.loads(text)
+        file: Traversable
+        file = resources.files("v440.tests").joinpath("testdata.toml")
+        return tomllib.loads(file.read_text(encoding="utf-8"))
 
 
 class TestDeformatting(unittest.TestCase):

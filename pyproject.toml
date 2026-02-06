@@ -25,7 +25,7 @@ dependencies = [
     "datahold>=3.0,<4",
     "datarepr>=1.1,<2",
     "iterflat>=1.0,<2",
-    "iterprod>=1.0,<2.0",
+    "iterprod>=1.0,<2",
     "packaging>=25.0,<26",
     "setdoc>=1.2.8,<2",
 ]
@@ -34,7 +34,7 @@ keywords = []
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "2.0.0a2"
+version = "2.0.0a2+tested"
 
 [project.license]
 file = "LICENSE.txt"
