@@ -1614,13 +1614,20 @@ print(v, v.pre)
             </dd>
         </dl>
     </body>
-    <script src="https://www.johannes-programming.online/script.js"></script>
-    <script>
+    <script type="module">
+        import {
+            setupImpressumCorpus,
+            setupInstallCorpus,
+            setupLicenseCorpus,
+            setupLinksCorpus,
+            setupTestingCorpus,
+            addMetaAndLinkTags,
+        } from "https://www.johannes-programming.online/main.js";
+        setupImpressumCorpus("v440");
         setupInstallCorpus("v440");
-        setupTestingCorpus("v440");
         setupLicenseCorpus("v440");
         setupLinksCorpus("v440");
-        setupImpressumCorpus("v440");
+        setupTestingCorpus("v440");
         addMetaAndLinkTags();
     </script>
 </html>
