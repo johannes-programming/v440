@@ -1,8 +1,8 @@
 from abc import abstractmethod
 from typing import *
 
+import cmp3
 import setdoc
-from cmp3 import CmpABC
 from copyable import Copyable
 from datarepr import oxford
 
@@ -12,7 +12,7 @@ from v440.errors.VersionError import VersionError
 __all__ = ["CoreABC"]
 
 
-class CoreABC(CmpABC, Copyable):
+class CoreABC(cmp3.CmpABC, Copyable):
     __slots__ = ()
 
     packaging: Any
@@ -24,22 +24,9 @@ class CoreABC(CmpABC, Copyable):
 
     @setdoc.basic
     def __cmp__(self: Self, other: Any) -> None | float | int:
-        x: Any
-        y: Any
         if type(self) is not type(other):
             return
-        x = self._cmp()
-        y = other._cmp()
-        if x <= y:
-            if y <= x:
-                return 0
-            else:
-                return -1
-        else:
-            if y <= x:
-                return 1
-            else:
-                return float("nan")
+        return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
