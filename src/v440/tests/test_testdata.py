@@ -5,12 +5,14 @@ import operator
 import shlex
 import tomllib
 import unittest
+from collections.abc import Callable, Iterable, Sequence
 from importlib import resources
 from importlib.resources.abc import Traversable
-from typing import *
+from typing import Any, Optional, Self, cast
 
 import iterprod
-import packaging.version
+from packaging.version import InvalidVersion
+from packaging.version import Version as Version_
 
 from v440 import core
 from v440.core.Version import Version
@@ -38,20 +40,28 @@ class Util(enum.Enum):
         file = resources.files("v440.tests").joinpath("testdata.toml")
         return tomllib.loads(file.read_text(encoding="utf-8"))
 
+    @functools.cached_property
+    def deformatting(self: Self) -> dict[str, Any]:
+        return cast(dict[str, Any], Util.util.data.get("deformatting", {}))
+
+    @functools.cached_property
+    def examples(self: Self) -> dict[str, Any]:
+        return cast(dict[str, Any], Util.util.data.get("examples", {}))
+
 
 class TestDeformatting(unittest.TestCase):
     def test_0(self: Self) -> None:
         x: str
-        y: dict
-        for x, y in Util.util.data["deformatting"].items():
+        y: dict[Any, Any]
+        for x, y in Util.util.deformatting.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict) -> None:
-        cls: type
-        split: dict[bool, dict]
-        x: str
-        y: dict
+    def go_examples(self: Self, clsname: str, tables: dict[str, Any]) -> None:
+        cls: Any
+        split: dict[bool, dict[Any, Any]]
+        x: Any
+        y: dict[Any, Any]
         cls = getattr(getattr(core, clsname), clsname)
         split = {False: dict(), True: dict()}
         for x, y in tables.items():
@@ -64,15 +74,15 @@ class TestDeformatting(unittest.TestCase):
                 self.go_valid_example(cls, x, **y)
 
     def go_invalid_example(
-        self: Self, cls: type, example: tuple[str], /, **kwargs: Any
+        self: Self, cls: Any, example: tuple[str, ...], /, **kwargs: Any
     ) -> None:
-        with self.assertRaises(TypeError):
+        with self.assertRaises(VersionError):
             cls.deformat(*example)
 
     def go_valid_example(
         self: Self,
-        cls: type,
-        example: tuple[str],
+        cls: Any,
+        example: tuple[str, ...],
         /,
         *,
         solution: Optional[str] = None,
@@ -85,21 +95,23 @@ class TestDeformatting(unittest.TestCase):
 class TestStringExamples(unittest.TestCase):
     def test_versions(self: Self) -> None:
         x: str
-        y: dict
-        for x, y in Util.util.data["examples"]["Version"].items():
+        y: dict[Any, Any]
+        for x, y in Util.util.examples["Version"].items():
             with self.subTest(example=x):
                 self.go_version(x, **y)
 
-    def go_version(self: Self, example: str, /, *, valid: bool, **kwargs: Any) -> None:
+    def go_version(
+        self: Self, example: str, /, *, valid: bool, **kwargs: Any
+    ) -> None:
         s: str
         x: Version
-        y: packaging.version.Version
+        y: Version_
         if not valid:
-            with self.assertRaises(packaging.version.InvalidVersion):
-                packaging.version.Version(example)
+            with self.assertRaises(InvalidVersion):
+                Version_(example)
             return
-        x = Version(example)
-        y = packaging.version.Version(example)
+        x = Version(string=example)
+        y = Version_(example)
         self.assertEqual(y, x.packaging)
         s = y.base_version
         while s.endswith(".0"):
@@ -159,16 +171,16 @@ class TestStringExamples(unittest.TestCase):
 
     def test_0(self: Self) -> None:
         x: str
-        y: dict
-        for x, y in Util.util.data["examples"].items():
+        y: dict[Any, Any]
+        for x, y in Util.util.examples.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict) -> None:
+    def go_examples(self: Self, clsname: str, tables: dict[Any, Any]) -> None:
         cls: type
-        split: dict
+        split: dict[Any, Any]
         x: str
-        y: dict
+        y: dict[Any, Any]
         cls = getattr(getattr(core, clsname), clsname)
         split = {False: dict(), True: dict()}
         for x, y in tables.items():
@@ -184,7 +196,7 @@ class TestStringExamples(unittest.TestCase):
         self: Self, cls: type, example: str, /, **kwargs: Any
     ) -> None:
         with self.assertRaises(VersionError):
-            cls(example)
+            cls(string=example)
 
     def go_valid_example(
         self: Self,
@@ -198,10 +210,14 @@ class TestStringExamples(unittest.TestCase):
         self.go_valid_example_remake(*args, **kwargs)
 
     def go_valid_example_string(
-        self: Self, cls: type, example: str, /, **kwargs
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        **kwargs: Any,
     ) -> None:
         obj: Any
-        obj = cls(example)
+        obj = cls(string=example)
         self.assertEqual(str(obj), obj.string)
         self.assertEqual(str(obj), format(obj))
         self.assertEqual(str(obj), format(obj, ""))
@@ -216,7 +232,7 @@ class TestStringExamples(unittest.TestCase):
         **kwargs: Any,
     ) -> None:
         obj: Any
-        obj = cls(example)
+        obj = cls(string=example)
         if normed is not None:
             self.assertEqual(obj.string, normed)
 
@@ -226,18 +242,18 @@ class TestStringExamples(unittest.TestCase):
         example: str,
         /,
         *,
-        formatted: Iterable = (),
+        formatted: Iterable[Any] = (),
         **kwargs: Any,
     ) -> None:
         obj: Any
-        obj = cls(example)
+        obj = cls(string=example)
         for x, y in dict(formatted).items():
             with self.subTest(spec=x, target=y):
                 self.assertEqual(y, format(obj, x))
 
     def go_valid_example_deformatted(
         self: Self,
-        cls: type,
+        cls: Any,
         example: str,
         /,
         *,
@@ -251,7 +267,7 @@ class TestStringExamples(unittest.TestCase):
 
     def go_valid_example_remake(
         self: Self,
-        cls: type,
+        cls: Any,
         example: str,
         /,
         **kwargs: Any,
@@ -259,7 +275,7 @@ class TestStringExamples(unittest.TestCase):
         obj: Any
         remake: str
         spec: str
-        obj = cls(example)
+        obj = cls(string=example)
         spec = cls.deformat(example)
         remake = format(obj, spec)
         self.assertEqual(
@@ -273,7 +289,7 @@ class TestDataSetter(unittest.TestCase):
 
     def test_0(self: Self) -> None:
         x: str
-        y: dict
+        y: dict[Any, Any]
         for x, y in Util.util.data["data-setter"].items():
             with self.subTest(clsname=x):
                 self.go_clsname(x, y)
@@ -281,12 +297,12 @@ class TestDataSetter(unittest.TestCase):
     def go_clsname(
         self: Self,
         clsname: str,
-        legacy_table: dict,
+        legacy_table: dict[Any, Any],
         /,
     ) -> None:
         cls: type
         x: str
-        y: dict
+        y: dict[Any, Any]
         cls = getattr(getattr(core, clsname), clsname)
         for x, y in legacy_table.items():
             with self.subTest(legacy_name=x):
@@ -308,7 +324,7 @@ class TestDataSetter(unittest.TestCase):
         cls: type,
         /,
         *,
-        query: list,
+        query: list[Any],
         queryname: str,
         **kwargs: Any,
     ) -> None:
@@ -322,12 +338,12 @@ class TestDataSetter(unittest.TestCase):
         cls: type,
         /,
         *,
-        query: list,
+        query: list[Any],
         queryname: str,
-        check: Optional[list] = None,
+        check: Optional[list[Any]] = None,
         attrname: Optional[str] = None,
-        args: list | tuple = (),
-        kwargs: dict | tuple = (),
+        args: Sequence[Any] = (),
+        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
         solution: Optional[Any] = None,
         solutionname: Optional[str] = None,
         **_kwargs: Any,
@@ -365,7 +381,7 @@ class TestVersionEpochGo(unittest.TestCase):
         msg: str
         v: Version
         msg = "epoch %r" % key
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         v.public.base.epoch = query
         self.assertEqual(str(v), full, msg=msg)
         self.assertIsInstance(v.public.base.epoch, int, msg=msg)
@@ -402,7 +418,7 @@ class TestSlicingGo(unittest.TestCase):
         step: Any = None,
     ) -> None:
         v: Version
-        v = Version(query)
+        v = Version(string=query)
         with self.assertRaises(Exception):
             v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution)
@@ -418,7 +434,7 @@ class TestSlicingGo(unittest.TestCase):
         step: Any = None,
     ) -> None:
         v: Version
-        v = Version(query)
+        v = Version(string=query)
         v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution)
 
@@ -427,7 +443,7 @@ class TestPackagingA(unittest.TestCase):
     def test_0(self: Self) -> None:
         x: str
         y: dict[str, Any]
-        for x, y in Util.util.data["examples"]["Version"].items():
+        for x, y in Util.util.examples["Version"].items():
             with self.subTest(example=x):
                 self.go(x, **y)
 
@@ -437,27 +453,27 @@ class TestPackagingA(unittest.TestCase):
         self.go_format(text)
 
     def go_format(self: Self, text: str) -> None:
-        a: packaging.version.Version
+        a: Version_
         b: str
         f: str
         g: str
-        a = packaging.version.Version(text)
+        a = Version_(text)
         b = str(a)
         f = "#." * len(a.release)
         f = f[:-1]
-        g = format(Version(text), f)
+        g = format(Version(string=text), f)
         self.assertEqual(b, g)
 
 
 class TestPackagingC(unittest.TestCase):
     def test_0(self: Self) -> None:
-        args: tuple[str, str, Callable]
-        ops: list[Callable]
+        args: tuple[Any, ...]
+        ops: list[Callable[..., Any]]
         pure: list[str]
         x: str
         y: dict[str, Any]
         pure = []
-        for x, y in Util.util.data["examples"]["Version"].items():
+        for x, y in Util.util.examples["Version"].items():
             if y["valid"]:
                 pure.append(x)
         ops = [
@@ -470,24 +486,48 @@ class TestPackagingC(unittest.TestCase):
         ]
         for args in iterprod.iterprod(pure, pure, ops):
             with self.subTest(args=args):
-                self.go(*args)
+                self.go(
+                    *cast(
+                        tuple[str, str, Callable[..., Any]],
+                        args,
+                    )
+                )
 
-    def go(self: Self, x: str, y: str, func: Callable, /) -> None:
-        a: packaging.version.Version
-        b: packaging.version.Version
-        c: packaging.version.Version
-        d: packaging.version.Version
-        native: bool
-        convert: bool
-        msg: str
-        a = packaging.version.Version(x)
-        b = Version(string=x).packaging
-        c = packaging.version.Version(y)
-        d = Version(string=y).packaging
-        native = func(a, c)
-        convert = func(b, d)
-        msg = f"{func} should match for {x!r} and {y!r}"
-        self.assertEqual(native, convert, msg=msg)
+    def go(
+        self: Self,
+        x: str,
+        y: str,
+        func: Callable[..., Any],
+        /,
+    ) -> None:
+        a: Version_
+        b: Version
+        c: Version_
+        d: Version_
+        e: Version
+        f: Version_
+        legacy: bool
+        current: bool
+        backwards: bool
+        a = Version_(x)
+        b = Version(string=x)
+        c = b.packaging
+        d = Version_(y)
+        e = Version(string=y)
+        f = e.packaging
+        legacy = func(a, d)
+        current = func(b, e)
+        backwards = func(c, f)
+        self.assertEqual(
+            current,
+            legacy,
+            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and legacy.",
+        )
+        self.assertEqual(
+            current,
+            backwards,
+            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and backwards.",
+        )
 
 
 class TestSlots(unittest.TestCase):
@@ -521,7 +561,7 @@ class TestReleaseAlias(unittest.TestCase):
             with self.subTest(test_label=x):
                 self.go(**y)
 
-    def go(self: Self, steps: list) -> None:
+    def go(self: Self, steps: list[Any]) -> None:
         version: Version
         step: dict[str, Any]
         version = Version()
@@ -533,9 +573,9 @@ class TestReleaseAlias(unittest.TestCase):
         version: Version,
         name: str,
         value: Any,
-        solution: Optional[list] = None,
+        solution: Optional[list[Any]] = None,
     ) -> None:
-        answer: list
+        answer: list[Any]
         setattr(version.public.base.release, name, value)
         if solution is None:
             return

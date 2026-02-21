@@ -2,33 +2,20 @@ from __future__ import annotations
 
 import operator
 import string as string_
-from functools import partialmethod
-from typing import *
-
-import setdoc
+from typing import Any, Final, Optional, Self, SupportsIndex, overload
 
 from v440.abc.ListABC import ListABC
 
 __all__ = ["Release"]
 
+MISSING: Final[object] = object()
+
 
 class Release(ListABC[int]):
     __slots__ = ()
-    data: tuple[int, ...]
-    major: int
-    micro: int
-    minor: int
-    packaging: tuple[int, ...]
-    patch: int
-    string: str
-
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "0") -> None:
-        self._data = ()
-        self.string = string
 
     @classmethod
-    def _data_parse(cls: type[Self], value: list) -> list[int]:
+    def _data_parse(cls: type[Self], value: list[Any]) -> list[int]:
         v: list[int]
         v = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
@@ -95,32 +82,57 @@ class Release(ListABC[int]):
         else:
             return x + y
 
-    def _delitem(self: Self, key: Any, *, minlen: Any = None) -> None:
+    def _delitem(
+        self: Self,
+        key: Any,
+        *,
+        minlen: Any = None,
+    ) -> None:
         data: list[int]
         data = self._list(minlen=minlen)
         del data[key]
         self.data = data
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, tuple[int, ...]]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         if spec.strip("#."):
             raise ValueError
-        return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
+        return tuple(map(len, spec.rstrip(".").split(".")))
 
-    def _format_parsed(self: Self, *, mags: tuple[int, ...]) -> str:
+    def _format_parsed(self: Self, mags: tuple[Any, ...], /) -> str:
         data: list[int]
-        parts: list[int]
+        parts: list[Any]
         data = list(self)
         data += [0] * max(0, len(mags) - len(self))
         parts = [f"0{m}d" for m in mags]
         parts += [""] * max(0, len(self) - len(mags))
         return ".".join(map(format, data, parts))
 
-    def _getitem(self: Self, key: Any, *, minlen: Any = None) -> Any:
+    @overload
+    def _getitem(
+        self: Self,
+        key: SupportsIndex,
+        *,
+        minlen: Optional[SupportsIndex] = None,
+    ) -> int: ...
+    @overload
+    def _getitem(
+        self: Self,
+        key: slice,
+        *,
+        minlen: Optional[SupportsIndex] = None,
+    ) -> list[int]: ...
+
+    def _getitem(
+        self: Self,
+        key: SupportsIndex | slice,
+        *,
+        minlen: Optional[SupportsIndex] = None,
+    ) -> int | list[int]:
         return self._list(minlen=minlen)[key]
 
     def _list(self: Self, minlen: Optional[SupportsIndex] = None) -> list[int]:
-        data: list
+        data: list[Any]
         index: Any
         data = list(self)
         if minlen is None:
@@ -137,23 +149,27 @@ class Release(ListABC[int]):
             raise ValueError
         return ans
 
-    def _setitem(self: Self, key: Any, value: Any, *, minlen: Any = None) -> None:
+    def _setitem(
+        self: Self, key: Any, value: Any, *, minlen: Any = None
+    ) -> None:
         data: list[int]
         data = self._list(minlen=minlen)
         data[key] = value
         self.data = data
 
     @classmethod
-    def _sort(cls: type[Self], value: int) -> int:
-        return value
+    def _sort(cls: type[Self], value: int) -> tuple[bool, int]:
+        return True, value
 
     def _string_fset(self: Self, value: str) -> None:
         if value.strip(string_.digits + "."):
             raise ValueError
         self.data = map(int, value.split("."))
 
-    def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
-        data: list
+    def bump(
+        self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1
+    ) -> None:
+        data: list[Any]
         a: int
         i: int
         a = operator.index(amount)
@@ -207,3 +223,7 @@ class Release(ListABC[int]):
 
     packaging = ListABC.data
     patch = micro
+
+    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
+        "This method sorts the data."
+        self.data = sorted(self, key=key, reverse=reverse)
