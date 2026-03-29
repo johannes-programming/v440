@@ -1,1 +1,2 @@
+recursive-include docs *.rst
 recursive-include src/v440 *.toml

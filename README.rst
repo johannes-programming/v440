@@ -2,4 +2,6 @@
 v440
 ====
 
-Visit the website `https://v440.johannes-programming.online/ <https://v440.johannes-programming.online/>`_ for more information.
+Each minor version has its own documentation.
+These docs can be found as rst-files in this projects ``docs`` directory.
+They can also be viewed on the projects website ``https://v440.johannes-programming.online/``.
