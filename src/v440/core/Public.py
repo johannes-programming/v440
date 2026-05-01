@@ -4,6 +4,7 @@ import string as string_
 from typing import *
 
 import setdoc
+from namings import Naming
 
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base
@@ -46,7 +47,7 @@ class Public(NestedABC):
         return x + y
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, str]:
+    def _format_parse(cls: type[Self], spec: str, /) -> Naming[str]:
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
@@ -56,7 +57,7 @@ class Public(NestedABC):
                 break
         if i != 0 and spec[i - 1] == "." and i != len(spec) and spec[i] not in "-_":
             i -= 1
-        return dict(base_f=spec[:i], qual_f=spec[i:])
+        return Naming[str](base_f=spec[:i], qual_f=spec[i:])
 
     def _format_parsed(self: Self, *, base_f: str, qual_f: str) -> str:
         return format(self.base, base_f) + format(self.qual, qual_f)

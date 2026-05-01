@@ -4,6 +4,8 @@ import operator
 from functools import reduce
 from typing import *
 
+from namings import Naming
+
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
 from v440.abc.QualABC import QualABC
@@ -33,7 +35,7 @@ class Dev(QualABC):
         return reduce(operator.and_, clues, Clue()).solo(".dev")
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
+    def _format_parse(cls: type[Self], spec: str, /) -> Naming[Clue]:
         clue: Clue
         matches: dict[str, str]
         matches = Cfg.fullmatches("dev_f", spec)
@@ -42,7 +44,7 @@ class Dev(QualABC):
             sep=matches["dev_sep_f"],
             mag=len(matches["dev_num_f"]),
         )
-        return dict(clue=clue)
+        return Naming[Clue](clue=clue)
 
     def _format_parsed(self: Self, *, clue: Clue) -> str:
         if not self:

@@ -4,6 +4,7 @@ from typing import *
 
 import packaging.version
 import setdoc
+from namings import Naming
 
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local
@@ -44,8 +45,8 @@ class Version(NestedABC):
         return cls._join(x, y)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, str]:
-        return dict(
+    def _format_parse(cls: type[Self], spec: str, /) -> Naming[str]:
+        return Naming(
             zip(
                 ("public_f", "local_f"),
                 cls._split(spec),

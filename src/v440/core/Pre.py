@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import *
 
 from iterprod import iterprod
+from namings import Naming
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
@@ -54,11 +55,11 @@ class Pre(QualABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
-        ans: dict[str, Clue]
+    def _format_parse(cls: type[Self], spec: str, /) -> Naming[Clue]:
+        ans: Naming[Clue]
         matches: dict[str, str]
         matches = Cfg.fullmatches("pre_f", spec)
-        ans = dict()
+        ans = Naming[Clue]()
         ans["a"] = Clue.by_spec(matches["a_f"])
         ans["b"] = Clue.by_spec(matches["b_f"])
         ans["rc"] = Clue.by_spec(matches["rc_f"])

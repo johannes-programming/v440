@@ -5,6 +5,7 @@ from typing import *
 
 import setdoc
 from iterprod import iterprod
+from namings import Naming
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
@@ -100,12 +101,12 @@ class Qual(NestedABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict:
-        ans: dict[str, str]
+    def _format_parse(cls: type[Self], spec: str, /) -> Naming[str]:
+        ans: Naming[str]
         matches: dict[str, str]
         x: str
         matches = Cfg.fullmatches("qual_f", spec)
-        ans = dict()
+        ans = Naming()
         for x in ("pre_f", "post_f", "dev_f"):
             ans[x] = matches[x]
         return ans

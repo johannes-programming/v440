@@ -6,6 +6,7 @@ from typing import *
 
 import setdoc
 from iterflat import iterflat
+from namings import Naming
 
 from v440._utils.Cfg import Cfg
 from v440.abc.ListABC import ListABC
@@ -109,7 +110,7 @@ class Local(ListABC[int | str]):
             return n
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Any]:
+    def _format_parse(cls: type[Self], spec: str, /) -> Naming[tuple]:
         l: str
         m: int
         x: str
@@ -131,7 +132,7 @@ class Local(ListABC[int | str]):
             split.append((m, l, y))
         while len(split) and split[-1] == (0, "", "."):
             split.pop()
-        return dict(split=tuple(split))
+        return Naming[tuple](split=tuple(split))
 
     def _format_parsed(self: Self, *, split: tuple[tuple[int, str, str], ...]) -> str:
         ans: str

@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import operator
 import string as string_
-from functools import partialmethod
 from typing import *
 
 import setdoc
+from namings import Naming
 
 from v440.abc.ListABC import ListABC
 
@@ -102,10 +102,10 @@ class Release(ListABC[int]):
         self.data = data
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, tuple[int, ...]]:
+    def _format_parse(cls: type[Self], spec: str, /) -> Naming[tuple[int, ...]]:
         if spec.strip("#."):
             raise ValueError
-        return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
+        return Naming(mags=tuple(map(len, spec.rstrip(".").split("."))))
 
     def _format_parsed(self: Self, *, mags: tuple[int, ...]) -> str:
         data: list[int]

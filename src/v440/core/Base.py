@@ -4,6 +4,7 @@ import operator
 from typing import *
 
 import setdoc
+from namings import Naming
 
 from v440._utils.Cfg import Cfg
 from v440.abc.NestedABC import NestedABC
@@ -70,11 +71,11 @@ class Base(NestedABC):
         cls: type[Self],
         spec: str,
         /,
-    ) -> dict[str, Any]:
-        ans: dict[str, int | str]
+    ) -> Naming[int | str]:
+        ans: Naming[int | str]
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
-        ans = dict()
+        ans = Naming[int | str]()
         ans["basev_f"] = matches["basev_f"]
         ans["epoch_mag"] = len(matches["epoch_f"])
         ans["release_f"] = matches["release_f"]

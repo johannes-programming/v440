@@ -1,3 +1,4 @@
+import collections.abc
 from abc import abstractmethod
 from typing import *
 
@@ -89,7 +90,9 @@ class CoreABC(cmp3.CmpABC, Copyable):
 
     @classmethod
     @abstractmethod
-    def _format_parse(self: Self, spec: str, /) -> dict[str, Any]: ...
+    def _format_parse(
+        self: Self, spec: str, /
+    ) -> collections.abc.Mapping[str, Any]: ...
 
     @abstractmethod
     def _format_parsed(self: Self, **kwargs: Any) -> Any: ...
