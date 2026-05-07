@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-    "setuptools>=64.0",
+    "setuptools>=77.0",
 ]
 
 [project]
@@ -11,13 +11,11 @@ authors = [
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Typing :: Typed",
 ]
 dependencies = [
     "cmp3>=1.0,<2",
@@ -27,17 +25,18 @@ dependencies = [
     "iterflat>=1.0,<2",
     "iterprod>=1.0,<2",
     "packaging>=25.0,<26",
-    "setdoc>=1.2.9,<2",
+    "setdoc>=1.2.20,<2",
 ]
 description = "This project provides mutable version objects in accordance with PEP440."
 keywords = []
+license = "MIT"
+license-files = [
+    "LICENSE.txt",
+]
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "2.0.2"
-
-[project.license]
-file = "LICENSE.txt"
+version = "2.0.3"
 
 [project.urls]
 Download = "https://pypi.org/project/v440/#files"
