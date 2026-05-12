@@ -62,7 +62,7 @@ class Dev(QualABC):
         if self:
             return self.num
         else:
-            return
+            return None
 
     @packaging.setter
     def packaging(self: Self, value: Optional[SupportsIndex]) -> None:

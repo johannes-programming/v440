@@ -59,8 +59,7 @@ class Post(QualABC):
 
     @property
     def packaging(self: Self) -> Optional[int]:
-        if self:
-            return self.num
+        return self.num if self else None
 
     @packaging.setter
     def packaging(self: Self, value: Optional[SupportsIndex]) -> None:

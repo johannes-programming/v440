@@ -102,7 +102,7 @@ class Release(ListABC[int]):
 
     def _format_parsed(self: Self, mags: tuple[Any, ...], /) -> str:
         data: list[int]
-        parts: list[int]
+        parts: list[Any]
         data = list(self)
         data += [0] * max(0, len(mags) - len(self))
         parts = [f"0{m}d" for m in mags]

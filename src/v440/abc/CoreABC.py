@@ -22,7 +22,7 @@ class CoreABC(cmp3.CmpABC, Copyable):
     @setdoc.basic
     def __cmp__(self: Self, other: Any) -> None | float | int:
         if type(self) is not type(other):
-            return
+            return None
         return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
 
     @setdoc.basic
@@ -86,7 +86,7 @@ class CoreABC(cmp3.CmpABC, Copyable):
 
     @classmethod
     @abstractmethod
-    def _format_parse(self: Self, spec: str, /) -> tuple[Any, ...]: ...
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
 
     @abstractmethod
     def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...

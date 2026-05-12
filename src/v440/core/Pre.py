@@ -26,9 +26,9 @@ class Pre(QualABC):
         o: Self
         clues: list[Clue]
         matches: dict[str, str]
-        pos: list[set]
+        pos: list[set[str]]
         sols: list[str]
-        way: tuple[set[str], set[str], set[str]]
+        way: tuple[Any, ...]
         clues = [Clue()] * 3
         for s, o in info.items():
             if not o:
@@ -92,6 +92,8 @@ class Pre(QualABC):
     def packaging(self: Self) -> Optional[tuple[str, int]]:
         if self:
             return self.lit, self.num
+        else:
+            return None
 
     @packaging.setter
     def packaging(self: Self, value: Optional[Iterable]) -> None:

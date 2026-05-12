@@ -46,8 +46,9 @@ class Qual(NestedABC):
         s: str
         t: str
         o: Self
+        clues: list[Clue]
         matches: dict[str, str]
-        parts: list[Clue]
+        parts: list[str]
         pos: list[set[str]]
         sols: list[str]
         table: tuple[Clue, ...]
@@ -55,26 +56,26 @@ class Qual(NestedABC):
         table = (Clue(),) * 5
         for s, o in info.items():
             matches = Cfg.fullmatches("qual", s)
-            parts = list()
+            clues = list()
             if o.pre.lit == "":
-                parts.append(Clue())
-                parts.append(Clue())
-                parts.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue())
             if o.pre.lit == "a":
-                parts.append(Clue.by_example(matches["pre"]))
-                parts.append(Clue())
-                parts.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+                clues.append(Clue())
+                clues.append(Clue())
             if o.pre.lit == "b":
-                parts.append(Clue())
-                parts.append(Clue.by_example(matches["pre"]))
-                parts.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+                clues.append(Clue())
             if o.pre.lit == "rc":
-                parts.append(Clue())
-                parts.append(Clue())
-                parts.append(Clue.by_example(matches["pre"]))
-            parts.append(Clue.by_example(matches["post"]))
-            parts.append(Clue.by_example(matches["dev"]))
-            table = tuple(map(operator.and_, parts, table))
+                clues.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+            clues.append(Clue.by_example(matches["post"]))
+            clues.append(Clue.by_example(matches["dev"]))
+            table = tuple(map(operator.and_, clues, table))
         pos = list()
         pos.append(table[0].possible(hollow="a", short="A"))
         pos.append(table[1].possible(hollow="b", short="B"))

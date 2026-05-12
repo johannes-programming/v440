@@ -31,7 +31,7 @@ class Local(ListABC[int | str]):
         s: str
         t: str
         i: int
-        parts: list[set]
+        parts: list[Any]
         if 0 == len(info):
             return ""
         m = max(map(len, info.values()))
@@ -191,6 +191,8 @@ class Local(ListABC[int | str]):
     def packaging(self: Self) -> Optional[str]:
         if self:
             return str(self)
+        else:
+            return None
 
     @packaging.setter
     def packaging(self: Self, value: Any) -> None:
