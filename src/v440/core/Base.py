@@ -16,11 +16,6 @@ class Base(NestedABC):
 
     __slots__ = ("_epoch", "_release")
 
-    epoch: int
-    packaging: str
-    release: Release
-    string: str
-
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._epoch = 0
@@ -70,24 +65,25 @@ class Base(NestedABC):
         cls: type[Self],
         spec: str,
         /,
-    ) -> dict[str, Any]:
-        ans: dict[str, int | str]
+    ) -> tuple[Any, ...]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
-        ans = dict()
-        ans["basev_f"] = matches["basev_f"]
-        ans["epoch_mag"] = len(matches["epoch_f"])
-        ans["release_f"] = matches["release_f"]
-        return ans
+        return (
+            matches["basev_f"],
+            len(matches["epoch_f"]),
+            matches["release_f"],
+        )
 
     def _format_parsed(
         self: Self,
-        *,
-        basev_f: str,
-        epoch_mag: int,
-        release_f: str,
+        parsed: tuple[Any, ...],
+        /,
     ) -> str:
+        basev_f: str
+        epoch_mag: int
+        release_f: str
         ans: str
+        basev_f, epoch_mag, release_f = parsed
         ans = basev_f
         if epoch_mag or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_mag)

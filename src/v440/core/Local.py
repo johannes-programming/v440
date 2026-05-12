@@ -13,15 +13,15 @@ from v440.abc.ListABC import ListABC
 __all__ = ["Local"]
 
 
+def sort_key(item: int | str) -> tuple[bool, int | str]:
+    return isinstance(item, int), item
+
+
 class Local(ListABC[int | str]):
     __slots__ = ()
 
-    data: tuple[int | str, ...]
-    packaging: Optional[str]
-    string: str
-
     @setdoc.basic
-    def __init__(self: Self, string: Any = "") -> None:
+    def __init__(self: Self, string: object = "") -> None:
         self._data = ()
         self.string = string
 
@@ -35,7 +35,7 @@ class Local(ListABC[int | str]):
         s: str
         t: str
         i: int
-        parts: list[set]
+        parts: list[Any]
         if 0 == len(info):
             return ""
         m = max(map(len, info.values()))
@@ -109,7 +109,7 @@ class Local(ListABC[int | str]):
             return n
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Any]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         l: str
         m: int
         x: str
@@ -131,9 +131,9 @@ class Local(ListABC[int | str]):
             split.append((m, l, y))
         while len(split) and split[-1] == (0, "", "."):
             split.pop()
-        return dict(split=tuple(split))
+        return tuple(split)
 
-    def _format_parsed(self: Self, *, split: tuple[tuple[int, str, str], ...]) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
         item: int | str
         index: int
@@ -144,8 +144,8 @@ class Local(ListABC[int | str]):
         z: str
         ans = ""
         for index, item in enumerate(self):
-            if index < len(split):
-                x, y, z = split[index]
+            if index < len(parsed):
+                x, y, z = parsed[index]
             else:
                 x, y, z = 0, "", "."
             if isinstance(item, int):
@@ -195,6 +195,8 @@ class Local(ListABC[int | str]):
     def packaging(self: Self) -> Optional[str]:
         if self:
             return str(self)
+        else:
+            return None
 
     @packaging.setter
     def packaging(self: Self, value: Any) -> None:
@@ -202,3 +204,11 @@ class Local(ListABC[int | str]):
             self.string = ""
         else:
             self.string = value
+
+    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
+        "This method sorts the data."
+        self.data = sorted(
+            self,
+            key=sort_key if key is None else key,
+            reverse=reverse,
+        )

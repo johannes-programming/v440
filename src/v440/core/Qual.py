@@ -19,11 +19,6 @@ __all__ = ["Qual"]
 class Qual(NestedABC):
 
     __slots__ = ("_pre", "_post", "_dev")
-    dev: Dev
-    packaging: str
-    post: Post
-    pre: Pre
-    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
@@ -51,6 +46,7 @@ class Qual(NestedABC):
         s: str
         t: str
         o: Self
+        clues: list[Clue]
         matches: dict[str, str]
         parts: list[str]
         pos: list[set[str]]
@@ -60,26 +56,26 @@ class Qual(NestedABC):
         table = (Clue(),) * 5
         for s, o in info.items():
             matches = Cfg.fullmatches("qual", s)
-            parts = list()
+            clues = list()
             if o.pre.lit == "":
-                parts.append(Clue())
-                parts.append(Clue())
-                parts.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue())
             if o.pre.lit == "a":
-                parts.append(Clue.by_example(matches["pre"]))
-                parts.append(Clue())
-                parts.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+                clues.append(Clue())
+                clues.append(Clue())
             if o.pre.lit == "b":
-                parts.append(Clue())
-                parts.append(Clue.by_example(matches["pre"]))
-                parts.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+                clues.append(Clue())
             if o.pre.lit == "rc":
-                parts.append(Clue())
-                parts.append(Clue())
-                parts.append(Clue.by_example(matches["pre"]))
-            parts.append(Clue.by_example(matches["post"]))
-            parts.append(Clue.by_example(matches["dev"]))
-            table = tuple(map(operator.and_, parts, table))
+                clues.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+            clues.append(Clue.by_example(matches["post"]))
+            clues.append(Clue.by_example(matches["dev"]))
+            table = tuple(map(operator.and_, clues, table))
         pos = list()
         pos.append(table[0].possible(hollow="a", short="A"))
         pos.append(table[1].possible(hollow="b", short="B"))
@@ -100,18 +96,21 @@ class Qual(NestedABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict:
-        ans: dict[str, str]
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         matches: dict[str, str]
-        x: str
         matches = Cfg.fullmatches("qual_f", spec)
-        ans = dict()
-        for x in ("pre_f", "post_f", "dev_f"):
-            ans[x] = matches[x]
-        return ans
+        return (
+            matches["pre_f"],
+            matches["post_f"],
+            matches["dev_f"],
+        )
 
-    def _format_parsed(self: Self, *, pre_f: str, post_f: str, dev_f: str) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
+        pre_f: str
+        post_f: str
+        dev_f: str
+        pre_f, post_f, dev_f = parsed
         ans = format(self.pre, pre_f)
         ans += format(self.post, post_f)
         ans += format(self.dev, dev_f)

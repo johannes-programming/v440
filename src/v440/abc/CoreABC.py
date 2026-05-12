@@ -1,7 +1,6 @@
 from abc import abstractmethod
 from typing import *
 
-import cmp3
 import setdoc
 from copyable import Copyable
 from datarepr import oxford
@@ -12,25 +11,20 @@ from v440.errors.VersionError import VersionError
 __all__ = ["CoreABC"]
 
 
-class CoreABC(cmp3.CmpABC, Copyable):
+class CoreABC(Copyable):
     __slots__ = ()
-
-    packaging: Any
-    string: str
 
     @abstractmethod
     @setdoc.basic
     def __bool__(self: Self) -> bool: ...
 
+    @abstractmethod
     @setdoc.basic
-    def __cmp__(self: Self, other: Any) -> None | float | int:
-        if type(self) is not type(other):
-            return
-        return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
+    def __eq__(self: Self, other: object) -> Any: ...
 
     @setdoc.basic
-    def __format__(self: Self, format_spec: Any) -> str:
-        parsed: dict[str, Any]
+    def __format__(self: Self, format_spec: object) -> str:
+        parsed: tuple[Any, ...]
         msg: str
         try:
             parsed = self._format_parse(str(format_spec))
@@ -38,11 +32,31 @@ class CoreABC(cmp3.CmpABC, Copyable):
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return str(self._format_parsed(**parsed))
+        return str(self._format_parsed(parsed))
 
     @abstractmethod
     @setdoc.basic
-    def __init__(self: Self, string: Any) -> None: ...
+    def __ge__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __gt__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __init__(self: Self, string: object) -> None: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __le__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __lt__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __ne__(self: Self, other: object) -> Any: ...
 
     @abstractmethod
     @setdoc.basic
@@ -56,11 +70,11 @@ class CoreABC(cmp3.CmpABC, Copyable):
         target: str
         a = getattr(type(self), name, None)
         if (not isinstance(a, property)) or not hasattr(a, "fset"):
-            super().__setattr__(name, value)
+            object.__setattr__(self, name, value)
             return
         backup = str(self)
         try:
-            super().__setattr__(name, value)
+            object.__setattr__(self, name, value)
         except VersionError:
             self.string = backup
             raise
@@ -80,19 +94,16 @@ class CoreABC(cmp3.CmpABC, Copyable):
     def __str__(self: Self) -> str:
         return format(self, "")
 
-    @abstractmethod
-    def _cmp(self: Self) -> Any: ...
-
     @classmethod
     @abstractmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> Any: ...
 
     @classmethod
     @abstractmethod
-    def _format_parse(self: Self, spec: str, /) -> dict[str, Any]: ...
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
 
     @abstractmethod
-    def _format_parsed(self: Self, **kwargs: Any) -> Any: ...
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...
 
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
@@ -127,5 +138,5 @@ class CoreABC(cmp3.CmpABC, Copyable):
         return format(self, "")
 
     @string.setter
-    def string(self: Self, value: Any) -> None:
+    def string(self: Self, value: object) -> None:
         self._string_fset(str(value).lower())

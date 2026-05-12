@@ -22,8 +22,10 @@ class Cfg(enum.Enum):
     @classmethod
     def fullmatches(cls: type[Self], key: str, value: str) -> dict[str, str]:
         ans: dict
+        fullmatch: Any
         x: str
-        ans = cls.cfg.patterns[key].fullmatch(value).groupdict()
+        fullmatch = cls.cfg.patterns[key].fullmatch(value)
+        ans = fullmatch.groupdict()
         for x in ans.keys():
             if ans[x] is None:
                 ans[x] = ""

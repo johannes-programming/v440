@@ -3,6 +3,7 @@ import string as string_
 from abc import abstractmethod
 from typing import *
 
+import cmp3  # type: ignore
 import setdoc
 from datarepr import datarepr
 
@@ -11,20 +12,21 @@ from v440.abc.CoreABC import CoreABC
 __all__ = ["QualABC"]
 
 
-class QualABC(CoreABC):
+class QualABC(cmp3.CmpABC, CoreABC):
     __slots__ = ("_lit", "_num")
-
-    lit: str
-    num: int
-    packaging: Any
-    string: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.lit)
 
     @setdoc.basic
-    def __init__(self: Self, string: Any = "") -> None:
+    def __cmp__(self: Self, other: Any) -> None | float | int:
+        if type(self) is not type(other):
+            return None
+        return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
+
+    @setdoc.basic
+    def __init__(self: Self, string: object = "") -> None:
         self._lit = ""
         self._num = 0
         self.string = string
@@ -36,6 +38,9 @@ class QualABC(CoreABC):
             lit=self.lit,
             num=self.num,
         )
+
+    @abstractmethod
+    def _cmp(self: Self) -> Any: ...
 
     @classmethod
     @abstractmethod
