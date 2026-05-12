@@ -1,0 +1,709 @@
+Overview
+--------
+
+The project v440 is a PyPI project that provides mutable version objects that allow flexible manipulation of version identifiers following the PEP440 standard.
+
+Installation
+------------
+
+To install v440, you can use pip. Open your terminal and run:
+
+.. code-block:: shell
+
+    pip install v440
+
+Introduction
+------------
+
+Core Components
+~~~~~~~~~~~~~~~~
+
+The v440 module is built around the class v440.Version. Its instances are mutable representations of PEP 440 conforming versions allowing to manipulate the specific parts of the version identifiers individually.
+
+.. code-block:: python
+
+    from v440 import Version
+
+    # Create an instance of the v440.Version class
+    v = Version("1.2.3")
+
+    # The instance allows manipulation of individual parts of the version
+    v.release.major = 2
+    v.release.minor = 5
+    v.pre = "beta.1"
+    v.local = "local.7.dev"
+
+    # Print the modified version
+    print(v)  # Output: 2.5.3b1+local.7.dev
+
+Quick Links for the properties of v440.Version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| Name    | Description                                                                  | Getter                                                       | Setter                                                       |
++=========+==============================================================================+==============================================================+==============================================================+
+| base    | Represents epoch and release.                                                | Gives a copy truncated to only epoch and release.            | Overwrites epoch and release.                                |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| data    | Represents the entire instance.                                              | Gives string representation.                                 | Overwrites all properties.                                   |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| dev     | Represents the devrelease part of the version identifier.                    | Gives None or a nonnegative integer.                         | Converts and saves the value.                                |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| epoch   | Represents the epoch part of the version identifier.                         | Gives a nonnegative integer.                                 | Converts and saves the value.                                |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| local   | Represents the local part of the version identifier.                         | Gives an object of the class Local.                          | Converts the value and saves it inside of local.             |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| post    | Represents the postrelease part of the version identifier.                   | Gives None or a nonnegative integer.                         | Converts and saves the value.                                |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| pre     | Represents the prerelease part of the version identifier.                    | Gives an object of the class Pre.                            | Converts the value and saves it inside of pre.               |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| public  | Represents the public part of the version identifier (everything but local). | Gives a copy without local.                                  | Overwrites all properties except for local.                  |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+| release | Represents the release part of the version identifier.                       | Gives a specialized list-like object that can be altered.    | Converts the value and saves it inside of release.           |
++---------+------------------------------------------------------------------------------+--------------------------------------------------------------+--------------------------------------------------------------+
+
+Version Object Examples
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    v = Version("1.0.0")
+    print(str(v))  # Output: 1.0.0
+    v.release[1] = 5
+    print(str(v))  # Output: 1.5.0
+
+Features
+--------
+
+``class v440.core.Local.Local(data: Any = None)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This class is a list-like subclass of datahold.OkayList specifically for the local property of Version. It implements all operations and methods of list. All items are are nonnegative integers or nonempty strings.
+
+Calling the class creates a new Local instance. The one (non required) positional argument is passed to its data property.
+
+``data: list[int|str]``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This property represents the entire instance. Its getter returns a list. Its setter interprets the given value as a local version identifier and uses this to change the instance accordingly.
+
+``class v440.core.Pre.Pre(data: Any = None)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This class is a list-like subclass of datahold.OkayList specifically for the pre property of Version. It implements all operations and methods of list. However the possibilities of modification are limited by strong constrains, especially that there must always be exactly two items, phase and subphase. The constraints ensures that pre-releases maintain their intended structure and semantics.
+
+Calling the class creates a new Pre object. The one (non required) positional argument is passed to its data property.
+
+``data: list``
+^^^^^^^^^^^^^^
+
+This property represents the entire instance. Its getter returns a list of length 2 containing the values of phase and subphase. Its setter interprets the given value as a prelease identifier and uses this to change phase and subphase accordingly.
+
+``isempty() -> bool``
+^^^^^^^^^^^^^^^^^^^^^
+
+This method returns a boolean value. True if data is equal to [None, None] meaning that the version is not an alpharelease, betarelease, or release candidate, otherwise False.
+
+``phase: Optional[str]``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This property is a keyalias for 0. It take a value of "a" (for an alpha release), "b" (for a beta release), or "rc" (for a release candidate) iff subphase is a nonnegative integer and the value None iff subphase is likewise None.
+
+``subphase: Optional[int]``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This property is a keyalias for ``1``. It take a nonnegative integer value iff phase is a string and the value None iff phase is likewise None.
+
+``class v440.core.Release.Release(data: Any = None)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This class is a subclass of datahold.OkayList specifically for the release property of Version. It implements all operations and methods of list. All items are are nonnegative integers. While normally all tailing zeros are dropped if it is necessary an unlimited amount of tailing zeros will be simulated.
+
+.. code-block:: python
+
+    from v440.core.Release import Release
+
+    release = Release("1.2.3")
+    print(release)
+    print(list(release))
+    release.insert(1, 42)
+    print(release)
+    release *= 2
+    print(release)
+    release += [3, 1, 4]
+    print(release)
+    print(release[0::2])
+    print(release[10])
+    print(release[100])
+
+    #Output:
+        #1.2.3
+        #[1, 2, 3]
+        #1.42.2.3
+        #1.42.2.3.1.42.2.3
+        #1.42.2.3.1.42.2.3.3.1.4
+        #[1, 2, 1, 2, 3, 4]
+        #4
+        #0
+
+Calling the class creates a new Release object. The one (non required) positional argument is passed to its data property.
+
+``bump(index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method increases the item at the given index by amount and sets all further items to zeros/cuts them off.
+
+.. code-block:: python
+
+    from v440.core.Release import Release
+
+    release = Release("1.2.3")
+    print(release)
+    release.bump(2)
+    print(release)
+    release.bump(-2, 10)
+    print(release)
+    release.bump(5)
+    print(release)
+
+    #Output:
+        #1.2.3
+        #1.2.4
+        #1.12
+        #1.12.0.0.0.1
+
+``data: list[int]``
+^^^^^^^^^^^^^^^^^^^
+
+This property represents the entire instance. Its getter returns a list. Its setter interprets the given value as a version release identifier and uses this to change the instance accordingly.
+
+``format(cutoff: Any = None) -> str``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method returns a string representation of the instance. The argument cutoff allows for modifying the length for the underlying list. This is especially useful because Release drops all the tailing zeros.
+
+.. code-block:: python
+
+    from v440.core.Release import Release
+
+    release = Release("1.3.3.7.0.0.0")
+    print(release)
+    print(release.format())
+    print(release.format("2"))
+    print(release.format("4"))
+    print(release.format("6"))
+    print(release.format("8"))
+    print(release.format("-1"))
+    print(release.format("-3"))
+    #Output
+        #1.3.3.7
+        #1.3.3.7
+        #1.3
+        #1.3.3.7
+        #1.3.3.7.0.0
+        #1.3.3.7.0.0.0.0
+        #1.3.3
+        #1
+
+``major: int``
+^^^^^^^^^^^^^^
+
+This property is a keyalias for ``0``.
+
+``minor: int``
+^^^^^^^^^^^^^^
+
+This property is a keyalias for ``1``.
+
+``micro: int``
+^^^^^^^^^^^^^^
+
+This property is a keyalias for ``2``.
+
+``patch: int``
+^^^^^^^^^^^^^^
+
+This property is another keyalias for ``2``, just as micro.
+
+``class v440.Version(data: Any = "0", /, **kwargs)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This class is the central class of the v440 project.
+
+Calling the class creates a new Version object. The one (non required) positional argument is passed to the data property. The keyword arguments are then passed to the properties defined by their keywords.
+
+``base: Self``
+^^^^^^^^^^^^^^
+
+This property is designed to provide a streamlined way to handle base versioning information. When accessing the base property, it returns a Version object that retains only the epoch and release information, effectively omitting the pre-release, post-release, development, and local version components. This property is particularly useful for scenarios where a clear and simplified version identifier is required without the additional complexity of other version components. The base property allows for both retrieval and modification. When setting base, you can update epoch and release simultaneously, which helps maintain consistency in versioning and makes it easier to manage version hierarchies. Here's an example demonstrating the functionality of the base property:
+
+.. code-block:: python
+
+    from v440 import Version
+
+    v = Version("1.2.3")
+    print("Initial version:", v)
+    print("Base version:", v.base)
+
+    v.base = "2.0"
+    print("Updated version:", v)
+    print("Base version:", v.base)
+
+    v.base = "1!3.4"
+    print("Version after changing base and epoch:", v)
+    print("Base version:", v.base)
+    print("Epoch:", v.epoch)
+
+    v.pre = "b1"
+    print("Pre-release version:", v)
+    print("Base version remains unchanged:", v.base)
+
+    #Output
+        #Initial version: 1.2.3
+        #Base version: 1.2.3
+        #Updated version: 2
+        #Base version: 2
+        #Version after changing base and epoch: 1!3.4
+        #Base version: 1!3.4
+        #Epoch: 1
+        #Pre-release version: 1!3.4b1
+        #Base version remains unchanged: 1!3.4
+
+In this example, the base property is used to demonstrate its functionality and flexibility. Initially, the version is set to "1.2.3". When the base property is updated to "2.0", it shows the changes. Later, by assigning "1!3.4" to base , both the epoch and the release version are modified, while the pre-release component remains unaffected. This showcases how the base property effectively streamlines version management by focusing solely on the essential components of a version identifier.
+
+``data: str``
+^^^^^^^^^^^^^
+
+This property represents the entire instance. Its getter returns the instance converted into a string. Its setter interprets the given value as a version identifier and uses this to change every property of the instance accordingly.
+
+.. code-block:: python
+
+    from v440 import Version
+
+    v = Version("42!1.2.3.dev1337+5.nov")
+    print("Initial version:", v)
+    print("Data property:", v.data)
+    print("Type of data property:", type(v.data))
+
+    v.data = 4.2
+    print("Updated version:", v)
+    print("Data property:", v.data)
+    print("Type of data property:", type(v.data))
+
+    v.data = 9001
+    print("Updated version:", v)
+    print("Data property:", v.data)
+    print("Type of data property:", type(v.data))
+
+    v.data = None
+    print("Updated version:", v)
+    print("Data property:", v.data)
+    print("Type of data property:", type(v.data))
+
+    v.data = "1701!4.5.6.rc255+reset"
+    print("Updated version:", v)
+    print("Data property:", v.data)
+    print("Type of data property:", type(v.data))
+
+    #Output
+        #Initial version: 42!1.2.3.dev1337+5.nov
+        #Data property: 42!1.2.3.dev1337+5.nov
+        #Type of data property: <class 'str'>
+        #Updated version: 4.2
+        #Data property: 4.2
+        #Type of data property: <class 'str'>
+        #Updated version: 9001
+        #Data property: 9001
+        #Type of data property: <class 'str'>
+        #Updated version: 0
+        #Data property: 0
+        #Type of data property: <class 'str'>
+        #Updated version: 1701!4.5.6rc255+reset
+        #Data property: 1701!4.5.6rc255+reset
+        #Type of data property: <class 'str'>
+
+``dev: Optional[int]``
+^^^^^^^^^^^^^^^^^^^^^^
+
+This property signifies developmental releases, which are often created during a project's development cycle. These releases are useful for developers and packagers who want to test early versions of the software without interfering with stable releases. The devsegment consists of the string ".dev" followed by a non-negative integer, which indicates the specific developmental release. Developmental releases are ordered numerically, appearing right before the corresponding stable release in version sorting. For example, if you have a version "1.2.3", the developmental releases would be labeled "1.2.3.dev1", "1.2.3.dev2", etc. Additionally, developmental releases can also be used in conjunction with pre-releases and post-releases, such as "1.2.3a.dev1" for an alpha release or "1.2.3.post1.dev1" for a post-release. While developmental releases serve a purpose in testing and continuous integration, it's generally advised against publishing them publicly, especially for pre-releases, as they can complicate version interpretation. Instead, it's clearer to create a new pre-release by incrementing the numeric part of the version. In the provided example code, the dev property is shown to be highly tolerant, accepting various formats and types, including strings, lists, and booleans, while maintaining the integrity of the versioning system:
+
+.. code-block:: python
+
+    from v440 import Version
+
+    v = Version("1.2.3")
+    print(v, type(v.dev), v.dev)
+    v.dev = 1
+    print(v, type(v.dev), v.dev)
+    v.dev = "42"
+    print(v, type(v.dev), v.dev)
+    v.dev = "dev1000"
+    print(v, type(v.dev), v.dev)
+    v.dev = "dev.2000"
+    print(v, type(v.dev), v.dev)
+    v.dev = ".dev.3000"
+    print(v, type(v.dev), v.dev)
+    v.dev = ".dev4000"
+    print(v, type(v.dev), v.dev)
+    v.dev = ("dev", "5000")
+    print(v, type(v.dev), v.dev)
+    v.dev = ["dev", "6000"]
+    print(v, type(v.dev), v.dev)
+    v.dev = "DEV7000"
+    print(v, type(v.dev), v.dev)
+    v.dev = "dEv8000"
+    print(v, type(v.dev), v.dev)
+    v.dev = ["dEV", "9000"]
+    print(v, type(v.dev), v.dev)
+    v.dev = False
+    print(v, type(v.dev), v.dev)
+    v.dev = True
+    print(v, type(v.dev), v.dev)
+    v.dev = None
+    print(v, type(v.dev), v.dev)
+
+    #Output:
+        #1.2.3 <class 'NoneType'> None
+        #1.2.3.dev1 <class 'int'> 1
+        #1.2.3.dev42 <class 'int'> 42
+        #1.2.3.dev1000 <class 'int'> 1000
+        #1.2.3.dev2000 <class 'int'> 2000
+        #1.2.3.dev3000 <class 'int'> 3000
+        #1.2.3.dev4000 <class 'int'> 4000
+        #1.2.3.dev5000 <class 'int'> 5000
+        #1.2.3.dev6000 <class 'int'> 6000
+        #1.2.3.dev7000 <class 'int'> 7000
+        #1.2.3.dev8000 <class 'int'> 8000
+        #1.2.3.dev9000 <class 'int'> 9000
+        #1.2.3.dev0 <class 'int'> 0
+        #1.2.3.dev1 <class 'int'> 1
+        #1.2.3 <class 'NoneType'> None
+
+This example highlights the flexibility of the dev property in handling different input types while adhering to the requirements of the versioning system.
+
+``epoch: int``
+^^^^^^^^^^^^^^
+
+This property in versioning serves as a mechanism to manage version identifiers in situations where the conventional sorting rules might not suffice. It is particularly useful when a project transitions from one versioning scheme to another, ensuring that version comparisons yield the correct results. The epoch is represented as a nonnegative integer and is placed before the other version components, separated by an exclamation mark (e.g., E!X.Y). If a version identifier lacks an explicit epoch, it defaults to 0. This is significant because it allows developers to redefine versioning strategies without conflicting with previous releases. For instance, if a project previously utilized date-based versioning and then shifts to semantic versioning, the epoch ensures that the new versions are recognized as more recent than the earlier versions. In the provided code example, the epoch property demonstrates its flexibility and tolerance in handling various types of inputs. The setter can accept strings, booleans, and even None, converting them to a valid integer or resetting the epoch to its default value.
+
+.. code-block:: python
+
+    from v440 import Version
+
+    v = Version("1.2.3")
+    v.epoch = 1
+    print(v, type(v.epoch), v.epoch)
+    v.epoch = "42"
+    print(v, type(v.epoch), v.epoch)
+    v.epoch = "9001!"
+    print(v, type(v.epoch), v.epoch)
+    v.epoch = False
+    print(v, type(v.epoch), v.epoch)
+    v.epoch = True
+    print(v, type(v.epoch), v.epoch)
+    v.epoch = None
+    print(v, type(v.epoch), v.epoch)
+
+    #Output:
+        # 1!1.2.3 <class 'int'> 1
+        # 42!1.2.3 <class 'int'> 42
+        # 9001!1.2.3 <class 'int'> 9001
+        # 1.2.3 <class 'int'> 0
+        # 1!1.2.3 <class 'int'> 1
+        # 1.2.3 <class 'int'> 0
+
+Overall, the epoch property is a vital feature for managing complex versioning schemes, helping maintain clarity and accuracy in version comparisons across different formats.
+
+``format(cutoff: Any = None) -> str``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method returns a string representation of the instance in which release is formatted with the given cutoff. See the format method of Release for more information.
+
+.. code-block:: python
+
+    from v440 import Version
+
+    version = Version("1.2.3rc42+my.local.patch")
+    print(version)
+    print(version.format())
+    print(version.format("2"))
+    print(version.format("4"))
+    print(version.format("6"))
+    print(version.format("-1"))
+
+    #Output:
+        #1.2.3rc42+my.local.patch
+        #1.2.3rc42+my.local.patch
+        #1.2rc42+my.local.patch
+        #1.2.3.0rc42+my.local.patch
+        #1.2.3.0.0.0rc42+my.local.patch
+        #1.2rc42+my.local.patch
+
+``isdevrelease() -> bool``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+This method returns a booloean value that tells whether the instance represents a devrelease or not.
+
+.. code-block:: python
+
+    from v440 import Version
+
+    # the following two functions are equivalent
+    def f(version:Version) -> bool:
+        return version.isdevrelease()
+    def g(version:Version) -> bool:
+        return version.dev is not None
+
+``isprerelease() -> bool``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method returns a booloean value that tells whether the instance represents a prerelease or not. Devreleases are also counted as prereleases, as they are by packaging.version.Version .
+
+.. code-block:: python
+
+    from v440 import Version
+
+    # the following two functions are equivalent
+    def f(version:Version) -> bool:
+        return version.isprerelease()
+    def g(version:Version) -> bool:
+        return version.isdevrelease() or not version.pre.isempty()
+
+``ispostrelease() -> bool``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method returns a booloean value that tells whether the instance represents a postrelease or not.
+
+.. code-block:: python
+
+    from v440 import Version
+
+    # the following two functions are equivalent
+    def f(version:Version) -> bool:
+        return version.ispostrelease()
+    def g(version:Version) -> bool:
+        return version.post is not None
+
+``local: v440.core.Local.Local``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This property is designed to manage local version identifiers, which serve as extensions to the public version number. These identifiers enable developers and integrators to indicate that a version is a specific variation of an upstream release, often due to custom patches or modifications. Local version identifiers follow the syntax <public version identifier>[+<local version label>], where the local label is prefixed by a plus sign. Local version identifiers can include ASCII letters, digits, and periods, and they must start and end with an alphanumeric character. The primary purpose of local identifiers is to help differentiate between official (public) upstream releases and downstream adaptations, which may not contain the same code as the upstream version. The local property in the v440 project behaves like a specialized list, capable of being manipulated while preserving its integrity. It can interpret strings with periods as lists, allowing for operations typical of lists, such as appending, removing, and sorting elements. Here's an example illustrating how the local property works:
+
+.. code-block:: python
+
+    from v440 import Version
+
+    v = Version("1.2.3")
+    backup = v.local
+    v.local = "local.1.2.3"
+    print(v, v.local)
+    v.local.append("extra")
+    print(v, v.local)
+    v.local.remove(1)
+    print(v, v.local)
+    print(v.local[0])
+    print(v.local[-1])
+    v.local.sort()
+    print(v, v.local)
+    v.local.clear()
+    print(v, v.local)
+    v.local = "reset.1.2"
+    print(v, v.local)
+    print(v.local is backup)
+
+    #Output:
+        #1.2.3+local.1.2.3 local.1.2.3
+        #1.2.3+local.1.2.3.extra local.1.2.3.extra
+        #1.2.3+local.2.3.extra local.2.3.extra
+        #Version.local
+        #extra
+        #1.2.3+extra.local.2.3 extra.local.2.3
+        #1.2.3
+        #1.2.3+reset.1.2 reset.1.2
+        #True
+
+In this example, the local property is initialized with a string that gets interpreted as a list. Various list operations are demonstrated, showcasing its functionality while preserving the original versioning structure. The local property is versatile and maintains the versioning rules, allowing for clear differentiation between upstream releases and downstream modifications.
+
+``packaging() -> packaging.version.Version``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method converts the current instance into an (immutable) packaging.version.Version object.
+
+.. code-block:: python
+
+    import packaging.version
+    import v440
+
+    # the following two functions are equivalent
+    def f(version:v440.Version) -> packaging.version.Version:
+        return version.packaging()
+    def g(version:v440.Version) -> packaging.version.Version:
+        return packaging.version.Version(str(version))
+
+``post: Optional[int]``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This property in versioning is used to identify post-releases, which are minor updates made to final releases that do not introduce significant changes to the software itself. These updates may address issues such as errors in release notes or minor tweaks that don't affect functionality. The inclusion of a post-release segment in the version identifier is denoted as X.Y.postN, where N is a non-negative integer that represents the post-release number. Post-releases are sequenced to appear directly after their corresponding stable releases in the version hierarchy. This means if you have a version 1.2.3, the post-releases will be labeled as 1.2.3.post1, 1.2.3.post2, etc. It's important to note that while post-releases can also be applied to pre-releases and release candidates (like 1.2.3a.post1 for an alpha version), using post-releases for significant bug fixes is not recommended. Instead, developers are encouraged to increment the main version number to reflect more substantial updates. The following code example illustrates the flexibility of the post property in handling various input formats, allowing it to accept different types while maintaining the integrity of the versioning system:
+
+.. code-block:: python
+
+    from v440 import Version
+
+    v = Version("1.2.3")
+    print(v, type(v.post), v.post)
+    v.post = 1
+    print(v, type(v.post), v.post)
+    v.post = "42"
+    print(v, type(v.post), v.post)
+    v.post = "post1000"
+    print(v, type(v.post), v.post)
+    v.post = "post.2000"
+    print(v, type(v.post), v.post)
+    v.post = ".post.3000"
+    print(v, type(v.post), v.post)
+    v.post = ".post4000"
+    print(v, type(v.post), v.post)
+    v.post = ("post", "5000")
+    print(v, type(v.post), v.post)
+    v.post = ["post", "6000"]
+    print(v, type(v.post), v.post)
+    v.post = "POST7000"
+    print(v, type(v.post), v.post)
+    v.post = "pOsT8000"
+    print(v, type(v.post), v.post)
+    v.post = ["poST", 9000]
+    print(v, type(v.post), v.post)
+    v.post = ["10000"]
+    print(v, type(v.post), v.post)
+    v.post = "REV11000"
+    print(v, type(v.post), v.post)
+    v.post = "rEv12000"
+    print(v, type(v.post), v.post)
+    v.post = "R13000"
+    print(v, type(v.post), v.post)
+    v.post = "r14000"
+    print(v, type(v.post), v.post)
+    v.post = ["post", None]
+    print(v, type(v.post), v.post)
+    v.post = False
+    print(v, type(v.post), v.post)
+    v.post = True
+    print(v, type(v.post), v.post)
+    v.post = None
+    print(v, type(v.post), v.post)
+
+    # Output:
+        # 1.2.3 <class 'NoneType'> None
+        # 1.2.3.post1 <class 'int'> 1
+        # 1.2.3.post42 <class 'int'> 42
+        # 1.2.3.post1000 <class 'int'> 1000
+        # 1.2.3.post2000 <class 'int'> 2000
+        # 1.2.3.post3000 <class 'int'> 3000
+        # 1.2.3.post4000 <class 'int'> 4000
+        # 1.2.3.post5000 <class 'int'> 5000
+        # 1.2.3.post6000 <class 'int'> 6000
+        # 1.2.3.post7000 <class 'int'> 7000
+        # 1.2.3.post8000 <class 'int'> 8000
+        # 1.2.3.post9000 <class 'int'> 9000
+        # 1.2.3.post10000 <class 'int'> 10000
+        # 1.2.3.post11000 <class 'int'> 11000
+        # 1.2.3.post12000 <class 'int'> 12000
+        # 1.2.3.post13000 <class 'int'> 13000
+        # 1.2.3.post14000 <class 'int'> 14000
+        # 1.2.3 <class 'NoneType'> None
+        # 1.2.3.post0 <class 'int'> 0
+        # 1.2.3.post1 <class 'int'> 1
+        # 1.2.3 <class 'NoneType'> None
+
+This example showcases how the post property can accept various input formats, reinforcing the system's versatility while adhering to the requirements of versioning conventions.
+
+``pre: v440.core.Pre.Pre``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This property is designed to handle prereleases, which allow developers to provide alpha, beta, or release candidate versions of their software for user testing prior to a final release. Pre-releases are indicated by a specific format in the version identifier, such as X.YaN for alpha releases, X.YbN for beta releases, and X.YrcN for release candidates. Its getter returns a Pre object whose modification will also modify the Version instance. Its setter passes the value to the data property of the Pre object. Therefore the underlying Pre object of the Version object can never actually be replaced. Once called through the getter it can always be used. Here's an example demonstrating how the pre property works:
+
+.. code-block:: python
+
+    from v440 import Version
+
+    v = Version("1.2.3")
+    backup = v.pre
+    print(v, v.pre)
+    v.pre = "a1"
+    print(v, v.pre)
+    v.pre.phase = "preview"
+    print(v, v.pre)
+    v.pre.subphase = "42"
+    print(v, v.pre)
+    v.pre.phase = """
+        BeTa
+
+
+        """
+
+    print(v, v.pre)
+    v.pre = None
+    print(v, v.pre)
+
+    #Output:
+        #1.2.3
+        #1.2.3a1 a1
+        #1.2.3rc1 rc1
+        #1.2.3rc42 rc42
+        #1.2.3b42 b42
+        #1.2.3
+
+In this example, the pre property starts with a version initialized to "1.2.3" Various operations illustrate how the pre property can be manipulated, such as setting the phase and subphase of the pre-release. However, it's important to note that most operations on the pre property are subject to restrictions—attempting to change the length of the list or assign an incorrect value would raise a VersionError . The implementation ensures that prereleases are clearly defined while preserving the flexibility needed for version management.
+
+``public: Self``
+^^^^^^^^^^^^^^^^
+
+This property is designed to provide a streamlined way to handle public versioning information. When accessing the public property, it returns another Version object that has no local version information, but is otherwise identical to the original instance.
+
+``release: v440.core.Release.Release``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This property represents the release identifier of the version. Its getter returns a Release object. Its setter passes the value to the data property of the underlying Release object. The object itself can only ever be altered but never be replaced.
+
+``update(**kwargs: Any) -> None``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method updates the properties of the current instance using keyword arguments (kwargs). Following the order of the keyword arguments the property of the name corresponding to the key is set to the corresponding value.
+
+``class v440.VersionError(*args: Any)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A subclass of ValueError that is raised iff an improper value is passed to any property of a class in this project.
+
+Calling the class creates a new VersionError object.
+
+``v440.test()``
+~~~~~~~~~~~~~~~
+
+This project can be tested through its test function.
+
+.. code-block:: python
+
+    import v440
+    v440.test()
+
+License
+-------
+
+This project is licensed under the MIT License.
+
+Links
+-----
+
+- Download: https://pypi.org/project/v440/#files
+- Index: https://pypi.org/project/v440/
+- Source: https://github.com/johannes-programming/v440/
+- Website: https://v440.johannes-programming.online/
+
+Impressum
+---------
+
+**Johannes Programming**
+
+- Name: Johannes
+- Email: johannes.programming@gmail.com
+- Homepage: https://www.johannes-programming.online/
+- Gravatar: https://www.johannes-programming.fyi/
