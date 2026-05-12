@@ -15,9 +15,6 @@ Item = TypeVar("Item")
 class ListABC(CoreABC, HoldList[Item]):
 
     __slots__ = ()
-    data: tuple[Item, ...]
-    packaging: Any
-    string: str
 
     @setdoc.basic
     def __add__(self: Self, other: Any) -> Self:

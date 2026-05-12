@@ -19,11 +19,6 @@ __all__ = ["Qual"]
 class Qual(NestedABC):
 
     __slots__ = ("_pre", "_post", "_dev")
-    dev: Dev
-    packaging: str
-    post: Post
-    pre: Pre
-    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
@@ -52,7 +47,7 @@ class Qual(NestedABC):
         t: str
         o: Self
         matches: dict[str, str]
-        parts: list[str]
+        parts: list[Clue]
         pos: list[set[str]]
         sols: list[str]
         table: tuple[Clue, ...]
@@ -100,18 +95,21 @@ class Qual(NestedABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict:
-        ans: dict[str, str]
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         matches: dict[str, str]
-        x: str
         matches = Cfg.fullmatches("qual_f", spec)
-        ans = dict()
-        for x in ("pre_f", "post_f", "dev_f"):
-            ans[x] = matches[x]
-        return ans
+        return (
+            matches["pre_f"],
+            matches["post_f"],
+            matches["dev_f"],
+        )
 
-    def _format_parsed(self: Self, *, pre_f: str, post_f: str, dev_f: str) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
+        pre_f: str
+        post_f: str
+        dev_f: str
+        pre_f, post_f, dev_f = parsed
         ans = format(self.pre, pre_f)
         ans += format(self.post, post_f)
         ans += format(self.dev, dev_f)

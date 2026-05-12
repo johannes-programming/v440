@@ -11,8 +11,6 @@ __all__ = ["NestedABC"]
 
 class NestedABC(CoreABC):
     __slots__ = ()
-    packaging: str
-    string: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:

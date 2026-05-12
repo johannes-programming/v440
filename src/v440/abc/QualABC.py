@@ -14,11 +14,6 @@ __all__ = ["QualABC"]
 class QualABC(CoreABC):
     __slots__ = ("_lit", "_num")
 
-    lit: str
-    num: int
-    packaging: Any
-    string: str
-
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.lit)

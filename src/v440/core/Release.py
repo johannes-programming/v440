@@ -14,13 +14,6 @@ __all__ = ["Release"]
 
 class Release(ListABC[int]):
     __slots__ = ()
-    data: tuple[int, ...]
-    major: int
-    micro: int
-    minor: int
-    packaging: tuple[int, ...]
-    patch: int
-    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
@@ -102,12 +95,12 @@ class Release(ListABC[int]):
         self.data = data
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, tuple[int, ...]]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         if spec.strip("#."):
             raise ValueError
-        return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
+        return tuple(map(len, spec.rstrip(".").split(".")))
 
-    def _format_parsed(self: Self, *, mags: tuple[int, ...]) -> str:
+    def _format_parsed(self: Self, mags: tuple[Any, ...], /) -> str:
         data: list[int]
         parts: list[int]
         data = list(self)

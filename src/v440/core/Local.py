@@ -16,10 +16,6 @@ __all__ = ["Local"]
 class Local(ListABC[int | str]):
     __slots__ = ()
 
-    data: tuple[int | str, ...]
-    packaging: Optional[str]
-    string: str
-
     @setdoc.basic
     def __init__(self: Self, string: Any = "") -> None:
         self._data = ()
@@ -109,7 +105,7 @@ class Local(ListABC[int | str]):
             return n
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Any]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         l: str
         m: int
         x: str
@@ -131,9 +127,9 @@ class Local(ListABC[int | str]):
             split.append((m, l, y))
         while len(split) and split[-1] == (0, "", "."):
             split.pop()
-        return dict(split=tuple(split))
+        return tuple(split)
 
-    def _format_parsed(self: Self, *, split: tuple[tuple[int, str, str], ...]) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
         item: int | str
         index: int
@@ -144,8 +140,8 @@ class Local(ListABC[int | str]):
         z: str
         ans = ""
         for index, item in enumerate(self):
-            if index < len(split):
-                x, y, z = split[index]
+            if index < len(parsed):
+                x, y, z = parsed[index]
             else:
                 x, y, z = 0, "", "."
             if isinstance(item, int):

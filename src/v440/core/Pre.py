@@ -15,11 +15,6 @@ class Pre(QualABC):
 
     __slots__ = ()
 
-    lit: str
-    num: int
-    packaging: Optional[tuple[str, int]]
-    string: str
-
     def _cmp(self: Self) -> tuple:
         if not self:
             return (frozenset("0"),)
@@ -54,19 +49,24 @@ class Pre(QualABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
-        ans: dict[str, Clue]
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        a: Clue
+        b: Clue
         matches: dict[str, str]
+        rc: Clue
         matches = Cfg.fullmatches("pre_f", spec)
-        ans = dict()
-        ans["a"] = Clue.by_spec(matches["a_f"])
-        ans["b"] = Clue.by_spec(matches["b_f"])
-        ans["rc"] = Clue.by_spec(matches["rc_f"])
-        return ans
+        a = Clue.by_spec(matches["a_f"])
+        b = Clue.by_spec(matches["b_f"])
+        rc = Clue.by_spec(matches["rc_f"])
+        return a, b, rc
 
-    def _format_parsed(self: Self, *, a: Clue, b: Clue, rc: Clue) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
+        a: Clue
+        b: Clue
         clue: Clue
+        rc: Clue
+        a, b, rc = parsed
         if self.lit == "a":
             clue = a
         elif self.lit == "b":

@@ -15,9 +15,6 @@ __all__ = ["CoreABC"]
 class CoreABC(cmp3.CmpABC, Copyable):
     __slots__ = ()
 
-    packaging: Any
-    string: str
-
     @abstractmethod
     @setdoc.basic
     def __bool__(self: Self) -> bool: ...
@@ -30,7 +27,7 @@ class CoreABC(cmp3.CmpABC, Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
-        parsed: dict[str, Any]
+        parsed: tuple[Any, ...]
         msg: str
         try:
             parsed = self._format_parse(str(format_spec))
@@ -38,7 +35,7 @@ class CoreABC(cmp3.CmpABC, Copyable):
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return str(self._format_parsed(**parsed))
+        return str(self._format_parsed(parsed))
 
     @abstractmethod
     @setdoc.basic
@@ -89,10 +86,10 @@ class CoreABC(cmp3.CmpABC, Copyable):
 
     @classmethod
     @abstractmethod
-    def _format_parse(self: Self, spec: str, /) -> dict[str, Any]: ...
+    def _format_parse(self: Self, spec: str, /) -> tuple[Any, ...]: ...
 
     @abstractmethod
-    def _format_parsed(self: Self, **kwargs: Any) -> Any: ...
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...
 
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
