@@ -36,7 +36,7 @@ license-files = [
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "2.0.4"
+version = "2.0.5"
 
 [project.urls]
 Download = "https://pypi.org/project/v440/#files"
@@ -45,8 +45,6 @@ Source = "https://github.com/johannes-programming/v440/"
 Website = "http://v440.johannes-programming.online/"
 
 [tool.mypy]
-files = [
-    ".",
-]
+files = []
 python_version = "3.11"
 strict = false
