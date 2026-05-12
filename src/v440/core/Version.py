@@ -14,10 +14,6 @@ __all__ = ["Version"]
 
 class Version(NestedABC):
     __slots__ = ("_public", "_local")
-    local: Local
-    packaging: packaging.version.Version
-    public: Public
-    string: str
 
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
@@ -44,16 +40,13 @@ class Version(NestedABC):
         return cls._join(x, y)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, str]:
-        return dict(
-            zip(
-                ("public_f", "local_f"),
-                cls._split(spec),
-                strict=True,
-            )
-        )
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        return tuple(cls._split(spec))
 
-    def _format_parsed(self: Self, *, public_f: str, local_f: str) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+        public_f: str
+        local_f: str
+        public_f, local_f = parsed
         return self._join(
             format(self.public, public_f),
             format(self.local, local_f),
