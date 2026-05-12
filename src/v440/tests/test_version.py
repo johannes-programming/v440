@@ -24,14 +24,14 @@ class TestVersionManipulation(unittest.TestCase):
         self.assertEqual(str(v), "2.5.3b1+local.7.dev")
 
 
-class TestVersionLocal(unittest.TestCase):
+class TestVersionLocal0(unittest.TestCase):
 
     def test_version_operations(self: Self) -> None:
         backup: Local
         v: Any
         v = Version("1.2.3")
         backup = v.local
-        v.local = "local.1.2.3"
+        v.local.string = "local.1.2.3"
         self.assertEqual(str(v), "1.2.3+local.1.2.3")
         self.assertEqual(str(v.local), "local.1.2.3")
         v.local.append("extra")
@@ -48,7 +48,7 @@ class TestVersionLocal(unittest.TestCase):
         v.local.clear()
         self.assertEqual(str(v), "1.2.3")
         self.assertEqual(str(v.local), "")
-        v.local = "reset.1.2"
+        v.local.string = "reset.1.2"
         self.assertEqual(str(v), "1.2.3+reset.1.2")
         self.assertEqual(str(v.local), "reset.1.2")
         self.assertTrue(v.local is backup)
