@@ -3,6 +3,10 @@ Overview
 
 The project v440 is a PyPI project that provides mutable version objects that allow flexible manipulation of version identifiers following the PEP440 standard.
 
+.. container:: warning
+
+    **Warning:** The major version ``1`` of ``v440`` has reached end-of-life.
+
 Installation
 ------------
 
