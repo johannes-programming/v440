@@ -15,11 +15,6 @@ class Dev(QualABC):
 
     __slots__ = ()
 
-    lit: str
-    num: int
-    packaging: Optional[int]
-    string: str
-
     def _cmp(self: Self) -> tuple:
         if self.lit:
             return 0, self.num
@@ -33,18 +28,20 @@ class Dev(QualABC):
         return reduce(operator.and_, clues, Clue()).solo(".dev")
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         clue: Clue
         matches: dict[str, str]
         matches = Cfg.fullmatches("dev_f", spec)
         clue = Clue(
-            head=matches["dev_head_f"],
-            sep=matches["dev_sep_f"],
-            mag=len(matches["dev_num_f"]),
+            matches["dev_head_f"],
+            matches["dev_sep_f"],
+            len(matches["dev_num_f"]),
         )
-        return dict(clue=clue)
+        return (clue,)
 
-    def _format_parsed(self: Self, *, clue: Clue) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+        clue: Clue
+        (clue,) = parsed
         if not self:
             return ""
         if "" == clue.head:
@@ -65,7 +62,7 @@ class Dev(QualABC):
         if self:
             return self.num
         else:
-            return
+            return None
 
     @packaging.setter
     def packaging(self: Self, value: Optional[SupportsIndex]) -> None:

@@ -16,11 +16,6 @@ class Public(NestedABC):
 
     __slots__ = ("_base", "_qual")
 
-    base: Base
-    packaging: str
-    qual: Qual
-    string: str
-
     @setdoc.basic
     def __init__(self: Self, string: Any = "0") -> None:
         self._base = Base()
@@ -46,7 +41,7 @@ class Public(NestedABC):
         return x + y
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, str]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
@@ -56,9 +51,12 @@ class Public(NestedABC):
                 break
         if i != 0 and spec[i - 1] == "." and i != len(spec) and spec[i] not in "-_":
             i -= 1
-        return dict(base_f=spec[:i], qual_f=spec[i:])
+        return spec[:i], spec[i:]
 
-    def _format_parsed(self: Self, *, base_f: str, qual_f: str) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+        base_f: str
+        qual_f: str
+        base_f, qual_f = parsed
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod

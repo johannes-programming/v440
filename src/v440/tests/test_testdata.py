@@ -48,9 +48,9 @@ class TestDeformatting(unittest.TestCase):
                 self.go_examples(x, y)
 
     def go_examples(self: Self, clsname: str, tables: dict) -> None:
-        cls: type
+        cls: Any
         split: dict[bool, dict]
-        x: str
+        x: Any
         y: dict
         cls = getattr(getattr(core, clsname), clsname)
         split = {False: dict(), True: dict()}
@@ -64,14 +64,14 @@ class TestDeformatting(unittest.TestCase):
                 self.go_valid_example(cls, x, **y)
 
     def go_invalid_example(
-        self: Self, cls: type, example: tuple[str], /, **kwargs: Any
+        self: Self, cls: Any, example: tuple[str], /, **kwargs: Any
     ) -> None:
         with self.assertRaises(TypeError):
             cls.deformat(*example)
 
     def go_valid_example(
         self: Self,
-        cls: type,
+        cls: Any,
         example: tuple[str],
         /,
         *,
@@ -237,7 +237,7 @@ class TestStringExamples(unittest.TestCase):
 
     def go_valid_example_deformatted(
         self: Self,
-        cls: type,
+        cls: Any,
         example: str,
         /,
         *,
@@ -251,7 +251,7 @@ class TestStringExamples(unittest.TestCase):
 
     def go_valid_example_remake(
         self: Self,
-        cls: type,
+        cls: Any,
         example: str,
         /,
         **kwargs: Any,
