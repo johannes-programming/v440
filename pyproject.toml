@@ -22,8 +22,8 @@ dependencies = [
     "copyable>=1.0,<2",
     "datahold>=3.0,<4",
     "datarepr>=1.1,<2",
-    "iterflat>=1.0,<2",
-    "iterprod>=1.0,<2",
+    "iterflat>=1.1,<2",
+    "iterprod>=1.1,<2",
     "packaging>=25.0,<26",
     "setdoc>=1.2.20,<2",
 ]
@@ -36,7 +36,7 @@ license-files = [
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "2.0.7+tested.2"
+version = "2.0.7+tested.3"
 
 [project.urls]
 Download = "https://pypi.org/project/v440/#files"
@@ -45,6 +45,8 @@ Source = "https://github.com/johannes-programming/v440/"
 Website = "http://v440.johannes-programming.online/"
 
 [tool.mypy]
-files = []
+files = [
+    ".",
+]
 python_version = "3.11"
 strict = false
