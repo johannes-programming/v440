@@ -137,8 +137,8 @@ class Release(ListABC[int]):
         self.data = data
 
     @classmethod
-    def _sort(cls: type[Self], value: int) -> int:
-        return value
+    def _sort(cls: type[Self], value: int) -> tuple[bool, int]:
+        return True, value
 
     def _string_fset(self: Self, value: str) -> None:
         if value.strip(string_.digits + "."):

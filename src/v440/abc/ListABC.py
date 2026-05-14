@@ -3,7 +3,7 @@ from typing import *
 
 import cmp3
 import setdoc
-from datahold import HoldList
+from datahold import BaseDataObject, HoldList
 from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
@@ -35,9 +35,12 @@ class ListABC(cmp3.CmpABC, CoreABC, HoldList[Item]):
 
     @setdoc.basic
     def __cmp__(self: Self, other: Any) -> None | float | int:
-        if type(self) is not type(other):
+        if isinstance(other, ListABC):
+            return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
+        elif isinstance(other, BaseDataObject):
+            return cmp3.cmp(self.data, other.data, mode="le")
+        else:
             return None
-        return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
 
     @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
