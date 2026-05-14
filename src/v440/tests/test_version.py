@@ -3,6 +3,7 @@ from typing import *
 
 from v440.core.Local import Local
 from v440.core.Qual import Qual
+from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.errors.VersionError import VersionError
 
@@ -459,6 +460,23 @@ class TestDevNoGo(unittest.TestCase):
         v.public.qual.dev.string = ""
         self.assertEqual(str(v), "1.2.3")
         self.assertFalse(v.public.qual.dev)
+
+
+class TestDataHoldStandards(unittest.TestCase):
+    def test_list_like_comparison(self: Self) -> None:
+        local: Local
+        release: Release
+        local = Local()
+        release = Release()
+        local.data = (1, 2, 3)
+        release.data = (1, 2, 3)
+        self.assertEqual(local, release)
+        local.data = (1, 2, 4)
+        release.data = (1, 2, 3)
+        self.assertGreater(local, release)
+        local.data = (1, 2, 3)
+        release.data = (1, 2, 4)
+        self.assertLess(local, release)
 
 
 if __name__ == "__main__":
