@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from typing import *
 
+import cmp3
 import setdoc
 from datahold import HoldList
 from datarepr import datarepr
@@ -12,7 +13,7 @@ __all__ = ["ListABC"]
 Item = TypeVar("Item")
 
 
-class ListABC(CoreABC, HoldList[Item]):
+class ListABC(cmp3.CmpABC, CoreABC, HoldList[Item]):
 
     __slots__ = ()
 
@@ -31,6 +32,12 @@ class ListABC(CoreABC, HoldList[Item]):
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.data)
+
+    @setdoc.basic
+    def __cmp__(self: Self, other: Any) -> None | float | int:
+        if type(self) is not type(other):
+            return None
+        return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
 
     @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:

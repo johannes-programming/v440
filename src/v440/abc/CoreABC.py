@@ -1,7 +1,6 @@
 from abc import abstractmethod
 from typing import *
 
-import cmp3
 import setdoc
 from copyable import Copyable
 from datarepr import oxford
@@ -12,18 +11,12 @@ from v440.errors.VersionError import VersionError
 __all__ = ["CoreABC"]
 
 
-class CoreABC(cmp3.CmpABC, Copyable):
+class CoreABC(Copyable):
     __slots__ = ()
 
     @abstractmethod
     @setdoc.basic
     def __bool__(self: Self) -> bool: ...
-
-    @setdoc.basic
-    def __cmp__(self: Self, other: Any) -> None | float | int:
-        if type(self) is not type(other):
-            return None
-        return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
 
     @setdoc.basic
     def __format__(self: Self, format_spec: Any) -> str:
