@@ -70,9 +70,6 @@ class CoreABC(Copyable):
     def __str__(self: Self) -> str:
         return format(self, "")
 
-    @abstractmethod
-    def _cmp(self: Self) -> Any: ...
-
     @classmethod
     @abstractmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> Any: ...

@@ -28,6 +28,9 @@ class NestedABC(cmp3.CmpABC, CoreABC):
         return datarepr(type(self).__name__, **self._todict())
 
     @abstractmethod
+    def _cmp(self: Self) -> Any: ...
+
+    @abstractmethod
     def _todict(self: Self) -> dict[str, Any]: ...
 
     packaging = CoreABC.string

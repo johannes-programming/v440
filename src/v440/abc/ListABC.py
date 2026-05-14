@@ -88,14 +88,3 @@ class ListABC(cmp3.CmpABC, CoreABC, HoldList[Item]):
     @data.setter
     def data(self: Self, value: Iterable) -> None:
         self._data = tuple(self._data_parse(list(value)))
-
-    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
-        "This method sorts the data."
-        data: list[Item]
-        k: Any
-        r: bool
-        data = list(self.data)
-        k = self._sort if key is None else key
-        r = bool(reverse)
-        data.sort(key=k, reverse=r)
-        self.data = data

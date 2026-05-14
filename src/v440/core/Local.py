@@ -200,3 +200,14 @@ class Local(ListABC[int | str]):
             self.string = ""
         else:
             self.string = value
+
+    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
+        "This method sorts the data."
+        data: list[int | str]
+        k: Any
+        r: bool
+        data = list(self.data)
+        k = self._sort if key is None else key
+        r = bool(reverse)
+        data.sort(key=k, reverse=r)
+        self.data = data

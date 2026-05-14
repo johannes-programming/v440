@@ -39,6 +39,9 @@ class QualABC(cmp3.CmpABC, CoreABC):
             num=self.num,
         )
 
+    @abstractmethod
+    def _cmp(self: Self) -> Any: ...
+
     @classmethod
     @abstractmethod
     def _lit_parse(cls: type[Self], value: str) -> str: ...
