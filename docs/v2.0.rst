@@ -12,6 +12,11 @@ To install v440, you can use pip. Open your terminal and run:
 
     pip install v440
 
+Typing
+------
+
+The typing conforms (not strictly) to ``mypy``.
+
 Features
 --------
 
