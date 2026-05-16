@@ -26,9 +26,15 @@ Features
 ``class v440.abc.CoreABC.CoreABC(string: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This abstract base class is the ancestor of all core classes. It enforces some standards in its decendents.
+This abstract base class is the ancestor of all ``core`` classes.
+It establishes some standards for its decendents.
 
-All properties have always a getter, never a deleter, and sometimes a setter. The properties without setter are explained under NestedABC. The properties with setter are of an immutable builtin type. The setter allows allows for replacing the value with another. If the setter receives an invalid value then a VersionError is raised and the instance is left unchanged.
+All properties have always a getter, never a deleter, and sometimes a setter.
+The properties without setter are explained under ``NestedABC``.
+The properties with setter are of an immutable builtin type.
+The setter allows allows for replacing the value with another.
+If the setter receives an invalid value then a ``VersionError`` is raised
+and the instance is left unchanged.
 
 ``__bool__() -> bool``
 """"""""""""""""""""""
@@ -37,53 +43,20 @@ This magic method implements ``bool(self)``.
 
 It is defined as equivalent to ``self == type(self)()``.
 
-``__eq__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-This magic method implements ``self == other``.
-
-It is defined as equivalent to ``type(self) is type(other) and self.string == other.string``.
-
 ``__format__(format_spec: Any) -> str``
 """""""""""""""""""""""""""""""""""""""
 
-The instances of each class can be formatted. A format spec is always either valid or invalid for a certain class. The empty string is valid for all classes and provides the standardized string. The format function always returns a PEP440-conforming string notation of the formatted object. Each possible PEP440-conforming notation of an object has at least one valid format spec that allows for its recreation in formatting.
-
-``__ge__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-This magic method implements ``self >= other``.
-
-See also __le__.
-
-``__gt__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-This magic method implements ``self > other``.
-
-See also __le__.
+The instances of each class can be formatted.
+A ``format_spec`` is always either valid or invalid for a certain class.
+The empty string is valid for all classes and provides the standardized string.
+The format function always returns a PEP440-conforming string notation of the formatted object.
+Each possible PEP440-conforming notation of an object has at least one valid ``format_spec``
+that allows for its recreation in formatting.
 
 ``__hash__ = None``
 """""""""""""""""""
 
 This class and all its decendents are unhashable.
-
-``__le__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-This magic method implements ``self <= other``.
-
-Each class implements a total order of all of its possible instances - with the sole exception of Pre("") which is neither greater than nor lesser than any instances of Pre. Each class is ordered in accordance with PEP440.
-
-``__lt__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-This magic method implements ``self < other``.
-
-See also __le__.
-
-``__ne__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
 
 ``__repr__() -> str``
 """""""""""""""""""""
@@ -107,17 +80,23 @@ This classmethod takes PEP440-conforming strings and returns the shorted possibl
 ``packaging: Any``
 """"""""""""""""""
 
-This property connects v440 with the packaging project. Its getter converts self to an appropriate value for the packaging project. Its setter takes such a value and configures self to match.
+This ``property`` connects ``v440`` with the ``packaging`` project.
+Its getter converts ``self`` to an appropriate value for the packaging project.
+Its setter takes such a value and configures ``self`` to match.
 
 ``string: str``
 """""""""""""""
 
-This property represents self as a string. self.string returns the same value as str(self). Setting this property allows to change the object in question to the state represented by the provided value. The string property accepts any value iff that value provides a PEP440-conforming string. It (and therefore also calling str) always returns a standardized PEP440-conforming string. Two objects of the same type are equal iff their string properties are equal.
+This ``property`` represents self as a string.
+``self.string`` returns the same value as ``str(self)``.
+Setting this ``property`` allows to change the object in question to the state represented by the provided value.
+The string property accepts any value iff that value provides a PEP440-conforming string.
+It (and therefore also calling str) always returns a standardized PEP440-conforming string. Two objects of the same type are equal iff their string properties are equal.
 
 ``class v440.abc.ListABC.ListABC(string: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This abstract base class inherits from CoreABC and from datahold.OkayList.
+This abstract base class inherits from ``CoreABC`` and from datahold.OkayList.
 
 ``__add__(other: Any) -> Self``
 """""""""""""""""""""""""""""""
@@ -169,7 +148,7 @@ This abstract base class inherits from CoreABC and from datahold.OkayList.
 
 This magic method implements ``self < other``.
 
-See also __le__.
+See also ``__le__``.
 
 ``__mul__() -> Any``
 """"""""""""""""""""
@@ -205,17 +184,19 @@ This classmethod takes PEP440-conforming strings and returns the shorted possibl
 ``packaging: Any``
 """"""""""""""""""
 
-This property connects v440 with the packaging project. Its getter converts self to an appropriate value for the packaging project. Its setter takes such a value and configures self to match.
+This ``property`` connects v440 with the packaging project. Its getter converts self to an appropriate value for the packaging project. Its setter takes such a value and configures self to match.
 
 ``string: str``
 """""""""""""""
 
-This property represents self as a string. self.string returns the same value as str(self). Setting this property allows to change the object in question to the state represented by the provided value. The string property accepts any value iff that value provides a PEP440-conforming string. It (and therefore also calling str) always returns a standardized PEP440-conforming string. Two objects of the same type are equal iff their string properties are equal.
+This ``property`` represents self as a string.
+``self.string`` returns the same value as ``str(self)``.
+Setting this ``property`` allows to change the object in question to the state represented by the provided value. The string property accepts any value iff that value provides a PEP440-conforming string. It (and therefore also calling str) always returns a standardized PEP440-conforming string. Two objects of the same type are equal iff their string properties are equal.
 
 ``class v440.abc.NestedABC.NestedABC(string: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This abstract base class inherits from CoreABC.
+This abstract base class inherits from ``CoreABC``.
 
 ``deformat(*strings: str) -> str``
 """"""""""""""""""""""""""""""""""
@@ -249,7 +230,15 @@ This abstract base class inherits from CoreABC.
 ``v440.core``
 ~~~~~~~~~~~~~
 
-This subpackage contains the principle classes of the project. Each of these classes has a dedicated module inside of core.
+This subpackage contains the principle classes of the project.
+Each of these classes has a dedicated module inside of core.
+Each class can be accessed alternatively in a nested fashion,
+e.g. ``v440.core.Base.Base is v440.Version.Public.Base``.
+
+Each class is ordered in accordance with PEP440.
+Therefore, each class implements a total order of all of its possible instances -
+with the sole exception of ``Pre("")``
+which is neither greater than nor lesser than any instances of ``Pre``.
 
 ``class v440.core.Base.Base(string: Any = "0")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -259,19 +248,19 @@ This class represents the base part of a public version identifier.
 ``epoch: int``
 """"""""""""""
 
-This property represents the epoch.
+This ``property`` represents the epoch.
 
 ``packaging: str``
 """"""""""""""""""
 
-This property represents the equivalent packaging.version.Version.base_version value.
+This ``property`` represents the equivalent ``packaging.version.Version.base_version`` value.
 
-It is defined as an alias of Base.string.
+It is defined as an alias of ``Base.string``.
 
 ``release: Release``
 """"""""""""""""""""
 
-This property represents the release.
+This ``property`` represents the release.
 
 ``string: str``
 """""""""""""""
@@ -284,17 +273,19 @@ This class represents the developmental release information.
 ``lit: str``
 """"""""""""
 
-This property represents the literal part of the information. It can take the values "" (with the numeral 0) and "dev" (with any non-negative numeral).
+This ``property`` represents the literal part of the information.
+It can take the values ``""`` (with the numeral ``0``) and ``"dev"`` (with any non-negative numeral).
 
 ``num: int``
 """"""""""""
 
-This property represents the numeral part of the information. It can only take non-negative values and is restricted to 0 if lit is "".
+This ``property`` represents the numeral part of the information.
+It can only take non-negative values and is restricted to ``0`` if ``lit`` is ``""``.
 
 ``packaging: Optional[int]``
 """"""""""""""""""""""""""""
 
-This property represents the equivalent packaging.version.Version.dev value.
+This ``property`` represents the equivalent ``packaging.version.Version.dev`` value.
 
 ``string: str``
 """""""""""""""
@@ -307,12 +298,12 @@ This list-like class represents the local part of version identifiers. Its items
 ``data: tuple[int | str, ...]``
 """""""""""""""""""""""""""""""
 
-This property represents the respective Local instance as a tuple.
+This ``property`` represents the respective Local instance as a tuple.
 
 ``packaging: Optional[str]``
 """"""""""""""""""""""""""""
 
-This property represents the equivalent packaging.version.Version.local value.
+This ``property`` represents the equivalent ``packaging.version.Version.local`` value.
 
 ``string: str``
 """""""""""""""
@@ -325,22 +316,22 @@ This class represents the post-release information.
 ``lit: str``
 """"""""""""
 
-This property represents the literal part of the information. It can take the values "" (with the numeral 0) and "post" (with any non-negative numeral).
+This ``property`` represents the literal part of the information. It can take the values "" (with the numeral 0) and "post" (with any non-negative numeral).
 
 ``num: int``
 """"""""""""
 
-This property represents the numeral part of the information. It can only take non-negative values and is restricted to 0 if lit is "".
+This ``property`` represents the numeral part of the information. It can only take non-negative values and is restricted to 0 if lit is "".
 
 ``packaging: Optional[int]``
 """"""""""""""""""""""""""""
 
-This property represents the equivalent packaging.version.Version.post value.
+This ``property`` represents the equivalent packaging.version.Version.post value.
 
 ``string: str``
 """""""""""""""
 
-This property represents the Post object as a string.
+This ``property`` represents the Post object as a string.
 
 ``class v440.core.Pre.Pre(string: Any = "")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -350,22 +341,24 @@ This class represents the pre-release information.
 ``lit: str``
 """"""""""""
 
-This property represents the literal part of the information. It can take the values "", "a", "b", and "rc". The value "" demands the numeral 0. It signifies that we are not dealing with a pre-release. All other values tolerate any non-negative numeral. Each of them represents another phase of the pre-release process: alpha-releases, beta-releases, and previews.
+This ``property`` represents the literal part of the information.
+It can take the values "", "a", "b", and "rc". The value "" demands the numeral 0. It signifies that we are not dealing with a pre-release. All other values tolerate any non-negative numeral. Each of them represents another phase of the pre-release process: alpha-releases, beta-releases, and previews.
 
 ``num: int``
 """"""""""""
 
-This property represents the numeral part of the information. It can only take non-negative values and is restricted to 0 if lit is "".
+This ``property`` represents the numeral part of the information.
+It can only take non-negative values and is restricted to 0 if lit is "".
 
 ``packaging: Optional[tuple[str, int]]``
 """"""""""""""""""""""""""""""""""""""""
 
-This property represents the equivalent packaging.version.Version.pre value.
+This ``property`` represents the equivalent packaging.version.Version.pre value.
 
 ``string: str``
 """""""""""""""
 
-This property represents the Pre object as a string.
+This ``property`` represents the Pre object as a string.
 
 ``class v440.core.Public.Public(string: Any = "0")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -376,7 +369,7 @@ This property represents the Pre object as a string.
 ``packaging: str``
 """"""""""""""""""
 
-This property represents the equivalent packaging.version.Version.public value.
+This ``property`` represents the equivalent packaging.version.Version.public value.
 
 It is defined as an alias of Public.string.
 
@@ -386,7 +379,7 @@ It is defined as an alias of Public.string.
 ``string: str``
 """""""""""""""
 
-This property represents the Public object as a string.
+This ``property`` represents the Public object as a string.
 
 ``class v440.core.Qual.Qual(string: Any = "")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -412,7 +405,7 @@ This method returns whether the current instance denotes a post-release.
 ``packaging: str``
 """"""""""""""""""
 
-Strictly speaking, the Qual class does not have a counterpart in packaging. From inference this property is defined as an alias of Qual.string.
+Strictly speaking, the Qual class does not have a counterpart in packaging. From inference this ``property`` is defined as an alias of Qual.string.
 
 ``post: Post``
 """"""""""""""
@@ -423,7 +416,7 @@ Strictly speaking, the Qual class does not have a counterpart in packaging. From
 ``string: str``
 """""""""""""""
 
-This property represents the Qual object as a string.
+This ``property`` represents the Qual object as a string.
 
 ``class v440.core.Release.Release(string: Any = "0")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -431,7 +424,7 @@ This property represents the Qual object as a string.
 ``data: tuple``
 """""""""""""""
 
-This property represents the data of the Release object.
+This ``property`` represents the data of the Release object.
 
 ``major: int``
 """"""""""""""
@@ -445,7 +438,7 @@ This property represents the data of the Release object.
 ``packaging: tuple``
 """"""""""""""""""""
 
-This property represents the equivalent packaging.version.Version.release value.
+This ``property`` represents the equivalent packaging.version.Version.release value.
 
 ``patch: int``
 """"""""""""""
@@ -453,7 +446,7 @@ This property represents the equivalent packaging.version.Version.release value.
 ``string: str``
 """""""""""""""
 
-This property represents the Release object as a string.
+This ``property`` represents the Release object as a string.
 
 ``class v440.core.Version.Version(string: Any = "0")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -463,22 +456,22 @@ This class is the centrepiece of the v440 project.
 ``local: Local``
 """"""""""""""""
 
-This property represents the local part of the version identifier.
+This ``property`` represents the local part of the version identifier.
 
 ``packaging: packaging.version.Version``
 """"""""""""""""""""""""""""""""""""""""
 
-This property represents the equivalent packaging.version.Version.
+This ``property`` represents the equivalent packaging.version.Version.
 
 ``public: Public``
 """"""""""""""""""
 
-This property represents the public part of the version identifier.
+This ``property`` represents the public part of the version identifier.
 
 ``string: str``
 """""""""""""""
 
-This property represents the Version object as a string.
+This ``property`` represents the Version object as a string.
 
 ``v440.errors``
 ~~~~~~~~~~~~~~~
