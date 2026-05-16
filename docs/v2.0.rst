@@ -59,8 +59,8 @@ The ``format`` function always returns a ``PEP 440``-conforming string notation 
 Each possible ``PEP 440``-conforming notation of an object has at least one valid ``format_spec``
 that allows for its recreation in formatting.
 
-``__eq__(other: object) -> types.NotImplemented | bool``
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+``__eq__(other: object) -> Any``
+""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self == other``.
 If ``type(self) is type(other)``, 
@@ -99,8 +99,8 @@ which is neither greater than nor lesser than any instances of ``Pre``.
 This abstract magic method will should overwritten to implement ``self < other``.
 See ``__le__``.
 
-``__ne__(other: object) -> types.NotImplemented | bool``
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+``__ne__(other: object) -> Any``
+""""""""""""""""""""""""""""""""
 
 This abstract magic method will should overwritten to implement ``self != other``.
 See ``__eq__``.
