@@ -26,7 +26,7 @@ class QualABC(cmp3.CmpABC, CoreABC):
         return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
 
     @setdoc.basic
-    def __init__(self: Self, string: Any = "") -> None:
+    def __init__(self: Self, string: object = "") -> None:
         self._lit = ""
         self._num = 0
         self.string = string

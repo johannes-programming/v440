@@ -1,15 +1,15 @@
 Overview
 --------
 
-The project ``v440`` is a PyPI project 
-that provides mutable version objects 
-that allow flexible manipulation of version identifiers 
+The project ``v440`` is a PyPI project
+that provides mutable version objects
+that allow flexible manipulation of version identifiers
 following the ``PEP 440`` standard.
 
 Installation
 ------------
 
-To install ``v440``, you can use ``pip``. 
+To install ``v440``, you can use ``pip``.
 Open your terminal and run:
 
 .. code-block:: shell
@@ -24,7 +24,7 @@ The typing conforms (not strictly) to ``mypy``.
 Features
 --------
 
-Inherited features are only explained again 
+Inherited features are only explained again
 if there is further noteworthy information.
 
 ``v440.abc``
@@ -46,7 +46,7 @@ and the instance is left unchanged.
 ``__bool__() -> bool``
 """"""""""""""""""""""
 
-This magic method implements ``bool(self)``. 
+This magic method implements ``bool(self)``.
 It is defined as equivalent to ``self == type(self)()``.
 
 ``__format__(format_spec: object) -> str``
@@ -63,7 +63,7 @@ that allows for its recreation in formatting.
 """"""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self == other``.
-If ``type(self) is type(other)``, 
+If ``type(self) is type(other)``,
 the overwrites will always ``return self.string == other.string``.
 
 ``__ge__(other: Any) -> Any``
@@ -90,7 +90,7 @@ This abstract magic method will be overwritten to implement ``self <= other``.
 The overwrites should always establish at the very least a partial order.
 Indeed, each ``core`` class is ordered in accordance with ``PEP 440``.
 Therefore, each class establishes a total order of all of its possible instances -
-with the sole exception of ``Pre("")`` 
+with the sole exception of ``Pre("")``
 which is neither greater than nor lesser than any instances of ``Pre``.
 
 ``__lt__(other: Any) -> Any``
@@ -122,12 +122,12 @@ It returns ``self.string``.
 ``copy() -> Self``
 """"""""""""""""""
 
-This method returns a copy of ``self``. 
+This method returns a copy of ``self``.
 
 ``deformat(*strings: str) -> str``
 """"""""""""""""""""""""""""""""""
 
-This ``classmethod`` takes ``PEP 440``-conforming strings and returns the shorted possible ``format_spec`` that can recreate all of them in formatting. 
+This ``classmethod`` takes ``PEP 440``-conforming strings and returns the shorted possible ``format_spec`` that can recreate all of them in formatting.
 The ``classmethod`` raises ``VersionError`` iff an argument is not actually ``PEP 440``-conforming or no common ``format_spec`` exists.
 
 ``packaging: Any``
@@ -222,7 +222,7 @@ This ``property`` represents the equivalent ``packaging.version.Version.dev`` va
 ``class v440.core.Local.Local(string: object = "")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This list-like class represents the local part of version identifiers. 
+This list-like class represents the local part of version identifiers.
 It inherits from ``v440.abc.ListABC.ListABC[int | str]``.
 
 ``packaging: Optional[str]``
@@ -318,7 +318,7 @@ This method returns whether the current instance denotes a post-release.
 ``packaging: str``
 """"""""""""""""""
 
-Strictly speaking, the ``Qual`` class does not have a counterpart in ``packaging``. 
+Strictly speaking, the ``Qual`` class does not have a counterpart in ``packaging``.
 By inference however, this ``property`` is defined as an alias of ``Qual.string``.
 
 ``post: Post``

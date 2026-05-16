@@ -18,8 +18,12 @@ class CoreABC(Copyable):
     @setdoc.basic
     def __bool__(self: Self) -> bool: ...
 
+    @abstractmethod
     @setdoc.basic
-    def __format__(self: Self, format_spec: Any) -> str:
+    def __eq__(self: Self, other: object) -> Any: ...
+
+    @setdoc.basic
+    def __format__(self: Self, format_spec: object) -> str:
         parsed: tuple[Any, ...]
         msg: str
         try:
@@ -32,7 +36,27 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __init__(self: Self, string: Any) -> None: ...
+    def __ge__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __gt__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __init__(self: Self, string: object) -> None: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __le__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __lt__(self: Self, other: Any) -> Any: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __ne__(self: Self, other: object) -> Any: ...
 
     @abstractmethod
     @setdoc.basic
@@ -114,5 +138,5 @@ class CoreABC(Copyable):
         return format(self, "")
 
     @string.setter
-    def string(self: Self, value: Any) -> None:
+    def string(self: Self, value: object) -> None:
         self._string_fset(str(value).lower())
