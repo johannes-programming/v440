@@ -13,7 +13,7 @@ __all__ = ["ListABC"]
 Item = TypeVar("Item")
 
 
-class ListABC(cmp3.CmpABC, CoreABC, HoldList[Item]):
+class ListABC(CoreABC, HoldList[Item]):
 
     __slots__ = ()
 
@@ -33,14 +33,107 @@ class ListABC(cmp3.CmpABC, CoreABC, HoldList[Item]):
     def __bool__(self: Self) -> bool:
         return bool(self.data)
 
+    __eq__ = BaseDataObject.__eq__
+
     @setdoc.basic
-    def __cmp__(self: Self, other: Any) -> None | float | int:
-        if isinstance(other, ListABC):
-            return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
-        elif isinstance(other, BaseDataObject):
-            return cmp3.cmp(self.data, other.data, mode="le")
-        else:
-            return None
+    def __ge__(self: Self, other: object) -> Any:
+        exc: Exception
+        x: Any
+        y: Any
+        z: int
+        if not isinstance(other, BaseDataObject):
+            return NotImplemented
+        if not isinstance(other, ListABC):
+            return BaseDataObject.__ge__(self, other)
+        try:
+            return BaseDataObject.__ge__(self, other)
+        except Exception as exc_:
+            exc = exc_
+        for x, y in zip(self, other):
+            if x is y or x == y:
+                continue
+            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
+            if z == -1:
+                return False
+            if z == 1:
+                return True
+            raise exc
+        return len(self) >= len(other)
+
+    @setdoc.basic
+    def __gt__(self: Self, other: object) -> Any:
+        exc: Exception
+        x: Any
+        y: Any
+        z: int
+        if not isinstance(other, BaseDataObject):
+            return NotImplemented
+        if not isinstance(other, ListABC):
+            return BaseDataObject.__gt__(self, other)
+        try:
+            return BaseDataObject.__gt__(self, other)
+        except Exception as exc_:
+            exc = exc_
+        for x, y in zip(self, other):
+            if x is y or x == y:
+                continue
+            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
+            if z == -1:
+                return False
+            if z == 1:
+                return True
+            raise exc
+        return len(self) > len(other)
+
+    @setdoc.basic
+    def __le__(self: Self, other: object) -> Any:
+        exc: Exception
+        x: Any
+        y: Any
+        z: int
+        if not isinstance(other, BaseDataObject):
+            return NotImplemented
+        if not isinstance(other, ListABC):
+            return BaseDataObject.__le__(self, other)
+        try:
+            return BaseDataObject.__le__(self, other)
+        except Exception as exc_:
+            exc = exc_
+        for x, y in zip(self, other):
+            if x is y or x == y:
+                continue
+            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
+            if z == -1:
+                return True
+            if z == 1:
+                return False
+            raise exc
+        return len(self) <= len(other)
+
+    @setdoc.basic
+    def __lt__(self: Self, other: object) -> Any:
+        exc: Exception
+        x: Any
+        y: Any
+        z: int
+        if not isinstance(other, BaseDataObject):
+            return NotImplemented
+        if not isinstance(other, ListABC):
+            return BaseDataObject.__lt__(self, other)
+        try:
+            return BaseDataObject.__lt__(self, other)
+        except Exception as exc_:
+            exc = exc_
+        for x, y in zip(self, other):
+            if x is y or x == y:
+                continue
+            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
+            if z == -1:
+                return True
+            if z == 1:
+                return False
+            raise exc
+        return len(self) < len(other)
 
     @setdoc.basic
     def __mul__(self: Self, other: Any) -> Self:
@@ -48,6 +141,8 @@ class ListABC(cmp3.CmpABC, CoreABC, HoldList[Item]):
         ans = type(self)()
         ans.data = self.data * other
         return ans
+
+    __ne__ = BaseDataObject.__ne__
 
     @setdoc.basic
     def __radd__(self: Self, other: Any) -> Self:
