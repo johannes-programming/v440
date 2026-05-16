@@ -49,8 +49,8 @@ and the instance is left unchanged.
 This magic method implements ``bool(self)``. 
 It is defined as equivalent to ``self == type(self)()``.
 
-``__format__(format_spec: Any) -> str``
-"""""""""""""""""""""""""""""""""""""""
+``__format__(format_spec: object) -> str``
+""""""""""""""""""""""""""""""""""""""""""
 
 The instances of each class can be formatted.
 ``format_spec`` is always either valid or invalid for a certain class.
