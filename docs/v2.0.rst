@@ -1,12 +1,16 @@
 Overview
 --------
 
-The project ``v440`` is a PyPI project that provides mutable version objects that allow flexible manipulation of version identifiers following the ``PEP 440`` standard.
+The project ``v440`` is a PyPI project 
+that provides mutable version objects 
+that allow flexible manipulation of version identifiers 
+following the ``PEP 440`` standard.
 
 Installation
 ------------
 
-To install ``v440``, you can use ``pip``. Open your terminal and run:
+To install ``v440``, you can use ``pip``. 
+Open your terminal and run:
 
 .. code-block:: shell
 
@@ -20,11 +24,14 @@ The typing conforms (not strictly) to ``mypy``.
 Features
 --------
 
+Inherited features are only explained again 
+if there is further noteworthy information.
+
 ``v440.abc``
 ~~~~~~~~~~~~
 
-``class v440.abc.CoreABC.CoreABC(string: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.CoreABC.CoreABC(string: object)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class is the ancestor of all ``core`` classes.
 It establishes some standards for its decendents.
@@ -39,8 +46,7 @@ and the instance is left unchanged.
 ``__bool__() -> bool``
 """"""""""""""""""""""
 
-This magic method implements ``bool(self)``.
-
+This magic method implements ``bool(self)``. 
 It is defined as equivalent to ``self == type(self)()``.
 
 ``__format__(format_spec: Any) -> str``
@@ -53,29 +59,76 @@ The ``format`` function always returns a ``PEP 440``-conforming string notation 
 Each possible ``PEP 440``-conforming notation of an object has at least one valid ``format_spec``
 that allows for its recreation in formatting.
 
+``__eq__(other: object) -> types.NotImplemented | bool``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+This abstract magic method will be overwritten to implement ``self == other``.
+If ``type(self) is type(other)``, 
+the overwrites will always ``return self.string == other.string``.
+
+``__ge__(other: Any) -> Any``
+"""""""""""""""""""""""""""""
+
+This abstract magic method will be overwritten to implement ``self >= other``.
+See ``__le__``.
+
+``__gt__(other: Any) -> Any``
+"""""""""""""""""""""""""""""
+
+This abstract magic method will be overwritten to implement ``self > other``.
+See ``__le__``.
+
 ``__hash__ = None``
 """""""""""""""""""
 
-This class and all its decendents are unhashable.
+This ``class`` and all its decendents are unhashable.
+
+``__le__(other: Any) -> Any``
+"""""""""""""""""""""""""""""
+
+This abstract magic method will be overwritten to implement ``self <= other``.
+The overwrites should always establish at the very least a partial order.
+Indeed, each ``core`` class is ordered in accordance with ``PEP 440``.
+Therefore, each class establishes a total order of all of its possible instances -
+with the sole exception of ``Pre("")`` 
+which is neither greater than nor lesser than any instances of ``Pre``.
+
+``__lt__(other: Any) -> Any``
+"""""""""""""""""""""""""""""
+
+This abstract magic method will should overwritten to implement ``self < other``.
+See ``__le__``.
+
+``__ne__(other: object) -> types.NotImplemented | bool``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+This abstract magic method will should overwritten to implement ``self != other``.
+See ``__eq__``.
 
 ``__repr__() -> str``
 """""""""""""""""""""
 
-``__subclasshook__(cls: type, other: type, /) -> bool``
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+``__subclasshook__(cls: type[Self], other: type, /) -> types.NotImplemented | bool``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-This magic classmethod always returns ``NotImplemented``.
+This magic ``classmethod`` always returns ``NotImplemented``.
 
 ``__str__() -> str``
 """"""""""""""""""""
 
+This magic method implements ``str(self)``.
+It returns ``self.string``.
+
 ``copy() -> Self``
 """"""""""""""""""
+
+This method returns a copy of ``self``. 
 
 ``deformat(*strings: str) -> str``
 """"""""""""""""""""""""""""""""""
 
-This classmethod takes ``PEP 440``-conforming strings and returns the shorted possible ``format_spec`` that can recreate all of them in formatting. The classmethod raises ``VersionError`` iff an argument is not actually ``PEP 440``-conforming or no common format spec exists.
+This ``classmethod`` takes ``PEP 440``-conforming strings and returns the shorted possible ``format_spec`` that can recreate all of them in formatting. 
+The ``classmethod`` raises ``VersionError`` iff an argument is not actually ``PEP 440``-conforming or no common ``format_spec`` exists.
 
 ``packaging: Any``
 """"""""""""""""""
@@ -93,139 +146,26 @@ Setting this ``property`` allows to change the object in question to the state r
 The ``string`` property accepts any value iff that value provides a ``PEP 440``-conforming string.
 It (and therefore also calling ``str``) always returns a standardized ``PEP 440``-conforming string. Two objects of the same type are equal iff their ``string`` properties are equal.
 
-``class v440.abc.ListABC.ListABC(string: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.ListABC.ListABC[Item](string: object)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This abstract base class inherits from ``CoreABC`` and from ``datahold.OkayList``.
+This abstract base class inherits from ``CoreABC`` and from ``datahold.HoldList[Item]``.
 
-``__add__(other: Any) -> Self``
-"""""""""""""""""""""""""""""""
-
-``__bool__() -> bool``
-""""""""""""""""""""""
-
-``__contains__(other: Any) -> bool``
-""""""""""""""""""""""""""""""""""""
-
-``__delitem__(key: Any) -> None``
-"""""""""""""""""""""""""""""""""
-
-``__eq__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-``__format__(format_spec: Any) -> str``
-"""""""""""""""""""""""""""""""""""""""
-
-``__ge__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-``__getitem__(key: Any) -> Any``
-""""""""""""""""""""""""""""""""
-
-``__gt__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-``__hash__() -> int``
-"""""""""""""""""""""
-
-``__iadd__(value: Any) -> Any``
-"""""""""""""""""""""""""""""""
-
-``__imul__(value: Any) -> Any``
-"""""""""""""""""""""""""""""""
-
-``__iter__() -> Any``
-"""""""""""""""""""""
-
-``__le__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-``__len__() -> int``
-""""""""""""""""""""
-
-``__lt__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-This magic method implements ``self < other``.
-
-See also ``__le__``.
-
-``__mul__() -> Any``
-""""""""""""""""""""
-
-``__ne__(other: Any) -> bool``
-""""""""""""""""""""""""""""""
-
-``__radd__() -> str``
-"""""""""""""""""""""
-
-``__rand__() -> str``
-"""""""""""""""""""""
-
-``__repr__() -> str``
-"""""""""""""""""""""
-
-``__subclasshook__(cls: type, other: type, /) -> bool``
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-This magic classmethod always returns ``NotImplemented``.
-
-``__str__() -> str``
-""""""""""""""""""""
-
-``copy() -> Self``
-""""""""""""""""""
-
-``deformat(*strings: str) -> str``
-""""""""""""""""""""""""""""""""""
-
-This classmethod takes ``PEP 440``-conforming strings and returns the shorted possible ``format_spec`` that can recreate all of them in formatting. The classmethod raises ``VersionError`` iff an argument is not actually ``PEP 440``-conforming or no common format spec exists.
-
-``packaging: Any``
-""""""""""""""""""
-
-This ``property`` connects ``v440`` with the ``packaging`` project. Its getter converts ``self`` to an appropriate value for the ``packaging`` project. Its setter takes such a value and configures ``self`` to match.
-
-``string: str``
-"""""""""""""""
-
-This ``property`` represents ``self`` as a string.
-``self.string`` returns the same value as ``str(self)``.
-Setting this ``property`` allows to change the object in question to the state represented by the provided value. The ``string`` property accepts any value iff that value provides a ``PEP 440``-conforming string. It (and therefore also calling ``str``) always returns a standardized ``PEP 440``-conforming string. Two objects of the same type are equal iff their ``string`` properties are equal.
-
-``class v440.abc.NestedABC.NestedABC(string: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.NestedABC.NestedABC(string: object)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``CoreABC``.
 
-``deformat(*strings: str) -> str``
-""""""""""""""""""""""""""""""""""
-
-``packaging: Any``
-""""""""""""""""""
-
-``string: str``
-"""""""""""""""
-
-``class v440.abc.QualABC.QualABC(string: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.QualABC.QualABC(string: object)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``CoreABC``.
-
-``deformat(*strings: str) -> str``
-""""""""""""""""""""""""""""""""""
 
 ``lit: str``
 """"""""""""
 
 ``num: int``
 """"""""""""
-
-``packaging: Any``
-""""""""""""""""""
-
-``string: str``
-"""""""""""""""
 
 ``v440.core``
 ~~~~~~~~~~~~~
@@ -235,15 +175,10 @@ Each of these classes has a dedicated module inside ``core``.
 Each class can be accessed alternatively in a nested fashion,
 e.g. ``v440.core.Base.Base is v440.Version.Public.Base``.
 
-Each class is ordered in accordance with ``PEP 440``.
-Therefore, each class implements a total order of all of its possible instances -
-with the sole exception of ``Pre("")``
-which is neither greater than nor lesser than any instances of ``Pre``.
+``class v440.core.Base.Base(string: object = "0")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``class v440.core.Base.Base(string: Any = "0")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This class represents the base part of a public version identifier.
+This ``class`` represents the base part of a public version identifier.
 
 ``epoch: int``
 """"""""""""""
@@ -255,20 +190,17 @@ This ``property`` represents the epoch.
 
 This ``property`` represents the equivalent ``packaging.version.Version.base_version`` value.
 
-It is defined as an alias of ``Base.string``.
+It is defined as an alias of ``string``.
 
 ``release: Release``
 """"""""""""""""""""
 
-This ``property`` represents the release.
+See ``v440.core.Release.Release``.
 
-``string: str``
-"""""""""""""""
+``class v440.core.Dev.Dev(string: object = "")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``class v440.core.Dev.Dev(string: Any = "")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This class represents the developmental release information.
+This ``class`` represents the developmental release information.
 
 ``lit: str``
 """"""""""""
@@ -287,31 +219,21 @@ It can only take non-negative values and is restricted to ``0`` if ``lit`` is ``
 
 This ``property`` represents the equivalent ``packaging.version.Version.dev`` value.
 
-``string: str``
-"""""""""""""""
+``class v440.core.Local.Local(string: object = "")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``class v440.core.Local.Local(string: Any = "")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This list-like class represents the local part of version identifiers. Its items are integers and strings. Asside from the members listed below it also implements indeces and methods exactly as ``list`` does.
-
-``data: tuple[int | str, ...]``
-"""""""""""""""""""""""""""""""
-
-This ``property`` represents the respective ``Local`` instance as a ``tuple``.
+This list-like class represents the local part of version identifiers. 
+It inherits from ``v440.abc.ListABC.ListABC[int | str]``.
 
 ``packaging: Optional[str]``
 """"""""""""""""""""""""""""
 
 This ``property`` represents the equivalent ``packaging.version.Version.local`` value.
 
-``string: str``
-"""""""""""""""
+``class v440.core.Post.Post(string: object = "")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``class v440.core.Post.Post(string: Any = "")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This class represents the post-release information.
+This ``class`` represents the post-release information.
 
 ``lit: str``
 """"""""""""
@@ -328,15 +250,10 @@ This ``property`` represents the numeral part of the information. It can only ta
 
 This ``property`` represents the equivalent ``packaging.version.Version.post`` value.
 
-``string: str``
-"""""""""""""""
+``class v440.core.Pre.Pre(string: object = "")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This ``property`` represents the ``Post`` object as a string.
-
-``class v440.core.Pre.Pre(string: Any = "")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This class represents the pre-release information.
+This ``class`` represents the pre-release information.
 
 ``lit: str``
 """"""""""""
@@ -355,16 +272,13 @@ It can only take non-negative values and is restricted to ``0`` if ``lit`` is ``
 
 This ``property`` represents the equivalent ``packaging.version.Version.pre`` value.
 
-``string: str``
-"""""""""""""""
-
-This ``property`` represents the ``Pre`` object as a string.
-
-``class v440.core.Public.Public(string: Any = "0")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.core.Public.Public(string: object = "0")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``base: Base``
 """"""""""""""
+
+See ``v440.core.Base.Base``.
 
 ``packaging: str``
 """"""""""""""""""
@@ -376,16 +290,15 @@ It is defined as an alias of ``Public.string``.
 ``qual: Qual``
 """"""""""""""
 
-``string: str``
-"""""""""""""""
+See ``v440.core.Qual.Qual``.
 
-This ``property`` represents the ``Public`` object as a string.
-
-``class v440.core.Qual.Qual(string: Any = "")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.core.Qual.Qual(string: object = "")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``dev: Dev``
 """"""""""""
+
+See ``v440.core.Dev.Dev``.
 
 ``isdevrelease() -> bool``
 """"""""""""""""""""""""""
@@ -405,26 +318,23 @@ This method returns whether the current instance denotes a post-release.
 ``packaging: str``
 """"""""""""""""""
 
-Strictly speaking, the ``Qual`` class does not have a counterpart in ``packaging``. By inference, this ``property`` is defined as an alias of ``Qual.string``.
+Strictly speaking, the ``Qual`` class does not have a counterpart in ``packaging``. 
+By inference however, this ``property`` is defined as an alias of ``Qual.string``.
 
 ``post: Post``
 """"""""""""""
 
+See ``v440.core.Post.Post``.
+
 ``pre: Pre``
 """"""""""""
 
-``string: str``
-"""""""""""""""
+See ``v440.core.Pre.Pre``.
 
-This ``property`` represents the ``Qual`` object as a string.
+``class v440.core.Release.Release(string: object = "0")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``class v440.core.Release.Release(string: Any = "0")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-``data: tuple``
-"""""""""""""""
-
-This ``property`` represents the data of the ``Release`` object.
+It inherits from ``v440.abc.ListABC.ListABC[int]``.
 
 ``major: int``
 """"""""""""""
@@ -435,28 +345,24 @@ This ``property`` represents the data of the ``Release`` object.
 ``minor: int``
 """"""""""""""
 
-``packaging: tuple``
-""""""""""""""""""""
+``packaging: tuple[int, ...]``
+""""""""""""""""""""""""""""""
 
 This ``property`` represents the equivalent ``packaging.version.Version.release`` value.
+It is an alias for ``data``.
 
 ``patch: int``
 """"""""""""""
 
-``string: str``
-"""""""""""""""
+``class v440.core.Version.Version(string: object = "0")``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This ``property`` represents the ``Release`` object as a string.
-
-``class v440.core.Version.Version(string: Any = "0")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This class is the centrepiece of the ``v440`` project.
+This ``class`` is the centrepiece of the ``v440`` project.
 
 ``local: Local``
 """"""""""""""""
 
-This ``property`` represents the local part of the version identifier.
+See ``v440.core.Local.Local``.
 
 ``packaging: packaging.version.Version``
 """"""""""""""""""""""""""""""""""""""""
@@ -466,12 +372,7 @@ This ``property`` represents the equivalent ``packaging.version.Version``.
 ``public: Public``
 """"""""""""""""""
 
-This ``property`` represents the public part of the version identifier.
-
-``string: str``
-"""""""""""""""
-
-This ``property`` represents the ``Version`` object as a string.
+See ``v440.core.Public.Public``.
 
 ``v440.errors``
 ~~~~~~~~~~~~~~~
@@ -479,8 +380,7 @@ This ``property`` represents the ``Version`` object as a string.
 ``class v440.errors.VersionError.VersionError(*args: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``args: tuple``
-"""""""""""""""
+This class inherits from ``ValueError``.
 
 ``v440.tests``
 ~~~~~~~~~~~~~~
