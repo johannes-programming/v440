@@ -379,7 +379,7 @@ It is defined as an alias of ``Public.string``.
 ``string: str``
 """""""""""""""
 
-This ``property`` represents the Public object as a string.
+This ``property`` represents the ``Public`` object as a string.
 
 ``class v440.core.Qual.Qual(string: Any = "")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -405,7 +405,7 @@ This method returns whether the current instance denotes a post-release.
 ``packaging: str``
 """"""""""""""""""
 
-Strictly speaking, the Qual class does not have a counterpart in packaging. From inference this ``property`` is defined as an alias of Qual.string.
+Strictly speaking, the ``Qual`` class does not have a counterpart in ``packaging``. By inference, this ``property`` is defined as an alias of ``Qual.string``.
 
 ``post: Post``
 """"""""""""""
@@ -416,7 +416,7 @@ Strictly speaking, the Qual class does not have a counterpart in packaging. From
 ``string: str``
 """""""""""""""
 
-This ``property`` represents the Qual object as a string.
+This ``property`` represents the ``Qual`` object as a string.
 
 ``class v440.core.Release.Release(string: Any = "0")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -424,7 +424,7 @@ This ``property`` represents the Qual object as a string.
 ``data: tuple``
 """""""""""""""
 
-This ``property`` represents the data of the Release object.
+This ``property`` represents the data of the ``Release`` object.
 
 ``major: int``
 """"""""""""""
@@ -438,7 +438,7 @@ This ``property`` represents the data of the Release object.
 ``packaging: tuple``
 """"""""""""""""""""
 
-This ``property`` represents the equivalent packaging.version.Version.release value.
+This ``property`` represents the equivalent ``packaging.version.Version.release`` value.
 
 ``patch: int``
 """"""""""""""
@@ -446,12 +446,12 @@ This ``property`` represents the equivalent packaging.version.Version.release va
 ``string: str``
 """""""""""""""
 
-This ``property`` represents the Release object as a string.
+This ``property`` represents the ``Release`` object as a string.
 
 ``class v440.core.Version.Version(string: Any = "0")``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This class is the centrepiece of the v440 project.
+This class is the centrepiece of the ``v440`` project.
 
 ``local: Local``
 """"""""""""""""
@@ -461,7 +461,7 @@ This ``property`` represents the local part of the version identifier.
 ``packaging: packaging.version.Version``
 """"""""""""""""""""""""""""""""""""""""
 
-This ``property`` represents the equivalent packaging.version.Version.
+This ``property`` represents the equivalent ``packaging.version.Version``.
 
 ``public: Public``
 """"""""""""""""""
@@ -471,7 +471,7 @@ This ``property`` represents the public part of the version identifier.
 ``string: str``
 """""""""""""""
 
-This ``property`` represents the Version object as a string.
+This ``property`` represents the ``Version`` object as a string.
 
 ``v440.errors``
 ~~~~~~~~~~~~~~~
@@ -485,12 +485,12 @@ This ``property`` represents the Version object as a string.
 ``v440.tests``
 ~~~~~~~~~~~~~~
 
-This subpackage allows for testing with unittest.
+This subpackage allows for testing with ``unittest``.
 
 ``v440.tests.test() -> unittest.TextTestResult``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This project can be tested through its test function.
+This project can be tested through its ``test`` function.
 
 .. code-block:: python
 
