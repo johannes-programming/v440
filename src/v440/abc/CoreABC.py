@@ -96,7 +96,7 @@ class CoreABC(Copyable):
 
     @classmethod
     @abstractmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> Any: ...
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str: ...
 
     @classmethod
     @abstractmethod
@@ -113,7 +113,7 @@ class CoreABC(Copyable):
         return type(self)(self)
 
     @classmethod
-    def deformat(cls: type[Self], *strings: Any) -> str:
+    def deformat(cls: type[Self], *strings: object) -> str:
         msg: str
         keys: tuple
         values: tuple
