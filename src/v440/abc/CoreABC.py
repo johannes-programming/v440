@@ -44,7 +44,7 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __init__(self: Self, string: object) -> None: ...
+    def __init__(self: Self, *, string: object) -> None: ...
 
     @abstractmethod
     @setdoc.basic

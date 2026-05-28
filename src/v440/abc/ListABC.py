@@ -102,6 +102,25 @@ class ListABC(CoreABC, HoldList[Item]):
             raise exc
         return len(self) > len(other)
 
+    @overload
+    @setdoc.basic
+    def __init__(self: Self) -> None:
+        ...
+
+    @overload
+    @setdoc.basic
+    def __init__(self: Self, data: Iterable[Item] = (), /) -> None:
+        ...
+
+    @overload
+    @setdoc.basic
+    def __init__(self: Self, *, string: object) -> None:
+        ...
+
+    @setdoc.basic
+    def __init__(self: Self, string: object | Iterable[Item] = ()) -> None:
+
+
     @setdoc.basic
     def __le__(self: Self, other: object) -> Any:
         exc: Exception
