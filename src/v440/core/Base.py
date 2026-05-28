@@ -116,6 +116,8 @@ class Base(NestedABC):
             raise ValueError
         self._epoch = v
 
+    packaging = NestedABC.string
+
     @property
     def release(self: Self) -> Release:
         "This property represents the release."

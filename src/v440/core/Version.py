@@ -85,7 +85,7 @@ class Version(NestedABC):
         return packaging.version.Version(str(self))
 
     @packaging.setter
-    def packaging(self: Self, value: Any) -> None:
+    def packaging(self: Self, value: object) -> None:
         self.string = value
 
     @property

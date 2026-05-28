@@ -11,6 +11,7 @@ from v440.abc.CoreABC import CoreABC
 __all__ = ["ListABC"]
 
 Item = TypeVar("Item")
+Item_ = TypeVar("Item_")
 
 
 def cmp(x: Any, y: Any) -> Any:
@@ -33,18 +34,6 @@ def cmp(x: Any, y: Any) -> Any:
 class ListABC(CoreABC, HoldList[Item]):
 
     __slots__ = ()
-
-    @setdoc.basic
-    def __add__(self: Self, other: Any) -> Self:
-        alt: tuple
-        ans: Self
-        try:
-            alt = tuple(other)
-        except Exception:
-            return NotImplemented
-        ans = type(self)()
-        ans.data = self.data + alt
-        return ans
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
@@ -160,18 +149,6 @@ class ListABC(CoreABC, HoldList[Item]):
         return ans
 
     __ne__ = BaseDataObject.__ne__
-
-    @setdoc.basic
-    def __radd__(self: Self, other: Any) -> Self:
-        alt: tuple
-        ans: Self
-        try:
-            alt = tuple(other)
-        except Exception:
-            return NotImplemented
-        ans = type(self)()
-        ans.data = alt + self.data
-        return ans
 
     @setdoc.basic
     def __repr__(self: Self) -> str:

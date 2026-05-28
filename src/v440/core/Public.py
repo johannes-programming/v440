@@ -82,6 +82,8 @@ class Public(NestedABC):
     def base(self: Self) -> Base:
         "This property represents the version base."
         return self._base
+    
+    packaging = NestedABC.string
 
     @property
     def qual(self: Self) -> Qual:

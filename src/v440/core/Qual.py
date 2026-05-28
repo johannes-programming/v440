@@ -143,6 +143,8 @@ class Qual(NestedABC):
         "This method returns whether the current instance denotes a post-release."
         return bool(self.post)
 
+    packaging = NestedABC.string
+    
     @property
     def post(self: Self) -> Post:
         return self._post

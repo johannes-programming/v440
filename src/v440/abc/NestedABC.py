@@ -33,4 +33,12 @@ class NestedABC(cmp3.CmpABC, CoreABC):
     @abstractmethod
     def _todict(self: Self) -> dict[str, Any]: ...
 
-    packaging = CoreABC.string
+    @property
+    @abstractmethod
+    def packaging(self: Self) -> Any:
+        ...
+    
+    @packaging.setter
+    @abstractmethod
+    def packaging(self: Self, value: Any) -> Any: 
+        ...
