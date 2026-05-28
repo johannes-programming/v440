@@ -90,6 +90,17 @@ class ListABC(CoreABC, HoldList[Item]):
                 return True
             raise exc
         return len(self) > len(other)
+    
+    @abstractmethod
+    @setdoc.basic
+    def __init__(
+        self:Self, 
+        data: Iterable[Item] = (), 
+        /, 
+        *, 
+        string: object,
+    ) -> None:
+        ...
 
     @setdoc.basic
     def __le__(self: Self, other: object) -> Any:

@@ -23,6 +23,10 @@ class NestedABC(cmp3.CmpABC, CoreABC):
             return None
         return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
 
+    @abstractmethod
+    @setdoc.basic
+    def __init__(self: Self, string: object) -> None: ...
+
     @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, **self._todict())

@@ -5,7 +5,6 @@ import string as string_
 from typing import *
 
 import setdoc
-from datahold import BaseDataObject
 
 from v440.abc.ListABC import ListABC
 
@@ -16,8 +15,15 @@ class Release(ListABC[int]):
     __slots__ = ()
 
     @setdoc.basic
-    def __init__(self: Self, string: object = "0") -> None:
+    def __init__(
+            self: Self, 
+            data: Iterable[SupportsIndex] = (),
+            /,
+            *,
+            string: object = "0",
+    ) -> None:
         self._data = ()
+        self.data = data
         self.string = string
 
     @classmethod

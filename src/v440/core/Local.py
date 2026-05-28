@@ -21,8 +21,15 @@ class Local(ListABC[int | str]):
     __slots__ = ()
 
     @setdoc.basic
-    def __init__(self: Self, string: object = "") -> None:
+    def __init__(
+            self: Self, 
+            data: Iterable[object], 
+            /, 
+            *,
+            string: object = "",
+    ) -> None:
         self._data = ()
+        self.data = data
         self.string = string
 
     @classmethod
