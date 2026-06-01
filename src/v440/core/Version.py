@@ -88,6 +88,10 @@ class Version(NestedABC):
         "This property represents the local identifier."
         return self._local
 
+    @local.setter
+    def local(self: Self, value: object) -> None:
+        self.local.string = value
+
     @property
     def packaging(self: Self) -> packaging.version.Version:
         "This method returns an eqivalent packaging.version.Version object."
@@ -101,3 +105,7 @@ class Version(NestedABC):
     def public(self: Self) -> Public_:
         "This property represents the public identifier."
         return self._public
+
+    @public.setter
+    def public(self: Self, value: object) -> None:
+        self.public.string = value

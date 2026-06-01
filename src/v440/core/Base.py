@@ -128,3 +128,7 @@ class Base(NestedABC):
     def release(self: Self) -> Release_:
         "This property represents the release."
         return self._release
+
+    @release.setter
+    def release(self: Self, value: object, /) -> None:
+        self.release.string = value

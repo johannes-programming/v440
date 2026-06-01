@@ -137,6 +137,10 @@ class Qual(NestedABC):
         "This property represents the stage of development."
         return self._dev
 
+    @dev.setter
+    def dev(self: Self, value: object, /) -> None:
+        self.dev.string = value
+
     def isdevrelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a dev-release."
         return bool(self.dev)
@@ -155,6 +159,14 @@ class Qual(NestedABC):
     def post(self: Self) -> Post_:
         return self._post
 
+    @post.setter
+    def post(self: Self, value: object, /) -> None:
+        self.post.string = value
+
     @property
     def pre(self: Self) -> Pre_:
         return self._pre
+
+    @pre.setter
+    def pre(self: Self, value: object, /) -> None:
+        self.pre.string = value

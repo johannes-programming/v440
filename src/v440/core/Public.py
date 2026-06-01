@@ -95,9 +95,17 @@ class Public(NestedABC):
         "This property represents the version base."
         return self._base
 
+    @base.setter
+    def base(self: Self, value: object, /) -> None:
+        self.base.string = value
+
     packaging = NestedABC.string
 
     @property
     def qual(self: Self) -> Qual_:
         "This property represents the qualification."
         return self._qual
+
+    @qual.setter
+    def qual(self: Self, value: object, /) -> None:
+        self.qual.string = value
