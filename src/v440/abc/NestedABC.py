@@ -7,10 +7,6 @@ from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
 
-__all__ = ["NonListABC"]
-
-from v440.abc.CoreABC import CoreABC
-
 __all__ = ["NestedABC"]
 
 
