@@ -3,9 +3,9 @@ from typing import Any, Optional, Self, cast
 
 import cmp3
 import setdoc
+from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
-from datarepr import datarepr
 
 __all__ = ["NonListABC"]
 
@@ -13,14 +13,14 @@ from v440.abc.CoreABC import CoreABC
 
 __all__ = ["NestedABC"]
 
+
 class NestedABC(cmp3.CmpABC, CoreABC):
     __slots__ = ()
-
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return any(map(bool, self._todict().values()))
-    
+
     @setdoc.basic
     def __cmp__(self: Self, other: Any) -> None | float | int:
         if type(self) is not type(other):
@@ -48,7 +48,7 @@ class NestedABC(cmp3.CmpABC, CoreABC):
     @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, **self._todict())
-    
+
     @abstractmethod
     def _cmp(self: Self) -> Any: ...
 

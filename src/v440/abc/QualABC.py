@@ -3,7 +3,6 @@ import string as string_
 from abc import abstractmethod
 from typing import Any, Self, SupportsIndex
 
-
 from v440.abc.NestedABC import NestedABC
 
 __all__ = ["QualABC"]
@@ -52,7 +51,8 @@ class QualABC(NestedABC):
             raise ValueError
         self._lit = self._lit_parse(x)
         self._num = int("0" + y)
-    def _todict(self: Self) -> dict[str, Any]: 
+
+    def _todict(self: Self) -> dict[str, Any]:
         return dict(lit=self.lit, num=self.num)
 
     @property
