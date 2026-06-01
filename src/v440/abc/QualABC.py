@@ -66,6 +66,8 @@ class QualABC(NonListABC):
             raise ValueError
         self._lit = self._lit_parse(x)
         self._num = int("0" + y)
+    def _todict(self: Self) -> dict[str, Any]: 
+        return dict(lit=self.lit, num=self.num)
 
     @property
     def lit(self: Self) -> str:

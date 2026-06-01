@@ -29,5 +29,3 @@ class NestedABC(NonListABC):
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, **self._todict())
 
-    @abstractmethod
-    def _todict(self: Self) -> dict[str, Any]: ...

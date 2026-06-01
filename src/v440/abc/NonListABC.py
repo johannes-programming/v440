@@ -42,3 +42,6 @@ class NonListABC(cmp3.CmpABC, CoreABC):
     @classmethod
     @abstractmethod
     def _init_factories(cls: type[Self]) -> dict[str, Any]: ...
+
+    @abstractmethod
+    def _todict(self: Self) -> dict[str, Any]: ...
