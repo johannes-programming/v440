@@ -30,8 +30,8 @@ if there is further noteworthy information.
 ``v440.abc``
 ~~~~~~~~~~~~
 
-``class v440.abc.CoreABC.CoreABC()`` ``class v440.abc.CoreABC.CoreABC(other: Self, /)`` ``class v440.abc.CoreABC.CoreABC(*, string: object)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.CoreABC.CoreABC(other: Optional[Self] = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class is the ancestor of all ``core`` classes.
 It establishes some standards for its decendents.
@@ -141,13 +141,13 @@ Setting this ``property`` allows to change the object in question to the state r
 The ``string`` property accepts any value iff that value provides a ``PEP 440``-conforming string.
 It (and therefore also calling ``str``) always returns a standardized ``PEP 440``-conforming string. Two objects of the same type are equal iff their ``string`` properties are equal.
 
-``class v440.abc.ListABC.ListABC[Item](data: Iterable[Item] = (), /)`` ``class v440.abc.ListABC.ListABC[Item](*, string: object)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.ListABC.ListABC[Item](data: Optional[Iterable[Item]] = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``CoreABC`` and from ``datahold.HoldList[Item]``.
 
-``class v440.abc.NestedABC.NestedABC()`` ``class v440.abc.NestedABC.NestedABC(string: object)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.NestedABC.NestedABC(other: Optional[Self] = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``CoreABC``.
 
@@ -217,8 +217,8 @@ It can only take non-negative values and is restricted to ``0`` if ``lit`` is ``
 
 This ``property`` represents the equivalent ``packaging.version.Version.dev`` value.
 
-``class v440.core.Local.Local(data: Iterable[int | str] = (), /)`` ``class v440.core.Local.Local(*, string: object)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.core.Local.Local(data: Optional[Iterable[int | str]] = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This list-like class represents the local part of version identifiers.
 It inherits from ``v440.abc.ListABC.ListABC[int | str]``.
@@ -344,8 +344,8 @@ See ``v440.core.Post.Post``.
 
 See ``v440.core.Pre.Pre``.
 
-``class v440.core.Release.Release(data: Iterable[int] = (), /)`` ``class v440.core.Release.Release(*, string: object)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.core.Release.Release(data: Optional[Iterable[int]] = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It inherits from ``v440.abc.ListABC.ListABC[int]``.
 
