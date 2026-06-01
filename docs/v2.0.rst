@@ -34,7 +34,7 @@ if there is further noteworthy information.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class is the ancestor of all ``core`` classes.
-It establishes some standards for its decendents.
+It establishes some standards for its descendants.
 
 The constructor always works as follows:
 - ``other`` is copied if given, otherwise the default values are used.
@@ -125,7 +125,7 @@ This method returns a copy of ``self``.
 ``deformat(*strings: object) -> str``
 """""""""""""""""""""""""""""""""""""
 
-This ``classmethod`` takes ``PEP 440``-conforming strings and returns the shorted possible ``format_spec`` that can recreate all of them in formatting.
+This ``classmethod`` takes ``PEP 440``-conforming strings and returns the shortest possible ``format_spec`` that can recreate all of them in formatting.
 The ``classmethod`` raises ``VersionError`` iff an argument is not actually ``PEP 440``-conforming or no common ``format_spec`` exists.
 
 ``packaging: Any``
@@ -155,8 +155,8 @@ This abstract base class inherits from ``CoreABC`` and from ``datahold.HoldList[
 
 This abstract base class inherits from ``CoreABC``.
 
-``class v440.abc.QualABC.QualABC(string: object = "")``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.QualABC.QualABC(other: Optional[Self] = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``CoreABC``.
 
