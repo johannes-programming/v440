@@ -14,8 +14,8 @@ class Public(NestedABC):
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
-    _base:Base_
-    _qual:Qual_
+    _base: Base_
+    _qual: Qual_
 
     __slots__ = ("_base", "_qual")
 
@@ -62,9 +62,9 @@ class Public(NestedABC):
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
-    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
         return dict(_base=Base_, _qual=Qual_)
-    
+
     @classmethod
     def _split(cls: type[Self], value: str) -> tuple[str, str]:
         i: int
@@ -88,8 +88,9 @@ class Public(NestedABC):
     def base(self: Self) -> Base_:
         "This property represents the version base."
         return self._base
+
     @base.setter
-    def base(self:Self, value:object) -> None:
+    def base(self: Self, value: object) -> None:
         self.base.string = value
 
     packaging = NestedABC.string
@@ -98,7 +99,7 @@ class Public(NestedABC):
     def qual(self: Self) -> Qual_:
         "This property represents the qualification."
         return self._qual
-    
+
     @qual.setter
-    def qual(self:Self, value:object) -> None:
+    def qual(self: Self, value: object) -> None:
         self.qual.string = value

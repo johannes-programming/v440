@@ -1,6 +1,6 @@
 from abc import abstractmethod
-from typing import Any, Self, cast, overload, Optional
 from collections.abc import Iterable
+from typing import Any, Optional, Self, cast, overload
 
 import cmp3
 import setdoc
@@ -23,14 +23,14 @@ class NonListABC(cmp3.CmpABC, CoreABC):
 
     @setdoc.basic
     def __init__(
-        self: Self, 
-        other: Optional[Self] = None, 
+        self: Self,
+        other: Optional[Self] = None,
         /,
-        **kwargs:Any,
-    ) -> None: 
-        x:str
-        y:Any
-        for x,y in self._init_factories().items():
+        **kwargs: Any,
+    ) -> None:
+        x: str
+        y: Any
+        for x, y in self._init_factories().items():
             if other is None:
                 object.__setattr__(self, x, y())
             else:
@@ -42,5 +42,4 @@ class NonListABC(cmp3.CmpABC, CoreABC):
 
     @classmethod
     @abstractmethod
-    def _init_factories(cls:type[Self]) -> dict[str, Any]:
-        ...
+    def _init_factories(cls: type[Self]) -> dict[str, Any]: ...

@@ -16,8 +16,8 @@ class Version(NestedABC):
 
     Public: Final[type[Public_]] = Public_
     Local: Final[type[Local_]] = Local_
-    _public:Public_
-    _local:Local_
+    _public: Public_
+    _local: Local_
 
     __slots__ = ("_public", "_local")
 
@@ -53,9 +53,9 @@ class Version(NestedABC):
         )
 
     @classmethod
-    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
         return dict(_public=Public_, _local=Local_)
-    
+
     @classmethod
     def _join(cls: type[Self], public: str, local: str = "") -> str:
         if local:
@@ -82,8 +82,9 @@ class Version(NestedABC):
     def local(self: Self) -> Local_:
         "This property represents the local identifier."
         return self._local
+
     @local.setter
-    def local(self:Self, value:object, /) -> None:
+    def local(self: Self, value: object, /) -> None:
         self.local.string = value
 
     @property
@@ -99,6 +100,7 @@ class Version(NestedABC):
     def public(self: Self) -> Public_:
         "This property represents the public identifier."
         return self._public
+
     @public.setter
-    def public(self:Self, value:object, /) -> None:
+    def public(self: Self, value: object, /) -> None:
         self.public.string = value

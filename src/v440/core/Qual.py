@@ -20,9 +20,9 @@ class Qual(NestedABC):
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_
     Dev: Final[type[Dev_]] = Dev_
-    _pre:Pre_
-    _post:Post_
-    _dev:Dev_
+    _pre: Pre_
+    _post: Post_
+    _dev: Dev_
 
     __slots__ = ("_pre", "_post", "_dev")
 
@@ -112,9 +112,9 @@ class Qual(NestedABC):
         return ans
 
     @classmethod
-    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
         return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
-    
+
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual", value)
@@ -129,8 +129,9 @@ class Qual(NestedABC):
     def dev(self: Self) -> Dev_:
         "This property represents the stage of development."
         return self._dev
+
     @dev.setter
-    def dev(self:Self, value:object) -> None:
+    def dev(self: Self, value: object) -> None:
         self.dev.string = value
 
     def isdevrelease(self: Self) -> bool:
@@ -152,12 +153,13 @@ class Qual(NestedABC):
         return self._post
 
     @post.setter
-    def post(self:Self, value:object) -> None:
+    def post(self: Self, value: object) -> None:
         self.post.string = value
+
     @property
     def pre(self: Self) -> Pre_:
         return self._pre
-    
+
     @pre.setter
-    def pre(self:Self, value:object) -> None:
+    def pre(self: Self, value: object) -> None:
         self.pre.string = value

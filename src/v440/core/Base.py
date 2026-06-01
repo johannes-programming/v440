@@ -13,8 +13,8 @@ __all__ = ["Base"]
 class Base(NestedABC):
 
     Release: Final[type[Release_]] = Release_
-    _epoch:int
-    _release:Release_
+    _epoch: int
+    _release: Release_
 
     __slots__ = ("_epoch", "_release")
 
@@ -88,9 +88,9 @@ class Base(NestedABC):
         return ans
 
     @classmethod
-    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
         return dict(_epoch=int, _release=Release_)
-    
+
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
@@ -122,7 +122,7 @@ class Base(NestedABC):
     def release(self: Self) -> Release_:
         "This property represents the release."
         return self._release
-    
+
     @release.setter
-    def release(self:Self, value:object, /) -> None:
+    def release(self: Self, value: object, /) -> None:
         self.release.string = value

@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from collections.abc import Iterable
 from functools import cmp_to_key
-from typing import Any, Final, Self, TypeVar, overload, Optional
+from typing import Any, Final, Optional, Self, TypeVar, overload
 
 import setdoc
 from datahold import BaseDataObject, HoldList
@@ -95,11 +95,11 @@ class ListABC(CoreABC, HoldList[Item]):
 
     @setdoc.basic
     def __init__(
-        self: Self, 
-        data: Optional[Iterable[Item]] = None, 
+        self: Self,
+        data: Optional[Iterable[Item]] = None,
         /,
-        **kwargs:Any,
-    ) -> None: 
+        **kwargs: Any,
+    ) -> None:
         self._data = ()
         if data is not None:
             self.data = data

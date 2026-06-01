@@ -12,8 +12,8 @@ __all__ = ["QualABC"]
 
 
 class QualABC(NonListABC):
-    _lit:str
-    _num:int
+    _lit: str
+    _num: int
     __slots__ = ("_lit", "_num")
 
     @setdoc.basic
@@ -32,7 +32,7 @@ class QualABC(NonListABC):
     def _cmp(self: Self) -> Any: ...
 
     @classmethod
-    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
         return dict(_lit=str, _num=int)
 
     @classmethod
