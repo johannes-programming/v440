@@ -1,4 +1,4 @@
-from abc import abstractmethod
+ 
 from typing import Any, Self, cast
 
 import cmp3
@@ -12,10 +12,6 @@ __all__ = ["NestedABC"]
 
 class NestedABC(NonListABC):
     __slots__ = ()
-
-    @setdoc.basic
-    def __bool__(self: Self) -> bool:
-        return any(map(bool, self._todict().values()))
 
     @setdoc.basic
     def __cmp__(self: Self, other: Any) -> None | float | int:

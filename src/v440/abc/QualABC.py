@@ -17,10 +17,6 @@ class QualABC(NonListABC):
     __slots__ = ("_lit", "_num")
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
-        return bool(self.lit)
-
-    @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(
             type(self).__name__,

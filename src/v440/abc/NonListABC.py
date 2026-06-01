@@ -12,6 +12,11 @@ __all__ = ["NonListABC"]
 class NonListABC(cmp3.CmpABC, CoreABC):
     __slots__ = ()
 
+
+    @setdoc.basic
+    def __bool__(self: Self) -> bool:
+        return any(map(bool, self._todict().values()))
+    
     @setdoc.basic
     def __cmp__(self: Self, other: Any) -> None | float | int:
         if type(self) is not type(other):
