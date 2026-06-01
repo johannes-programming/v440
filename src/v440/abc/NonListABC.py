@@ -33,7 +33,7 @@ class NonListABC(cmp3.CmpABC, CoreABC):
             if other is None:
                 object.__setattr__(self, x, y())
             else:
-                object.__setattr__(self, x, y(getattr(self, x)))
+                object.__setattr__(self, x, y(getattr(other, x)))
         self._init_kwargs(**kwargs)
 
     @abstractmethod

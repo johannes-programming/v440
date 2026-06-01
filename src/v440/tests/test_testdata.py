@@ -110,7 +110,7 @@ class TestStringExamples(unittest.TestCase):
             with self.assertRaises(InvalidVersion):
                 Version_(example)
             return
-        x = Version(example)
+        x = Version(string=example)
         y = Version_(example)
         self.assertEqual(y, x.packaging)
         s = y.base_version
@@ -381,7 +381,7 @@ class TestVersionEpochGo(unittest.TestCase):
         msg: str
         v: Version
         msg = "epoch %r" % key
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         v.public.base.epoch = query
         self.assertEqual(str(v), full, msg=msg)
         self.assertIsInstance(v.public.base.epoch, int, msg=msg)
@@ -418,7 +418,7 @@ class TestSlicingGo(unittest.TestCase):
         step: Any = None,
     ) -> None:
         v: Version
-        v = Version(query)
+        v = Version(string=query)
         with self.assertRaises(Exception):
             v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution)
@@ -434,7 +434,7 @@ class TestSlicingGo(unittest.TestCase):
         step: Any = None,
     ) -> None:
         v: Version
-        v = Version(query)
+        v = Version(string=query)
         v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution)
 
@@ -461,14 +461,14 @@ class TestPackagingA(unittest.TestCase):
         b = str(a)
         f = "#." * len(a.release)
         f = f[:-1]
-        g = format(Version(text), f)
+        g = format(Version(string=text), f)
         self.assertEqual(b, g)
 
 
 class TestPackagingC(unittest.TestCase):
     def test_0(self: Self) -> None:
         args: tuple[Any, ...]
-        ops: list[Callable[[str, str], Any]]
+        ops: list[Callable[..., Any]]
         pure: list[str]
         x: str
         y: dict[str, Any]
@@ -488,7 +488,7 @@ class TestPackagingC(unittest.TestCase):
             with self.subTest(args=args):
                 self.go(
                     *cast(
-                        tuple[str, str, Callable[[Version_, Version_], Any]],
+                        tuple[str, str, Callable[..., Any]],
                         args,
                     )
                 )
@@ -497,24 +497,37 @@ class TestPackagingC(unittest.TestCase):
         self: Self,
         x: str,
         y: str,
-        func: Callable[[Version_, Version_], Any],
+        func: Callable[..., Any],
         /,
     ) -> None:
         a: Version_
         b: Version_
-        c: Version_
+        c: Version
         d: Version_
-        native: bool
-        convert: bool
-        msg: str
-        a = Version_(str(x))
-        b = Version(string=x).packaging
-        c = Version_(str(y))
-        d = Version(string=y).packaging
-        native = func(a, c)
-        convert = func(b, d)
-        msg = f"{func} should match for {x!r} and {y!r}"
-        self.assertEqual(native, convert, msg=msg)
+        e: Version_
+        f: Version
+        legacy: bool
+        current: bool
+        backwards: bool
+        a = Version_(x)
+        b = Version(string=x)
+        c = b.packaging
+        d = Version_(y)
+        e = Version(string=y)
+        f = e.packaging
+        legacy = func(a, d)
+        current = func(b, e)
+        backwards = func(c, f)
+        self.assertEqual(
+            current,
+            legacy,
+            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and legacy.",
+        )
+        self.assertEqual(
+            current,
+            backwards,
+            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and backwards.",
+        )
 
 
 class TestSlots(unittest.TestCase):

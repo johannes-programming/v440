@@ -3,7 +3,6 @@ from __future__ import annotations
 import operator
 from typing import Any, Final, Self
 
-import setdoc
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
@@ -28,9 +27,7 @@ class Qual(NestedABC):
         ans: tuple[str, int]
         if self.pre:
             ans = (self.pre.lit, self.pre.num)
-        elif self.post is not None:
-            ans = ("z", 0)
-        elif self.dev is None:
+        elif self.post or not self.dev:
             ans = ("z", 0)
         else:
             ans = ("", 0)

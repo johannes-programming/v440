@@ -27,7 +27,7 @@ class TestVersionManipulation(unittest.TestCase):
     def test_version_modification(self: Self) -> None:
         # Create an instance of the v440.Version class
         v: Version
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
 
         # Modify individual parts of the version
         v.public.base.release.major = 2
@@ -44,7 +44,7 @@ class TestVersionLocal0(unittest.TestCase):
     def test_version_operations(self: Self) -> None:
         backup: Local
         v: Any
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         backup = v.local
         v.local.string = "local.1.2.3"
         self.assertEqual(str(v), "1.2.3+local.1.2.3")
@@ -74,7 +74,7 @@ class TestPre(unittest.TestCase):
     def test_pre(self: Self) -> None:
         backup: Qual
         v: Version
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         backup = v.public.qual
 
         # Initial version, no pre-release version
@@ -112,7 +112,7 @@ class TestExample(unittest.TestCase):
 
     def test_example_2(self: Self) -> None:
         v: Version
-        v = Version("2.5.3")
+        v = Version(string="2.5.3")
         self.assertEqual(str(v), "2.5.3")  # Modified version
         v.public.base.release[1] = 64
         v.public.base.release.micro = 4
@@ -121,8 +121,8 @@ class TestExample(unittest.TestCase):
     def test_example_3(self: Self) -> None:
         v1: Version
         v2: Version
-        v1 = Version("1.6.3")
-        v2 = Version("1.6.4")
+        v1 = Version(string="1.6.3")
+        v2 = Version(string="1.6.4")
         self.assertEqual(str(v1), "1.6.3")  # v1
         self.assertEqual(str(v2), "1.6.4")  # v2
         # eq
@@ -190,7 +190,7 @@ class TestExample(unittest.TestCase):
 
     def test_example_5(self: Self) -> None:
         v: Version
-        v = Version("2.0.0-alpha.1")
+        v = Version(string="2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
         v.public.qual.pre.string = "beta.2"
         self.assertEqual(str(v), "2b2")  # Modified pre-release version
@@ -204,7 +204,7 @@ class TestExample(unittest.TestCase):
 
     def test_example_6(self: Self) -> None:
         v: Version
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         v.public.qual.post.string = -1
         v.local.string = "local.7.dev"
         self.assertEqual(
@@ -233,7 +233,7 @@ class TestExample(unittest.TestCase):
 
     def test_example_7(self: Self) -> None:
         v: Version
-        v = Version("5.0.0")
+        v = Version(string="5.0.0")
         self.assertEqual(str(v), "5")  # Original version
         v.string = "00000000.0000.00.0"
         self.assertEqual(str(v), "0")  # After reset
@@ -248,8 +248,8 @@ class TestPatch(unittest.TestCase):
     def test_example_0(self: Self) -> None:
         x: Qual
         y: Qual
-        x = Qual("a1")
-        y = Qual("b2")
+        x = Qual(string="a1")
+        y = Qual(string="b2")
         with self.assertRaises(Exception):
             x += y  # type: ignore[operator]
 
@@ -461,13 +461,13 @@ class TestSlicingNoGo(unittest.TestCase):
 
     def test_slicing_2(self: Self) -> None:
         v: Version
-        v = Version("1.2.3.4.5.6.7.8.9.10")
+        v = Version(string="1.2.3.4.5.6.7.8.9.10")
         with self.assertRaises(Exception):
             v.public.base.release[-8:15:5] = 777  # type: ignore[call-overload]
 
     def test_slicing_7(self: Self) -> None:
         v: Version
-        v = Version("1.2.3.4.5.6.7.8.9.10")
+        v = Version(string="1.2.3.4.5.6.7.8.9.10")
         del v.public.base.release[-8:15:5]
         self.assertEqual(str(v), "1.2.4.5.6.7.9.10")
 
@@ -476,13 +476,13 @@ class TestDevNoGo(unittest.TestCase):
 
     def test_initial_none_dev(self: Self) -> None:
         v: Version
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         self.assertEqual(str(v), "1.2.3")
         self.assertFalse(v.public.qual.dev)
 
     def test_dev_as_none(self: Self) -> None:
         v: Version
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         v.public.qual.dev.string = ""
         self.assertEqual(str(v), "1.2.3")
         self.assertFalse(v.public.qual.dev)

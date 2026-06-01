@@ -2463,6 +2463,14 @@ normed = "1.2.3a1.post4.dev5+local"
 deformatted = "--dev"
 legacy = "spec.test_version_with_complex_specifiers_and_local"
 
+[examples.Version."1.0a1"]
+valid = true
+normed = "1a1"
+
+[examples.Version."1.0.dev1"]
+valid = true
+normed = "1.dev1"
+
 [deformatting.Base.""]
 valid = true
 solution = ""
