@@ -1,35 +1,36 @@
 from __future__ import annotations
 
-from typing import *
+from collections.abc import Iterable
+from typing import Any, Final, Self
 
 import packaging.version
 import setdoc
 
 from v440.abc.NestedABC import NestedABC
-from v440.core.Local import Local
-from v440.core.Public import Public
+from v440.core.Local import Local as Local_
+from v440.core.Public import Public as Public_
 
 __all__ = ["Version"]
 
 
 class Version(NestedABC):
+
+    Public: Final[type[Public_]] = Public_
+    Local: Final[type[Local_]] = Local_
+
     __slots__ = ("_public", "_local")
-    local: Local
-    packaging: packaging.version.Version
-    public: Public
-    string: str
 
     @setdoc.basic
-    def __init__(self: Self, string: Any = "0") -> None:
-        self._public = Public()
-        self._local = Local()
+    def __init__(self: Self, string: object = "0") -> None:
+        self._public = Public_()
+        self._local = Local_()
         self.string = string
 
-    def _cmp(self: Self) -> tuple[Public, Local]:
+    def _cmp(self: Self) -> tuple[Public_, Local_]:
         return self.public, self.local
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict, /) -> str:
+    def _deformat(cls: type[Self], info: dict[Any, Any], /) -> str:
         publics: set[str]
         locals_: set[str]
         x: str
@@ -39,21 +40,18 @@ class Version(NestedABC):
         for x, y in map(cls._split, info.keys()):
             publics.add(x)
             locals_.add(y)
-        x = Public.deformat(*publics)
-        y = Local.deformat(*locals_)
+        x = Public_.deformat(*publics)
+        y = Local_.deformat(*locals_)
         return cls._join(x, y)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, str]:
-        return dict(
-            zip(
-                ("public_f", "local_f"),
-                cls._split(spec),
-                strict=True,
-            )
-        )
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        return tuple(cls._split(spec))
 
-    def _format_parsed(self: Self, *, public_f: str, local_f: str) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+        public_f: str
+        local_f: str
+        public_f, local_f = parsed
         return self._join(
             format(self.public, public_f),
             format(self.local, local_f),
@@ -82,7 +80,7 @@ class Version(NestedABC):
         return dict(public=self.public, local=self.local)
 
     @property
-    def local(self: Self) -> Local:
+    def local(self: Self) -> Local_:
         "This property represents the local identifier."
         return self._local
 
@@ -92,14 +90,10 @@ class Version(NestedABC):
         return packaging.version.Version(str(self))
 
     @packaging.setter
-    def packaging(self: Self, value: Any) -> None:
+    def packaging(self: Self, value: object) -> None:
         self.string = value
 
     @property
-    def public(self: Self) -> Public:
+    def public(self: Self) -> Public_:
         "This property represents the public identifier."
         return self._public
-
-
-Version.Local = Local
-Version.Public = Public

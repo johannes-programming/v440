@@ -1,30 +1,25 @@
 import operator
 import string as string_
 from abc import abstractmethod
-from typing import *
+from typing import Any, Self, SupportsIndex
 
 import setdoc
 from datarepr import datarepr
 
-from v440.abc.CoreABC import CoreABC
+from v440.abc.NonListABC import NonListABC
 
 __all__ = ["QualABC"]
 
 
-class QualABC(CoreABC):
+class QualABC(NonListABC):
     __slots__ = ("_lit", "_num")
-
-    lit: str
-    num: int
-    packaging: Any
-    string: str
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.lit)
 
     @setdoc.basic
-    def __init__(self: Self, string: Any = "") -> None:
+    def __init__(self: Self, string: object = "") -> None:
         self._lit = ""
         self._num = 0
         self.string = string
@@ -36,6 +31,9 @@ class QualABC(CoreABC):
             lit=self.lit,
             num=self.num,
         )
+
+    @abstractmethod
+    def _cmp(self: Self) -> Any: ...
 
     @classmethod
     @abstractmethod
@@ -74,7 +72,7 @@ class QualABC(CoreABC):
         return self._lit
 
     @lit.setter
-    def lit(self: Self, value: Any) -> None:
+    def lit(self: Self, value: object) -> None:
         x: str
         x = str(value).lower()
         if x:

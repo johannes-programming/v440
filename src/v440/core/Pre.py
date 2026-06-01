@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import *
+from typing import Any, Optional, Self, SupportsIndex
 
 from iterprod import iterprod
 
@@ -15,12 +15,7 @@ class Pre(QualABC):
 
     __slots__ = ()
 
-    lit: str
-    num: int
-    packaging: Optional[tuple[str, int]]
-    string: str
-
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self) -> tuple[Any, ...]:
         if not self:
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
@@ -31,9 +26,9 @@ class Pre(QualABC):
         o: Self
         clues: list[Clue]
         matches: dict[str, str]
-        pos: list[set]
+        pos: list[set[str]]
         sols: list[str]
-        way: tuple[set[str], set[str], set[str]]
+        way: tuple[Any, ...]
         clues = [Clue()] * 3
         for s, o in info.items():
             if not o:
@@ -54,19 +49,24 @@ class Pre(QualABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
-        ans: dict[str, Clue]
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        a: Clue
+        b: Clue
         matches: dict[str, str]
+        rc: Clue
         matches = Cfg.fullmatches("pre_f", spec)
-        ans = dict()
-        ans["a"] = Clue.by_spec(matches["a_f"])
-        ans["b"] = Clue.by_spec(matches["b_f"])
-        ans["rc"] = Clue.by_spec(matches["rc_f"])
-        return ans
+        a = Clue.by_spec(matches["a_f"])
+        b = Clue.by_spec(matches["b_f"])
+        rc = Clue.by_spec(matches["rc_f"])
+        return a, b, rc
 
-    def _format_parsed(self: Self, *, a: Clue, b: Clue, rc: Clue) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
+        a: Clue
+        b: Clue
         clue: Clue
+        rc: Clue
+        a, b, rc = parsed
         if self.lit == "a":
             clue = a
         elif self.lit == "b":
@@ -86,15 +86,19 @@ class Pre(QualABC):
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str) -> str:
-        return Cfg.cfg.data["consts"]["phases"][value]
+        return Cfg.cfg.phases[value]
 
     @property
     def packaging(self: Self) -> Optional[tuple[str, int]]:
         if self:
             return self.lit, self.num
+        else:
+            return None
 
     @packaging.setter
-    def packaging(self: Self, value: Optional[Iterable]) -> None:
+    def packaging(
+        self: Self, value: Optional[tuple[str, SupportsIndex]]
+    ) -> None:
         if value is None:
             self.num = 0
             self.lit = ""
