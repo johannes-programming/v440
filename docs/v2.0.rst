@@ -50,7 +50,7 @@ then the given value is passed to its ``string`` property.
 """"""""""""""""""""""
 
 This magic method implements ``bool(self)``.
-It is always defined as equivalent to ``self == type(self)()``.
+It is always defined as equivalent to ``self != type(self)()``.
 
 ``__format__(format_spec: object) -> str``
 """"""""""""""""""""""""""""""""""""""""""
