@@ -4,12 +4,12 @@ from abc import abstractmethod
 from typing import Any, Self, SupportsIndex
 
 
-from v440.abc.NonListABC import NonListABC
+from v440.abc.NestedABC import NestedABC
 
 __all__ = ["QualABC"]
 
 
-class QualABC(NonListABC):
+class QualABC(NestedABC):
     _lit: str
     _num: int
     __slots__ = ("_lit", "_num")
