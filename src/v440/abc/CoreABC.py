@@ -130,7 +130,7 @@ class CoreABC(Copyable):
         except Exception:
             msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
             msg %= oxford(*strings)
-            raise TypeError(msg)
+            raise VersionError(msg)
 
     @property
     @abstractmethod
