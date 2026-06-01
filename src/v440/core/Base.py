@@ -93,6 +93,10 @@ class Base(NestedABC):
         ans += format(self.release, release_f)
         return ans
 
+    @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_epoch=int, _release=Release_)
+
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)

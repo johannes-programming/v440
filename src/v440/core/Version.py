@@ -58,6 +58,10 @@ class Version(NestedABC):
         )
 
     @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_public=Public_, _local=Local_)
+
+    @classmethod
     def _join(cls: type[Self], public: str, local: str = "") -> str:
         if local:
             return public + "+" + local

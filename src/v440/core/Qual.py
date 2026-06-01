@@ -118,6 +118,10 @@ class Qual(NestedABC):
         ans += format(self.dev, dev_f)
         return ans
 
+    @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
+
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual", value)

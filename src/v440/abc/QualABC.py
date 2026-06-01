@@ -36,6 +36,10 @@ class QualABC(NonListABC):
     def _cmp(self: Self) -> Any: ...
 
     @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_lit=str, _num=int)
+
+    @classmethod
     @abstractmethod
     def _lit_parse(cls: type[Self], value: str) -> str: ...
 

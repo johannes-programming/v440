@@ -68,6 +68,10 @@ class Public(NestedABC):
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_base=Base_, _qual=Qual_)
+
+    @classmethod
     def _split(cls: type[Self], value: str) -> tuple[str, str]:
         i: int
         i = int(value.lower().startswith("v"))
