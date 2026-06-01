@@ -18,12 +18,6 @@ class Base(NestedABC):
 
     __slots__ = ("_epoch", "_release")
 
-    @setdoc.basic
-    def __init__(self: Self, string: object = "0") -> None:
-        self._epoch = 0
-        self._release = Release_()
-        self.string = string
-
     def _cmp(self: Self) -> tuple[int, Release_]:
         return self.epoch, self.release
 

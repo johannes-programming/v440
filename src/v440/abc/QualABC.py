@@ -19,12 +19,6 @@ class QualABC(NonListABC):
         return bool(self.lit)
 
     @setdoc.basic
-    def __init__(self: Self, string: object = "") -> None:
-        self._lit = ""
-        self._num = 0
-        self.string = string
-
-    @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(
             type(self).__name__,

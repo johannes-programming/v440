@@ -24,13 +24,6 @@ class Qual(NestedABC):
 
     __slots__ = ("_pre", "_post", "_dev")
 
-    @setdoc.basic
-    def __init__(self: Self, string: object = "") -> None:
-        self._pre = Pre_()
-        self._post = Post_()
-        self._dev = Dev_()
-        self.string = string
-
     def _cmp(self: Self) -> tuple[str, int, Post_, Dev_]:
         ans: tuple[str, int]
         if self.pre:

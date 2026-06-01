@@ -20,12 +20,6 @@ class Version(NestedABC):
 
     __slots__ = ("_public", "_local")
 
-    @setdoc.basic
-    def __init__(self: Self, string: object = "0") -> None:
-        self._public = Public_()
-        self._local = Local_()
-        self.string = string
-
     def _cmp(self: Self) -> tuple[Public_, Local_]:
         return self.public, self.local
 

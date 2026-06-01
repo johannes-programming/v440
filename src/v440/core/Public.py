@@ -19,12 +19,6 @@ class Public(NestedABC):
 
     __slots__ = ("_base", "_qual")
 
-    @setdoc.basic
-    def __init__(self: Self, string: object = "0") -> None:
-        self._base = Base_()
-        self._qual = Qual_()
-        self.string = string
-
     def _cmp(self: Self) -> tuple[Base_, Qual_]:
         return self.base, self.qual
 
