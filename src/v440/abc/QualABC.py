@@ -3,8 +3,6 @@ import string as string_
 from abc import abstractmethod
 from typing import Any, Self, SupportsIndex
 
-import setdoc
-from datarepr import datarepr
 
 from v440.abc.NonListABC import NonListABC
 
@@ -15,14 +13,6 @@ class QualABC(NonListABC):
     _lit: str
     _num: int
     __slots__ = ("_lit", "_num")
-
-    @setdoc.basic
-    def __repr__(self: Self) -> str:
-        return datarepr(
-            type(self).__name__,
-            lit=self.lit,
-            num=self.num,
-        )
 
     @abstractmethod
     def _cmp(self: Self) -> Any: ...

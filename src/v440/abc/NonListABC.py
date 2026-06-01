@@ -5,6 +5,7 @@ import cmp3
 import setdoc
 
 from v440.abc.CoreABC import CoreABC
+from datarepr import datarepr
 
 __all__ = ["NonListABC"]
 
@@ -41,6 +42,10 @@ class NonListABC(cmp3.CmpABC, CoreABC):
                 object.__setattr__(self, x, y(getattr(other, x)))
         self._init_kwargs(**kwargs)
 
+    @setdoc.basic
+    def __repr__(self: Self) -> str:
+        return datarepr(type(self).__name__, **self._todict())
+    
     @abstractmethod
     def _cmp(self: Self) -> Any: ...
 
