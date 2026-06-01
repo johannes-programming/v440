@@ -3,7 +3,6 @@ from __future__ import annotations
 import operator
 from typing import Any, Final, Self
 
-import setdoc
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
@@ -21,15 +20,11 @@ class Qual(NestedABC):
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_
     Dev: Final[type[Dev_]] = Dev_
+    _pre:Pre_
+    _post:Post_
+    _dev:Dev_
 
     __slots__ = ("_pre", "_post", "_dev")
-
-    @setdoc.basic
-    def __init__(self: Self, string: object = "") -> None:
-        self._pre = Pre_()
-        self._post = Post_()
-        self._dev = Dev_()
-        self.string = string
 
     def _cmp(self: Self) -> tuple[str, int, Post_, Dev_]:
         ans: tuple[str, int]
@@ -116,6 +111,10 @@ class Qual(NestedABC):
         ans += format(self.dev, dev_f)
         return ans
 
+    @classmethod
+    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+        return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
+    
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual", value)
@@ -130,6 +129,9 @@ class Qual(NestedABC):
     def dev(self: Self) -> Dev_:
         "This property represents the stage of development."
         return self._dev
+    @dev.setter
+    def dev(self:Self, value:object) -> None:
+        self.dev.string = value
 
     def isdevrelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a dev-release."
@@ -149,6 +151,13 @@ class Qual(NestedABC):
     def post(self: Self) -> Post_:
         return self._post
 
+    @post.setter
+    def post(self:Self, value:object) -> None:
+        self.post.string = value
     @property
     def pre(self: Self) -> Pre_:
         return self._pre
+    
+    @pre.setter
+    def pre(self:Self, value:object) -> None:
+        self.pre.string = value

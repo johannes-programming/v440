@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Any, Self, overload
+from typing import Any, Self, overload, Optional
 
 import setdoc
 from copyable import Copyable
@@ -42,20 +42,10 @@ class CoreABC(Copyable):
     @setdoc.basic
     def __gt__(self: Self, other: Any) -> Any: ...
 
-    @overload
     @abstractmethod
     @setdoc.basic
-    def __init__(self: Self) -> None: ...
-
-    @overload
-    @abstractmethod
-    @setdoc.basic
-    def __init__(self: Self, other: Self, /) -> None: ...
-
-    @overload
-    @abstractmethod
-    @setdoc.basic
-    def __init__(self: Self, *, string: object) -> None: ...
+    def __init__(self: Self, other:Optional[Self] =None, /, **kwargs:Any) -> None: 
+        ...
 
     @abstractmethod
     @setdoc.basic
@@ -111,12 +101,18 @@ class CoreABC(Copyable):
     @abstractmethod
     def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...
 
+    def _init_kwargs(self:Self, **kwargs:Any) -> None:
+        x:str
+        y:Any
+        for x,y in kwargs.items():
+            setattr(self, x.lstrip("_"), y)
+            
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
 
     @setdoc.basic
     def copy(self: Self) -> Self:
-        return type(self)(self)  # type: ignore[abstract]
+        return type(self)(self) 
 
     @classmethod
     def deformat(cls: type[Self], *strings: object) -> str:
@@ -127,7 +123,7 @@ class CoreABC(Copyable):
         info = dict()
         for x in strings:
             y = str(x)
-            info[y] = cls(string=y)  # type: ignore[abstract]
+            info[y] = cls(string=y) 
         try:
             return cls._deformat(info)
         except Exception:

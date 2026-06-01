@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from collections.abc import Iterable
 from functools import cmp_to_key
-from typing import Any, Final, Self, TypeVar, overload
+from typing import Any, Final, Self, TypeVar, overload, Optional
 
 import setdoc
 from datahold import BaseDataObject, HoldList
@@ -93,25 +93,17 @@ class ListABC(CoreABC, HoldList[Item]):
             raise exc
         return len(self) > len(other)
 
-    @overload
-    @setdoc.basic
-    def __init__(self: Self, data: Iterable[Item] = (), /) -> None: ...
-
-    @overload
-    @setdoc.basic
-    def __init__(self: Self, /, *, string: object) -> None: ...
-
     @setdoc.basic
     def __init__(
-        self: Self, data: Any = MISSING, /, *, string: object = MISSING
-    ) -> None:
+        self: Self, 
+        data: Optional[Iterable[Item]] = None, 
+        /,
+        **kwargs:Any,
+    ) -> None: 
         self._data = ()
-        if data is not MISSING and string is not MISSING:
-            raise TypeError
-        if data is not MISSING:
+        if data is not None:
             self.data = data
-        if string is not MISSING:
-            self.string = string
+        self._init_kwargs(**kwargs)
 
     @setdoc.basic
     def __le__(self: Self, other: object) -> Any:

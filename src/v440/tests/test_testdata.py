@@ -110,7 +110,7 @@ class TestStringExamples(unittest.TestCase):
             with self.assertRaises(InvalidVersion):
                 Version_(example)
             return
-        x = Version(example)
+        x = Version(string=example)
         y = Version_(example)
         self.assertEqual(y, x.packaging)
         s = y.base_version
@@ -381,7 +381,7 @@ class TestVersionEpochGo(unittest.TestCase):
         msg: str
         v: Version
         msg = "epoch %r" % key
-        v = Version("1.2.3")
+        v = Version(string="1.2.3")
         v.public.base.epoch = query
         self.assertEqual(str(v), full, msg=msg)
         self.assertIsInstance(v.public.base.epoch, int, msg=msg)
@@ -418,7 +418,7 @@ class TestSlicingGo(unittest.TestCase):
         step: Any = None,
     ) -> None:
         v: Version
-        v = Version(query)
+        v = Version(string=query)
         with self.assertRaises(Exception):
             v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution)
@@ -434,7 +434,7 @@ class TestSlicingGo(unittest.TestCase):
         step: Any = None,
     ) -> None:
         v: Version
-        v = Version(query)
+        v = Version(string=query)
         v.public.base.release[start:stop:step] = change
         self.assertEqual(str(v), solution)
 
@@ -461,7 +461,7 @@ class TestPackagingA(unittest.TestCase):
         b = str(a)
         f = "#." * len(a.release)
         f = f[:-1]
-        g = format(Version(text), f)
+        g = format(Version(string=text), f)
         self.assertEqual(b, g)
 
 

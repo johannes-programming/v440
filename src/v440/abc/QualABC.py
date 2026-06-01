@@ -12,17 +12,13 @@ __all__ = ["QualABC"]
 
 
 class QualABC(NonListABC):
+    _lit:str
+    _num:int
     __slots__ = ("_lit", "_num")
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
         return bool(self.lit)
-
-    @setdoc.basic
-    def __init__(self: Self, string: object = "") -> None:
-        self._lit = ""
-        self._num = 0
-        self.string = string
 
     @setdoc.basic
     def __repr__(self: Self) -> str:
@@ -34,6 +30,10 @@ class QualABC(NonListABC):
 
     @abstractmethod
     def _cmp(self: Self) -> Any: ...
+
+    @classmethod
+    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+        return dict(_lit=str, _num=int)
 
     @classmethod
     @abstractmethod

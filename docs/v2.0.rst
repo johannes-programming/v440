@@ -47,7 +47,7 @@ and the instance is left unchanged.
 """"""""""""""""""""""
 
 This magic method implements ``bool(self)``.
-It is defined as equivalent to ``self == type(self)()``.
+It is defined as equivalent to ``self != type(self)()``.
 
 ``__format__(format_spec: object) -> str``
 """"""""""""""""""""""""""""""""""""""""""

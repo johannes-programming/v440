@@ -3,8 +3,6 @@ from __future__ import annotations
 import string as string_
 from typing import Any, Final, Self
 
-import setdoc
-
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
 from v440.core.Qual import Qual as Qual_
@@ -16,14 +14,10 @@ class Public(NestedABC):
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
+    _base:Base_
+    _qual:Qual_
 
     __slots__ = ("_base", "_qual")
-
-    @setdoc.basic
-    def __init__(self: Self, string: object = "0") -> None:
-        self._base = Base_()
-        self._qual = Qual_()
-        self.string = string
 
     def _cmp(self: Self) -> tuple[Base_, Qual_]:
         return self.base, self.qual
@@ -68,6 +62,10 @@ class Public(NestedABC):
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
+    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+        return dict(_base=Base_, _qual=Qual_)
+    
+    @classmethod
     def _split(cls: type[Self], value: str) -> tuple[str, str]:
         i: int
         i = int(value.lower().startswith("v"))
@@ -90,6 +88,9 @@ class Public(NestedABC):
     def base(self: Self) -> Base_:
         "This property represents the version base."
         return self._base
+    @base.setter
+    def base(self:Self, value:object) -> None:
+        self.base.string = value
 
     packaging = NestedABC.string
 
@@ -97,3 +98,7 @@ class Public(NestedABC):
     def qual(self: Self) -> Qual_:
         "This property represents the qualification."
         return self._qual
+    
+    @qual.setter
+    def qual(self:Self, value:object) -> None:
+        self.qual.string = value

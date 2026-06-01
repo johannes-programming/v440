@@ -3,8 +3,6 @@ from __future__ import annotations
 import operator
 from typing import Any, Final, Self
 
-import setdoc
-
 from v440._utils.Cfg import Cfg
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
@@ -15,14 +13,10 @@ __all__ = ["Base"]
 class Base(NestedABC):
 
     Release: Final[type[Release_]] = Release_
+    _epoch:int
+    _release:Release_
 
     __slots__ = ("_epoch", "_release")
-
-    @setdoc.basic
-    def __init__(self: Self, string: object = "0") -> None:
-        self._epoch = 0
-        self._release = Release_()
-        self.string = string
 
     def _cmp(self: Self) -> tuple[int, Release_]:
         return self.epoch, self.release
@@ -93,6 +87,10 @@ class Base(NestedABC):
         ans += format(self.release, release_f)
         return ans
 
+    @classmethod
+    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+        return dict(_epoch=int, _release=Release_)
+    
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
@@ -124,3 +122,7 @@ class Base(NestedABC):
     def release(self: Self) -> Release_:
         "This property represents the release."
         return self._release
+    
+    @release.setter
+    def release(self:Self, value:object, /) -> None:
+        self.release.string = value

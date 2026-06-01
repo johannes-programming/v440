@@ -4,7 +4,6 @@ from collections.abc import Iterable
 from typing import Any, Final, Self
 
 import packaging.version
-import setdoc
 
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
@@ -17,14 +16,10 @@ class Version(NestedABC):
 
     Public: Final[type[Public_]] = Public_
     Local: Final[type[Local_]] = Local_
+    _public:Public_
+    _local:Local_
 
     __slots__ = ("_public", "_local")
-
-    @setdoc.basic
-    def __init__(self: Self, string: object = "0") -> None:
-        self._public = Public_()
-        self._local = Local_()
-        self.string = string
 
     def _cmp(self: Self) -> tuple[Public_, Local_]:
         return self.public, self.local
@@ -58,6 +53,10 @@ class Version(NestedABC):
         )
 
     @classmethod
+    def _init_factories(cls:type[Self]) -> dict[str, Any]:
+        return dict(_public=Public_, _local=Local_)
+    
+    @classmethod
     def _join(cls: type[Self], public: str, local: str = "") -> str:
         if local:
             return public + "+" + local
@@ -83,6 +82,9 @@ class Version(NestedABC):
     def local(self: Self) -> Local_:
         "This property represents the local identifier."
         return self._local
+    @local.setter
+    def local(self:Self, value:object, /) -> None:
+        self.local.string = value
 
     @property
     def packaging(self: Self) -> packaging.version.Version:
@@ -97,3 +99,6 @@ class Version(NestedABC):
     def public(self: Self) -> Public_:
         "This property represents the public identifier."
         return self._public
+    @public.setter
+    def public(self:Self, value:object, /) -> None:
+        self.public.string = value
