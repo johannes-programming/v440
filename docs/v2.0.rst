@@ -37,6 +37,7 @@ This abstract base class is the ancestor of all ``core`` classes.
 It establishes some standards for its descendants.
 
 The constructor always works as follows:
+
 - ``other`` is copied if given, otherwise the default values are used.
 - ``kwargs`` are applied in the given order, they can be used to immediately alter properties.
 
@@ -158,7 +159,7 @@ This abstract base class inherits from ``CoreABC``.
 ``class v440.abc.QualABC.QualABC(other: Optional[Self] = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This abstract base class inherits from ``CoreABC``.
+This abstract base class inherits from ``NestedABC``.
 
 ``lit: str``
 """"""""""""
@@ -178,9 +179,12 @@ e.g. ``v440.core.Base.Base is v440.Version.Public.Base``.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the base part of a public version identifier.
+It inherits from ``NestedABC``.
 
 ``Release: Final[type[v440.core.Release.Release]] = v440.core.Release.Release``
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+This ``class`` inherits from ``v440.abc.ListABC.ListABC[int]``.
 
 ``epoch: int``
 """"""""""""""
@@ -203,6 +207,7 @@ See ``v440.core.Release.Release``.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the developmental release information.
+It inherits from ``QualABC``.
 
 ``lit: str``
 """"""""""""
@@ -256,6 +261,7 @@ This ``property`` represents the equivalent ``packaging.version.Version.post`` v
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the pre-release information.
+It inherits from ``v440.abc.QualABC.QualABC``.
 
 ``lit: str``
 """"""""""""
@@ -276,6 +282,8 @@ This ``property`` represents the equivalent ``packaging.version.Version.pre`` va
 
 ``class v440.core.Public.Public(other: Optional[Self] = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This class inherits from ``v440.abc.NestedABC.NestedABC``.
 
 ``Base: Final[type[v440.core.Base.Base]] = v440.core.Base.Base``
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -302,6 +310,8 @@ See ``v440.core.Qual.Qual``.
 
 ``class v440.core.Qual.Qual(other: Optional[Self] = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This class inherits from ``v440.abc.NestedABC.NestedABC``.
 
 ``Dev: Final[type[v440.core.Dev.Dev]] = v440.core.Dev.Dev``
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -351,7 +361,7 @@ See ``v440.core.Pre.Pre``.
 ``class v440.core.Release.Release(data: Optional[Iterable[int]] = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It inherits from ``v440.abc.ListABC.ListABC[int]``.
+This class inherits from ``v440.abc.ListABC.ListABC[int]``.
 
 ``bump(index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None``
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -378,6 +388,7 @@ It is an alias for ``data``.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` is the centrepiece of the ``v440`` project.
+It inherits from ``v440.abc.NestedABC.NestedABC``.
 
 ``Local: Final[type[v440.core.Local.Local]] = v440.core.Local.Local``
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
