@@ -1,22 +1,23 @@
 import builtins
 import enum
 import functools
+import io
 import operator
 import shlex
 import tomllib
 import unittest
 from collections.abc import Callable, Iterable, Sequence
+from pathlib import Path
 from typing import Any, Optional, Self, cast
 
 import iterprod
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
-from pathlib import Path
 
 from v440 import core
 from v440.core.Version import Version
 from v440.errors.VersionError import VersionError
-import io
+
 __all__ = [
     "TestDataSetter",
     "TestDeformatting",
@@ -35,8 +36,8 @@ class Util(enum.Enum):
 
     @functools.cached_property
     def data(self: Self) -> dict[str, Any]:
-        file:Path
-        stream:io.BufferedReader
+        file: Path
+        stream: io.BufferedReader
         file = Path(__file__).parent / "testdata.toml"
         with file.open("rb") as stream:
             return tomllib.load(stream)
@@ -217,9 +218,9 @@ class TestStringExamples(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
-        bool_:Optional[bool]
+        bool_: Optional[bool]
         obj: Any
-        repr_:Optional[str]
+        repr_: Optional[str]
         obj = cls(string=example)
         bool_ = cast(Optional[bool], kwargs.get("bool"))
         if bool_ is not None:
@@ -237,7 +238,7 @@ class TestStringExamples(unittest.TestCase):
     ) -> None:
         obj: Any
         answer: str
-        solution : Optional[str]
+        solution: Optional[str]
         obj = cls(string=example)
         answer = str(obj)
         self.assertEqual(answer, obj.string)

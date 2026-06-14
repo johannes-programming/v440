@@ -257,8 +257,8 @@ class TestPatch(unittest.TestCase):
 class TestVersionRelease(unittest.TestCase):
 
     def test_repr(self: Self) -> None:
-        release:Release
-        release = Release([1,2,3])
+        release: Release
+        release = Release([1, 2, 3])
         self.assertEqual(repr(release), "Release([1, 2, 3])")
         self.assertEqual(str(release), "1.2.3")
 

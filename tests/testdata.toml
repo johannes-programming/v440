@@ -1,3 +1,45 @@
+[core-non-attributes.test-0000]
+string = "0"
+clsname = "Base"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0100]
+string = ""
+clsname = "Local"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0200]
+string = "0"
+clsname = "Public"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0300]
+string = ""
+clsname = "Qual"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0400]
+string = "0"
+clsname = "Release"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0500]
+string = "0"
+clsname = "Public"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0600]
+string = "0"
+clsname = "Version"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
 [data-setter.Release.test_release_invalid_assignment]
 valid = false
 query = [
@@ -91,7 +133,12 @@ valid = true
 query = "2.5.3.9"
 queryname = "string"
 attrname = "sort"
-solution = [2, 3, 5, 9]
+solution = [
+    2,
+    3,
+    5,
+    9,
+]
 
 [data-setter.Release.test_example_8]
 valid = true
@@ -769,62 +816,146 @@ queryname = "string"
 solutionname = "str"
 valid = true
 
-[slicingmethod.test_slicing_1]
+[deformatting.Base.""]
+valid = true
+solution = ""
+
+[deformatting.Base."1.2.3 v4.5"]
 valid = false
-query = "1.2.3.4.5.6.7.8.9.10"
-start = -8
-stop = 15
-step = 5
-change = [
-    7,
-    7,
-    7,
-]
-solution = "1.2.3.4.5.6.7.8.9.10"
 
-[slicingmethod.test_slicing_3]
-valid = true
-query = "1.2.3.4.5.6.7.8.9.10"
-start = 3
-stop = 4
-change = [
-    777,
-]
-solution = "1.2.3.777.5.6.7.8.9.10"
+[deformatting.Base."V1.2.3 4.5"]
+valid = false
 
-[slicingmethod.test_slicing_4]
+[deformatting.Dev.""]
 valid = true
-query = "1.2.3.4.5.6.7.8.9.10"
-start = 3
-stop = 4
-change = [
-    7,
-    7,
-    7,
-]
-solution = "1.2.3.7.7.7.5.6.7.8.9.10"
+solution = ""
 
-[slicingmethod.test_slicing_5]
+[deformatting.Dev."dev dev.1"]
 valid = true
-query = "1"
-start = 3
-stop = 4
-change = [
-    7,
-    7,
-    7,
-]
-solution = "1.7.7.7"
+solution = "dev."
 
-[slicingmethod.test_slicing_6]
+[deformatting.Dev."deV deV_1"]
 valid = true
-query = "1"
-start = 3
-stop = 4
-change = [
-    777,
-]
-solution = "1.777"
+solution = "deV_"
+
+[deformatting.Dev."dev deV_1"]
+valid = false
+
+[deformatting.Local.""]
+valid = true
+solution = ""
+
+[deformatting.Local."qwERty 0123_aBcD"]
+valid = true
+solution = "####~~^^_~^~^"
+
+[deformatting.Local."qwERty 0.0.0"]
+valid = true
+solution = "~~^^"
+
+[deformatting.Post.""]
+valid = true
+solution = ""
+
+[deformatting.Post."r r.1"]
+valid = true
+solution = "r."
+
+[deformatting.Post."r r_1"]
+valid = true
+solution = "r_"
+
+[deformatting.Pre.""]
+valid = true
+solution = ""
+
+[deformatting.Pre."a alpha"]
+valid = false
+
+[deformatting.Pre."a10 a01"]
+valid = true
+solution = "a##"
+
+[deformatting.Pre."beTA a12 beTA.19"]
+valid = true
+solution = "beTA."
+
+[deformatting.Pre."alpha alpha4 .pre5"]
+valid = true
+solution = "alphaB#.pre"
+
+[deformatting.Public.""]
+valid = true
+solution = ""
+
+[deformatting.Qual.""]
+valid = true
+solution = ""
+
+[deformatting.Qual.-2]
+valid = true
+solution = "-"
+
+[deformatting.Qual."c c1"]
+valid = true
+solution = "c"
+
+[deformatting.Qual."c c1 -2"]
+valid = false
+
+[deformatting.Qual."c1 -2"]
+valid = true
+solution = "c#-"
+
+[deformatting.Qual."c c-1"]
+valid = true
+solution = "c-"
+
+[deformatting.Qual."c c-1 -2"]
+valid = true
+solution = "c--"
+
+[deformatting.Qual."beta1 dev.2"]
+valid = true
+solution = "betadev."
+
+[deformatting.Qual."a b c r dev"]
+valid = true
+solution = "abcrdev"
+
+[deformatting.Qual."a a1 -9"]
+valid = true
+solution = "aB#-"
+
+[deformatting.Qual."b b1 -9"]
+valid = true
+solution = "bC#-"
+
+[deformatting.Qual."rc rc1 -9"]
+valid = false
+
+[deformatting.Release."1.2.0 9.8.7.6.0.5"]
+valid = true
+solution = "..#"
+
+[deformatting.Release."4.0 1.2.0 9.8.7.6.0.5"]
+valid = true
+solution = "..#"
+
+[deformatting.Release."4.0 9.8.7.6.0.5"]
+valid = true
+solution = ".#"
+
+[deformatting.Release."4.0 1.2.0"]
+valid = true
+solution = "..#"
+
+[deformatting.Version.""]
+valid = true
+solution = ""
+
+[deformatting.Version."1.2.3 v9.8"]
+valid = false
 
 [epoch.test_epoch_as_int]
 query = 1
@@ -850,107 +981,6 @@ part = 0
 query = true
 full = "1!1.2.3"
 part = 1
-
-[core-non-attributes.test-0000]
-string = "0"
-clsname = "Base"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[core-non-attributes.test-0100]
-string = ""
-clsname = "Local"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[core-non-attributes.test-0200]
-string = "0"
-clsname = "Public"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[core-non-attributes.test-0300]
-string = ""
-clsname = "Qual"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[core-non-attributes.test-0400]
-string = "0"
-clsname = "Release"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[core-non-attributes.test-0500]
-string = "0"
-clsname = "Public"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[core-non-attributes.test-0600]
-string = "0"
-clsname = "Version"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[[release-key.test-major.steps]]
-name = "major"
-value = 10
-solution = [
-    10,
-]
-
-[[release-key.test-minor.steps]]
-name = "minor"
-value = 1
-solution = [
-    0,
-    1,
-]
-
-[[release-key.test-micro.steps]]
-name = "micro"
-value = 1
-solution = [
-    0,
-    0,
-    1,
-]
-
-[[release-key.test-patch.steps]]
-name = "patch"
-value = 5
-solution = [
-    0,
-    0,
-    5,
-]
-
-[[release-key.modify-increase-length.steps]]
-name = "data"
-value = [
-    1,
-]
-solution = [
-    1,
-]
-
-[[release-key.modify-increase-length.steps]]
-name = "minor"
-value = 5
-solution = [
-    1,
-    5,
-]
-
-[[release-key.modify-increase-length.steps]]
-name = "micro"
-value = 3
-solution = [
-    1,
-    5,
-    3,
-]
 
 [examples.Base.""]
 valid = false
@@ -2472,143 +2502,118 @@ str = "1.2.3a1.post4.dev5+local"
 deformatted = "--dev"
 legacy = "spec.test_version_with_complex_specifiers_and_local"
 
-[deformatting.Base.""]
-valid = true
-solution = ""
+[[release-key.test-major.steps]]
+name = "major"
+value = 10
+solution = [
+    10,
+]
 
-[deformatting.Base."1.2.3 v4.5"]
+[[release-key.test-minor.steps]]
+name = "minor"
+value = 1
+solution = [
+    0,
+    1,
+]
+
+[[release-key.test-micro.steps]]
+name = "micro"
+value = 1
+solution = [
+    0,
+    0,
+    1,
+]
+
+[[release-key.test-patch.steps]]
+name = "patch"
+value = 5
+solution = [
+    0,
+    0,
+    5,
+]
+
+[[release-key.modify-increase-length.steps]]
+name = "data"
+value = [
+    1,
+]
+solution = [
+    1,
+]
+
+[[release-key.modify-increase-length.steps]]
+name = "minor"
+value = 5
+solution = [
+    1,
+    5,
+]
+
+[[release-key.modify-increase-length.steps]]
+name = "micro"
+value = 3
+solution = [
+    1,
+    5,
+    3,
+]
+
+[slicingmethod.test_slicing_1]
 valid = false
+query = "1.2.3.4.5.6.7.8.9.10"
+start = -8
+stop = 15
+step = 5
+change = [
+    7,
+    7,
+    7,
+]
+solution = "1.2.3.4.5.6.7.8.9.10"
 
-[deformatting.Base."V1.2.3 4.5"]
-valid = false
-
-[deformatting.Dev.""]
+[slicingmethod.test_slicing_3]
 valid = true
-solution = ""
+query = "1.2.3.4.5.6.7.8.9.10"
+start = 3
+stop = 4
+change = [
+    777,
+]
+solution = "1.2.3.777.5.6.7.8.9.10"
 
-[deformatting.Dev."dev dev.1"]
+[slicingmethod.test_slicing_4]
 valid = true
-solution = "dev."
+query = "1.2.3.4.5.6.7.8.9.10"
+start = 3
+stop = 4
+change = [
+    7,
+    7,
+    7,
+]
+solution = "1.2.3.7.7.7.5.6.7.8.9.10"
 
-[deformatting.Dev."deV deV_1"]
+[slicingmethod.test_slicing_5]
 valid = true
-solution = "deV_"
+query = "1"
+start = 3
+stop = 4
+change = [
+    7,
+    7,
+    7,
+]
+solution = "1.7.7.7"
 
-[deformatting.Dev."dev deV_1"]
-valid = false
-
-[deformatting.Local.""]
+[slicingmethod.test_slicing_6]
 valid = true
-solution = ""
-
-[deformatting.Local."qwERty 0123_aBcD"]
-valid = true
-solution = "####~~^^_~^~^"
-
-[deformatting.Local."qwERty 0.0.0"]
-valid = true
-solution = "~~^^"
-
-[deformatting.Post.""]
-valid = true
-solution = ""
-
-[deformatting.Post."r r.1"]
-valid = true
-solution = "r."
-
-[deformatting.Post."r r_1"]
-valid = true
-solution = "r_"
-
-[deformatting.Pre.""]
-valid = true
-solution = ""
-
-[deformatting.Pre."a alpha"]
-valid = false
-
-[deformatting.Pre."a10 a01"]
-valid = true
-solution = "a##"
-
-[deformatting.Pre."beTA a12 beTA.19"]
-valid = true
-solution = "beTA."
-
-[deformatting.Pre."alpha alpha4 .pre5"]
-valid = true
-solution = "alphaB#.pre"
-
-[deformatting.Public.""]
-valid = true
-solution = ""
-
-[deformatting.Qual.""]
-valid = true
-solution = ""
-
-[deformatting.Qual.-2]
-valid = true
-solution = "-"
-
-[deformatting.Qual."c c1"]
-valid = true
-solution = "c"
-
-[deformatting.Qual."c c1 -2"]
-valid = false
-
-[deformatting.Qual."c1 -2"]
-valid = true
-solution = "c#-"
-
-[deformatting.Qual."c c-1"]
-valid = true
-solution = "c-"
-
-[deformatting.Qual."c c-1 -2"]
-valid = true
-solution = "c--"
-
-[deformatting.Qual."beta1 dev.2"]
-valid = true
-solution = "betadev."
-
-[deformatting.Qual."a b c r dev"]
-valid = true
-solution = "abcrdev"
-
-[deformatting.Qual."a a1 -9"]
-valid = true
-solution = "aB#-"
-
-[deformatting.Qual."b b1 -9"]
-valid = true
-solution = "bC#-"
-
-[deformatting.Qual."rc rc1 -9"]
-valid = false
-
-[deformatting.Release."1.2.0 9.8.7.6.0.5"]
-valid = true
-solution = "..#"
-
-[deformatting.Release."4.0 1.2.0 9.8.7.6.0.5"]
-valid = true
-solution = "..#"
-
-[deformatting.Release."4.0 9.8.7.6.0.5"]
-valid = true
-solution = ".#"
-
-[deformatting.Release."4.0 1.2.0"]
-valid = true
-solution = "..#"
-
-[deformatting.Version.""]
-valid = true
-solution = ""
-
-[deformatting.Version."1.2.3 v9.8"]
-valid = false
+query = "1"
+start = 3
+stop = 4
+change = [
+    777,
+]
+solution = "1.777"
