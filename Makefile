@@ -10,7 +10,8 @@ add:
 amend: add
 	git commit --amend --no-edit;
 
-beautiful: isort black jacobus toml_sorted
+beautiful: isort black jacobus toml_sorted works
+	conda run -n works python make/text_sort.py MANIFEST.in;
 
 black: works
 	conda run -n works pip install 'black>=24.5,<26' >/dev/null;
