@@ -1703,6 +1703,12 @@ deformatted = ""
 legacy = "Epoch Versions"
 valid = true
 
+[examples.Version."1+1"]
+valid = true
+
+[examples.Version."1+a"]
+valid = true
+
 [examples.Version."1..0"]
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
 valid = false
