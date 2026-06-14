@@ -39,8 +39,9 @@ isort: works
 	conda run -n works isort . ;
 
 jacobus: works
-	conda run -n works pip install 'jacobus>=2.0,<3' >/dev/null;
+	conda run -n works pip install 'jacobus>=2.1,<3' >/dev/null;
 	conda run -n works python -m jacobus @make/jacobus.txt;
+	conda run -n works python -m jacobus @make/jacobus_in.txt;
 
 pypi: clean build upload
 
