@@ -1023,16 +1023,20 @@ deformatted = ""
 valid = true
 
 [examples.Dev.""]
+bool = false
 deformatted = ""
 valid = true
 
 [examples.Dev.-dev5]
+bool = true
 deformatted = "-dev"
 str = ".dev5"
 valid = true
 
 [examples.Dev.".dev5"]
+bool = true
 deformatted = ""
+repr = "Dev(lit='dev', num=5)"
 str = ".dev5"
 valid = true
 
@@ -1130,6 +1134,7 @@ str = "x1.y2.3"
 valid = true
 
 [examples.Post.""]
+bool = false
 deformatted = ""
 str = ""
 valid = true
@@ -1138,11 +1143,13 @@ valid = true
 valid = false
 
 [examples.Post.post]
+bool = true
 deformatted = "post"
 str = ".post0"
 valid = true
 
 [examples.Post.post-1]
+bool = true
 deformatted = "post-"
 str = ".post1"
 valid = true
@@ -1288,10 +1295,12 @@ deformatted = ""
 valid = true
 
 [examples.Public."1.2.3a1.post1.dev2"]
+bool = true
 deformatted = ""
 valid = true
 
 [examples.Qual.""]
+bool = false
 deformatted = ""
 str = ""
 valid = true
@@ -1302,6 +1311,7 @@ str = ".post2"
 valid = true
 
 [examples.Qual._AlPhA]
+bool = true
 deformatted = "_AlPhA"
 str = "a0"
 valid = true
