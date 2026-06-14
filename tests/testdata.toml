@@ -957,7 +957,8 @@ valid = false
 
 [examples.Base."0!0"]
 valid = true
-normed = "0"
+repr = "Base(epoch=0, release=Release([]))"
+str = "0"
 deformatted = "#!"
 
 [examples.Base."1!1.2.3"]
@@ -994,7 +995,7 @@ deformatted = ""
 
 [examples.Dev.dev0]
 valid = true
-normed = ".dev0"
+str = ".dev0"
 deformatted = "dev#"
 
 [examples.Dev.dev1]
@@ -1007,22 +1008,22 @@ deformatted = "dev"
 
 [examples.Dev.dev01]
 valid = true
-normed = ".dev1"
+str = ".dev1"
 deformatted = "dev##"
 
 [examples.Dev.dev10]
 valid = true
-normed = ".dev10"
+str = ".dev10"
 deformatted = "dev"
 
 [examples.Dev.dev]
 valid = true
-normed = ".dev0"
+str = ".dev0"
 deformatted = "dev"
 
 [examples.Dev.dev-1]
 valid = true
-normed = ".dev1"
+str = ".dev1"
 deformatted = "dev-"
 
 [examples.Dev.deva]
@@ -1036,47 +1037,47 @@ valid = false
 
 [examples.Dev.-dev5]
 valid = true
-normed = ".dev5"
+str = ".dev5"
 deformatted = "-dev"
 
 [examples.Dev.".dev5"]
 valid = true
-normed = ".dev5"
+str = ".dev5"
 deformatted = ""
 
 [examples.Local.""]
 valid = true
-normed = ""
+str = ""
 deformatted = ""
 
 [examples.Local.abc]
 valid = true
-normed = "abc"
+str = "abc"
 deformatted = ""
 
 [examples.Local."abc.1"]
 valid = true
-normed = "abc.1"
+str = "abc.1"
 deformatted = ""
 
 [examples.Local."a1.b2"]
 valid = true
-normed = "a1.b2"
+str = "a1.b2"
 deformatted = ""
 
 [examples.Local.001]
 valid = true
-normed = "1"
+str = "1"
 deformatted = "###"
 
 [examples.Local."abc.001.def"]
 valid = true
-normed = "abc.1.def"
+str = "abc.1.def"
 deformatted = ".###"
 
 [examples.Local."x1.y2.3"]
 valid = true
-normed = "x1.y2.3"
+str = "x1.y2.3"
 deformatted = ""
 
 [examples.Local."a..b"]
@@ -1096,42 +1097,42 @@ valid = false
 
 [examples.Post.""]
 valid = true
-normed = ""
+str = ""
 deformatted = ""
 
 [examples.Post.post0]
 valid = true
-normed = ".post0"
+str = ".post0"
 deformatted = "post#"
 
 [examples.Post.post1]
 valid = true
-normed = ".post1"
+str = ".post1"
 deformatted = "post"
 
 [examples.Post.post2]
 valid = true
-normed = ".post2"
+str = ".post2"
 deformatted = "post"
 
 [examples.Post.post10]
 valid = true
-normed = ".post10"
+str = ".post10"
 deformatted = "post"
 
 [examples.Post.post01]
 valid = true
-normed = ".post1"
+str = ".post1"
 deformatted = "post##"
 
 [examples.Post.post]
 valid = true
-normed = ".post0"
+str = ".post0"
 deformatted = "post"
 
 [examples.Post.post-1]
 valid = true
-normed = ".post1"
+str = ".post1"
 deformatted = "post-"
 
 [examples.Post.p1]
@@ -1142,47 +1143,47 @@ valid = false
 
 [examples.Pre.""]
 valid = true
-normed = ""
+str = ""
 deformatted = ""
 
 [examples.Pre.a1]
 valid = true
-normed = "a1"
+str = "a1"
 deformatted = ""
 
 [examples.Pre.alpha1]
 valid = true
-normed = "a1"
+str = "a1"
 deformatted = "alpha"
 
 [examples.Pre.b2]
 valid = true
-normed = "b2"
+str = "b2"
 deformatted = ""
 
 [examples.Pre.rc1]
 valid = true
-normed = "rc1"
+str = "rc1"
 deformatted = ""
 
 [examples.Pre.c3]
 valid = true
-normed = "rc3"
+str = "rc3"
 deformatted = "c"
 
 [examples.Pre.a]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "a"
 
 [examples.Pre.alpha]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "alpha"
 
 [examples.Pre.aLPha]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "aLPha"
 
 [examples.Pre.x1]
@@ -1190,17 +1191,17 @@ valid = false
 
 [examples.Pre.pre1]
 valid = true
-normed = "rc1"
+str = "rc1"
 deformatted = "pre"
 
 [examples.Pre.rc]
 valid = true
-normed = "rc0"
+str = "rc0"
 deformatted = "rc"
 
 [examples.Pre.b1]
 valid = true
-normed = "b1"
+str = "b1"
 deformatted = ""
 
 [examples.Pre.b1.formatted]
@@ -1210,7 +1211,7 @@ BETA = "BETA1"
 
 [examples.Pre._AlPhA_0]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "_AlPhA_#"
 
 [examples.Public.""]
@@ -1218,7 +1219,7 @@ valid = false
 
 [examples.Public."0!0"]
 valid = true
-normed = "0"
+str = "0"
 deformatted = "#!"
 
 [examples.Public."1.2.3"]
@@ -1239,7 +1240,7 @@ deformatted = ""
 
 [examples.Public."1!1.0rc1.post2"]
 valid = true
-normed = "1!1rc1.post2"
+str = "1!1rc1.post2"
 deformatted = ".#"
 
 [examples.Public."1.0+loc"]
@@ -1250,7 +1251,7 @@ valid = false
 
 [examples.Public."1.0.post"]
 valid = true
-normed = "1.post0"
+str = "1.post0"
 deformatted = ".#.post"
 
 [examples.Public."1!"]
@@ -1258,87 +1259,87 @@ valid = false
 
 [examples.Qual.""]
 valid = true
-normed = ""
+str = ""
 deformatted = ""
 
 [examples.Qual.a1]
 valid = true
-normed = "a1"
+str = "a1"
 deformatted = ""
 
 [examples.Qual.alpha1]
 valid = true
-normed = "a1"
+str = "a1"
 deformatted = "alpha"
 
 [examples.Qual.post1]
 valid = true
-normed = ".post1"
+str = ".post1"
 deformatted = "post"
 
 [examples.Qual.dev1]
 valid = true
-normed = ".dev1"
+str = ".dev1"
 deformatted = "dev"
 
 [examples.Qual."a1.post1"]
 valid = true
-normed = "a1.post1"
+str = "a1.post1"
 deformatted = ""
 
 [examples.Qual.a1-2-dev-3]
 valid = true
-normed = "a1.post2.dev3"
+str = "a1.post2.dev3"
 deformatted = "--dev-"
 
 [examples.Qual.a1-2]
 valid = true
-normed = "a1.post2"
+str = "a1.post2"
 deformatted = "-"
 
 [examples.Qual.-2]
 valid = true
-normed = ".post2"
+str = ".post2"
 deformatted = "-"
 
 [examples.Qual."a1.post2.dev3"]
 valid = true
-normed = "a1.post2.dev3"
+str = "a1.post2.dev3"
 deformatted = ""
 
 [examples.Qual."rc1.dev2"]
 valid = true
-normed = "rc1.dev2"
+str = "rc1.dev2"
 deformatted = ""
 
 [examples.Qual.alpha]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "alpha"
 
 [examples.Qual.post]
 valid = true
-normed = ".post0"
+str = ".post0"
 deformatted = "post"
 
 [examples.Qual.dev]
 valid = true
-normed = ".dev0"
+str = ".dev0"
 deformatted = "dev"
 
 [examples.Qual.alpha-1]
 valid = true
-normed = "a1"
+str = "a1"
 deformatted = "alpha-"
 
 [examples.Qual._AlPhA]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "_AlPhA"
 
 [examples.Qual._AlPhA_0]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "_AlPhA_#"
 
 [examples.Qual._AlPhA_]
@@ -1346,12 +1347,12 @@ valid = false
 
 [examples.Qual.post-1]
 valid = true
-normed = ".post1"
+str = ".post1"
 deformatted = "post-"
 
 [examples.Qual._post-1]
 valid = true
-normed = ".post1"
+str = ".post1"
 deformatted = "_post-"
 
 [examples.Qual._post-1.formatted]
@@ -1359,12 +1360,12 @@ deformatted = "_post-"
 
 [examples.Qual.a]
 valid = true
-normed = "a0"
+str = "a0"
 deformatted = "a"
 
 [examples.Qual.b1]
 valid = true
-normed = "b1"
+str = "b1"
 deformatted = ""
 
 [examples.Qual.b1.formatted]
@@ -1374,7 +1375,7 @@ BETA = "BETA1"
 
 [examples.Qual."beta1.post2.dev3"]
 valid = true
-normed = "b1.post2.dev3"
+str = "b1.post2.dev3"
 deformatted = "beta"
 
 [examples.Qual."beta1.post2.dev3".formatted]
@@ -1386,27 +1387,27 @@ valid = false
 
 [examples.Release.0]
 valid = true
-normed = "0"
+str = "0"
 deformatted = ""
 
 [examples.Release.1]
 valid = true
-normed = "1"
+str = "1"
 deformatted = ""
 
 [examples.Release."1.2"]
 valid = true
-normed = "1.2"
+str = "1.2"
 deformatted = ""
 
 [examples.Release."1.2.3"]
 valid = true
-normed = "1.2.3"
+str = "1.2.3"
 deformatted = ""
 
 [examples.Release."1.02.3"]
 valid = true
-normed = "1.2.3"
+str = "1.2.3"
 deformatted = ".##"
 
 [examples.Release."1.02.3".formatted]
@@ -1414,22 +1415,22 @@ deformatted = ".##"
 
 [examples.Release."1.002.3"]
 valid = true
-normed = "1.2.3"
+str = "1.2.3"
 deformatted = ".###"
 
 [examples.Release."1.042.3"]
 valid = true
-normed = "1.42.3"
+str = "1.42.3"
 deformatted = ".###"
 
 [examples.Release."10.0.0"]
 valid = true
-normed = "10"
+str = "10"
 deformatted = "..#"
 
 [examples.Release."3.4.5.6"]
 valid = true
-normed = "3.4.5.6"
+str = "3.4.5.6"
 deformatted = ""
 repr = "Release([3, 4, 5, 6])"
 
@@ -1447,13 +1448,13 @@ valid = false
 
 [examples.Release."0.0.1"]
 valid = true
-normed = "0.0.1"
+str = "0.0.1"
 deformatted = ""
 
 [examples.Version."v1.0.0"]
 valid = true
 legacy = "test_example_1"
-normed = "1"
+str = "1"
 deformatted = "v..#"
 
 [examples.Version."v1.0.0".formatted]
@@ -1464,52 +1465,52 @@ valid = false
 
 [examples.Version.0]
 valid = true
-normed = "0"
+str = "0"
 deformatted = ""
 
 [examples.Version."1.2.3a1"]
 valid = true
-normed = "1.2.3a1"
+str = "1.2.3a1"
 deformatted = ""
 
 [examples.Version."1.2.3a1.post1.dev2"]
 valid = true
-normed = "1.2.3a1.post1.dev2"
+str = "1.2.3a1.post1.dev2"
 deformatted = ""
 
 [examples.Version."1.2.3+abc"]
 valid = true
-normed = "1.2.3+abc"
+str = "1.2.3+abc"
 deformatted = ""
 
 [examples.Version."1.2.3+aBc"]
 valid = true
-normed = "1.2.3+abc"
+str = "1.2.3+abc"
 deformatted = "+~^"
 
 [examples.Version."1.2.3+abc.1"]
 valid = true
-normed = "1.2.3+abc.1"
+str = "1.2.3+abc.1"
 deformatted = ""
 
 [examples.Version."1!1.0"]
 valid = true
-normed = "1!1"
+str = "1!1"
 deformatted = ".#"
 
 [examples.Version."0!1.0rc1+1.abc"]
 valid = true
-normed = "1rc1+1.abc"
+str = "1rc1+1.abc"
 deformatted = "#!.#"
 
 [examples.Version."2.0.post1"]
 valid = true
-normed = "2.post1"
+str = "2.post1"
 deformatted = ".#"
 
 [examples.Version."2.0.post1+local.1"]
 valid = true
-normed = "2.post1+local.1"
+str = "2.post1+local.1"
 deformatted = ".#"
 
 [examples.Version."not a version"]
@@ -1520,7 +1521,7 @@ valid = false
 
 [examples.Version."1.0a"]
 valid = true
-normed = "1a0"
+str = "1a0"
 deformatted = ".#a"
 
 [examples.Version."1!"]
@@ -1532,19 +1533,19 @@ valid = false
 [examples.Version."1.0.0"]
 valid = true
 legacy = "Basic Versioning"
-normed = "1"
+str = "1"
 deformatted = "..#"
 
 [examples.Version."0.9.1"]
 valid = true
 legacy = "Basic Versioning"
-normed = "0.9.1"
+str = "0.9.1"
 deformatted = ""
 
 [examples.Version."2.1.0"]
 valid = true
 legacy = "Basic Versioning"
-normed = "2.1"
+str = "2.1"
 deformatted = "..#"
 
 [examples.Version."10.5.3"]
@@ -1605,19 +1606,19 @@ deformatted = "..#"
 [examples.Version."4.1.0-rc.1"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
-normed = "4.1rc1"
+str = "4.1rc1"
 deformatted = "..#-rc."
 
 [examples.Version."1.1a0"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
-normed = "1.1a0"
+str = "1.1a0"
 deformatted = ""
 
 [examples.Version."1.1.0-alpha.2"]
 valid = true
 legacy = "Pre-releases (alpha, beta, release candidate)"
-normed = "1.1a2"
+str = "1.1a2"
 deformatted = "..#-alpha."
 
 [examples.Version."5.0rc1"]
@@ -1653,7 +1654,7 @@ deformatted = "..#-post"
 [examples.Version."0.9.0post5"]
 valid = true
 legacy = "Post-releases"
-normed = "0.9.post5"
+str = "0.9.post5"
 deformatted = "..#post"
 
 [examples.Version."0.9.0post5".formatted]
@@ -1682,30 +1683,30 @@ deformatted = ""
 [examples.Version."1.0dev5"]
 valid = true
 legacy = "Development releases"
-normed = "1.dev5"
+str = "1.dev5"
 deformatted = ".#dev"
 
 [examples.Version."1.1.0-dev3"]
 valid = true
 legacy = "Development releases"
-normed = "1.1.dev3"
+str = "1.1.dev3"
 deformatted = "..#R#-dev"
 
 [examples.Version."0.5.0.dev4"]
 valid = true
 legacy = "Development releases"
-normed = "0.5.dev4"
+str = "0.5.dev4"
 deformatted = "..#"
 
 [examples.Version."00.5.0.dev4"]
 valid = true
-normed = "0.5.dev4"
+str = "0.5.dev4"
 deformatted = "##..#"
 
 [examples.Version."1.0.0+local"]
 valid = true
 legacy = "Local Versions"
-normed = "1+local"
+str = "1+local"
 deformatted = "..#"
 
 [examples.Version."2.0.1+20130313144700"]
@@ -1746,13 +1747,13 @@ deformatted = ""
 [examples.Version."1!0.1.0"]
 valid = true
 legacy = "Epoch Versions"
-normed = "1!0.1"
+str = "1!0.1"
 deformatted = "..#"
 
 [examples.Version."2!1.0.0"]
 valid = true
 legacy = "Epoch Versions"
-normed = "2!1"
+str = "2!1"
 deformatted = "..#"
 
 [examples.Version."1!2.3.4"]
@@ -1763,7 +1764,7 @@ deformatted = ""
 [examples.Version."0!0.0.1"]
 valid = true
 legacy = "Epoch Versions"
-normed = "0.0.1"
+str = "0.0.1"
 deformatted = "#!"
 
 [examples.Version."3!1.2.0"]
@@ -1789,61 +1790,61 @@ deformatted = ""
 [examples.Version."1!1.0.0a1.dev1"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-normed = "1!1a1.dev1"
+str = "1!1a1.dev1"
 deformatted = "..#"
 
 [examples.Version."1.2.3.post4+exp.sha.5114f85"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-normed = "1.2.3.post4+exp.sha.5114f85"
+str = "1.2.3.post4+exp.sha.5114f85"
 deformatted = ""
 
 [examples.Version."3.2.1rc2.post1.dev3"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-normed = "3.2.1rc2.post1.dev3"
+str = "3.2.1rc2.post1.dev3"
 deformatted = ""
 
 [examples.Version."0!0.9.0.post5.dev7+local.5"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-normed = "0.9.post5.dev7+local.5"
+str = "0.9.post5.dev7+local.5"
 deformatted = "#!..#"
 
 [examples.Version."2!3.4.5a2+ubuntu1"]
 valid = true
 legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-normed = "2!3.4.5a2+ubuntu1"
+str = "2!3.4.5a2+ubuntu1"
 deformatted = ""
 
 [examples.Version."1.0"]
 valid = true
 legacy = "Edge Cases / Special Forms"
-normed = "1"
+str = "1"
 deformatted = ".#"
 
 [examples.Version."v2.0"]
 valid = true
 legacy = "Edge Cases / Special Forms"
-normed = "2"
+str = "2"
 deformatted = "v.#"
 
 [examples.Version."1.2.3-456"]
 valid = true
 legacy = "Edge Cases / Special Forms"
-normed = "1.2.3.post456"
+str = "1.2.3.post456"
 deformatted = "-"
 
 [examples.Version."2.0.0-beta"]
 valid = true
 legacy = "Edge Cases / Special Forms"
-normed = "2b0"
+str = "2b0"
 deformatted = "..#-beta"
 
 [examples.Version."1.0.0.dev1234567"]
 valid = true
 legacy = "Edge Cases / Special Forms"
-normed = "1.dev1234567"
+str = "1.dev1234567"
 deformatted = "..#"
 
 [examples.Version."1.0.0.post123456789"]
@@ -1874,25 +1875,25 @@ deformatted = "-beta"
 [examples.Version."01.0.0"]
 valid = true
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-normed = "1"
+str = "1"
 deformatted = "##..#"
 
 [examples.Version."1.0.0beta1"]
 valid = true
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-normed = "1b1"
+str = "1b1"
 deformatted = "..#beta"
 
 [examples.Version."v1.2.3"]
 valid = true
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-normed = "1.2.3"
+str = "1.2.3"
 deformatted = "v"
 
 [examples.Version."1.0.0a1.post2.dev3"]
 valid = true
 legacy = "Increasing complexity with more combinations"
-normed = "1a1.post2.dev3"
+str = "1a1.post2.dev3"
 deformatted = "..#"
 
 [examples.Version."1!2.0.0b3.post1+exp.sha.1234abcd"]
@@ -2068,7 +2069,7 @@ deformatted = ""
 [examples.Version."0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"]
 valid = true
 legacy = "Extreme cases with very long versions"
-normed = "0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"
+str = "0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"
 deformatted = "#!..#"
 
 [examples.Version."1.2.3"]
@@ -2173,7 +2174,7 @@ deformatted = ""
 
 [examples.Version."1.2.3a0.post10"]
 valid = true
-normed = "1.2.3a0.post10"
+str = "1.2.3a0.post10"
 legacy = "Difficult Qualification Relations"
 deformatted = ""
 
@@ -2189,7 +2190,7 @@ deformatted = ""
 
 [examples.Version."1.2.3a0.post_10"]
 valid = true
-normed = "1.2.3a0.post10"
+str = "1.2.3a0.post10"
 deformatted = ".post_"
 
 [examples.Version."1.2.3a0.post10.dev2"]
@@ -2424,43 +2425,43 @@ legacy = "Test version with invalid specifiers that should raise an error"
 
 [examples.Version."1.2.3-4"]
 valid = true
-normed = "1.2.3.post4"
+str = "1.2.3.post4"
 deformatted = "-"
 legacy = "spec.test_basic_version_with_post_specifier"
 
 [examples.Version."1.2.3a1-4"]
 valid = true
-normed = "1.2.3a1.post4"
+str = "1.2.3a1.post4"
 deformatted = "-"
 legacy = "spec.test_version_with_pre_release_and_post_specifiers"
 
 [examples.Version."1.2.3-4+local"]
 valid = true
-normed = "1.2.3.post4+local"
+str = "1.2.3.post4+local"
 deformatted = "-"
 legacy = "spec.test_version_with_post_and_local_specifiers"
 
 [examples.Version."1!1.2.3-4"]
 valid = true
-normed = "1!1.2.3.post4"
+str = "1!1.2.3.post4"
 deformatted = "-"
 legacy = "spec.test_version_with_post_specifier_and_epoch"
 
 [examples.Version."1.2.3-4-dev5"]
 valid = true
-normed = "1.2.3.post4.dev5"
+str = "1.2.3.post4.dev5"
 deformatted = "--dev"
 legacy = "spec.test_version_with_dev_specifier_after_post"
 
 [examples.Version."1!1.2.3-4-dev2"]
 valid = true
-normed = "1!1.2.3.post4.dev2"
+str = "1!1.2.3.post4.dev2"
 deformatted = "--dev"
 legacy = "spec.test_version_with_epoch_and_wrong_order_specifiers"
 
 [examples.Version."1.2.3a1-4-dev5+local"]
 valid = true
-normed = "1.2.3a1.post4.dev5+local"
+str = "1.2.3a1.post4.dev5+local"
 deformatted = "--dev"
 legacy = "spec.test_version_with_complex_specifiers_and_local"
 

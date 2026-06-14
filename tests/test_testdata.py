@@ -205,8 +205,7 @@ class TestStringExamples(unittest.TestCase):
         **kwargs: Any,
     ) -> None:
         self.go_valid_example_repr(*args, **kwargs)
-        self.go_valid_example_string(*args, **kwargs)
-        self.go_valid_example_normed(*args, **kwargs)
+        self.go_valid_example_str(*args, **kwargs)
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
@@ -225,7 +224,7 @@ class TestStringExamples(unittest.TestCase):
         if repr_ is not None:
             self.assertEqual(repr(obj), repr_)
 
-    def go_valid_example_string(
+    def go_valid_example_str(
         self: Self,
         cls: type,
         example: str,
@@ -233,24 +232,16 @@ class TestStringExamples(unittest.TestCase):
         **kwargs: Any,
     ) -> None:
         obj: Any
+        answer: str
+        solution : Optional[str]
         obj = cls(string=example)
-        self.assertEqual(str(obj), obj.string)
-        self.assertEqual(str(obj), format(obj))
-        self.assertEqual(str(obj), format(obj, ""))
-
-    def go_valid_example_normed(
-        self: Self,
-        cls: type,
-        example: str,
-        /,
-        *,
-        normed: Optional[str] = None,
-        **kwargs: Any,
-    ) -> None:
-        obj: Any
-        obj = cls(string=example)
-        if normed is not None:
-            self.assertEqual(obj.string, normed)
+        answer = str(obj)
+        self.assertEqual(answer, obj.string)
+        self.assertEqual(answer, format(obj))
+        self.assertEqual(answer, format(obj, ""))
+        solution = cast(Optional[str], kwargs.get("str"))
+        if solution is not None:
+            self.assertEqual(str(obj), solution)
 
     def go_valid_example_formatted(
         self: Self,
