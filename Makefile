@@ -1,5 +1,5 @@
 .ONESHELL:
-.PHONY: all add amend beautiful black build clean commit commit-version echo isort jacobus pypi rebase reset test toml_sorted_pyproject upload version works
+.PHONY: all add amend beautiful black build clean commit commit-version echo isort jacobus pypi rebase reset test toml_sorted upload version works
 SHELL := /bin/zsh
 
 all: beautiful commit-version
@@ -10,7 +10,7 @@ add:
 amend: add
 	git commit --amend --no-edit;
 
-beautiful: isort black jacobus toml_sorted_pyproject
+beautiful: isort black jacobus toml_sorted
 
 black: works
 	conda run -n works pip install 'black>=24.5,<26' >/dev/null;
@@ -56,9 +56,10 @@ test:
 	conda run -n test311 pip install mypy >/dev/null;
 	conda run -n test311 python -m mypy -p datahold;
 
-toml_sorted_pyproject: works
+toml_sorted: works
 	conda run -n works pip install 'toml_sorted>=2.0,<3' >/dev/null;
 	conda run -n works python -m toml_sorted @make/toml_sorted_pyproject.txt;
+	conda run -n works python -m toml_sorted @make/toml_sorted_testdata.txt;
 
 upload: works
 	conda run -n works pip install 'twine>=5.2,<7' >/dev/null;

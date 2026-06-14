@@ -1,0 +1,4 @@
+--sort
+--sort
+--key=examples
+tests/testdata.toml
