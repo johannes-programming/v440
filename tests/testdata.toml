@@ -1431,6 +1431,7 @@ deformatted = "..#"
 valid = true
 normed = "3.4.5.6"
 deformatted = ""
+repr = "Release([3, 4, 5, 6])"
 
 [examples.Release."1."]
 valid = false

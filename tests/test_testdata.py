@@ -204,11 +204,26 @@ class TestStringExamples(unittest.TestCase):
         *args: Any,
         **kwargs: Any,
     ) -> None:
+        self.go_valid_example_repr(*args, **kwargs)
         self.go_valid_example_string(*args, **kwargs)
         self.go_valid_example_normed(*args, **kwargs)
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
+
+    def go_valid_example_repr(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        repr_:Optional[str]
+        obj = cls(string=example)
+        repr_ = cast(Optional[str], kwargs.get("repr"))
+        if repr_ is not None:
+            self.assertEqual(repr(obj), repr_)
 
     def go_valid_example_string(
         self: Self,
