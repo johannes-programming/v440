@@ -6,18 +6,17 @@ import shlex
 import tomllib
 import unittest
 from collections.abc import Callable, Iterable, Sequence
-from importlib import resources
-from importlib.resources.abc import Traversable
 from typing import Any, Optional, Self, cast
 
 import iterprod
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
+from pathlib import Path
 
 from v440 import core
 from v440.core.Version import Version
 from v440.errors.VersionError import VersionError
-
+import io
 __all__ = [
     "TestDataSetter",
     "TestDeformatting",
@@ -36,9 +35,11 @@ class Util(enum.Enum):
 
     @functools.cached_property
     def data(self: Self) -> dict[str, Any]:
-        file: Traversable
-        file = resources.files("v440.tests").joinpath("testdata.toml")
-        return tomllib.loads(file.read_text(encoding="utf-8"))
+        file:Path
+        stream:io.BufferedReader
+        file = Path(__file__).parent / "testdata.toml"
+        with file.open("rb") as stream:
+            return tomllib.load(stream)
 
     @functools.cached_property
     def deformatting(self: Self) -> dict[str, Any]:

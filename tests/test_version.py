@@ -256,6 +256,12 @@ class TestPatch(unittest.TestCase):
 
 class TestVersionRelease(unittest.TestCase):
 
+    def test_repr(self: Self) -> None:
+        release:Release
+        release = Release([1,2,3])
+        self.assertEqual(repr(release), "Release([1, 2, 3])")
+        self.assertEqual(str(release), "1.2.3")
+
     def test_major_minor_micro_aliases(self: Self) -> None:
         # Test major, minor, and micro aliases for the first three indices
         version: Any

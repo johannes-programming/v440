@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from collections.abc import Iterable
 from functools import cmp_to_key
-from typing import Any, Final, Optional, Self, TypeVar, overload
+from typing import Any, Final, Optional, Self, TypeVar
 
 import setdoc
 from datahold import BaseDataObject, HoldList
@@ -157,9 +157,7 @@ class ListABC(CoreABC, HoldList[Item]):
 
     __ne__ = BaseDataObject.__ne__
 
-    @setdoc.basic
-    def __repr__(self: Self) -> str:
-        return datarepr(type(self).__name__, list(self))
+    __repr__ = HoldList.__repr__
 
     @classmethod
     @abstractmethod

@@ -419,20 +419,11 @@ See ``v440.core.Public.Public``.
 
 This class inherits from ``ValueError``.
 
-``v440.tests``
-~~~~~~~~~~~~~~
+Testing
+-------
 
-This subpackage allows for testing with ``unittest``.
-
-``v440.tests.test() -> unittest.TextTestResult``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This project can be tested through its ``test`` function.
-
-.. code-block:: python
-
-    import v440.tests
-    v440.tests.test()
+This project may be tested through its ``unittest`` scripts inside of its ``tests/`` directory.
+They in turn can be run by ``run_tests.py``.
 
 License
 -------
