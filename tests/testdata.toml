@@ -1,0 +1,2635 @@
+[core-non-attributes.test-0000]
+string = "0"
+clsname = "Base"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0100]
+string = ""
+clsname = "Local"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0200]
+string = "0"
+clsname = "Public"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0300]
+string = ""
+clsname = "Qual"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0400]
+string = "0"
+clsname = "Release"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0500]
+string = "0"
+clsname = "Public"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.test-0600]
+string = "0"
+clsname = "Version"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[data-setter.Local.test_local_append]
+args = [
+    "build",
+]
+attrname = "append"
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+    "build",
+]
+valid = true
+
+[data-setter.Local.test_local_basic_assignment]
+query = [
+    1,
+    "local",
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "local",
+    "dev",
+]
+valid = true
+
+[data-setter.Local.test_local_boolean_assignment]
+query = [
+    true,
+    false,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    "dev",
+]
+valid = true
+
+[data-setter.Local.test_local_clear]
+attrname = "clear"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter.Local.test_local_conversion_mixed]
+query = [
+    "1",
+    2,
+    "local",
+    4,
+    true,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    "local",
+    4,
+    1,
+]
+valid = true
+
+[data-setter.Local.test_local_conversion_string]
+query = [
+    "1",
+    "2",
+    "local",
+    "test",
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    "local",
+    "test",
+]
+valid = true
+
+[data-setter.Local.test_local_count]
+args = [
+    "dev",
+]
+attrname = "count"
+check = 2
+query = [
+    1,
+    "dev",
+    "dev",
+    "build",
+]
+queryname = "data"
+valid = true
+
+[data-setter.Local.test_local_data_setter]
+query = [
+    "custom",
+    "data",
+]
+queryname = "data"
+solution = [
+    "custom",
+    "data",
+]
+valid = true
+
+[data-setter.Local.test_local_empty_list]
+query = []
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter.Local.test_local_equality_with_list]
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+]
+valid = true
+
+[data-setter.Local.test_local_extend]
+args = [
+    [
+        "test",
+        123,
+    ],
+]
+attrname = "extend"
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+    "test",
+    123,
+]
+valid = true
+
+[data-setter.Local.test_local_index]
+args = [
+    "dev",
+]
+attrname = "index"
+check = 1
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+valid = true
+
+[data-setter.Local.test_local_insert]
+args = [
+    1,
+    "alpha",
+]
+attrname = "insert"
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "alpha",
+    "dev",
+]
+valid = true
+
+[data-setter.Local.test_local_invalid_value]
+query = [
+    "a",
+    {},
+    "3",
+]
+queryname = "data"
+valid = false
+
+[data-setter.Local.test_local_iterable]
+query = "1.dev.build"
+queryname = "string"
+solution = [
+    1,
+    "dev",
+    "build",
+]
+valid = true
+
+[data-setter.Local.test_local_large_integers]
+query = [
+    1000000000000000000,
+]
+queryname = "data"
+solution = [
+    1000000000000000000,
+]
+valid = true
+
+[data-setter.Local.test_local_non_string_elements]
+query = [
+    1,
+    [],
+    "test",
+]
+queryname = "data"
+valid = false
+
+[data-setter.Local.test_local_pop]
+attrname = "pop"
+check = "build"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+]
+valid = true
+
+[data-setter.Local.test_local_pop_with_index]
+args = [
+    1,
+]
+attrname = "pop"
+check = "dev"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    1,
+    "build",
+]
+valid = true
+
+[data-setter.Local.test_local_remove]
+args = [
+    "dev",
+]
+attrname = "remove"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    1,
+    "build",
+]
+valid = true
+
+[data-setter.Local.test_local_reverse]
+attrname = "reverse"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    "build",
+    "dev",
+    1,
+]
+valid = true
+
+[data-setter.Local.test_local_sort]
+attrname = "sort"
+query = [
+    3,
+    1,
+    "dev",
+    2,
+    "2",
+    "4a",
+    "a4",
+]
+queryname = "data"
+solution = [
+    "4a",
+    "a4",
+    "dev",
+    1,
+    2,
+    2,
+    3,
+]
+valid = true
+
+[data-setter.Local.test_local_sort_reverse]
+attrname = "sort"
+query = [
+    3,
+    1,
+    "dev",
+    2,
+    "2",
+    "4a",
+    "a4",
+]
+queryname = "data"
+solution = [
+    3,
+    2,
+    2,
+    1,
+    "dev",
+    "a4",
+    "4a",
+]
+valid = true
+
+[data-setter.Local.test_local_sort_reverse.kwargs]
+reverse = true
+
+[data-setter.Release.test_example_4]
+attrname = "sort"
+query = "2.5.3.9"
+queryname = "string"
+solution = [
+    2,
+    3,
+    5,
+    9,
+]
+valid = true
+
+[data-setter.Release.test_example_8]
+attrname = "bump"
+query = "1.2.3.4.5.6.7.8.9.10"
+queryname = "string"
+solution = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    13,
+]
+valid = true
+
+[data-setter.Release.test_example_8.kwargs]
+index = 7
+amount = 5
+
+[data-setter.Release.test_release_append]
+args = [
+    4,
+]
+attrname = "append"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+    4,
+]
+valid = true
+
+[data-setter.Release.test_release_append.kwargs]
+
+[data-setter.Release.test_release_assignment_with_bool_conversion]
+query = [
+    true,
+    false,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_basic_assignment]
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_boolean_assignment]
+query = [
+    true,
+    false,
+    1,
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    1,
+]
+valid = true
+
+[data-setter.Release.test_release_clear]
+args = []
+attrname = "clear"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter.Release.test_release_clear.kwargs]
+
+[data-setter.Release.test_release_count]
+args = [
+    2,
+]
+attrname = "count"
+check = 2
+query = [
+    1,
+    2,
+    2,
+    3,
+]
+queryname = "data"
+valid = true
+
+[data-setter.Release.test_release_count.kwargs]
+
+[data-setter.Release.test_release_data_property_empty]
+query = []
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter.Release.test_release_empty_list]
+query = []
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter.Release.test_release_equality_with_list]
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_extend]
+args = [
+    [
+        3,
+        4,
+        5,
+    ],
+]
+attrname = "extend"
+query = [
+    1,
+    2,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+    4,
+    5,
+]
+valid = true
+
+[data-setter.Release.test_release_extend.kwargs]
+
+[data-setter.Release.test_release_index]
+args = [
+    2,
+]
+attrname = "index"
+check = 1
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+valid = true
+
+[data-setter.Release.test_release_index.kwargs]
+
+[data-setter.Release.test_release_insert]
+args = [
+    2,
+    3,
+]
+attrname = "insert"
+query = [
+    1,
+    2,
+    4,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+    4,
+]
+valid = true
+
+[data-setter.Release.test_release_insert.kwargs]
+
+[data-setter.Release.test_release_integer_float]
+query = [
+    true,
+    false,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_invalid_assignment]
+query = [
+    "1",
+    "invalid",
+    "3",
+]
+queryname = "data"
+valid = false
+
+[data-setter.Release.test_release_invalid_boolean_assignment]
+query = [
+    "true",
+    "false",
+]
+queryname = "data"
+valid = false
+
+[data-setter.Release.test_release_invalid_float_value]
+query = [
+    1,
+    2.5,
+    3,
+]
+queryname = "data"
+valid = false
+
+[data-setter.Release.test_release_invalid_value]
+query = [
+    "a",
+    2,
+    "3",
+]
+queryname = "data"
+valid = false
+
+[data-setter.Release.test_release_large_numbers]
+query = [
+    1000000000,
+    2000000000,
+    3000000000,
+]
+queryname = "data"
+solution = [
+    1000000000,
+    2000000000,
+    3000000000,
+]
+valid = true
+
+[data-setter.Release.test_release_max_integer]
+query = [
+    1000000000000000000,
+]
+queryname = "data"
+solution = [
+    1000000000000000000,
+]
+valid = true
+
+[data-setter.Release.test_release_non_integer_elements]
+query = [
+    "invalid",
+    2,
+    3,
+]
+queryname = "data"
+valid = false
+
+[data-setter.Release.test_release_pop]
+args = []
+attrname = "pop"
+check = 3
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+]
+valid = true
+
+[data-setter.Release.test_release_pop.kwargs]
+
+[data-setter.Release.test_release_pop_with_index]
+args = [
+    1,
+]
+attrname = "pop"
+check = 2
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_pop_with_index.kwargs]
+
+[data-setter.Release.test_release_remove]
+args = [
+    2,
+]
+attrname = "remove"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_remove.kwargs]
+
+[data-setter.Release.test_release_reverse]
+attrname = "reverse"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    3,
+    2,
+    1,
+]
+valid = true
+
+[data-setter.Release.test_release_sort]
+attrname = "sort"
+query = [
+    3,
+    1,
+    2,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_trailing_zeros]
+query = [
+    1,
+    2,
+    3,
+    0,
+    0,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
+valid = true
+
+[data-setter.Release.test_release_zero]
+query = [
+    0,
+]
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter.Version."data-property.dragon"]
+query = 9001
+queryname = "string"
+solution = "9001"
+solutionname = "str"
+valid = true
+
+[data-setter.Version."data-property.hitch"]
+query = 4.2
+queryname = "string"
+solution = "4.2"
+solutionname = "str"
+valid = true
+
+[data-setter.Version."data-property.local"]
+query = "42!1.2.3.dev1337+5.nov"
+queryname = "string"
+solution = "42!1.2.3.dev1337+5.nov"
+solutionname = "str"
+valid = true
+
+[data-setter.Version."data-property.local_again"]
+query = "1701!4.5.6.rc255+reset"
+queryname = "string"
+solution = "1701!4.5.6rc255+reset"
+solutionname = "str"
+valid = true
+
+[deformatting.Base.""]
+solution = ""
+valid = true
+
+[deformatting.Base."1.2.3 v4.5"]
+valid = false
+
+[deformatting.Base."V1.2.3 4.5"]
+valid = false
+
+[deformatting.Dev.""]
+solution = ""
+valid = true
+
+[deformatting.Dev."deV deV_1"]
+solution = "deV_"
+valid = true
+
+[deformatting.Dev."dev deV_1"]
+valid = false
+
+[deformatting.Dev."dev dev.1"]
+solution = "dev."
+valid = true
+
+[deformatting.Local.""]
+solution = ""
+valid = true
+
+[deformatting.Local."qwERty 0.0.0"]
+solution = "~~^^"
+valid = true
+
+[deformatting.Local."qwERty 0123_aBcD"]
+solution = "####~~^^_~^~^"
+valid = true
+
+[deformatting.Post.""]
+solution = ""
+valid = true
+
+[deformatting.Post."r r.1"]
+solution = "r."
+valid = true
+
+[deformatting.Post."r r_1"]
+solution = "r_"
+valid = true
+
+[deformatting.Pre.""]
+solution = ""
+valid = true
+
+[deformatting.Pre."a alpha"]
+valid = false
+
+[deformatting.Pre."a10 a01"]
+solution = "a##"
+valid = true
+
+[deformatting.Pre."alpha alpha4 .pre5"]
+solution = "alphaB#.pre"
+valid = true
+
+[deformatting.Pre."beTA a12 beTA.19"]
+solution = "beTA."
+valid = true
+
+[deformatting.Public.""]
+solution = ""
+valid = true
+
+[deformatting.Qual.""]
+solution = ""
+valid = true
+
+[deformatting.Qual.-2]
+solution = "-"
+valid = true
+
+[deformatting.Qual."a a1 -9"]
+solution = "aB#-"
+valid = true
+
+[deformatting.Qual."a b c r dev"]
+solution = "abcrdev"
+valid = true
+
+[deformatting.Qual."b b1 -9"]
+solution = "bC#-"
+valid = true
+
+[deformatting.Qual."beta1 dev.2"]
+solution = "betadev."
+valid = true
+
+[deformatting.Qual."c c-1"]
+solution = "c-"
+valid = true
+
+[deformatting.Qual."c c-1 -2"]
+solution = "c--"
+valid = true
+
+[deformatting.Qual."c c1"]
+solution = "c"
+valid = true
+
+[deformatting.Qual."c c1 -2"]
+valid = false
+
+[deformatting.Qual."c1 -2"]
+solution = "c#-"
+valid = true
+
+[deformatting.Qual."rc rc1 -9"]
+valid = false
+
+[deformatting.Release."1.2.0 9.8.7.6.0.5"]
+solution = "..#"
+valid = true
+
+[deformatting.Release."4.0 1.2.0"]
+solution = "..#"
+valid = true
+
+[deformatting.Release."4.0 1.2.0 9.8.7.6.0.5"]
+solution = "..#"
+valid = true
+
+[deformatting.Release."4.0 9.8.7.6.0.5"]
+solution = ".#"
+valid = true
+
+[deformatting.Version.""]
+solution = ""
+valid = true
+
+[deformatting.Version."1.2.3 v9.8"]
+valid = false
+
+[epoch.test_epoch_as_false]
+full = "1.2.3"
+part = 0
+query = false
+
+[epoch.test_epoch_as_int]
+full = "1!1.2.3"
+part = 1
+query = 1
+
+[epoch.test_epoch_as_string_number]
+full = "42!1.2.3"
+part = 42
+query = 42
+
+[epoch.test_epoch_as_string_with_non_digit]
+full = "9001!1.2.3"
+part = 9001
+query = 9001
+
+[epoch.test_epoch_as_true]
+full = "1!1.2.3"
+part = 1
+query = true
+
+[examples.Base.""]
+valid = false
+
+[examples.Base."!1.2"]
+valid = false
+
+[examples.Base."0!0"]
+bool = false
+deformatted = "#!"
+repr = "Base(epoch=0, release=Release([]))"
+str = "0"
+valid = true
+
+[examples.Base."1!"]
+valid = false
+
+[examples.Base."1!-1"]
+valid = false
+
+[examples.Base."1!1.2.3"]
+bool = true
+deformatted = ""
+valid = true
+
+[examples.Base."1!1.2.a"]
+valid = false
+
+[examples.Base."1.2.3"]
+deformatted = ""
+valid = true
+
+[examples.Base."2!0"]
+deformatted = ""
+valid = true
+
+[examples.Base."3!10.0.7"]
+bool = true
+deformatted = ""
+valid = true
+
+[examples.Dev.""]
+bool = false
+deformatted = ""
+valid = true
+
+[examples.Dev.-dev5]
+bool = true
+deformatted = "-dev"
+str = ".dev5"
+valid = true
+
+[examples.Dev.".dev5"]
+bool = true
+deformatted = ""
+repr = "Dev(lit='dev', num=5)"
+str = ".dev5"
+valid = true
+
+[examples.Dev.d1]
+valid = false
+
+[examples.Dev.dev]
+deformatted = "dev"
+str = ".dev0"
+valid = true
+
+[examples.Dev.dev-1]
+deformatted = "dev-"
+str = ".dev1"
+valid = true
+
+[examples.Dev.dev0]
+deformatted = "dev#"
+str = ".dev0"
+valid = true
+
+[examples.Dev.dev01]
+deformatted = "dev##"
+str = ".dev1"
+valid = true
+
+[examples.Dev.dev1]
+deformatted = "dev"
+valid = true
+
+[examples.Dev.dev10]
+deformatted = "dev"
+str = ".dev10"
+valid = true
+
+[examples.Dev.dev1a]
+valid = false
+
+[examples.Dev.dev2]
+deformatted = "dev"
+valid = true
+
+[examples.Dev.deva]
+valid = false
+
+[examples.Local.""]
+bool = false
+deformatted = ""
+str = ""
+valid = true
+
+[examples.Local.".abc"]
+valid = false
+
+[examples.Local.001]
+deformatted = "###"
+str = "1"
+valid = true
+
+[examples.Local."a b"]
+valid = false
+
+[examples.Local."a..b"]
+valid = false
+
+[examples.Local."a1.b2"]
+deformatted = ""
+str = "a1.b2"
+valid = true
+
+[examples.Local.abc]
+deformatted = ""
+str = "abc"
+valid = true
+
+[examples.Local."abc."]
+valid = false
+
+[examples.Local."abc..1"]
+valid = false
+
+[examples.Local."abc.001.def"]
+deformatted = ".###"
+str = "abc.1.def"
+valid = true
+
+[examples.Local."abc.1"]
+deformatted = ""
+str = "abc.1"
+valid = true
+
+[examples.Local."x1.y2.3"]
+deformatted = ""
+str = "x1.y2.3"
+valid = true
+
+[examples.Post.""]
+bool = false
+deformatted = ""
+str = ""
+valid = true
+
+[examples.Post.p1]
+valid = false
+
+[examples.Post.post]
+bool = true
+deformatted = "post"
+str = ".post0"
+valid = true
+
+[examples.Post.post-1]
+bool = true
+deformatted = "post-"
+str = ".post1"
+valid = true
+
+[examples.Post.post0]
+deformatted = "post#"
+str = ".post0"
+valid = true
+
+[examples.Post.post01]
+deformatted = "post##"
+str = ".post1"
+valid = true
+
+[examples.Post.post1]
+deformatted = "post"
+str = ".post1"
+valid = true
+
+[examples.Post.post10]
+deformatted = "post"
+str = ".post10"
+valid = true
+
+[examples.Post.post1a]
+valid = false
+
+[examples.Post.post2]
+deformatted = "post"
+str = ".post2"
+valid = true
+
+[examples.Pre.""]
+deformatted = ""
+str = ""
+valid = true
+
+[examples.Pre._AlPhA_0]
+deformatted = "_AlPhA_#"
+str = "a0"
+valid = true
+
+[examples.Pre.a]
+deformatted = "a"
+str = "a0"
+valid = true
+
+[examples.Pre.a1]
+deformatted = ""
+str = "a1"
+valid = true
+
+[examples.Pre.aLPha]
+deformatted = "aLPha"
+str = "a0"
+valid = true
+
+[examples.Pre.alpha]
+deformatted = "alpha"
+str = "a0"
+valid = true
+
+[examples.Pre.alpha1]
+deformatted = "alpha"
+str = "a1"
+valid = true
+
+[examples.Pre.b1]
+deformatted = ""
+str = "b1"
+valid = true
+
+[examples.Pre.b1.formatted]
+"" = "b1"
+BETA = "BETA1"
+"a###" = "b1"
+
+[examples.Pre.b2]
+deformatted = ""
+str = "b2"
+valid = true
+
+[examples.Pre.c3]
+deformatted = "c"
+str = "rc3"
+valid = true
+
+[examples.Pre.pre1]
+deformatted = "pre"
+str = "rc1"
+valid = true
+
+[examples.Pre.rc]
+deformatted = "rc"
+str = "rc0"
+valid = true
+
+[examples.Pre.rc1]
+deformatted = ""
+str = "rc1"
+valid = true
+
+[examples.Pre.x1]
+valid = false
+
+[examples.Public.""]
+valid = false
+
+[examples.Public."0!0"]
+deformatted = "#!"
+str = "0"
+valid = true
+
+[examples.Public."1!"]
+valid = false
+
+[examples.Public."1!1.0rc1.post2"]
+deformatted = ".#"
+str = "1!1rc1.post2"
+valid = true
+
+[examples.Public."1.0+loc"]
+valid = false
+
+[examples.Public."1.0.post"]
+deformatted = ".#.post"
+str = "1.post0"
+valid = true
+
+[examples.Public."1.0.post1a1"]
+valid = false
+
+[examples.Public."1.2.3"]
+deformatted = ""
+valid = true
+
+[examples.Public."1.2.3.post1"]
+deformatted = ""
+valid = true
+
+[examples.Public."1.2.3a1"]
+deformatted = ""
+valid = true
+
+[examples.Public."1.2.3a1.post1.dev2"]
+bool = true
+deformatted = ""
+valid = true
+
+[examples.Qual.""]
+bool = false
+deformatted = ""
+str = ""
+valid = true
+
+[examples.Qual.-2]
+deformatted = "-"
+str = ".post2"
+valid = true
+
+[examples.Qual._AlPhA]
+bool = true
+deformatted = "_AlPhA"
+str = "a0"
+valid = true
+
+[examples.Qual._AlPhA_]
+valid = false
+
+[examples.Qual._AlPhA_0]
+deformatted = "_AlPhA_#"
+str = "a0"
+valid = true
+
+[examples.Qual._post-1]
+deformatted = "_post-"
+str = ".post1"
+valid = true
+
+[examples.Qual._post-1.formatted]
+"-DEV#" = "-1"
+
+[examples.Qual.a]
+deformatted = "a"
+str = "a0"
+valid = true
+
+[examples.Qual.a1]
+deformatted = ""
+str = "a1"
+valid = true
+
+[examples.Qual.a1-2]
+deformatted = "-"
+str = "a1.post2"
+valid = true
+
+[examples.Qual.a1-2-dev-3]
+deformatted = "--dev-"
+str = "a1.post2.dev3"
+valid = true
+
+[examples.Qual."a1.post1"]
+deformatted = ""
+str = "a1.post1"
+valid = true
+
+[examples.Qual."a1.post2.dev3"]
+deformatted = ""
+str = "a1.post2.dev3"
+valid = true
+
+[examples.Qual.alpha]
+deformatted = "alpha"
+str = "a0"
+valid = true
+
+[examples.Qual.alpha-1]
+bool = true
+deformatted = "alpha-"
+str = "a1"
+valid = true
+
+[examples.Qual.alpha1]
+deformatted = "alpha"
+str = "a1"
+valid = true
+
+[examples.Qual.b1]
+deformatted = ""
+str = "b1"
+valid = true
+
+[examples.Qual.b1.formatted]
+"" = "b1"
+BETA = "BETA1"
+"a###" = "b1"
+
+[examples.Qual."beta1.post2.dev3"]
+deformatted = "beta"
+str = "b1.post2.dev3"
+valid = true
+
+[examples.Qual."beta1.post2.dev3".formatted]
+"r#-dev" = "b1r2-dev3"
+-dev = "b1-2dev3"
+
+[examples.Qual.dev]
+bool = true
+deformatted = "dev"
+str = ".dev0"
+valid = true
+
+[examples.Qual.dev1]
+deformatted = "dev"
+str = ".dev1"
+valid = true
+
+[examples.Qual.post]
+deformatted = "post"
+str = ".post0"
+valid = true
+
+[examples.Qual.post-1]
+deformatted = "post-"
+str = ".post1"
+valid = true
+
+[examples.Qual.post1]
+deformatted = "post"
+str = ".post1"
+valid = true
+
+[examples.Qual."rc1.dev2"]
+deformatted = ""
+str = "rc1.dev2"
+valid = true
+
+[examples.Release.""]
+valid = false
+
+[examples.Release.".1"]
+valid = false
+
+[examples.Release.0]
+deformatted = ""
+str = "0"
+valid = true
+
+[examples.Release."0.0.1"]
+deformatted = ""
+str = "0.0.1"
+valid = true
+
+[examples.Release.1]
+deformatted = ""
+str = "1"
+valid = true
+
+[examples.Release."1."]
+valid = false
+
+[examples.Release."1.-1"]
+valid = false
+
+[examples.Release."1.002.3"]
+deformatted = ".###"
+str = "1.2.3"
+valid = true
+
+[examples.Release."1.02.3"]
+deformatted = ".##"
+str = "1.2.3"
+valid = true
+
+[examples.Release."1.02.3".formatted]
+"....#" = "1.2.3.0.0"
+
+[examples.Release."1.042.3"]
+deformatted = ".###"
+str = "1.42.3"
+valid = true
+
+[examples.Release."1.2"]
+deformatted = ""
+str = "1.2"
+valid = true
+
+[examples.Release."1.2.3"]
+deformatted = ""
+str = "1.2.3"
+valid = true
+
+[examples.Release."1.a"]
+valid = false
+
+[examples.Release."10.0.0"]
+deformatted = "..#"
+str = "10"
+valid = true
+
+[examples.Release."3.4.5.6"]
+deformatted = ""
+repr = "Release([3, 4, 5, 6])"
+str = "3.4.5.6"
+valid = true
+
+[examples.Version.""]
+valid = false
+
+[examples.Version.0]
+deformatted = ""
+str = "0"
+valid = true
+
+[examples.Version."0!0.0.0a1.post9999.dev8888+local-build.0"]
+deformatted = "#!..#+-"
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"]
+deformatted = "#!..#"
+legacy = "Extreme cases with very long versions"
+str = "0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"
+valid = true
+
+[examples.Version."0!0.0.1"]
+deformatted = "#!"
+legacy = "Epoch Versions"
+str = "0.0.1"
+valid = true
+
+[examples.Version."0!0.9.0.post5.dev7+local.5"]
+deformatted = "#!..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "0.9.post5.dev7+local.5"
+valid = true
+
+[examples.Version."0!1.0rc1+1.abc"]
+deformatted = "#!.#"
+str = "1rc1+1.abc"
+valid = true
+
+[examples.Version."0!1.1a1.post1.dev100+local.build.hash99999"]
+deformatted = "#!"
+legacy = "Advanced pre-release + post-release + development combinations"
+valid = true
+
+[examples.Version."0!99999999.99999.99999+local.version.9876543210"]
+deformatted = "#!"
+legacy = "Very large versions with long numeric parts"
+valid = true
+
+[examples.Version."0.0.0"]
+deformatted = "..#"
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."0.0.0a1.post0.dev0+local.build.invalid_character#"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."0.0.1"]
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."0.1"]
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."0.1+build.1"]
+deformatted = ""
+legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."0.1.0-beta+20190506.commit.gdeadbeef"]
+deformatted = "..#-beta"
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."0.1.0a12345678901234567890.post12345678901234567890.dev12345678901234567890+build12345678901234567890"]
+deformatted = "..#"
+legacy = "Extreme cases with very long versions"
+valid = true
+
+[examples.Version."0.1a1.post2.dev0+local.build.1234abc"]
+deformatted = ""
+legacy = "Advanced pre-release + post-release + development combinations"
+valid = true
+
+[examples.Version."0.5.0.dev4"]
+deformatted = "..#"
+legacy = "Development releases"
+str = "0.5.dev4"
+valid = true
+
+[examples.Version."0.5.0rc1.post1111.dev987+local.build.exp123"]
+deformatted = "..#"
+legacy = "Advanced pre-release + post-release + development combinations"
+valid = true
+
+[examples.Version."0.9.0+ubuntu1"]
+deformatted = "..#"
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."0.9.0.post99.dev1000+ubuntu12.04.5"]
+deformatted = "..#+.##"
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."0.9.0post5"]
+deformatted = "..#post"
+legacy = "Post-releases"
+str = "0.9.post5"
+valid = true
+
+[examples.Version."0.9.0post5".formatted]
+- = "0.9-5"
+
+[examples.Version."0.9.1"]
+deformatted = ""
+legacy = "Basic Versioning"
+str = "0.9.1"
+valid = true
+
+[examples.Version."0.9.1.dev10"]
+deformatted = ""
+legacy = "Development releases"
+valid = true
+
+[examples.Version."0.9.1rc4"]
+deformatted = ""
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."00!1.0.0"]
+deformatted = "##!..#"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."00.5.0.dev4"]
+deformatted = "##..#"
+str = "0.5.dev4"
+valid = true
+
+[examples.Version."01.0.0"]
+deformatted = "##..#"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+str = "1"
+valid = true
+
+[examples.Version."1!"]
+valid = false
+
+[examples.Version."1!0.1.0"]
+deformatted = "..#"
+legacy = "Epoch Versions"
+str = "1!0.1"
+valid = true
+
+[examples.Version."1!1.0"]
+deformatted = ".#"
+str = "1!1"
+valid = true
+
+[examples.Version."1!1.0.0.dev4567.post9+20190101"]
+legacy = "Increasing complexity with more combinations"
+valid = false
+
+[examples.Version."1!1.0.0a1.dev1"]
+deformatted = "..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "1!1a1.dev1"
+valid = true
+
+[examples.Version."1!1.1a1000000000.post1000000000.dev1000000000+local.0"]
+deformatted = ""
+legacy = "Complex strings with multiple epochs, large numbers, and combinations"
+valid = true
+
+[examples.Version."1!1.2.3-4"]
+deformatted = "-"
+legacy = "spec.test_version_with_post_specifier_and_epoch"
+str = "1!1.2.3.post4"
+valid = true
+
+[examples.Version."1!1.2.3-4-dev2"]
+deformatted = "--dev"
+legacy = "spec.test_version_with_epoch_and_wrong_order_specifiers"
+str = "1!1.2.3.post4.dev2"
+valid = true
+
+[examples.Version."1!1.2.3a1-4-dev5-6+local"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1!1.2.3a1.post6.dev5+local"]
+deformatted = ""
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."1!2.0.0+"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1!2.0.0b3.post1+exp.sha.1234abcd"]
+deformatted = "..#"
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."1!2.0.1.post3.dev1+local.hash.deadbeef"]
+deformatted = ""
+legacy = "Combining epochs with local versions"
+valid = true
+
+[examples.Version."1!2.3.4"]
+deformatted = ""
+legacy = "Epoch Versions"
+valid = true
+
+[examples.Version."1+1"]
+valid = true
+
+[examples.Version."1+a"]
+valid = true
+
+[examples.Version."1..0"]
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+valid = false
+
+[examples.Version."1.0"]
+deformatted = ".#"
+legacy = "Edge Cases / Special Forms"
+str = "1"
+valid = true
+
+[examples.Version."1.0++a"]
+valid = false
+
+[examples.Version."1.0+deadbeef"]
+deformatted = ".#"
+legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."1.0..1"]
+valid = false
+
+[examples.Version."1.0.0"]
+deformatted = "..#"
+legacy = "Basic Versioning"
+str = "1"
+valid = true
+
+[examples.Version."1.0.0++local.version.doubleplus"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0+@build"]
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+valid = false
+
+[examples.Version."1.0.0+abc.5.1"]
+deformatted = "..#"
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."1.0.0+build@sha.123"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0+exp.sha.5114f85"]
+deformatted = "..#"
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."1.0.0+local"]
+deformatted = "..#"
+legacy = "Local Versions"
+str = "1+local"
+valid = true
+
+[examples.Version."1.0.0-alpha+linux-x86_64"]
+deformatted = "..#-alpha+-_"
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."1.0.0-alpha_1"]
+deformatted = "..#-alpha_"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."1.0.0...dev"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0.a1"]
+deformatted = "..#.a"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."1.0.0.dev1"]
+deformatted = "..#"
+legacy = "Development releases"
+valid = true
+
+[examples.Version."1.0.0.dev1234567"]
+deformatted = "..#"
+legacy = "Edge Cases / Special Forms"
+str = "1.dev1234567"
+valid = true
+
+[examples.Version."1.0.0.dev1rc1"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
+valid = false
+
+[examples.Version."1.0.0.post1"]
+deformatted = "..#"
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."1.0.0.post123456789"]
+deformatted = "..#"
+legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."1.0.0.post1a1"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
+valid = false
+
+[examples.Version."1.0.0.post999999.dev9999999+build.1234567890"]
+deformatted = "..#"
+legacy = "Very large versions with long numeric parts"
+valid = true
+
+[examples.Version."1.0.0a01.post00.dev01+build00"]
+deformatted = "..#a##.post##.dev##"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."1.0.0a1"]
+deformatted = "..#"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."1.0.0a1..post2"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0a1.post2"]
+deformatted = "..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+valid = true
+
+[examples.Version."1.0.0a1.post2+ubuntu16.04"]
+deformatted = "..#+.##"
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."1.0.0a1.post2.dev3"]
+deformatted = "..#"
+legacy = "Increasing complexity with more combinations"
+str = "1a1.post2.dev3"
+valid = true
+
+[examples.Version."1.0.0alpha_beta"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0b99.post8888.dev7777+local.version.abcdef"]
+deformatted = "..#"
+legacy = "Advanced pre-release + post-release + development combinations"
+valid = true
+
+[examples.Version."1.0.0beta1"]
+deformatted = "..#beta"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+str = "1b1"
+valid = true
+
+[examples.Version."1.0.1+2019.10.22"]
+deformatted = ""
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."1.0a"]
+deformatted = ".#a"
+str = "1a0"
+valid = true
+
+[examples.Version."1.0dev5"]
+deformatted = ".#dev"
+legacy = "Development releases"
+str = "1.dev5"
+valid = true
+
+[examples.Version."1.1.0-alpha"]
+deformatted = "..#-alpha"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."1.1.0-alpha.2"]
+deformatted = "..#-alpha."
+legacy = "Pre-releases (alpha, beta, release candidate)"
+str = "1.1a2"
+valid = true
+
+[examples.Version."1.1.0-dev3"]
+deformatted = "..#R#-dev"
+legacy = "Development releases"
+str = "1.1.dev3"
+valid = true
+
+[examples.Version."1.1a0"]
+deformatted = ""
+legacy = "Pre-releases (alpha, beta, release candidate)"
+str = "1.1a0"
+valid = true
+
+[examples.Version."1.2"]
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."1.2.0-post4"]
+deformatted = "..#-post"
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."1.2.3"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3+aBc"]
+deformatted = "+~^"
+str = "1.2.3+abc"
+valid = true
+
+[examples.Version."1.2.3+abc"]
+deformatted = ""
+str = "1.2.3+abc"
+valid = true
+
+[examples.Version."1.2.3+abc.1"]
+deformatted = ""
+str = "1.2.3+abc.1"
+valid = true
+
+[examples.Version."1.2.3+abc.123"]
+deformatted = ""
+legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."1.2.3+local.version.with.extremely.long.identifier.123456789012345678901234567890"]
+deformatted = ""
+legacy = "Extreme cases with very long versions"
+valid = true
+
+[examples.Version."1.2.3--4"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-4"]
+deformatted = "-"
+legacy = "spec.test_basic_version_with_post_specifier"
+str = "1.2.3.post4"
+valid = true
+
+[examples.Version."1.2.3-4+local"]
+deformatted = "-"
+legacy = "spec.test_version_with_post_and_local_specifiers"
+str = "1.2.3.post4+local"
+valid = true
+
+[examples.Version."1.2.3-4-5"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-4-dev5"]
+deformatted = "--dev"
+legacy = "spec.test_version_with_dev_specifier_after_post"
+str = "1.2.3.post4.dev5"
+valid = true
+
+[examples.Version."1.2.3-456"]
+deformatted = "-"
+legacy = "Edge Cases / Special Forms"
+str = "1.2.3.post456"
+valid = true
+
+[examples.Version."1.2.3-4a1"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-4a1-dev5-6"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-beta"]
+deformatted = "-beta"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+valid = true
+
+[examples.Version."1.2.3-dev1-dev2"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-dev1-post2-dev3"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post0.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post0.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post0.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post10"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post10.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post10.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post10.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post4+exp.sha.5114f85"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "1.2.3.post4+exp.sha.5114f85"
+valid = true
+
+[examples.Version."1.2.3a0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post0.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post0.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post0.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post10"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+str = "1.2.3a0.post10"
+valid = true
+
+[examples.Version."1.2.3a0.post10.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post10.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post10.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post_10"]
+deformatted = ".post_"
+str = "1.2.3a0.post10"
+valid = true
+
+[examples.Version."1.2.3a1"]
+deformatted = ""
+str = "1.2.3a1"
+valid = true
+
+[examples.Version."1.2.3a1--4"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3a1-4"]
+deformatted = "-"
+legacy = "spec.test_version_with_pre_release_and_post_specifiers"
+str = "1.2.3a1.post4"
+valid = true
+
+[examples.Version."1.2.3a1-4-5"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3a1-4-dev5+local"]
+deformatted = "--dev"
+legacy = "spec.test_version_with_complex_specifiers_and_local"
+str = "1.2.3a1.post4.dev5+local"
+valid = true
+
+[examples.Version."1.2.3a1.post1.dev2"]
+deformatted = ""
+str = "1.2.3a1.post1.dev2"
+valid = true
+
+[examples.Version."1.2.3a1.post11.dev7+sha256.abc123def456"]
+deformatted = ""
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."1.2.3a4"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post0.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post0.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post0.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post10"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post10.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post10.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a4.post10.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3alpha1.post2"]
+deformatted = "alpha"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."1.2.3b1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1".formatted]
+"" = "1.2.3b1"
+BETA = "1.2.3BETA1"
+"##_dEv" = "01.2.3b1"
+
+[examples.Version."1.2.3b1.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post0.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post0.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post0.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post10"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post10.dev0"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post10.dev1"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3b1.post10.dev2"]
+deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3rc1+build123"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+valid = true
+
+[examples.Version."1.2.post.3"]
+deformatted = ".post."
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."10!9999.8888.7777a6666.post5555.dev4444+build.hash123abc"]
+deformatted = ""
+legacy = "Complex strings with multiple epochs, large numbers, and combinations"
+valid = true
+
+[examples.Version."10.5.3"]
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."100!0.0.0a0.post0.dev0+exp.sha.0"]
+deformatted = "..#"
+legacy = "Very large versions with long numeric parts"
+valid = true
+
+[examples.Version."2!1..0"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."2!1.0.0"]
+deformatted = "..#"
+legacy = "Epoch Versions"
+str = "2!1"
+valid = true
+
+[examples.Version."2!1.0.0+local.version.1234"]
+deformatted = "..#"
+legacy = "Combining epochs with local versions"
+valid = true
+
+[examples.Version."2!1.0.0rc1.post1a1"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
+valid = false
+
+[examples.Version."2!1.2.3-4-5"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."2!3.4.5a2+ubuntu1"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "2!3.4.5a2+ubuntu1"
+valid = true
+
+[examples.Version."2!5.6.7b5.post10.dev1000+exp.sha12345678"]
+deformatted = ""
+legacy = "Advanced pre-release + post-release + development combinations"
+valid = true
+
+[examples.Version."2!999.999.999a999.post9999.dev9999+local.build.9"]
+deformatted = ""
+legacy = "Very large versions with long numeric parts"
+valid = true
+
+[examples.Version."2.0.0-beta"]
+deformatted = "..#-beta"
+legacy = "Edge Cases / Special Forms"
+str = "2b0"
+valid = true
+
+[examples.Version."2.0.0-rc.1.post2+build.sha.e91e63f0"]
+deformatted = "..#-rc."
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."2.0.0.dev2"]
+deformatted = "..#"
+legacy = "Development releases"
+valid = true
+
+[examples.Version."2.0.1+20130313144700"]
+deformatted = ""
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."2.0.post1"]
+deformatted = ".#"
+str = "2.post1"
+valid = true
+
+[examples.Version."2.0.post1+local.1"]
+deformatted = ".#"
+str = "2.post1+local.1"
+valid = true
+
+[examples.Version."2.0b3"]
+deformatted = ".#"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."2.1.0"]
+deformatted = "..#"
+legacy = "Basic Versioning"
+str = "2.1"
+valid = true
+
+[examples.Version."2.1.0+build.12345"]
+deformatted = "..#"
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."2.1.0.post4"]
+deformatted = "..#"
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."2.1.0b2.dev3"]
+deformatted = "..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+valid = true
+
+[examples.Version."2.1.dev0"]
+deformatted = ""
+legacy = "Development releases"
+valid = true
+
+[examples.Version."2.4"]
+bool = true
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."3!1.0.0a1.dev1rc1+build123"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
+valid = false
+
+[examples.Version."3!1.2.0"]
+deformatted = "..#"
+legacy = "Epoch Versions"
+valid = true
+
+[examples.Version."3!2.1.0-alpha.5+build.34567abcd"]
+deformatted = "..#-alpha."
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."3!4.5.6a2.post8.dev9+build.sha.abcdef123456"]
+deformatted = ""
+legacy = "Combining epochs with local versions"
+valid = true
+
+[examples.Version."3.0.0b2"]
+deformatted = "..#"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."3.2.1+dfsg1"]
+deformatted = ""
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."3.2.1.post7"]
+deformatted = ""
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."3.2.1rc2.post1.dev3"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "3.2.1rc2.post1.dev3"
+valid = true
+
+[examples.Version."4.1.0-rc.1"]
+deformatted = "..#-rc."
+legacy = "Pre-releases (alpha, beta, release candidate)"
+str = "4.1rc1"
+valid = true
+
+[examples.Version."42!1.0.0rc999.post999.dev9999+exp.build.local1"]
+deformatted = "..#"
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."5.0rc1"]
+deformatted = ".#"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."not a version"]
+valid = false
+
+[examples.Version."v1.0.0"]
+deformatted = "v..#"
+legacy = "test_example_1"
+str = "1"
+valid = true
+
+[examples.Version."v1.0.0".formatted]
+"#.#.#" = "1.0.0"
+
+[examples.Version."v1.0.0-0"]
+deformatted = "v..#-"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."v1.0.0.post0.dev0"]
+deformatted = "v..#"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."v1.2.3"]
+deformatted = "v"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+str = "1.2.3"
+valid = true
+
+[examples.Version."v2.0"]
+deformatted = "v.#"
+legacy = "Edge Cases / Special Forms"
+str = "2"
+valid = true
+
+[[release-key.modify-increase-length.steps]]
+name = "data"
+value = [
+    1,
+]
+solution = [
+    1,
+]
+
+[[release-key.modify-increase-length.steps]]
+name = "minor"
+value = 5
+solution = [
+    1,
+    5,
+]
+
+[[release-key.modify-increase-length.steps]]
+name = "micro"
+value = 3
+solution = [
+    1,
+    5,
+    3,
+]
+
+[[release-key.test-major.steps]]
+name = "major"
+value = 10
+solution = [
+    10,
+]
+
+[[release-key.test-micro.steps]]
+name = "micro"
+value = 1
+solution = [
+    0,
+    0,
+    1,
+]
+
+[[release-key.test-minor.steps]]
+name = "minor"
+value = 1
+solution = [
+    0,
+    1,
+]
+
+[[release-key.test-patch.steps]]
+name = "patch"
+value = 5
+solution = [
+    0,
+    0,
+    5,
+]
+
+[slicingmethod.test_slicing_1]
+change = [
+    7,
+    7,
+    7,
+]
+query = "1.2.3.4.5.6.7.8.9.10"
+solution = "1.2.3.4.5.6.7.8.9.10"
+start = -8
+step = 5
+stop = 15
+valid = false
+
+[slicingmethod.test_slicing_3]
+change = [
+    777,
+]
+query = "1.2.3.4.5.6.7.8.9.10"
+solution = "1.2.3.777.5.6.7.8.9.10"
+start = 3
+stop = 4
+valid = true
+
+[slicingmethod.test_slicing_4]
+change = [
+    7,
+    7,
+    7,
+]
+query = "1.2.3.4.5.6.7.8.9.10"
+solution = "1.2.3.7.7.7.5.6.7.8.9.10"
+start = 3
+stop = 4
+valid = true
+
+[slicingmethod.test_slicing_5]
+change = [
+    7,
+    7,
+    7,
+]
+query = "1"
+solution = "1.7.7.7"
+start = 3
+stop = 4
+valid = true
+
+[slicingmethod.test_slicing_6]
+change = [
+    777,
+]
+query = "1"
+solution = "1.777"
+start = 3
+stop = 4
+valid = true
