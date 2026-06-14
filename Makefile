@@ -55,10 +55,10 @@ test:
 	conda run -n test311 python run_tests.py;
 	conda run -n test311 pip install mypy >/dev/null;
 	conda run -n test311 python -m mypy --strict .;
-	conda run -n test311 python -m mypy --strict -p toml_sorted;
+	conda run -n test311 python -m mypy --strict -p v440;
 
 toml_sorted: works
-	conda run -n works pip install 'toml_sorted>=2.0,<3' >/dev/null;
+	conda run -n works pip install 'toml_sorted>=2.1,<3' >/dev/null;
 	conda run -n works python -m toml_sorted @make/toml_sorted_pyproject.txt;
 	conda run -n works python -m toml_sorted @make/toml_sorted_testdata.txt;
 
