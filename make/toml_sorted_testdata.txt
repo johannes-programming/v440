@@ -1,4 +1,11 @@
 --sort
 --sort
 --key=examples
+--sort
+--key=examples
+--all-keys
+--sort
+--key=examples
+--all-keys
+--all-keys
 tests/testdata.toml
