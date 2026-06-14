@@ -252,6 +252,14 @@ class TestPatch(unittest.TestCase):
         y = Qual(string="b2")
         with self.assertRaises(Exception):
             x += y  # type: ignore[operator]
+    
+    def test_cmp(self: Self) -> None:
+        self.assertFalse(Version(string="1+1") == Version(string="1+a"))
+        self.assertFalse(Version(string="1+1") <= Version(string="1+a"))
+        self.assertFalse(Version(string="1+1") < Version(string="1+a"))
+        self.assertTrue(Version(string="1+1") >= Version(string="1+a"))
+        self.assertTrue(Version(string="1+1") > Version(string="1+a"))
+        self.assertTrue(Version(string="1+1") != Version(string="1+a"))
 
 
 class TestVersionRelease(unittest.TestCase):
