@@ -1,5 +1,14 @@
 --sort
 --sort
+--key=deformatting
+--sort
+--key=deformatting
+--all-keys
+--sort
+--key=deformatting
+--all-keys
+--all-keys
+--sort
 --key=examples
 --sort
 --key=examples
@@ -15,5 +24,4 @@
 --sort
 --key=slicingmethod
 --all-keys
---sort
 tests/testdata.toml
