@@ -1,41 +1,24 @@
 import operator
 import string as string_
 from abc import abstractmethod
-from typing import *
+from typing import Any, Self, SupportsIndex
 
-import setdoc
-from datarepr import datarepr
-
-from v440.abc.CoreABC import CoreABC
+from v440.abc.NestedABC import NestedABC
 
 __all__ = ["QualABC"]
 
 
-class QualABC(CoreABC):
+class QualABC(NestedABC):
+    _lit: str
+    _num: int
     __slots__ = ("_lit", "_num")
 
-    lit: str
-    num: int
-    packaging: Any
-    string: str
+    @abstractmethod
+    def _cmp(self: Self) -> Any: ...
 
-    @setdoc.basic
-    def __bool__(self: Self) -> bool:
-        return bool(self.lit)
-
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "") -> None:
-        self._lit = ""
-        self._num = 0
-        self.string = string
-
-    @setdoc.basic
-    def __repr__(self: Self) -> str:
-        return datarepr(
-            type(self).__name__,
-            lit=self.lit,
-            num=self.num,
-        )
+    @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_lit=str, _num=int)
 
     @classmethod
     @abstractmethod
@@ -69,12 +52,15 @@ class QualABC(CoreABC):
         self._lit = self._lit_parse(x)
         self._num = int("0" + y)
 
+    def _todict(self: Self) -> dict[str, Any]:
+        return dict(lit=self.lit, num=self.num)
+
     @property
     def lit(self: Self) -> str:
         return self._lit
 
     @lit.setter
-    def lit(self: Self, value: Any) -> None:
+    def lit(self: Self, value: object) -> None:
         x: str
         x = str(value).lower()
         if x:

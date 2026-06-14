@@ -1,85 +1,76 @@
 from __future__ import annotations
 
 import operator
-from typing import *
+from typing import Any, Final, Self
 
-import setdoc
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
 from v440.abc.NestedABC import NestedABC
-from v440.core.Dev import Dev
-from v440.core.Post import Post
-from v440.core.Pre import Pre
+from v440.core.Dev import Dev as Dev_
+from v440.core.Post import Post as Post_
+from v440.core.Pre import Pre as Pre_
 
 __all__ = ["Qual"]
 
 
 class Qual(NestedABC):
 
+    Pre: Final[type[Pre_]] = Pre_
+    Post: Final[type[Post_]] = Post_
+    Dev: Final[type[Dev_]] = Dev_
+    _pre: Pre_
+    _post: Post_
+    _dev: Dev_
+
     __slots__ = ("_pre", "_post", "_dev")
-    dev: Dev
-    packaging: str
-    post: Post
-    pre: Pre
-    string: str
 
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "") -> None:
-        self._pre = Pre()
-        self._post = Post()
-        self._dev = Dev()
-        self.string = string
-
-    def _cmp(self: Self) -> tuple:
-        ans: tuple[int | str, ...]
-        ans = ()
+    def _cmp(self: Self) -> tuple[str, int, Post_, Dev_]:
+        ans: tuple[str, int]
         if self.pre:
-            ans += (self.pre.lit, self.pre.num)
-        elif self.post is not None:
-            ans += ("z", 0)
-        elif self.dev is None:
-            ans += ("z", 0)
+            ans = (self.pre.lit, self.pre.num)
+        elif self.post or not self.dev:
+            ans = ("z", 0)
         else:
-            ans += ("", 0)
-        ans += (self.post, self.dev)
-        return ans
+            ans = ("", 0)
+        return ans + (self.post, self.dev)
 
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         s: str
         t: str
         o: Self
+        clues: list[Clue]
         matches: dict[str, str]
         parts: list[str]
         pos: list[set[str]]
         sols: list[str]
         table: tuple[Clue, ...]
-        way: tuple
+        way: tuple[Any, ...]
         table = (Clue(),) * 5
         for s, o in info.items():
             matches = Cfg.fullmatches("qual", s)
-            parts = list()
+            clues = list()
             if o.pre.lit == "":
-                parts.append(Clue())
-                parts.append(Clue())
-                parts.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue())
             if o.pre.lit == "a":
-                parts.append(Clue.by_example(matches["pre"]))
-                parts.append(Clue())
-                parts.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+                clues.append(Clue())
+                clues.append(Clue())
             if o.pre.lit == "b":
-                parts.append(Clue())
-                parts.append(Clue.by_example(matches["pre"]))
-                parts.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+                clues.append(Clue())
             if o.pre.lit == "rc":
-                parts.append(Clue())
-                parts.append(Clue())
-                parts.append(Clue.by_example(matches["pre"]))
-            parts.append(Clue.by_example(matches["post"]))
-            parts.append(Clue.by_example(matches["dev"]))
-            table = tuple(map(operator.and_, parts, table))
+                clues.append(Clue())
+                clues.append(Clue())
+                clues.append(Clue.by_example(matches["pre"]))
+            clues.append(Clue.by_example(matches["post"]))
+            clues.append(Clue.by_example(matches["dev"]))
+            table = tuple(map(operator.and_, clues, table))
         pos = list()
         pos.append(table[0].possible(hollow="a", short="A"))
         pos.append(table[1].possible(hollow="b", short="B"))
@@ -100,22 +91,29 @@ class Qual(NestedABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict:
-        ans: dict[str, str]
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         matches: dict[str, str]
-        x: str
         matches = Cfg.fullmatches("qual_f", spec)
-        ans = dict()
-        for x in ("pre_f", "post_f", "dev_f"):
-            ans[x] = matches[x]
-        return ans
+        return (
+            matches["pre_f"],
+            matches["post_f"],
+            matches["dev_f"],
+        )
 
-    def _format_parsed(self: Self, *, pre_f: str, post_f: str, dev_f: str) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
+        pre_f: str
+        post_f: str
+        dev_f: str
+        pre_f, post_f, dev_f = parsed
         ans = format(self.pre, pre_f)
         ans += format(self.post, post_f)
         ans += format(self.dev, dev_f)
         return ans
+
+    @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
 
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
@@ -128,9 +126,13 @@ class Qual(NestedABC):
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
-    def dev(self: Self) -> Dev:
+    def dev(self: Self) -> Dev_:
         "This property represents the stage of development."
         return self._dev
+
+    @dev.setter
+    def dev(self: Self, value: object) -> None:
+        self.dev.string = value
 
     def isdevrelease(self: Self) -> bool:
         "This method returns whether the current instance denotes a dev-release."
@@ -144,15 +146,20 @@ class Qual(NestedABC):
         "This method returns whether the current instance denotes a post-release."
         return bool(self.post)
 
+    packaging = NestedABC.string
+
     @property
-    def post(self: Self) -> Post:
+    def post(self: Self) -> Post_:
         return self._post
 
+    @post.setter
+    def post(self: Self, value: object) -> None:
+        self.post.string = value
+
     @property
-    def pre(self: Self) -> Pre:
+    def pre(self: Self) -> Pre_:
         return self._pre
 
-
-Qual.Dev = Dev
-Qual.Post = Post
-Qual.Pre = Pre
+    @pre.setter
+    def pre(self: Self, value: object) -> None:
+        self.pre.string = value

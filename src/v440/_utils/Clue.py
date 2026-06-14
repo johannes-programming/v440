@@ -1,4 +1,4 @@
-from typing import *
+from typing import NamedTuple, Self
 
 from v440._utils.Cfg import Cfg
 
@@ -54,15 +54,6 @@ class Clue(NamedTuple):
         else:
             mag = -len(matches["num"])
         return cls(matches["head"], sep, mag)
-
-    @classmethod
-    def by_examples(cls: type[Self], *values: str) -> Self:
-        ans: Self
-        s: str
-        ans = cls()
-        for s in values:
-            ans &= cls.by_string(s)
-        return ans
 
     @classmethod
     def by_spec(cls: type[Self], value: str, /) -> Self:
