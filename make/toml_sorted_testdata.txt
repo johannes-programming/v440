@@ -8,4 +8,12 @@
 --key=examples
 --all-keys
 --all-keys
+--sort
+--key=release-key
+--sort
+--key=slicingmethod
+--sort
+--key=slicingmethod
+--all-keys
+--sort
 tests/testdata.toml
