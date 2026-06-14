@@ -31,6 +31,10 @@ def cmp(x: Any, y: Any) -> Any:
             raise
         else:
             return i
+        
+
+def cmpkey(x: int|str, /) -> tuple[bool, int|str]:
+    return isinstance(x, int), x
 
 
 class ListABC(CoreABC, HoldList[Item]):
@@ -45,53 +49,19 @@ class ListABC(CoreABC, HoldList[Item]):
 
     @setdoc.basic
     def __ge__(self: Self, other: object) -> Any:
-        exc: Exception
-        x: Any
-        y: Any
-        z: int
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__ge__(self, other)
-        try:
-            return BaseDataObject.__ge__(self, other)
-        except Exception as exc_:
-            exc = exc_
-        for x, y in zip(self, other):
-            if x is y or x == y:
-                continue
-            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
-            if z == -1:
-                return False
-            if z == 1:
-                return True
-            raise exc
-        return len(self) >= len(other)
+        return tuple(map(cmpkey, self)) >= tuple(map(cmpkey, other))
 
     @setdoc.basic
     def __gt__(self: Self, other: object) -> Any:
-        exc: Exception
-        x: Any
-        y: Any
-        z: int
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__gt__(self, other)
-        try:
-            return BaseDataObject.__gt__(self, other)
-        except Exception as exc_:
-            exc = exc_
-        for x, y in zip(self, other):
-            if x is y or x == y:
-                continue
-            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
-            if z == -1:
-                return False
-            if z == 1:
-                return True
-            raise exc
-        return len(self) > len(other)
+        return tuple(map(cmpkey, self)) > tuple(map(cmpkey, other))
 
     @setdoc.basic
     def __init__(
@@ -107,53 +77,19 @@ class ListABC(CoreABC, HoldList[Item]):
 
     @setdoc.basic
     def __le__(self: Self, other: object) -> Any:
-        exc: Exception
-        x: Any
-        y: Any
-        z: int
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__le__(self, other)
-        try:
-            return BaseDataObject.__le__(self, other)
-        except Exception as exc_:
-            exc = exc_
-        for x, y in zip(self, other):
-            if x is y or x == y:
-                continue
-            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
-            if z == -1:
-                return True
-            if z == 1:
-                return False
-            raise exc
-        return len(self) <= len(other)
+        return tuple(map(cmpkey, self)) <= tuple(map(cmpkey, other))
 
     @setdoc.basic
     def __lt__(self: Self, other: object) -> Any:
-        exc: Exception
-        x: Any
-        y: Any
-        z: int
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__lt__(self, other)
-        try:
-            return BaseDataObject.__lt__(self, other)
-        except Exception as exc_:
-            exc = exc_
-        for x, y in zip(self, other):
-            if x is y or x == y:
-                continue
-            z = bool(isinstance(x, int)) - bool(isinstance(y, int))
-            if z == -1:
-                return True
-            if z == 1:
-                return False
-            raise exc
-        return len(self) < len(other)
+        return tuple(map(cmpkey, self)) < tuple(map(cmpkey, other))
 
     __ne__ = BaseDataObject.__ne__
 
