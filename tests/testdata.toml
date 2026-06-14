@@ -956,12 +956,14 @@ solution = [
 valid = false
 
 [examples.Base."0!0"]
+bool = false
 valid = true
 repr = "Base(epoch=0, release=Release([]))"
 str = "0"
 deformatted = "#!"
 
 [examples.Base."1!1.2.3"]
+bool = true
 valid = true
 deformatted = ""
 
@@ -970,6 +972,7 @@ valid = true
 deformatted = ""
 
 [examples.Base."3!10.0.7"]
+bool = true
 valid = true
 deformatted = ""
 
@@ -1046,6 +1049,7 @@ str = ".dev5"
 deformatted = ""
 
 [examples.Local.""]
+bool = false
 valid = true
 str = ""
 deformatted = ""
@@ -1323,11 +1327,13 @@ str = ".post0"
 deformatted = "post"
 
 [examples.Qual.dev]
+bool = true
 valid = true
 str = ".dev0"
 deformatted = "dev"
 
 [examples.Qual.alpha-1]
+bool = true
 valid = true
 str = "a1"
 deformatted = "alpha-"
@@ -1574,6 +1580,7 @@ legacy = "Basic Versioning"
 deformatted = ""
 
 [examples.Version."2.4"]
+bool = true
 valid = true
 legacy = "Basic Versioning"
 deformatted = ""
