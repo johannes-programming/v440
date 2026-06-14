@@ -985,424 +985,393 @@ part = 1
 [examples.Base.""]
 valid = false
 
-[examples.Base."0!0"]
-bool = false
-valid = true
-repr = "Base(epoch=0, release=Release([]))"
-str = "0"
-deformatted = "#!"
-
-[examples.Base."1!1.2.3"]
-bool = true
-valid = true
-deformatted = ""
-
-[examples.Base."2!0"]
-valid = true
-deformatted = ""
-
-[examples.Base."3!10.0.7"]
-bool = true
-valid = true
-deformatted = ""
-
-[examples.Base."1!"]
+[examples.Base."!1.2"]
 valid = false
 
-[examples.Base."!1.2"]
+[examples.Base."0!0"]
+bool = false
+deformatted = "#!"
+repr = "Base(epoch=0, release=Release([]))"
+str = "0"
+valid = true
+
+[examples.Base."1!"]
 valid = false
 
 [examples.Base."1!-1"]
 valid = false
 
+[examples.Base."1!1.2.3"]
+bool = true
+deformatted = ""
+valid = true
+
 [examples.Base."1!1.2.a"]
 valid = false
 
 [examples.Base."1.2.3"]
-valid = true
 deformatted = ""
+valid = true
+
+[examples.Base."2!0"]
+deformatted = ""
+valid = true
+
+[examples.Base."3!10.0.7"]
+bool = true
+deformatted = ""
+valid = true
 
 [examples.Dev.""]
-valid = true
 deformatted = ""
-
-[examples.Dev.dev0]
 valid = true
-str = ".dev0"
-deformatted = "dev#"
 
-[examples.Dev.dev1]
+[examples.Dev.-dev5]
+deformatted = "-dev"
+str = ".dev5"
 valid = true
-deformatted = "dev"
 
-[examples.Dev.dev2]
+[examples.Dev.".dev5"]
+deformatted = ""
+str = ".dev5"
 valid = true
-deformatted = "dev"
-
-[examples.Dev.dev01]
-valid = true
-str = ".dev1"
-deformatted = "dev##"
-
-[examples.Dev.dev10]
-valid = true
-str = ".dev10"
-deformatted = "dev"
-
-[examples.Dev.dev]
-valid = true
-str = ".dev0"
-deformatted = "dev"
-
-[examples.Dev.dev-1]
-valid = true
-str = ".dev1"
-deformatted = "dev-"
-
-[examples.Dev.deva]
-valid = false
-
-[examples.Dev.dev1a]
-valid = false
 
 [examples.Dev.d1]
 valid = false
 
-[examples.Dev.-dev5]
+[examples.Dev.dev]
+deformatted = "dev"
+str = ".dev0"
 valid = true
-str = ".dev5"
-deformatted = "-dev"
 
-[examples.Dev.".dev5"]
+[examples.Dev.dev-1]
+deformatted = "dev-"
+str = ".dev1"
 valid = true
-str = ".dev5"
-deformatted = ""
+
+[examples.Dev.dev0]
+deformatted = "dev#"
+str = ".dev0"
+valid = true
+
+[examples.Dev.dev01]
+deformatted = "dev##"
+str = ".dev1"
+valid = true
+
+[examples.Dev.dev1]
+deformatted = "dev"
+valid = true
+
+[examples.Dev.dev10]
+deformatted = "dev"
+str = ".dev10"
+valid = true
+
+[examples.Dev.dev1a]
+valid = false
+
+[examples.Dev.dev2]
+deformatted = "dev"
+valid = true
+
+[examples.Dev.deva]
+valid = false
 
 [examples.Local.""]
 bool = false
-valid = true
+deformatted = ""
 str = ""
-deformatted = ""
-
-[examples.Local.abc]
 valid = true
-str = "abc"
-deformatted = ""
-
-[examples.Local."abc.1"]
-valid = true
-str = "abc.1"
-deformatted = ""
-
-[examples.Local."a1.b2"]
-valid = true
-str = "a1.b2"
-deformatted = ""
-
-[examples.Local.001]
-valid = true
-str = "1"
-deformatted = "###"
-
-[examples.Local."abc.001.def"]
-valid = true
-str = "abc.1.def"
-deformatted = ".###"
-
-[examples.Local."x1.y2.3"]
-valid = true
-str = "x1.y2.3"
-deformatted = ""
-
-[examples.Local."a..b"]
-valid = false
 
 [examples.Local.".abc"]
 valid = false
 
-[examples.Local."abc."]
-valid = false
+[examples.Local.001]
+deformatted = "###"
+str = "1"
+valid = true
 
 [examples.Local."a b"]
+valid = false
+
+[examples.Local."a..b"]
+valid = false
+
+[examples.Local."a1.b2"]
+deformatted = ""
+str = "a1.b2"
+valid = true
+
+[examples.Local.abc]
+deformatted = ""
+str = "abc"
+valid = true
+
+[examples.Local."abc."]
 valid = false
 
 [examples.Local."abc..1"]
 valid = false
 
-[examples.Post.""]
+[examples.Local."abc.001.def"]
+deformatted = ".###"
+str = "abc.1.def"
 valid = true
-str = ""
+
+[examples.Local."abc.1"]
 deformatted = ""
-
-[examples.Post.post0]
+str = "abc.1"
 valid = true
-str = ".post0"
-deformatted = "post#"
 
-[examples.Post.post1]
+[examples.Local."x1.y2.3"]
+deformatted = ""
+str = "x1.y2.3"
 valid = true
-str = ".post1"
-deformatted = "post"
 
-[examples.Post.post2]
+[examples.Post.""]
+deformatted = ""
+str = ""
 valid = true
-str = ".post2"
-deformatted = "post"
-
-[examples.Post.post10]
-valid = true
-str = ".post10"
-deformatted = "post"
-
-[examples.Post.post01]
-valid = true
-str = ".post1"
-deformatted = "post##"
-
-[examples.Post.post]
-valid = true
-str = ".post0"
-deformatted = "post"
-
-[examples.Post.post-1]
-valid = true
-str = ".post1"
-deformatted = "post-"
 
 [examples.Post.p1]
 valid = false
 
+[examples.Post.post]
+deformatted = "post"
+str = ".post0"
+valid = true
+
+[examples.Post.post-1]
+deformatted = "post-"
+str = ".post1"
+valid = true
+
+[examples.Post.post0]
+deformatted = "post#"
+str = ".post0"
+valid = true
+
+[examples.Post.post01]
+deformatted = "post##"
+str = ".post1"
+valid = true
+
+[examples.Post.post1]
+deformatted = "post"
+str = ".post1"
+valid = true
+
+[examples.Post.post10]
+deformatted = "post"
+str = ".post10"
+valid = true
+
 [examples.Post.post1a]
 valid = false
 
+[examples.Post.post2]
+deformatted = "post"
+str = ".post2"
+valid = true
+
 [examples.Pre.""]
-valid = true
+deformatted = ""
 str = ""
-deformatted = ""
-
-[examples.Pre.a1]
 valid = true
-str = "a1"
-deformatted = ""
 
-[examples.Pre.alpha1]
+[examples.Pre._AlPhA_0]
+deformatted = "_AlPhA_#"
+str = "a0"
 valid = true
-str = "a1"
-deformatted = "alpha"
-
-[examples.Pre.b2]
-valid = true
-str = "b2"
-deformatted = ""
-
-[examples.Pre.rc1]
-valid = true
-str = "rc1"
-deformatted = ""
-
-[examples.Pre.c3]
-valid = true
-str = "rc3"
-deformatted = "c"
 
 [examples.Pre.a]
-valid = true
-str = "a0"
 deformatted = "a"
-
-[examples.Pre.alpha]
-valid = true
 str = "a0"
-deformatted = "alpha"
+valid = true
+
+[examples.Pre.a1]
+deformatted = ""
+str = "a1"
+valid = true
 
 [examples.Pre.aLPha]
-valid = true
-str = "a0"
 deformatted = "aLPha"
-
-[examples.Pre.x1]
-valid = false
-
-[examples.Pre.pre1]
+str = "a0"
 valid = true
-str = "rc1"
-deformatted = "pre"
 
-[examples.Pre.rc]
+[examples.Pre.alpha]
+deformatted = "alpha"
+str = "a0"
 valid = true
-str = "rc0"
-deformatted = "rc"
+
+[examples.Pre.alpha1]
+deformatted = "alpha"
+str = "a1"
+valid = true
 
 [examples.Pre.b1]
-valid = true
-str = "b1"
 deformatted = ""
+str = "b1"
+valid = true
 
 [examples.Pre.b1.formatted]
 "" = "b1"
 BETA = "BETA1"
 "a###" = "b1"
 
-[examples.Pre._AlPhA_0]
+[examples.Pre.b2]
+deformatted = ""
+str = "b2"
 valid = true
-str = "a0"
-deformatted = "_AlPhA_#"
+
+[examples.Pre.c3]
+deformatted = "c"
+str = "rc3"
+valid = true
+
+[examples.Pre.pre1]
+deformatted = "pre"
+str = "rc1"
+valid = true
+
+[examples.Pre.rc]
+deformatted = "rc"
+str = "rc0"
+valid = true
+
+[examples.Pre.rc1]
+deformatted = ""
+str = "rc1"
+valid = true
+
+[examples.Pre.x1]
+valid = false
 
 [examples.Public.""]
 valid = false
 
 [examples.Public."0!0"]
-valid = true
-str = "0"
 deformatted = "#!"
-
-[examples.Public."1.2.3"]
+str = "0"
 valid = true
-deformatted = ""
-
-[examples.Public."1.2.3a1"]
-valid = true
-deformatted = ""
-
-[examples.Public."1.2.3.post1"]
-valid = true
-deformatted = ""
-
-[examples.Public."1.2.3a1.post1.dev2"]
-valid = true
-deformatted = ""
-
-[examples.Public."1!1.0rc1.post2"]
-valid = true
-str = "1!1rc1.post2"
-deformatted = ".#"
-
-[examples.Public."1.0+loc"]
-valid = false
-
-[examples.Public."1.0.post1a1"]
-valid = false
-
-[examples.Public."1.0.post"]
-valid = true
-str = "1.post0"
-deformatted = ".#.post"
 
 [examples.Public."1!"]
 valid = false
 
+[examples.Public."1!1.0rc1.post2"]
+deformatted = ".#"
+str = "1!1rc1.post2"
+valid = true
+
+[examples.Public."1.0+loc"]
+valid = false
+
+[examples.Public."1.0.post"]
+deformatted = ".#.post"
+str = "1.post0"
+valid = true
+
+[examples.Public."1.0.post1a1"]
+valid = false
+
+[examples.Public."1.2.3"]
+deformatted = ""
+valid = true
+
+[examples.Public."1.2.3.post1"]
+deformatted = ""
+valid = true
+
+[examples.Public."1.2.3a1"]
+deformatted = ""
+valid = true
+
+[examples.Public."1.2.3a1.post1.dev2"]
+deformatted = ""
+valid = true
+
 [examples.Qual.""]
-valid = true
+deformatted = ""
 str = ""
-deformatted = ""
-
-[examples.Qual.a1]
 valid = true
-str = "a1"
-deformatted = ""
-
-[examples.Qual.alpha1]
-valid = true
-str = "a1"
-deformatted = "alpha"
-
-[examples.Qual.post1]
-valid = true
-str = ".post1"
-deformatted = "post"
-
-[examples.Qual.dev1]
-valid = true
-str = ".dev1"
-deformatted = "dev"
-
-[examples.Qual."a1.post1"]
-valid = true
-str = "a1.post1"
-deformatted = ""
-
-[examples.Qual.a1-2-dev-3]
-valid = true
-str = "a1.post2.dev3"
-deformatted = "--dev-"
-
-[examples.Qual.a1-2]
-valid = true
-str = "a1.post2"
-deformatted = "-"
 
 [examples.Qual.-2]
-valid = true
-str = ".post2"
 deformatted = "-"
-
-[examples.Qual."a1.post2.dev3"]
+str = ".post2"
 valid = true
-str = "a1.post2.dev3"
-deformatted = ""
-
-[examples.Qual."rc1.dev2"]
-valid = true
-str = "rc1.dev2"
-deformatted = ""
-
-[examples.Qual.alpha]
-valid = true
-str = "a0"
-deformatted = "alpha"
-
-[examples.Qual.post]
-valid = true
-str = ".post0"
-deformatted = "post"
-
-[examples.Qual.dev]
-bool = true
-valid = true
-str = ".dev0"
-deformatted = "dev"
-
-[examples.Qual.alpha-1]
-bool = true
-valid = true
-str = "a1"
-deformatted = "alpha-"
 
 [examples.Qual._AlPhA]
-valid = true
-str = "a0"
 deformatted = "_AlPhA"
-
-[examples.Qual._AlPhA_0]
-valid = true
 str = "a0"
-deformatted = "_AlPhA_#"
+valid = true
 
 [examples.Qual._AlPhA_]
 valid = false
 
-[examples.Qual.post-1]
+[examples.Qual._AlPhA_0]
+deformatted = "_AlPhA_#"
+str = "a0"
 valid = true
-str = ".post1"
-deformatted = "post-"
 
 [examples.Qual._post-1]
-valid = true
-str = ".post1"
 deformatted = "_post-"
+str = ".post1"
+valid = true
 
 [examples.Qual._post-1.formatted]
 "-DEV#" = "-1"
 
 [examples.Qual.a]
-valid = true
-str = "a0"
 deformatted = "a"
+str = "a0"
+valid = true
+
+[examples.Qual.a1]
+deformatted = ""
+str = "a1"
+valid = true
+
+[examples.Qual.a1-2]
+deformatted = "-"
+str = "a1.post2"
+valid = true
+
+[examples.Qual.a1-2-dev-3]
+deformatted = "--dev-"
+str = "a1.post2.dev3"
+valid = true
+
+[examples.Qual."a1.post1"]
+deformatted = ""
+str = "a1.post1"
+valid = true
+
+[examples.Qual."a1.post2.dev3"]
+deformatted = ""
+str = "a1.post2.dev3"
+valid = true
+
+[examples.Qual.alpha]
+deformatted = "alpha"
+str = "a0"
+valid = true
+
+[examples.Qual.alpha-1]
+bool = true
+deformatted = "alpha-"
+str = "a1"
+valid = true
+
+[examples.Qual.alpha1]
+deformatted = "alpha"
+str = "a1"
+valid = true
 
 [examples.Qual.b1]
-valid = true
-str = "b1"
 deformatted = ""
+str = "b1"
+valid = true
 
 [examples.Qual.b1.formatted]
 "" = "b1"
@@ -1410,895 +1379,846 @@ BETA = "BETA1"
 "a###" = "b1"
 
 [examples.Qual."beta1.post2.dev3"]
-valid = true
-str = "b1.post2.dev3"
 deformatted = "beta"
+str = "b1.post2.dev3"
+valid = true
 
 [examples.Qual."beta1.post2.dev3".formatted]
 "r#-dev" = "b1r2-dev3"
 -dev = "b1-2dev3"
 
+[examples.Qual.dev]
+bool = true
+deformatted = "dev"
+str = ".dev0"
+valid = true
+
+[examples.Qual.dev1]
+deformatted = "dev"
+str = ".dev1"
+valid = true
+
+[examples.Qual.post]
+deformatted = "post"
+str = ".post0"
+valid = true
+
+[examples.Qual.post-1]
+deformatted = "post-"
+str = ".post1"
+valid = true
+
+[examples.Qual.post1]
+deformatted = "post"
+str = ".post1"
+valid = true
+
+[examples.Qual."rc1.dev2"]
+deformatted = ""
+str = "rc1.dev2"
+valid = true
+
 [examples.Release.""]
-valid = false
-
-[examples.Release.0]
-valid = true
-str = "0"
-deformatted = ""
-
-[examples.Release.1]
-valid = true
-str = "1"
-deformatted = ""
-
-[examples.Release."1.2"]
-valid = true
-str = "1.2"
-deformatted = ""
-
-[examples.Release."1.2.3"]
-valid = true
-str = "1.2.3"
-deformatted = ""
-
-[examples.Release."1.02.3"]
-valid = true
-str = "1.2.3"
-deformatted = ".##"
-
-[examples.Release."1.02.3".formatted]
-"....#" = "1.2.3.0.0"
-
-[examples.Release."1.002.3"]
-valid = true
-str = "1.2.3"
-deformatted = ".###"
-
-[examples.Release."1.042.3"]
-valid = true
-str = "1.42.3"
-deformatted = ".###"
-
-[examples.Release."10.0.0"]
-valid = true
-str = "10"
-deformatted = "..#"
-
-[examples.Release."3.4.5.6"]
-valid = true
-str = "3.4.5.6"
-deformatted = ""
-repr = "Release([3, 4, 5, 6])"
-
-[examples.Release."1."]
 valid = false
 
 [examples.Release.".1"]
 valid = false
 
+[examples.Release.0]
+deformatted = ""
+str = "0"
+valid = true
+
+[examples.Release."0.0.1"]
+deformatted = ""
+str = "0.0.1"
+valid = true
+
+[examples.Release.1]
+deformatted = ""
+str = "1"
+valid = true
+
+[examples.Release."1."]
+valid = false
+
 [examples.Release."1.-1"]
 valid = false
+
+[examples.Release."1.002.3"]
+deformatted = ".###"
+str = "1.2.3"
+valid = true
+
+[examples.Release."1.02.3"]
+deformatted = ".##"
+str = "1.2.3"
+valid = true
+
+[examples.Release."1.02.3".formatted]
+"....#" = "1.2.3.0.0"
+
+[examples.Release."1.042.3"]
+deformatted = ".###"
+str = "1.42.3"
+valid = true
+
+[examples.Release."1.2"]
+deformatted = ""
+str = "1.2"
+valid = true
+
+[examples.Release."1.2.3"]
+deformatted = ""
+str = "1.2.3"
+valid = true
 
 [examples.Release."1.a"]
 valid = false
 
-[examples.Release."0.0.1"]
+[examples.Release."10.0.0"]
+deformatted = "..#"
+str = "10"
 valid = true
-str = "0.0.1"
+
+[examples.Release."3.4.5.6"]
 deformatted = ""
-
-[examples.Version."v1.0.0"]
+repr = "Release([3, 4, 5, 6])"
+str = "3.4.5.6"
 valid = true
-legacy = "test_example_1"
-str = "1"
-deformatted = "v..#"
-
-[examples.Version."v1.0.0".formatted]
-"#.#.#" = "1.0.0"
 
 [examples.Version.""]
 valid = false
 
 [examples.Version.0]
-valid = true
+deformatted = ""
 str = "0"
-deformatted = ""
-
-[examples.Version."1.2.3a1"]
 valid = true
-str = "1.2.3a1"
-deformatted = ""
 
-[examples.Version."1.2.3a1.post1.dev2"]
+[examples.Version."0!0.0.0a1.post9999.dev8888+local-build.0"]
+deformatted = "#!..#+-"
+legacy = "Increasing complexity with more combinations"
 valid = true
-str = "1.2.3a1.post1.dev2"
-deformatted = ""
 
-[examples.Version."1.2.3+abc"]
+[examples.Version."0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"]
+deformatted = "#!..#"
+legacy = "Extreme cases with very long versions"
+str = "0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"
 valid = true
-str = "1.2.3+abc"
-deformatted = ""
 
-[examples.Version."1.2.3+aBc"]
+[examples.Version."0!0.0.1"]
+deformatted = "#!"
+legacy = "Epoch Versions"
+str = "0.0.1"
 valid = true
-str = "1.2.3+abc"
-deformatted = "+~^"
 
-[examples.Version."1.2.3+abc.1"]
+[examples.Version."0!0.9.0.post5.dev7+local.5"]
+deformatted = "#!..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "0.9.post5.dev7+local.5"
 valid = true
-str = "1.2.3+abc.1"
-deformatted = ""
-
-[examples.Version."1!1.0"]
-valid = true
-str = "1!1"
-deformatted = ".#"
 
 [examples.Version."0!1.0rc1+1.abc"]
-valid = true
-str = "1rc1+1.abc"
 deformatted = "#!.#"
-
-[examples.Version."2.0.post1"]
+str = "1rc1+1.abc"
 valid = true
-str = "2.post1"
-deformatted = ".#"
 
-[examples.Version."2.0.post1+local.1"]
+[examples.Version."0!1.1a1.post1.dev100+local.build.hash99999"]
+deformatted = "#!"
+legacy = "Advanced pre-release + post-release + development combinations"
 valid = true
-str = "2.post1+local.1"
-deformatted = ".#"
 
-[examples.Version."not a version"]
-valid = false
-
-[examples.Version."1.0..1"]
-valid = false
-
-[examples.Version."1.0a"]
+[examples.Version."0!99999999.99999.99999+local.version.9876543210"]
+deformatted = "#!"
+legacy = "Very large versions with long numeric parts"
 valid = true
-str = "1a0"
-deformatted = ".#a"
-
-[examples.Version."1!"]
-valid = false
-
-[examples.Version."1.0++a"]
-valid = false
-
-[examples.Version."1.0.0"]
-valid = true
-legacy = "Basic Versioning"
-str = "1"
-deformatted = "..#"
-
-[examples.Version."0.9.1"]
-valid = true
-legacy = "Basic Versioning"
-str = "0.9.1"
-deformatted = ""
-
-[examples.Version."2.1.0"]
-valid = true
-legacy = "Basic Versioning"
-str = "2.1"
-deformatted = "..#"
-
-[examples.Version."10.5.3"]
-valid = true
-legacy = "Basic Versioning"
-deformatted = ""
-
-[examples.Version."0.0.1"]
-valid = true
-legacy = "Basic Versioning"
-deformatted = ""
 
 [examples.Version."0.0.0"]
-valid = true
-legacy = "Basic Versioning"
 deformatted = "..#"
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."0.0.0a1.post0.dev0+local.build.invalid_character#"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."0.0.1"]
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
 
 [examples.Version."0.1"]
-valid = true
+deformatted = ""
 legacy = "Basic Versioning"
-deformatted = ""
-
-[examples.Version."1.2"]
 valid = true
-legacy = "Basic Versioning"
-deformatted = ""
 
-[examples.Version."2.4"]
-bool = true
-valid = true
-legacy = "Basic Versioning"
+[examples.Version."0.1+build.1"]
 deformatted = ""
-
-[examples.Version."1.0.0a1"]
+legacy = "Edge Cases / Special Forms"
 valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
+
+[examples.Version."0.1.0-beta+20190506.commit.gdeadbeef"]
+deformatted = "..#-beta"
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."0.1.0a12345678901234567890.post12345678901234567890.dev12345678901234567890+build12345678901234567890"]
 deformatted = "..#"
-
-[examples.Version."2.0b3"]
+legacy = "Extreme cases with very long versions"
 valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
-deformatted = ".#"
 
-[examples.Version."0.9.1rc4"]
-valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
+[examples.Version."0.1a1.post2.dev0+local.build.1234abc"]
 deformatted = ""
-
-[examples.Version."1.1.0-alpha"]
+legacy = "Advanced pre-release + post-release + development combinations"
 valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
-deformatted = "..#-alpha"
 
-[examples.Version."3.0.0b2"]
-valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
+[examples.Version."0.5.0.dev4"]
 deformatted = "..#"
-
-[examples.Version."4.1.0-rc.1"]
+legacy = "Development releases"
+str = "0.5.dev4"
 valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
-str = "4.1rc1"
-deformatted = "..#-rc."
 
-[examples.Version."1.1a0"]
-valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
-str = "1.1a0"
-deformatted = ""
-
-[examples.Version."1.1.0-alpha.2"]
-valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
-str = "1.1a2"
-deformatted = "..#-alpha."
-
-[examples.Version."5.0rc1"]
-valid = true
-legacy = "Pre-releases (alpha, beta, release candidate)"
-deformatted = ".#"
-
-[examples.Version."1.0.0.post1"]
-valid = true
-legacy = "Post-releases"
+[examples.Version."0.5.0rc1.post1111.dev987+local.build.exp123"]
 deformatted = "..#"
-
-[examples.Version."2.1.0.post4"]
+legacy = "Advanced pre-release + post-release + development combinations"
 valid = true
-legacy = "Post-releases"
+
+[examples.Version."0.9.0+ubuntu1"]
 deformatted = "..#"
-
-[examples.Version."3.2.1.post7"]
+legacy = "Local Versions"
 valid = true
-legacy = "Post-releases"
-deformatted = ""
 
-[examples.Version."1.2.post.3"]
+[examples.Version."0.9.0.post99.dev1000+ubuntu12.04.5"]
+deformatted = "..#+.##"
+legacy = "Increasing complexity with more combinations"
 valid = true
-legacy = "Post-releases"
-deformatted = ".post."
-
-[examples.Version."1.2.0-post4"]
-valid = true
-legacy = "Post-releases"
-deformatted = "..#-post"
 
 [examples.Version."0.9.0post5"]
-valid = true
+deformatted = "..#post"
 legacy = "Post-releases"
 str = "0.9.post5"
-deformatted = "..#post"
+valid = true
 
 [examples.Version."0.9.0post5".formatted]
 - = "0.9-5"
 
-[examples.Version."1.0.0.dev1"]
+[examples.Version."0.9.1"]
+deformatted = ""
+legacy = "Basic Versioning"
+str = "0.9.1"
 valid = true
-legacy = "Development releases"
-deformatted = "..#"
-
-[examples.Version."2.0.0.dev2"]
-valid = true
-legacy = "Development releases"
-deformatted = "..#"
 
 [examples.Version."0.9.1.dev10"]
-valid = true
+deformatted = ""
 legacy = "Development releases"
+valid = true
+
+[examples.Version."0.9.1rc4"]
 deformatted = ""
-
-[examples.Version."2.1.dev0"]
+legacy = "Pre-releases (alpha, beta, release candidate)"
 valid = true
-legacy = "Development releases"
-deformatted = ""
-
-[examples.Version."1.0dev5"]
-valid = true
-legacy = "Development releases"
-str = "1.dev5"
-deformatted = ".#dev"
-
-[examples.Version."1.1.0-dev3"]
-valid = true
-legacy = "Development releases"
-str = "1.1.dev3"
-deformatted = "..#R#-dev"
-
-[examples.Version."0.5.0.dev4"]
-valid = true
-legacy = "Development releases"
-str = "0.5.dev4"
-deformatted = "..#"
-
-[examples.Version."00.5.0.dev4"]
-valid = true
-str = "0.5.dev4"
-deformatted = "##..#"
-
-[examples.Version."1.0.0+local"]
-valid = true
-legacy = "Local Versions"
-str = "1+local"
-deformatted = "..#"
-
-[examples.Version."2.0.1+20130313144700"]
-valid = true
-legacy = "Local Versions"
-deformatted = ""
-
-[examples.Version."1.0.0+exp.sha.5114f85"]
-valid = true
-legacy = "Local Versions"
-deformatted = "..#"
-
-[examples.Version."1.0.0+abc.5.1"]
-valid = true
-legacy = "Local Versions"
-deformatted = "..#"
-
-[examples.Version."1.0.1+2019.10.22"]
-valid = true
-legacy = "Local Versions"
-deformatted = ""
-
-[examples.Version."0.9.0+ubuntu1"]
-valid = true
-legacy = "Local Versions"
-deformatted = "..#"
-
-[examples.Version."2.1.0+build.12345"]
-valid = true
-legacy = "Local Versions"
-deformatted = "..#"
-
-[examples.Version."3.2.1+dfsg1"]
-valid = true
-legacy = "Local Versions"
-deformatted = ""
-
-[examples.Version."1!0.1.0"]
-valid = true
-legacy = "Epoch Versions"
-str = "1!0.1"
-deformatted = "..#"
-
-[examples.Version."2!1.0.0"]
-valid = true
-legacy = "Epoch Versions"
-str = "2!1"
-deformatted = "..#"
-
-[examples.Version."1!2.3.4"]
-valid = true
-legacy = "Epoch Versions"
-deformatted = ""
-
-[examples.Version."0!0.0.1"]
-valid = true
-legacy = "Epoch Versions"
-str = "0.0.1"
-deformatted = "#!"
-
-[examples.Version."3!1.2.0"]
-valid = true
-legacy = "Epoch Versions"
-deformatted = "..#"
-
-[examples.Version."1.0.0a1.post2"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-deformatted = "..#"
-
-[examples.Version."2.1.0b2.dev3"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-deformatted = "..#"
-
-[examples.Version."1.2.3rc1+build123"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-deformatted = ""
-
-[examples.Version."1!1.0.0a1.dev1"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-str = "1!1a1.dev1"
-deformatted = "..#"
-
-[examples.Version."1.2.3.post4+exp.sha.5114f85"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-str = "1.2.3.post4+exp.sha.5114f85"
-deformatted = ""
-
-[examples.Version."3.2.1rc2.post1.dev3"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-str = "3.2.1rc2.post1.dev3"
-deformatted = ""
-
-[examples.Version."0!0.9.0.post5.dev7+local.5"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-str = "0.9.post5.dev7+local.5"
-deformatted = "#!..#"
-
-[examples.Version."2!3.4.5a2+ubuntu1"]
-valid = true
-legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
-str = "2!3.4.5a2+ubuntu1"
-deformatted = ""
-
-[examples.Version."1.0"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-str = "1"
-deformatted = ".#"
-
-[examples.Version."v2.0"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-str = "2"
-deformatted = "v.#"
-
-[examples.Version."1.2.3-456"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-str = "1.2.3.post456"
-deformatted = "-"
-
-[examples.Version."2.0.0-beta"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-str = "2b0"
-deformatted = "..#-beta"
-
-[examples.Version."1.0.0.dev1234567"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-str = "1.dev1234567"
-deformatted = "..#"
-
-[examples.Version."1.0.0.post123456789"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-deformatted = "..#"
-
-[examples.Version."1.2.3+abc.123"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-deformatted = ""
-
-[examples.Version."1.0+deadbeef"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-deformatted = ".#"
-
-[examples.Version."0.1+build.1"]
-valid = true
-legacy = "Edge Cases / Special Forms"
-deformatted = ""
-
-[examples.Version."1.2.3-beta"]
-valid = true
-legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-deformatted = "-beta"
-
-[examples.Version."01.0.0"]
-valid = true
-legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-str = "1"
-deformatted = "##..#"
-
-[examples.Version."1.0.0beta1"]
-valid = true
-legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-str = "1b1"
-deformatted = "..#beta"
-
-[examples.Version."v1.2.3"]
-valid = true
-legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-str = "1.2.3"
-deformatted = "v"
-
-[examples.Version."1.0.0a1.post2.dev3"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-str = "1a1.post2.dev3"
-deformatted = "..#"
-
-[examples.Version."1!2.0.0b3.post1+exp.sha.1234abcd"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-deformatted = "..#"
-
-[examples.Version."0.9.0.post99.dev1000+ubuntu12.04.5"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-deformatted = "..#+.##"
-
-[examples.Version."3!2.1.0-alpha.5+build.34567abcd"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-deformatted = "..#-alpha."
-
-[examples.Version."1.2.3a1.post11.dev7+sha256.abc123def456"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-deformatted = ""
-
-[examples.Version."0!0.0.0a1.post9999.dev8888+local-build.0"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-deformatted = "#!..#+-"
-
-[examples.Version."42!1.0.0rc999.post999.dev9999+exp.build.local1"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-deformatted = "..#"
-
-[examples.Version."1!1.2.3a1.post6.dev5+local"]
-valid = true
-legacy = "Increasing complexity with more combinations"
-deformatted = ""
-
-[examples.Version."2!1.0.0+local.version.1234"]
-valid = true
-legacy = "Combining epochs with local versions"
-deformatted = "..#"
-
-[examples.Version."1!2.0.1.post3.dev1+local.hash.deadbeef"]
-valid = true
-legacy = "Combining epochs with local versions"
-deformatted = ""
-
-[examples.Version."3!4.5.6a2.post8.dev9+build.sha.abcdef123456"]
-valid = true
-legacy = "Combining epochs with local versions"
-deformatted = ""
-
-[examples.Version."0.1a1.post2.dev0+local.build.1234abc"]
-valid = true
-legacy = "Advanced pre-release + post-release + development combinations"
-deformatted = ""
-
-[examples.Version."2!5.6.7b5.post10.dev1000+exp.sha12345678"]
-valid = true
-legacy = "Advanced pre-release + post-release + development combinations"
-deformatted = ""
-
-[examples.Version."1.0.0b99.post8888.dev7777+local.version.abcdef"]
-valid = true
-legacy = "Advanced pre-release + post-release + development combinations"
-deformatted = "..#"
-
-[examples.Version."0.5.0rc1.post1111.dev987+local.build.exp123"]
-valid = true
-legacy = "Advanced pre-release + post-release + development combinations"
-deformatted = "..#"
-
-[examples.Version."0!1.1a1.post1.dev100+local.build.hash99999"]
-valid = true
-legacy = "Advanced pre-release + post-release + development combinations"
-deformatted = "#!"
-
-[examples.Version."1.0.0.post999999.dev9999999+build.1234567890"]
-valid = true
-legacy = "Very large versions with long numeric parts"
-deformatted = "..#"
-
-[examples.Version."0!99999999.99999.99999+local.version.9876543210"]
-valid = true
-legacy = "Very large versions with long numeric parts"
-deformatted = "#!"
-
-[examples.Version."100!0.0.0a0.post0.dev0+exp.sha.0"]
-valid = true
-legacy = "Very large versions with long numeric parts"
-deformatted = "..#"
-
-[examples.Version."2!999.999.999a999.post9999.dev9999+local.build.9"]
-valid = true
-legacy = "Very large versions with long numeric parts"
-deformatted = ""
-
-[examples.Version."10!9999.8888.7777a6666.post5555.dev4444+build.hash123abc"]
-valid = true
-legacy = "Complex strings with multiple epochs, large numbers, and combinations"
-deformatted = ""
-
-[examples.Version."1!1.1a1000000000.post1000000000.dev1000000000+local.0"]
-valid = true
-legacy = "Complex strings with multiple epochs, large numbers, and combinations"
-deformatted = ""
-
-[examples.Version."1.0.0a1.post2+ubuntu16.04"]
-valid = true
-legacy = "Mixed use of pre-release and post-release with complex local versions"
-deformatted = "..#+.##"
-
-[examples.Version."2.0.0-rc.1.post2+build.sha.e91e63f0"]
-valid = true
-legacy = "Mixed use of pre-release and post-release with complex local versions"
-deformatted = "..#-rc."
-
-[examples.Version."1.0.0-alpha+linux-x86_64"]
-valid = true
-legacy = "Mixed use of pre-release and post-release with complex local versions"
-deformatted = "..#-alpha+-_"
-
-[examples.Version."0.1.0-beta+20190506.commit.gdeadbeef"]
-valid = true
-legacy = "Mixed use of pre-release and post-release with complex local versions"
-deformatted = "..#-beta"
-
-[examples.Version."1.0.0-alpha_1"]
-valid = true
-legacy = "Invalid cases (testing error handling for extreme cases)"
-deformatted = "..#-alpha_"
-
-[examples.Version."v1.0.0.post0.dev0"]
-valid = true
-legacy = "Invalid cases (testing error handling for extreme cases)"
-deformatted = "v..#"
-
-[examples.Version."1.0.0.a1"]
-valid = true
-legacy = "Invalid cases (testing error handling for extreme cases)"
-deformatted = "..#.a"
-
-[examples.Version."1.2.3alpha1.post2"]
-valid = true
-legacy = "Invalid cases (testing error handling for extreme cases)"
-deformatted = "alpha"
 
 [examples.Version."00!1.0.0"]
-valid = true
-legacy = "Invalid cases (testing error handling for extreme cases)"
 deformatted = "##!..#"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."00.5.0.dev4"]
+deformatted = "##..#"
+str = "0.5.dev4"
+valid = true
+
+[examples.Version."01.0.0"]
+deformatted = "##..#"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+str = "1"
+valid = true
+
+[examples.Version."1!"]
+valid = false
+
+[examples.Version."1!0.1.0"]
+deformatted = "..#"
+legacy = "Epoch Versions"
+str = "1!0.1"
+valid = true
+
+[examples.Version."1!1.0"]
+deformatted = ".#"
+str = "1!1"
+valid = true
+
+[examples.Version."1!1.0.0.dev4567.post9+20190101"]
+legacy = "Increasing complexity with more combinations"
+valid = false
+
+[examples.Version."1!1.0.0a1.dev1"]
+deformatted = "..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "1!1a1.dev1"
+valid = true
+
+[examples.Version."1!1.1a1000000000.post1000000000.dev1000000000+local.0"]
+deformatted = ""
+legacy = "Complex strings with multiple epochs, large numbers, and combinations"
+valid = true
+
+[examples.Version."1!1.2.3-4"]
+deformatted = "-"
+legacy = "spec.test_version_with_post_specifier_and_epoch"
+str = "1!1.2.3.post4"
+valid = true
+
+[examples.Version."1!1.2.3-4-dev2"]
+deformatted = "--dev"
+legacy = "spec.test_version_with_epoch_and_wrong_order_specifiers"
+str = "1!1.2.3.post4.dev2"
+valid = true
+
+[examples.Version."1!1.2.3a1-4-dev5-6+local"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1!1.2.3a1.post6.dev5+local"]
+deformatted = ""
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."1!2.0.0+"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1!2.0.0b3.post1+exp.sha.1234abcd"]
+deformatted = "..#"
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."1!2.0.1.post3.dev1+local.hash.deadbeef"]
+deformatted = ""
+legacy = "Combining epochs with local versions"
+valid = true
+
+[examples.Version."1!2.3.4"]
+deformatted = ""
+legacy = "Epoch Versions"
+valid = true
+
+[examples.Version."1..0"]
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+valid = false
+
+[examples.Version."1.0"]
+deformatted = ".#"
+legacy = "Edge Cases / Special Forms"
+str = "1"
+valid = true
+
+[examples.Version."1.0++a"]
+valid = false
+
+[examples.Version."1.0+deadbeef"]
+deformatted = ".#"
+legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."1.0..1"]
+valid = false
+
+[examples.Version."1.0.0"]
+deformatted = "..#"
+legacy = "Basic Versioning"
+str = "1"
+valid = true
+
+[examples.Version."1.0.0++local.version.doubleplus"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0+@build"]
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+valid = false
+
+[examples.Version."1.0.0+abc.5.1"]
+deformatted = "..#"
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."1.0.0+build@sha.123"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0+exp.sha.5114f85"]
+deformatted = "..#"
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."1.0.0+local"]
+deformatted = "..#"
+legacy = "Local Versions"
+str = "1+local"
+valid = true
+
+[examples.Version."1.0.0-alpha+linux-x86_64"]
+deformatted = "..#-alpha+-_"
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."1.0.0-alpha_1"]
+deformatted = "..#-alpha_"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."1.0.0...dev"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0.a1"]
+deformatted = "..#.a"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
+
+[examples.Version."1.0.0.dev1"]
+deformatted = "..#"
+legacy = "Development releases"
+valid = true
+
+[examples.Version."1.0.0.dev1234567"]
+deformatted = "..#"
+legacy = "Edge Cases / Special Forms"
+str = "1.dev1234567"
+valid = true
+
+[examples.Version."1.0.0.dev1rc1"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
+valid = false
+
+[examples.Version."1.0.0.post1"]
+deformatted = "..#"
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."1.0.0.post123456789"]
+deformatted = "..#"
+legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."1.0.0.post1a1"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
+valid = false
+
+[examples.Version."1.0.0.post999999.dev9999999+build.1234567890"]
+deformatted = "..#"
+legacy = "Very large versions with long numeric parts"
+valid = true
 
 [examples.Version."1.0.0a01.post00.dev01+build00"]
-valid = true
-legacy = "Invalid cases (testing error handling for extreme cases)"
 deformatted = "..#a##.post##.dev##"
-
-[examples.Version."v1.0.0-0"]
-valid = true
 legacy = "Invalid cases (testing error handling for extreme cases)"
-deformatted = "v..#-"
-
-[examples.Version."0.1.0a12345678901234567890.post12345678901234567890.dev12345678901234567890+build12345678901234567890"]
 valid = true
-legacy = "Extreme cases with very long versions"
+
+[examples.Version."1.0.0a1"]
 deformatted = "..#"
-
-[examples.Version."1.2.3+local.version.with.extremely.long.identifier.123456789012345678901234567890"]
+legacy = "Pre-releases (alpha, beta, release candidate)"
 valid = true
-legacy = "Extreme cases with very long versions"
+
+[examples.Version."1.0.0a1..post2"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0a1.post2"]
+deformatted = "..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+valid = true
+
+[examples.Version."1.0.0a1.post2+ubuntu16.04"]
+deformatted = "..#+.##"
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."1.0.0a1.post2.dev3"]
+deformatted = "..#"
+legacy = "Increasing complexity with more combinations"
+str = "1a1.post2.dev3"
+valid = true
+
+[examples.Version."1.0.0alpha_beta"]
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = false
+
+[examples.Version."1.0.0b99.post8888.dev7777+local.version.abcdef"]
+deformatted = "..#"
+legacy = "Advanced pre-release + post-release + development combinations"
+valid = true
+
+[examples.Version."1.0.0beta1"]
+deformatted = "..#beta"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+str = "1b1"
+valid = true
+
+[examples.Version."1.0.1+2019.10.22"]
 deformatted = ""
-
-[examples.Version."0!0.0.0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"]
+legacy = "Local Versions"
 valid = true
-legacy = "Extreme cases with very long versions"
-str = "0a9999999999999.post9999999999999.dev9999999999999+build.sha.9999999999999"
-deformatted = "#!..#"
+
+[examples.Version."1.0a"]
+deformatted = ".#a"
+str = "1a0"
+valid = true
+
+[examples.Version."1.0dev5"]
+deformatted = ".#dev"
+legacy = "Development releases"
+str = "1.dev5"
+valid = true
+
+[examples.Version."1.1.0-alpha"]
+deformatted = "..#-alpha"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."1.1.0-alpha.2"]
+deformatted = "..#-alpha."
+legacy = "Pre-releases (alpha, beta, release candidate)"
+str = "1.1a2"
+valid = true
+
+[examples.Version."1.1.0-dev3"]
+deformatted = "..#R#-dev"
+legacy = "Development releases"
+str = "1.1.dev3"
+valid = true
+
+[examples.Version."1.1a0"]
+deformatted = ""
+legacy = "Pre-releases (alpha, beta, release candidate)"
+str = "1.1a0"
+valid = true
+
+[examples.Version."1.2"]
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."1.2.0-post4"]
+deformatted = "..#-post"
+legacy = "Post-releases"
+valid = true
 
 [examples.Version."1.2.3"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3+aBc"]
+deformatted = "+~^"
+str = "1.2.3+abc"
+valid = true
+
+[examples.Version."1.2.3+abc"]
+deformatted = ""
+str = "1.2.3+abc"
+valid = true
+
+[examples.Version."1.2.3+abc.1"]
+deformatted = ""
+str = "1.2.3+abc.1"
+valid = true
+
+[examples.Version."1.2.3+abc.123"]
+deformatted = ""
+legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."1.2.3+local.version.with.extremely.long.identifier.123456789012345678901234567890"]
+deformatted = ""
+legacy = "Extreme cases with very long versions"
+valid = true
+
+[examples.Version."1.2.3--4"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-4"]
+deformatted = "-"
+legacy = "spec.test_basic_version_with_post_specifier"
+str = "1.2.3.post4"
+valid = true
+
+[examples.Version."1.2.3-4+local"]
+deformatted = "-"
+legacy = "spec.test_version_with_post_and_local_specifiers"
+str = "1.2.3.post4+local"
+valid = true
+
+[examples.Version."1.2.3-4-5"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-4-dev5"]
+deformatted = "--dev"
+legacy = "spec.test_version_with_dev_specifier_after_post"
+str = "1.2.3.post4.dev5"
+valid = true
+
+[examples.Version."1.2.3-456"]
+deformatted = "-"
+legacy = "Edge Cases / Special Forms"
+str = "1.2.3.post456"
+valid = true
+
+[examples.Version."1.2.3-4a1"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-4a1-dev5-6"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-beta"]
+deformatted = "-beta"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+valid = true
+
+[examples.Version."1.2.3-dev1-dev2"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3-dev1-post2-dev3"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
 
 [examples.Version."1.2.3.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post0.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post0.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post0.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post10"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post10.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post10.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3.post10.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3.post4+exp.sha.5114f85"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "1.2.3.post4+exp.sha.5114f85"
+valid = true
 
 [examples.Version."1.2.3a0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.post0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.post0.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.post0.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.post0.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.post10"]
-valid = true
-str = "1.2.3a0.post10"
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+str = "1.2.3a0.post10"
+valid = true
 
 [examples.Version."1.2.3a0.post10.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a0.post10.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
-
-[examples.Version."1.2.3a0.post_10"]
+legacy = "Difficult Qualification Relations"
 valid = true
-str = "1.2.3a0.post10"
-deformatted = ".post_"
 
 [examples.Version."1.2.3a0.post10.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3a0.post_10"]
+deformatted = ".post_"
+str = "1.2.3a0.post10"
+valid = true
+
+[examples.Version."1.2.3a1"]
+deformatted = ""
+str = "1.2.3a1"
+valid = true
+
+[examples.Version."1.2.3a1--4"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3a1-4"]
+deformatted = "-"
+legacy = "spec.test_version_with_pre_release_and_post_specifiers"
+str = "1.2.3a1.post4"
+valid = true
+
+[examples.Version."1.2.3a1-4-5"]
+legacy = "Test version with invalid specifiers that should raise an error"
+valid = false
+
+[examples.Version."1.2.3a1-4-dev5+local"]
+deformatted = "--dev"
+legacy = "spec.test_version_with_complex_specifiers_and_local"
+str = "1.2.3a1.post4.dev5+local"
+valid = true
+
+[examples.Version."1.2.3a1.post1.dev2"]
+deformatted = ""
+str = "1.2.3a1.post1.dev2"
+valid = true
+
+[examples.Version."1.2.3a1.post11.dev7+sha256.abc123def456"]
+deformatted = ""
+legacy = "Increasing complexity with more combinations"
+valid = true
 
 [examples.Version."1.2.3a4"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post0.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post0.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post0.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post10"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post10.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post10.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3a4.post10.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
+
+[examples.Version."1.2.3alpha1.post2"]
+deformatted = "alpha"
+legacy = "Invalid cases (testing error handling for extreme cases)"
+valid = true
 
 [examples.Version."1.2.3b1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1".formatted]
 "" = "1.2.3b1"
@@ -2306,201 +2226,281 @@ BETA = "1.2.3BETA1"
 "##_dEv" = "01.2.3b1"
 
 [examples.Version."1.2.3b1.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post0.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post0.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post0.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post10"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post10.dev0"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post10.dev1"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
 [examples.Version."1.2.3b1.post10.dev2"]
-valid = true
-legacy = "Difficult Qualification Relations"
 deformatted = ""
+legacy = "Difficult Qualification Relations"
+valid = true
 
-[examples.Version."1.0.0.post1a1"]
-valid = false
-legacy = "Cases with inconsistent pre-release and post-release ordering"
+[examples.Version."1.2.3rc1+build123"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+valid = true
 
-[examples.Version."1.0.0.dev1rc1"]
-valid = false
-legacy = "Cases with inconsistent pre-release and post-release ordering"
+[examples.Version."1.2.post.3"]
+deformatted = ".post."
+legacy = "Post-releases"
+valid = true
 
-[examples.Version."2!1.0.0rc1.post1a1"]
-valid = false
-legacy = "Cases with inconsistent pre-release and post-release ordering"
+[examples.Version."10!9999.8888.7777a6666.post5555.dev4444+build.hash123abc"]
+deformatted = ""
+legacy = "Complex strings with multiple epochs, large numbers, and combinations"
+valid = true
 
-[examples.Version."3!1.0.0a1.dev1rc1+build123"]
-valid = false
-legacy = "Cases with inconsistent pre-release and post-release ordering"
+[examples.Version."10.5.3"]
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
 
-[examples.Version."1!1.0.0.dev4567.post9+20190101"]
-valid = false
-legacy = "Increasing complexity with more combinations"
-
-[examples.Version."1..0"]
-valid = false
-legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-
-[examples.Version."1.0.0+@build"]
-valid = false
-legacy = "Invalid or Potentially Problematic Cases (for error handling)"
-
-[examples.Version."1!2.0.0+"]
-valid = false
-legacy = "Invalid cases (testing error handling for extreme cases)"
-
-[examples.Version."1.0.0alpha_beta"]
-valid = false
-legacy = "Invalid cases (testing error handling for extreme cases)"
-
-[examples.Version."1.0.0...dev"]
-valid = false
-legacy = "Invalid cases (testing error handling for extreme cases)"
-
-[examples.Version."0.0.0a1.post0.dev0+local.build.invalid_character#"]
-valid = false
-legacy = "Invalid cases (testing error handling for extreme cases)"
-
-[examples.Version."1.0.0a1..post2"]
-valid = false
-legacy = "Invalid cases (testing error handling for extreme cases)"
+[examples.Version."100!0.0.0a0.post0.dev0+exp.sha.0"]
+deformatted = "..#"
+legacy = "Very large versions with long numeric parts"
+valid = true
 
 [examples.Version."2!1..0"]
-valid = false
 legacy = "Invalid cases (testing error handling for extreme cases)"
-
-[examples.Version."1.0.0+build@sha.123"]
 valid = false
-legacy = "Invalid cases (testing error handling for extreme cases)"
 
-[examples.Version."1.0.0++local.version.doubleplus"]
-valid = false
-legacy = "Invalid cases (testing error handling for extreme cases)"
+[examples.Version."2!1.0.0"]
+deformatted = "..#"
+legacy = "Epoch Versions"
+str = "2!1"
+valid = true
 
-[examples.Version."1.2.3--4"]
-valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
+[examples.Version."2!1.0.0+local.version.1234"]
+deformatted = "..#"
+legacy = "Combining epochs with local versions"
+valid = true
 
-[examples.Version."1.2.3a1--4"]
+[examples.Version."2!1.0.0rc1.post1a1"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
 valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
-
-[examples.Version."1!1.2.3a1-4-dev5-6+local"]
-valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
-
-[examples.Version."1.2.3-dev1-dev2"]
-valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
-
-[examples.Version."1.2.3-4-5"]
-valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
-
-[examples.Version."1.2.3a1-4-5"]
-valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
 
 [examples.Version."2!1.2.3-4-5"]
-valid = false
 legacy = "Test version with invalid specifiers that should raise an error"
-
-[examples.Version."1.2.3-4a1-dev5-6"]
 valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
 
-[examples.Version."1.2.3-dev1-post2-dev3"]
+[examples.Version."2!3.4.5a2+ubuntu1"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "2!3.4.5a2+ubuntu1"
+valid = true
+
+[examples.Version."2!5.6.7b5.post10.dev1000+exp.sha12345678"]
+deformatted = ""
+legacy = "Advanced pre-release + post-release + development combinations"
+valid = true
+
+[examples.Version."2!999.999.999a999.post9999.dev9999+local.build.9"]
+deformatted = ""
+legacy = "Very large versions with long numeric parts"
+valid = true
+
+[examples.Version."2.0.0-beta"]
+deformatted = "..#-beta"
+legacy = "Edge Cases / Special Forms"
+str = "2b0"
+valid = true
+
+[examples.Version."2.0.0-rc.1.post2+build.sha.e91e63f0"]
+deformatted = "..#-rc."
+legacy = "Mixed use of pre-release and post-release with complex local versions"
+valid = true
+
+[examples.Version."2.0.0.dev2"]
+deformatted = "..#"
+legacy = "Development releases"
+valid = true
+
+[examples.Version."2.0.1+20130313144700"]
+deformatted = ""
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."2.0.post1"]
+deformatted = ".#"
+str = "2.post1"
+valid = true
+
+[examples.Version."2.0.post1+local.1"]
+deformatted = ".#"
+str = "2.post1+local.1"
+valid = true
+
+[examples.Version."2.0b3"]
+deformatted = ".#"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."2.1.0"]
+deformatted = "..#"
+legacy = "Basic Versioning"
+str = "2.1"
+valid = true
+
+[examples.Version."2.1.0+build.12345"]
+deformatted = "..#"
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."2.1.0.post4"]
+deformatted = "..#"
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."2.1.0b2.dev3"]
+deformatted = "..#"
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+valid = true
+
+[examples.Version."2.1.dev0"]
+deformatted = ""
+legacy = "Development releases"
+valid = true
+
+[examples.Version."2.4"]
+bool = true
+deformatted = ""
+legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."3!1.0.0a1.dev1rc1+build123"]
+legacy = "Cases with inconsistent pre-release and post-release ordering"
 valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
 
-[examples.Version."1.2.3-4a1"]
+[examples.Version."3!1.2.0"]
+deformatted = "..#"
+legacy = "Epoch Versions"
+valid = true
+
+[examples.Version."3!2.1.0-alpha.5+build.34567abcd"]
+deformatted = "..#-alpha."
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."3!4.5.6a2.post8.dev9+build.sha.abcdef123456"]
+deformatted = ""
+legacy = "Combining epochs with local versions"
+valid = true
+
+[examples.Version."3.0.0b2"]
+deformatted = "..#"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."3.2.1+dfsg1"]
+deformatted = ""
+legacy = "Local Versions"
+valid = true
+
+[examples.Version."3.2.1.post7"]
+deformatted = ""
+legacy = "Post-releases"
+valid = true
+
+[examples.Version."3.2.1rc2.post1.dev3"]
+deformatted = ""
+legacy = "Mixed Versions (combining post, dev, pre-releases, etc.)"
+str = "3.2.1rc2.post1.dev3"
+valid = true
+
+[examples.Version."4.1.0-rc.1"]
+deformatted = "..#-rc."
+legacy = "Pre-releases (alpha, beta, release candidate)"
+str = "4.1rc1"
+valid = true
+
+[examples.Version."42!1.0.0rc999.post999.dev9999+exp.build.local1"]
+deformatted = "..#"
+legacy = "Increasing complexity with more combinations"
+valid = true
+
+[examples.Version."5.0rc1"]
+deformatted = ".#"
+legacy = "Pre-releases (alpha, beta, release candidate)"
+valid = true
+
+[examples.Version."not a version"]
 valid = false
-legacy = "Test version with invalid specifiers that should raise an error"
 
-[examples.Version."1.2.3-4"]
+[examples.Version."v1.0.0"]
+deformatted = "v..#"
+legacy = "test_example_1"
+str = "1"
 valid = true
-str = "1.2.3.post4"
-deformatted = "-"
-legacy = "spec.test_basic_version_with_post_specifier"
 
-[examples.Version."1.2.3a1-4"]
-valid = true
-str = "1.2.3a1.post4"
-deformatted = "-"
-legacy = "spec.test_version_with_pre_release_and_post_specifiers"
+[examples.Version."v1.0.0".formatted]
+"#.#.#" = "1.0.0"
 
-[examples.Version."1.2.3-4+local"]
+[examples.Version."v1.0.0-0"]
+deformatted = "v..#-"
+legacy = "Invalid cases (testing error handling for extreme cases)"
 valid = true
-str = "1.2.3.post4+local"
-deformatted = "-"
-legacy = "spec.test_version_with_post_and_local_specifiers"
 
-[examples.Version."1!1.2.3-4"]
+[examples.Version."v1.0.0.post0.dev0"]
+deformatted = "v..#"
+legacy = "Invalid cases (testing error handling for extreme cases)"
 valid = true
-str = "1!1.2.3.post4"
-deformatted = "-"
-legacy = "spec.test_version_with_post_specifier_and_epoch"
 
-[examples.Version."1.2.3-4-dev5"]
+[examples.Version."v1.2.3"]
+deformatted = "v"
+legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+str = "1.2.3"
 valid = true
-str = "1.2.3.post4.dev5"
-deformatted = "--dev"
-legacy = "spec.test_version_with_dev_specifier_after_post"
 
-[examples.Version."1!1.2.3-4-dev2"]
+[examples.Version."v2.0"]
+deformatted = "v.#"
+legacy = "Edge Cases / Special Forms"
+str = "2"
 valid = true
-str = "1!1.2.3.post4.dev2"
-deformatted = "--dev"
-legacy = "spec.test_version_with_epoch_and_wrong_order_specifiers"
-
-[examples.Version."1.2.3a1-4-dev5+local"]
-valid = true
-str = "1.2.3a1.post4.dev5+local"
-deformatted = "--dev"
-legacy = "spec.test_version_with_complex_specifiers_and_local"
 
 [[release-key.test-major.steps]]
 name = "major"
