@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import operator
+from collections.abc import Iterable
 from functools import reduce
-from typing import *
+from typing import Any, Optional, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
@@ -14,11 +15,6 @@ __all__ = ["Post"]
 class Post(QualABC):
 
     __slots__ = ()
-
-    lit: str
-    num: int
-    packaging: Optional[int]
-    string: str
 
     def _cmp(self: Self) -> int:
         if self.lit:
@@ -33,7 +29,7 @@ class Post(QualABC):
         return reduce(operator.and_, clues, Clue()).solo(".post")
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> str:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         clue: Clue
         matches: dict[str, str]
         matches = Cfg.fullmatches("post_f", spec)
@@ -42,9 +38,11 @@ class Post(QualABC):
             sep=matches["post_sep_f"],
             mag=len(matches["post_num_f"]),
         )
-        return dict(clue=clue)
+        return (clue,)
 
-    def _format_parsed(self: Self, *, clue: Clue) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+        clue: Clue
+        (clue,) = parsed
         if not self:
             return ""
         if "" == clue.head:
@@ -62,8 +60,7 @@ class Post(QualABC):
 
     @property
     def packaging(self: Self) -> Optional[int]:
-        if self:
-            return self.num
+        return self.num if self else None
 
     @packaging.setter
     def packaging(self: Self, value: Optional[SupportsIndex]) -> None:

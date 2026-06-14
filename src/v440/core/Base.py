@@ -1,39 +1,30 @@
 from __future__ import annotations
 
 import operator
-from typing import *
-
-import setdoc
+from typing import Any, Final, Self
 
 from v440._utils.Cfg import Cfg
 from v440.abc.NestedABC import NestedABC
-from v440.core.Release import Release
+from v440.core.Release import Release as Release_
 
 __all__ = ["Base"]
 
 
 class Base(NestedABC):
 
+    Release: Final[type[Release_]] = Release_
+    _epoch: int
+    _release: Release_
+
     __slots__ = ("_epoch", "_release")
 
-    epoch: int
-    packaging: str
-    release: Release
-    string: str
-
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "0") -> None:
-        self._epoch = 0
-        self._release = Release()
-        self.string = string
-
-    def _cmp(self: Self) -> tuple[int, Release]:
+    def _cmp(self: Self) -> tuple[int, Release_]:
         return self.epoch, self.release
 
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         matches: dict[str, str]
-        table: dict[str, set]
+        table: dict[str, set[Any]]
         s: str
         t: str
         table = dict()
@@ -46,7 +37,7 @@ class Base(NestedABC):
                 table[t].add(matches[t])
         s = cls._deformat_basev(*table["basev"])
         s += cls._deformat_epoch(*table["epoch"])
-        s += Release.deformat(*table["release"])
+        s += Release_.deformat(*table["release"])
         return s
 
     @classmethod
@@ -70,30 +61,35 @@ class Base(NestedABC):
         cls: type[Self],
         spec: str,
         /,
-    ) -> dict[str, Any]:
-        ans: dict[str, int | str]
+    ) -> tuple[Any, ...]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
-        ans = dict()
-        ans["basev_f"] = matches["basev_f"]
-        ans["epoch_mag"] = len(matches["epoch_f"])
-        ans["release_f"] = matches["release_f"]
-        return ans
+        return (
+            matches["basev_f"],
+            len(matches["epoch_f"]),
+            matches["release_f"],
+        )
 
     def _format_parsed(
         self: Self,
-        *,
-        basev_f: str,
-        epoch_mag: int,
-        release_f: str,
+        parsed: tuple[Any, ...],
+        /,
     ) -> str:
+        basev_f: str
+        epoch_mag: int
+        release_f: str
         ans: str
+        basev_f, epoch_mag, release_f = parsed
         ans = basev_f
         if epoch_mag or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_mag)
             ans += "!"
         ans += format(self.release, release_f)
         return ans
+
+    @classmethod
+    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+        return dict(_epoch=int, _release=Release_)
 
     def _string_fset(self: Self, value: str) -> None:
         matches: dict[str, str]
@@ -120,10 +116,13 @@ class Base(NestedABC):
             raise ValueError
         self._epoch = v
 
+    packaging = NestedABC.string
+
     @property
-    def release(self: Self) -> Release:
+    def release(self: Self) -> Release_:
         "This property represents the release."
         return self._release
 
-
-Base.Release = Release
+    @release.setter
+    def release(self: Self, value: object, /) -> None:
+        self.release.string = value

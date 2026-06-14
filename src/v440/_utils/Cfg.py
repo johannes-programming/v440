@@ -4,7 +4,7 @@ import re
 import tomllib
 from importlib import resources
 from importlib.resources.abc import Traversable
-from typing import *
+from typing import Any, Self, cast
 
 __all__ = ["Cfg"]
 
@@ -21,17 +21,19 @@ class Cfg(enum.Enum):
 
     @classmethod
     def fullmatches(cls: type[Self], key: str, value: str) -> dict[str, str]:
-        ans: dict
+        ans: dict[Any, Any]
+        fullmatch: Any
         x: str
-        ans = cls.cfg.patterns[key].fullmatch(value).groupdict()
+        fullmatch = cls.cfg.patterns[key].fullmatch(value)
+        ans = fullmatch.groupdict()
         for x in ans.keys():
             if ans[x] is None:
                 ans[x] = ""
         return ans
 
     @functools.cached_property
-    def patterns(self: Self) -> dict[str, re.Pattern]:
-        ans: dict[str, re.Pattern]
+    def patterns(self: Self) -> dict[str, re.Pattern[str]]:
+        ans: dict[str, re.Pattern[str]]
         parts: dict[str, str]
         x: str
         y: str
@@ -43,3 +45,7 @@ class Cfg(enum.Enum):
             parts[x] = f"(?P<{x}>{z})"
             ans[x] = re.compile(z, re.IGNORECASE | re.VERBOSE)
         return ans
+
+    @functools.cached_property
+    def phases(self: Self) -> dict[str, str]:
+        return cast(dict[str, str], Cfg.cfg.data["consts"]["phases"])
