@@ -1,36 +1,33 @@
-from abc import abstractmethod
-from typing import *
+"""Provide the CoreABC abstract base for v440 classes."""
 
-import cmp3
+__all__: list[str] = ["CoreABC"]
+
+from abc import abstractmethod
+from typing import Any, Self
+
 import setdoc
 from copyable import Copyable
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
+from v440._utils.setter import setter
 from v440.errors.VersionError import VersionError
 
-__all__ = ["CoreABC"]
 
-
-class CoreABC(cmp3.CmpABC, Copyable):
+class CoreABC(Copyable):
     __slots__ = ()
-
-    packaging: Any
-    string: str
 
     @abstractmethod
     @setdoc.basic
-    def __bool__(self: Self) -> bool: ...
+    def __bool__(self: Self, /) -> bool: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __eq__(self: Self, other: object, /) -> bool: ...
 
     @setdoc.basic
-    def __cmp__(self: Self, other: Any) -> None | float | int:
-        if type(self) is not type(other):
-            return
-        return cmp3.cmp(self._cmp(), other._cmp(), mode="le")
-
-    @setdoc.basic
-    def __format__(self: Self, format_spec: Any) -> str:
-        parsed: dict[str, Any]
+    def __format__(self: Self, format_spec: object, /) -> str:
+        parsed: tuple[Any, ...]
         msg: str
         try:
             parsed = self._format_parse(str(format_spec))
@@ -38,94 +35,93 @@ class CoreABC(cmp3.CmpABC, Copyable):
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return str(self._format_parsed(**parsed))
+        return str(self._format_parsed(parsed))
 
     @abstractmethod
     @setdoc.basic
-    def __init__(self: Self, string: Any) -> None: ...
+    def __ge__(self: Self, other: Self, /) -> bool: ...
 
     @abstractmethod
     @setdoc.basic
-    def __repr__(self: Self) -> str: ...
+    def __gt__(self: Self, other: Self, /) -> bool: ...
 
     @setdoc.basic
-    def __setattr__(self: Self, name: str, value: Any) -> None:
-        a: Any
-        backup: str
-        msg: str
-        target: str
-        a = getattr(type(self), name, None)
-        if (not isinstance(a, property)) or not hasattr(a, "fset"):
-            super().__setattr__(name, value)
-            return
-        backup = str(self)
-        try:
-            super().__setattr__(name, value)
-        except VersionError:
-            self.string = backup
-            raise
-        except Exception:
-            self._string_fset(backup.lower())
-            msg = "%r is an invalid value for %r"
-            target = type(self).__name__ + "." + name
-            msg %= (value, target)
-            raise VersionError(msg)
+    def __init__(
+        self: Self, other: Self | None = None, /, **kwargs: Any
+    ) -> None:
+        self._init_other(other)
+        self._init_kwargs(**kwargs)
 
-    @classmethod
-    def __subclasshook__(cls: type[Self], other: type, /) -> bool:
-        "This magic classmethod can be overwritten for a custom subclass check."
-        return NotImplemented
+    @abstractmethod
+    @setdoc.basic
+    def __le__(self: Self, other: Self, /) -> bool: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __lt__(self: Self, other: Self, /) -> bool: ...
+
+    @abstractmethod
+    @setdoc.basic
+    def __repr__(self: Self, /) -> str: ...
 
     @setdoc.basic
-    def __str__(self: Self) -> str:
+    def __str__(self: Self, /) -> str:
         return format(self, "")
 
+    @classmethod
     @abstractmethod
-    def _cmp(self: Self) -> Any: ...
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str: ...
 
     @classmethod
     @abstractmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> Any: ...
-
-    @classmethod
-    @abstractmethod
-    def _format_parse(self: Self, spec: str, /) -> dict[str, Any]: ...
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
 
     @abstractmethod
-    def _format_parsed(self: Self, **kwargs: Any) -> Any: ...
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...
+
+    def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
+        x: str
+        y: Any
+        for x, y in kwargs.items():
+            setattr(self, x.lstrip("_"), y)
 
     @abstractmethod
-    def _string_fset(self: Self, value: str) -> None: ...
+    def _init_other(self: Self, other: Self | None, /) -> None: ...
+
+    @abstractmethod
+    def _string_fset(self: Self, value: str, /) -> None: ...
 
     @setdoc.basic
-    def copy(self: Self) -> Self:
+    def copy(self: Self, /) -> Self:
         return type(self)(self)
 
     @classmethod
-    def deformat(cls: type[Self], *strings: Any) -> str:
+    def deformat(cls: type[Self], /, *strings: object) -> str:
         msg: str
-        keys: tuple
-        values: tuple
         info: dict[str, Self]
-        keys = tuple(map(str, strings))
-        values = tuple(map(cls, keys))
-        info = dict(zip(keys, values))
+        x: object
+        y: str
+        info = dict()
+        for x in strings:
+            y = str(x)
+            info[y] = cls(string=y)
         try:
             return cls._deformat(info)
         except Exception:
             msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
             msg %= oxford(*strings)
-            raise TypeError(msg)
+            raise VersionError(msg)
 
     @property
     @abstractmethod
-    def packaging(self: Self) -> Any: ...
+    def packaging(self: Self, /) -> Any: ...
 
     @property
-    def string(self: Self) -> str:
+    def string(self: Self, /) -> str:
         "This property represents self as str."
         return format(self, "")
 
     @string.setter
-    def string(self: Self, value: Any) -> None:
+    @setter
+    def string(self: Self, value: object, /) -> None:
         self._string_fset(str(value).lower())

@@ -1,34 +1,23 @@
+"""Provide the Release class for version release tuples in v440."""
+
 from __future__ import annotations
+
+__all__: list[str] = ["Release"]
+
 
 import operator
 import string as string_
-from functools import partialmethod
-from typing import *
+from typing import Any, Self, SupportsIndex, overload
 
-import setdoc
-
+from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
-
-__all__ = ["Release"]
 
 
 class Release(ListABC[int]):
     __slots__ = ()
-    data: tuple[int, ...]
-    major: int
-    micro: int
-    minor: int
-    packaging: tuple[int, ...]
-    patch: int
-    string: str
-
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "0") -> None:
-        self._data = ()
-        self.string = string
 
     @classmethod
-    def _data_parse(cls: type[Self], value: list) -> list[int]:
+    def _data_parse(cls: type[Self], value: list[Any], /) -> list[int]:
         v: list[int]
         v = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
@@ -73,7 +62,7 @@ class Release(ListABC[int]):
         return s
 
     @classmethod
-    def _deformat_force(cls: type[Self], part: str) -> int:
+    def _deformat_force(cls: type[Self], part: str, /) -> int:
         if part == "0":
             return -1
         if part.startswith("0"):
@@ -81,7 +70,7 @@ class Release(ListABC[int]):
         return -len(part)
 
     @classmethod
-    def _deformat_comb(cls: type[Self], x: int, y: int) -> int:
+    def _deformat_comb(cls: type[Self], x: int, y: int, /) -> int:
         if 0 > x * y:
             if x + y <= 0:
                 return max(x, y)
@@ -95,32 +84,61 @@ class Release(ListABC[int]):
         else:
             return x + y
 
-    def _delitem(self: Self, key: Any, *, minlen: Any = None) -> None:
+    def _delitem(
+        self: Self,
+        /,
+        key: Any,
+        *,
+        minlen: Any = None,
+    ) -> None:
         data: list[int]
         data = self._list(minlen=minlen)
         del data[key]
         self.data = data
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, tuple[int, ...]]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         if spec.strip("#."):
             raise ValueError
-        return dict(mags=tuple(map(len, spec.rstrip(".").split("."))))
+        return tuple(map(len, spec.rstrip(".").split(".")))
 
-    def _format_parsed(self: Self, *, mags: tuple[int, ...]) -> str:
+    def _format_parsed(self: Self, mags: tuple[Any, ...], /) -> str:
         data: list[int]
-        parts: list[int]
+        parts: list[Any]
         data = list(self)
         data += [0] * max(0, len(mags) - len(self))
         parts = [f"0{m}d" for m in mags]
         parts += [""] * max(0, len(self) - len(mags))
         return ".".join(map(format, data, parts))
 
-    def _getitem(self: Self, key: Any, *, minlen: Any = None) -> Any:
+    @overload
+    def _getitem(
+        self: Self,
+        /,
+        key: SupportsIndex,
+        *,
+        minlen: SupportsIndex | None = None,
+    ) -> int: ...
+    @overload
+    def _getitem(
+        self: Self,
+        /,
+        key: slice,
+        *,
+        minlen: SupportsIndex | None = None,
+    ) -> list[int]: ...
+
+    def _getitem(
+        self: Self,
+        /,
+        key: SupportsIndex | slice,
+        *,
+        minlen: SupportsIndex | None = None,
+    ) -> int | list[int]:
         return self._list(minlen=minlen)[key]
 
-    def _list(self: Self, minlen: Optional[SupportsIndex] = None) -> list[int]:
-        data: list
+    def _list(self: Self, /, minlen: SupportsIndex | None = None) -> list[int]:
+        data: list[Any]
         index: Any
         data = list(self)
         if minlen is None:
@@ -130,80 +148,94 @@ class Release(ListABC[int]):
         return data
 
     @classmethod
-    def _item_parse(cls: type[Self], value: SupportsIndex) -> int:
+    def _item_parse(cls: type[Self], value: SupportsIndex, /) -> int:
         ans: int
         ans = operator.index(value)
         if ans < 0:
             raise ValueError
         return ans
 
-    def _setitem(self: Self, key: Any, value: Any, *, minlen: Any = None) -> None:
+    def _setitem(
+        self: Self, /, key: Any, value: Any, *, minlen: Any = None
+    ) -> None:
         data: list[int]
         data = self._list(minlen=minlen)
         data[key] = value
         self.data = data
 
     @classmethod
-    def _sort(cls: type[Self], value: int) -> int:
-        return value
+    def _sort(cls: type[Self], value: int, /) -> tuple[bool, int]:
+        return True, value
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         if value.strip(string_.digits + "."):
             raise ValueError
         self.data = map(int, value.split("."))
 
-    def bump(self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1) -> None:
-        data: list
+    def bump(
+        self: Self, /, index: SupportsIndex = -1, amount: SupportsIndex = 1
+    ) -> None:
+        data: list[int]
         a: int
         i: int
         a = operator.index(amount)
         i = operator.index(index)
-        if i < len(self):
-            self[i] += a
-            return
         data = list(self)
-        data.extend([0] * (i - len(self)))
-        data.append(a)
+        if i == -1:
+            data[-1] += a
+        elif i < len(self):
+            data[i] += a
+            data = data[: i + 1]
+        else:
+            data.extend((0,) * (i - len(self)))
+            data.append(a)
         self.data = data
 
     @property
-    def major(self: Self) -> int:
+    def major(self: Self, /) -> int:
         "This property represents the version major."
         return self._getitem(key=0, minlen=1)
 
     @major.setter
-    def major(self: Self, value: Any) -> None:
+    @setter
+    def major(self: Self, value: Any, /) -> None:
         self._setitem(key=0, value=value, minlen=1)
 
     @major.deleter
-    def major(self: Self) -> None:
+    def major(self: Self, /) -> None:
         self._delitem(key=0, minlen=1)
 
     @property
-    def minor(self: Self) -> int:
+    def minor(self: Self, /) -> int:
         "This property represents the version minor."
         return self._getitem(key=1, minlen=2)
 
     @minor.setter
-    def minor(self: Self, value: Any) -> None:
+    @setter
+    def minor(self: Self, value: Any, /) -> None:
         self._setitem(key=1, value=value, minlen=2)
 
     @minor.deleter
-    def minor(self: Self) -> None:
+    def minor(self: Self, /) -> None:
         self._delitem(key=1, minlen=2)
 
     @property
-    def micro(self: Self) -> int:
+    def micro(self: Self, /) -> int:
         "This property represents the version micro."
         return self._getitem(key=2, minlen=3)
 
     @micro.setter
-    def micro(self: Self, value: Any) -> None:
+    @setter
+    def micro(self: Self, value: Any, /) -> None:
         self._setitem(key=2, value=value, minlen=3)
 
     @micro.deleter
-    def micro(self: Self) -> None:
+    def micro(self: Self, /) -> None:
         self._delitem(key=2, minlen=3)
 
     packaging = ListABC.data
     patch = micro
+
+    def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
+        "This method sorts the data."
+        self.data = sorted(self, key=key, reverse=reverse)

@@ -1,39 +1,33 @@
+"""Provide the Base class for v440 public version base."""
+
 from __future__ import annotations
 
-import operator
-from typing import *
+__all__: list[str] = ["Base"]
 
-import setdoc
+import operator
+from typing import Any, Final, Self
 
 from v440._utils.Cfg import Cfg
+from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
-from v440.core.Release import Release
-
-__all__ = ["Base"]
+from v440.core.Release import Release as Release_
 
 
 class Base(NestedABC):
 
+    Release: Final[type[Release_]] = Release_
+    _epoch: int
+    _release: Release_
+
     __slots__ = ("_epoch", "_release")
 
-    epoch: int
-    packaging: str
-    release: Release
-    string: str
-
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "0") -> None:
-        self._epoch = 0
-        self._release = Release()
-        self.string = string
-
-    def _cmp(self: Self) -> tuple[int, Release]:
+    def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         matches: dict[str, str]
-        table: dict[str, set]
+        table: dict[str, set[Any]]
         s: str
         t: str
         table = dict()
@@ -46,15 +40,15 @@ class Base(NestedABC):
                 table[t].add(matches[t])
         s = cls._deformat_basev(*table["basev"])
         s += cls._deformat_epoch(*table["epoch"])
-        s += Release.deformat(*table["release"])
+        s += Release_.deformat(*table["release"])
         return s
 
     @classmethod
-    def _deformat_basev(cls: type[Self], value: str = "") -> str:
+    def _deformat_basev(cls: type[Self], value: str = "", /) -> str:
         return value
 
     @classmethod
-    def _deformat_epoch(cls: type[Self], *table: str) -> str:
+    def _deformat_epoch(cls: type[Self], /, *table: str) -> str:
         n: int
         s: str
         n = 0
@@ -70,24 +64,25 @@ class Base(NestedABC):
         cls: type[Self],
         spec: str,
         /,
-    ) -> dict[str, Any]:
-        ans: dict[str, int | str]
+    ) -> tuple[Any, ...]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
-        ans = dict()
-        ans["basev_f"] = matches["basev_f"]
-        ans["epoch_mag"] = len(matches["epoch_f"])
-        ans["release_f"] = matches["release_f"]
-        return ans
+        return (
+            matches["basev_f"],
+            len(matches["epoch_f"]),
+            matches["release_f"],
+        )
 
     def _format_parsed(
         self: Self,
-        *,
-        basev_f: str,
-        epoch_mag: int,
-        release_f: str,
+        parsed: tuple[Any, ...],
+        /,
     ) -> str:
+        basev_f: str
+        epoch_mag: int
+        release_f: str
         ans: str
+        basev_f, epoch_mag, release_f = parsed
         ans = basev_f
         if epoch_mag or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_mag)
@@ -95,7 +90,11 @@ class Base(NestedABC):
         ans += format(self.release, release_f)
         return ans
 
-    def _string_fset(self: Self, value: str) -> None:
+    @classmethod
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
+        return dict(_epoch=int, _release=Release_)
+
+    def _string_fset(self: Self, value: str, /) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
@@ -104,26 +103,31 @@ class Base(NestedABC):
             self.epoch = 0
         self.release.string = matches["release"]
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(epoch=self.epoch, release=self.release)
 
     @property
-    def epoch(self: Self) -> int:
+    def epoch(self: Self, /) -> int:
         "This property represents the epoch."
         return self._epoch
 
     @epoch.setter
-    def epoch(self: Self, value: Any) -> None:
+    @setter
+    def epoch(self: Self, value: Any, /) -> None:
         v: int
         v = operator.index(value)
         if v < 0:
             raise ValueError
         self._epoch = v
 
+    packaging = NestedABC.string
+
     @property
-    def release(self: Self) -> Release:
+    def release(self: Self, /) -> Release_:
         "This property represents the release."
         return self._release
 
-
-Base.Release = Release
+    @release.setter
+    @setter
+    def release(self: Self, value: object, /) -> None:
+        self.release.string = value

@@ -1,26 +1,25 @@
+"""Provide the Dev class for developmental releases in v440."""
+
 from __future__ import annotations
 
+__all__: list[str] = ["Dev"]
+
 import operator
+from collections.abc import Iterable
 from functools import reduce
-from typing import *
+from typing import Any, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
+from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
-
-__all__ = ["Dev"]
 
 
 class Dev(QualABC):
 
     __slots__ = ()
 
-    lit: str
-    num: int
-    packaging: Optional[int]
-    string: str
-
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self, /) -> tuple[int] | tuple[int, int]:
         if self.lit:
             return 0, self.num
         else:
@@ -33,18 +32,20 @@ class Dev(QualABC):
         return reduce(operator.and_, clues, Clue()).solo(".dev")
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         clue: Clue
         matches: dict[str, str]
         matches = Cfg.fullmatches("dev_f", spec)
         clue = Clue(
-            head=matches["dev_head_f"],
-            sep=matches["dev_sep_f"],
-            mag=len(matches["dev_num_f"]),
+            matches["dev_head_f"],
+            matches["dev_sep_f"],
+            len(matches["dev_num_f"]),
         )
-        return dict(clue=clue)
+        return (clue,)
 
-    def _format_parsed(self: Self, *, clue: Clue) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+        clue: Clue
+        (clue,) = parsed
         if not self:
             return ""
         if "" == clue.head:
@@ -54,21 +55,22 @@ class Dev(QualABC):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
         if value == "dev":
             return "dev"
         else:
             raise ValueError
 
     @property
-    def packaging(self: Self) -> Optional[int]:
+    def packaging(self: Self, /) -> int | None:
         if self:
             return self.num
         else:
-            return
+            return None
 
     @packaging.setter
-    def packaging(self: Self, value: Optional[SupportsIndex]) -> None:
+    @setter
+    def packaging(self: Self, value: SupportsIndex | None, /) -> None:
         if value is None:
             self.num = 0
             self.lit = ""
