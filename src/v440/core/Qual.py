@@ -1,4 +1,8 @@
+"""Provide the Qual class for qualified version parts in v440."""
+
 from __future__ import annotations
+
+__all__ = ["Qual"]
 
 import operator
 from typing import Any, Final, Self
@@ -11,8 +15,6 @@ from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
 from v440.core.Post import Post as Post_
 from v440.core.Pre import Pre as Pre_
-
-__all__ = ["Qual"]
 
 
 class Qual(NestedABC):
@@ -135,15 +137,15 @@ class Qual(NestedABC):
         self.dev.string = value
 
     def isdevrelease(self: Self) -> bool:
-        "This method returns whether the current instance denotes a dev-release."
+        "Return whether this instance denotes a dev-release."
         return bool(self.dev)
 
     def isprerelease(self: Self) -> bool:
-        "This method returns whether the current instance denotes a pre-release."
+        "Return whether this instance denotes a pre-release."
         return bool(self.pre) or bool(self.dev)
 
     def ispostrelease(self: Self) -> bool:
-        "This method returns whether the current instance denotes a post-release."
+        "Return whether this instance denotes a post-release."
         return bool(self.post)
 
     packaging = NestedABC.string

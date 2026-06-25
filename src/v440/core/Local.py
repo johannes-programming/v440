@@ -1,4 +1,8 @@
+"""Provide the Local class for local version identifiers in v440."""
+
 from __future__ import annotations
+
+__all__ = ["Local"]
 
 import operator
 import string as string_
@@ -8,12 +12,6 @@ from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
 from v440.abc.ListABC import ListABC
-
-__all__ = ["Local"]
-
-
-def sort_key(item: int | str) -> tuple[bool, int | str]:
-    return isinstance(item, int), item
 
 
 class Local(ListABC[int | str]):
@@ -208,3 +206,8 @@ class Local(ListABC[int | str]):
             key=sort_key if key is None else key,
             reverse=reverse,
         )
+
+
+def sort_key(item: int | str) -> tuple[bool, int | str]:
+    "Return key for sorting int before str in Local."
+    return isinstance(item, int), item

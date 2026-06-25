@@ -1,4 +1,8 @@
+"""Provide the central Version class for mutable PEP 440 versions."""
+
 from __future__ import annotations
+
+__all__ = ["Version"]
 
 from collections.abc import Iterable
 from typing import Any, Final, Self
@@ -8,8 +12,6 @@ import packaging.version
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
-
-__all__ = ["Version"]
 
 
 class Version(NestedABC):
