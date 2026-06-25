@@ -1,6 +1,8 @@
-import unittest
+"""Run the unittest suite for v440."""
 
 __all__ = ["main"]
+
+import unittest
 
 
 def main() -> unittest.TextTestResult:

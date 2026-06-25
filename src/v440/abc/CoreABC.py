@@ -1,3 +1,7 @@
+"""Provide the CoreABC abstract base for v440 classes."""
+
+__all__ = ["CoreABC"]
+
 from abc import abstractmethod
 from typing import Any, Optional, Self, overload
 
@@ -7,8 +11,6 @@ from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440.errors.VersionError import VersionError
-
-__all__ = ["CoreABC"]
 
 
 class CoreABC(Copyable):

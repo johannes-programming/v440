@@ -1,4 +1,8 @@
+"""Provide the Post class for post-releases in v440."""
+
 from __future__ import annotations
+
+__all__ = ["Post"]
 
 import operator
 from collections.abc import Iterable
@@ -8,8 +12,6 @@ from typing import Any, Optional, Self, SupportsIndex
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
 from v440.abc.QualABC import QualABC
-
-__all__ = ["Post"]
 
 
 class Post(QualABC):

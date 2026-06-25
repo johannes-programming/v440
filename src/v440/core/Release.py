@@ -1,12 +1,14 @@
+"""Provide the Release class for version release tuples in v440."""
+
 from __future__ import annotations
+
+__all__ = ["Release"]
 
 import operator
 import string as string_
 from typing import Any, Final, Optional, Self, SupportsIndex, overload
 
 from v440.abc.ListABC import ListABC
-
-__all__ = ["Release"]
 
 MISSING: Final[object] = object()
 

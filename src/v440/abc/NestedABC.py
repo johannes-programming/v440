@@ -1,3 +1,7 @@
+"""Provide the NestedABC abstract base for v440 nested classes."""
+
+__all__ = ["NestedABC"]
+
 from abc import abstractmethod
 from typing import Any, Optional, Self, cast
 
@@ -6,8 +10,6 @@ import setdoc
 from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
-
-__all__ = ["NestedABC"]
 
 
 class NestedABC(cmp3.CmpABC, CoreABC):

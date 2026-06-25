@@ -1,4 +1,8 @@
+"""Provide the Pre class for pre-releases in v440."""
+
 from __future__ import annotations
+
+__all__ = ["Pre"]
 
 from typing import Any, Optional, Self, SupportsIndex
 
@@ -7,8 +11,6 @@ from iterprod import iterprod
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
 from v440.abc.QualABC import QualABC
-
-__all__ = ["Pre"]
 
 
 class Pre(QualABC):
