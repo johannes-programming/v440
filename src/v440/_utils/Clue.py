@@ -1,3 +1,7 @@
+"""Provide the Clue helper class for version de/formatting in v440."""
+
+__all__ = ["Clue"]
+
 from typing import NamedTuple, Self
 
 from v440._utils.Cfg import Cfg

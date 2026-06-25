@@ -1,3 +1,7 @@
+"""Provide configuration and pattern utilities for v440."""
+
+__all__ = ["Cfg"]
+
 import enum
 import functools
 import re
@@ -5,8 +9,6 @@ import tomllib
 from importlib import resources
 from importlib.resources.abc import Traversable
 from typing import Any, Self, cast
-
-__all__ = ["Cfg"]
 
 
 class Cfg(enum.Enum):

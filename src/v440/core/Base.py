@@ -1,4 +1,8 @@
+"""Provide the Base class for v440 public version base."""
+
 from __future__ import annotations
+
+__all__ = ["Base"]
 
 import operator
 from typing import Any, Final, Self
@@ -6,8 +10,6 @@ from typing import Any, Final, Self
 from v440._utils.Cfg import Cfg
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
-
-__all__ = ["Base"]
 
 
 class Base(NestedABC):

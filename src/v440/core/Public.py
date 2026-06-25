@@ -1,4 +1,8 @@
+"""Provide the Public class for public version identifiers in v440."""
+
 from __future__ import annotations
+
+__all__ = ["Public"]
 
 import string as string_
 from typing import Any, Final, Self
@@ -6,8 +10,6 @@ from typing import Any, Final, Self
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
 from v440.core.Qual import Qual as Qual_
-
-__all__ = ["Public"]
 
 
 class Public(NestedABC):

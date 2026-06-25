@@ -1,11 +1,13 @@
+"""Provide the QualABC abstract base for qualified v440 classes."""
+
+__all__ = ["QualABC"]
+
 import operator
 import string as string_
 from abc import abstractmethod
 from typing import Any, Self, SupportsIndex
 
 from v440.abc.NestedABC import NestedABC
-
-__all__ = ["QualABC"]
 
 
 class QualABC(NestedABC):
