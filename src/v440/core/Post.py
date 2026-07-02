@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["Post"]
+__all__: list[str] = ["Post"]
 
 import operator
 from collections.abc import Iterable

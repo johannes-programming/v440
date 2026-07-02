@@ -1,6 +1,6 @@
 """Run the unittest suite for v440."""
 
-__all__ = ["main"]
+__all__: list[str] = ["main"]
 
 import unittest
 

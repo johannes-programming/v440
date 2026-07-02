@@ -2,15 +2,13 @@
 
 from __future__ import annotations
 
-__all__ = ["Release"]
+__all__: list[str] = ["Release"]
 
 import operator
 import string as string_
-from typing import Any, Final, Optional, Self, SupportsIndex, overload
+from typing import Any, Optional, Self, SupportsIndex, overload
 
 from v440.abc.ListABC import ListABC
-
-MISSING: Final[object] = object()
 
 
 class Release(ListABC[int]):

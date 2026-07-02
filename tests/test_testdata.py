@@ -1,3 +1,15 @@
+__all__: list[str] = [
+    "TestDataSetter",
+    "TestDeformatting",
+    "TestPackagingA",
+    "TestPackagingC",
+    "TestReleaseAlias",
+    "TestSlicingGo",
+    "TestSlots",
+    "TestStringExamples",
+    "TestVersionEpochGo",
+]
+
 import builtins
 import enum
 import functools
@@ -17,18 +29,6 @@ from packaging.version import Version as Version_
 from v440 import core
 from v440.core.Version import Version
 from v440.errors.VersionError import VersionError
-
-__all__ = [
-    "TestDataSetter",
-    "TestDeformatting",
-    "TestPackagingA",
-    "TestPackagingC",
-    "TestReleaseAlias",
-    "TestSlicingGo",
-    "TestSlots",
-    "TestStringExamples",
-    "TestVersionEpochGo",
-]
 
 
 class Util(enum.Enum):
@@ -480,6 +480,7 @@ class TestPackagingA(unittest.TestCase):
 class TestPackagingC(unittest.TestCase):
     def test_0(self: Self) -> None:
         args: tuple[Any, ...]
+        casted: tuple[str, str, Callable[..., Any]]
         ops: list[Callable[..., Any]]
         pure: list[str]
         x: str
@@ -498,12 +499,10 @@ class TestPackagingC(unittest.TestCase):
         ]
         for args in iterprod.iterprod(pure, pure, ops):
             with self.subTest(args=args):
-                self.go(
-                    *cast(
-                        tuple[str, str, Callable[..., Any]],
-                        args,
-                    )
+                casted = cast(
+                    tuple[str, str, Callable[..., Any]], args
                 )
+                self.go(*casted)
 
     def go(
         self: Self,
