@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["Version"]
+__all__: list[str] = ["Version"]
 
 from collections.abc import Iterable
 from typing import Any, Final, Self

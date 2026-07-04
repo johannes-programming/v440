@@ -1,6 +1,6 @@
 """Provide the NestedABC abstract base for v440 nested classes."""
 
-__all__ = ["NestedABC"]
+__all__: list[str] = ["NestedABC"]
 
 from abc import abstractmethod
 from typing import Any, Optional, Self, cast

@@ -1,6 +1,6 @@
 """Provide the QualABC abstract base for qualified v440 classes."""
 
-__all__ = ["QualABC"]
+__all__: list[str] = ["QualABC"]
 
 import operator
 import string as string_

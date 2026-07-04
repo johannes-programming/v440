@@ -1,6 +1,6 @@
 """Provide configuration and pattern utilities for v440."""
 
-__all__ = ["Cfg"]
+__all__: list[str] = ["Cfg"]
 
 import enum
 import functools

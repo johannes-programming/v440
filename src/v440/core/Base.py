@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["Base"]
+__all__: list[str] = ["Base"]
 
 import operator
 from typing import Any, Final, Self
