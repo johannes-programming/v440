@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["Local"]
+__all__: list[str] = ["Local"]
 
 import operator
 import string as string_

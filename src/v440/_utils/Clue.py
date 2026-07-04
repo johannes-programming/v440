@@ -1,6 +1,6 @@
 """Provide the Clue helper class for version de/formatting in v440."""
 
-__all__ = ["Clue"]
+__all__: list[str] = ["Clue"]
 
 from typing import NamedTuple, Self
 

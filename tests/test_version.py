@@ -1,13 +1,4 @@
-import unittest
-from typing import Any, Self
-
-from v440.core.Local import Local
-from v440.core.Qual import Qual
-from v440.core.Release import Release
-from v440.core.Version import Version
-from v440.errors.VersionError import VersionError
-
-__all__ = [
+__all__: list[str] = [
     "TestVersionManipulation",
     "TestVersionLocal0",
     "TestPre",
@@ -20,6 +11,15 @@ __all__ = [
     "TestDevNoGo",
     "TestDataHoldStandards",
 ]
+
+import unittest
+from typing import Any, Self
+
+from v440.core.Local import Local
+from v440.core.Qual import Qual
+from v440.core.Release import Release
+from v440.core.Version import Version
+from v440.errors.VersionError import VersionError
 
 
 class TestVersionManipulation(unittest.TestCase):

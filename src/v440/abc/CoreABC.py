@@ -1,9 +1,9 @@
 """Provide the CoreABC abstract base for v440 classes."""
 
-__all__ = ["CoreABC"]
+__all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
-from typing import Any, Optional, Self, overload
+from typing import Any, Optional, Self
 
 import setdoc
 from copyable import Copyable

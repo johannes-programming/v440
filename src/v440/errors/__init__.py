@@ -1,3 +1,3 @@
 """Provide error classes for v440."""
 
-__all__ = []
+__all__: list[str] = []
