@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["Public"]
+__all__: list[str] = ["Public"]
 
 import string as string_
 from typing import Any, Final, Self

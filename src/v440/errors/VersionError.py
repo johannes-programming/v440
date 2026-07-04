@@ -1,6 +1,6 @@
 """Provide the VersionError exception for v440."""
 
-__all__ = ["VersionError"]
+__all__: list[str] = ["VersionError"]
 
 
 class VersionError(ValueError):

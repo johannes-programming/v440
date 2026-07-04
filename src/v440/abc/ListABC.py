@@ -1,6 +1,6 @@
 """Provide the ListABC abstract base for list-like v440 classes."""
 
-__all__ = ["ListABC"]
+__all__: list[str] = ["ListABC"]
 
 from abc import abstractmethod
 from collections.abc import Iterable
@@ -9,13 +9,10 @@ from typing import Any, Final, Optional, Self, TypeVar
 
 import setdoc
 from datahold import BaseDataObject, HoldList
-from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
 
 Item = TypeVar("Item", bound=int | str)
-
-MISSING: Final[object] = object()
 
 
 class ListABC(CoreABC, HoldList[Item]):

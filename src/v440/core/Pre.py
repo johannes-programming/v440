@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["Pre"]
+__all__: list[str] = ["Pre"]
 
 from typing import Any, Optional, Self, SupportsIndex
 
