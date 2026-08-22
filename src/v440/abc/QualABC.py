@@ -16,17 +16,17 @@ class QualABC(NestedABC):
     __slots__ = ("_lit", "_num")
 
     @abstractmethod
-    def _cmp(self: Self) -> Any: ...
+    def _cmp(self: Self, /) -> Any: ...
 
     @classmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_lit=str, _num=int)
 
     @classmethod
     @abstractmethod
-    def _lit_parse(cls: type[Self], value: str) -> str: ...
+    def _lit_parse(cls: type[Self], value: str, /) -> str: ...
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         x: str
         y: str
         if value == "":
@@ -54,15 +54,15 @@ class QualABC(NestedABC):
         self._lit = self._lit_parse(x)
         self._num = int("0" + y)
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(lit=self.lit, num=self.num)
 
     @property
-    def lit(self: Self) -> str:
+    def lit(self: Self, /) -> str:
         return self._lit
 
     @lit.setter
-    def lit(self: Self, value: object) -> None:
+    def lit(self: Self, value: object, /) -> None:
         x: str
         x = str(value).lower()
         if x:
@@ -73,11 +73,11 @@ class QualABC(NestedABC):
             self._lit = ""
 
     @property
-    def num(self: Self) -> int:
+    def num(self: Self, /) -> int:
         return self._num
 
     @num.setter
-    def num(self: Self, value: SupportsIndex) -> None:
+    def num(self: Self, value: SupportsIndex, /) -> None:
         y: int
         y = operator.index(value)
         if y < 0:
