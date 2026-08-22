@@ -42,9 +42,7 @@ class Dev(QualABC):
         )
         return (clue,)
 
-    def _format_parsed(self: Self, /, *parsed: Any) -> str:
-        clue: Clue
-        (clue,) = parsed
+    def _format_parsed(self: Self, clue: Clue, /) -> str:
         if not self:
             return ""
         if "" == clue.head:

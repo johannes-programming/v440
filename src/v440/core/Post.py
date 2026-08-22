@@ -31,7 +31,7 @@ class Post(QualABC):
         return reduce(operator.and_, clues, Clue()).solo(".post")
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Clue]:
         clue: Clue
         matches: dict[str, str]
         matches = Cfg.fullmatches("post_f", spec)
@@ -42,9 +42,7 @@ class Post(QualABC):
         )
         return (clue,)
 
-    def _format_parsed(self: Self, /, *parsed: Any) -> str:
-        clue: Clue
-        (clue,) = parsed
+    def _format_parsed(self: Self, clue: Clue, /) -> str:
         if not self:
             return ""
         if "" == clue.head:

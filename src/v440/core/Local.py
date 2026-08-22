@@ -6,6 +6,7 @@ __all__: list[str] = ["Local"]
 
 import operator
 import string as string_
+from collections import abc
 from typing import Any, Self
 
 import setdoc
@@ -53,7 +54,7 @@ class Local(ListABC[int | str]):
         cls: type[Self],
         spec: str,
         /,
-    ) -> tuple[Any, ...]:
+    ) -> abc.Iterable[Any]:
         l: str
         m: int
         x: str
@@ -75,7 +76,7 @@ class Local(ListABC[int | str]):
             split.append((m, l, y))
         while len(split) and split[-1] == (0, "", "."):
             split.pop()
-        return tuple(split)
+        return split
 
     def _format_parsed(
         self: Self,

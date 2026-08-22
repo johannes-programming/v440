@@ -3,6 +3,7 @@
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
+from collections import abc
 from typing import Any, Never, Self
 
 import setdoc
@@ -26,7 +27,7 @@ class CoreABC:
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
         msg: str
-        parsed: tuple[Any, ...]
+        parsed: abc.Iterable[Any]
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
@@ -95,7 +96,7 @@ class CoreABC:
 
     @classmethod
     @abstractmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
+    def _format_parse(cls: type[Self], spec: str, /) -> abc.Iterable[Any]: ...
 
     @abstractmethod
     def _format_parsed(self: Self, /, *parsed: Any) -> object: ...
