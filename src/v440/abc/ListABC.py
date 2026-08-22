@@ -3,9 +3,9 @@
 __all__: list[str] = ["ListABC"]
 
 from abc import abstractmethod
-from collections.abc import Iterable
+from collections import abc
 from functools import cmp_to_key
-from typing import Any, Final, Optional, Self, TypeVar
+from typing import Any, Self, TypeVar
 
 import setdoc
 from datahold import BaseDataObject, HoldList
@@ -44,13 +44,11 @@ class ListABC(CoreABC, HoldList[Item]):
     @setdoc.basic
     def __init__(
         self: Self,
-        data: Optional[Iterable[Item]] = None,
+        other: abc.Iterable[Item] | None = None,
         /,
         **kwargs: Any,
     ) -> None:
-        self._data = ()
-        if data is not None:
-            self.data = data
+        self._init_other(other)
         self._init_kwargs(**kwargs)
 
     @setdoc.basic
@@ -75,7 +73,14 @@ class ListABC(CoreABC, HoldList[Item]):
 
     @classmethod
     @abstractmethod
-    def _data_parse(cls: type[Self], value: list[Any]) -> Iterable[Item]: ...
+    def _data_parse(
+        cls: type[Self], value: list[Any]
+    ) -> abc.Iterable[Item]: ...
+
+    def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
+        self._data = ()
+        if other is not None:
+            self.data = other
 
     @property
     @setdoc.basic
@@ -83,7 +88,7 @@ class ListABC(CoreABC, HoldList[Item]):
         return self._data
 
     @data.setter
-    def data(self: Self, value: Iterable[Any]) -> None:
+    def data(self: Self, value: abc.Iterable[Any]) -> None:
         self._data = tuple(self._data_parse(list(value)))
 
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
