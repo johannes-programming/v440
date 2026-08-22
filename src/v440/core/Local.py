@@ -6,7 +6,7 @@ __all__: list[str] = ["Local"]
 
 import operator
 import string as string_
-from typing import Any, Optional, Self
+from typing import Any, Self
 
 from iterflat import iterflat
 
@@ -186,7 +186,7 @@ class Local(ListABC[int | str]):
         self.data = v.split(".")
 
     @property
-    def packaging(self: Self) -> Optional[str]:
+    def packaging(self: Self) -> str | None:
         if self:
             return str(self)
         else:
