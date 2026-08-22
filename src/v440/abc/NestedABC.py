@@ -3,7 +3,7 @@
 __all__: list[str] = ["NestedABC"]
 
 from abc import abstractmethod
-from typing import Any, Optional, Self, cast
+from typing import Any, Self, cast
 
 import cmp3
 import setdoc
@@ -28,22 +28,6 @@ class NestedABC(cmp3.CmpABC, CoreABC):
         )
 
     @setdoc.basic
-    def __init__(
-        self: Self,
-        other: Optional[Self] = None,
-        /,
-        **kwargs: Any,
-    ) -> None:
-        x: str
-        y: Any
-        for x, y in self._init_factories().items():
-            if other is None:
-                object.__setattr__(self, x, y())
-            else:
-                object.__setattr__(self, x, y(getattr(other, x)))
-        self._init_kwargs(**kwargs)
-
-    @setdoc.basic
     def __repr__(self: Self) -> str:
         return datarepr(type(self).__name__, **self._todict())
 
@@ -53,6 +37,15 @@ class NestedABC(cmp3.CmpABC, CoreABC):
     @classmethod
     @abstractmethod
     def _init_factories(cls: type[Self]) -> dict[str, Any]: ...
+
+    def _init_other(self: Self, other: Self | None, /) -> None:
+        x: str
+        y: Any
+        for x, y in self._init_factories().items():
+            if other is None:
+                object.__setattr__(self, x, y())
+            else:
+                object.__setattr__(self, x, y(getattr(other, x)))
 
     @abstractmethod
     def _todict(self: Self) -> dict[str, Any]: ...
