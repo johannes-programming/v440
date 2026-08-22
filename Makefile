@@ -61,7 +61,7 @@ reset:
 	git reset HEAD~1
 
 test: beautiful dist
-	conda run -n base python make/env.py test_v440 --python=3.11 --recreate >/dev/null;
+	conda run -n base python make/env.py test_v440 --python=3.12 --recreate >/dev/null;
 	conda run -n test_v440 pip install dist/*.tar.gz >/dev/null;
 	conda run -n test_v440 python run_tests.py;
 	conda run -n test_v440 pip install mypy >/dev/null;
