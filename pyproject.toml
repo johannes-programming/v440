@@ -20,7 +20,6 @@ classifiers = [
 ]
 dependencies = [
     "cmp3>=1.1,<2",
-    "copyable>=1.1,<2",
     "datahold>=4.0.0a6,<5",
     "datarepr>=1.2,<2",
     "iterflat>=1.1,<2",
@@ -37,7 +36,7 @@ license-files = [
 name = "v440"
 readme = "README.rst"
 requires-python = ">=3.12"
-version = "3.0.0a3"
+version = "3.0.0a4"
 
 [project.urls]
 Download = "https://pypi.org/project/v440/#files"
