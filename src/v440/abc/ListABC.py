@@ -30,7 +30,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
     __slots__ = ()
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
+    def __bool__(self: Self, /) -> bool:
         return bool(len(self))
 
     @overload  # type: ignore[override]
@@ -167,11 +167,19 @@ class ListABC[Item: int | str](  # type: ignore[misc]
     @classmethod
     @abstractmethod
     def _mutable_parse(
-        cls: type[Self], value: list[Any]
+        cls: type[Self],
+        other: list[Item],
+        /,
     ) -> abc.Iterable[Item]: ...
 
     @setdoc.basic
-    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
+    def sort(
+        self: Self,
+        /,
+        *,
+        key: Any = None,
+        reverse: Any = False,
+    ) -> None:
         mutable: list[Item]
         with self.__mutate__() as mutable:
             mutable.sort(
@@ -186,7 +194,7 @@ def cmpkey(x: int | str, /) -> tuple[bool, int | str]:
 
 
 @cmp_to_key
-def sort_key(x: Any, y: Any) -> Any:
+def sort_key(x: Any, y: Any, /) -> int:
     """Compare two values with PEP 440 style for mixed int/str."""
     i: int
     if x is y or x == y:
