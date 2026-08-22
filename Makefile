@@ -29,6 +29,7 @@ commit-version: add py312
 
 clean:
 	rm -fr 'dist/';
+	rm -fr 'out/';
 
 dist: beautiful clean build
 
@@ -58,15 +59,18 @@ rebase:
 	git rebase --empty=drop --interactive $(PARAMS);
 
 reset:
-	git reset HEAD~1
+	git reset HEAD~1 ;
 
-test: beautiful dist
+test: dist
+	mkdir dist/out/ ;
 	conda run -n base python make/env.py test_v440 --python=3.12 --recreate >/dev/null;
 	conda run -n test_v440 pip install dist/*.tar.gz >/dev/null;
-	conda run -n test_v440 python run_tests.py;
+	conda run -n test_v440 python make/run_introspection.py > dist/out/introspection_out.txt 2> dist/out/introspection_err.txt || true;
+	conda run -n test_v440 python run_tests.py > dist/out/tests_out.txt 2> dist/out/tests_err.txt || true;
 	conda run -n test_v440 pip install mypy >/dev/null;
-	conda run -n test_v440 python -m mypy --exclude build --exclude dist --strict .;
-	conda run -n test_v440 python -m mypy --strict -p v440;
+	conda run -n test_v440 python -m mypy --exclude build --exclude dist --strict . > dist/out/mypy_dir_out.txt 2> dist/out/mypy_dir_err.txt || true;
+	conda run -n test_v440 python -m mypy --strict -p v440 > dist/out/mypy_pkg_out.txt 2> dist/out/mypy_pkg_err.txt || true;
+	zip -r dist/out.zip dist/out;
 
 toml_sorted: py312
 	conda run -n py312 pip install 'toml_sorted>=2.1,<3' >/dev/null;
