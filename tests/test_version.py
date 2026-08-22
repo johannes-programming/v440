@@ -1,15 +1,15 @@
 __all__: list[str] = [
-    "TestVersionManipulation",
-    "TestVersionLocal0",
-    "TestPre",
+    "TestAdditionalVersionRelease",
+    "TestDataHoldStandards",
+    "TestDevNoGo",
     "TestExample",
     "TestPatch",
-    "TestVersionRelease",
-    "TestAdditionalVersionRelease",
-    "TestVersionLocal",
+    "TestPre",
     "TestSlicingNoGo",
-    "TestDevNoGo",
-    "TestDataHoldStandards",
+    "TestVersionLocal",
+    "TestVersionLocal0",
+    "TestVersionManipulation",
+    "TestVersionRelease",
 ]
 
 import unittest
