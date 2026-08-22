@@ -158,17 +158,17 @@ class ListABC[Item: int | str](  # type: ignore[misc]
             other,
         )
 
-    @classmethod
-    @abstractmethod
-    def _mutable_parse(
-        cls: type[Self], value: list[Any]
-    ) -> abc.Iterable[Item]: ...
-
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
         if other is None:
             MutableListSlot.__init__(self)
         else:
             MutableListSlot.__init__(self, other)
+
+    @classmethod
+    @abstractmethod
+    def _mutable_parse(
+        cls: type[Self], value: list[Any]
+    ) -> abc.Iterable[Item]: ...
 
     @setdoc.basic
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
