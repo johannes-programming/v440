@@ -35,7 +35,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
 
     @setdoc.basic
     def __bool__(self: Self) -> bool:
-        return bool(self.data)
+        return bool(len(self))
 
     @overload  # type: ignore[override]
     def __ge__[Item_, Return](
@@ -149,7 +149,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
         mutable: list[Item]
         mutable = list(getattr(self, "_slot", ()))
         yield mutable
-        self._slot = tuple(self._data_parse(mutable))
+        self._slot = tuple(self._mutable_parse(mutable))
 
     @classmethod
     @setdoc.basic
@@ -164,7 +164,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
 
     @classmethod
     @abstractmethod
-    def _data_parse(
+    def _mutable_parse(
         cls: type[Self], value: list[Any]
     ) -> abc.Iterable[Item]: ...
 
@@ -174,25 +174,14 @@ class ListABC[Item: int | str](  # type: ignore[misc]
         else:
             MutableListSlot.__init__(self, other)
 
-    @property
-    @setdoc.basic
-    def data(self: Self, /) -> tuple[Item, ...]:
-        return self.__frozen__()
-
-    @data.setter
-    def data(self: Self, other: abc.Iterable[Item], /) -> None:
-        mutable: list[Item]
-        with self.__mutate__() as mutable:
-            mutable.clear()
-            mutable.extend(other)
-
     @setdoc.basic
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
-        self.data = sorted(
-            self,
-            key=cmp_to_key(cmp) if key is None else key,
-            reverse=reverse,
-        )
+        mutable: list[Item]
+        with self.__mutate__() as mutable:
+            mutable.sort(
+                key=cmp_to_key(cmp) if key is None else key,
+                reverse=reverse,
+            )
 
 
 def cmp(x: Any, y: Any) -> Any:

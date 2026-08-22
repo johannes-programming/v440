@@ -8,6 +8,7 @@ import operator
 import string as string_
 from typing import Any, Self
 
+import setdoc
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
@@ -18,7 +19,7 @@ class Local(ListABC[int | str]):
     __slots__ = ()
 
     @classmethod
-    def _data_parse(
+    def _mutable_parse(
         cls: type[Self], value: list[Any]
     ) -> tuple[int | str, ...]:
         return tuple(map(cls._item_parse, value))
@@ -176,14 +177,14 @@ class Local(ListABC[int | str]):
     def _string_fset(self: Self, value: str) -> None:
         v: str
         if value == "":
-            self.data = ()
+            self[:] = ()
             return
         v = value
         if v.startswith("+"):
             v = v[1:]
         v = v.replace("_", ".")
         v = v.replace("-", ".")
-        self.data = v.split(".")
+        self[:] = v.split(".")
 
     @property
     def packaging(self: Self) -> str | None:
@@ -199,13 +200,14 @@ class Local(ListABC[int | str]):
         else:
             self.string = value
 
+    @setdoc.basic
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
-        "This method sorts the data."
-        self.data = sorted(
-            self,
-            key=sort_key if key is None else key,
-            reverse=reverse,
-        )
+        mutable: list[int | str]
+        with self.__mutate__() as mutable:
+            mutable.sort(
+                key=sort_key if key is None else key,
+                reverse=reverse,
+            )
 
 
 def sort_key(item: int | str) -> tuple[bool, int | str]:

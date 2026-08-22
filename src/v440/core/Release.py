@@ -6,7 +6,10 @@ __all__: list[str] = ["Release"]
 
 import operator
 import string as string_
+from collections import abc
 from typing import Any, Self, SupportsIndex, overload
+
+import setdoc
 
 from v440.abc.ListABC import ListABC
 
@@ -15,7 +18,7 @@ class Release(ListABC[int]):
     __slots__ = ()
 
     @classmethod
-    def _data_parse(cls: type[Self], value: list[Any]) -> list[int]:
+    def _mutable_parse(cls: type[Self], value: list[Any]) -> list[int]:
         v: list[int]
         v = list(map(cls._item_parse, value))
         while v and v[-1] == 0:
@@ -88,10 +91,10 @@ class Release(ListABC[int]):
         *,
         minlen: Any = None,
     ) -> None:
-        data: list[int]
-        data = self._list(minlen=minlen)
-        del data[key]
-        self.data = data
+        packaging: list[int]
+        packaging = self._list(minlen=minlen)
+        del packaging[key]
+        self.packaging = packaging
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
@@ -100,13 +103,13 @@ class Release(ListABC[int]):
         return tuple(map(len, spec.rstrip(".").split(".")))
 
     def _format_parsed(self: Self, mags: tuple[Any, ...], /) -> str:
-        data: list[int]
+        packaging: list[int]
         parts: list[Any]
-        data = list(self)
-        data += [0] * max(0, len(mags) - len(self))
+        packaging = list(self)
+        packaging += [0] * max(0, len(mags) - len(self))
         parts = [f"0{m}d" for m in mags]
         parts += [""] * max(0, len(self) - len(mags))
-        return ".".join(map(format, data, parts))
+        return ".".join(map(format, packaging, parts))
 
     @overload
     def _getitem(
@@ -132,14 +135,14 @@ class Release(ListABC[int]):
         return self._list(minlen=minlen)[key]
 
     def _list(self: Self, minlen: SupportsIndex | None = None) -> list[int]:
-        data: list[Any]
+        packaging: list[Any]
         index: Any
-        data = list(self)
+        packaging = list(self)
         if minlen is None:
-            return data
+            return packaging
         index = operator.index(minlen)
-        data.extend([0] * max(0, index - len(self)))
-        return data
+        packaging.extend([0] * max(0, index - len(self)))
+        return packaging
 
     @classmethod
     def _item_parse(cls: type[Self], value: SupportsIndex) -> int:
@@ -152,10 +155,10 @@ class Release(ListABC[int]):
     def _setitem(
         self: Self, key: Any, value: Any, *, minlen: Any = None
     ) -> None:
-        data: list[int]
-        data = self._list(minlen=minlen)
-        data[key] = value
-        self.data = data
+        packaging: list[int]
+        packaging = self._list(minlen=minlen)
+        packaging[key] = value
+        self.packaging = packaging
 
     @classmethod
     def _sort(cls: type[Self], value: int) -> tuple[bool, int]:
@@ -164,12 +167,12 @@ class Release(ListABC[int]):
     def _string_fset(self: Self, value: str) -> None:
         if value.strip(string_.digits + "."):
             raise ValueError
-        self.data = map(int, value.split("."))
+        self.packaging = map(int, value.split("."))
 
     def bump(
         self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1
     ) -> None:
-        data: list[Any]
+        packaging: list[Any]
         a: int
         i: int
         a = operator.index(amount)
@@ -177,10 +180,10 @@ class Release(ListABC[int]):
         if i < len(self):
             self[i] += a
             return
-        data = list(self)
-        data.extend([0] * (i - len(self)))
-        data.append(a)
-        self.data = data
+        packaging = list(self)
+        packaging.extend([0] * (i - len(self)))
+        packaging.append(a)
+        self.packaging = packaging
 
     @property
     def major(self: Self) -> int:
@@ -221,9 +224,20 @@ class Release(ListABC[int]):
     def micro(self: Self) -> None:
         self._delitem(key=2, minlen=3)
 
-    packaging = ListABC.data
+    @property
+    @setdoc.basic
+    def packaging(self: Self, /) -> tuple[int, ...]:
+        return self.__frozen__()
+
+    @packaging.setter
+    def packaging(self: Self, other: abc.Iterable[int], /) -> None:
+        mutable: list[int]
+        with self.__mutate__() as mutable:
+            mutable.clear()
+            mutable.extend(other)
+
     patch = micro
 
+    @setdoc.basic
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
-        "This method sorts the data."
-        self.data = sorted(self, key=key, reverse=reverse)
+        self.packaging = sorted(self, key=key, reverse=reverse)
