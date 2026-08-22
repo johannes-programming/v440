@@ -151,9 +151,11 @@ class ListABC[Item: int | str](MutableListSlot[Item], CoreABC):
     @classmethod
     @setdoc.basic
     def __type__(
-        cls: type[Any], other: abc.Iterable[Item], /
-    ) -> ListABC[Item]:
-        return cls(  # type: ignore[no-any-return]
+        cls,
+        other: abc.Iterable[Item],
+        /,
+    ) -> Self:
+        return cls(
             other,
         )
 
@@ -171,7 +173,7 @@ class ListABC[Item: int | str](MutableListSlot[Item], CoreABC):
 
     @setdoc.basic
     def copy(self: Self, /) -> Self:
-        return self.__type__(self)  # type: ignore[return-value]
+        return self.__type__(self)
 
     @property
     @setdoc.basic
