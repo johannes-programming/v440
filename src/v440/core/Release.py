@@ -172,18 +172,17 @@ class Release(ListABC[int]):
     def bump(
         self: Self, index: SupportsIndex = -1, amount: SupportsIndex = 1
     ) -> None:
-        packaging: list[Any]
         a: int
         i: int
+        mutable: list[int]
         a = operator.index(amount)
         i = operator.index(index)
-        if i < len(self):
-            self[i] += a
-            return
-        packaging = list(self)
-        packaging.extend([0] * (i - len(self)))
-        packaging.append(a)
-        self.packaging = packaging
+        with self.__mutate__() as mutable:
+            if i < len(self):
+                mutable[i] += a
+            else:
+                mutable.extend([0] * (i - len(self)))
+                mutable.append(a)
 
     @property
     def major(self: Self) -> int:
@@ -240,4 +239,5 @@ class Release(ListABC[int]):
 
     @setdoc.basic
     def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
-        self.packaging = sorted(self, key=key, reverse=reverse)
+        with self.__mutate__() as mutable:
+            mutable.sort(key=key, reverse=reverse)
