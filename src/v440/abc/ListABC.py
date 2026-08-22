@@ -7,7 +7,7 @@ __all__: list[str] = ["ListABC"]
 import contextlib
 from abc import abstractmethod
 from collections import abc
-from functools import cmp_to_key, wraps
+from functools import cmp_to_key
 from typing import Any, Protocol, Self, overload
 
 import setdoc
@@ -26,7 +26,10 @@ class SupportsDunderLT[Other, Return](Protocol):
     def __lt__(self: Any, other: Other, /) -> Return: ...
 
 
-class ListABC[Item: int | str](MutableListSlot[Item], CoreABC):
+class ListABC[Item: int | str](  # type: ignore[misc]
+    MutableListSlot[Item],
+    CoreABC,
+):
 
     __slots__ = ()
 
@@ -170,10 +173,6 @@ class ListABC[Item: int | str](MutableListSlot[Item], CoreABC):
             MutableListSlot.__init__(self)
         else:
             MutableListSlot.__init__(self, other)
-
-    @setdoc.basic
-    def copy(self: Self, /) -> Self:
-        return self.__type__(self)
 
     @property
     @setdoc.basic

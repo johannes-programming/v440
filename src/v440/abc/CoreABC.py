@@ -113,7 +113,7 @@ class CoreABC:
     def _string_fset(self: Self, value: str) -> None: ...
 
     @setdoc.basic
-    def copy(self: Self) -> Self:
+    def copy(self: Self, /) -> Self:
         return type(self)(self)
 
     @classmethod
