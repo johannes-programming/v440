@@ -2,49 +2,47 @@
 
 __all__: list[str] = ["ListABC"]
 
+import contextlib
+import functools
 from abc import abstractmethod
-from collections.abc import Iterable
+from collections import abc
 from functools import cmp_to_key
-from typing import Any, Final, Optional, Self, TypeVar
+from typing import Any, Optional, Self
 
 import setdoc
-from datahold import BaseDataObject, HoldList
+from datahold import MutableListSlot
 
 from v440.abc.CoreABC import CoreABC
 
-Item = TypeVar("Item", bound=int | str)
 
-
-class ListABC(CoreABC, HoldList[Item]):
+class ListABC[Item: int | str](MutableListSlot[Item], CoreABC):
 
     __slots__ = ()
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
+    def __bool__(self: Self, /) -> bool:
         return bool(self.data)
 
-    __eq__ = BaseDataObject.__eq__
+    @setdoc.basic
+    @functools.wraps(MutableListSlot.__ge__)
+    def __ge__(self: Self, other: Any, /) -> bool:
+        if isinstance(other, ListABC):
+            return tuple(map(cmpkey, self)) >= tuple(map(cmpkey, other))
+        else:
+            return MutableListSlot.__ge__(self, other)
 
     @setdoc.basic
-    def __ge__(self: Self, other: object) -> Any:
-        if not isinstance(other, BaseDataObject):
-            return NotImplemented
-        if not isinstance(other, ListABC):
-            return BaseDataObject.__ge__(self, other)
-        return tuple(map(cmpkey, self)) >= tuple(map(cmpkey, other))
-
-    @setdoc.basic
-    def __gt__(self: Self, other: object) -> Any:
-        if not isinstance(other, BaseDataObject):
-            return NotImplemented
-        if not isinstance(other, ListABC):
-            return BaseDataObject.__gt__(self, other)
-        return tuple(map(cmpkey, self)) > tuple(map(cmpkey, other))
+    @functools.wraps(MutableListSlot.__gt__)
+    def __gt__(self: Self, other: Any, /) -> bool:
+        if isinstance(other, ListABC):
+            return tuple(map(cmpkey, self)) > tuple(map(cmpkey, other))
+        else:
+            return MutableListSlot.__gt__(self, other)
 
     @setdoc.basic
     def __init__(
         self: Self,
-        data: Optional[Iterable[Item]] = None,
+        data: Optional[abc.Iterable[Item]] = None,
         /,
         **kwargs: Any,
     ) -> None:
@@ -54,39 +52,53 @@ class ListABC(CoreABC, HoldList[Item]):
         self._init_kwargs(**kwargs)
 
     @setdoc.basic
-    def __le__(self: Self, other: object) -> Any:
-        if not isinstance(other, BaseDataObject):
-            return NotImplemented
-        if not isinstance(other, ListABC):
-            return BaseDataObject.__le__(self, other)
-        return tuple(map(cmpkey, self)) <= tuple(map(cmpkey, other))
+    @functools.wraps(MutableListSlot.__le__)
+    def __le__(self: Self, other: Any, /) -> bool:
+        if isinstance(other, ListABC):
+            return tuple(map(cmpkey, self)) <= tuple(map(cmpkey, other))
+        else:
+            return MutableListSlot.__le__(self, other)
 
     @setdoc.basic
-    def __lt__(self: Self, other: object) -> Any:
-        if not isinstance(other, BaseDataObject):
-            return NotImplemented
-        if not isinstance(other, ListABC):
-            return BaseDataObject.__lt__(self, other)
-        return tuple(map(cmpkey, self)) < tuple(map(cmpkey, other))
+    @functools.wraps(MutableListSlot.__lt__)
+    def __lt__(self: Self, other: Any, /) -> bool:
+        if isinstance(other, ListABC):
+            return tuple(map(cmpkey, self)) < tuple(map(cmpkey, other))
+        else:
+            return MutableListSlot.__lt__(self, other)
 
-    __ne__ = BaseDataObject.__ne__
+    @contextlib.contextmanager
+    @setdoc.basic
+    def __mutate__(
+        self: Self, /
+    ) -> abc.Generator[list[int | str], None, None]:
+        mutable: list[int | str]
+        mutable = list(self._slot)
+        yield mutable
+        self._slot = tuple(self._data_parse(mutable))
 
-    __repr__ = HoldList.__repr__
+    @classmethod
+    def __type__(cls: type[Self], data: abc.Iterable[int | str], /) -> Self:
+        return cls(data)
 
     @classmethod
     @abstractmethod
-    def _data_parse(cls: type[Self], value: list[Any]) -> Iterable[Item]: ...
+    def _data_parse(
+        cls: type[Self], value: list[Any]
+    ) -> abc.Iterable[Item]: ...
 
     @property
     @setdoc.basic
-    def data(self: Self) -> tuple[Item, ...]:
-        return self._data
+    def data(self: Self, /) -> tuple[Item, ...]:
+        return self.__frozen__()
 
     @data.setter
-    def data(self: Self, value: Iterable[Any]) -> None:
-        self._data = tuple(self._data_parse(list(value)))
+    def data(self: Self, value: abc.Iterable[Any], /) -> None:
+        with self.__mutate__() as mutable:
+            mutable.clear()
+            mutable.extend(value)
 
-    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
+    def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
         "Sort the data."
         self.data = sorted(
             self,

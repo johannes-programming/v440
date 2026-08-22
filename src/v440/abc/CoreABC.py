@@ -60,10 +60,6 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __ne__(self: Self, other: object) -> Any: ...
-
-    @abstractmethod
-    @setdoc.basic
     def __repr__(self: Self) -> str: ...
 
     @setdoc.basic
