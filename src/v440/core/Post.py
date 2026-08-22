@@ -18,7 +18,7 @@ class Post(QualABC):
 
     __slots__ = ()
 
-    def _cmp(self: Self) -> int:
+    def _cmp(self: Self, /) -> int:
         if self.lit:
             return self.num
         else:
@@ -54,18 +54,18 @@ class Post(QualABC):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
         if value in ("-", "post", "r", "rev"):
             return "post"
         else:
             raise ValueError
 
     @property
-    def packaging(self: Self) -> int | None:
+    def packaging(self: Self, /) -> int | None:
         return self.num if self else None
 
     @packaging.setter
-    def packaging(self: Self, value: SupportsIndex | None) -> None:
+    def packaging(self: Self, value: SupportsIndex | None, /) -> None:
         if value is None:
             self.num = 0
             self.lit = ""

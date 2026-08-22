@@ -28,7 +28,7 @@ class Qual(NestedABC):
 
     __slots__ = ("_pre", "_post", "_dev")
 
-    def _cmp(self: Self) -> tuple[str, int, Post_, Dev_]:
+    def _cmp(self: Self, /) -> tuple[str, int, Post_, Dev_]:
         ans: tuple[str, int]
         if self.pre:
             ans = (self.pre.lit, self.pre.num)
@@ -114,54 +114,54 @@ class Qual(NestedABC):
         return ans
 
     @classmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual", value)
         self.pre.string = matches["pre"]
         self.post.string = matches["post"]
         self.dev.string = matches["dev"]
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
-    def dev(self: Self) -> Dev_:
+    def dev(self: Self, /) -> Dev_:
         "This property represents the stage of development."
         return self._dev
 
     @dev.setter
-    def dev(self: Self, value: object) -> None:
+    def dev(self: Self, value: object, /) -> None:
         self.dev.string = value
 
-    def isdevrelease(self: Self) -> bool:
+    def isdevrelease(self: Self, /) -> bool:
         "Return whether this instance denotes a dev-release."
         return bool(self.dev)
 
-    def isprerelease(self: Self) -> bool:
+    def isprerelease(self: Self, /) -> bool:
         "Return whether this instance denotes a pre-release."
         return bool(self.pre) or bool(self.dev)
 
-    def ispostrelease(self: Self) -> bool:
+    def ispostrelease(self: Self, /) -> bool:
         "Return whether this instance denotes a post-release."
         return bool(self.post)
 
     packaging = NestedABC.string
 
     @property
-    def post(self: Self) -> Post_:
+    def post(self: Self, /) -> Post_:
         return self._post
 
     @post.setter
-    def post(self: Self, value: object) -> None:
+    def post(self: Self, value: object, /) -> None:
         self.post.string = value
 
     @property
-    def pre(self: Self) -> Pre_:
+    def pre(self: Self, /) -> Pre_:
         return self._pre
 
     @pre.setter
-    def pre(self: Self, value: object) -> None:
+    def pre(self: Self, value: object, /) -> None:
         self.pre.string = value

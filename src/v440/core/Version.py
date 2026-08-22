@@ -23,7 +23,7 @@ class Version(NestedABC):
 
     __slots__ = ("_public", "_local")
 
-    def _cmp(self: Self) -> tuple[Public_, Local_]:
+    def _cmp(self: Self, /) -> tuple[Public_, Local_]:
         return self.public, self.local
 
     @classmethod
@@ -55,17 +55,17 @@ class Version(NestedABC):
         )
 
     @classmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_public=Public_, _local=Local_)
 
     @classmethod
-    def _join(cls: type[Self], public: str, local: str = "") -> str:
+    def _join(cls: type[Self], public: str, local: str = "", /) -> str:
         if local:
             return public + "+" + local
         else:
             return public
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         self.public.string, self.local.string = self._split(value)
 
     @classmethod
@@ -77,11 +77,11 @@ class Version(NestedABC):
         else:
             return string, ""
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(public=self.public, local=self.local)
 
     @property
-    def local(self: Self) -> Local_:
+    def local(self: Self, /) -> Local_:
         "This property represents the local identifier."
         return self._local
 
@@ -90,16 +90,16 @@ class Version(NestedABC):
         self.local.string = value
 
     @property
-    def packaging(self: Self) -> packaging.version.Version:
+    def packaging(self: Self, /) -> packaging.version.Version:
         "This method returns an eqivalent packaging.version.Version object."
         return packaging.version.Version(str(self))
 
     @packaging.setter
-    def packaging(self: Self, value: object) -> None:
+    def packaging(self: Self, value: object, /) -> None:
         self.string = value
 
     @property
-    def public(self: Self) -> Public_:
+    def public(self: Self, /) -> Public_:
         "This property represents the public identifier."
         return self._public
 
