@@ -6,14 +6,13 @@ from abc import abstractmethod
 from typing import Any, Self
 
 import setdoc
-from copyable import Copyable
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440.errors.VersionError import VersionError
 
 
-class CoreABC(Copyable):
+class CoreABC:
     __slots__ = ()
 
     @abstractmethod

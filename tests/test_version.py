@@ -438,17 +438,6 @@ class TestVersionLocal(unittest.TestCase):
         solution = [1, "dev", 1, "dev", 1, "dev"]
         self.assertEqual(answer, solution)
 
-    def test_local_addition(self: Self) -> None:
-        # Test adding another list to local
-        answer: list[Any]
-        solution: list[Any]
-        version: Any
-        version = Version()
-        version.local.data = [1, "dev"]
-        answer = list(version.local + ["build"])
-        solution = [1, "dev", "build"]
-        self.assertEqual(answer, solution)
-
     def test_local_inequality_with_list(self: Self) -> None:
         # Test inequality of local with a normal list
         version: Any
@@ -513,10 +502,10 @@ class TestDataHoldStandards(unittest.TestCase):
         self.assertEqual(local, release)
         local.data = (1, 2, 4)
         release.data = (1, 2, 3)
-        self.assertGreater(local, release)
+        self.assertGreater(local, release)  # type: ignore[misc]
         local.data = (1, 2, 3)
         release.data = (1, 2, 4)
-        self.assertLess(local, release)
+        self.assertLess(local, release)  # type: ignore[misc]
 
 
 if __name__ == "__main__":
