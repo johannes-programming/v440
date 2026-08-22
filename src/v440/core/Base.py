@@ -5,7 +5,7 @@ from __future__ import annotations
 __all__: list[str] = ["Base"]
 
 import operator
-from typing import Any, Final, Self
+from typing import Any, Final, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440.abc.NestedABC import NestedABC
@@ -26,7 +26,7 @@ class Base(NestedABC):
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         matches: dict[str, str]
-        table: dict[str, set[Any]]
+        table: dict[str, set[str]]
         s: str
         t: str
         table = dict()
@@ -63,7 +63,7 @@ class Base(NestedABC):
         cls: type[Self],
         spec: str,
         /,
-    ) -> tuple[Any, ...]:
+    ) -> tuple[str, int, str]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         return (
@@ -111,7 +111,7 @@ class Base(NestedABC):
         return self._epoch
 
     @epoch.setter
-    def epoch(self: Self, value: Any, /) -> None:
+    def epoch(self: Self, value: SupportsIndex, /) -> None:
         v: int
         v = operator.index(value)
         if v < 0:
