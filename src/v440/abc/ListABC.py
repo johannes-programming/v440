@@ -67,8 +67,6 @@ class ListABC(CoreABC, HoldList[Item]):
             return BaseDataObject.__lt__(self, other)
         return tuple(map(cmpkey, self)) < tuple(map(cmpkey, other))
 
-    __ne__ = BaseDataObject.__ne__
-
     __repr__ = HoldList.__repr__
 
     @classmethod

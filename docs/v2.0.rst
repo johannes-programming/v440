@@ -103,12 +103,6 @@ which is neither greater than nor lesser than any instances of ``Pre``.
 This abstract magic method will should overwritten to implement ``self < other``.
 See ``__le__``.
 
-``__ne__(other: object) -> Any``
-""""""""""""""""""""""""""""""""
-
-This abstract magic method will should overwritten to implement ``self != other``.
-See ``__eq__``.
-
 ``__repr__() -> str``
 """""""""""""""""""""
 
