@@ -18,14 +18,6 @@ class Release(ListABC[int]):
     __slots__ = ()
 
     @classmethod
-    def _mutable_parse(cls: type[Self], value: list[Any]) -> list[int]:
-        v: list[int]
-        v = list(map(cls._item_parse, value))
-        while v and v[-1] == 0:
-            v.pop()
-        return v
-
-    @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         i: int
         j: int
@@ -134,6 +126,14 @@ class Release(ListABC[int]):
     ) -> int | list[int]:
         return self._list(minlen=minlen)[key]
 
+    @classmethod
+    def _item_parse(cls: type[Self], value: SupportsIndex) -> int:
+        ans: int
+        ans = operator.index(value)
+        if ans < 0:
+            raise ValueError
+        return ans
+
     def _list(self: Self, minlen: SupportsIndex | None = None) -> list[int]:
         packaging: list[Any]
         index: Any
@@ -145,12 +145,12 @@ class Release(ListABC[int]):
         return packaging
 
     @classmethod
-    def _item_parse(cls: type[Self], value: SupportsIndex) -> int:
-        ans: int
-        ans = operator.index(value)
-        if ans < 0:
-            raise ValueError
-        return ans
+    def _mutable_parse(cls: type[Self], value: list[Any]) -> list[int]:
+        v: list[int]
+        v = list(map(cls._item_parse, value))
+        while v and v[-1] == 0:
+            v.pop()
+        return v
 
     def _setitem(
         self: Self, key: Any, value: Any, *, minlen: Any = None
