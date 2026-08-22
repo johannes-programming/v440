@@ -117,9 +117,9 @@ class Qual(NestedABC):
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
 
-    def _string_fset(self: Self, value: str, /) -> None:
+    def _string_fset(self: Self, other: str, /) -> None:
         matches: dict[str, str]
-        matches = Cfg.fullmatches("qual", value)
+        matches = Cfg.fullmatches("qual", other)
         self.pre.string = matches["pre"]
         self.post.string = matches["post"]
         self.dev.string = matches["dev"]
@@ -133,8 +133,8 @@ class Qual(NestedABC):
         return self._dev
 
     @dev.setter
-    def dev(self: Self, value: object, /) -> None:
-        self.dev.string = value
+    def dev(self: Self, other: object, /) -> None:
+        self.dev.string = other
 
     def isdevrelease(self: Self, /) -> bool:
         "Return whether this instance denotes a dev-release."
@@ -155,13 +155,13 @@ class Qual(NestedABC):
         return self._post
 
     @post.setter
-    def post(self: Self, value: object, /) -> None:
-        self.post.string = value
+    def post(self: Self, other: object, /) -> None:
+        self.post.string = other
 
     @property
     def pre(self: Self, /) -> Pre_:
         return self._pre
 
     @pre.setter
-    def pre(self: Self, value: object, /) -> None:
-        self.pre.string = value
+    def pre(self: Self, other: object, /) -> None:
+        self.pre.string = other

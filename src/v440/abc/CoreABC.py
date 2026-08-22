@@ -110,7 +110,7 @@ class CoreABC:
     def _init_other(self: Self, other: Self | None, /) -> None: ...
 
     @abstractmethod
-    def _string_fset(self: Self, value: str, /) -> None: ...
+    def _string_fset(self: Self, other: str, /) -> None: ...
 
     @setdoc.basic
     def copy(self: Self, /) -> Self:
@@ -143,5 +143,5 @@ class CoreABC:
         return format(self, "")
 
     @string.setter
-    def string(self: Self, value: object, /) -> None:
-        self._string_fset(str(value).lower())
+    def string(self: Self, other: object, /) -> None:
+        self._string_fset(str(other).lower())
