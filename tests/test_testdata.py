@@ -20,7 +20,7 @@ import tomllib
 import unittest
 from collections.abc import Callable, Iterable, Sequence
 from pathlib import Path
-from typing import Any, Optional, Self, cast
+from typing import Any, Self, cast
 
 import iterprod
 from packaging.version import InvalidVersion
@@ -87,7 +87,7 @@ class TestDeformatting(unittest.TestCase):
         example: tuple[str, ...],
         /,
         *,
-        solution: Optional[str] = None,
+        solution: str | None = None,
         **kwargs: Any,
     ) -> None:
         if solution is not None:
@@ -218,14 +218,14 @@ class TestStringExamples(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
-        bool_: Optional[bool]
+        bool_: bool | None
         obj: Any
-        repr_: Optional[str]
+        repr_: str | None
         obj = cls(string=example)
-        bool_ = cast(Optional[bool], kwargs.get("bool"))
+        bool_ = cast(bool | None, kwargs.get("bool"))
         if bool_ is not None:
             self.assertEqual(bool(obj), bool_)
-        repr_ = cast(Optional[str], kwargs.get("repr"))
+        repr_ = cast(str | None, kwargs.get("repr"))
         if repr_ is not None:
             self.assertEqual(repr(obj), repr_)
 
@@ -238,13 +238,13 @@ class TestStringExamples(unittest.TestCase):
     ) -> None:
         obj: Any
         answer: str
-        solution: Optional[str]
+        solution: str | None
         obj = cls(string=example)
         answer = str(obj)
         self.assertEqual(answer, obj.string)
         self.assertEqual(answer, format(obj))
         self.assertEqual(answer, format(obj, ""))
-        solution = cast(Optional[str], kwargs.get("str"))
+        solution = cast(str | None, kwargs.get("str"))
         if solution is not None:
             self.assertEqual(str(obj), solution)
 
@@ -269,7 +269,7 @@ class TestStringExamples(unittest.TestCase):
         example: str,
         /,
         *,
-        deformatted: Optional[str] = None,
+        deformatted: str | None = None,
         **kwargs: Any,
     ) -> None:
         spec: str
@@ -352,12 +352,12 @@ class TestDataSetter(unittest.TestCase):
         *,
         query: list[Any],
         queryname: str,
-        check: Optional[list[Any]] = None,
-        attrname: Optional[str] = None,
+        check: list[Any] | None = None,
+        attrname: str | None = None,
         args: Sequence[Any] = (),
         kwargs: dict[Any, Any] | tuple[Any, ...] = (),
-        solution: Optional[Any] = None,
-        solutionname: Optional[str] = None,
+        solution: Any | None = None,
+        solutionname: str | None = None,
         **_kwargs: Any,
     ) -> None:
         ans: Any
@@ -582,7 +582,7 @@ class TestReleaseAlias(unittest.TestCase):
         version: Version,
         name: str,
         value: Any,
-        solution: Optional[list[Any]] = None,
+        solution: list[Any] | None = None,
     ) -> None:
         answer: list[Any]
         setattr(version.public.base.release, name, value)

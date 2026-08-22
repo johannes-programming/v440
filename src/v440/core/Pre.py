@@ -4,7 +4,7 @@ from __future__ import annotations
 
 __all__: list[str] = ["Pre"]
 
-from typing import Any, Optional, Self, SupportsIndex
+from typing import Any, Self, SupportsIndex
 
 from iterprod import iterprod
 
@@ -91,16 +91,14 @@ class Pre(QualABC):
         return Cfg.cfg.phases[value]
 
     @property
-    def packaging(self: Self) -> Optional[tuple[str, int]]:
+    def packaging(self: Self) -> tuple[str, int] | None:
         if self:
             return self.lit, self.num
         else:
             return None
 
     @packaging.setter
-    def packaging(
-        self: Self, value: Optional[tuple[str, SupportsIndex]]
-    ) -> None:
+    def packaging(self: Self, value: tuple[str, SupportsIndex] | None) -> None:
         if value is None:
             self.num = 0
             self.lit = ""
