@@ -3,7 +3,7 @@
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
-from typing import Any, Self
+from typing import Any, Never, Self
 
 import setdoc
 from datarepr import oxford
@@ -136,6 +136,10 @@ class CoreABC:
     @property
     @abstractmethod
     def packaging(self: Self, /) -> object: ...
+
+    @packaging.setter
+    @abstractmethod
+    def packaging(self: Self, other: Never, /) -> None: ...
 
     @property
     def string(self: Self, /) -> str:
