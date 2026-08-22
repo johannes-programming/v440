@@ -6,7 +6,7 @@ __all__: list[str] = ["Release"]
 
 import operator
 import string as string_
-from typing import Any, Optional, Self, SupportsIndex, overload
+from typing import Any, Self, SupportsIndex, overload
 
 from v440.abc.ListABC import ListABC
 
@@ -113,25 +113,25 @@ class Release(ListABC[int]):
         self: Self,
         key: SupportsIndex,
         *,
-        minlen: Optional[SupportsIndex] = None,
+        minlen: SupportsIndex | None = None,
     ) -> int: ...
     @overload
     def _getitem(
         self: Self,
         key: slice,
         *,
-        minlen: Optional[SupportsIndex] = None,
+        minlen: SupportsIndex | None = None,
     ) -> list[int]: ...
 
     def _getitem(
         self: Self,
         key: SupportsIndex | slice,
         *,
-        minlen: Optional[SupportsIndex] = None,
+        minlen: SupportsIndex | None = None,
     ) -> int | list[int]:
         return self._list(minlen=minlen)[key]
 
-    def _list(self: Self, minlen: Optional[SupportsIndex] = None) -> list[int]:
+    def _list(self: Self, minlen: SupportsIndex | None = None) -> list[int]:
         data: list[Any]
         index: Any
         data = list(self)
