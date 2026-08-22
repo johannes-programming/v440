@@ -15,7 +15,7 @@ from v440.abc.CoreABC import CoreABC
 Item = TypeVar("Item", bound=int | str)
 
 
-class ListABC(CoreABC, HoldList[Item]):
+class ListABC(HoldList[Item], CoreABC):
 
     __slots__ = ()
 
