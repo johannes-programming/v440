@@ -135,7 +135,7 @@ class CoreABC:
 
     @property
     @abstractmethod
-    def packaging(self: Self, /) -> Any: ...
+    def packaging(self: Self, /) -> object: ...
 
     @property
     def string(self: Self, /) -> str:
