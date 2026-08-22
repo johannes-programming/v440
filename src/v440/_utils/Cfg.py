@@ -15,14 +15,16 @@ class Cfg(enum.Enum):
     cfg = None
 
     @functools.cached_property
-    def data(self: Self) -> dict[str, Any]:
+    def data(self: Self, /) -> dict[str, Any]:
         "This cached property holds the cfg data."
         file: Traversable
         file = resources.files("v440._utils").joinpath("cfg.toml")
         return tomllib.loads(file.read_text(encoding="utf-8"))
 
     @classmethod
-    def fullmatches(cls: type[Self], key: str, value: str) -> dict[str, str]:
+    def fullmatches(
+        cls: type[Self], /, key: str, value: str
+    ) -> dict[str, str]:
         ans: dict[Any, Any]
         fullmatch: Any
         x: str
@@ -34,7 +36,7 @@ class Cfg(enum.Enum):
         return ans
 
     @functools.cached_property
-    def patterns(self: Self) -> dict[str, re.Pattern[str]]:
+    def patterns(self: Self, /) -> dict[str, re.Pattern[str]]:
         ans: dict[str, re.Pattern[str]]
         parts: dict[str, str]
         x: str
@@ -49,5 +51,5 @@ class Cfg(enum.Enum):
         return ans
 
     @functools.cached_property
-    def phases(self: Self) -> dict[str, str]:
+    def phases(self: Self, /) -> dict[str, str]:
         return cast(dict[str, str], Cfg.cfg.data["consts"]["phases"])
