@@ -4,10 +4,10 @@ import argparse
 import json
 import logging
 import subprocess
-from typing import Any, Optional
+from typing import Any
 
 
-def env_create(env: str, python: Optional[str]) -> subprocess.CompletedProcess:  # type: ignore[type-arg]
+def env_create(env: str, python: str | None) -> subprocess.CompletedProcess:  # type: ignore[type-arg]
     """Create conda env."""
     args: list[str]
     args = [
@@ -58,7 +58,7 @@ def env_remove(env: str) -> subprocess.CompletedProcess:  # type: ignore[type-ar
     return subprocess.run(args, check=True)
 
 
-def main(args: Optional[list[str]] = None, /) -> None:
+def main(args: list[str] | None = None, /) -> None:
     """Run script through its main CLI."""
     kwargs: dict[str, Any]
     parser: argparse.ArgumentParser
@@ -75,9 +75,7 @@ def main(args: Optional[list[str]] = None, /) -> None:
         logging.exception(exc)
 
 
-def run(
-    *envs: str, python: Optional[str] = None, recreate: bool = False
-) -> None:
+def run(*envs: str, python: str | None = None, recreate: bool = False) -> None:
     """Run script through its main API."""
     env: str
     envs_: list[str]
