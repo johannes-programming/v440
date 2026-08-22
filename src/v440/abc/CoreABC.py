@@ -22,7 +22,7 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __eq__(self: Self, other: object) -> Any: ...
+    def __eq__(self: Self, other: object, /) -> bool: ...
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object) -> str:
@@ -38,11 +38,11 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __ge__(self: Self, other: Any) -> Any: ...
+    def __ge__(self: Self, other: Self, /) -> bool: ...
 
     @abstractmethod
     @setdoc.basic
-    def __gt__(self: Self, other: Any) -> Any: ...
+    def __gt__(self: Self, other: Self, /) -> bool: ...
 
     @setdoc.basic
     def __init__(
@@ -53,11 +53,11 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __le__(self: Self, other: Any) -> Any: ...
+    def __le__(self: Self, other: Self, /) -> bool: ...
 
     @abstractmethod
     @setdoc.basic
-    def __lt__(self: Self, other: Any) -> Any: ...
+    def __lt__(self: Self, other: Self, /) -> bool: ...
 
     @abstractmethod
     @setdoc.basic
