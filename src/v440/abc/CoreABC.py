@@ -3,7 +3,7 @@
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
-from typing import Any, Optional, Self
+from typing import Any, Self
 
 import setdoc
 from copyable import Copyable
@@ -44,11 +44,12 @@ class CoreABC(Copyable):
     @setdoc.basic
     def __gt__(self: Self, other: Any) -> Any: ...
 
-    @abstractmethod
     @setdoc.basic
     def __init__(
-        self: Self, other: Optional[Self] = None, /, **kwargs: Any
-    ) -> None: ...
+        self: Self, other: Self | None = None, /, **kwargs: Any
+    ) -> None:
+        self._init_other(other)
+        self._init_kwargs(**kwargs)
 
     @abstractmethod
     @setdoc.basic
@@ -109,6 +110,9 @@ class CoreABC(Copyable):
         y: Any
         for x, y in kwargs.items():
             setattr(self, x.lstrip("_"), y)
+
+    @abstractmethod
+    def _init_other(self: Self, other: Self | None, /) -> None: ...
 
     @abstractmethod
     def _string_fset(self: Self, value: str) -> None: ...
