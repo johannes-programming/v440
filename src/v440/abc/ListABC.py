@@ -8,22 +8,18 @@ import contextlib
 from abc import abstractmethod
 from collections import abc
 from functools import cmp_to_key
-from typing import Any, Protocol, Self, overload
+from typing import Any, Self, overload
 
 import setdoc
 from datahold import ListLike, MutableListSlot
 
+from v440._utils.typing import (
+    SupportsDunderGE,
+    SupportsDunderGT,
+    SupportsDunderLE,
+    SupportsDunderLT,
+)
 from v440.abc.CoreABC import CoreABC
-
-
-class SupportsDunderGE[Other, Return](Protocol):
-    def __ge__(self: Any, other: Other, /) -> Return: ...
-class SupportsDunderGT[Other, Return](Protocol):
-    def __gt__(self: Any, other: Other, /) -> Return: ...
-class SupportsDunderLE[Other, Return](Protocol):
-    def __le__(self: Any, other: Other, /) -> Return: ...
-class SupportsDunderLT[Other, Return](Protocol):
-    def __lt__(self: Any, other: Other, /) -> Return: ...
 
 
 class ListABC[Item: int | str](  # type: ignore[misc]
@@ -179,12 +175,18 @@ class ListABC[Item: int | str](  # type: ignore[misc]
         mutable: list[Item]
         with self.__mutate__() as mutable:
             mutable.sort(
-                key=cmp_to_key(cmp) if key is None else key,
+                key=sort_key if key is None else key,
                 reverse=reverse,
             )
 
 
-def cmp(x: Any, y: Any) -> Any:
+def cmpkey(x: int | str, /) -> tuple[bool, int | str]:
+    """Return key for sorting int before str."""
+    return isinstance(x, int), x
+
+
+@cmp_to_key
+def sort_key(x: Any, y: Any) -> Any:
     """Compare two values with PEP 440 style for mixed int/str."""
     i: int
     if x is y or x == y:
@@ -200,8 +202,3 @@ def cmp(x: Any, y: Any) -> Any:
             raise
         else:
             return i
-
-
-def cmpkey(x: int | str, /) -> tuple[bool, int | str]:
-    """Return key for sorting int before str."""
-    return isinstance(x, int), x
