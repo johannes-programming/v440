@@ -74,14 +74,12 @@ class Base(NestedABC):
 
     def _format_parsed(
         self: Self,
-        parsed: tuple[Any, ...],
+        basev_f: str,
+        epoch_mag: int,
+        release_f: str,
         /,
     ) -> str:
-        basev_f: str
-        epoch_mag: int
-        release_f: str
         ans: str
-        basev_f, epoch_mag, release_f = parsed
         ans = basev_f
         if epoch_mag or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_mag)

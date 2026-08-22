@@ -7,13 +7,12 @@ from typing import Any, Self, cast
 
 import cmp3
 import setdoc
-from copyable import Copyable
 from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
 
 
-class NestedABC(cmp3.CmpABC, CoreABC, Copyable):
+class NestedABC(cmp3.CmpABC, CoreABC):
     __slots__ = ()
 
     @setdoc.basic

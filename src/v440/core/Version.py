@@ -45,7 +45,7 @@ class Version(NestedABC):
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         return tuple(cls._split(spec))
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(self: Self, /, *parsed: Any) -> str:
         public_f: str
         local_f: str
         public_f, local_f = parsed

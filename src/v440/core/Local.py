@@ -79,8 +79,8 @@ class Local(ListABC[int | str]):
 
     def _format_parsed(
         self: Self,
-        parsed: tuple[Any, ...],
         /,
+        *parsed: Any,
     ) -> str:
         ans: str
         item: int | str

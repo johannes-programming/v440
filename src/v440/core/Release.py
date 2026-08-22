@@ -95,7 +95,7 @@ class Release(ListABC[int]):
             raise ValueError
         return tuple(map(len, spec.rstrip(".").split(".")))
 
-    def _format_parsed(self: Self, mags: tuple[Any, ...], /) -> str:
+    def _format_parsed(self: Self, /, *mags: Any) -> str:
         packaging: list[int]
         parts: list[Any]
         packaging = list(self)

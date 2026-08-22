@@ -42,7 +42,7 @@ class Post(QualABC):
         )
         return (clue,)
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(self: Self, /, *parsed: Any) -> str:
         clue: Clue
         (clue,) = parsed
         if not self:
