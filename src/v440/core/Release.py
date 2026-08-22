@@ -90,12 +90,12 @@ class Release(ListABC[int]):
         self.packaging = packaging
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[int, ...]:
         if spec.strip("#."):
             raise ValueError
         return tuple(map(len, spec.rstrip(".").split(".")))
 
-    def _format_parsed(self: Self, /, *mags: Any) -> str:
+    def _format_parsed(self: Self, /, *mags: int) -> str:
         packaging: list[int]
         parts: list[Any]
         packaging = list(self)

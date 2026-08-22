@@ -4,7 +4,7 @@ from __future__ import annotations
 
 __all__: list[str] = ["Version"]
 
-from collections.abc import Iterable
+from collections import abc
 from typing import Any, Final, Self
 
 import packaging.version
@@ -42,13 +42,10 @@ class Version(NestedABC):
         return cls._join(x, y)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        return tuple(cls._split(spec))
+    def _format_parse(cls: type[Self], spec: str, /) -> abc.Sequence[str]:
+        return cls._split(spec)
 
-    def _format_parsed(self: Self, /, *parsed: Any) -> str:
-        public_f: str
-        local_f: str
-        public_f, local_f = parsed
+    def _format_parsed(self: Self, public_f: str, local_f: str, /) -> str:
         return self._join(
             format(self.public, public_f),
             format(self.local, local_f),
@@ -69,7 +66,7 @@ class Version(NestedABC):
         self.public.string, self.local.string = self._split(value)
 
     @classmethod
-    def _split(cls: type[Self], string: str, /) -> Iterable[str]:
+    def _split(cls: type[Self], string: str, /) -> abc.Sequence[str]:
         if string.endswith("+"):
             raise ValueError
         if "+" in string:
