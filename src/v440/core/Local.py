@@ -20,12 +20,18 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _mutable_parse(
-        cls: type[Self], value: list[Any]
+        cls: type[Self],
+        value: list[Any],
+        /,
     ) -> tuple[int | str, ...]:
         return tuple(map(cls._item_parse, value))
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self]) -> str:
+    def _deformat(
+        cls: type[Self],
+        info: dict[str, Self],
+        /,
+    ) -> str:
         m: int
         s: str
         t: str
@@ -51,7 +57,11 @@ class Local(ListABC[int | str]):
         return s
 
     @classmethod
-    def _deformat_part(cls: type[Self], part: set[str]) -> str:
+    def _deformat_part(
+        cls: type[Self],
+        part: set[str],
+        /,
+    ) -> str:
         lits: set[str]
         nums: set[str]
         s: str
@@ -67,7 +77,11 @@ class Local(ListABC[int | str]):
         return s
 
     @classmethod
-    def _deformat_lits(cls: type[Self], part: set[str]) -> str:
+    def _deformat_lits(
+        cls: type[Self],
+        part: set[str],
+        /,
+    ) -> str:
         i: int
         s: str
         t: str
@@ -89,7 +103,11 @@ class Local(ListABC[int | str]):
         return s
 
     @classmethod
-    def _deformat_nums(cls: type[Self], part: set[str]) -> int:
+    def _deformat_nums(
+        cls: type[Self],
+        part: set[str],
+        /,
+    ) -> int:
         n: int
         s: str
         n = 1
@@ -104,7 +122,11 @@ class Local(ListABC[int | str]):
             return n
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+    def _format_parse(
+        cls: type[Self],
+        spec: str,
+        /,
+    ) -> tuple[Any, ...]:
         l: str
         m: int
         x: str
@@ -128,7 +150,11 @@ class Local(ListABC[int | str]):
             split.pop()
         return tuple(split)
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(
+        self: Self,
+        parsed: tuple[Any, ...],
+        /,
+    ) -> str:
         ans: str
         item: int | str
         index: int
@@ -155,7 +181,11 @@ class Local(ListABC[int | str]):
         return ans
 
     @classmethod
-    def _item_parse(cls: type[Self], value: Any) -> int | str:
+    def _item_parse(
+        cls: type[Self],
+        value: Any,
+        /,
+    ) -> int | str:
         ans: int | str
         try:
             ans = operator.index(value)
@@ -171,10 +201,18 @@ class Local(ListABC[int | str]):
         return ans
 
     @classmethod
-    def _sort(cls: type[Self], value: Any) -> tuple[bool, int | str]:
+    def _sort(
+        cls: type[Self],
+        value: Any,
+        /,
+    ) -> tuple[bool, int | str]:
         return type(value) is int, value
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(
+        self: Self,
+        value: str,
+        /,
+    ) -> None:
         v: str
         if value == "":
             self[:] = ()
@@ -187,21 +225,27 @@ class Local(ListABC[int | str]):
         self[:] = v.split(".")
 
     @property
-    def packaging(self: Self) -> str | None:
+    def packaging(self: Self, /) -> str | None:
         if self:
             return str(self)
         else:
             return None
 
     @packaging.setter
-    def packaging(self: Self, value: Any) -> None:
+    def packaging(self: Self, value: Any, /) -> None:
         if value is None:
             self.string = ""
         else:
             self.string = value
 
     @setdoc.basic
-    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
+    def sort(
+        self: Self,
+        /,
+        *,
+        key: Any = None,
+        reverse: Any = False,
+    ) -> None:
         mutable: list[int | str]
         with self.__mutate__() as mutable:
             mutable.sort(
@@ -210,6 +254,6 @@ class Local(ListABC[int | str]):
             )
 
 
-def sort_key(item: int | str) -> tuple[bool, int | str]:
+def sort_key(item: int | str, /) -> tuple[bool, int | str]:
     "Return key for sorting int before str in Local."
     return isinstance(item, int), item
