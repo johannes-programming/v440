@@ -70,14 +70,14 @@ This abstract magic method will be overwritten to implement ``self == other``.
 If ``type(self) is type(other)``,
 the overwrites will always ``return self.string == other.string``.
 
-``__ge__(other: Any) -> Any``
-"""""""""""""""""""""""""""""
+``__ge__(other: Any, /) -> bool``
+"""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self >= other``.
 See ``__le__``.
 
-``__gt__(other: Any) -> Any``
-"""""""""""""""""""""""""""""
+``__gt__(other: Any, /) -> bool``
+"""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self > other``.
 See ``__le__``.
@@ -87,8 +87,8 @@ See ``__le__``.
 
 This ``class`` and all its decendents are unhashable.
 
-``__le__(other: Any) -> Any``
-"""""""""""""""""""""""""""""
+``__le__(other: Any, /) -> bool``
+"""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self <= other``.
 The overwrites should always establish at the very least a partial order.
@@ -97,8 +97,8 @@ Therefore, each class establishes a total order of all of its possible instances
 with the sole exception of ``Pre("")``
 which is neither greater than nor lesser than any instances of ``Pre``.
 
-``__lt__(other: Any) -> Any``
-"""""""""""""""""""""""""""""
+``__lt__(other: Any, /) -> bool``
+"""""""""""""""""""""""""""""""""
 
 This abstract magic method will should overwritten to implement ``self < other``.
 See ``__le__``.
@@ -143,7 +143,7 @@ Two objects of the same type are equal iff their ``string`` properties are equal
 ``class v440.abc.ListABC.ListABC[Item](data: Iterable[Item] | None = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This abstract base class inherits from ``CoreABC`` and from ``datahold.HoldList[Item]``.
+This abstract base class inherits from ``datahold.HoldList[Item]`` and from ``CoreABC``.
 
 ``class v440.abc.NestedABC.NestedABC(other: Self | None = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
