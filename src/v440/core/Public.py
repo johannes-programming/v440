@@ -21,11 +21,11 @@ class Public(NestedABC):
 
     __slots__ = ("_base", "_qual")
 
-    def _cmp(self: Self) -> tuple[Base_, Qual_]:
+    def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
         return self.base, self.qual
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self]) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         bases: set[str]
         quals: set[str]
         x: str
@@ -40,7 +40,7 @@ class Public(NestedABC):
         return x + y
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[str, str]:
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
@@ -57,18 +57,15 @@ class Public(NestedABC):
             i -= 1
         return spec[:i], spec[i:]
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
-        base_f: str
-        qual_f: str
-        base_f, qual_f = parsed
+    def _format_parsed(self: Self, base_f: str, qual_f: str, /) -> str:
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_base=Base_, _qual=Qual_)
 
     @classmethod
-    def _split(cls: type[Self], value: str) -> tuple[str, str]:
+    def _split(cls: type[Self], value: str, /) -> tuple[str, str]:
         i: int
         i = int(value.lower().startswith("v"))
         while i < len(value):
@@ -80,28 +77,28 @@ class Public(NestedABC):
             i -= 1
         return value[:i], value[i:]
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         self.base.string, self.qual.string = self._split(value)
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(base=self.base, qual=self.qual)
 
     @property
-    def base(self: Self) -> Base_:
+    def base(self: Self, /) -> Base_:
         "This property represents the version base."
         return self._base
 
     @base.setter
-    def base(self: Self, value: object) -> None:
+    def base(self: Self, value: object, /) -> None:
         self.base.string = value
 
     packaging = NestedABC.string
 
     @property
-    def qual(self: Self) -> Qual_:
+    def qual(self: Self, /) -> Qual_:
         "This property represents the qualification."
         return self._qual
 
     @qual.setter
-    def qual(self: Self, value: object) -> None:
+    def qual(self: Self, value: object, /) -> None:
         self.qual.string = value

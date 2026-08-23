@@ -3,38 +3,38 @@
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
-from typing import Any, Self
+from collections import abc
+from typing import Any, Never, Self
 
 import setdoc
-from copyable import Copyable
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440.errors.VersionError import VersionError
 
 
-class CoreABC(Copyable):
+class CoreABC:
     __slots__ = ()
 
     @abstractmethod
     @setdoc.basic
-    def __bool__(self: Self) -> bool: ...
+    def __bool__(self: Self, /) -> bool: ...
 
     @abstractmethod
     @setdoc.basic
     def __eq__(self: Self, other: object, /) -> bool: ...
 
     @setdoc.basic
-    def __format__(self: Self, format_spec: object) -> str:
-        parsed: tuple[Any, ...]
+    def __format__(self: Self, format_spec: object, /) -> str:
         msg: str
+        parsed: abc.Iterable[Any]
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return str(self._format_parsed(parsed))
+        return str(self._format_parsed(*parsed))
 
     @abstractmethod
     @setdoc.basic
@@ -61,10 +61,10 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __repr__(self: Self) -> str: ...
+    def __repr__(self: Self, /) -> str: ...
 
     @setdoc.basic
-    def __setattr__(self: Self, name: str, value: Any) -> None:
+    def __setattr__(self: Self, name: str, value: Any, /) -> None:
         a: Any
         backup: str
         msg: str
@@ -87,7 +87,7 @@ class CoreABC(Copyable):
             raise VersionError(msg)
 
     @setdoc.basic
-    def __str__(self: Self) -> str:
+    def __str__(self: Self, /) -> str:
         return format(self, "")
 
     @classmethod
@@ -96,12 +96,12 @@ class CoreABC(Copyable):
 
     @classmethod
     @abstractmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
+    def _format_parse(cls: type[Self], spec: str, /) -> abc.Iterable[Any]: ...
 
     @abstractmethod
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...
+    def _format_parsed(self: Self, /, *parsed: Any) -> object: ...
 
-    def _init_kwargs(self: Self, **kwargs: Any) -> None:
+    def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
         x: str
         y: Any
         for x, y in kwargs.items():
@@ -111,14 +111,14 @@ class CoreABC(Copyable):
     def _init_other(self: Self, other: Self | None, /) -> None: ...
 
     @abstractmethod
-    def _string_fset(self: Self, value: str) -> None: ...
+    def _string_fset(self: Self, other: str, /) -> None: ...
 
     @setdoc.basic
-    def copy(self: Self) -> Self:
+    def copy(self: Self, /) -> Self:
         return type(self)(self)
 
     @classmethod
-    def deformat(cls: type[Self], *strings: object) -> str:
+    def deformat(cls: type[Self], /, *strings: object) -> str:
         msg: str
         info: dict[str, Self]
         x: object
@@ -136,13 +136,17 @@ class CoreABC(Copyable):
 
     @property
     @abstractmethod
-    def packaging(self: Self) -> Any: ...
+    def packaging(self: Self, /) -> object: ...
+
+    @packaging.setter
+    @abstractmethod
+    def packaging(self: Self, other: Never, /) -> None: ...
 
     @property
-    def string(self: Self) -> str:
+    def string(self: Self, /) -> str:
         "This property represents self as str."
         return format(self, "")
 
     @string.setter
-    def string(self: Self, value: object) -> None:
-        self._string_fset(str(value).lower())
+    def string(self: Self, other: object, /) -> None:
+        self._string_fset(str(other).lower())

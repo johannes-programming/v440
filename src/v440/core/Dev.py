@@ -18,7 +18,7 @@ class Dev(QualABC):
 
     __slots__ = ()
 
-    def _cmp(self: Self) -> tuple[int] | tuple[int, int]:
+    def _cmp(self: Self, /) -> tuple[int] | tuple[int, int]:
         if self.lit:
             return 0, self.num
         else:
@@ -42,9 +42,7 @@ class Dev(QualABC):
         )
         return (clue,)
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
-        clue: Clue
-        (clue,) = parsed
+    def _format_parsed(self: Self, clue: Clue, /) -> str:
         if not self:
             return ""
         if "" == clue.head:
@@ -54,21 +52,21 @@ class Dev(QualABC):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
         if value == "dev":
             return "dev"
         else:
             raise ValueError
 
     @property
-    def packaging(self: Self) -> int | None:
+    def packaging(self: Self, /) -> int | None:
         if self:
             return self.num
         else:
             return None
 
     @packaging.setter
-    def packaging(self: Self, value: SupportsIndex | None) -> None:
+    def packaging(self: Self, value: SupportsIndex | None, /) -> None:
         if value is None:
             self.num = 0
             self.lit = ""

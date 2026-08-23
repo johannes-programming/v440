@@ -17,7 +17,7 @@ class Pre(QualABC):
 
     __slots__ = ()
 
-    def _cmp(self: Self) -> tuple[Any, ...]:
+    def _cmp(self: Self, /) -> tuple[Any, ...]:
         if not self:
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
@@ -51,7 +51,9 @@ class Pre(QualABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+    def _format_parse(
+        cls: type[Self], spec: str, /
+    ) -> tuple[Clue, Clue, Clue]:
         a: Clue
         b: Clue
         matches: dict[str, str]
@@ -62,13 +64,9 @@ class Pre(QualABC):
         rc = Clue.by_spec(matches["rc_f"])
         return a, b, rc
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(self: Self, a: Clue, b: Clue, rc: Clue, /) -> str:
         ans: str
-        a: Clue
-        b: Clue
         clue: Clue
-        rc: Clue
-        a, b, rc = parsed
         if self.lit == "a":
             clue = a
         elif self.lit == "b":
@@ -87,18 +85,20 @@ class Pre(QualABC):
         return ans
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
         return Cfg.cfg.phases[value]
 
     @property
-    def packaging(self: Self) -> tuple[str, int] | None:
+    def packaging(self: Self, /) -> tuple[str, int] | None:
         if self:
             return self.lit, self.num
         else:
             return None
 
     @packaging.setter
-    def packaging(self: Self, value: tuple[str, SupportsIndex] | None) -> None:
+    def packaging(
+        self: Self, value: tuple[str, SupportsIndex] | None, /
+    ) -> None:
         if value is None:
             self.num = 0
             self.lit = ""

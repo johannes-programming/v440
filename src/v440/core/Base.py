@@ -5,7 +5,7 @@ from __future__ import annotations
 __all__: list[str] = ["Base"]
 
 import operator
-from typing import Any, Final, Self
+from typing import Any, Final, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440.abc.NestedABC import NestedABC
@@ -20,13 +20,13 @@ class Base(NestedABC):
 
     __slots__ = ("_epoch", "_release")
 
-    def _cmp(self: Self) -> tuple[int, Release_]:
+    def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         matches: dict[str, str]
-        table: dict[str, set[Any]]
+        table: dict[str, set[str]]
         s: str
         t: str
         table = dict()
@@ -43,11 +43,11 @@ class Base(NestedABC):
         return s
 
     @classmethod
-    def _deformat_basev(cls: type[Self], value: str = "") -> str:
+    def _deformat_basev(cls: type[Self], value: str = "", /) -> str:
         return value
 
     @classmethod
-    def _deformat_epoch(cls: type[Self], *table: str) -> str:
+    def _deformat_epoch(cls: type[Self], /, *table: str) -> str:
         n: int
         s: str
         n = 0
@@ -63,7 +63,7 @@ class Base(NestedABC):
         cls: type[Self],
         spec: str,
         /,
-    ) -> tuple[Any, ...]:
+    ) -> tuple[str, int, str]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         return (
@@ -74,14 +74,12 @@ class Base(NestedABC):
 
     def _format_parsed(
         self: Self,
-        parsed: tuple[Any, ...],
+        basev_f: str,
+        epoch_mag: int,
+        release_f: str,
         /,
     ) -> str:
-        basev_f: str
-        epoch_mag: int
-        release_f: str
         ans: str
-        basev_f, epoch_mag, release_f = parsed
         ans = basev_f
         if epoch_mag or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_mag)
@@ -90,10 +88,10 @@ class Base(NestedABC):
         return ans
 
     @classmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_epoch=int, _release=Release_)
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
@@ -102,16 +100,16 @@ class Base(NestedABC):
             self.epoch = 0
         self.release.string = matches["release"]
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(epoch=self.epoch, release=self.release)
 
     @property
-    def epoch(self: Self) -> int:
+    def epoch(self: Self, /) -> int:
         "This property represents the epoch."
         return self._epoch
 
     @epoch.setter
-    def epoch(self: Self, value: Any) -> None:
+    def epoch(self: Self, value: SupportsIndex, /) -> None:
         v: int
         v = operator.index(value)
         if v < 0:
@@ -121,7 +119,7 @@ class Base(NestedABC):
     packaging = NestedABC.string
 
     @property
-    def release(self: Self) -> Release_:
+    def release(self: Self, /) -> Release_:
         "This property represents the release."
         return self._release
 
