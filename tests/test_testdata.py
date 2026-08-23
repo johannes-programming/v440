@@ -53,14 +53,16 @@ class Util(enum.Enum):
 
 
 class TestDeformatting(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.deformatting.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict[str, Any]) -> None:
+    def go_examples(
+        self: Self, /, clsname: str, tables: dict[str, Any]
+    ) -> None:
         cls: Any
         split: dict[bool, dict[Any, Any]]
         x: Any
@@ -97,7 +99,7 @@ class TestDeformatting(unittest.TestCase):
 
 class TestDataSetter(unittest.TestCase):
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.data["mutating"].items():
@@ -174,7 +176,7 @@ class TestDataSetter(unittest.TestCase):
 
 class TestLocalData(unittest.TestCase):
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.data["mutating-local"].items():
@@ -234,7 +236,7 @@ class TestLocalData(unittest.TestCase):
 
 
 class TestPackagingA(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
         for x, y in Util.util.examples["Version"].items():
@@ -246,7 +248,7 @@ class TestPackagingA(unittest.TestCase):
             return
         self.go_format(text)
 
-    def go_format(self: Self, text: str) -> None:
+    def go_format(self: Self, /, text: str) -> None:
         a: Version_
         b: str
         f: str
@@ -260,7 +262,7 @@ class TestPackagingA(unittest.TestCase):
 
 
 class TestPackagingC(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         args: tuple[Any, ...]
         casted: tuple[str, str, Callable[..., Any]]
         ops: list[Callable[..., Any]]
@@ -322,14 +324,14 @@ class TestPackagingC(unittest.TestCase):
 
 
 class TestReleaseAlias(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: Any
         y: Any
         for x, y in Util.util.data["release-key"].items():
             with self.subTest(test_label=x):
                 self.go(**y)
 
-    def go(self: Self, steps: list[Any]) -> None:
+    def go(self: Self, /, steps: list[Any]) -> None:
         version: Version
         step: dict[str, Any]
         version = Version()
@@ -352,7 +354,7 @@ class TestReleaseAlias(unittest.TestCase):
 
 
 class TestSlicingGo(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
         for x, y in Util.util.data["slicingmethod"].items():
@@ -403,7 +405,7 @@ class TestSlicingGo(unittest.TestCase):
 
 
 class TestSlots(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: Any
         y: Any
         for x, y in Util.util.data["core-non-attributes"].items():
@@ -426,7 +428,7 @@ class TestSlots(unittest.TestCase):
 
 
 class TestStringExamples(unittest.TestCase):
-    def test_versions(self: Self) -> None:
+    def test_versions(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples["Version"].items():
@@ -502,14 +504,16 @@ class TestStringExamples(unittest.TestCase):
             x.public.base.release.packaging,
         )
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict[Any, Any]) -> None:
+    def go_examples(
+        self: Self, /, clsname: str, tables: dict[Any, Any]
+    ) -> None:
         cls: type
         split: dict[Any, Any]
         x: str
@@ -630,7 +634,7 @@ class TestStringExamples(unittest.TestCase):
 
 class TestVersionEpochGo(unittest.TestCase):
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
         for x, y in Util.util.data["epoch"].items():

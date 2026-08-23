@@ -242,10 +242,12 @@ class Release(ListABC[int]):
     def micro(self: Self, /) -> None:
         self._delitem(key=2, minlen=3)
 
+    patch = micro
+
     @property
     @setdoc.basic
     def packaging(self: Self, /) -> tuple[int, ...]:
-        return self.__frozen__()
+        return self.__freeze__()
 
     @packaging.setter
     def packaging(self: Self, other: abc.Iterable[int], /) -> None:
@@ -253,8 +255,6 @@ class Release(ListABC[int]):
         with self.__mutate__() as mutable:
             mutable.clear()
             mutable.extend(other)
-
-    patch = micro
 
     @setdoc.basic
     def sort(

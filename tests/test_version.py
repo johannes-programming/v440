@@ -24,21 +24,21 @@ from v440.errors.VersionError import VersionError
 
 class TestAdditionalVersionRelease(unittest.TestCase):
 
-    def test_release_inequality_with_list(self: Self) -> None:
+    def test_release_inequality_with_list(self: Self, /) -> None:
         # Test inequality of release with a normal list
         version: Any
         version = Version()
         version.public.base.release[:] = [1, 2, 3]
         self.assertFalse(version.public.base.release == [1, 2, 4])
 
-    def test_release_len(self: Self) -> None:
+    def test_release_len(self: Self, /) -> None:
         # Test the length of the release list
         version: Any
         version = Version()
         version.public.base.release[:] = [1, 2, 3]
         self.assertEqual(len(version.public.base.release), 3)
 
-    def test_release_slice_assignment(self: Self) -> None:
+    def test_release_slice_assignment(self: Self, /) -> None:
         # Test assigning a slice to release
         version: Any
         version = Version()
@@ -49,7 +49,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
             [1, 20, 30, 40, 5],
         )
 
-    def test_release_iterable(self: Self) -> None:
+    def test_release_iterable(self: Self, /) -> None:
         # Test if release supports iteration
         version: Any
         result: list[Any]
@@ -58,28 +58,28 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         result = list(version.public.base.release)
         self.assertEqual(result, [1, 2, 3])
 
-    def test_release_repr(self: Self) -> None:
+    def test_release_repr(self: Self, /) -> None:
         # Test the repr of the release property
         version: Any
         version = Version()
         version.public.base.release[:] = [1, 2, 3]
         self.assertEqual(str(version.public.base.release), "1.2.3")
 
-    def test_release_data_property(self: Self) -> None:
+    def test_release_data_property(self: Self, /) -> None:
         # Test the 'data' property
         version: Any
         version = Version()
         version.public.base.release[:] = [1, 2, 3]
-        self.assertEqual(version.public.base.release.__frozen__(), (1, 2, 3))
+        self.assertEqual(version.public.base.release.__freeze__(), (1, 2, 3))
 
-    def test_release_data_setter(self: Self) -> None:
+    def test_release_data_setter(self: Self, /) -> None:
         # Test setting the 'data' property directly
         version: Any
         version = Version()
         version.public.base.release[:] = [10, 20, 30]
         self.assertEqual(list(version.public.base.release), [10, 20, 30])
 
-    def test_release_contains(self: Self) -> None:
+    def test_release_contains(self: Self, /) -> None:
         # Test 'in' keyword with release
         version: Any
         version = Version()
@@ -87,7 +87,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         self.assertIn(2, version.public.base.release)
         self.assertNotIn(4, version.public.base.release)
 
-    def test_release_mul(self: Self) -> None:
+    def test_release_mul(self: Self, /) -> None:
         # Test multiplying the release (list behavior)
         answer: list[int]
         solution: list[int]
@@ -98,7 +98,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
         solution = [1, 2, 1, 2, 1, 2]
         self.assertEqual(answer, solution)
 
-    def test_release_addition(self: Self) -> None:
+    def test_release_addition(self: Self, /) -> None:
         # Test adding another list to release
         answer: list[Any]
         solution: list[Any]
@@ -111,7 +111,7 @@ class TestAdditionalVersionRelease(unittest.TestCase):
 
 
 class TestDataHoldStandards(unittest.TestCase):
-    def test_list_like_comparison(self: Self) -> None:
+    def test_list_like_comparison(self: Self, /) -> None:
         local: Local
         release: Release
         local = Local()
@@ -129,13 +129,13 @@ class TestDataHoldStandards(unittest.TestCase):
 
 class TestDevNoGo(unittest.TestCase):
 
-    def test_initial_none_dev(self: Self) -> None:
+    def test_initial_none_dev(self: Self, /) -> None:
         v: Version
         v = Version(string="1.2.3")
         self.assertEqual(str(v), "1.2.3")
         self.assertFalse(v.public.qual.dev)
 
-    def test_dev_as_none(self: Self) -> None:
+    def test_dev_as_none(self: Self, /) -> None:
         v: Version
         v = Version(string="1.2.3")
         v.public.qual.dev.string = ""
@@ -145,7 +145,7 @@ class TestDevNoGo(unittest.TestCase):
 
 class TestExample(unittest.TestCase):
 
-    def test_example_2(self: Self) -> None:
+    def test_example_2(self: Self, /) -> None:
         v: Version
         v = Version(string="2.5.3")
         self.assertEqual(str(v), "2.5.3")  # Modified version
@@ -153,7 +153,7 @@ class TestExample(unittest.TestCase):
         v.public.base.release.micro = 4
         self.assertEqual(str(v), "2.64.4")  # Further modified version
 
-    def test_example_3(self: Self) -> None:
+    def test_example_3(self: Self, /) -> None:
         v1: Version
         v2: Version
         v1 = Version(string="1.6.3")
@@ -223,7 +223,7 @@ class TestExample(unittest.TestCase):
         with self.assertRaises(Exception):
             str(v2) < v1
 
-    def test_example_5(self: Self) -> None:
+    def test_example_5(self: Self, /) -> None:
         v: Version
         v = Version(string="2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
@@ -237,7 +237,7 @@ class TestExample(unittest.TestCase):
             str(v), "2rc2"
         )  # Even further modified pre-release version
 
-    def test_example_6(self: Self) -> None:
+    def test_example_6(self: Self, /) -> None:
         v: Version
         v = Version(string="1.2.3")
         v.public.qual.post.string = -1
@@ -266,7 +266,7 @@ class TestExample(unittest.TestCase):
             str(v), "1.2.3.post3+3.test.19"
         )  # Modified local again
 
-    def test_example_7(self: Self) -> None:
+    def test_example_7(self: Self, /) -> None:
         v: Version
         v = Version(string="5.0.0")
         self.assertEqual(str(v), "5")  # Original version
@@ -280,7 +280,7 @@ class TestExample(unittest.TestCase):
 
 
 class TestPatch(unittest.TestCase):
-    def test_example_0(self: Self) -> None:
+    def test_example_0(self: Self, /) -> None:
         x: Qual
         y: Qual
         x = Qual(string="a1")
@@ -288,7 +288,7 @@ class TestPatch(unittest.TestCase):
         with self.assertRaises(Exception):
             x += y  # type: ignore[operator]
 
-    def test_cmp(self: Self) -> None:
+    def test_cmp(self: Self, /) -> None:
         self.assertFalse(Version(string="1+1") == Version(string="1+a"))
         self.assertFalse(Version(string="1+1") <= Version(string="1+a"))
         self.assertFalse(Version(string="1+1") < Version(string="1+a"))
@@ -299,7 +299,7 @@ class TestPatch(unittest.TestCase):
 
 class TestPre(unittest.TestCase):
 
-    def test_pre(self: Self) -> None:
+    def test_pre(self: Self, /) -> None:
         backup: Qual
         v: Version
         v = Version(string="1.2.3")
@@ -338,13 +338,13 @@ class TestPre(unittest.TestCase):
 
 class TestSlicingNoGo(unittest.TestCase):
 
-    def test_slicing_2(self: Self) -> None:
+    def test_slicing_2(self: Self, /) -> None:
         v: Version
         v = Version(string="1.2.3.4.5.6.7.8.9.10")
         with self.assertRaises(Exception):
             v.public.base.release[-8:15:5] = 777  # type: ignore[call-overload]
 
-    def test_slicing_7(self: Self) -> None:
+    def test_slicing_7(self: Self, /) -> None:
         v: Version
         v = Version(string="1.2.3.4.5.6.7.8.9.10")
         del v.public.base.release[-8:15:5]
@@ -353,14 +353,14 @@ class TestSlicingNoGo(unittest.TestCase):
 
 class TestVersionLocal(unittest.TestCase):
 
-    def test_local_len(self: Self) -> None:
+    def test_local_len(self: Self, /) -> None:
         # Test the length of the local list
         version: Any
         version = Version()
         version.local[:] = [1, "dev", "build"]
         self.assertEqual(len(version.local), 3)
 
-    def test_local_slice_assignment(self: Self) -> None:
+    def test_local_slice_assignment(self: Self, /) -> None:
         # Test assigning a slice to the local list
         version: Any
         version = Version()
@@ -368,7 +368,7 @@ class TestVersionLocal(unittest.TestCase):
         version.local[1:3] = ["alpha", "beta"]
         self.assertEqual(list(version.local), [1, "alpha", "beta"])
 
-    def test_local_contains(self: Self) -> None:
+    def test_local_contains(self: Self, /) -> None:
         # Test 'in' keyword with local list
         version: Any
         version = Version()
@@ -376,7 +376,7 @@ class TestVersionLocal(unittest.TestCase):
         self.assertIn("dev", version.local)
         self.assertNotIn("alpha", version.local)
 
-    def test_local_mul(self: Self) -> None:
+    def test_local_mul(self: Self, /) -> None:
         # Test multiplying the local list
         answer: list[Any]
         solution: list[Any]
@@ -387,31 +387,31 @@ class TestVersionLocal(unittest.TestCase):
         solution = [1, "dev", 1, "dev", 1, "dev"]
         self.assertEqual(answer, solution)
 
-    def test_local_inequality_with_list(self: Self) -> None:
+    def test_local_inequality_with_list(self: Self, /) -> None:
         # Test inequality of local with a normal list
         version: Any
         version = Version()
         version.local[:] = [1, "dev"]
         self.assertFalse(version.local == [1, "build"])
 
-    def test_local_repr(self: Self) -> None:
+    def test_local_repr(self: Self, /) -> None:
         # Test repr of local list
         version: Any
         version = Version()
         version.local[:] = [1, "dev", "build"]
         self.assertEqual(str(version.local), "1.dev.build")
 
-    def test_local_data_property(self: Self) -> None:
+    def test_local_data_property(self: Self, /) -> None:
         # Test that 'data' property correctly reflects local's internal list
         version: Any
         version = Version()
         version.local[:] = [1, "dev", "build"]
-        self.assertEqual(version.local.__frozen__(), (1, "dev", "build"))
+        self.assertEqual(version.local.__freeze__(), (1, "dev", "build"))
 
 
 class TestVersionLocal0(unittest.TestCase):
 
-    def test_version_operations(self: Self) -> None:
+    def test_version_operations(self: Self, /) -> None:
         backup: Local
         v: Any
         v = Version(string="1.2.3")
@@ -441,7 +441,7 @@ class TestVersionLocal0(unittest.TestCase):
 
 class TestVersionManipulation(unittest.TestCase):
 
-    def test_version_modification(self: Self) -> None:
+    def test_version_modification(self: Self, /) -> None:
         # Create an instance of the v440.Version class
         v: Version
         v = Version(string="1.2.3")
@@ -458,13 +458,13 @@ class TestVersionManipulation(unittest.TestCase):
 
 class TestVersionRelease(unittest.TestCase):
 
-    def test_repr(self: Self) -> None:
+    def test_repr(self: Self, /) -> None:
         release: Release
         release = Release([1, 2, 3])
         self.assertEqual(repr(release), "Release([1, 2, 3])")
         self.assertEqual(str(release), "1.2.3")
 
-    def test_major_minor_micro_aliases(self: Self) -> None:
+    def test_major_minor_micro_aliases(self: Self, /) -> None:
         # Test major, minor, and micro aliases for the first three indices
         version: Any
         version = Version()
@@ -476,7 +476,7 @@ class TestVersionRelease(unittest.TestCase):
             version.public.base.release.patch, 3
         )  # 'patch' is an alias for micro
 
-    def test_release_modify_aliases(self: Self) -> None:
+    def test_release_modify_aliases(self: Self, /) -> None:
         # Test modifying the release via major, minor, and micro properties
         version: Any
         version = Version()
@@ -487,7 +487,7 @@ class TestVersionRelease(unittest.TestCase):
         self.assertEqual(list(version.public.base.release), [10, 20, 30])
         self.assertEqual(version.public.base.release.patch, 30)
 
-    def test_release_with_tailing_zeros_simulation(self: Self) -> None:
+    def test_release_with_tailing_zeros_simulation(self: Self, /) -> None:
         # Test that the release can simulate arbitrary high number of tailing zeros
         version: Version
         version = Version()
@@ -497,7 +497,7 @@ class TestVersionRelease(unittest.TestCase):
             simulated_release, Version.Public.Base.Release([1, 2])
         )
 
-    def test_release_empty_major(self: Self) -> None:
+    def test_release_empty_major(self: Self, /) -> None:
         # Test that an empty release still has valid major, minor, micro values
         version: Any
         version = Version()
