@@ -1,6 +1,7 @@
 __all__: list[str] = [
     "TestDataSetter",
     "TestDeformatting",
+    "TestLocalData",
     "TestPackagingA",
     "TestPackagingC",
     "TestReleaseAlias",
@@ -52,14 +53,16 @@ class Util(enum.Enum):
 
 
 class TestDeformatting(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.deformatting.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict[str, Any]) -> None:
+    def go_examples(
+        self: Self, /, clsname: str, tables: dict[str, Any]
+    ) -> None:
         cls: Any
         split: dict[bool, dict[Any, Any]]
         x: Any
@@ -94,8 +97,338 @@ class TestDeformatting(unittest.TestCase):
             self.assertEqual(solution, cls.deformat(*example))
 
 
+class TestDataSetter(unittest.TestCase):
+
+    def test_0(self: Self, /) -> None:
+        x: str
+        y: dict[Any, Any]
+        for x, y in Util.util.data["mutating"].items():
+            with self.subTest(clsname=x):
+                self.go_clsname(x, y)
+
+    def go_clsname(
+        self: Self,
+        clsname: str,
+        legacy_table: dict[Any, Any],
+        /,
+    ) -> None:
+        cls: type
+        x: str
+        y: dict[Any, Any]
+        cls = getattr(getattr(core, clsname), clsname)
+        for x, y in legacy_table.items():
+            with self.subTest(legacy_name=x):
+                self.go_task(cls, **y)
+
+    def go_task(
+        self: Self,
+        *args: Any,
+        valid: bool,
+        **kwargs: Any,
+    ) -> None:
+        if valid:
+            self.go_valid(*args, **kwargs)
+        else:
+            self.go_invalid(*args, **kwargs)
+
+    def go_invalid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list[Any],
+        queryname: str,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        obj = cls()
+        with self.assertRaises(VersionError):
+            setattr(obj, queryname, query)
+
+    def go_valid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list[Any],
+        queryname: str,
+        check: list[Any] | None = None,
+        attrname: str | None = None,
+        args: Sequence[Any] = (),
+        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
+        solution: Any | None = None,
+        solutionname: str | None = None,
+        **_kwargs: Any,
+    ) -> None:
+        ans: Any
+        attr: Any
+        obj: Any
+        obj = cls()
+        setattr(obj, queryname, query)
+        if attrname is not None:
+            attr = getattr(obj, attrname)
+            ans = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, check)
+        if solutionname is not None:
+            ans = getattr(builtins, solutionname)(obj)
+            self.assertEqual(ans, solution)
+
+
+class TestLocalData(unittest.TestCase):
+
+    def test_0(self: Self, /) -> None:
+        x: str
+        y: dict[Any, Any]
+        for x, y in Util.util.data["mutating-local"].items():
+            with self.subTest(legacy_name=x):
+                self.go_task(**y)
+
+    def go_task(
+        self: Self,
+        *,
+        queryname: str = "data",
+        valid: bool,
+        **kwargs: Any,
+    ) -> None:
+        self.assertEqual(queryname, "data")
+        if valid:
+            self.go_valid(**kwargs)
+        else:
+            self.go_invalid(**kwargs)
+
+    def go_invalid(
+        self: Self,
+        /,
+        *,
+        query: list[Any],
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        obj = core.Local.Local()
+        with self.assertRaises(TypeError):
+            obj[:] = query
+
+    def go_valid(
+        self: Self,
+        /,
+        *,
+        query: list[Any],
+        check: list[Any] | None = None,
+        attrname: str | None = None,
+        args: Sequence[Any] = (),
+        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
+        solution: Any | None = None,
+        solutionname: str | None = None,
+        **_kwargs: Any,
+    ) -> None:
+        ans: Any
+        attr: Any
+        obj: Any
+        obj = core.Local.Local()
+        obj[:] = query
+        if attrname is not None:
+            attr = getattr(obj, attrname)
+            ans = attr(*args, **dict(kwargs))
+            self.assertEqual(ans, check)
+        if solutionname is not None:
+            ans = getattr(builtins, solutionname)(obj)
+            self.assertEqual(ans, solution)
+
+
+class TestPackagingA(unittest.TestCase):
+    def test_0(self: Self, /) -> None:
+        x: str
+        y: dict[str, Any]
+        for x, y in Util.util.examples["Version"].items():
+            with self.subTest(example=x):
+                self.go(x, **y)
+
+    def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
+        if not valid:
+            return
+        self.go_format(text)
+
+    def go_format(self: Self, /, text: str) -> None:
+        a: Version_
+        b: str
+        f: str
+        g: str
+        a = Version_(text)
+        b = str(a)
+        f = "#." * len(a.release)
+        f = f[:-1]
+        g = format(Version(string=text), f)
+        self.assertEqual(b, g)
+
+
+class TestPackagingC(unittest.TestCase):
+    def test_0(self: Self, /) -> None:
+        args: tuple[Any, ...]
+        casted: tuple[str, str, Callable[..., Any]]
+        ops: list[Callable[..., Any]]
+        pure: list[str]
+        x: str
+        y: dict[str, Any]
+        pure = []
+        for x, y in Util.util.examples["Version"].items():
+            if y["valid"]:
+                pure.append(x)
+        ops = [
+            operator.eq,
+            operator.ne,
+            operator.gt,
+            operator.ge,
+            operator.le,
+            operator.lt,
+        ]
+        for args in iterprod.iterprod(pure, pure, ops):
+            with self.subTest(args=args):
+                casted = cast(tuple[str, str, Callable[..., Any]], args)
+                self.go(*casted)
+
+    def go(
+        self: Self,
+        x: str,
+        y: str,
+        func: Callable[..., Any],
+        /,
+    ) -> None:
+        a: Version_
+        b: Version
+        c: Version_
+        d: Version_
+        e: Version
+        f: Version_
+        legacy: bool
+        current: bool
+        backwards: bool
+        a = Version_(x)
+        b = Version(string=x)
+        c = b.packaging
+        d = Version_(y)
+        e = Version(string=y)
+        f = e.packaging
+        legacy = func(a, d)
+        current = func(b, e)
+        backwards = func(c, f)
+        self.assertEqual(
+            current,
+            legacy,
+            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and legacy.",
+        )
+        self.assertEqual(
+            current,
+            backwards,
+            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and backwards.",
+        )
+
+
+class TestReleaseAlias(unittest.TestCase):
+    def test_0(self: Self, /) -> None:
+        x: Any
+        y: Any
+        for x, y in Util.util.data["release-key"].items():
+            with self.subTest(test_label=x):
+                self.go(**y)
+
+    def go(self: Self, /, steps: list[Any]) -> None:
+        version: Version
+        step: dict[str, Any]
+        version = Version()
+        for step in steps:
+            self.modify(version=version, **step)
+
+    def modify(
+        self: Self,
+        version: Version,
+        name: str,
+        value: Any,
+        solution: list[Any] | None = None,
+    ) -> None:
+        answer: list[Any]
+        setattr(version.public.base.release, name, value)
+        if solution is None:
+            return
+        answer = list(version.public.base.release)
+        self.assertEqual(answer, solution)
+
+
+class TestSlicingGo(unittest.TestCase):
+    def test_0(self: Self, /) -> None:
+        x: str
+        y: dict[str, Any]
+        for x, y in Util.util.data["slicingmethod"].items():
+            with self.subTest(key=x):
+                self.go(**y)
+
+    def go(
+        self: Self,
+        *,
+        valid: bool,
+        **kwargs: Any,
+    ) -> None:
+        if valid:
+            self.go_valid(**kwargs)
+        else:
+            self.go_invalid(**kwargs)
+
+    def go_invalid(
+        self: Self,
+        *,
+        query: Any,
+        change: Any,
+        solution: str,
+        start: Any = None,
+        stop: Any = None,
+        step: Any = None,
+    ) -> None:
+        v: Version
+        v = Version(string=query)
+        with self.assertRaises(Exception):
+            v.public.base.release[start:stop:step] = change
+        self.assertEqual(str(v), solution)
+
+    def go_valid(
+        self: Self,
+        *,
+        query: Any,
+        change: Any,
+        solution: str,
+        start: Any = None,
+        stop: Any = None,
+        step: Any = None,
+    ) -> None:
+        v: Version
+        v = Version(string=query)
+        v.public.base.release[start:stop:step] = change
+        self.assertEqual(str(v), solution)
+
+
+class TestSlots(unittest.TestCase):
+    def test_0(self: Self, /) -> None:
+        x: Any
+        y: Any
+        for x, y in Util.util.data["core-non-attributes"].items():
+            with self.subTest(test_label=x):
+                self.go(**y)
+
+    def go(
+        self: Self,
+        clsname: str,
+        attrname: str,
+        attrvalue: Any,
+        string: Any = None,
+    ) -> None:
+        cls: type
+        obj: Any
+        cls = getattr(getattr(core, clsname), clsname)
+        obj = cls(string=string)
+        with self.assertRaises(AttributeError):
+            setattr(obj, attrname, attrvalue)
+
+
 class TestStringExamples(unittest.TestCase):
-    def test_versions(self: Self) -> None:
+    def test_versions(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples["Version"].items():
@@ -171,14 +504,16 @@ class TestStringExamples(unittest.TestCase):
             x.public.base.release.packaging,
         )
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict[Any, Any]) -> None:
+    def go_examples(
+        self: Self, /, clsname: str, tables: dict[Any, Any]
+    ) -> None:
         cls: type
         split: dict[Any, Any]
         x: str
@@ -297,86 +632,9 @@ class TestStringExamples(unittest.TestCase):
         )
 
 
-class TestDataSetter(unittest.TestCase):
-
-    def test_0(self: Self) -> None:
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter"].items():
-            with self.subTest(clsname=x):
-                self.go_clsname(x, y)
-
-    def go_clsname(
-        self: Self,
-        clsname: str,
-        legacy_table: dict[Any, Any],
-        /,
-    ) -> None:
-        cls: type
-        x: str
-        y: dict[Any, Any]
-        cls = getattr(getattr(core, clsname), clsname)
-        for x, y in legacy_table.items():
-            with self.subTest(legacy_name=x):
-                self.go_task(cls, **y)
-
-    def go_task(
-        self: Self,
-        *args: Any,
-        valid: bool,
-        **kwargs: Any,
-    ) -> None:
-        if valid:
-            self.go_valid(*args, **kwargs)
-        else:
-            self.go_invalid(*args, **kwargs)
-
-    def go_invalid(
-        self: Self,
-        cls: type,
-        /,
-        *,
-        query: list[Any],
-        queryname: str,
-        **kwargs: Any,
-    ) -> None:
-        obj: Any
-        obj = cls()
-        with self.assertRaises(VersionError):
-            setattr(obj, queryname, query)
-
-    def go_valid(
-        self: Self,
-        cls: type,
-        /,
-        *,
-        query: list[Any],
-        queryname: str,
-        check: list[Any] | None = None,
-        attrname: str | None = None,
-        args: Sequence[Any] = (),
-        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
-        solution: Any | None = None,
-        solutionname: str | None = None,
-        **_kwargs: Any,
-    ) -> None:
-        ans: Any
-        attr: Any
-        obj: Any
-        obj = cls()
-        setattr(obj, queryname, query)
-        if attrname is not None:
-            attr = getattr(obj, attrname)
-            ans = attr(*args, **dict(kwargs))
-            self.assertEqual(ans, check)
-        if solutionname is not None:
-            ans = getattr(builtins, solutionname)(obj)
-            self.assertEqual(ans, solution)
-
-
 class TestVersionEpochGo(unittest.TestCase):
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
         for x, y in Util.util.data["epoch"].items():
@@ -398,198 +656,6 @@ class TestVersionEpochGo(unittest.TestCase):
         self.assertEqual(str(v), full, msg=msg)
         self.assertIsInstance(v.public.base.epoch, int, msg=msg)
         self.assertEqual(v.public.base.epoch, part, msg=msg)
-
-
-class TestSlicingGo(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        x: str
-        y: dict[str, Any]
-        for x, y in Util.util.data["slicingmethod"].items():
-            with self.subTest(key=x):
-                self.go(**y)
-
-    def go(
-        self: Self,
-        *,
-        valid: bool,
-        **kwargs: Any,
-    ) -> None:
-        if valid:
-            self.go_valid(**kwargs)
-        else:
-            self.go_invalid(**kwargs)
-
-    def go_invalid(
-        self: Self,
-        *,
-        query: Any,
-        change: Any,
-        solution: str,
-        start: Any = None,
-        stop: Any = None,
-        step: Any = None,
-    ) -> None:
-        v: Version
-        v = Version(string=query)
-        with self.assertRaises(Exception):
-            v.public.base.release[start:stop:step] = change
-        self.assertEqual(str(v), solution)
-
-    def go_valid(
-        self: Self,
-        *,
-        query: Any,
-        change: Any,
-        solution: str,
-        start: Any = None,
-        stop: Any = None,
-        step: Any = None,
-    ) -> None:
-        v: Version
-        v = Version(string=query)
-        v.public.base.release[start:stop:step] = change
-        self.assertEqual(str(v), solution)
-
-
-class TestPackagingA(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        x: str
-        y: dict[str, Any]
-        for x, y in Util.util.examples["Version"].items():
-            with self.subTest(example=x):
-                self.go(x, **y)
-
-    def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
-        if not valid:
-            return
-        self.go_format(text)
-
-    def go_format(self: Self, text: str) -> None:
-        a: Version_
-        b: str
-        f: str
-        g: str
-        a = Version_(text)
-        b = str(a)
-        f = "#." * len(a.release)
-        f = f[:-1]
-        g = format(Version(string=text), f)
-        self.assertEqual(b, g)
-
-
-class TestPackagingC(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        args: tuple[Any, ...]
-        casted: tuple[str, str, Callable[..., Any]]
-        ops: list[Callable[..., Any]]
-        pure: list[str]
-        x: str
-        y: dict[str, Any]
-        pure = []
-        for x, y in Util.util.examples["Version"].items():
-            if y["valid"]:
-                pure.append(x)
-        ops = [
-            operator.eq,
-            operator.ne,
-            operator.gt,
-            operator.ge,
-            operator.le,
-            operator.lt,
-        ]
-        for args in iterprod.iterprod(pure, pure, ops):
-            with self.subTest(args=args):
-                casted = cast(tuple[str, str, Callable[..., Any]], args)
-                self.go(*casted)
-
-    def go(
-        self: Self,
-        x: str,
-        y: str,
-        func: Callable[..., Any],
-        /,
-    ) -> None:
-        a: Version_
-        b: Version
-        c: Version_
-        d: Version_
-        e: Version
-        f: Version_
-        legacy: bool
-        current: bool
-        backwards: bool
-        a = Version_(x)
-        b = Version(string=x)
-        c = b.packaging
-        d = Version_(y)
-        e = Version(string=y)
-        f = e.packaging
-        legacy = func(a, d)
-        current = func(b, e)
-        backwards = func(c, f)
-        self.assertEqual(
-            current,
-            legacy,
-            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and legacy.",
-        )
-        self.assertEqual(
-            current,
-            backwards,
-            f"operator.{func.__name__}({x!r}, {y!r}) should match for current and backwards.",
-        )
-
-
-class TestSlots(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        x: Any
-        y: Any
-        for x, y in Util.util.data["core-non-attributes"].items():
-            with self.subTest(test_label=x):
-                self.go(**y)
-
-    def go(
-        self: Self,
-        clsname: str,
-        attrname: str,
-        attrvalue: Any,
-        string: Any = None,
-    ) -> None:
-        cls: type
-        obj: Any
-        cls = getattr(getattr(core, clsname), clsname)
-        obj = cls(string=string)
-        with self.assertRaises(AttributeError):
-            setattr(obj, attrname, attrvalue)
-
-
-class TestReleaseAlias(unittest.TestCase):
-    def test_0(self: Self) -> None:
-        x: Any
-        y: Any
-        for x, y in Util.util.data["release-key"].items():
-            with self.subTest(test_label=x):
-                self.go(**y)
-
-    def go(self: Self, steps: list[Any]) -> None:
-        version: Version
-        step: dict[str, Any]
-        version = Version()
-        for step in steps:
-            self.modify(version=version, **step)
-
-    def modify(
-        self: Self,
-        version: Version,
-        name: str,
-        value: Any,
-        solution: list[Any] | None = None,
-    ) -> None:
-        answer: list[Any]
-        setattr(version.public.base.release, name, value)
-        if solution is None:
-            return
-        answer = list(version.public.base.release)
-        self.assertEqual(answer, solution)
 
 
 if __name__ == "__main__":

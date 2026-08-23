@@ -28,7 +28,7 @@ class Qual(NestedABC):
 
     __slots__ = ("_pre", "_post", "_dev")
 
-    def _cmp(self: Self) -> tuple[str, int, Post_, Dev_]:
+    def _cmp(self: Self, /) -> tuple[str, int, Post_, Dev_]:
         ans: tuple[str, int]
         if self.pre:
             ans = (self.pre.lit, self.pre.num)
@@ -93,7 +93,7 @@ class Qual(NestedABC):
         return sols[0]
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[str, str, str]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual_f", spec)
         return (
@@ -102,66 +102,64 @@ class Qual(NestedABC):
             matches["dev_f"],
         )
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(
+        self: Self, pre_f: str, post_f: str, dev_f: str, /
+    ) -> str:
         ans: str
-        pre_f: str
-        post_f: str
-        dev_f: str
-        pre_f, post_f, dev_f = parsed
         ans = format(self.pre, pre_f)
         ans += format(self.post, post_f)
         ans += format(self.dev, dev_f)
         return ans
 
     @classmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, other: str, /) -> None:
         matches: dict[str, str]
-        matches = Cfg.fullmatches("qual", value)
+        matches = Cfg.fullmatches("qual", other)
         self.pre.string = matches["pre"]
         self.post.string = matches["post"]
         self.dev.string = matches["dev"]
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
-    def dev(self: Self) -> Dev_:
+    def dev(self: Self, /) -> Dev_:
         "This property represents the stage of development."
         return self._dev
 
     @dev.setter
-    def dev(self: Self, value: object) -> None:
-        self.dev.string = value
+    def dev(self: Self, other: object, /) -> None:
+        self.dev.string = other
 
-    def isdevrelease(self: Self) -> bool:
+    def isdevrelease(self: Self, /) -> bool:
         "Return whether this instance denotes a dev-release."
         return bool(self.dev)
 
-    def isprerelease(self: Self) -> bool:
+    def isprerelease(self: Self, /) -> bool:
         "Return whether this instance denotes a pre-release."
         return bool(self.pre) or bool(self.dev)
 
-    def ispostrelease(self: Self) -> bool:
+    def ispostrelease(self: Self, /) -> bool:
         "Return whether this instance denotes a post-release."
         return bool(self.post)
 
     packaging = NestedABC.string
 
     @property
-    def post(self: Self) -> Post_:
+    def post(self: Self, /) -> Post_:
         return self._post
 
     @post.setter
-    def post(self: Self, value: object) -> None:
-        self.post.string = value
+    def post(self: Self, other: object, /) -> None:
+        self.post.string = other
 
     @property
-    def pre(self: Self) -> Pre_:
+    def pre(self: Self, /) -> Pre_:
         return self._pre
 
     @pre.setter
-    def pre(self: Self, value: object) -> None:
-        self.pre.string = value
+    def pre(self: Self, other: object, /) -> None:
+        self.pre.string = other
