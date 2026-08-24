@@ -13,6 +13,7 @@ from typing import Any, Self, overload
 import setdoc
 from datahold import ListLike, MutableListSlot
 
+from v440._utils.Cfg import Cfg
 from v440._utils.typing import (
     SupportsDunderGE,
     SupportsDunderGT,
@@ -20,6 +21,7 @@ from v440._utils.typing import (
     SupportsDunderLT,
 )
 from v440.abc.CoreABC import CoreABC
+from v440.errors.VersionError import VersionError
 
 
 class ListABC[Item: int | str](  # type: ignore[misc]
@@ -143,9 +145,21 @@ class ListABC[Item: int | str](  # type: ignore[misc]
     @setdoc.basic
     def __mutate__(self: Self, /) -> abc.Generator[list[Item], None, None]:
         mutable: list[Item]
+        slot: tuple[Item, ...]
         mutable = list(getattr(self, "_slot", ()))
         yield mutable
-        self._slot = tuple(self._mutable_parse(mutable))
+        try:
+            slot = tuple(self._mutable_parse(mutable))
+        except (TypeError, VersionError):
+            raise
+        except Exception:
+            raise Cfg.error(
+                "mutable",
+                VersionError,
+                mutable=mutable,
+                name=type(self).__name__,
+            )
+        self._slot = slot
 
     @classmethod
     @setdoc.basic
