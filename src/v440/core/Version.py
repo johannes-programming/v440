@@ -39,14 +39,14 @@ class Version(NestedABC):
             locals_.add(y)
         x = Public_.deformat(*publics)
         y = Local_.deformat(*locals_)
-        return cls._join(x, y)
+        return join(x, y)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> abc.Sequence[str]:
         return cls._split(spec)
 
     def _format_parsed(self: Self, public_f: str, local_f: str, /) -> str:
-        return self._join(
+        return join(
             format(self.public, public_f),
             format(self.local, local_f),
         )
@@ -54,13 +54,6 @@ class Version(NestedABC):
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_public=Public_, _local=Local_)
-
-    @classmethod
-    def _join(cls: type[Self], public: str, local: str = "", /) -> str:
-        if local:
-            return public + "+" + local
-        else:
-            return public
 
     def _string_fset(self: Self, value: str, /) -> None:
         self.public.string, self.local.string = self._split(value)
@@ -103,3 +96,10 @@ class Version(NestedABC):
     @public.setter
     def public(self: Self, value: object, /) -> None:
         self.public.string = value
+
+
+def join(public: str, local: str = "", /) -> str:
+    if local:
+        return public + "+" + local
+    else:
+        return public
