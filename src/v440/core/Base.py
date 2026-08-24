@@ -37,26 +37,10 @@ class Base(NestedABC):
             matches = Cfg.fullmatches("base", s)
             for t in ("basev", "epoch", "release"):
                 table[t].add(matches[t])
-        s = cls._deformat_basev(*table["basev"])
-        s += cls._deformat_epoch(*table["epoch"])
+        s = deformat_basev(*table["basev"])
+        s += deformat_epoch(*table["epoch"])
         s += Release_.deformat(*table["release"])
         return s
-
-    @classmethod
-    def _deformat_basev(cls: type[Self], value: str = "", /) -> str:
-        return value
-
-    @classmethod
-    def _deformat_epoch(cls: type[Self], /, *table: str) -> str:
-        n: int
-        s: str
-        n = 0
-        for s in table:
-            if s.startswith("0"):
-                n = max(n, len(s))
-        if n > min(map(len, table), default=0):
-            raise ValueError
-        return "#" * n + "!" * bool(n)
 
     @classmethod
     def _format_parse(
@@ -126,3 +110,19 @@ class Base(NestedABC):
     @release.setter
     def release(self: Self, value: object, /) -> None:
         self.release.string = value
+
+
+def deformat_basev(value: str = "", /) -> str:
+    return value
+
+
+def deformat_epoch(*table: str) -> str:
+    n: int
+    s: str
+    n = 0
+    for s in table:
+        if s.startswith("0"):
+            n = max(n, len(s))
+    if n > min(map(len, table), default=0):
+        raise ValueError
+    return "#" * n + "!" * bool(n)

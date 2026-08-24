@@ -20,6 +20,7 @@ import shlex
 import tomllib
 import unittest
 from collections.abc import Callable, Iterable, Sequence
+from importlib import import_module
 from pathlib import Path
 from typing import Any, Self, cast
 
@@ -50,6 +51,14 @@ class Util(enum.Enum):
     @functools.cached_property
     def examples(self: Self) -> dict[str, Any]:
         return cast(dict[str, Any], Util.util.data.get("examples", {}))
+
+    @staticmethod
+    def get_import(string: str, /) -> Any:
+        names: list[str]
+        pkg: Any
+        error_names = string.split(".")
+        error_pkg = import_module(".".join(error_names[:-1]))
+        return getattr(error_pkg, error_names[-1])
 
 
 class TestDeformatting(unittest.TestCase):
@@ -136,13 +145,15 @@ class TestDataSetter(unittest.TestCase):
         cls: type,
         /,
         *,
+        error: str = "v440.VersionError",
         query: list[Any],
         queryname: str,
         **kwargs: Any,
     ) -> None:
         obj: Any
+        error_type = Util.get_import(error)
         obj = cls()
-        with self.assertRaises(VersionError):
+        with self.assertRaises(error_type):
             setattr(obj, queryname, query)
 
     def go_valid(
@@ -150,6 +161,7 @@ class TestDataSetter(unittest.TestCase):
         cls: type,
         /,
         *,
+        error: str = "",
         query: list[Any],
         queryname: str,
         check: list[Any] | None = None,
@@ -163,6 +175,7 @@ class TestDataSetter(unittest.TestCase):
         ans: Any
         attr: Any
         obj: Any
+        self.assertEqual(error, "")
         obj = cls()
         setattr(obj, queryname, query)
         if attrname is not None:
@@ -200,23 +213,27 @@ class TestLocalData(unittest.TestCase):
         self: Self,
         /,
         *,
+        error: str = "v440.VersionError",
         query: list[Any],
         **kwargs: Any,
     ) -> None:
+        error_type: type[Any]
         obj: Any
+        error_type = Util.get_import(error)
         obj = core.Local.Local()
-        with self.assertRaises(TypeError):
+        with self.assertRaises(error_type):
             obj[:] = query
 
     def go_valid(
         self: Self,
         /,
         *,
-        query: list[Any],
-        check: list[Any] | None = None,
-        attrname: str | None = None,
         args: Sequence[Any] = (),
+        attrname: str | None = None,
+        check: list[Any] | None = None,
+        error: str = "",
         kwargs: dict[Any, Any] | tuple[Any, ...] = (),
+        query: list[Any],
         solution: Any | None = None,
         solutionname: str | None = None,
         **_kwargs: Any,
@@ -224,6 +241,7 @@ class TestLocalData(unittest.TestCase):
         ans: Any
         attr: Any
         obj: Any
+        self.assertEqual(error, "")
         obj = core.Local.Local()
         obj[:] = query
         if attrname is not None:
@@ -530,9 +548,17 @@ class TestStringExamples(unittest.TestCase):
                 self.go_valid_example(cls, x, **y)
 
     def go_invalid_example(
-        self: Self, cls: type, example: str, /, **kwargs: Any
+        self: Self,
+        cls: type[Any],
+        example: str,
+        /,
+        *,
+        error: str = "v440.VersionError",
+        **kwargs: Any,
     ) -> None:
-        with self.assertRaises(VersionError):
+        error_type: type[Exception]
+        error_type = Util.get_import(error)
+        with self.assertRaises(error_type):
             cls(string=example)
 
     def go_valid_example(
@@ -540,11 +566,23 @@ class TestStringExamples(unittest.TestCase):
         *args: Any,
         **kwargs: Any,
     ) -> None:
+        self.go_valid_example_error(*args, **kwargs)
         self.go_valid_example_repr(*args, **kwargs)
         self.go_valid_example_str(*args, **kwargs)
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
+
+    def go_valid_example_error(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        *,
+        error: str = "",
+        **kwargs: Any,
+    ) -> None:
+        self.assertEqual(error, "")
 
     def go_valid_example_repr(
         self: Self,

@@ -11,6 +11,8 @@ rc = "rc"
 [errors]
 deformat = "No common format specifier for {oxford}."
 format = "Invalid format specifier {spec!r} for object of type {type!r}."
+mutable = "{mutable!r} is an invalid value for {name!r}."
+setattr = "{value!r} is an invalid value for {name!r}."
 
 [patterns]
 basev_f = "V?"
