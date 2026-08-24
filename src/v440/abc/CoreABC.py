@@ -69,8 +69,6 @@ class CoreABC:
     def __setattr__(self: Self, name: str, value: Any, /) -> None:
         a: Any
         backup: str
-        msg: str
-        target: str
         a = getattr(type(self), name, None)
         if (not isinstance(a, property)) or not hasattr(a, "fset"):
             object.__setattr__(self, name, value)
