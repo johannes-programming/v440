@@ -20,7 +20,9 @@ import shlex
 import tomllib
 import unittest
 from collections.abc import Callable, Iterable, Sequence
+from importlib import import_module
 from pathlib import Path
+from types import ModuleType
 from typing import Any, Self, cast
 
 import iterprod
@@ -136,13 +138,20 @@ class TestDataSetter(unittest.TestCase):
         cls: type,
         /,
         *,
+        error_name: str = "v440.VersionError",
         query: list[Any],
         queryname: str,
         **kwargs: Any,
     ) -> None:
+        error_names: list[str]
+        error_pkg: ModuleType
+        error_type: type[Exception]
         obj: Any
+        error_names = error_name.split(".")
+        error_pkg = import_module(".".join(error_names[:-1]))
+        error_type = getattr(error_pkg, error_names[-1])
         obj = cls()
-        with self.assertRaises(VersionError):
+        with self.assertRaises(error_type):
             setattr(obj, queryname, query)
 
     def go_valid(
