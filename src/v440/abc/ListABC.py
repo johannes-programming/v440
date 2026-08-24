@@ -9,6 +9,7 @@ from abc import abstractmethod
 from collections import abc
 from functools import cmp_to_key
 from typing import Any, Self, overload
+from v440._utils.Cfg import Cfg
 
 import setdoc
 from datahold import ListLike, MutableListSlot
@@ -20,6 +21,7 @@ from v440._utils.typing import (
     SupportsDunderLT,
 )
 from v440.abc.CoreABC import CoreABC
+from v440.errors.VersionError import VersionError
 
 
 class ListABC[Item: int | str](  # type: ignore[misc]
@@ -143,9 +145,22 @@ class ListABC[Item: int | str](  # type: ignore[misc]
     @setdoc.basic
     def __mutate__(self: Self, /) -> abc.Generator[list[Item], None, None]:
         mutable: list[Item]
+        slot: tuple[Item, ...]
         mutable = list(getattr(self, "_slot", ()))
         yield mutable
-        self._slot = tuple(self._mutable_parse(mutable))
+        try:
+            slot = tuple(self._parse(map(self.__item, mutable)))
+        except TypeError:
+            
+        except VersionError:
+            raise
+        except Exception:
+            raise VersionError(
+                repr(mutable)
+                + " is an invalid value for "
+                + repr(type(self).__name__)
+            ) from None
+        self._slot = slot
 
     @classmethod
     @setdoc.basic
@@ -157,6 +172,20 @@ class ListABC[Item: int | str](  # type: ignore[misc]
         return cls(
             other,
         )
+
+    @classmethod
+    def __item(cls: type[Self], item: Item, /) -> Item:
+        try:
+            return cls._item(item)
+        except TypeError:
+            raise TypeError(
+                "type "
+                + repr(type(item))
+                + " of "
+                + repr(item)
+                + " is not allowed for "
+                + repr()
+            )
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
         if other is None:

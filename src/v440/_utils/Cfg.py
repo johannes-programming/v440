@@ -8,11 +8,15 @@ import re
 import tomllib
 from importlib import resources
 from importlib.resources.abc import Traversable
-from typing import Any, Self, cast
+from typing import Any, Self, cast, Never
 
 
 class Cfg(enum.Enum):
     cfg = None
+
+    @functools.cached_property
+    def consts(self: Self, /) -> dict[str, Any]:
+        return cast(dict[str, Any], self.data["consts"])
 
     @functools.cached_property
     def data(self: Self, /) -> dict[str, Any]:
@@ -20,6 +24,24 @@ class Cfg(enum.Enum):
         file: Traversable
         file = resources.files("v440._utils").joinpath("cfg.toml")
         return tomllib.loads(file.read_text(encoding="utf-8"))
+
+    @classmethod
+    def error(
+        cls:type[Self], 
+        key: str,
+        exc_type: type[Exception], 
+        /, 
+        *args: object, 
+        **kwargs: object,
+    ) -> Never:
+        raise exc_type(
+
+        )
+        
+
+    @functools.cached_property
+    def errors(self: Self, /) -> dict[str, str]:
+        return cast(dict[str, str], self.consts["errors"])
 
     @classmethod
     def fullmatches(
