@@ -7,7 +7,7 @@ __all__: list[str] = ["Local"]
 import operator
 import string as string_
 from collections import abc
-from typing import Any, Self
+from typing import Any, Self, SupportsIndex
 
 import setdoc
 from iterflat import iterflat
@@ -108,13 +108,21 @@ class Local(ListABC[int | str]):
         ans = ans[:-1]
         return ans
 
-    @classmethod
-    def _mutable_parse(
-        cls: type[Self],
-        other: list[Any],
-        /,
-    ) -> tuple[int | str, ...]:
-        return tuple(map(parse_item, other))
+    @staticmethod
+    def _item(value: object, /) -> int | str:
+        ans: int | str
+        if isinstance(value, SupportsIndex):
+            ans = operator.index(value)
+            if ans < 0:
+                raise ValueError
+            return ans
+        else:
+            ans = str(value).lower()
+            if ans.strip(string_.digits + string_.ascii_lowercase):
+                raise ValueError
+            if ans.strip(string_.digits):
+                return ans
+            return int(ans)
 
     @classmethod
     def _sort(
@@ -220,22 +228,6 @@ def deformat_part(part: set[str], /) -> str:
     s = "#" * deformat_nums(nums)
     s += deformat_lits(lits)
     return s
-
-
-def parse_item(value: Any, /) -> int | str:
-    ans: int | str
-    try:
-        ans = operator.index(value)
-    except Exception:
-        ans = str(value).lower()
-        if ans.strip(string_.digits + string_.ascii_lowercase):
-            raise
-        if not ans.strip(string_.digits):
-            ans = int(ans)
-    else:
-        if ans < 0:
-            raise ValueError
-    return ans
 
 
 def sort_key(item: int | str, /) -> tuple[bool, int | str]:

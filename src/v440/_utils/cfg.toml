@@ -11,6 +11,9 @@ rc = "rc"
 [errors]
 deformat = "No common format specifier for {oxford}."
 format = "Invalid format specifier {spec!r} for object of type {type!r}."
+Item = "The type {Self!r} forbids items of type {Item!r} but got {item!r}."
+item = "The type {Self!r} forbids {item!r} of type {Item!r} as an item."
+list = "{item!r} of type {Item!r} forbidden for the type {Self!r}."
 
 [patterns]
 basev_f = "V?"
