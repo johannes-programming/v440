@@ -129,10 +129,10 @@ class Release(ListABC[int]):
     ) -> int | list[int]:
         return self._list(minlen=minlen)[key]
 
-    @classmethod
-    def _item_parse(cls: type[Self], value: SupportsIndex, /) -> int:
+    @staticmethod
+    def _item(item: SupportsIndex, /) -> int:
         ans: int
-        ans = operator.index(value)
+        ans = operator.index(item)
         if ans < 0:
             raise ValueError
         return ans
@@ -147,13 +147,13 @@ class Release(ListABC[int]):
         packaging.extend([0] * max(0, index - len(self)))
         return packaging
 
-    @classmethod
-    def _mutable_parse(cls: type[Self], value: list[Any], /) -> list[int]:
-        v: list[int]
-        v = list(map(cls._item_parse, value))
-        while v and v[-1] == 0:
-            v.pop()
-        return v
+    @staticmethod
+    def _parse(other: abc.Iterable[int], /) -> abc.Iterable[int]:
+        ans: list[int]
+        ans = list(other)
+        while ans and not ans[-1]:
+            ans.pop()
+        return ans
 
     def _setitem(
         self: Self,

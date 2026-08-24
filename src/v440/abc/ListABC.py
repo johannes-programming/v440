@@ -143,9 +143,16 @@ class ListABC[Item: int | str](  # type: ignore[misc]
     @setdoc.basic
     def __mutate__(self: Self, /) -> abc.Generator[list[Item], None, None]:
         mutable: list[Item]
+        slot: tuple[Item, ...]
         mutable = list(getattr(self, "_slot", ()))
         yield mutable
-        self._slot = tuple(self._mutable_parse(mutable))
+        try:
+            slot = tuple(self._parse(map(self._item, mutable)))
+        except TypeError:
+            raise TypeError(
+                f"{type(self).__name__}({list(slot)})"
+            )
+        self._slot = slot
 
     @classmethod
     @setdoc.basic
@@ -164,13 +171,13 @@ class ListABC[Item: int | str](  # type: ignore[misc]
         else:
             MutableListSlot.__init__(self, other)
 
-    @classmethod
+    @staticmethod
     @abstractmethod
-    def _mutable_parse(
-        cls: type[Self],
-        other: list[Item],
-        /,
-    ) -> abc.Iterable[Item]: ...
+    def _item(item: Item, /) -> Item: ...
+
+    @staticmethod
+    @abstractmethod
+    def _parse(other: abc.Iterable[Item], /) -> abc.Iterable[Item]: ...
 
     @setdoc.basic
     def sort(
