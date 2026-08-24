@@ -213,23 +213,27 @@ class TestLocalData(unittest.TestCase):
         self: Self,
         /,
         *,
+        error: str = "v440.VersionError",
         query: list[Any],
         **kwargs: Any,
     ) -> None:
+        error_type: type[Any]
         obj: Any
+        error_type = Util.get_import(error)
         obj = core.Local.Local()
-        with self.assertRaises(TypeError):
+        with self.assertRaises(error_type):
             obj[:] = query
 
     def go_valid(
         self: Self,
         /,
         *,
-        query: list[Any],
-        check: list[Any] | None = None,
-        attrname: str | None = None,
         args: Sequence[Any] = (),
+        attrname: str | None = None,
+        check: list[Any] | None = None,
+        error: str = "",
         kwargs: dict[Any, Any] | tuple[Any, ...] = (),
+        query: list[Any],
         solution: Any | None = None,
         solutionname: str | None = None,
         **_kwargs: Any,
@@ -237,6 +241,7 @@ class TestLocalData(unittest.TestCase):
         ans: Any
         attr: Any
         obj: Any
+        self.assertEqual(error, "")
         obj = core.Local.Local()
         obj[:] = query
         if attrname is not None:

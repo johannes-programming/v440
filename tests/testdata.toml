@@ -322,7 +322,7 @@ valid = true
 
 [examples.Local."a b"]
 valid = false
-error = "builtins.TypeError"
+error = "v440.VersionError"
 
 [examples.Local."a..b"]
 valid = false
@@ -776,7 +776,7 @@ valid = true
 [examples.Version."0.0.0a1.post0.dev0+local.build.invalid_character#"]
 legacy = "Invalid cases (testing error handling for extreme cases)"
 valid = false
-error = "builtins.TypeError"
+error = "v440.VersionError"
 
 [examples.Version."0.0.1"]
 deformatted = ""
@@ -979,7 +979,7 @@ valid = false
 [examples.Version."1.0.0+@build"]
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
 valid = false
-error = "builtins.TypeError"
+error = "v440.VersionError"
 
 [examples.Version."1.0.0+abc.5.1"]
 deformatted = "..#"
@@ -2393,6 +2393,7 @@ query = [
 ]
 queryname = "data"
 valid = false
+error = "v440.VersionError"
 
 [mutating-local.test_local_large_integers]
 query = [
@@ -2405,6 +2406,7 @@ solution = [
 valid = true
 
 [mutating-local.test_local_non_string_elements]
+error = "v440.VersionError"
 query = [
     1,
     [],
