@@ -52,6 +52,14 @@ class Util(enum.Enum):
     def examples(self: Self) -> dict[str, Any]:
         return cast(dict[str, Any], Util.util.data.get("examples", {}))
 
+    @staticmethod
+    def get_import(string: str, /) -> Any:
+        names: list[str]
+        pkg: Any
+        error_names = string.split(".")
+        error_pkg = import_module(".".join(error_names[:-1]))
+        return getattr(error_pkg, error_names[-1])
+
 
 class TestDeformatting(unittest.TestCase):
     def test_0(self: Self, /) -> None:
@@ -142,13 +150,8 @@ class TestDataSetter(unittest.TestCase):
         queryname: str,
         **kwargs: Any,
     ) -> None:
-        error_names: list[str]
-        error_pkg: Any
-        error_type: type[Exception]
         obj: Any
-        error_names = error.split(".")
-        error_pkg = import_module(".".join(error_names[:-1]))
-        error_type = getattr(error_pkg, error_names[-1])
+        error_type = Util.get_import(error)
         obj = cls()
         with self.assertRaises(error_type):
             setattr(obj, queryname, query)
@@ -538,9 +541,17 @@ class TestStringExamples(unittest.TestCase):
                 self.go_valid_example(cls, x, **y)
 
     def go_invalid_example(
-        self: Self, cls: type, example: str, /, **kwargs: Any
+        self: Self,
+        cls: type[Any],
+        example: str,
+        /,
+        *,
+        error: str = "v440.VersionError",
+        **kwargs: Any,
     ) -> None:
-        with self.assertRaises(VersionError):
+        error_type: type[Exception]
+        error_type = Util.get_import(error)
+        with self.assertRaises(error_type):
             cls(string=example)
 
     def go_valid_example(
