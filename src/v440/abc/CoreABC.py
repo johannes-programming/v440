@@ -76,7 +76,7 @@ class CoreABC:
         backup = str(self)
         try:
             object.__setattr__(self, name, value)
-        except VersionError:
+        except (TypeError, VersionError):
             self.string = backup
             raise
         except Exception:

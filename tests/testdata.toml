@@ -1982,6 +1982,7 @@ solution = [
 valid = true
 
 [mutating.Release.test_release_invalid_assignment]
+error = "builtins.TypeError"
 query = [
     "1",
     "invalid",
@@ -1991,6 +1992,7 @@ queryname = "packaging"
 valid = false
 
 [mutating.Release.test_release_invalid_boolean_assignment]
+error = "builtins.TypeError"
 query = [
     "true",
     "false",
@@ -1999,6 +2001,7 @@ queryname = "packaging"
 valid = false
 
 [mutating.Release.test_release_invalid_float_value]
+error = "builtins.TypeError"
 query = [
     1,
     2.5,
@@ -2008,6 +2011,7 @@ queryname = "packaging"
 valid = false
 
 [mutating.Release.test_release_invalid_value]
+error = "builtins.TypeError"
 query = [
     "a",
     2,
@@ -2041,6 +2045,7 @@ solution = [
 valid = true
 
 [mutating.Release.test_release_non_integer_elements]
+error = "builtins.TypeError"
 query = [
     "invalid",
     2,
