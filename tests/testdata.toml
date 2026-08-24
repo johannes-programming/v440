@@ -989,7 +989,7 @@ valid = true
 [examples.Version."1.0.0+build@sha.123"]
 legacy = "Invalid cases (testing error handling for extreme cases)"
 valid = false
-error = "builtins.TypeError"
+error = "v440.VersionError"
 
 [examples.Version."1.0.0+exp.sha.5114f85"]
 deformatted = "..#"
