@@ -13,6 +13,7 @@ from typing import Any, Self, overload
 import setdoc
 from datahold import ListLike, MutableListSlot
 
+from v440._utils.Cfg import Cfg
 from v440._utils.typing import (
     SupportsDunderGE,
     SupportsDunderGT,
@@ -20,6 +21,7 @@ from v440._utils.typing import (
     SupportsDunderLT,
 )
 from v440.abc.CoreABC import CoreABC
+from v440.errors.VersionError import VersionError
 
 
 class ListABC[Item: int | str](  # type: ignore[misc]
@@ -145,7 +147,17 @@ class ListABC[Item: int | str](  # type: ignore[misc]
         mutable: list[Item]
         mutable = list(getattr(self, "_slot", ()))
         yield mutable
-        self._slot = tuple(self._mutable_parse(mutable))
+        try:
+            self._slot = tuple(self._parse(map(self.__item, mutable)))
+        except (TypeError, VersionError):
+            raise
+        except Exception:
+            raise Cfg.error(
+                "mutable",
+                VersionError,
+                mutable=mutable,
+                name=type(self).__name__,
+            ) from None
 
     @classmethod
     @setdoc.basic
@@ -158,19 +170,33 @@ class ListABC[Item: int | str](  # type: ignore[misc]
             other,
         )
 
+    @classmethod
+    def __item(cls: type[Self], item: Item, /) -> Item:
+        try:
+            return cls._item(item)
+        except (TypeError, VersionError):
+            raise
+        except Exception:
+            raise Cfg.error(
+                "item",
+                VersionError,
+                item=item,
+                name=cls.__name__,
+            ) from None
+
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
         if other is None:
             MutableListSlot.__init__(self)
         else:
             MutableListSlot.__init__(self, other)
 
-    @classmethod
-    @abstractmethod
-    def _mutable_parse(
-        cls: type[Self],
-        other: list[Item],
-        /,
-    ) -> abc.Iterable[Item]: ...
+    @staticmethod
+    def _item(item: Item, /) -> Item:
+        return item
+
+    @staticmethod
+    def _parse(other: abc.Iterable[Item], /) -> abc.Iterable[Item]:
+        return other
 
     @setdoc.basic
     def sort(
