@@ -26,14 +26,16 @@ class CoreABC:
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
-        msg: str
         parsed: abc.Iterable[Any]
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
-            msg = Cfg.cfg.data["consts"]["errors"]["format"]
-            msg %= (format_spec, type(self).__name__)
-            raise VersionError(msg)  # from None
+            raise Cfg.error(
+                "format",
+                VersionError,
+                spec=format_spec,
+                type=type(self).__name__,
+            )
         return str(self._format_parsed(*parsed))
 
     @abstractmethod
@@ -119,7 +121,6 @@ class CoreABC:
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
-        msg: str
         info: dict[str, Self]
         x: object
         y: str
@@ -130,9 +131,11 @@ class CoreABC:
         try:
             return cls._deformat(info)
         except Exception:
-            msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
-            msg %= oxford(*strings)
-            raise VersionError(msg)
+            raise Cfg.error(
+                "deformat",
+                VersionError,
+                oxford=oxford(*strings),
+            )
 
     @property
     @abstractmethod

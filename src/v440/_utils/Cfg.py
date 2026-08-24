@@ -22,6 +22,17 @@ class Cfg(enum.Enum):
         return tomllib.loads(file.read_text(encoding="utf-8"))
 
     @classmethod
+    def error[Error: Exception](
+        cls: type[Self],
+        key: str,
+        exc_type: type[Error],
+        /,
+        *args: object,
+        **kwargs: object,
+    ) -> Error:
+        return exc_type(cls.cfg.data["errors"][key].format(*args, **kwargs))
+
+    @classmethod
     def fullmatches(
         cls: type[Self], /, key: str, value: str
     ) -> dict[str, str]:

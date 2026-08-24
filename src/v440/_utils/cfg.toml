@@ -1,7 +1,3 @@
-[consts.errors]
-deformat = "No common format specifier for %s."
-format = "Invalid format specifier %r for object of type %r."
-
 [consts.phases]
 alpha = "a"
 a = "a"
@@ -11,6 +7,10 @@ preview = "rc"
 pre = "rc"
 c = "rc"
 rc = "rc"
+
+[errors]
+deformat = "No common format specifier for {oxford}."
+format = "Invalid format specifier {spec!r} for object of type {type!r}."
 
 [patterns]
 basev_f = "V?"
