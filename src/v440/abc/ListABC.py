@@ -145,11 +145,10 @@ class ListABC[Item: int | str](  # type: ignore[misc]
     @setdoc.basic
     def __mutate__(self: Self, /) -> abc.Generator[list[Item], None, None]:
         mutable: list[Item]
-        slot: tuple[Item, ...]
         mutable = list(getattr(self, "_slot", ()))
         yield mutable
         try:
-            slot = tuple(self._parse(map(self.__item, mutable)))
+            self._slot = tuple(self._parse(map(self.__item, mutable)))
         except (TypeError, VersionError):
             raise
         except Exception:
@@ -159,7 +158,6 @@ class ListABC[Item: int | str](  # type: ignore[misc]
                 mutable=mutable,
                 name=type(self).__name__,
             )
-        self._slot = slot
 
     @classmethod
     @setdoc.basic
