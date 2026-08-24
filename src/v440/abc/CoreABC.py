@@ -83,10 +83,12 @@ class CoreABC:
             raise
         except Exception:
             self._string_fset(backup.lower())
-            msg = "%r is an invalid value for %r"
-            target = type(self).__name__ + "." + name
-            msg %= (value, target)
-            raise VersionError(msg)
+            raise Cfg.error(
+                "setattr",
+                VersionError,
+                name=type(self).__name__ + "." + name,
+                value=value,
+            )
 
     @setdoc.basic
     def __str__(self: Self, /) -> str:
