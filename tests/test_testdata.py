@@ -161,6 +161,7 @@ class TestDataSetter(unittest.TestCase):
         cls: type,
         /,
         *,
+        error: str = "",
         query: list[Any],
         queryname: str,
         check: list[Any] | None = None,
@@ -174,6 +175,7 @@ class TestDataSetter(unittest.TestCase):
         ans: Any
         attr: Any
         obj: Any
+        self.assertEqual(error, "")
         obj = cls()
         setattr(obj, queryname, query)
         if attrname is not None:
@@ -559,11 +561,23 @@ class TestStringExamples(unittest.TestCase):
         *args: Any,
         **kwargs: Any,
     ) -> None:
+        self.go_valid_example_error(*args, **kwargs)
         self.go_valid_example_repr(*args, **kwargs)
         self.go_valid_example_str(*args, **kwargs)
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
+
+    def go_valid_example_error(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        *,
+        error: str = "",
+        **kwargs: Any,
+    ) -> None:
+        self.assertEqual(error, "")
 
     def go_valid_example_repr(
         self: Self,
