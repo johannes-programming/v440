@@ -149,7 +149,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
         mutable = list(getattr(self, "_slot", ()))
         yield mutable
         try:
-            slot = tuple(self._mutable_parse(mutable))
+            slot = tuple(self._parse(map(self.__item, mutable)))
         except (TypeError, VersionError):
             raise
         except Exception:
@@ -172,19 +172,33 @@ class ListABC[Item: int | str](  # type: ignore[misc]
             other,
         )
 
+    @classmethod
+    def __item(cls: type[Self], item: Item, /) -> Item:
+        try:
+            return cls._item(item)
+        except (TypeError, VersionError):
+            raise
+        except Exception:
+            raise Cfg.error(
+                "item",
+                VersionError,
+                item=item,
+                name=cls.__name__,
+            )
+
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
         if other is None:
             MutableListSlot.__init__(self)
         else:
             MutableListSlot.__init__(self, other)
 
-    @classmethod
-    @abstractmethod
-    def _mutable_parse(
-        cls: type[Self],
-        other: list[Item],
-        /,
-    ) -> abc.Iterable[Item]: ...
+    @staticmethod
+    def _item(item: Item, /) -> Item:
+        return item
+
+    @staticmethod
+    def _parse(other: abc.Iterable[Item], /) -> abc.Iterable[Item]:
+        return other
 
     @setdoc.basic
     def sort(
