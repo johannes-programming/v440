@@ -157,7 +157,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
                 VersionError,
                 mutable=mutable,
                 name=type(self).__name__,
-            )
+            ) from None
 
     @classmethod
     @setdoc.basic
@@ -182,7 +182,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
                 VersionError,
                 item=item,
                 name=cls.__name__,
-            )
+            ) from None
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
         if other is None:

@@ -86,7 +86,7 @@ class CoreABC:
                 VersionError,
                 name=type(self).__name__ + "." + name,
                 value=value,
-            )
+            ) from None
 
     @setdoc.basic
     def __str__(self: Self, /) -> str:
