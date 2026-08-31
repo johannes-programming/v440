@@ -162,7 +162,7 @@ class ListABC[Item: int | str](  # type: ignore[misc]
     @classmethod
     @setdoc.basic
     def __type__(
-        cls,
+        cls: type[Self],
         other: abc.Iterable[Item],
         /,
     ) -> Self:
