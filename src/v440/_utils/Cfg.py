@@ -36,10 +36,12 @@ class Cfg(enum.Enum):
     def fullmatches(
         cls: type[Self], /, key: str, value: str
     ) -> dict[str, str]:
-        ans: dict[Any, Any]
-        fullmatch: Any
+        ans: dict[str, Any]
+        fullmatch: re.Match[str] | None
         x: str
         fullmatch = cls.cfg.patterns[key].fullmatch(value)
+        if fullmatch is None:
+            raise Exception
         ans = fullmatch.groupdict()
         for x in ans.keys():
             if ans[x] is None:
