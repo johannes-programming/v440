@@ -42,7 +42,7 @@ class Release(ListABC[int]):
             if s == "":
                 continue
             for i, t in enumerate(s.split(".")):
-                k = cls._deformat_force(t)
+                k = deformat_force(t)
                 table[i] = cls._deformat_comb(table[i], k)
         s = ""
         for i, k in enumerate(table):
@@ -53,14 +53,6 @@ class Release(ListABC[int]):
             s += "."
         s = s.rstrip(".")
         return s
-
-    @classmethod
-    def _deformat_force(cls: type[Self], part: str, /) -> int:
-        if part == "0":
-            return -1
-        if part.startswith("0"):
-            return len(part)
-        return -len(part)
 
     @classmethod
     def _deformat_comb(cls: type[Self], x: int, y: int, /) -> int:
@@ -266,3 +258,11 @@ class Release(ListABC[int]):
     ) -> None:
         with self.__mutate__() as mutable:
             mutable.sort(key=key, reverse=reverse)
+
+
+def deformat_force(part: str, /) -> int:
+    if part == "0":
+        return -1
+    if part.startswith("0"):
+        return len(part)
+    return -len(part)
