@@ -110,19 +110,20 @@ class Local(ListABC[int | str]):
 
     @staticmethod
     def _item(value: Any, /) -> int | str:
-        ans: int | str
+        lit: str
+        num: int
         if isinstance(value, SupportsIndex):
-            ans = operator.index(value)
-            if ans < 0:
+            num = operator.index(value)
+            if num < 0:
                 raise ValueError
-            return ans
+            return num
         else:
-            ans = str(value).lower()
-            if ans.strip(string_.digits + string_.ascii_lowercase):
+            lit = str(value).lower()
+            if lit.strip(string_.digits + string_.ascii_lowercase):
                 raise ValueError
-            if ans.strip(string_.digits):
-                return ans
-            return int(ans)
+            if lit.strip(string_.digits):
+                return lit
+            return int(lit)
 
     @classmethod
     def _sort(
