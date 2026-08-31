@@ -43,7 +43,7 @@ class Release(ListABC[int]):
                 continue
             for i, t in enumerate(s.split(".")):
                 k = deformat_force(t)
-                table[i] = cls._deformat_comb(table[i], k)
+                table[i] = deformat_comb(table[i], k)
         s = ""
         for i, k in enumerate(table):
             if k > 1:
@@ -53,21 +53,6 @@ class Release(ListABC[int]):
             s += "."
         s = s.rstrip(".")
         return s
-
-    @classmethod
-    def _deformat_comb(cls: type[Self], x: int, y: int, /) -> int:
-        if 0 > x * y:
-            if x + y <= 0:
-                return max(x, y)
-            raise ValueError
-        elif 0 < x * y:
-            if x < 0:
-                return max(x, y)
-            if x == y:
-                return x
-            raise ValueError
-        else:
-            return x + y
 
     def _delitem(
         self: Self,
@@ -258,6 +243,21 @@ class Release(ListABC[int]):
     ) -> None:
         with self.__mutate__() as mutable:
             mutable.sort(key=key, reverse=reverse)
+
+
+def deformat_comb(x: int, y: int, /) -> int:
+    if 0 > x * y:
+        if x + y <= 0:
+            return max(x, y)
+        raise ValueError
+    elif 0 < x * y:
+        if x < 0:
+            return max(x, y)
+        if x == y:
+            return x
+        raise ValueError
+    else:
+        return x + y
 
 
 def deformat_force(part: str, /) -> int:
