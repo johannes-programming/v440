@@ -7,7 +7,7 @@ __all__: list[str] = ["Post"]
 import operator
 from collections.abc import Iterable
 from functools import reduce
-from typing import Any, Self, SupportsIndex
+from typing import Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
