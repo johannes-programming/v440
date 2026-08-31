@@ -110,7 +110,7 @@ class Local(ListABC[int | str]):
         return ans
 
     @staticmethod
-    def _item(value: Any, /) -> int | str:
+    def _item(value: object, /) -> int | str:
         lit: str
         num: int
         if isinstance(value, SupportsIndex):
@@ -129,7 +129,7 @@ class Local(ListABC[int | str]):
     @classmethod
     def _sort(
         cls: type[Self],
-        value: Any,
+        value: int | str,
         /,
     ) -> tuple[bool, int | str]:
         return type(value) is int, value
@@ -159,7 +159,7 @@ class Local(ListABC[int | str]):
 
     @packaging.setter
     @setter
-    def packaging(self: Self, value: Any, /) -> None:
+    def packaging(self: Self, value: object, /) -> None:
         if value is None:
             self.string = ""
         else:
