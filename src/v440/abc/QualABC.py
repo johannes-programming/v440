@@ -7,6 +7,7 @@ import string as string_
 from abc import abstractmethod
 from typing import Any, Self, SupportsIndex
 
+from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 
 
@@ -62,6 +63,7 @@ class QualABC(NestedABC):
         return self._lit
 
     @lit.setter
+    @setter
     def lit(self: Self, value: object, /) -> None:
         x: str
         x = str(value).lower()
@@ -77,6 +79,7 @@ class QualABC(NestedABC):
         return self._num
 
     @num.setter
+    @setter
     def num(self: Self, value: SupportsIndex, /) -> None:
         y: int
         y = operator.index(value)

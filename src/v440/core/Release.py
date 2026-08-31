@@ -11,6 +11,7 @@ from typing import Any, Self, SupportsIndex, overload
 
 import setdoc
 
+from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
@@ -186,6 +187,7 @@ class Release(ListABC[int]):
         return self._getitem(key=0, minlen=1)
 
     @major.setter
+    @setter
     def major(self: Self, value: Any, /) -> None:
         self._setitem(key=0, value=value, minlen=1)
 
@@ -199,6 +201,7 @@ class Release(ListABC[int]):
         return self._getitem(key=1, minlen=2)
 
     @minor.setter
+    @setter
     def minor(self: Self, value: Any, /) -> None:
         self._setitem(key=1, value=value, minlen=2)
 
@@ -212,6 +215,7 @@ class Release(ListABC[int]):
         return self._getitem(key=2, minlen=3)
 
     @micro.setter
+    @setter
     def micro(self: Self, value: Any, /) -> None:
         self._setitem(key=2, value=value, minlen=3)
 
@@ -227,6 +231,7 @@ class Release(ListABC[int]):
         return self.__freeze__()
 
     @packaging.setter
+    @setter
     def packaging(self: Self, other: abc.Iterable[int], /) -> None:
         mutable: list[int]
         with self.__mutate__() as mutable:
