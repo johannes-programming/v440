@@ -11,6 +11,7 @@ from typing import Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
+from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
@@ -63,6 +64,7 @@ class Post(QualABC):
         return self.num if self else None
 
     @packaging.setter
+    @setter
     def packaging(self: Self, value: SupportsIndex | None, /) -> None:
         if value is None:
             self.num = 0

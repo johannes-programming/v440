@@ -10,6 +10,7 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
+from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
@@ -96,6 +97,7 @@ class Pre(QualABC):
             return None
 
     @packaging.setter
+    @setter
     def packaging(
         self: Self, value: tuple[str, SupportsIndex] | None, /
     ) -> None:

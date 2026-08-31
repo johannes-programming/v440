@@ -10,6 +10,7 @@ import setdoc
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
+from v440._utils.setter import setter
 from v440.errors.VersionError import VersionError
 
 
@@ -66,29 +67,6 @@ class CoreABC:
     def __repr__(self: Self, /) -> str: ...
 
     @setdoc.basic
-    def __setattr__(self: Self, name: str, value: Any, /) -> None:
-        a: Any
-        backup: str
-        a = getattr(type(self), name, None)
-        if (not isinstance(a, property)) or not hasattr(a, "fset"):
-            object.__setattr__(self, name, value)
-            return
-        backup = str(self)
-        try:
-            object.__setattr__(self, name, value)
-        except (TypeError, VersionError):
-            self.string = backup
-            raise
-        except Exception:
-            self._string_fset(backup.lower())
-            raise Cfg.error(
-                "setattr",
-                VersionError,
-                name=type(self).__name__ + "." + name,
-                value=value,
-            ) from None
-
-    @setdoc.basic
     def __str__(self: Self, /) -> str:
         return format(self, "")
 
@@ -142,6 +120,7 @@ class CoreABC:
     def packaging(self: Self, /) -> object: ...
 
     @packaging.setter
+    @setter
     @abstractmethod
     def packaging(self: Self, other: Never, /) -> None: ...
 
@@ -151,5 +130,6 @@ class CoreABC:
         return format(self, "")
 
     @string.setter
+    @setter
     def string(self: Self, other: object, /) -> None:
         self._string_fset(str(other).lower())

@@ -8,6 +8,7 @@ import operator
 from typing import Any, Final, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
+from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
 
@@ -93,6 +94,7 @@ class Base(NestedABC):
         return self._epoch
 
     @epoch.setter
+    @setter
     def epoch(self: Self, value: SupportsIndex, /) -> None:
         v: int
         v = operator.index(value)
@@ -108,6 +110,7 @@ class Base(NestedABC):
         return self._release
 
     @release.setter
+    @setter
     def release(self: Self, value: object, /) -> None:
         self.release.string = value
 

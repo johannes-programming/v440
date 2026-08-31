@@ -9,6 +9,7 @@ from typing import Any, Final, Self
 
 import packaging.version
 
+from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
@@ -76,6 +77,7 @@ class Version(NestedABC):
         return self._local
 
     @local.setter
+    @setter
     def local(self: Self, value: object, /) -> None:
         self.local.string = value
 
@@ -85,6 +87,7 @@ class Version(NestedABC):
         return packaging.version.Version(str(self))
 
     @packaging.setter
+    @setter
     def packaging(self: Self, value: object, /) -> None:
         self.string = value
 
@@ -94,6 +97,7 @@ class Version(NestedABC):
         return self._public
 
     @public.setter
+    @setter
     def public(self: Self, value: object, /) -> None:
         self.public.string = value
 
