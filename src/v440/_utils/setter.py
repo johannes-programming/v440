@@ -4,7 +4,7 @@ __all__: list[str] = ["setter"]
 
 from collections.abc import Callable
 from functools import wraps
-from typing import Protocol, cast
+from typing import Protocol, Self, cast
 
 from v440._utils.Cfg import Cfg
 from v440.errors.VersionError import VersionError
@@ -12,12 +12,12 @@ from v440.errors.VersionError import VersionError
 
 class _Settable(Protocol):
     @property
-    def string(self, /) -> str: ...
+    def string(self: Self, /) -> str: ...
 
     @string.setter
-    def string(self, other: object, /) -> None: ...
+    def string(self: Self, other: object, /) -> None: ...
 
-    def _string_fset(self, other: str, /) -> None: ...
+    def _string_fset(self: Self, other: str, /) -> None: ...
 
 
 def setter[Function: Callable[..., None]](

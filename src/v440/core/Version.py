@@ -28,7 +28,7 @@ class Version(NestedABC):
         return self.public, self.local
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[Any, Any], /) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         publics: set[str]
         locals_: set[str]
         x: str
