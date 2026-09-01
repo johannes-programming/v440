@@ -10,7 +10,6 @@ import setdoc
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
-from v440._utils.setter import setter
 from v440.errors.VersionError import VersionError
 
 
@@ -120,7 +119,6 @@ class CoreABC:
     def packaging(self: Self, /) -> object: ...
 
     @packaging.setter
-    @setter
     @abstractmethod
     def packaging(self: Self, other: Never, /) -> None: ...
 
@@ -130,6 +128,13 @@ class CoreABC:
         return format(self, "")
 
     @string.setter
-    @setter
     def string(self: Self, other: object, /) -> None:
-        self._string_fset(str(other).lower())
+        try:
+            self._string_fset(str(other).lower())
+        except Exception:
+            raise Cfg.error(
+                "string",
+                VersionError,
+                string=other,
+                type=type(self).__name__,
+            )
