@@ -126,8 +126,9 @@ dmypy.json
 # PKG-INFO
 PKG-INFO
 
-# .DS_store
+# finder
 **/.DS_store
+**/.localized
 
 # out
 out/
