@@ -173,6 +173,8 @@ class TestStringExamples(unittest.TestCase):
             x.public.base.release.packaging,
         )
 
+
+class TestStringExamples0(unittest.TestCase):
     def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
