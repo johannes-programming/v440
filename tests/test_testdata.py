@@ -97,12 +97,6 @@ class TestDeformatting(unittest.TestCase):
 
 
 class TestStringExamples(unittest.TestCase):
-    def test_versions(self: Self, /) -> None:
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.examples["Version"].items():
-            with self.subTest(example=x):
-                self.go_version(x, **y)
 
     def go_version(
         self: Self, example: str, /, *, valid: bool, **kwargs: Any
@@ -173,14 +167,15 @@ class TestStringExamples(unittest.TestCase):
             x.public.base.release.packaging,
         )
 
-
-class TestStringExamples0(unittest.TestCase):
-    def test_0(self: Self, /) -> None:
+    def test_versions(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.examples.items():
-            with self.subTest(clsname=x):
-                self.go_examples(x, y)
+        for x, y in Util.util.examples["Version"].items():
+            with self.subTest(example=x):
+                self.go_version(x, **y)
+
+
+class TestStringExamples0(unittest.TestCase):
 
     def go_examples(
         self: Self, /, clsname: str, tables: dict[Any, Any]
@@ -217,6 +212,54 @@ class TestStringExamples0(unittest.TestCase):
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
+
+    def go_valid_example_deformatted(
+        self: Self,
+        cls: Any,
+        example: str,
+        /,
+        *,
+        deformatted: str | None = None,
+        **kwargs: Any,
+    ) -> None:
+        spec: str
+        spec = cls.deformat(example)
+        if deformatted is not None:
+            self.assertEqual(spec, deformatted)
+
+    def go_valid_example_formatted(
+        self: Self,
+        cls: type,
+        example: str,
+        /,
+        *,
+        formatted: Iterable[Any] = (),
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        obj = cls(string=example)
+        for x, y in dict(formatted).items():
+            with self.subTest(spec=x, target=y):
+                self.assertEqual(y, format(obj, x))
+
+    def go_valid_example_remake(
+        self: Self,
+        cls: Any,
+        example: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        remake: str
+        spec: str
+        obj = cls(string=example)
+        spec = cls.deformat(example)
+        remake = format(obj, spec)
+        self.assertEqual(
+            example,
+            remake,
+            msg="example=%r, remake=%r, spec=%r" % (example, remake, spec),
+        )
 
     def go_valid_example_repr(
         self: Self,
@@ -255,53 +298,12 @@ class TestStringExamples0(unittest.TestCase):
         if solution is not None:
             self.assertEqual(str(obj), solution)
 
-    def go_valid_example_formatted(
-        self: Self,
-        cls: type,
-        example: str,
-        /,
-        *,
-        formatted: Iterable[Any] = (),
-        **kwargs: Any,
-    ) -> None:
-        obj: Any
-        obj = cls(string=example)
-        for x, y in dict(formatted).items():
-            with self.subTest(spec=x, target=y):
-                self.assertEqual(y, format(obj, x))
-
-    def go_valid_example_deformatted(
-        self: Self,
-        cls: Any,
-        example: str,
-        /,
-        *,
-        deformatted: str | None = None,
-        **kwargs: Any,
-    ) -> None:
-        spec: str
-        spec = cls.deformat(example)
-        if deformatted is not None:
-            self.assertEqual(spec, deformatted)
-
-    def go_valid_example_remake(
-        self: Self,
-        cls: Any,
-        example: str,
-        /,
-        **kwargs: Any,
-    ) -> None:
-        obj: Any
-        remake: str
-        spec: str
-        obj = cls(string=example)
-        spec = cls.deformat(example)
-        remake = format(obj, spec)
-        self.assertEqual(
-            example,
-            remake,
-            msg="example=%r, remake=%r, spec=%r" % (example, remake, spec),
-        )
+    def test_0(self: Self, /) -> None:
+        x: str
+        y: dict[Any, Any]
+        for x, y in Util.util.examples.items():
+            with self.subTest(clsname=x):
+                self.go_examples(x, y)
 
 
 class TestDataSetter(unittest.TestCase):
