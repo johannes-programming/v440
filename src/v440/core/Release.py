@@ -4,10 +4,12 @@ from __future__ import annotations
 
 __all__: list[str] = ["Release"]
 
+
 import operator
 import string as string_
 from typing import Any, Self, SupportsIndex, overload
 
+from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
@@ -192,6 +194,7 @@ class Release(ListABC[int]):
         return self._getitem(key=0, minlen=1)
 
     @major.setter
+    @setter
     def major(self: Self, value: Any, /) -> None:
         self._setitem(key=0, value=value, minlen=1)
 
@@ -205,6 +208,7 @@ class Release(ListABC[int]):
         return self._getitem(key=1, minlen=2)
 
     @minor.setter
+    @setter
     def minor(self: Self, value: Any, /) -> None:
         self._setitem(key=1, value=value, minlen=2)
 
@@ -218,6 +222,7 @@ class Release(ListABC[int]):
         return self._getitem(key=2, minlen=3)
 
     @micro.setter
+    @setter
     def micro(self: Self, value: Any, /) -> None:
         self._setitem(key=2, value=value, minlen=3)
 

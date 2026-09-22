@@ -10,6 +10,7 @@ from typing import Any, Self, TypeVar
 import setdoc
 from datahold import BaseDataObject, HoldList
 
+from v440._utils.setter import setter
 from v440.abc.CoreABC import CoreABC
 
 Item = TypeVar("Item", bound=int | str)
@@ -86,6 +87,7 @@ class ListABC(HoldList[Item], CoreABC):
         return self._data
 
     @data.setter
+    @setter
     def data(self: Self, value: abc.Iterable[Any], /) -> None:
         self._data = tuple(self._data_parse(list(value)))
 

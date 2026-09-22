@@ -4,9 +4,11 @@ from __future__ import annotations
 
 __all__: list[str] = ["Public"]
 
+
 import string as string_
 from typing import Any, Final, Self
 
+from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
 from v440.core.Qual import Qual as Qual_
@@ -92,6 +94,7 @@ class Public(NestedABC):
         return self._base
 
     @base.setter
+    @setter
     def base(self: Self, value: object, /) -> None:
         self.base.string = value
 
@@ -103,5 +106,6 @@ class Public(NestedABC):
         return self._qual
 
     @qual.setter
+    @setter
     def qual(self: Self, value: object, /) -> None:
         self.qual.string = value

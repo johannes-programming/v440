@@ -10,6 +10,7 @@ from copyable import Copyable
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
+from v440._utils.setter import setter
 from v440.errors.VersionError import VersionError
 
 
@@ -62,29 +63,6 @@ class CoreABC(Copyable):
     @abstractmethod
     @setdoc.basic
     def __repr__(self: Self, /) -> str: ...
-
-    @setdoc.basic
-    def __setattr__(self: Self, name: str, value: Any, /) -> None:
-        a: Any
-        backup: str
-        msg: str
-        target: str
-        a = getattr(type(self), name, None)
-        if (not isinstance(a, property)) or not hasattr(a, "fset"):
-            object.__setattr__(self, name, value)
-            return
-        backup = str(self)
-        try:
-            object.__setattr__(self, name, value)
-        except VersionError:
-            self.string = backup
-            raise
-        except Exception:
-            self._string_fset(backup.lower())
-            msg = "%r is an invalid value for %r"
-            target = type(self).__name__ + "." + name
-            msg %= (value, target)
-            raise VersionError(msg)
 
     @setdoc.basic
     def __str__(self: Self, /) -> str:
@@ -144,5 +122,6 @@ class CoreABC(Copyable):
         return format(self, "")
 
     @string.setter
+    @setter
     def string(self: Self, value: object, /) -> None:
         self._string_fset(str(value).lower())

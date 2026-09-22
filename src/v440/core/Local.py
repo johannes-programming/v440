@@ -11,6 +11,7 @@ from typing import Any, Self
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
+from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
@@ -193,6 +194,7 @@ class Local(ListABC[int | str]):
             return None
 
     @packaging.setter
+    @setter
     def packaging(self: Self, value: Any) -> None:
         if value is None:
             self.string = ""

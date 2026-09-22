@@ -11,6 +11,7 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
+from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
 from v440.core.Post import Post as Post_
@@ -133,6 +134,7 @@ class Qual(NestedABC):
         return self._dev
 
     @dev.setter
+    @setter
     def dev(self: Self, value: object, /) -> None:
         self.dev.string = value
 
@@ -155,6 +157,7 @@ class Qual(NestedABC):
         return self._post
 
     @post.setter
+    @setter
     def post(self: Self, value: object, /) -> None:
         self.post.string = value
 
@@ -163,5 +166,6 @@ class Qual(NestedABC):
         return self._pre
 
     @pre.setter
+    @setter
     def pre(self: Self, value: object, /) -> None:
         self.pre.string = value
