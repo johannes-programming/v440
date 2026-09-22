@@ -55,7 +55,7 @@ class Dev(QualABC):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
         if value == "dev":
             return "dev"
         else:
@@ -70,7 +70,7 @@ class Dev(QualABC):
 
     @packaging.setter
     @setter
-    def packaging(self: Self, value: SupportsIndex | None) -> None:
+    def packaging(self: Self, value: SupportsIndex | None, /) -> None:
         if value is None:
             self.num = 0
             self.lit = ""

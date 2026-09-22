@@ -55,7 +55,7 @@ class Post(QualABC):
         return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
         if value in ("-", "post", "r", "rev"):
             return "post"
         else:
@@ -67,7 +67,7 @@ class Post(QualABC):
 
     @packaging.setter
     @setter
-    def packaging(self: Self, value: SupportsIndex | None) -> None:
+    def packaging(self: Self, value: SupportsIndex | None, /) -> None:
         if value is None:
             self.num = 0
             self.lit = ""

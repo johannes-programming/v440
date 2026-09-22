@@ -44,11 +44,11 @@ class Base(NestedABC):
         return s
 
     @classmethod
-    def _deformat_basev(cls: type[Self], value: str = "") -> str:
+    def _deformat_basev(cls: type[Self], value: str = "", /) -> str:
         return value
 
     @classmethod
-    def _deformat_epoch(cls: type[Self], *table: str) -> str:
+    def _deformat_epoch(cls: type[Self], /, *table: str) -> str:
         n: int
         s: str
         n = 0
@@ -94,7 +94,7 @@ class Base(NestedABC):
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_epoch=int, _release=Release_)
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
@@ -113,7 +113,7 @@ class Base(NestedABC):
 
     @epoch.setter
     @setter
-    def epoch(self: Self, value: Any) -> None:
+    def epoch(self: Self, value: Any, /) -> None:
         v: int
         v = operator.index(value)
         if v < 0:

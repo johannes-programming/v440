@@ -27,7 +27,7 @@ class Public(NestedABC):
         return self.base, self.qual
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self]) -> str:
+    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
         bases: set[str]
         quals: set[str]
         x: str
