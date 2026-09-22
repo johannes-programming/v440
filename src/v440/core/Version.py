@@ -65,7 +65,7 @@ class Version(NestedABC):
         else:
             return public
 
-    def _string_fset(self: Self, value: str) -> None:
+    def _string_fset(self: Self, value: str, /) -> None:
         self.public.string, self.local.string = self._split(value)
 
     @classmethod

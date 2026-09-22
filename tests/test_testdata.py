@@ -35,7 +35,7 @@ class Util(enum.Enum):
     util = None
 
     @functools.cached_property
-    def data(self: Self) -> dict[str, Any]:
+    def data(self: Self, /) -> dict[str, Any]:
         file: Path
         stream: io.BufferedReader
         file = Path(__file__).parent / "testdata.toml"
@@ -43,23 +43,25 @@ class Util(enum.Enum):
             return tomllib.load(stream)
 
     @functools.cached_property
-    def deformatting(self: Self) -> dict[str, Any]:
+    def deformatting(self: Self, /) -> dict[str, Any]:
         return cast(dict[str, Any], Util.util.data.get("deformatting", {}))
 
     @functools.cached_property
-    def examples(self: Self) -> dict[str, Any]:
+    def examples(self: Self, /) -> dict[str, Any]:
         return cast(dict[str, Any], Util.util.data.get("examples", {}))
 
 
 class TestDeformatting(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.deformatting.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict[str, Any]) -> None:
+    def go_examples(
+        self: Self, /, clsname: str, tables: dict[str, Any]
+    ) -> None:
         cls: Any
         split: dict[bool, dict[Any, Any]]
         x: Any
@@ -95,7 +97,7 @@ class TestDeformatting(unittest.TestCase):
 
 
 class TestStringExamples(unittest.TestCase):
-    def test_versions(self: Self) -> None:
+    def test_versions(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples["Version"].items():
@@ -171,14 +173,16 @@ class TestStringExamples(unittest.TestCase):
             x.public.base.release.packaging,
         )
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples.items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
-    def go_examples(self: Self, clsname: str, tables: dict[Any, Any]) -> None:
+    def go_examples(
+        self: Self, /, clsname: str, tables: dict[Any, Any]
+    ) -> None:
         cls: type
         split: dict[Any, Any]
         x: str
@@ -202,6 +206,7 @@ class TestStringExamples(unittest.TestCase):
 
     def go_valid_example(
         self: Self,
+        /,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -299,7 +304,7 @@ class TestStringExamples(unittest.TestCase):
 
 class TestDataSetter(unittest.TestCase):
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.data["data-setter"].items():
@@ -322,6 +327,7 @@ class TestDataSetter(unittest.TestCase):
 
     def go_task(
         self: Self,
+        /,
         *args: Any,
         valid: bool,
         **kwargs: Any,
@@ -376,7 +382,7 @@ class TestDataSetter(unittest.TestCase):
 
 class TestVersionEpochGo(unittest.TestCase):
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
         for x, y in Util.util.data["epoch"].items():
@@ -385,6 +391,7 @@ class TestVersionEpochGo(unittest.TestCase):
 
     def go(
         self: Self,
+        /,
         full: Any,
         part: Any,
         query: Any = None,
@@ -401,7 +408,7 @@ class TestVersionEpochGo(unittest.TestCase):
 
 
 class TestSlicingGo(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
         for x, y in Util.util.data["slicingmethod"].items():
@@ -410,6 +417,7 @@ class TestSlicingGo(unittest.TestCase):
 
     def go(
         self: Self,
+        /,
         *,
         valid: bool,
         **kwargs: Any,
@@ -421,6 +429,7 @@ class TestSlicingGo(unittest.TestCase):
 
     def go_invalid(
         self: Self,
+        /,
         *,
         query: Any,
         change: Any,
@@ -437,6 +446,7 @@ class TestSlicingGo(unittest.TestCase):
 
     def go_valid(
         self: Self,
+        /,
         *,
         query: Any,
         change: Any,
@@ -452,7 +462,7 @@ class TestSlicingGo(unittest.TestCase):
 
 
 class TestPackagingA(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
         for x, y in Util.util.examples["Version"].items():
@@ -464,7 +474,7 @@ class TestPackagingA(unittest.TestCase):
             return
         self.go_format(text)
 
-    def go_format(self: Self, text: str) -> None:
+    def go_format(self: Self, /, text: str) -> None:
         a: Version_
         b: str
         f: str
@@ -478,7 +488,7 @@ class TestPackagingA(unittest.TestCase):
 
 
 class TestPackagingC(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         args: tuple[Any, ...]
         casted: tuple[str, str, Callable[..., Any]]
         ops: list[Callable[..., Any]]
@@ -540,7 +550,7 @@ class TestPackagingC(unittest.TestCase):
 
 
 class TestSlots(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: Any
         y: Any
         for x, y in Util.util.data["core-non-attributes"].items():
@@ -549,6 +559,7 @@ class TestSlots(unittest.TestCase):
 
     def go(
         self: Self,
+        /,
         clsname: str,
         attrname: str,
         attrvalue: Any,
@@ -563,14 +574,14 @@ class TestSlots(unittest.TestCase):
 
 
 class TestReleaseAlias(unittest.TestCase):
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         x: Any
         y: Any
         for x, y in Util.util.data["release-key"].items():
             with self.subTest(test_label=x):
                 self.go(**y)
 
-    def go(self: Self, steps: list[Any]) -> None:
+    def go(self: Self, /, steps: list[Any]) -> None:
         version: Version
         step: dict[str, Any]
         version = Version()
@@ -579,6 +590,7 @@ class TestReleaseAlias(unittest.TestCase):
 
     def modify(
         self: Self,
+        /,
         version: Version,
         name: str,
         value: Any,
