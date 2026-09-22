@@ -18,7 +18,7 @@ class Dev(QualABC):
 
     __slots__ = ()
 
-    def _cmp(self: Self) -> tuple[int] | tuple[int, int]:
+    def _cmp(self: Self, /) -> tuple[int] | tuple[int, int]:
         if self.lit:
             return 0, self.num
         else:
@@ -61,7 +61,7 @@ class Dev(QualABC):
             raise ValueError
 
     @property
-    def packaging(self: Self) -> int | None:
+    def packaging(self: Self, /) -> int | None:
         if self:
             return self.num
         else:

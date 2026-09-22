@@ -16,11 +16,11 @@ class NestedABC(cmp3.CmpABC, CoreABC):
     __slots__ = ()
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
+    def __bool__(self: Self, /) -> bool:
         return any(map(bool, self._todict().values()))
 
     @setdoc.basic
-    def __cmp__(self: Self, other: Any) -> None | float | int:
+    def __cmp__(self: Self, other: Any, /) -> None | float | int:
         if type(self) is not type(other):
             return None
         return cast(
@@ -28,15 +28,15 @@ class NestedABC(cmp3.CmpABC, CoreABC):
         )
 
     @setdoc.basic
-    def __repr__(self: Self) -> str:
+    def __repr__(self: Self, /) -> str:
         return datarepr(type(self).__name__, **self._todict())
 
     @abstractmethod
-    def _cmp(self: Self) -> Any: ...
+    def _cmp(self: Self, /) -> Any: ...
 
     @classmethod
     @abstractmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]: ...
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]: ...
 
     def _init_other(self: Self, other: Self | None, /) -> None:
         x: str
@@ -48,4 +48,4 @@ class NestedABC(cmp3.CmpABC, CoreABC):
                 object.__setattr__(self, x, y(getattr(other, x)))
 
     @abstractmethod
-    def _todict(self: Self) -> dict[str, Any]: ...
+    def _todict(self: Self, /) -> dict[str, Any]: ...

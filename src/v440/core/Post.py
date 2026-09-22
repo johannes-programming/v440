@@ -18,7 +18,7 @@ class Post(QualABC):
 
     __slots__ = ()
 
-    def _cmp(self: Self) -> int:
+    def _cmp(self: Self, /) -> int:
         if self.lit:
             return self.num
         else:
@@ -61,7 +61,7 @@ class Post(QualABC):
             raise ValueError
 
     @property
-    def packaging(self: Self) -> int | None:
+    def packaging(self: Self, /) -> int | None:
         return self.num if self else None
 
     @packaging.setter

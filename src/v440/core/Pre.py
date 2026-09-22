@@ -17,7 +17,7 @@ class Pre(QualABC):
 
     __slots__ = ()
 
-    def _cmp(self: Self) -> tuple[Any, ...]:
+    def _cmp(self: Self, /) -> tuple[Any, ...]:
         if not self:
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
@@ -87,18 +87,20 @@ class Pre(QualABC):
         return ans
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
         return Cfg.cfg.phases[value]
 
     @property
-    def packaging(self: Self) -> tuple[str, int] | None:
+    def packaging(self: Self, /) -> tuple[str, int] | None:
         if self:
             return self.lit, self.num
         else:
             return None
 
     @packaging.setter
-    def packaging(self: Self, value: tuple[str, SupportsIndex] | None) -> None:
+    def packaging(
+        self: Self, value: tuple[str, SupportsIndex] | None, /
+    ) -> None:
         if value is None:
             self.num = 0
             self.lit = ""

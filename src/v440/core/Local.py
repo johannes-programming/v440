@@ -186,7 +186,7 @@ class Local(ListABC[int | str]):
         self.data = v.split(".")
 
     @property
-    def packaging(self: Self) -> str | None:
+    def packaging(self: Self, /) -> str | None:
         if self:
             return str(self)
         else:

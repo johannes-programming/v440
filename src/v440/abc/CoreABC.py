@@ -18,14 +18,14 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __bool__(self: Self) -> bool: ...
+    def __bool__(self: Self, /) -> bool: ...
 
     @abstractmethod
     @setdoc.basic
     def __eq__(self: Self, other: object, /) -> bool: ...
 
     @setdoc.basic
-    def __format__(self: Self, format_spec: object) -> str:
+    def __format__(self: Self, format_spec: object, /) -> str:
         parsed: tuple[Any, ...]
         msg: str
         try:
@@ -61,10 +61,10 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __repr__(self: Self) -> str: ...
+    def __repr__(self: Self, /) -> str: ...
 
     @setdoc.basic
-    def __setattr__(self: Self, name: str, value: Any) -> None:
+    def __setattr__(self: Self, name: str, value: Any, /) -> None:
         a: Any
         backup: str
         msg: str
@@ -87,7 +87,7 @@ class CoreABC(Copyable):
             raise VersionError(msg)
 
     @setdoc.basic
-    def __str__(self: Self) -> str:
+    def __str__(self: Self, /) -> str:
         return format(self, "")
 
     @classmethod
@@ -101,7 +101,7 @@ class CoreABC(Copyable):
     @abstractmethod
     def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...
 
-    def _init_kwargs(self: Self, **kwargs: Any) -> None:
+    def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
         x: str
         y: Any
         for x, y in kwargs.items():
@@ -111,14 +111,14 @@ class CoreABC(Copyable):
     def _init_other(self: Self, other: Self | None, /) -> None: ...
 
     @abstractmethod
-    def _string_fset(self: Self, value: str) -> None: ...
+    def _string_fset(self: Self, value: str, /) -> None: ...
 
     @setdoc.basic
-    def copy(self: Self) -> Self:
+    def copy(self: Self, /) -> Self:
         return type(self)(self)
 
     @classmethod
-    def deformat(cls: type[Self], *strings: object) -> str:
+    def deformat(cls: type[Self], /, *strings: object) -> str:
         msg: str
         info: dict[str, Self]
         x: object
@@ -136,13 +136,13 @@ class CoreABC(Copyable):
 
     @property
     @abstractmethod
-    def packaging(self: Self) -> Any: ...
+    def packaging(self: Self, /) -> Any: ...
 
     @property
-    def string(self: Self) -> str:
+    def string(self: Self, /) -> str:
         "This property represents self as str."
         return format(self, "")
 
     @string.setter
-    def string(self: Self, value: object) -> None:
+    def string(self: Self, value: object, /) -> None:
         self._string_fset(str(value).lower())

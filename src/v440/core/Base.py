@@ -20,7 +20,7 @@ class Base(NestedABC):
 
     __slots__ = ("_epoch", "_release")
 
-    def _cmp(self: Self) -> tuple[int, Release_]:
+    def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
     @classmethod
@@ -90,7 +90,7 @@ class Base(NestedABC):
         return ans
 
     @classmethod
-    def _init_factories(cls: type[Self]) -> dict[str, Any]:
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_epoch=int, _release=Release_)
 
     def _string_fset(self: Self, value: str) -> None:
@@ -102,11 +102,11 @@ class Base(NestedABC):
             self.epoch = 0
         self.release.string = matches["release"]
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(epoch=self.epoch, release=self.release)
 
     @property
-    def epoch(self: Self) -> int:
+    def epoch(self: Self, /) -> int:
         "This property represents the epoch."
         return self._epoch
 
@@ -121,7 +121,7 @@ class Base(NestedABC):
     packaging = NestedABC.string
 
     @property
-    def release(self: Self) -> Release_:
+    def release(self: Self, /) -> Release_:
         "This property represents the release."
         return self._release
 

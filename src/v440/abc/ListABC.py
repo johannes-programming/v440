@@ -20,13 +20,13 @@ class ListABC(HoldList[Item], CoreABC):
     __slots__ = ()
 
     @setdoc.basic
-    def __bool__(self: Self) -> bool:
+    def __bool__(self: Self, /) -> bool:
         return bool(self.data)
 
     __eq__ = BaseDataObject.__eq__
 
     @setdoc.basic
-    def __ge__(self: Self, other: object) -> Any:
+    def __ge__(self: Self, other: object, /) -> Any:
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -34,7 +34,7 @@ class ListABC(HoldList[Item], CoreABC):
         return tuple(map(cmpkey, self)) >= tuple(map(cmpkey, other))
 
     @setdoc.basic
-    def __gt__(self: Self, other: object) -> Any:
+    def __gt__(self: Self, other: object, /) -> Any:
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -52,7 +52,7 @@ class ListABC(HoldList[Item], CoreABC):
         self._init_kwargs(**kwargs)
 
     @setdoc.basic
-    def __le__(self: Self, other: object) -> Any:
+    def __le__(self: Self, other: object, /) -> Any:
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -60,7 +60,7 @@ class ListABC(HoldList[Item], CoreABC):
         return tuple(map(cmpkey, self)) <= tuple(map(cmpkey, other))
 
     @setdoc.basic
-    def __lt__(self: Self, other: object) -> Any:
+    def __lt__(self: Self, other: object, /) -> Any:
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -72,7 +72,7 @@ class ListABC(HoldList[Item], CoreABC):
     @classmethod
     @abstractmethod
     def _data_parse(
-        cls: type[Self], value: list[Any]
+        cls: type[Self], value: list[Any], /
     ) -> abc.Iterable[Item]: ...
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
@@ -82,14 +82,14 @@ class ListABC(HoldList[Item], CoreABC):
 
     @property
     @setdoc.basic
-    def data(self: Self) -> tuple[Item, ...]:
+    def data(self: Self, /) -> tuple[Item, ...]:
         return self._data
 
     @data.setter
-    def data(self: Self, value: abc.Iterable[Any]) -> None:
+    def data(self: Self, value: abc.Iterable[Any], /) -> None:
         self._data = tuple(self._data_parse(list(value)))
 
-    def sort(self: Self, *, key: Any = None, reverse: Any = False) -> None:
+    def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
         "Sort the data."
         self.data = sorted(
             self,
