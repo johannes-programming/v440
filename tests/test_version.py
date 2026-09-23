@@ -8,6 +8,7 @@ from v440.core.Version import Version
 from v440.errors.VersionError import VersionError
 
 __all__ = [
+    "TestReleaseBump",
     "TestVersionManipulation",
     "TestVersionLocal0",
     "TestPre",
@@ -20,6 +21,26 @@ __all__ = [
     "TestDevNoGo",
     "TestDataHoldStandards",
 ]
+
+
+class TestReleaseBump(unittest.TestCase):
+
+    def test_release_bump(self: Self, /) -> None:
+        # Create an instance of the v440.Version class
+        r: Release
+        r = Release(string="1.2.3")
+
+        # Bump the version using the bump method
+        r.bump(1, 2)
+        self.assertEqual(str(r), "1.4")  # Bumped version
+
+        # Bump the version again
+        r.bump(2, 1)
+        self.assertEqual(str(r), "1.4.1")  # Further bumped version
+
+        # Bump the version again
+        r.bump()
+        self.assertEqual(str(r), "1.4.2")  # Further bumped version
 
 
 class TestVersionManipulation(unittest.TestCase):
