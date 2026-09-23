@@ -35,8 +35,8 @@ license-files = [
 ]
 name = "v440"
 readme = "README.rst"
-requires-python = ">=3.12"
-version = "2.0.42"
+requires-python = ">=3.11"
+version = "2.0.43"
 
 [project.urls]
 Download = "https://pypi.org/project/v440/#files"
@@ -48,5 +48,5 @@ Website = "https://v440.johannes-programming.online/"
 files = [
     ".",
 ]
-python_version = "3.12"
+python_version = "3.11"
 strict = true

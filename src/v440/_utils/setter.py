@@ -2,15 +2,14 @@ __all__: list[str] = ["setter"]
 
 from collections import abc
 from functools import wraps
-from typing import Any, cast
+from typing import Any, TypeVar, cast
 
 from v440.errors.VersionError import VersionError
 
+Function = TypeVar("Function", bound=abc.Callable[..., None])
 
-def setter[Function: abc.Callable[..., None]](
-    function: Function,
-    /,
-) -> Function:
+
+def setter(function: Function, /) -> Function:
     """Restore an instance and normalize errors when its setter fails."""
 
     @wraps(function)
