@@ -360,12 +360,12 @@ class TestDataSetter(unittest.TestCase):
         cls: type,
         /,
         *,
+        args: Sequence[Any] = (),
+        attrname: str | None = None,
+        check: list[Any] | None = None,
+        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
         query: list[Any],
         queryname: str,
-        check: list[Any] | None = None,
-        attrname: str | None = None,
-        args: Sequence[Any] = (),
-        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
         solution: Any | None = None,
         solutionname: str | None = None,
         **_kwargs: Any,
@@ -375,11 +375,15 @@ class TestDataSetter(unittest.TestCase):
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
-        if attrname is not None:
+        if attrname is None:
+            self.assertIsNone(check)
+        else:
             attr = getattr(obj, attrname)
             ans = attr(*args, **dict(kwargs))
             self.assertEqual(ans, check)
-        if solutionname is not None:
+        if solutionname is None:
+            pass  # self.assertIsNone(solution)
+        else:
             ans = getattr(builtins, solutionname)(obj)
             self.assertEqual(ans, solution)
 

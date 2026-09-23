@@ -1,11 +1,17 @@
-"""Run the unittest suite for v440."""
+"""Test the package."""
 
-__all__: list[str] = ["main"]
+__all__: list[str] = ["main", "run"]
 
+import sys
 import unittest
+from typing import Never
 
 
-def main() -> unittest.TextTestResult:
+def main() -> Never:
+    sys.exit(not run().wasSuccessful())
+
+
+def run() -> unittest.TextTestResult:
     loader: unittest.TestLoader
     suite: unittest.TestSuite
     runner: unittest.TextTestRunner
