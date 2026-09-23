@@ -310,13 +310,6 @@ class TestStringExamples0(unittest.TestCase):
 
 class TestTotalSetter0(unittest.TestCase):
 
-    def test_0(self: Self, /) -> None:
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter-0"].items():
-            with self.subTest(clsname=x):
-                self.go_clsname(x, y)
-
     def go_clsname(
         self: Self,
         clsname: str,
@@ -339,11 +332,11 @@ class TestTotalSetter0(unittest.TestCase):
         **kwargs: Any,
     ) -> None:
         if valid:
-            self.go_valid(*args, **kwargs)
+            self.go_task_valid(*args, **kwargs)
         else:
-            self.go_invalid(*args, **kwargs)
+            self.go_task_invalid(*args, **kwargs)
 
-    def go_invalid(
+    def go_task_invalid(
         self: Self,
         cls: type,
         /,
@@ -357,7 +350,7 @@ class TestTotalSetter0(unittest.TestCase):
         with self.assertRaises(VersionError):
             setattr(obj, queryname, query)
 
-    def go_valid(
+    def go_task_valid(
         self: Self,
         cls: type,
         /,
@@ -370,15 +363,15 @@ class TestTotalSetter0(unittest.TestCase):
         obj = cls()
         setattr(obj, queryname, query)
 
-
-class TestTotalSetter1(unittest.TestCase):
-
     def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter-1"].items():
+        for x, y in Util.util.data["data-setter-0"].items():
             with self.subTest(clsname=x):
                 self.go_clsname(x, y)
+
+
+class TestTotalSetter1(unittest.TestCase):
 
     def go_clsname(
         self: Self,
@@ -402,11 +395,11 @@ class TestTotalSetter1(unittest.TestCase):
         **kwargs: Any,
     ) -> None:
         if valid:
-            self.go_valid(*args, **kwargs)
+            self.go_task_valid(*args, **kwargs)
         else:
-            self.go_invalid(*args, **kwargs)
+            self.go_task_invalid(*args, **kwargs)
 
-    def go_invalid(
+    def go_task_invalid(
         self: Self,
         cls: type,
         /,
@@ -420,7 +413,7 @@ class TestTotalSetter1(unittest.TestCase):
         with self.assertRaises(VersionError):
             setattr(obj, queryname, query)
 
-    def go_valid(
+    def go_task_valid(
         self: Self,
         cls: type,
         /,
@@ -442,15 +435,15 @@ class TestTotalSetter1(unittest.TestCase):
         ans = attr(*args, **dict(kwargs))
         self.assertEqual(ans, check)
 
-
-class TestTotalSetter2(unittest.TestCase):
-
-    def test_0(self: Self, /) -> None:
+    def test_1(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter-2"].items():
+        for x, y in Util.util.data["data-setter-1"].items():
             with self.subTest(clsname=x):
                 self.go_clsname(x, y)
+
+
+class TestTotalSetter2(unittest.TestCase):
 
     def go_clsname(
         self: Self,
@@ -474,11 +467,11 @@ class TestTotalSetter2(unittest.TestCase):
         **kwargs: Any,
     ) -> None:
         if valid:
-            self.go_valid(*args, **kwargs)
+            self.go_task_valid(*args, **kwargs)
         else:
-            self.go_invalid(*args, **kwargs)
+            self.go_task_invalid(*args, **kwargs)
 
-    def go_invalid(
+    def go_task_invalid(
         self: Self,
         cls: type,
         /,
@@ -492,7 +485,7 @@ class TestTotalSetter2(unittest.TestCase):
         with self.assertRaises(VersionError):
             setattr(obj, queryname, query)
 
-    def go_valid(
+    def go_task_valid(
         self: Self,
         cls: type,
         /,
@@ -504,15 +497,18 @@ class TestTotalSetter2(unittest.TestCase):
         **_kwargs: Any,
     ) -> None:
         ans: Any
-        attr: Any
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
-        if solutionname is None:
-            pass  # self.assertIsNone(solution)
-        else:
-            ans = getattr(builtins, solutionname)(obj)
-            self.assertEqual(ans, solution)
+        ans = getattr(builtins, solutionname)(obj)
+        self.assertEqual(ans, solution)
+
+    def test_2(self: Self, /) -> None:
+        x: str
+        y: dict[Any, Any]
+        for x, y in Util.util.data["data-setter-2"].items():
+            with self.subTest(clsname=x):
+                self.go_clsname(x, y)
 
 
 class TestVersionEpochGo(unittest.TestCase):
