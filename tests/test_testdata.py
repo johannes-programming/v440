@@ -1,5 +1,4 @@
 __all__: list[str] = [
-    "TestDataSetter",
     "TestDeformatting",
     "TestPackagingA",
     "TestPackagingC",
@@ -7,6 +6,9 @@ __all__: list[str] = [
     "TestSlicingGo",
     "TestSlots",
     "TestStringExamples",
+    "TestTotalSetter0",
+    "TestTotalSetter1",
+    "TestTotalSetter2",
     "TestVersionEpochGo",
 ]
 
@@ -306,12 +308,75 @@ class TestStringExamples0(unittest.TestCase):
                 self.go_examples(x, y)
 
 
-class TestDataSetter(unittest.TestCase):
+class TestTotalSetter0(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter"].items():
+        for x, y in Util.util.data["data-setter-0"].items():
+            with self.subTest(clsname=x):
+                self.go_clsname(x, y)
+
+    def go_clsname(
+        self: Self,
+        clsname: str,
+        legacy_table: dict[Any, Any],
+        /,
+    ) -> None:
+        cls: type
+        x: str
+        y: dict[Any, Any]
+        cls = getattr(getattr(core, clsname), clsname)
+        for x, y in legacy_table.items():
+            with self.subTest(legacy_name=x):
+                self.go_task(cls, **y)
+
+    def go_task(
+        self: Self,
+        /,
+        *args: Any,
+        valid: bool,
+        **kwargs: Any,
+    ) -> None:
+        if valid:
+            self.go_valid(*args, **kwargs)
+        else:
+            self.go_invalid(*args, **kwargs)
+
+    def go_invalid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list[Any],
+        queryname: str,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        obj = cls()
+        with self.assertRaises(VersionError):
+            setattr(obj, queryname, query)
+
+    def go_valid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list[Any],
+        queryname: str,
+        **_kwargs: Any,
+    ) -> None:
+        obj: Any
+        obj = cls()
+        setattr(obj, queryname, query)
+
+
+class TestTotalSetter1(unittest.TestCase):
+
+    def test_0(self: Self, /) -> None:
+        x: str
+        y: dict[Any, Any]
+        for x, y in Util.util.data["data-setter-1"].items():
             with self.subTest(clsname=x):
                 self.go_clsname(x, y)
 
@@ -361,13 +426,11 @@ class TestDataSetter(unittest.TestCase):
         /,
         *,
         args: Sequence[Any] = (),
-        attrname: str | None = None,
+        attrname: str,
         check: list[Any] | None = None,
         kwargs: dict[Any, Any] | tuple[Any, ...] = (),
         query: list[Any],
         queryname: str,
-        solution: Any | None = None,
-        solutionname: str | None = None,
         **_kwargs: Any,
     ) -> None:
         ans: Any
@@ -375,12 +438,76 @@ class TestDataSetter(unittest.TestCase):
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
-        if attrname is None:
-            self.assertIsNone(check)
+        attr = getattr(obj, attrname)
+        ans = attr(*args, **dict(kwargs))
+        self.assertEqual(ans, check)
+
+
+class TestTotalSetter2(unittest.TestCase):
+
+    def test_0(self: Self, /) -> None:
+        x: str
+        y: dict[Any, Any]
+        for x, y in Util.util.data["data-setter-2"].items():
+            with self.subTest(clsname=x):
+                self.go_clsname(x, y)
+
+    def go_clsname(
+        self: Self,
+        clsname: str,
+        legacy_table: dict[Any, Any],
+        /,
+    ) -> None:
+        cls: type
+        x: str
+        y: dict[Any, Any]
+        cls = getattr(getattr(core, clsname), clsname)
+        for x, y in legacy_table.items():
+            with self.subTest(legacy_name=x):
+                self.go_task(cls, **y)
+
+    def go_task(
+        self: Self,
+        /,
+        *args: Any,
+        valid: bool,
+        **kwargs: Any,
+    ) -> None:
+        if valid:
+            self.go_valid(*args, **kwargs)
         else:
-            attr = getattr(obj, attrname)
-            ans = attr(*args, **dict(kwargs))
-            self.assertEqual(ans, check)
+            self.go_invalid(*args, **kwargs)
+
+    def go_invalid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list[Any],
+        queryname: str,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        obj = cls()
+        with self.assertRaises(VersionError):
+            setattr(obj, queryname, query)
+
+    def go_valid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list[Any],
+        queryname: str,
+        solution: Any,
+        solutionname: str,
+        **_kwargs: Any,
+    ) -> None:
+        ans: Any
+        attr: Any
+        obj: Any
+        obj = cls()
+        setattr(obj, queryname, query)
         if solutionname is None:
             pass  # self.assertIsNone(solution)
         else:

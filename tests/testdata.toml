@@ -40,7 +40,311 @@ clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[data-setter.Local.test_local_append]
+[data-setter-0.Local.test_local_basic_assignment]
+query = [
+    1,
+    "local",
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "local",
+    "dev",
+]
+valid = true
+
+[data-setter-0.Local.test_local_boolean_assignment]
+query = [
+    true,
+    false,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    "dev",
+]
+valid = true
+
+[data-setter-0.Local.test_local_conversion_mixed]
+query = [
+    "1",
+    2,
+    "local",
+    4,
+    true,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    "local",
+    4,
+    1,
+]
+valid = true
+
+[data-setter-0.Local.test_local_conversion_string]
+query = [
+    "1",
+    "2",
+    "local",
+    "test",
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    "local",
+    "test",
+]
+valid = true
+
+[data-setter-0.Local.test_local_data_setter]
+query = [
+    "custom",
+    "data",
+]
+queryname = "data"
+solution = [
+    "custom",
+    "data",
+]
+valid = true
+
+[data-setter-0.Local.test_local_empty_list]
+query = []
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter-0.Local.test_local_equality_with_list]
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+]
+valid = true
+
+[data-setter-0.Local.test_local_invalid_value]
+query = [
+    "a",
+    {},
+    "3",
+]
+queryname = "data"
+valid = false
+
+[data-setter-0.Local.test_local_iterable]
+query = "1.dev.build"
+queryname = "string"
+solution = [
+    1,
+    "dev",
+    "build",
+]
+valid = true
+
+[data-setter-0.Local.test_local_large_integers]
+query = [
+    1000000000000000000,
+]
+queryname = "data"
+solution = [
+    1000000000000000000,
+]
+valid = true
+
+[data-setter-0.Local.test_local_non_string_elements]
+query = [
+    1,
+    [],
+    "test",
+]
+queryname = "data"
+valid = false
+
+[data-setter-0.Release.test_release_assignment_with_bool_conversion]
+query = [
+    true,
+    false,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    3,
+]
+valid = true
+
+[data-setter-0.Release.test_release_basic_assignment]
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
+valid = true
+
+[data-setter-0.Release.test_release_boolean_assignment]
+query = [
+    true,
+    false,
+    1,
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    1,
+]
+valid = true
+
+[data-setter-0.Release.test_release_data_property_empty]
+query = []
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter-0.Release.test_release_empty_list]
+query = []
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter-0.Release.test_release_equality_with_list]
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
+valid = true
+
+[data-setter-0.Release.test_release_integer_float]
+query = [
+    true,
+    false,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    0,
+    3,
+]
+valid = true
+
+[data-setter-0.Release.test_release_invalid_assignment]
+query = [
+    "1",
+    "invalid",
+    "3",
+]
+queryname = "data"
+valid = false
+
+[data-setter-0.Release.test_release_invalid_boolean_assignment]
+query = [
+    "true",
+    "false",
+]
+queryname = "data"
+valid = false
+
+[data-setter-0.Release.test_release_invalid_float_value]
+query = [
+    1,
+    2.5,
+    3,
+]
+queryname = "data"
+valid = false
+
+[data-setter-0.Release.test_release_invalid_value]
+query = [
+    "a",
+    2,
+    "3",
+]
+queryname = "data"
+valid = false
+
+[data-setter-0.Release.test_release_large_numbers]
+query = [
+    1000000000,
+    2000000000,
+    3000000000,
+]
+queryname = "data"
+solution = [
+    1000000000,
+    2000000000,
+    3000000000,
+]
+valid = true
+
+[data-setter-0.Release.test_release_max_integer]
+query = [
+    1000000000000000000,
+]
+queryname = "data"
+solution = [
+    1000000000000000000,
+]
+valid = true
+
+[data-setter-0.Release.test_release_non_integer_elements]
+query = [
+    "invalid",
+    2,
+    3,
+]
+queryname = "data"
+valid = false
+
+[data-setter-0.Release.test_release_trailing_zeros]
+query = [
+    1,
+    2,
+    3,
+    0,
+    0,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
+valid = true
+
+[data-setter-0.Release.test_release_zero]
+query = [
+    0,
+]
+queryname = "data"
+solution = []
+valid = true
+
+[data-setter-1.Local.test_local_append]
 args = [
     "build",
 ]
@@ -57,35 +361,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_basic_assignment]
-query = [
-    1,
-    "local",
-    "dev",
-]
-queryname = "data"
-solution = [
-    1,
-    "local",
-    "dev",
-]
-valid = true
-
-[data-setter.Local.test_local_boolean_assignment]
-query = [
-    true,
-    false,
-    "dev",
-]
-queryname = "data"
-solution = [
-    1,
-    0,
-    "dev",
-]
-valid = true
-
-[data-setter.Local.test_local_clear]
+[data-setter-1.Local.test_local_clear]
 attrname = "clear"
 query = [
     1,
@@ -96,41 +372,7 @@ queryname = "data"
 solution = []
 valid = true
 
-[data-setter.Local.test_local_conversion_mixed]
-query = [
-    "1",
-    2,
-    "local",
-    4,
-    true,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    "local",
-    4,
-    1,
-]
-valid = true
-
-[data-setter.Local.test_local_conversion_string]
-query = [
-    "1",
-    "2",
-    "local",
-    "test",
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    "local",
-    "test",
-]
-valid = true
-
-[data-setter.Local.test_local_count]
+[data-setter-1.Local.test_local_count]
 args = [
     "dev",
 ]
@@ -145,37 +387,7 @@ query = [
 queryname = "data"
 valid = true
 
-[data-setter.Local.test_local_data_setter]
-query = [
-    "custom",
-    "data",
-]
-queryname = "data"
-solution = [
-    "custom",
-    "data",
-]
-valid = true
-
-[data-setter.Local.test_local_empty_list]
-query = []
-queryname = "data"
-solution = []
-valid = true
-
-[data-setter.Local.test_local_equality_with_list]
-query = [
-    1,
-    "dev",
-]
-queryname = "data"
-solution = [
-    1,
-    "dev",
-]
-valid = true
-
-[data-setter.Local.test_local_extend]
+[data-setter-1.Local.test_local_extend]
 args = [
     [
         "test",
@@ -196,7 +408,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_index]
+[data-setter-1.Local.test_local_index]
 args = [
     "dev",
 ]
@@ -210,7 +422,7 @@ query = [
 queryname = "data"
 valid = true
 
-[data-setter.Local.test_local_insert]
+[data-setter-1.Local.test_local_insert]
 args = [
     1,
     "alpha",
@@ -228,45 +440,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_invalid_value]
-query = [
-    "a",
-    {},
-    "3",
-]
-queryname = "data"
-valid = false
-
-[data-setter.Local.test_local_iterable]
-query = "1.dev.build"
-queryname = "string"
-solution = [
-    1,
-    "dev",
-    "build",
-]
-valid = true
-
-[data-setter.Local.test_local_large_integers]
-query = [
-    1000000000000000000,
-]
-queryname = "data"
-solution = [
-    1000000000000000000,
-]
-valid = true
-
-[data-setter.Local.test_local_non_string_elements]
-query = [
-    1,
-    [],
-    "test",
-]
-queryname = "data"
-valid = false
-
-[data-setter.Local.test_local_pop]
+[data-setter-1.Local.test_local_pop]
 attrname = "pop"
 check = "build"
 query = [
@@ -281,7 +455,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_pop_with_index]
+[data-setter-1.Local.test_local_pop_with_index]
 args = [
     1,
 ]
@@ -299,7 +473,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_remove]
+[data-setter-1.Local.test_local_remove]
 args = [
     "dev",
 ]
@@ -316,7 +490,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_reverse]
+[data-setter-1.Local.test_local_reverse]
 attrname = "reverse"
 query = [
     1,
@@ -331,7 +505,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_sort]
+[data-setter-1.Local.test_local_sort]
 attrname = "sort"
 query = [
     3,
@@ -354,7 +528,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_sort_reverse]
+[data-setter-1.Local.test_local_sort_reverse]
 attrname = "sort"
 query = [
     3,
@@ -377,10 +551,10 @@ solution = [
 ]
 valid = true
 
-[data-setter.Local.test_local_sort_reverse.kwargs]
+[data-setter-1.Local.test_local_sort_reverse.kwargs]
 reverse = true
 
-[data-setter.Release.test_example_4]
+[data-setter-1.Release.test_example_4]
 attrname = "sort"
 query = "2.5.3.9"
 queryname = "string"
@@ -392,7 +566,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_example_8]
+[data-setter-1.Release.test_example_8]
 attrname = "bump"
 query = "1.2.3.4.5.6.7.8.9.10"
 queryname = "string"
@@ -408,11 +582,11 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_example_8.kwargs]
+[data-setter-1.Release.test_example_8.kwargs]
 index = 7
 amount = 5
 
-[data-setter.Release.test_release_append]
+[data-setter-1.Release.test_release_append]
 args = [
     4,
 ]
@@ -431,51 +605,9 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_append.kwargs]
+[data-setter-1.Release.test_release_append.kwargs]
 
-[data-setter.Release.test_release_assignment_with_bool_conversion]
-query = [
-    true,
-    false,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    0,
-    3,
-]
-valid = true
-
-[data-setter.Release.test_release_basic_assignment]
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    3,
-]
-valid = true
-
-[data-setter.Release.test_release_boolean_assignment]
-query = [
-    true,
-    false,
-    1,
-]
-queryname = "data"
-solution = [
-    1,
-    0,
-    1,
-]
-valid = true
-
-[data-setter.Release.test_release_clear]
+[data-setter-1.Release.test_release_clear]
 args = []
 attrname = "clear"
 query = [
@@ -487,9 +619,9 @@ queryname = "data"
 solution = []
 valid = true
 
-[data-setter.Release.test_release_clear.kwargs]
+[data-setter-1.Release.test_release_clear.kwargs]
 
-[data-setter.Release.test_release_count]
+[data-setter-1.Release.test_release_count]
 args = [
     2,
 ]
@@ -504,35 +636,9 @@ query = [
 queryname = "data"
 valid = true
 
-[data-setter.Release.test_release_count.kwargs]
+[data-setter-1.Release.test_release_count.kwargs]
 
-[data-setter.Release.test_release_data_property_empty]
-query = []
-queryname = "data"
-solution = []
-valid = true
-
-[data-setter.Release.test_release_empty_list]
-query = []
-queryname = "data"
-solution = []
-valid = true
-
-[data-setter.Release.test_release_equality_with_list]
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    3,
-]
-valid = true
-
-[data-setter.Release.test_release_extend]
+[data-setter-1.Release.test_release_extend]
 args = [
     [
         3,
@@ -555,9 +661,9 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_extend.kwargs]
+[data-setter-1.Release.test_release_extend.kwargs]
 
-[data-setter.Release.test_release_index]
+[data-setter-1.Release.test_release_index]
 args = [
     2,
 ]
@@ -571,9 +677,9 @@ query = [
 queryname = "data"
 valid = true
 
-[data-setter.Release.test_release_index.kwargs]
+[data-setter-1.Release.test_release_index.kwargs]
 
-[data-setter.Release.test_release_insert]
+[data-setter-1.Release.test_release_insert]
 args = [
     2,
     3,
@@ -593,91 +699,9 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_insert.kwargs]
+[data-setter-1.Release.test_release_insert.kwargs]
 
-[data-setter.Release.test_release_integer_float]
-query = [
-    true,
-    false,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    0,
-    3,
-]
-valid = true
-
-[data-setter.Release.test_release_invalid_assignment]
-query = [
-    "1",
-    "invalid",
-    "3",
-]
-queryname = "data"
-valid = false
-
-[data-setter.Release.test_release_invalid_boolean_assignment]
-query = [
-    "true",
-    "false",
-]
-queryname = "data"
-valid = false
-
-[data-setter.Release.test_release_invalid_float_value]
-query = [
-    1,
-    2.5,
-    3,
-]
-queryname = "data"
-valid = false
-
-[data-setter.Release.test_release_invalid_value]
-query = [
-    "a",
-    2,
-    "3",
-]
-queryname = "data"
-valid = false
-
-[data-setter.Release.test_release_large_numbers]
-query = [
-    1000000000,
-    2000000000,
-    3000000000,
-]
-queryname = "data"
-solution = [
-    1000000000,
-    2000000000,
-    3000000000,
-]
-valid = true
-
-[data-setter.Release.test_release_max_integer]
-query = [
-    1000000000000000000,
-]
-queryname = "data"
-solution = [
-    1000000000000000000,
-]
-valid = true
-
-[data-setter.Release.test_release_non_integer_elements]
-query = [
-    "invalid",
-    2,
-    3,
-]
-queryname = "data"
-valid = false
-
-[data-setter.Release.test_release_pop]
+[data-setter-1.Release.test_release_pop]
 args = []
 attrname = "pop"
 check = 3
@@ -693,9 +717,9 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_pop.kwargs]
+[data-setter-1.Release.test_release_pop.kwargs]
 
-[data-setter.Release.test_release_pop_with_index]
+[data-setter-1.Release.test_release_pop_with_index]
 args = [
     1,
 ]
@@ -713,9 +737,9 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_pop_with_index.kwargs]
+[data-setter-1.Release.test_release_pop_with_index.kwargs]
 
-[data-setter.Release.test_release_remove]
+[data-setter-1.Release.test_release_remove]
 args = [
     2,
 ]
@@ -732,9 +756,9 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_remove.kwargs]
+[data-setter-1.Release.test_release_remove.kwargs]
 
-[data-setter.Release.test_release_reverse]
+[data-setter-1.Release.test_release_reverse]
 attrname = "reverse"
 query = [
     1,
@@ -749,7 +773,7 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_sort]
+[data-setter-1.Release.test_release_sort]
 attrname = "sort"
 query = [
     3,
@@ -764,52 +788,28 @@ solution = [
 ]
 valid = true
 
-[data-setter.Release.test_release_trailing_zeros]
-query = [
-    1,
-    2,
-    3,
-    0,
-    0,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    3,
-]
-valid = true
-
-[data-setter.Release.test_release_zero]
-query = [
-    0,
-]
-queryname = "data"
-solution = []
-valid = true
-
-[data-setter.Version."data-property.dragon"]
+[data-setter-2.Version."data-property.dragon"]
 query = 9001
 queryname = "string"
 solution = "9001"
 solutionname = "str"
 valid = true
 
-[data-setter.Version."data-property.hitch"]
+[data-setter-2.Version."data-property.hitch"]
 query = 4.2
 queryname = "string"
 solution = "4.2"
 solutionname = "str"
 valid = true
 
-[data-setter.Version."data-property.local"]
+[data-setter-2.Version."data-property.local"]
 query = "42!1.2.3.dev1337+5.nov"
 queryname = "string"
 solution = "42!1.2.3.dev1337+5.nov"
 solutionname = "str"
 valid = true
 
-[data-setter.Version."data-property.local_again"]
+[data-setter-2.Version."data-property.local_again"]
 query = "1701!4.5.6.rc255+reset"
 queryname = "string"
 solution = "1701!4.5.6rc255+reset"
