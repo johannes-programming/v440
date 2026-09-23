@@ -175,17 +175,20 @@ class Release(ListABC[int]):
     def bump(
         self: Self, /, index: SupportsIndex = -1, amount: SupportsIndex = 1
     ) -> None:
-        data: list[Any]
+        data: list[int]
         a: int
         i: int
         a = operator.index(amount)
         i = operator.index(index)
-        if i < len(self):
-            self[i] += a
-            return
         data = list(self)
-        data.extend([0] * (i - len(self)))
-        data.append(a)
+        if i == -1:
+            data[-1] += a
+        elif i < len(self):
+            data[i] += a
+            data = data[: i + 1]
+        else:
+            data.extend((0,) * (i - len(self)))
+            data.append(a)
         self.data = data
 
     @property

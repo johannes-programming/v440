@@ -1,15 +1,17 @@
 __all__: list[str] = [
-    "TestVersionManipulation",
-    "TestVersionLocal0",
-    "TestPre",
-    "TestExample",
-    "TestPatch",
-    "TestVersionRelease",
-    "TestAdditionalVersionRelease",
-    "TestVersionLocal",
-    "TestSlicingNoGo",
-    "TestDevNoGo",
     "TestDataHoldStandards",
+    "TestDevNoGo",
+    "TestVersionBumpRelease",
+    "TestVersionSlicingNoGo",
+    "TestVersionLocal",
+    "TestVersionLocal0",
+    "TestVersionManipulation",
+    "TestVersionPre",
+    "TestVersionPreviousExample",
+    "TestVersionQualPatch",
+    "TestVersionRelative",
+    "TestVersionRelease",
+    "TestVersionReleaseAdditional",
 ]
 
 import unittest
@@ -20,6 +22,26 @@ from v440.core.Qual import Qual
 from v440.core.Release import Release
 from v440.core.Version import Version
 from v440.errors.VersionError import VersionError
+
+
+class TestVersionBumpRelease(unittest.TestCase):
+
+    def test_release_bump(self: Self, /) -> None:
+        # Create an instance of the v440.Version class
+        r: Release
+        r = Release(string="1.2.3")
+
+        # Bump the version using the bump method
+        r.bump(1, 2)
+        self.assertEqual(str(r), "1.4")  # Bumped version
+
+        # Bump the version again
+        r.bump(2, 1)
+        self.assertEqual(str(r), "1.4.1")  # Further bumped version
+
+        # Bump the version again
+        r.bump()
+        self.assertEqual(str(r), "1.4.2")  # Further bumped version
 
 
 class TestVersionManipulation(unittest.TestCase):
@@ -69,7 +91,7 @@ class TestVersionLocal0(unittest.TestCase):
         self.assertTrue(v.local is backup)
 
 
-class TestPre(unittest.TestCase):
+class TestVersionPre(unittest.TestCase):
 
     def test_pre(self: Self, /) -> None:
         backup: Qual
@@ -108,7 +130,7 @@ class TestPre(unittest.TestCase):
         self.assertEqual(str(v.public.qual), "")
 
 
-class TestExample(unittest.TestCase):
+class TestVersionPreviousExample(unittest.TestCase):
 
     def test_example_2(self: Self, /) -> None:
         v: Version
@@ -244,7 +266,7 @@ class TestExample(unittest.TestCase):
         self.assertEqual(str(v), "4!5.0.1")  # After error
 
 
-class TestPatch(unittest.TestCase):
+class TestVersionQualPatch(unittest.TestCase):
     def test_example_0(self: Self, /) -> None:
         x: Qual
         y: Qual
@@ -253,6 +275,8 @@ class TestPatch(unittest.TestCase):
         with self.assertRaises(Exception):
             x += y  # type: ignore[operator]
 
+
+class TestVersionRelative(unittest.TestCase):
     def test_cmp(self: Self, /) -> None:
         self.assertFalse(Version(string="1+1") == Version(string="1+a"))
         self.assertFalse(Version(string="1+1") <= Version(string="1+a"))
@@ -314,7 +338,7 @@ class TestVersionRelease(unittest.TestCase):
         self.assertEqual(version.public.base.release.patch, 0)
 
 
-class TestAdditionalVersionRelease(unittest.TestCase):
+class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_inequality_with_list(self: Self, /) -> None:
         # Test inequality of release with a normal list
@@ -471,7 +495,7 @@ class TestVersionLocal(unittest.TestCase):
         self.assertEqual(version.local.data, (1, "dev", "build"))
 
 
-class TestSlicingNoGo(unittest.TestCase):
+class TestVersionSlicingNoGo(unittest.TestCase):
 
     def test_slicing_2(self: Self, /) -> None:
         v: Version
