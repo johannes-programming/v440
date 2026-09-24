@@ -196,7 +196,7 @@ class TestStringExamples0(unittest.TestCase):
         split: dict[Any, Any]
         x: str
         y: dict[Any, Any]
-        cls = getattr(getattr(core, clsname), clsname)
+        cls = Util.import_("v440.core.{0}.{0}".format(clsname))
         split = {False: dict(), True: dict()}
         for x, y in tables.items():
             split[y["valid"]][x] = y
@@ -219,11 +219,11 @@ class TestStringExamples0(unittest.TestCase):
         *args: Any,
         **kwargs: Any,
     ) -> None:
+        self.go_valid_example_deformatted(*args, **kwargs)
+        self.go_valid_example_formatted(*args, **kwargs)
+        self.go_valid_example_remake(*args, **kwargs)
         self.go_valid_example_repr(*args, **kwargs)
         self.go_valid_example_str(*args, **kwargs)
-        self.go_valid_example_formatted(*args, **kwargs)
-        self.go_valid_example_deformatted(*args, **kwargs)
-        self.go_valid_example_remake(*args, **kwargs)
 
     def go_valid_example_deformatted(
         self: Self,
@@ -408,7 +408,7 @@ class TestTotalMethod(unittest.TestCase):
         args: abc.Sequence[Any] = (),
         attrname: str,
         check: list[Any] | None = None,
-        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
+        kwargs: dict[Any, Any] | tuple[()] = (),
         query: list[Any],
         queryname: str,
         **_kwargs: Any,
@@ -452,7 +452,7 @@ class TestFunction(unittest.TestCase):
         /,
         *,
         args: abc.Sequence[Any] = (),
-        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
+        kwargs: dict[Any, Any] | tuple[()] = (),
         query: list[Any],
         queryname: str,
         solution: Any,
