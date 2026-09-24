@@ -12,6 +12,7 @@ __all__: list[str] = [
     "TestVersionEpochGo",
 ]
 
+import contextlib
 import enum
 import functools
 import importlib
@@ -523,20 +524,22 @@ class TestSlicingGo(unittest.TestCase):
         stop: Any = None,
         step: Any = None,
     ) -> None:
+        ctx: Any
         v: Any
         v = cls(string=query)
         if valid:
-            v[start:stop:step] = change
+            ctx = contextlib.nullcontext()
         else:
-            with self.assertRaises(Exception):
-                v[start:stop:step] = change
+            ctx = self.assertRaises(Exception)
+        with ctx:
+            v[start:stop:step] = change
         self.assertEqual(str(v), solution)
 
     def test_2(self: Self, /) -> None:
         cls: type[Any]
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.data["slicingmethod"].items():
+        for x, y in Util.util.data["slicing"].items():
             cls = Util.import_(f"v440.core.{x}.{x}")
             with self.subTest(typename=x):
                 self.go_cls(cls, **y)
