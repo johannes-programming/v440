@@ -463,7 +463,7 @@ class TestTotalSetter2(unittest.TestCase):
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
-        ans = getattr(builtins, solutionname)(obj)
+        ans = Util.import_(solutionname)(obj)
         self.assertEqual(ans, solution)
 
     def test_2(self: Self, /) -> None:
