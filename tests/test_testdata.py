@@ -381,7 +381,7 @@ class TestTotalSetter0(unittest.TestCase):
     def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter-0"].items():
+        for x, y in Util.util.data["attr-setter"].items():
             with self.subTest(clsname=x):
                 self.go_clsname(x, y)
 
