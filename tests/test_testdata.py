@@ -1,7 +1,7 @@
 __all__: list[str] = [
     "TestDeformatting",
     "TestPackagingA",
-    "TestPackagingC",
+    "TestOrder",
     "TestReleaseAlias",
     "TestSlicingGo",
     "TestSlots",
@@ -26,7 +26,6 @@ from collections.abc import Callable, Iterable, Sequence
 from pathlib import Path
 from typing import Any, Self, cast
 
-import iterprod
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
 
@@ -583,11 +582,8 @@ class TestPackagingA(unittest.TestCase):
         self.assertEqual(b, g)
 
 
-class TestPackagingC(unittest.TestCase):
+class TestOrder(unittest.TestCase):
     def test_0(self: Self, /) -> None:
-        args: tuple[Any, ...]
-        casted: tuple[str, str, Callable[..., Any]]
-        ops: list[Callable[..., Any]]
         pure: list[str]
         x: str
         y: dict[str, Any]
@@ -595,25 +591,29 @@ class TestPackagingC(unittest.TestCase):
         for x, y in Util.util.examples["Version"].items():
             if y["valid"]:
                 pure.append(x)
-        ops = [
-            operator.eq,
-            operator.ne,
-            operator.gt,
-            operator.ge,
-            operator.le,
-            operator.lt,
-        ]
-        for args in iterprod.iterprod(pure, pure, ops):
-            with self.subTest(args=args):
-                casted = cast(tuple[str, str, Callable[..., Any]], args)
-                self.go(*casted)
+        for o in ("eq", "ge", "gt", "le", "lt", "ne"):
+            func = getattr(operator, o)
+            with self.subTest(func=o):
+                self.go_op(func=func, pure=pure)
+
+    def go_op(
+        self: Self,
+        /,
+        func: Callable[[Any, Any], Any],
+        pure: list[str],
+    ) -> None:
+        for i in range(len(pure) ** 2):
+            x = pure[i // len(pure)]
+            y = pure[i % len(pure)]
+            with self.subTest(x=x, y=y):
+                self.go(x=x, y=y, func=func)
 
     def go(
         self: Self,
+        *,
+        func: Callable[[Any, Any], Any],
         x: str,
         y: str,
-        func: Callable[..., Any],
-        /,
     ) -> None:
         a: Version_
         b: Version
@@ -621,9 +621,9 @@ class TestPackagingC(unittest.TestCase):
         d: Version_
         e: Version
         f: Version_
-        legacy: bool
-        current: bool
         backwards: bool
+        current: bool
+        legacy: bool
         a = Version_(x)
         b = Version(string=x)
         c = b.packaging
