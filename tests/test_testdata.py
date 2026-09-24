@@ -8,6 +8,7 @@ __all__: list[str] = [
     "TestStringExamples",
     "TestTotalAttrSetter",
     "TestTotalMethod",
+    "TestTypeNames",
     "TestFunction",
     "TestVersionEpochGo",
 ]
@@ -188,6 +189,17 @@ class TestStringExamples(unittest.TestCase):
                 self.go_version(x, **y)
 
 
+class TestTypeNames(unittest.TestCase):
+    def go_name(self: Self, name: str, /) -> None:
+        cls: type[Any]
+        cls = Util.import_(f"v440.core.{name}.{name}")
+        self.assertEqual(cls.__name__, name)
+
+    def test_0(self: Self) -> None:
+        for name in Util.util.data["synonymous-to-empty"]:
+            self.go_name(name)
+
+
 class TestStringExamples0(unittest.TestCase):
 
     def go_examples(
@@ -225,6 +237,7 @@ class TestStringExamples0(unittest.TestCase):
         self.go_valid_example_remake(*args, **kwargs)
         self.go_valid_example_repr(*args, **kwargs)
         self.go_valid_example_str(*args, **kwargs)
+        self.go_valid_example_synonym(*args, **kwargs)
 
     def go_valid_example_deformatted(
         self: Self,
@@ -310,6 +323,22 @@ class TestStringExamples0(unittest.TestCase):
         solution = cast(str | None, kwargs.get("str"))
         if solution is not None:
             self.assertEqual(str(obj), solution)
+
+    def go_valid_example_synonym(
+        self: Self,
+        cls: type[Any],
+        example: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        obj: Any
+        syn: str
+        syn = Util.util.data["synonymous-to-empty"][cls.__name__]
+        obj = cls(string=example)
+        x = format(obj, "")
+        y = format(obj, syn)
+        with self.subTest(msg="synonym", empty=x, synonym=y):
+            self.assertEqual(x, y)
 
     def test_0(self: Self, /) -> None:
         x: str
