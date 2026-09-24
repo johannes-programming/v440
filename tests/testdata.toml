@@ -359,7 +359,6 @@ solution = [
     "dev",
     "build",
 ]
-valid = true
 
 [data-setter-1.Local.test_local_clear]
 attrname = "clear"
@@ -370,7 +369,6 @@ query = [
 ]
 queryname = "data"
 solution = []
-valid = true
 
 [data-setter-1.Local.test_local_count]
 args = [
@@ -385,7 +383,6 @@ query = [
     "build",
 ]
 queryname = "data"
-valid = true
 
 [data-setter-1.Local.test_local_extend]
 args = [
@@ -406,7 +403,6 @@ solution = [
     "test",
     123,
 ]
-valid = true
 
 [data-setter-1.Local.test_local_index]
 args = [
@@ -420,7 +416,6 @@ query = [
     "build",
 ]
 queryname = "data"
-valid = true
 
 [data-setter-1.Local.test_local_insert]
 args = [
@@ -438,7 +433,6 @@ solution = [
     "alpha",
     "dev",
 ]
-valid = true
 
 [data-setter-1.Local.test_local_pop]
 attrname = "pop"
@@ -453,7 +447,6 @@ solution = [
     1,
     "dev",
 ]
-valid = true
 
 [data-setter-1.Local.test_local_pop_with_index]
 args = [
@@ -471,7 +464,6 @@ solution = [
     1,
     "build",
 ]
-valid = true
 
 [data-setter-1.Local.test_local_remove]
 args = [
@@ -488,7 +480,6 @@ solution = [
     1,
     "build",
 ]
-valid = true
 
 [data-setter-1.Local.test_local_reverse]
 attrname = "reverse"
@@ -503,7 +494,6 @@ solution = [
     "dev",
     1,
 ]
-valid = true
 
 [data-setter-1.Local.test_local_sort]
 attrname = "sort"
@@ -526,7 +516,6 @@ solution = [
     2,
     3,
 ]
-valid = true
 
 [data-setter-1.Local.test_local_sort_reverse]
 attrname = "sort"
@@ -549,7 +538,6 @@ solution = [
     "a4",
     "4a",
 ]
-valid = true
 
 [data-setter-1.Local.test_local_sort_reverse.kwargs]
 reverse = true
@@ -564,7 +552,6 @@ solution = [
     5,
     9,
 ]
-valid = true
 
 [data-setter-1.Release.test_example_8]
 attrname = "bump"
@@ -580,7 +567,6 @@ solution = [
     7,
     13,
 ]
-valid = true
 
 [data-setter-1.Release.test_example_8.kwargs]
 index = 7
@@ -603,7 +589,6 @@ solution = [
     3,
     4,
 ]
-valid = true
 
 [data-setter-1.Release.test_release_append.kwargs]
 
@@ -617,7 +602,6 @@ query = [
 ]
 queryname = "data"
 solution = []
-valid = true
 
 [data-setter-1.Release.test_release_clear.kwargs]
 
@@ -634,7 +618,6 @@ query = [
     3,
 ]
 queryname = "data"
-valid = true
 
 [data-setter-1.Release.test_release_count.kwargs]
 
@@ -659,7 +642,6 @@ solution = [
     4,
     5,
 ]
-valid = true
 
 [data-setter-1.Release.test_release_extend.kwargs]
 
@@ -675,7 +657,6 @@ query = [
     3,
 ]
 queryname = "data"
-valid = true
 
 [data-setter-1.Release.test_release_index.kwargs]
 
@@ -697,7 +678,6 @@ solution = [
     3,
     4,
 ]
-valid = true
 
 [data-setter-1.Release.test_release_insert.kwargs]
 
@@ -715,7 +695,6 @@ solution = [
     1,
     2,
 ]
-valid = true
 
 [data-setter-1.Release.test_release_pop.kwargs]
 
@@ -735,7 +714,6 @@ solution = [
     1,
     3,
 ]
-valid = true
 
 [data-setter-1.Release.test_release_pop_with_index.kwargs]
 
@@ -754,7 +732,6 @@ solution = [
     1,
     3,
 ]
-valid = true
 
 [data-setter-1.Release.test_release_remove.kwargs]
 
@@ -771,7 +748,6 @@ solution = [
     2,
     1,
 ]
-valid = true
 
 [data-setter-1.Release.test_release_sort]
 attrname = "sort"
@@ -786,7 +762,6 @@ solution = [
     2,
     3,
 ]
-valid = true
 
 [data-setter-2.Version."data-property.dragon"]
 query = 9001
