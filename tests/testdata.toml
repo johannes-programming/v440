@@ -344,30 +344,6 @@ clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[data-setter-2.Version."data-property.dragon"]
-query = 9001
-queryname = "string"
-solution = "9001"
-solutionname = "builtins.str"
-
-[data-setter-2.Version."data-property.hitch"]
-query = 4.2
-queryname = "string"
-solution = "4.2"
-solutionname = "builtins.str"
-
-[data-setter-2.Version."data-property.local"]
-query = "42!1.2.3.dev1337+5.nov"
-queryname = "string"
-solution = "42!1.2.3.dev1337+5.nov"
-solutionname = "builtins.str"
-
-[data-setter-2.Version."data-property.local_again"]
-query = "1701!4.5.6.rc255+reset"
-queryname = "string"
-solution = "1701!4.5.6rc255+reset"
-solutionname = "builtins.str"
-
 [deformatting.Base.""]
 solution = ""
 valid = true
@@ -2069,6 +2045,30 @@ deformatted = "v.#"
 legacy = "Edge Cases / Special Forms"
 str = "2"
 valid = true
+
+[function.Version."data-property.dragon"]
+query = 9001
+queryname = "string"
+solution = "9001"
+solutionname = "builtins.str"
+
+[function.Version."data-property.hitch"]
+query = 4.2
+queryname = "string"
+solution = "4.2"
+solutionname = "builtins.str"
+
+[function.Version."data-property.local"]
+query = "42!1.2.3.dev1337+5.nov"
+queryname = "string"
+solution = "42!1.2.3.dev1337+5.nov"
+solutionname = "builtins.str"
+
+[function.Version."data-property.local_again"]
+query = "1701!4.5.6.rc255+reset"
+queryname = "string"
+solution = "1701!4.5.6rc255+reset"
+solutionname = "builtins.str"
 
 [[release-key.modify-increase-length.steps]]
 name = "data"

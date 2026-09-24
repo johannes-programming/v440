@@ -453,6 +453,8 @@ class TestTotalSetter2(unittest.TestCase):
         cls: type,
         /,
         *,
+        args: Sequence[Any] = (),
+        kwargs: dict[Any, Any] | tuple[Any, ...] = (),
         query: list[Any],
         queryname: str,
         solution: Any,
@@ -463,13 +465,13 @@ class TestTotalSetter2(unittest.TestCase):
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
-        ans = Util.import_(solutionname)(obj)
+        ans = Util.import_(solutionname)(obj, *args, **dict(kwargs))
         self.assertEqual(ans, solution)
 
     def test_2(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter-2"].items():
+        for x, y in Util.util.data["function"].items():
             with self.subTest(clsname=x):
                 self.go_clsname(x, y)
 
