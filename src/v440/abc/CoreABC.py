@@ -34,6 +34,8 @@ class CoreABC(Copyable):
         try:
             flat = str(format_spec)
             spec = flat.strip()
+            if flat and not spec:
+                raise ValueError
             parsed = self._format_parse(spec)
         except Exception:
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
@@ -101,10 +103,36 @@ class CoreABC(Copyable):
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
+        flats: tuple[str, ...]
         msg: str
         info: dict[str, Self]
         x: object
         y: str
+        bodies = set()
+        brace = None
+        empty = None
+        flats = tuple(map(str, strings))
+        for flat in flats:
+            body = flat.strip()
+            if body == "" and empty in (None, flat):
+                empty = flat
+                continue
+            if body == "":
+                msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
+                msg %= oxford(*flats)
+                raise VersionError(msg)
+            body = flat.replace(body, "a")
+            if brace in (None, body):
+                brace = body
+                continue
+            msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
+            msg %= oxford(*flats)
+            raise VersionError(msg)
+        if None not in (brace, empty) and brace.replace("a", "") == empty:
+
+
+
+
         info = dict()
         for x in strings:
             y = str(x)
