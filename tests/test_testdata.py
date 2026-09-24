@@ -502,57 +502,44 @@ class TestVersionEpochGo(unittest.TestCase):
 
 
 class TestSlicingGo(unittest.TestCase):
-    def test_0(self: Self, /) -> None:
+
+    def go_cls(self: Self, cls: type[Any], /, **kwargs: Any) -> None:
         x: str
         y: dict[str, Any]
-        for x, y in Util.util.data["slicingmethod"].items():
+        for x, y in kwargs.items():
             with self.subTest(key=x):
-                self.go(**y)
+                self.go_cls_key(cls, **y)
 
-    def go(
+    def go_cls_key(
         self: Self,
+        cls: type[Any],
         /,
         *,
         valid: bool,
-        **kwargs: Any,
+        query: Any,
+        change: Any,
+        solution: str,
+        start: Any = None,
+        stop: Any = None,
+        step: Any = None,
     ) -> None:
+        v: Any
+        v = cls(string=query)
         if valid:
-            self.go_valid(**kwargs)
+            v[start:stop:step] = change
         else:
-            self.go_invalid(**kwargs)
-
-    def go_invalid(
-        self: Self,
-        /,
-        *,
-        query: Any,
-        change: Any,
-        solution: str,
-        start: Any = None,
-        stop: Any = None,
-        step: Any = None,
-    ) -> None:
-        v: Version
-        v = Version(string=query)
-        with self.assertRaises(Exception):
-            v.public.base.release[start:stop:step] = change
+            with self.assertRaises(Exception):
+                v[start:stop:step] = change
         self.assertEqual(str(v), solution)
 
-    def go_valid(
-        self: Self,
-        /,
-        *,
-        query: Any,
-        change: Any,
-        solution: str,
-        start: Any = None,
-        stop: Any = None,
-        step: Any = None,
-    ) -> None:
-        v: Version
-        v = Version(string=query)
-        v.public.base.release[start:stop:step] = change
-        self.assertEqual(str(v), solution)
+    def test_2(self: Self, /) -> None:
+        cls: type[Any]
+        x: str
+        y: dict[Any, Any]
+        for x, y in Util.util.data["slicingmethod"].items():
+            cls = Util.import_(f"v440.core.{x}.{x}")
+            with self.subTest(typename=x):
+                self.go_cls(cls, **y)
 
 
 class TestFormat(unittest.TestCase):
