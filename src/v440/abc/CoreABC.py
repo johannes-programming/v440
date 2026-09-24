@@ -27,15 +27,19 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
-        parsed: tuple[Any, ...]
+        flat: str
         msg: str
+        parsed: tuple[Any, ...]
+        spec: str
         try:
-            parsed = self._format_parse(str(format_spec))
+            flat = str(format_spec)
+            spec = flat.strip()
+            parsed = self._format_parse(spec)
         except Exception:
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return str(self._format_parsed(parsed))
+        return flat.replace(spec, str(self._format_parsed(parsed)))
 
     @abstractmethod
     @setdoc.basic
@@ -124,4 +128,4 @@ class CoreABC(Copyable):
     @string.setter
     @setter
     def string(self: Self, value: object, /) -> None:
-        self._string_fset(str(value).lower())
+        self._string_fset(str(value).lower().strip())
