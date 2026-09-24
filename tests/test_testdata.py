@@ -6,8 +6,8 @@ __all__: list[str] = [
     "TestSlicingGo",
     "TestSlots",
     "TestStringExamples",
-    "TestTotalSetter0",
-    "TestTotalSetter1",
+    "TestTotalAttrSetter",
+    "TestTotalMethod",
     "TestTotalSetter2",
     "TestVersionEpochGo",
 ]
@@ -320,7 +320,7 @@ class TestStringExamples0(unittest.TestCase):
                 self.go_examples(x, y)
 
 
-class TestTotalSetter0(unittest.TestCase):
+class TestTotalAttrSetter(unittest.TestCase):
 
     def go_clsname(
         self: Self,
@@ -386,7 +386,7 @@ class TestTotalSetter0(unittest.TestCase):
                 self.go_clsname(x, y)
 
 
-class TestTotalSetter1(unittest.TestCase):
+class TestTotalMethod(unittest.TestCase):
 
     def go_clsname(
         self: Self,
@@ -427,7 +427,7 @@ class TestTotalSetter1(unittest.TestCase):
     def test_1(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.data["data-setter-1"].items():
+        for x, y in Util.util.data["total-method"].items():
             with self.subTest(clsname=x):
                 self.go_clsname(x, y)
 

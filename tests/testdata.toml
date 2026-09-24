@@ -344,425 +344,6 @@ clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[data-setter-1.Local.test_local_append]
-args = [
-    "build",
-]
-attrname = "append"
-query = [
-    1,
-    "dev",
-]
-queryname = "data"
-solution = [
-    1,
-    "dev",
-    "build",
-]
-
-[data-setter-1.Local.test_local_clear]
-attrname = "clear"
-query = [
-    1,
-    "dev",
-    "build",
-]
-queryname = "data"
-solution = []
-
-[data-setter-1.Local.test_local_count]
-args = [
-    "dev",
-]
-attrname = "count"
-check = 2
-query = [
-    1,
-    "dev",
-    "dev",
-    "build",
-]
-queryname = "data"
-
-[data-setter-1.Local.test_local_extend]
-args = [
-    [
-        "test",
-        123,
-    ],
-]
-attrname = "extend"
-query = [
-    1,
-    "dev",
-]
-queryname = "data"
-solution = [
-    1,
-    "dev",
-    "test",
-    123,
-]
-
-[data-setter-1.Local.test_local_index]
-args = [
-    "dev",
-]
-attrname = "index"
-check = 1
-query = [
-    1,
-    "dev",
-    "build",
-]
-queryname = "data"
-
-[data-setter-1.Local.test_local_insert]
-args = [
-    1,
-    "alpha",
-]
-attrname = "insert"
-query = [
-    1,
-    "dev",
-]
-queryname = "data"
-solution = [
-    1,
-    "alpha",
-    "dev",
-]
-
-[data-setter-1.Local.test_local_pop]
-attrname = "pop"
-check = "build"
-query = [
-    1,
-    "dev",
-    "build",
-]
-queryname = "data"
-solution = [
-    1,
-    "dev",
-]
-
-[data-setter-1.Local.test_local_pop_with_index]
-args = [
-    1,
-]
-attrname = "pop"
-check = "dev"
-query = [
-    1,
-    "dev",
-    "build",
-]
-queryname = "data"
-solution = [
-    1,
-    "build",
-]
-
-[data-setter-1.Local.test_local_remove]
-args = [
-    "dev",
-]
-attrname = "remove"
-query = [
-    1,
-    "dev",
-    "build",
-]
-queryname = "data"
-solution = [
-    1,
-    "build",
-]
-
-[data-setter-1.Local.test_local_reverse]
-attrname = "reverse"
-query = [
-    1,
-    "dev",
-    "build",
-]
-queryname = "data"
-solution = [
-    "build",
-    "dev",
-    1,
-]
-
-[data-setter-1.Local.test_local_sort]
-attrname = "sort"
-query = [
-    3,
-    1,
-    "dev",
-    2,
-    "2",
-    "4a",
-    "a4",
-]
-queryname = "data"
-solution = [
-    "4a",
-    "a4",
-    "dev",
-    1,
-    2,
-    2,
-    3,
-]
-
-[data-setter-1.Local.test_local_sort_reverse]
-attrname = "sort"
-query = [
-    3,
-    1,
-    "dev",
-    2,
-    "2",
-    "4a",
-    "a4",
-]
-queryname = "data"
-solution = [
-    3,
-    2,
-    2,
-    1,
-    "dev",
-    "a4",
-    "4a",
-]
-
-[data-setter-1.Local.test_local_sort_reverse.kwargs]
-reverse = true
-
-[data-setter-1.Release.test_example_4]
-attrname = "sort"
-query = "2.5.3.9"
-queryname = "string"
-solution = [
-    2,
-    3,
-    5,
-    9,
-]
-
-[data-setter-1.Release.test_example_8]
-attrname = "bump"
-query = "1.2.3.4.5.6.7.8.9.10"
-queryname = "string"
-solution = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    13,
-]
-
-[data-setter-1.Release.test_example_8.kwargs]
-index = 7
-amount = 5
-
-[data-setter-1.Release.test_release_append]
-args = [
-    4,
-]
-attrname = "append"
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    3,
-    4,
-]
-
-[data-setter-1.Release.test_release_append.kwargs]
-
-[data-setter-1.Release.test_release_clear]
-args = []
-attrname = "clear"
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = []
-
-[data-setter-1.Release.test_release_clear.kwargs]
-
-[data-setter-1.Release.test_release_count]
-args = [
-    2,
-]
-attrname = "count"
-check = 2
-query = [
-    1,
-    2,
-    2,
-    3,
-]
-queryname = "data"
-
-[data-setter-1.Release.test_release_count.kwargs]
-
-[data-setter-1.Release.test_release_extend]
-args = [
-    [
-        3,
-        4,
-        5,
-    ],
-]
-attrname = "extend"
-query = [
-    1,
-    2,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    3,
-    4,
-    5,
-]
-
-[data-setter-1.Release.test_release_extend.kwargs]
-
-[data-setter-1.Release.test_release_index]
-args = [
-    2,
-]
-attrname = "index"
-check = 1
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-
-[data-setter-1.Release.test_release_index.kwargs]
-
-[data-setter-1.Release.test_release_insert]
-args = [
-    2,
-    3,
-]
-attrname = "insert"
-query = [
-    1,
-    2,
-    4,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    3,
-    4,
-]
-
-[data-setter-1.Release.test_release_insert.kwargs]
-
-[data-setter-1.Release.test_release_pop]
-args = []
-attrname = "pop"
-check = 3
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-]
-
-[data-setter-1.Release.test_release_pop.kwargs]
-
-[data-setter-1.Release.test_release_pop_with_index]
-args = [
-    1,
-]
-attrname = "pop"
-check = 2
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    3,
-]
-
-[data-setter-1.Release.test_release_pop_with_index.kwargs]
-
-[data-setter-1.Release.test_release_remove]
-args = [
-    2,
-]
-attrname = "remove"
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = [
-    1,
-    3,
-]
-
-[data-setter-1.Release.test_release_remove.kwargs]
-
-[data-setter-1.Release.test_release_reverse]
-attrname = "reverse"
-query = [
-    1,
-    2,
-    3,
-]
-queryname = "data"
-solution = [
-    3,
-    2,
-    1,
-]
-
-[data-setter-1.Release.test_release_sort]
-attrname = "sort"
-query = [
-    3,
-    1,
-    2,
-]
-queryname = "data"
-solution = [
-    1,
-    2,
-    3,
-]
-
 [data-setter-2.Version."data-property.dragon"]
 query = 9001
 queryname = "string"
@@ -2608,3 +2189,422 @@ solution = "1.777"
 start = 3
 stop = 4
 valid = true
+
+[total-method.Local.test_local_append]
+args = [
+    "build",
+]
+attrname = "append"
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+    "build",
+]
+
+[total-method.Local.test_local_clear]
+attrname = "clear"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = []
+
+[total-method.Local.test_local_count]
+args = [
+    "dev",
+]
+attrname = "count"
+check = 2
+query = [
+    1,
+    "dev",
+    "dev",
+    "build",
+]
+queryname = "data"
+
+[total-method.Local.test_local_extend]
+args = [
+    [
+        "test",
+        123,
+    ],
+]
+attrname = "extend"
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+    "test",
+    123,
+]
+
+[total-method.Local.test_local_index]
+args = [
+    "dev",
+]
+attrname = "index"
+check = 1
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+
+[total-method.Local.test_local_insert]
+args = [
+    1,
+    "alpha",
+]
+attrname = "insert"
+query = [
+    1,
+    "dev",
+]
+queryname = "data"
+solution = [
+    1,
+    "alpha",
+    "dev",
+]
+
+[total-method.Local.test_local_pop]
+attrname = "pop"
+check = "build"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    1,
+    "dev",
+]
+
+[total-method.Local.test_local_pop_with_index]
+args = [
+    1,
+]
+attrname = "pop"
+check = "dev"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    1,
+    "build",
+]
+
+[total-method.Local.test_local_remove]
+args = [
+    "dev",
+]
+attrname = "remove"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    1,
+    "build",
+]
+
+[total-method.Local.test_local_reverse]
+attrname = "reverse"
+query = [
+    1,
+    "dev",
+    "build",
+]
+queryname = "data"
+solution = [
+    "build",
+    "dev",
+    1,
+]
+
+[total-method.Local.test_local_sort]
+attrname = "sort"
+query = [
+    3,
+    1,
+    "dev",
+    2,
+    "2",
+    "4a",
+    "a4",
+]
+queryname = "data"
+solution = [
+    "4a",
+    "a4",
+    "dev",
+    1,
+    2,
+    2,
+    3,
+]
+
+[total-method.Local.test_local_sort_reverse]
+attrname = "sort"
+query = [
+    3,
+    1,
+    "dev",
+    2,
+    "2",
+    "4a",
+    "a4",
+]
+queryname = "data"
+solution = [
+    3,
+    2,
+    2,
+    1,
+    "dev",
+    "a4",
+    "4a",
+]
+
+[total-method.Local.test_local_sort_reverse.kwargs]
+reverse = true
+
+[total-method.Release.test_example_4]
+attrname = "sort"
+query = "2.5.3.9"
+queryname = "string"
+solution = [
+    2,
+    3,
+    5,
+    9,
+]
+
+[total-method.Release.test_example_8]
+attrname = "bump"
+query = "1.2.3.4.5.6.7.8.9.10"
+queryname = "string"
+solution = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    13,
+]
+
+[total-method.Release.test_example_8.kwargs]
+index = 7
+amount = 5
+
+[total-method.Release.test_release_append]
+args = [
+    4,
+]
+attrname = "append"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+    4,
+]
+
+[total-method.Release.test_release_append.kwargs]
+
+[total-method.Release.test_release_clear]
+args = []
+attrname = "clear"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = []
+
+[total-method.Release.test_release_clear.kwargs]
+
+[total-method.Release.test_release_count]
+args = [
+    2,
+]
+attrname = "count"
+check = 2
+query = [
+    1,
+    2,
+    2,
+    3,
+]
+queryname = "data"
+
+[total-method.Release.test_release_count.kwargs]
+
+[total-method.Release.test_release_extend]
+args = [
+    [
+        3,
+        4,
+        5,
+    ],
+]
+attrname = "extend"
+query = [
+    1,
+    2,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+    4,
+    5,
+]
+
+[total-method.Release.test_release_extend.kwargs]
+
+[total-method.Release.test_release_index]
+args = [
+    2,
+]
+attrname = "index"
+check = 1
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+
+[total-method.Release.test_release_index.kwargs]
+
+[total-method.Release.test_release_insert]
+args = [
+    2,
+    3,
+]
+attrname = "insert"
+query = [
+    1,
+    2,
+    4,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+    4,
+]
+
+[total-method.Release.test_release_insert.kwargs]
+
+[total-method.Release.test_release_pop]
+args = []
+attrname = "pop"
+check = 3
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+]
+
+[total-method.Release.test_release_pop.kwargs]
+
+[total-method.Release.test_release_pop_with_index]
+args = [
+    1,
+]
+attrname = "pop"
+check = 2
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    3,
+]
+
+[total-method.Release.test_release_pop_with_index.kwargs]
+
+[total-method.Release.test_release_remove]
+args = [
+    2,
+]
+attrname = "remove"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    1,
+    3,
+]
+
+[total-method.Release.test_release_remove.kwargs]
+
+[total-method.Release.test_release_reverse]
+attrname = "reverse"
+query = [
+    1,
+    2,
+    3,
+]
+queryname = "data"
+solution = [
+    3,
+    2,
+    1,
+]
+
+[total-method.Release.test_release_sort]
+attrname = "sort"
+query = [
+    3,
+    1,
+    2,
+]
+queryname = "data"
+solution = [
+    1,
+    2,
+    3,
+]
