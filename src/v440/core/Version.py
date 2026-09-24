@@ -4,7 +4,7 @@ from __future__ import annotations
 
 __all__: list[str] = ["Version"]
 
-from collections.abc import Iterable
+from collections import abc
 from typing import Any, Final, Self
 
 import packaging.version
@@ -70,7 +70,7 @@ class Version(NestedABC):
         self.public.string, self.local.string = self._split(value)
 
     @classmethod
-    def _split(cls: type[Self], string: str, /) -> Iterable[str]:
+    def _split(cls: type[Self], string: str, /) -> abc.Iterable[str]:
         if string.endswith("+"):
             raise ValueError
         if "+" in string:

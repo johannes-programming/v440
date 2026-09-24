@@ -5,7 +5,7 @@ from __future__ import annotations
 __all__: list[str] = ["Post"]
 
 import operator
-from collections.abc import Iterable
+from collections import abc
 from functools import reduce
 from typing import Any, Self, SupportsIndex
 
@@ -27,7 +27,7 @@ class Post(QualABC):
 
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        clues: Iterable[Clue]
+        clues: abc.Iterable[Clue]
         clues = map(Clue.by_example, info.keys())
         return reduce(operator.and_, clues, Clue()).solo(".post")
 
