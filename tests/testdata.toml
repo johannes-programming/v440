@@ -52,7 +52,7 @@ solution = [
     "local",
     "dev",
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_boolean_assignment]
 query = [
@@ -66,7 +66,7 @@ solution = [
     0,
     "dev",
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_conversion_mixed]
 query = [
@@ -84,7 +84,7 @@ solution = [
     4,
     1,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_conversion_string]
 query = [
@@ -100,7 +100,7 @@ solution = [
     "local",
     "test",
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_data_setter]
 query = [
@@ -112,13 +112,13 @@ solution = [
     "custom",
     "data",
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_empty_list]
 query = []
 queryname = "data"
 solution = []
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_equality_with_list]
 query = [
@@ -130,7 +130,7 @@ solution = [
     1,
     "dev",
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_invalid_value]
 query = [
@@ -139,7 +139,7 @@ query = [
     "3",
 ]
 queryname = "data"
-valid = false
+exceptiontype = "v440.VersionError"
 
 [data-setter-0.Local.test_local_iterable]
 query = "1.dev.build"
@@ -149,7 +149,7 @@ solution = [
     "dev",
     "build",
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_large_integers]
 query = [
@@ -159,7 +159,7 @@ queryname = "data"
 solution = [
     1000000000000000000,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Local.test_local_non_string_elements]
 query = [
@@ -168,7 +168,7 @@ query = [
     "test",
 ]
 queryname = "data"
-valid = false
+exceptiontype = "v440.VersionError"
 
 [data-setter-0.Release.test_release_assignment_with_bool_conversion]
 query = [
@@ -182,7 +182,7 @@ solution = [
     0,
     3,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_basic_assignment]
 query = [
@@ -196,7 +196,7 @@ solution = [
     2,
     3,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_boolean_assignment]
 query = [
@@ -210,19 +210,19 @@ solution = [
     0,
     1,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_data_property_empty]
 query = []
 queryname = "data"
 solution = []
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_empty_list]
 query = []
 queryname = "data"
 solution = []
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_equality_with_list]
 query = [
@@ -236,7 +236,7 @@ solution = [
     2,
     3,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_integer_float]
 query = [
@@ -250,7 +250,7 @@ solution = [
     0,
     3,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_invalid_assignment]
 query = [
@@ -259,7 +259,7 @@ query = [
     "3",
 ]
 queryname = "data"
-valid = false
+exceptiontype = "v440.VersionError"
 
 [data-setter-0.Release.test_release_invalid_boolean_assignment]
 query = [
@@ -267,7 +267,7 @@ query = [
     "false",
 ]
 queryname = "data"
-valid = false
+exceptiontype = "v440.VersionError"
 
 [data-setter-0.Release.test_release_invalid_float_value]
 query = [
@@ -276,7 +276,7 @@ query = [
     3,
 ]
 queryname = "data"
-valid = false
+exceptiontype = "v440.VersionError"
 
 [data-setter-0.Release.test_release_invalid_value]
 query = [
@@ -285,7 +285,7 @@ query = [
     "3",
 ]
 queryname = "data"
-valid = false
+exceptiontype = "v440.VersionError"
 
 [data-setter-0.Release.test_release_large_numbers]
 query = [
@@ -299,7 +299,7 @@ solution = [
     2000000000,
     3000000000,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_max_integer]
 query = [
@@ -309,7 +309,7 @@ queryname = "data"
 solution = [
     1000000000000000000,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_non_integer_elements]
 query = [
@@ -318,7 +318,7 @@ query = [
     3,
 ]
 queryname = "data"
-valid = false
+exceptiontype = "v440.VersionError"
 
 [data-setter-0.Release.test_release_trailing_zeros]
 query = [
@@ -334,7 +334,7 @@ solution = [
     2,
     3,
 ]
-valid = true
+exceptiontype = ""
 
 [data-setter-0.Release.test_release_zero]
 query = [
@@ -342,7 +342,7 @@ query = [
 ]
 queryname = "data"
 solution = []
-valid = true
+exceptiontype = ""
 
 [data-setter-1.Local.test_local_append]
 args = [

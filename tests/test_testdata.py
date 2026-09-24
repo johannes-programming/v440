@@ -15,10 +15,12 @@ __all__: list[str] = [
 import builtins
 import enum
 import functools
+import importlib
 import io
 import operator
 import shlex
 import tomllib
+import types
 import unittest
 from collections.abc import Callable, Iterable, Sequence
 from pathlib import Path
@@ -51,6 +53,16 @@ class Util(enum.Enum):
     @functools.cached_property
     def examples(self: Self, /) -> dict[str, Any]:
         return cast(dict[str, Any], Util.util.data.get("examples", {}))
+
+    @classmethod
+    def import_(cls: type[Self], qualname: str, /) -> Any:
+        module: types.ModuleType
+        name: str
+        names: list[str]
+        names = qualname.split(".")
+        name = names.pop(-1)
+        module = importlib.import_module(".".join(names))
+        return getattr(module, name)
 
 
 class TestDeformatting(unittest.TestCase):
@@ -328,26 +340,29 @@ class TestTotalSetter0(unittest.TestCase):
         self: Self,
         /,
         *args: Any,
-        valid: bool,
+        exceptiontype: str,
         **kwargs: Any,
     ) -> None:
-        if valid:
-            self.go_task_valid(*args, **kwargs)
+        if exceptiontype:
+            self.go_task_invalid(*args, **kwargs, exceptiontype=exceptiontype)
         else:
-            self.go_task_invalid(*args, **kwargs)
+            self.go_task_valid(*args, **kwargs)
 
     def go_task_invalid(
         self: Self,
         cls: type,
         /,
         *,
+        exceptiontype: str,
         query: list[Any],
         queryname: str,
         **kwargs: Any,
     ) -> None:
+        exc: type[Exception]
         obj: Any
+        exc = Util.import_(exceptiontype)
         obj = cls()
-        with self.assertRaises(VersionError):
+        with self.assertRaises(exc):
             setattr(obj, queryname, query)
 
     def go_task_valid(
