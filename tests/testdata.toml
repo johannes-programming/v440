@@ -2186,6 +2186,17 @@ start = 3
 stop = 4
 valid = true
 
+[synonymous-to-empty]
+Base = "!"
+Dev = ".dev#"
+Local = "."
+Post = ".post#"
+Pre = "a#"
+Public = "!"
+Qual = "a#"
+Release = "."
+Version = "!"
+
 [total-method.Local.test_local_append]
 args = [
     "build",
