@@ -1,6 +1,6 @@
 __all__: list[str] = [
     "TestDeformatting",
-    "TestPackagingA",
+    "TestFormat",
     "TestOrder",
     "TestReleaseAlias",
     "TestSlicingGo",
@@ -8,11 +8,10 @@ __all__: list[str] = [
     "TestStringExamples",
     "TestTotalAttrSetter",
     "TestTotalMethod",
-    "TestTotalSetter2",
+    "TestFunction",
     "TestVersionEpochGo",
 ]
 
-import builtins
 import enum
 import functools
 import importlib
@@ -22,7 +21,7 @@ import shlex
 import tomllib
 import types
 import unittest
-from collections.abc import Callable, Iterable, Sequence
+from collections import abc
 from pathlib import Path
 from typing import Any, Self, cast
 
@@ -246,7 +245,7 @@ class TestStringExamples0(unittest.TestCase):
         example: str,
         /,
         *,
-        formatted: Iterable[Any] = (),
+        formatted: abc.Iterable[Any] = (),
         **kwargs: Any,
     ) -> None:
         obj: Any
@@ -406,7 +405,7 @@ class TestTotalMethod(unittest.TestCase):
         cls: type,
         /,
         *,
-        args: Sequence[Any] = (),
+        args: abc.Sequence[Any] = (),
         attrname: str,
         check: list[Any] | None = None,
         kwargs: dict[Any, Any] | tuple[Any, ...] = (),
@@ -431,7 +430,7 @@ class TestTotalMethod(unittest.TestCase):
                 self.go_clsname(x, y)
 
 
-class TestTotalSetter2(unittest.TestCase):
+class TestFunction(unittest.TestCase):
 
     def go_clsname(
         self: Self,
@@ -452,7 +451,7 @@ class TestTotalSetter2(unittest.TestCase):
         cls: type,
         /,
         *,
-        args: Sequence[Any] = (),
+        args: abc.Sequence[Any] = (),
         kwargs: dict[Any, Any] | tuple[Any, ...] = (),
         query: list[Any],
         queryname: str,
@@ -556,24 +555,15 @@ class TestSlicingGo(unittest.TestCase):
         self.assertEqual(str(v), solution)
 
 
-class TestPackagingA(unittest.TestCase):
-    def test_0(self: Self, /) -> None:
-        x: str
-        y: dict[str, Any]
-        for x, y in Util.util.examples["Version"].items():
-            with self.subTest(example=x):
-                self.go(x, **y)
+class TestFormat(unittest.TestCase):
 
     def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
-        if not valid:
-            return
-        self.go_format(text)
-
-    def go_format(self: Self, /, text: str) -> None:
         a: Version_
         b: str
         f: str
         g: str
+        if not valid:
+            return
         a = Version_(text)
         b = str(a)
         f = "#." * len(a.release)
@@ -581,37 +571,20 @@ class TestPackagingA(unittest.TestCase):
         g = format(Version(string=text), f)
         self.assertEqual(b, g)
 
-
-class TestOrder(unittest.TestCase):
     def test_0(self: Self, /) -> None:
-        pure: list[str]
         x: str
         y: dict[str, Any]
-        pure = []
         for x, y in Util.util.examples["Version"].items():
-            if y["valid"]:
-                pure.append(x)
-        for o in ("eq", "ge", "gt", "le", "lt", "ne"):
-            func = getattr(operator, o)
-            with self.subTest(func=o):
-                self.go_op(func=func, pure=pure)
+            with self.subTest(example=x):
+                self.go(x, **y)
 
-    def go_op(
-        self: Self,
-        /,
-        func: Callable[[Any, Any], Any],
-        pure: list[str],
-    ) -> None:
-        for i in range(len(pure) ** 2):
-            x = pure[i // len(pure)]
-            y = pure[i % len(pure)]
-            with self.subTest(x=x, y=y):
-                self.go(x=x, y=y, func=func)
+
+class TestOrder(unittest.TestCase):
 
     def go(
         self: Self,
         *,
-        func: Callable[[Any, Any], Any],
+        func: abc.Callable[[Any, Any], Any],
         x: str,
         y: str,
     ) -> None:
@@ -643,6 +616,32 @@ class TestOrder(unittest.TestCase):
             backwards,
             f"operator.{func.__name__}({x!r}, {y!r}) should match for current and backwards.",
         )
+
+    def go_op(
+        self: Self,
+        /,
+        func: abc.Callable[[Any, Any], Any],
+        pure: list[str],
+    ) -> None:
+        i: int
+        for i in range(len(pure) ** 2):
+            x = pure[i // len(pure)]
+            y = pure[i % len(pure)]
+            with self.subTest(x=x, y=y):
+                self.go(x=x, y=y, func=func)
+
+    def test_0(self: Self, /) -> None:
+        pure: list[str]
+        x: str
+        y: dict[str, Any]
+        pure = []
+        for x, y in Util.util.examples["Version"].items():
+            if y["valid"]:
+                pure.append(x)
+        for o in ("eq", "ge", "gt", "le", "lt", "ne"):
+            func = getattr(operator, o)
+            with self.subTest(func=o):
+                self.go_op(func=func, pure=pure)
 
 
 class TestSlots(unittest.TestCase):
