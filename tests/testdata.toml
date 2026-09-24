@@ -2129,7 +2129,7 @@ solution = [
     5,
 ]
 
-[slicingmethod.Release.test_slicing_1]
+[slicing.Release.test_slicing_1]
 change = [
     7,
     7,
@@ -2142,7 +2142,7 @@ step = 5
 stop = 15
 valid = false
 
-[slicingmethod.Release.test_slicing_3]
+[slicing.Release.test_slicing_3]
 change = [
     777,
 ]
@@ -2152,7 +2152,7 @@ start = 3
 stop = 4
 valid = true
 
-[slicingmethod.Release.test_slicing_4]
+[slicing.Release.test_slicing_4]
 change = [
     7,
     7,
@@ -2164,7 +2164,7 @@ start = 3
 stop = 4
 valid = true
 
-[slicingmethod.Release.test_slicing_5]
+[slicing.Release.test_slicing_5]
 change = [
     7,
     7,
@@ -2176,7 +2176,7 @@ start = 3
 stop = 4
 valid = true
 
-[slicingmethod.Release.test_slicing_6]
+[slicing.Release.test_slicing_6]
 change = [
     777,
 ]
