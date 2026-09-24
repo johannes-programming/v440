@@ -450,32 +450,6 @@ class TestTotalSetter2(unittest.TestCase):
 
     def go_task(
         self: Self,
-        /,
-        *args: Any,
-        valid: bool,
-        **kwargs: Any,
-    ) -> None:
-        if valid:
-            self.go_task_valid(*args, **kwargs)
-        else:
-            self.go_task_invalid(*args, **kwargs)
-
-    def go_task_invalid(
-        self: Self,
-        cls: type,
-        /,
-        *,
-        query: list[Any],
-        queryname: str,
-        **kwargs: Any,
-    ) -> None:
-        obj: Any
-        obj = cls()
-        with self.assertRaises(VersionError):
-            setattr(obj, queryname, query)
-
-    def go_task_valid(
-        self: Self,
         cls: type,
         /,
         *,
