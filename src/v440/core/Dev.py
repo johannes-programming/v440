@@ -6,13 +6,29 @@ __all__: list[str] = ["Dev"]
 
 import operator
 from collections import abc
-from functools import reduce
+from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
+
+from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
+from v440.errors.VersionError import VersionError
+
+
+@dataclass
+class DevDeformat:
+    clue: Clue
+    info: dict[str, Dev]
+
+    def best(self: Self, /) -> str:
+        return self.clue.solo(".dev")
+
+    def intersection_update(self: Self, other: Self, /) -> None:
+        self.clue &= other.clue
+        self.info.update(other.info)
 
 
 class Dev(QualABC):
@@ -25,11 +41,18 @@ class Dev(QualABC):
         else:
             return (1,)
 
-    @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        clues: abc.Iterable[Clue]
-        clues = map(Clue.by_example, info.keys())
-        return reduce(operator.and_, clues, Clue()).solo(".dev")
+    @staticmethod
+    def _deformat(body: str | None = None, /) -> DevDeformat:
+        if body is None:
+            return DevDeformat(
+                info=dict(),
+                clue=Clue(),
+            )
+        else:
+            return DevDeformat(
+                info={body: Dev(body)},
+                clue=Clue.by_example(body),
+            )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
@@ -60,6 +83,19 @@ class Dev(QualABC):
             return "dev"
         else:
             raise ValueError
+
+    @classmethod
+    def deformat(cls: type[Self], /, *strings: object) -> str:
+        x: DevDeformat | None
+        x = cls._deformat()
+        for flat in set(map(str, strings)):
+            try:
+                x.intersection_update(cls._deformat(flat))
+            except Exception:
+                msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
+                msg %= oxford(*strings)
+                raise VersionError(msg)
+        return x.best()
 
     @property
     def packaging(self: Self, /) -> int | None:
