@@ -6,9 +6,12 @@ __all__: list[str] = ["Public"]
 
 
 import string as string_
+from dataclasses import dataclass
 from typing import Any, Final, Self
 
-from v440._utils.deformatting import OldDeformattable
+from frozendict import frozendict
+
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
@@ -28,7 +31,24 @@ def split_public(value: str, /) -> tuple[str, str]:
     return value[:i], value[i:]
 
 
-class Public(OldDeformattable, NestedABC):
+@dataclass(frozen=True, kw_only=True)
+class PublicDeformat:
+    bases: frozenset[str]
+    info: frozendict[str, Public]
+    quals: frozenset[str]
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            bases=self.bases | other.bases,
+            info=self.info | other.info,
+            quals=self.quals | other.quals,
+        )
+
+    def best(self: Self, /) -> str:
+        return Base_.deformat(*self.bases) + Qual_.deformat(*self.quals)
+
+
+class Public(NewDeformattable, NestedABC):
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
@@ -41,19 +61,25 @@ class Public(OldDeformattable, NestedABC):
         return self.base, self.qual
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        bases: set[str]
-        quals: set[str]
-        x: str
-        y: str
-        bases = set()
-        quals = set()
-        for x, y in map(split_public, info.keys()):
-            bases.add(x)
-            quals.add(y)
-        x = Base_.deformat(*bases)
-        y = Qual_.deformat(*quals)
-        return x + y
+    def _deformat(
+        cls: type[Self], body: str | None = None, /
+    ) -> PublicDeformat:
+        base: str
+        public: Self
+        qual: str
+        if body is None:
+            return PublicDeformat(
+                bases=frozenset(),
+                info=frozendict(),
+                quals=frozenset(),
+            )
+        public = cls(string=body)
+        base, qual = split_public(body)
+        return PublicDeformat(
+            bases=frozenset({base}),
+            info=frozendict({body: public}),
+            quals=frozenset({qual}),
+        )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
