@@ -545,21 +545,23 @@ class TestSlicingGo(unittest.TestCase):
         cls: type[Any],
         /,
         *,
-        valid: bool,
-        query: Any,
         change: Any,
+        exceptiontype: str,
+        query: Any,
         solution: str,
         start: Any = None,
         stop: Any = None,
         step: Any = None,
     ) -> None:
         ctx: Any
+        exc: Any
         v: Any
         v = cls(string=query)
-        if valid:
-            ctx = contextlib.nullcontext()
+        if exceptiontype:
+            exc = Util.import_(exceptiontype)
+            ctx = self.assertRaises(exc)
         else:
-            ctx = self.assertRaises(Exception)
+            ctx = contextlib.nullcontext()
         with ctx:
             v[start:stop:step] = change
         self.assertEqual(str(v), solution)
