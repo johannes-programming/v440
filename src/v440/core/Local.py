@@ -16,7 +16,7 @@ from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
-class Local(ListABC[int | str], OldDeformattable):
+class Local(OldDeformattable, ListABC[int | str]):
     __slots__ = ()
 
     @classmethod

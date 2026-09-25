@@ -15,7 +15,7 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Pre(QualABC, OldDeformattable):
+class Pre(OldDeformattable, QualABC):
 
     __slots__ = ()
 

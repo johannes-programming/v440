@@ -14,7 +14,7 @@ from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
-class Release(ListABC[int], OldDeformattable):
+class Release(OldDeformattable, ListABC[int]):
     __slots__ = ()
 
     @classmethod

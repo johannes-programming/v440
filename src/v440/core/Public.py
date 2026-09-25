@@ -15,7 +15,7 @@ from v440.core.Base import Base as Base_
 from v440.core.Qual import Qual as Qual_
 
 
-class Public(NestedABC, OldDeformattable):
+class Public(OldDeformattable, NestedABC):
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_

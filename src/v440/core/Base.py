@@ -14,7 +14,7 @@ from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
 
 
-class Base(NestedABC, OldDeformattable):
+class Base(OldDeformattable, NestedABC):
 
     Release: Final[type[Release_]] = Release_
     _epoch: int

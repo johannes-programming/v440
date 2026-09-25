@@ -16,7 +16,7 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Post(QualABC, OldDeformattable):
+class Post(OldDeformattable, QualABC):
 
     __slots__ = ()
 
