@@ -11,12 +11,12 @@ from typing import Any, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import Deformattable
+from v440._utils.deformatting import OldDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Post(QualABC, Deformattable):
+class Post(QualABC, OldDeformattable):
 
     __slots__ = ()
 

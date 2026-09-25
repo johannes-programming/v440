@@ -8,13 +8,13 @@ import operator
 from typing import Any, Final, Self
 
 from v440._utils.Cfg import Cfg
-from v440._utils.deformatting import Deformattable
+from v440._utils.deformatting import OldDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
 
 
-class Base(NestedABC, Deformattable):
+class Base(NestedABC, OldDeformattable):
 
     Release: Final[type[Release_]] = Release_
     _epoch: int

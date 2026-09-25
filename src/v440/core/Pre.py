@@ -10,12 +10,12 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import Deformattable
+from v440._utils.deformatting import OldDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Pre(QualABC, Deformattable):
+class Pre(QualABC, OldDeformattable):
 
     __slots__ = ()
 
