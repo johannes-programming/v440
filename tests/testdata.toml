@@ -2505,7 +2505,7 @@ solution = "1.2.3.4.5.6.7.8.9.10"
 start = -8
 step = 5
 stop = 15
-valid = false
+exceptiontype = "builtins.Exception"
 
 [slicing.Release.test_slicing_3]
 change = [
@@ -2515,7 +2515,7 @@ query = "1.2.3.4.5.6.7.8.9.10"
 solution = "1.2.3.777.5.6.7.8.9.10"
 start = 3
 stop = 4
-valid = true
+exceptiontype = ""
 
 [slicing.Release.test_slicing_4]
 change = [
@@ -2527,7 +2527,7 @@ query = "1.2.3.4.5.6.7.8.9.10"
 solution = "1.2.3.7.7.7.5.6.7.8.9.10"
 start = 3
 stop = 4
-valid = true
+exceptiontype = ""
 
 [slicing.Release.test_slicing_5]
 change = [
@@ -2539,7 +2539,7 @@ query = "1"
 solution = "1.7.7.7"
 start = 3
 stop = 4
-valid = true
+exceptiontype = ""
 
 [slicing.Release.test_slicing_6]
 change = [
@@ -2549,7 +2549,17 @@ query = "1"
 solution = "1.777"
 start = 3
 stop = 4
-valid = true
+exceptiontype = ""
+
+[slicing.Local.test_slicing_6]
+change = [
+    777,
+]
+query = "abc.123.def"
+solution = "abc.777.def"
+start = 1
+stop = 2
+exceptiontype = ""
 
 [synonymous-to-empty]
 Base = "!"
