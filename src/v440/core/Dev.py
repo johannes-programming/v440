@@ -6,17 +6,33 @@ __all__: list[str] = ["Dev"]
 
 import operator
 from collections import abc
+from dataclasses import dataclass
 from functools import reduce
 from typing import Any, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import OldDeformattable
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Dev(OldDeformattable, QualABC):
+@dataclass(frozen=True, kw_only=True)
+class DevDeformat:
+    clue: Clue
+    info: dict[str, Dev]
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            clue=self.clue & other.clue,
+            info=self.info | other.info,
+        )
+
+    def best(self: Self, /) -> str:
+        return self.clue.solo(".dev")
+
+
+class Dev(NewDeformattable, QualABC):
 
     __slots__ = ()
 
@@ -27,10 +43,17 @@ class Dev(OldDeformattable, QualABC):
             return (1,)
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        clues: abc.Iterable[Clue]
-        clues = map(Clue.by_example, info.keys())
-        return reduce(operator.and_, clues, Clue()).solo(".dev")
+    def _deformat(cls: type[Self], body: str | None = None, /) -> DevDeformat:
+        if body is None:
+            return DevDeformat(
+                clue=Clue(),
+                info=dict(),
+            )
+        else:
+            return DevDeformat(
+                clue=Clue.by_example(body),
+                info={body: cls(string=body)},
+            )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
