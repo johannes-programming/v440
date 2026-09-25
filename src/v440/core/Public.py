@@ -15,6 +15,19 @@ from v440.core.Base import Base as Base_
 from v440.core.Qual import Qual as Qual_
 
 
+def split_public(value: str, /) -> tuple[str, str]:
+    i: int
+    i = int(value.lower().startswith("v"))
+    while i < len(value):
+        if value[i] in (string_.digits + "!."):
+            i += 1
+        else:
+            break
+    if i and (value[i - 1] == "."):
+        i -= 1
+    return value[:i], value[i:]
+
+
 class Public(OldDeformattable, NestedABC):
 
     Base: Final[type[Base_]] = Base_
@@ -35,7 +48,7 @@ class Public(OldDeformattable, NestedABC):
         y: str
         bases = set()
         quals = set()
-        for x, y in map(cls._split, info.keys()):
+        for x, y in map(split_public, info.keys()):
             bases.add(x)
             quals.add(y)
         x = Base_.deformat(*bases)
@@ -70,21 +83,8 @@ class Public(OldDeformattable, NestedABC):
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_base=Base_, _qual=Qual_)
 
-    @classmethod
-    def _split(cls: type[Self], value: str, /) -> tuple[str, str]:
-        i: int
-        i = int(value.lower().startswith("v"))
-        while i < len(value):
-            if value[i] in (string_.digits + "!."):
-                i += 1
-            else:
-                break
-        if i and (value[i - 1] == "."):
-            i -= 1
-        return value[:i], value[i:]
-
     def _string_fset(self: Self, value: str, /) -> None:
-        self.base.string, self.qual.string = self._split(value)
+        self.base.string, self.qual.string = split_public(value)
 
     def _todict(self: Self, /) -> dict[str, Any]:
         return dict(base=self.base, qual=self.qual)
