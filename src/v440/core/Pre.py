@@ -4,44 +4,44 @@ from __future__ import annotations
 
 __all__: list[str] = ["Pre"]
 
+from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
 
+from frozendict import frozendict
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import OldDeformattable
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Pre(OldDeformattable, QualABC):
+@dataclass(frozen=True, kw_only=True)
+class PreDeformat:
+    clues: tuple[Clue, Clue, Clue]
+    info: frozendict[str, Pre]
 
-    __slots__ = ()
+    def __and__(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            clues=(
+                self.clues[0] & other.clues[0],
+                self.clues[1] & other.clues[1],
+                self.clues[2] & other.clues[2],
+            ),
+            info=self.info | other.info,
+        )
 
-    def _cmp(self: Self, /) -> tuple[Any, ...]:
-        if not self:
-            return (frozenset("0"),)
-        return frozenset("1"), self.lit, self.num
-
-    @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        s: str
-        o: Self
-        clues: list[Clue]
+    def best(self: Self, /) -> str:
         matches: dict[str, str]
         pos: list[set[str]]
         sols: list[str]
+        s: str
         way: tuple[Any, ...]
-        clues = [Clue()] * 3
-        for s, o in info.items():
-            if not o:
-                continue
-            clues[("a", "b", "rc").index(o.lit)] &= Clue.by_example(s)
         pos = list()
-        pos.append(clues[0].possible(hollow="a", short="A"))
-        pos.append(clues[1].possible(hollow="b", short="B"))
-        pos.append(clues[2].possible(hollow="rc", short="C"))
+        pos.append(self.clues[0].possible(hollow="a", short="A"))
+        pos.append(self.clues[1].possible(hollow="b", short="B"))
+        pos.append(self.clues[2].possible(hollow="rc", short="C"))
         sols = list()
         for way in iterprod(*pos):
             s = "".join(way)
@@ -51,6 +51,34 @@ class Pre(OldDeformattable, QualABC):
         sols.sort()
         sols.sort(key=len)
         return sols[0]
+
+
+class Pre(NewDeformattable, QualABC):
+
+    __slots__ = ()
+
+    def _cmp(self: Self, /) -> tuple[Any, ...]:
+        if not self:
+            return (frozenset("0"),)
+        return frozenset("1"), self.lit, self.num
+
+    @classmethod
+    def _deformat(cls: type[Self], body: str | None = None, /) -> PreDeformat:
+        clues: list[Clue]
+        pre: Self
+        if body is None:
+            return PreDeformat(
+                clues=(Clue(), Clue(), Clue()),
+                info=frozendict(),
+            )
+        pre = cls(string=body)
+        clues = [Clue(), Clue(), Clue()]
+        if pre:
+            clues[("a", "b", "rc").index(pre.lit)] = Clue.by_example(body)
+        return PreDeformat(
+            clues=(clues[0], clues[1], clues[2]),
+            info=frozendict({body: pre}),
+        )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
