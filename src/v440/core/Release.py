@@ -7,14 +7,52 @@ __all__: list[str] = ["Release"]
 
 import operator
 import string as string_
+from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex, overload
 
-from v440._utils.deformatting import OldDeformattable
+from frozendict import frozendict
+
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
-class Release(OldDeformattable, ListABC[int]):
+@dataclass(frozen=True, kw_only=True)
+class ReleaseDeformat:
+    end: int
+    info: frozendict[str, Release]
+    table: tuple[int, ...]
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        i: int
+        table: list[int]
+        table = [0] * max(len(self.table), len(other.table))
+        for i in range(len(table)):
+            table[i] = Release._deformat_comb(
+                self.table[i] if i < len(self.table) else 0,
+                other.table[i] if i < len(other.table) else 0,
+            )
+        return type(self)(
+            end=max(self.end, other.end),
+            info=self.info | other.info,
+            table=tuple(table),
+        )
+
+    def best(self: Self, /) -> str:
+        ans: str
+        i: int
+        mag: int
+        ans = ""
+        for i, mag in enumerate(self.table):
+            if mag > 1:
+                ans += "#" * mag
+            elif i == self.end:
+                ans += "#"
+            ans += "."
+        return ans.rstrip(".")
+
+
+class Release(NewDeformattable, ListABC[int]):
     __slots__ = ()
 
     @classmethod
@@ -26,41 +64,26 @@ class Release(OldDeformattable, ListABC[int]):
         return v
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        i: int
-        j: int
+    def _deformat(
+        cls: type[Self], body: str | None = None, /
+    ) -> ReleaseDeformat:
         k: int
-        s: str
+        release: Self
         t: str
-        table: list[int]
-        if len(info) == 0:
-            return ""
-        i = 0
-        j = 0
-        for s in info.keys():
-            k = s.count(".")
-            i = max(i, k + 1)
-            t = s.rstrip("0")
-            if t.endswith(".") or t == "":
-                j = max(j, k)
-        if j == 0:
-            j = -1
-        table = [0] * i
-        for s in info.keys():
-            if s == "":
-                continue
-            for i, t in enumerate(s.split(".")):
-                k = cls._deformat_force(t)
-                table[i] = cls._deformat_comb(table[i], k)
-        s = ""
-        for i, k in enumerate(table):
-            if k > 1:
-                s += "#" * k
-            elif i == j:
-                s += "#"
-            s += "."
-        s = s.rstrip(".")
-        return s
+        if body is None:
+            return ReleaseDeformat(
+                end=-1,
+                info=frozendict(),
+                table=(),
+            )
+        release = cls(string=body)
+        k = body.count(".")
+        t = body.rstrip("0")
+        return ReleaseDeformat(
+            end=k if k > 0 and (t.endswith(".") or t == "") else -1,
+            info=frozendict({body: release}),
+            table=tuple(map(cls._deformat_force, body.split("."))),
+        )
 
     @classmethod
     def _deformat_force(cls: type[Self], part: str, /) -> int:
