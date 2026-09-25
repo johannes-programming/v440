@@ -1,6 +1,4 @@
-"""Provide the CoreABC abstract base for v440 classes."""
-
-__all__: list[str] = ["Deformat"]
+__all__: list[str] = ["OldDeformattable"]
 
 from abc import ABC, abstractmethod
 from typing import Self
@@ -11,7 +9,7 @@ from v440._utils.Cfg import Cfg
 from v440.errors.VersionError import VersionError
 
 
-class Deformattable(ABC):
+class OldDeformattable(ABC):
     __slots__ = ()
 
     @classmethod

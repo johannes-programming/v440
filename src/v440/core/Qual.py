@@ -11,7 +11,7 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import Deformattable
+from v440._utils.deformatting import OldDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
@@ -19,7 +19,7 @@ from v440.core.Post import Post as Post_
 from v440.core.Pre import Pre as Pre_
 
 
-class Qual(NestedABC, Deformattable):
+class Qual(NestedABC, OldDeformattable):
 
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_

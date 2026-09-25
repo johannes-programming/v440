@@ -8,14 +8,14 @@ __all__: list[str] = ["Public"]
 import string as string_
 from typing import Any, Final, Self
 
-from v440._utils.deformatting import Deformattable
+from v440._utils.deformatting import OldDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
 from v440.core.Qual import Qual as Qual_
 
 
-class Public(NestedABC, Deformattable):
+class Public(NestedABC, OldDeformattable):
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
