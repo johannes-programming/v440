@@ -354,6 +354,386 @@ valid = false
 [deformatting.Base."V1.2.3 4.5"]
 valid = false
 
+[deformatting.Base.0]
+solution = ""
+valid = true
+
+[deformatting.Base.V0]
+solution = "V"
+valid = true
+
+[deformatting.Base.v0]
+solution = "v"
+valid = true
+
+[deformatting.Base."0!0"]
+solution = "#!"
+valid = true
+
+[deformatting.Base.00]
+solution = "##"
+valid = true
+
+[deformatting.Base."1!1.0"]
+solution = ".#"
+valid = true
+
+[deformatting.Base."01!0"]
+solution = "##!"
+valid = true
+
+[deformatting.Base.001]
+solution = "###"
+valid = true
+
+[deformatting.Base."0.0.0"]
+solution = "..#"
+valid = true
+
+[deformatting.Base."V0!0"]
+solution = "V#!"
+valid = true
+
+[deformatting.Base.V00]
+solution = "V##"
+valid = true
+
+[deformatting.Base."V1!1.0"]
+solution = "V.#"
+valid = true
+
+[deformatting.Base."v0!0"]
+solution = "v#!"
+valid = true
+
+[deformatting.Base.v00]
+solution = "v##"
+valid = true
+
+[deformatting.Base."v1!1.0"]
+solution = "v.#"
+valid = true
+
+[deformatting.Base."0!00"]
+solution = "#!##"
+valid = true
+
+[deformatting.Base."0!1.0"]
+solution = "#!.#"
+valid = true
+
+[deformatting.Base."001!0"]
+solution = "###!"
+valid = true
+
+[deformatting.Base."1!1.0.0.0"]
+solution = "...#"
+valid = true
+
+[deformatting.Base."V01!0"]
+solution = "V##!"
+valid = true
+
+[deformatting.Base.V001]
+solution = "V###"
+valid = true
+
+[deformatting.Base."V0.0.0"]
+solution = "V..#"
+valid = true
+
+[deformatting.Base."v01!0"]
+solution = "v##!"
+valid = true
+
+[deformatting.Base.v001]
+solution = "v###"
+valid = true
+
+[deformatting.Base."v0.0.0"]
+solution = "v..#"
+valid = true
+
+[deformatting.Base."0!001"]
+solution = "#!###"
+valid = true
+
+[deformatting.Base."0!0.0.0"]
+solution = "#!..#"
+valid = true
+
+[deformatting.Base."01!00"]
+solution = "##!##"
+valid = true
+
+[deformatting.Base."01!1.0"]
+solution = "##!.#"
+valid = true
+
+[deformatting.Base."00.00"]
+solution = "##.##"
+valid = true
+
+[deformatting.Base."V0!00"]
+solution = "V#!##"
+valid = true
+
+[deformatting.Base."V0!1.0"]
+solution = "V#!.#"
+valid = true
+
+[deformatting.Base."V001!0"]
+solution = "V###!"
+valid = true
+
+[deformatting.Base."V1!1.0.0.0"]
+solution = "V...#"
+valid = true
+
+[deformatting.Base."v0!00"]
+solution = "v#!##"
+valid = true
+
+[deformatting.Base."v0!1.0"]
+solution = "v#!.#"
+valid = true
+
+[deformatting.Base."v001!0"]
+solution = "v###!"
+valid = true
+
+[deformatting.Base."v1!1.0.0.0"]
+solution = "v...#"
+valid = true
+
+[deformatting.Base."0!1.0.0.0"]
+solution = "#!...#"
+valid = true
+
+[deformatting.Base."01!001"]
+solution = "##!###"
+valid = true
+
+[deformatting.Base."01!0.0.0"]
+solution = "##!..#"
+valid = true
+
+[deformatting.Base."001!00"]
+solution = "###!##"
+valid = true
+
+[deformatting.Base."001!1.0"]
+solution = "###!.#"
+valid = true
+
+[deformatting.Base."V0!001"]
+solution = "V#!###"
+valid = true
+
+[deformatting.Base."V0!0.0.0"]
+solution = "V#!..#"
+valid = true
+
+[deformatting.Base."V01!00"]
+solution = "V##!##"
+valid = true
+
+[deformatting.Base."V01!1.0"]
+solution = "V##!.#"
+valid = true
+
+[deformatting.Base."V00.00"]
+solution = "V##.##"
+valid = true
+
+[deformatting.Base."v0!001"]
+solution = "v#!###"
+valid = true
+
+[deformatting.Base."v0!0.0.0"]
+solution = "v#!..#"
+valid = true
+
+[deformatting.Base."v01!00"]
+solution = "v##!##"
+valid = true
+
+[deformatting.Base."v01!1.0"]
+solution = "v##!.#"
+valid = true
+
+[deformatting.Base."v00.00"]
+solution = "v##.##"
+valid = true
+
+[deformatting.Base."0!00.00"]
+solution = "#!##.##"
+valid = true
+
+[deformatting.Base."01!1.0.0.0"]
+solution = "##!...#"
+valid = true
+
+[deformatting.Base."001!001"]
+solution = "###!###"
+valid = true
+
+[deformatting.Base."001!0.0.0"]
+solution = "###!..#"
+valid = true
+
+[deformatting.Base."001.002"]
+solution = "###.###"
+valid = true
+
+[deformatting.Base."1!7.08.009"]
+solution = ".##.###"
+valid = true
+
+[deformatting.Base."V0!1.0.0.0"]
+solution = "V#!...#"
+valid = true
+
+[deformatting.Base."V01!001"]
+solution = "V##!###"
+valid = true
+
+[deformatting.Base."V01!0.0.0"]
+solution = "V##!..#"
+valid = true
+
+[deformatting.Base."V001!00"]
+solution = "V###!##"
+valid = true
+
+[deformatting.Base."V001!1.0"]
+solution = "V###!.#"
+valid = true
+
+[deformatting.Base."v0!1.0.0.0"]
+solution = "v#!...#"
+valid = true
+
+[deformatting.Base."v01!001"]
+solution = "v##!###"
+valid = true
+
+[deformatting.Base."v01!0.0.0"]
+solution = "v##!..#"
+valid = true
+
+[deformatting.Base."v001!00"]
+solution = "v###!##"
+valid = true
+
+[deformatting.Base."v001!1.0"]
+solution = "v###!.#"
+valid = true
+
+[deformatting.Base."01!00.00"]
+solution = "##!##.##"
+valid = true
+
+[deformatting.Base."0 1 1!0"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!1"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!1.2"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!1.2.3"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!10"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!10.20"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!10.20.30"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!100"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!100.200.300"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 1 1!2"]
+solution = ""
+valid = true
+
+[deformatting.Base."0 0!0"]
+valid = false
+
+[deformatting.Base."0 0!0.0.0"]
+valid = false
+
+[deformatting.Base."0 0!00"]
+valid = false
+
+[deformatting.Base."0 0!00.00"]
+valid = false
+
+[deformatting.Base."0 0!00.00.00"]
+valid = false
+
+[deformatting.Base."0 0!001"]
+valid = false
+
+[deformatting.Base."0 0!001.002"]
+valid = false
+
+[deformatting.Base."0 0!001.002.003"]
+valid = false
+
+[deformatting.Base."0 0!002"]
+valid = false
+
+[deformatting.Base."0 0!007"]
+valid = false
+
+[deformatting.Base.x]
+valid = false
+
+[deformatting.Base."!"]
+valid = false
+
+[deformatting.Base."1!"]
+valid = false
+
+[deformatting.Base."!1"]
+valid = false
+
+[deformatting.Base.v]
+valid = false
+
+[deformatting.Base.vv1]
+valid = false
+
+[deformatting.Base."1..2"]
+valid = false
+
+[deformatting.Base."1."]
+valid = false
+
+[deformatting.Base.-1]
+valid = false
+
+[deformatting.Base."1+a"]
+valid = false
+
 [deformatting.Dev.""]
 solution = ""
 valid = true
@@ -369,6 +749,386 @@ valid = false
 solution = "dev."
 valid = true
 
+[deformatting.Dev.".dev0"]
+solution = ""
+valid = true
+
+[deformatting.Dev.DEV]
+solution = "DEV"
+valid = true
+
+[deformatting.Dev.Dev]
+solution = "Dev"
+valid = true
+
+[deformatting.Dev.deV]
+solution = "deV"
+valid = true
+
+[deformatting.Dev.dev]
+solution = "dev"
+valid = true
+
+[deformatting.Dev.-DEV]
+solution = "-DEV"
+valid = true
+
+[deformatting.Dev.-Dev]
+solution = "-Dev"
+valid = true
+
+[deformatting.Dev.-deV]
+solution = "-deV"
+valid = true
+
+[deformatting.Dev.-dev]
+solution = "-dev"
+valid = true
+
+[deformatting.Dev.".DEV"]
+solution = ".DEV"
+valid = true
+
+[deformatting.Dev.".Dev"]
+solution = ".Dev"
+valid = true
+
+[deformatting.Dev.".deV"]
+solution = ".deV"
+valid = true
+
+[deformatting.Dev.".dev"]
+solution = ".dev"
+valid = true
+
+[deformatting.Dev.DEV0]
+solution = "DEV#"
+valid = true
+
+[deformatting.Dev.DEV-1]
+solution = "DEV-"
+valid = true
+
+[deformatting.Dev."DEV.1"]
+solution = "DEV."
+valid = true
+
+[deformatting.Dev.DEV_1]
+solution = "DEV_"
+valid = true
+
+[deformatting.Dev.Dev0]
+solution = "Dev#"
+valid = true
+
+[deformatting.Dev.Dev-1]
+solution = "Dev-"
+valid = true
+
+[deformatting.Dev."Dev.1"]
+solution = "Dev."
+valid = true
+
+[deformatting.Dev.Dev_1]
+solution = "Dev_"
+valid = true
+
+[deformatting.Dev._DEV]
+solution = "_DEV"
+valid = true
+
+[deformatting.Dev._Dev]
+solution = "_Dev"
+valid = true
+
+[deformatting.Dev._deV]
+solution = "_deV"
+valid = true
+
+[deformatting.Dev._dev]
+solution = "_dev"
+valid = true
+
+[deformatting.Dev.deV0]
+solution = "deV#"
+valid = true
+
+[deformatting.Dev.deV-1]
+solution = "deV-"
+valid = true
+
+[deformatting.Dev."deV.1"]
+solution = "deV."
+valid = true
+
+[deformatting.Dev.deV_1]
+solution = "deV_"
+valid = true
+
+[deformatting.Dev.dev0]
+solution = "dev#"
+valid = true
+
+[deformatting.Dev.dev-1]
+solution = "dev-"
+valid = true
+
+[deformatting.Dev."dev.1"]
+solution = "dev."
+valid = true
+
+[deformatting.Dev.dev_1]
+solution = "dev_"
+valid = true
+
+[deformatting.Dev.-DEV0]
+solution = "-DEV#"
+valid = true
+
+[deformatting.Dev.-DEV-1]
+solution = "-DEV-"
+valid = true
+
+[deformatting.Dev."-DEV.1"]
+solution = "-DEV."
+valid = true
+
+[deformatting.Dev.-DEV_1]
+solution = "-DEV_"
+valid = true
+
+[deformatting.Dev.-Dev0]
+solution = "-Dev#"
+valid = true
+
+[deformatting.Dev.-Dev-1]
+solution = "-Dev-"
+valid = true
+
+[deformatting.Dev."-Dev.1"]
+solution = "-Dev."
+valid = true
+
+[deformatting.Dev.-Dev_1]
+solution = "-Dev_"
+valid = true
+
+[deformatting.Dev.-deV0]
+solution = "-deV#"
+valid = true
+
+[deformatting.Dev.-deV-1]
+solution = "-deV-"
+valid = true
+
+[deformatting.Dev."-deV.1"]
+solution = "-deV."
+valid = true
+
+[deformatting.Dev.-deV_1]
+solution = "-deV_"
+valid = true
+
+[deformatting.Dev.-dev0]
+solution = "-dev#"
+valid = true
+
+[deformatting.Dev.-dev-1]
+solution = "-dev-"
+valid = true
+
+[deformatting.Dev."-dev.1"]
+solution = "-dev."
+valid = true
+
+[deformatting.Dev.-dev_1]
+solution = "-dev_"
+valid = true
+
+[deformatting.Dev.".DEV0"]
+solution = ".DEV#"
+valid = true
+
+[deformatting.Dev.".DEV-1"]
+solution = ".DEV-"
+valid = true
+
+[deformatting.Dev.".DEV.1"]
+solution = ".DEV."
+valid = true
+
+[deformatting.Dev.".DEV_1"]
+solution = ".DEV_"
+valid = true
+
+[deformatting.Dev.".Dev0"]
+solution = ".Dev#"
+valid = true
+
+[deformatting.Dev.".Dev-1"]
+solution = ".Dev-"
+valid = true
+
+[deformatting.Dev.".Dev.1"]
+solution = ".Dev."
+valid = true
+
+[deformatting.Dev.".Dev_1"]
+solution = ".Dev_"
+valid = true
+
+[deformatting.Dev.".deV0"]
+solution = ".deV#"
+valid = true
+
+[deformatting.Dev.".deV-1"]
+solution = ".deV-"
+valid = true
+
+[deformatting.Dev.".deV.1"]
+solution = ".deV."
+valid = true
+
+[deformatting.Dev.".deV_1"]
+solution = ".deV_"
+valid = true
+
+[deformatting.Dev.".dev-1"]
+solution = ".dev-"
+valid = true
+
+[deformatting.Dev.".dev.1"]
+solution = ".dev."
+valid = true
+
+[deformatting.Dev.".dev_1"]
+solution = ".dev_"
+valid = true
+
+[deformatting.Dev.DEV01]
+solution = "DEV##"
+valid = true
+
+[deformatting.Dev.DEV-0]
+solution = "DEV-#"
+valid = true
+
+[deformatting.Dev."DEV.0"]
+solution = "DEV.#"
+valid = true
+
+[deformatting.Dev.DEV_0]
+solution = "DEV_#"
+valid = true
+
+[deformatting.Dev.Dev01]
+solution = "Dev##"
+valid = true
+
+[deformatting.Dev.Dev-0]
+solution = "Dev-#"
+valid = true
+
+[deformatting.Dev.".dev0 .dev1 .dev10"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev1 .dev2"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev1 .dev42"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev1 .dev9"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev10 .dev2"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev10 .dev42"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev10 .dev9"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev2 .dev42"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev2 .dev9"]
+solution = ""
+valid = true
+
+[deformatting.Dev.".dev0 .dev42 .dev9"]
+solution = ""
+valid = true
+
+[deformatting.Dev."-DEV -DEV-0"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV-0001"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV-001"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV-007"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV-01"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV-02"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV-099"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV.0"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV.0001"]
+valid = false
+
+[deformatting.Dev."-DEV -DEV.001"]
+valid = false
+
+[deformatting.Dev.d]
+valid = false
+
+[deformatting.Dev.de]
+valid = false
+
+[deformatting.Dev."dev."]
+valid = false
+
+[deformatting.Dev.dev_]
+valid = false
+
+[deformatting.Dev.dev-]
+valid = false
+
+[deformatting.Dev.".dev."]
+valid = false
+
+[deformatting.Dev.devx]
+valid = false
+
+[deformatting.Dev.dev1x]
+valid = false
+
+[deformatting.Dev.1dev]
+valid = false
+
+[deformatting.Dev.--dev1]
+valid = false
+
 [deformatting.Local.""]
 solution = ""
 valid = true
@@ -381,6 +1141,386 @@ valid = true
 solution = "####~~^^_~^~^"
 valid = true
 
+[deformatting.Local.0]
+solution = ""
+valid = true
+
+[deformatting.Local.0-0]
+solution = "-"
+valid = true
+
+[deformatting.Local.A1]
+solution = "^"
+valid = true
+
+[deformatting.Local.0_0]
+solution = "_"
+valid = true
+
+[deformatting.Local.01]
+solution = "##"
+valid = true
+
+[deformatting.Local.1-2-3]
+solution = "--"
+valid = true
+
+[deformatting.Local.0-A1]
+solution = "-^"
+valid = true
+
+[deformatting.Local.1-2_3]
+solution = "-_"
+valid = true
+
+[deformatting.Local."1.2-3"]
+solution = ".-"
+valid = true
+
+[deformatting.Local."0.A1"]
+solution = ".^"
+valid = true
+
+[deformatting.Local."1.2_3"]
+solution = "._"
+valid = true
+
+[deformatting.Local.A1-0]
+solution = "^-"
+valid = true
+
+[deformatting.Local.AB12]
+solution = "^^"
+valid = true
+
+[deformatting.Local.A1_0]
+solution = "^_"
+valid = true
+
+[deformatting.Local.1_2-3]
+solution = "_-"
+valid = true
+
+[deformatting.Local.0_A1]
+solution = "_^"
+valid = true
+
+[deformatting.Local.1_2_3]
+solution = "__"
+valid = true
+
+[deformatting.Local.001]
+solution = "###"
+valid = true
+
+[deformatting.Local.01-0]
+solution = "##-"
+valid = true
+
+[deformatting.Local.01_0]
+solution = "##_"
+valid = true
+
+[deformatting.Local.0-01]
+solution = "-##"
+valid = true
+
+[deformatting.Local.0-AB12]
+solution = "-^^"
+valid = true
+
+[deformatting.Local."0.01"]
+solution = ".##"
+valid = true
+
+[deformatting.Local."0.AB12"]
+solution = ".^^"
+valid = true
+
+[deformatting.Local.A1-A1]
+solution = "^-^"
+valid = true
+
+[deformatting.Local."A1.A1"]
+solution = "^.^"
+valid = true
+
+[deformatting.Local.AB12-0]
+solution = "^^-"
+valid = true
+
+[deformatting.Local.ABC]
+solution = "^^^"
+valid = true
+
+[deformatting.Local.AB12_0]
+solution = "^^_"
+valid = true
+
+[deformatting.Local.A1_A1]
+solution = "^_^"
+valid = true
+
+[deformatting.Local.AbC]
+solution = "^~^"
+valid = true
+
+[deformatting.Local.0_01]
+solution = "_##"
+valid = true
+
+[deformatting.Local.0_AB12]
+solution = "_^^"
+valid = true
+
+[deformatting.Local.001-0]
+solution = "###-"
+valid = true
+
+[deformatting.Local.001_0]
+solution = "###_"
+valid = true
+
+[deformatting.Local.01-A1]
+solution = "##-^"
+valid = true
+
+[deformatting.Local."01.A1"]
+solution = "##.^"
+valid = true
+
+[deformatting.Local.01_A1]
+solution = "##_^"
+valid = true
+
+[deformatting.Local.0-001]
+solution = "-###"
+valid = true
+
+[deformatting.Local.0-ABC]
+solution = "-^^^"
+valid = true
+
+[deformatting.Local.0-AbC]
+solution = "-^~^"
+valid = true
+
+[deformatting.Local."0.001"]
+solution = ".###"
+valid = true
+
+[deformatting.Local."0.ABC"]
+solution = ".^^^"
+valid = true
+
+[deformatting.Local."0.AbC"]
+solution = ".^~^"
+valid = true
+
+[deformatting.Local.A1-01]
+solution = "^-##"
+valid = true
+
+[deformatting.Local.A1-b2-C3]
+solution = "^--^"
+valid = true
+
+[deformatting.Local."A1-b2.C3"]
+solution = "^-.^"
+valid = true
+
+[deformatting.Local.A1-AB12]
+solution = "^-^^"
+valid = true
+
+[deformatting.Local.A1-b2_C3]
+solution = "^-_^"
+valid = true
+
+[deformatting.Local."A1.01"]
+solution = "^.##"
+valid = true
+
+[deformatting.Local."A1.b2-C3"]
+solution = "^.-^"
+valid = true
+
+[deformatting.Local."A1.b2.C3"]
+solution = "^..^"
+valid = true
+
+[deformatting.Local."A1.AB12"]
+solution = "^.^^"
+valid = true
+
+[deformatting.Local."A1.b2_C3"]
+solution = "^._^"
+valid = true
+
+[deformatting.Local.AB12-A1]
+solution = "^^-^"
+valid = true
+
+[deformatting.Local."AB12.A1"]
+solution = "^^.^"
+valid = true
+
+[deformatting.Local.ABC-0]
+solution = "^^^-"
+valid = true
+
+[deformatting.Local.ABC_0]
+solution = "^^^_"
+valid = true
+
+[deformatting.Local.AB12_A1]
+solution = "^^_^"
+valid = true
+
+[deformatting.Local.A1_01]
+solution = "^_##"
+valid = true
+
+[deformatting.Local.A1_b2-C3]
+solution = "^_-^"
+valid = true
+
+[deformatting.Local."A1_b2.C3"]
+solution = "^_.^"
+valid = true
+
+[deformatting.Local.A1_AB12]
+solution = "^_^^"
+valid = true
+
+[deformatting.Local.A1_b2_C3]
+solution = "^__^"
+valid = true
+
+[deformatting.Local.AbC-0]
+solution = "^~^-"
+valid = true
+
+[deformatting.Local.AbC_0]
+solution = "^~^_"
+valid = true
+
+[deformatting.Local.0_001]
+solution = "_###"
+valid = true
+
+[deformatting.Local.0_ABC]
+solution = "_^^^"
+valid = true
+
+[deformatting.Local.0_AbC]
+solution = "_^~^"
+valid = true
+
+[deformatting.Local.001-A1]
+solution = "###-^"
+valid = true
+
+[deformatting.Local."0 0.0 0.1"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.10"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.2"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.9"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.a1"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.ab12"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.abc"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.foo"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.x"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 0.0 0.x9"]
+solution = ""
+valid = true
+
+[deformatting.Local."0 001"]
+valid = false
+
+[deformatting.Local."0 001-0"]
+valid = false
+
+[deformatting.Local."0 001-001"]
+valid = false
+
+[deformatting.Local."0 001-002-003"]
+valid = false
+
+[deformatting.Local."0 001-002.003"]
+valid = false
+
+[deformatting.Local."0 001-002_003"]
+valid = false
+
+[deformatting.Local."0 001-01"]
+valid = false
+
+[deformatting.Local."0 001-1"]
+valid = false
+
+[deformatting.Local."0 001-10"]
+valid = false
+
+[deformatting.Local."0 001-2"]
+valid = false
+
+[deformatting.Local."+"]
+valid = false
+
+[deformatting.Local."a+b"]
+valid = false
+
+[deformatting.Local."a..b"]
+valid = false
+
+[deformatting.Local.a__b]
+valid = false
+
+[deformatting.Local.a--b]
+valid = false
+
+[deformatting.Local.".abc"]
+valid = false
+
+[deformatting.Local."abc."]
+valid = false
+
+[deformatting.Local."abc+def"]
+valid = false
+
+[deformatting.Local."a$b"]
+valid = false
+
+[deformatting.Local."a/b"]
+valid = false
+
 [deformatting.Post.""]
 solution = ""
 valid = true
@@ -392,6 +1532,386 @@ valid = true
 [deformatting.Post."r r_1"]
 solution = "r_"
 valid = true
+
+[deformatting.Post.".post0"]
+solution = ""
+valid = true
+
+[deformatting.Post.-0]
+solution = "-"
+valid = true
+
+[deformatting.Post.R]
+solution = "R"
+valid = true
+
+[deformatting.Post.r]
+solution = "r"
+valid = true
+
+[deformatting.Post.-R]
+solution = "-R"
+valid = true
+
+[deformatting.Post.-r]
+solution = "-r"
+valid = true
+
+[deformatting.Post.".R"]
+solution = ".R"
+valid = true
+
+[deformatting.Post.".r"]
+solution = ".r"
+valid = true
+
+[deformatting.Post.R0]
+solution = "R#"
+valid = true
+
+[deformatting.Post.R-1]
+solution = "R-"
+valid = true
+
+[deformatting.Post."R.1"]
+solution = "R."
+valid = true
+
+[deformatting.Post.R_1]
+solution = "R_"
+valid = true
+
+[deformatting.Post._R]
+solution = "_R"
+valid = true
+
+[deformatting.Post._r]
+solution = "_r"
+valid = true
+
+[deformatting.Post.r0]
+solution = "r#"
+valid = true
+
+[deformatting.Post.r-1]
+solution = "r-"
+valid = true
+
+[deformatting.Post."r.1"]
+solution = "r."
+valid = true
+
+[deformatting.Post.r_1]
+solution = "r_"
+valid = true
+
+[deformatting.Post.-01]
+solution = "-##"
+valid = true
+
+[deformatting.Post.-R0]
+solution = "-R#"
+valid = true
+
+[deformatting.Post.-R-1]
+solution = "-R-"
+valid = true
+
+[deformatting.Post."-R.1"]
+solution = "-R."
+valid = true
+
+[deformatting.Post.-R_1]
+solution = "-R_"
+valid = true
+
+[deformatting.Post.-r0]
+solution = "-r#"
+valid = true
+
+[deformatting.Post.-r-1]
+solution = "-r-"
+valid = true
+
+[deformatting.Post."-r.1"]
+solution = "-r."
+valid = true
+
+[deformatting.Post.-r_1]
+solution = "-r_"
+valid = true
+
+[deformatting.Post.".R0"]
+solution = ".R#"
+valid = true
+
+[deformatting.Post.".R-1"]
+solution = ".R-"
+valid = true
+
+[deformatting.Post.".R.1"]
+solution = ".R."
+valid = true
+
+[deformatting.Post.".R_1"]
+solution = ".R_"
+valid = true
+
+[deformatting.Post.".r0"]
+solution = ".r#"
+valid = true
+
+[deformatting.Post.".r-1"]
+solution = ".r-"
+valid = true
+
+[deformatting.Post.".r.1"]
+solution = ".r."
+valid = true
+
+[deformatting.Post.".r_1"]
+solution = ".r_"
+valid = true
+
+[deformatting.Post.R01]
+solution = "R##"
+valid = true
+
+[deformatting.Post.R-0]
+solution = "R-#"
+valid = true
+
+[deformatting.Post."R.0"]
+solution = "R.#"
+valid = true
+
+[deformatting.Post.REV]
+solution = "REV"
+valid = true
+
+[deformatting.Post.R_0]
+solution = "R_#"
+valid = true
+
+[deformatting.Post.Rev]
+solution = "Rev"
+valid = true
+
+[deformatting.Post._R0]
+solution = "_R#"
+valid = true
+
+[deformatting.Post._R-1]
+solution = "_R-"
+valid = true
+
+[deformatting.Post."_R.1"]
+solution = "_R."
+valid = true
+
+[deformatting.Post._R_1]
+solution = "_R_"
+valid = true
+
+[deformatting.Post._r0]
+solution = "_r#"
+valid = true
+
+[deformatting.Post._r-1]
+solution = "_r-"
+valid = true
+
+[deformatting.Post."_r.1"]
+solution = "_r."
+valid = true
+
+[deformatting.Post._r_1]
+solution = "_r_"
+valid = true
+
+[deformatting.Post.r01]
+solution = "r##"
+valid = true
+
+[deformatting.Post.r-0]
+solution = "r-#"
+valid = true
+
+[deformatting.Post."r.0"]
+solution = "r.#"
+valid = true
+
+[deformatting.Post.r_0]
+solution = "r_#"
+valid = true
+
+[deformatting.Post.rev]
+solution = "rev"
+valid = true
+
+[deformatting.Post.-001]
+solution = "-###"
+valid = true
+
+[deformatting.Post.-R01]
+solution = "-R##"
+valid = true
+
+[deformatting.Post.-R-0]
+solution = "-R-#"
+valid = true
+
+[deformatting.Post."-R.0"]
+solution = "-R.#"
+valid = true
+
+[deformatting.Post.-REV]
+solution = "-REV"
+valid = true
+
+[deformatting.Post.-R_0]
+solution = "-R_#"
+valid = true
+
+[deformatting.Post.-Rev]
+solution = "-Rev"
+valid = true
+
+[deformatting.Post.-r01]
+solution = "-r##"
+valid = true
+
+[deformatting.Post.-r-0]
+solution = "-r-#"
+valid = true
+
+[deformatting.Post."-r.0"]
+solution = "-r.#"
+valid = true
+
+[deformatting.Post.-r_0]
+solution = "-r_#"
+valid = true
+
+[deformatting.Post.-rev]
+solution = "-rev"
+valid = true
+
+[deformatting.Post.".R01"]
+solution = ".R##"
+valid = true
+
+[deformatting.Post.".R-0"]
+solution = ".R-#"
+valid = true
+
+[deformatting.Post.".R.0"]
+solution = ".R.#"
+valid = true
+
+[deformatting.Post.".REV"]
+solution = ".REV"
+valid = true
+
+[deformatting.Post.".post0 .post1 .post10"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post1 .post2"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post1 .post42"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post1 .post9"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post10 .post2"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post10 .post42"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post10 .post9"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post2 .post42"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post2 .post9"]
+solution = ""
+valid = true
+
+[deformatting.Post.".post0 .post42 .post9"]
+solution = ""
+valid = true
+
+[deformatting.Post."-0 -001"]
+valid = false
+
+[deformatting.Post."-0 -01"]
+valid = false
+
+[deformatting.Post."-0 -POST"]
+valid = false
+
+[deformatting.Post."-0 -POST-0"]
+valid = false
+
+[deformatting.Post."-0 -POST-001"]
+valid = false
+
+[deformatting.Post."-0 -POST-007"]
+valid = false
+
+[deformatting.Post."-0 -POST-01"]
+valid = false
+
+[deformatting.Post."-0 -POST-02"]
+valid = false
+
+[deformatting.Post."-0 -POST-099"]
+valid = false
+
+[deformatting.Post."-0 -POST-1"]
+valid = false
+
+[deformatting.Post.p]
+valid = false
+
+[deformatting.Post.po]
+valid = false
+
+[deformatting.Post."post."]
+valid = false
+
+[deformatting.Post.post_]
+valid = false
+
+[deformatting.Post.post-]
+valid = false
+
+[deformatting.Post."rev."]
+valid = false
+
+[deformatting.Post."r."]
+valid = false
+
+[deformatting.Post.--1]
+valid = false
+
+[deformatting.Post.-]
+valid = false
+
+[deformatting.Post.postx]
+valid = false
 
 [deformatting.Pre.""]
 solution = ""
@@ -412,9 +1932,769 @@ valid = true
 solution = "beTA."
 valid = true
 
+[deformatting.Pre.a0]
+solution = ""
+valid = true
+
+[deformatting.Pre.A]
+solution = "A"
+valid = true
+
+[deformatting.Pre.B]
+solution = "B"
+valid = true
+
+[deformatting.Pre.C]
+solution = "C"
+valid = true
+
+[deformatting.Pre.a]
+solution = "a"
+valid = true
+
+[deformatting.Pre.b]
+solution = "b"
+valid = true
+
+[deformatting.Pre.c]
+solution = "c"
+valid = true
+
+[deformatting.Pre.-A]
+solution = "-A"
+valid = true
+
+[deformatting.Pre.-B]
+solution = "-B"
+valid = true
+
+[deformatting.Pre.-C]
+solution = "-C"
+valid = true
+
+[deformatting.Pre.-a]
+solution = "-a"
+valid = true
+
+[deformatting.Pre.-b]
+solution = "-b"
+valid = true
+
+[deformatting.Pre.-c]
+solution = "-c"
+valid = true
+
+[deformatting.Pre.".A"]
+solution = ".A"
+valid = true
+
+[deformatting.Pre.".B"]
+solution = ".B"
+valid = true
+
+[deformatting.Pre.".C"]
+solution = ".C"
+valid = true
+
+[deformatting.Pre.".a"]
+solution = ".a"
+valid = true
+
+[deformatting.Pre.".b"]
+solution = ".b"
+valid = true
+
+[deformatting.Pre.".c"]
+solution = ".c"
+valid = true
+
+[deformatting.Pre.A0]
+solution = "A#"
+valid = true
+
+[deformatting.Pre.A-1]
+solution = "A-"
+valid = true
+
+[deformatting.Pre."A.1"]
+solution = "A."
+valid = true
+
+[deformatting.Pre.A_1]
+solution = "A_"
+valid = true
+
+[deformatting.Pre.B0]
+solution = "B#"
+valid = true
+
+[deformatting.Pre.B-1]
+solution = "B-"
+valid = true
+
+[deformatting.Pre."B.1"]
+solution = "B."
+valid = true
+
+[deformatting.Pre.B_1]
+solution = "B_"
+valid = true
+
+[deformatting.Pre.C0]
+solution = "C#"
+valid = true
+
+[deformatting.Pre.C-1]
+solution = "C-"
+valid = true
+
+[deformatting.Pre."C.1"]
+solution = "C."
+valid = true
+
+[deformatting.Pre.C_1]
+solution = "C_"
+valid = true
+
+[deformatting.Pre.RC]
+solution = "RC"
+valid = true
+
+[deformatting.Pre._A]
+solution = "_A"
+valid = true
+
+[deformatting.Pre._B]
+solution = "_B"
+valid = true
+
+[deformatting.Pre._C]
+solution = "_C"
+valid = true
+
+[deformatting.Pre._a]
+solution = "_a"
+valid = true
+
+[deformatting.Pre._b]
+solution = "_b"
+valid = true
+
+[deformatting.Pre._c]
+solution = "_c"
+valid = true
+
+[deformatting.Pre.a-1]
+solution = "a-"
+valid = true
+
+[deformatting.Pre."a.1"]
+solution = "a."
+valid = true
+
+[deformatting.Pre.a_1]
+solution = "a_"
+valid = true
+
+[deformatting.Pre.b-1]
+solution = "b-"
+valid = true
+
+[deformatting.Pre."b.1"]
+solution = "b."
+valid = true
+
+[deformatting.Pre.b_1]
+solution = "b_"
+valid = true
+
+[deformatting.Pre.c0]
+solution = "c#"
+valid = true
+
+[deformatting.Pre.c-1]
+solution = "c-"
+valid = true
+
+[deformatting.Pre."c.1"]
+solution = "c."
+valid = true
+
+[deformatting.Pre.c_1]
+solution = "c_"
+valid = true
+
+[deformatting.Pre.rc]
+solution = "rc"
+valid = true
+
+[deformatting.Pre.-A0]
+solution = "-A#"
+valid = true
+
+[deformatting.Pre.-A-1]
+solution = "-A-"
+valid = true
+
+[deformatting.Pre."-A.1"]
+solution = "-A."
+valid = true
+
+[deformatting.Pre.-A_1]
+solution = "-A_"
+valid = true
+
+[deformatting.Pre.-B0]
+solution = "-B#"
+valid = true
+
+[deformatting.Pre.-B-1]
+solution = "-B-"
+valid = true
+
+[deformatting.Pre."-B.1"]
+solution = "-B."
+valid = true
+
+[deformatting.Pre.-B_1]
+solution = "-B_"
+valid = true
+
+[deformatting.Pre.-C0]
+solution = "-C#"
+valid = true
+
+[deformatting.Pre.-C-1]
+solution = "-C-"
+valid = true
+
+[deformatting.Pre."-C.1"]
+solution = "-C."
+valid = true
+
+[deformatting.Pre.-C_1]
+solution = "-C_"
+valid = true
+
+[deformatting.Pre.-RC]
+solution = "-RC"
+valid = true
+
+[deformatting.Pre.-a0]
+solution = "-a#"
+valid = true
+
+[deformatting.Pre.-a-1]
+solution = "-a-"
+valid = true
+
+[deformatting.Pre."-a.1"]
+solution = "-a."
+valid = true
+
+[deformatting.Pre.-a_1]
+solution = "-a_"
+valid = true
+
+[deformatting.Pre.-b0]
+solution = "-b#"
+valid = true
+
+[deformatting.Pre.-b-1]
+solution = "-b-"
+valid = true
+
+[deformatting.Pre."-b.1"]
+solution = "-b."
+valid = true
+
+[deformatting.Pre.-b_1]
+solution = "-b_"
+valid = true
+
+[deformatting.Pre."a0 a1 a10"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 a2"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 a42"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 a9"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 b0"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 b1"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 b10"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 b2"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 b42"]
+solution = ""
+valid = true
+
+[deformatting.Pre."a0 a1 b9"]
+solution = ""
+valid = true
+
+[deformatting.Pre."-A -A-0"]
+valid = false
+
+[deformatting.Pre."-A -A-001"]
+valid = false
+
+[deformatting.Pre."-A -A-007"]
+valid = false
+
+[deformatting.Pre."-A -A-01"]
+valid = false
+
+[deformatting.Pre."-A -A-02"]
+valid = false
+
+[deformatting.Pre."-A -A-099"]
+valid = false
+
+[deformatting.Pre."-A -A.0"]
+valid = false
+
+[deformatting.Pre."-A -A.001"]
+valid = false
+
+[deformatting.Pre."-A -A.007"]
+valid = false
+
+[deformatting.Pre."-A -A.01"]
+valid = false
+
+[deformatting.Pre.x]
+valid = false
+
+[deformatting.Pre.aa]
+valid = false
+
+[deformatting.Pre."alpha."]
+valid = false
+
+[deformatting.Pre.beta_]
+valid = false
+
+[deformatting.Pre.rc-]
+valid = false
+
+[deformatting.Pre."pre."]
+valid = false
+
+[deformatting.Pre.preview_]
+valid = false
+
+[deformatting.Pre."a+1"]
+valid = false
+
+[deformatting.Pre.1a]
+valid = false
+
+[deformatting.Pre."a..1"]
+valid = false
+
 [deformatting.Public.""]
 solution = ""
 valid = true
+
+[deformatting.Public.0]
+solution = ""
+valid = true
+
+[deformatting.Public."V1!1.2.3"]
+solution = "V"
+valid = true
+
+[deformatting.Public."v1!10.20.30"]
+solution = "v"
+valid = true
+
+[deformatting.Public."0!100"]
+solution = "#!"
+valid = true
+
+[deformatting.Public."10!02"]
+solution = "##"
+valid = true
+
+[deformatting.Public."1.0"]
+solution = ".#"
+valid = true
+
+[deformatting.Public."01!10.20.30"]
+solution = "##!"
+valid = true
+
+[deformatting.Public.007]
+solution = "###"
+valid = true
+
+[deformatting.Public.0-02]
+solution = "-##"
+valid = true
+
+[deformatting.Public."0.0.0"]
+solution = "..#"
+valid = true
+
+[deformatting.Public."V0!1.2.3"]
+solution = "V#!"
+valid = true
+
+[deformatting.Public."V1!00"]
+solution = "V##"
+valid = true
+
+[deformatting.Public."v0!10.20.30"]
+solution = "v#!"
+valid = true
+
+[deformatting.Public.v09]
+solution = "v##"
+valid = true
+
+[deformatting.Public."v1!1.0"]
+solution = "v.#"
+valid = true
+
+[deformatting.Public."001!1.2.3"]
+solution = "###!"
+valid = true
+
+[deformatting.Public."1!100b2-1DEV5"]
+solution = "-DEV"
+valid = true
+
+[deformatting.Public."1!1.0.0.0"]
+solution = "...#"
+valid = true
+
+[deformatting.Public."V01!2"]
+solution = "V##!"
+valid = true
+
+[deformatting.Public."V1!007"]
+solution = "V###"
+valid = true
+
+[deformatting.Public."V1.2.0"]
+solution = "V..#"
+valid = true
+
+[deformatting.Public."v01!1"]
+solution = "v##!"
+valid = true
+
+[deformatting.Public.v002]
+solution = "v###"
+valid = true
+
+[deformatting.Public."01!1.0"]
+solution = "##!.#"
+valid = true
+
+[deformatting.Public."9!01-02"]
+solution = "##-##"
+valid = true
+
+[deformatting.Public."2!01.02"]
+solution = "##.##"
+valid = true
+
+[deformatting.Public."1.0-02"]
+solution = ".#-##"
+valid = true
+
+[deformatting.Public."V0!00"]
+solution = "V#!##"
+valid = true
+
+[deformatting.Public."V001!10.20.30"]
+solution = "V###!"
+valid = true
+
+[deformatting.Public."V9!1.0.0.0"]
+solution = "V...#"
+valid = true
+
+[deformatting.Public."1!100rcdev1"]
+solution = "rcdev"
+valid = true
+
+[deformatting.Public."v0!1.0"]
+solution = "v#!.#"
+valid = true
+
+[deformatting.Public."v001!2"]
+solution = "v###!"
+valid = true
+
+[deformatting.Public."0!1.0.0.0"]
+solution = "#!...#"
+valid = true
+
+[deformatting.Public."01!001"]
+solution = "##!###"
+valid = true
+
+[deformatting.Public."001!00"]
+solution = "###!##"
+valid = true
+
+[deformatting.Public."V0!007"]
+solution = "V#!###"
+valid = true
+
+[deformatting.Public."V01!02"]
+solution = "V##!##"
+valid = true
+
+[deformatting.Public."V10!01.02"]
+solution = "V##.##"
+valid = true
+
+[deformatting.Public."42!9rc1rev_05"]
+solution = "rev_##"
+valid = true
+
+[deformatting.Public."v0!001"]
+solution = "v#!###"
+valid = true
+
+[deformatting.Public."001!007"]
+solution = "###!###"
+valid = true
+
+[deformatting.Public."001!1.2.3-02"]
+solution = "###!-##"
+valid = true
+
+[deformatting.Public.099b2-1DEV5]
+solution = "###-DEV"
+valid = true
+
+[deformatting.Public."1!001.002"]
+solution = "###.###"
+valid = true
+
+[deformatting.Public."9!7.08.009"]
+solution = ".##.###"
+valid = true
+
+[deformatting.Public."V0!42b2-1DEV5"]
+solution = "V#!-DEV"
+valid = true
+
+[deformatting.Public."V01!002"]
+solution = "V##!###"
+valid = true
+
+[deformatting.Public."V01!0.0.0"]
+solution = "V##!..#"
+valid = true
+
+[deformatting.Public."V099!00"]
+solution = "V###!##"
+valid = true
+
+[deformatting.Public."V001!1.0"]
+solution = "V###!.#"
+valid = true
+
+[deformatting.Public."10!2arev_05"]
+solution = "arev_##"
+valid = true
+
+[deformatting.Public."v001!02"]
+solution = "v###!##"
+valid = true
+
+[deformatting.Public."v099!1.0"]
+solution = "v###!.#"
+valid = true
+
+[deformatting.Public."099!1.0.0.0"]
+solution = "###!...#"
+valid = true
+
+[deformatting.Public.099rcdev1]
+solution = "###rcdev"
+valid = true
+
+[deformatting.Public."2!00.00.00"]
+solution = "##.##.##"
+valid = true
+
+[deformatting.Public."1!100.a2dev.02"]
+solution = ".adev.##"
+valid = true
+
+[deformatting.Public."V0!42rcdev1"]
+solution = "V#!rcdev"
+valid = true
+
+[deformatting.Public."V001!001"]
+solution = "V###!###"
+valid = true
+
+[deformatting.Public."V9!001.002"]
+solution = "V###.###"
+valid = true
+
+[deformatting.Public."2!10.20bpost1dev1"]
+solution = "bpostdev"
+valid = true
+
+[deformatting.Public."v001!002"]
+solution = "v###!###"
+valid = true
+
+[deformatting.Public."v001!0.0.0"]
+solution = "v###!..#"
+valid = true
+
+[deformatting.Public."0!001.002"]
+solution = "#!###.###"
+valid = true
+
+[deformatting.Public."01!99rc1rev_05"]
+solution = "##!rev_##"
+valid = true
+
+[deformatting.Public."10!02rc1-02.dev"]
+solution = "##-##.dev"
+valid = true
+
+[deformatting.Public."2!01.02b2-1DEV5"]
+solution = "##.##-DEV"
+valid = true
+
+[deformatting.Public."100.a2-02dev1"]
+solution = ".a#-##dev"
+valid = true
+
+[deformatting.Public."V0!1.2.3rc1rev_05"]
+solution = "V#!rev_##"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V10!1"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V10!10.20"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V10!9"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V2!0"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V2!1.2"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V2!100.200.300"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V42!0"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V42!1.2"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V42!100.200.300"]
+solution = "V"
+valid = true
+
+[deformatting.Public."V1!1.2.3 V1!42 V9"]
+solution = "V"
+valid = true
+
+[deformatting.Public."0 0!001.002"]
+valid = false
+
+[deformatting.Public."0 0!001.002-alpha3-02.DEV_06"]
+valid = false
+
+[deformatting.Public."0 0!001.002_beta.4_post-3DEV5"]
+valid = false
+
+[deformatting.Public."0 0!001.002alpha.04_post-3dev.02"]
+valid = false
+
+[deformatting.Public."0 0!001.002bpost1dev1"]
+valid = false
+
+[deformatting.Public."0 0!001.002rc01post.02dev.02"]
+valid = false
+
+[deformatting.Public."0 0!01.02.03.004"]
+valid = false
+
+[deformatting.Public."0 0!01.02.03.004-alpha3.post.DEV_06"]
+valid = false
+
+[deformatting.Public."0 0!01.02.03.004_beta.4post1_dev-3"]
+valid = false
+
+[deformatting.Public."0 0!01.02.03.004alpha.04post1dev1"]
+valid = false
+
+[deformatting.Public.x]
+valid = false
+
+[deformatting.Public.v]
+valid = false
+
+[deformatting.Public."1."]
+valid = false
+
+[deformatting.Public."1..2"]
+valid = false
+
+[deformatting.Public."!1"]
+valid = false
+
+[deformatting.Public."1!"]
+valid = false
+
+[deformatting.Public."v!1"]
+valid = false
+
+[deformatting.Public."1+a"]
+valid = false
+
+[deformatting.Public."1.2+abc"]
+valid = false
+
+[deformatting.Public."1.2x"]
+valid = false
 
 [deformatting.Qual.""]
 solution = ""
@@ -460,6 +2740,386 @@ solution = "c#-"
 valid = true
 
 [deformatting.Qual."rc rc1 -9"]
+valid = false
+
+[deformatting.Qual.a1]
+solution = ""
+valid = true
+
+[deformatting.Qual.-1]
+solution = "-"
+valid = true
+
+[deformatting.Qual.a]
+solution = "a"
+valid = true
+
+[deformatting.Qual.b]
+solution = "b"
+valid = true
+
+[deformatting.Qual.a1r]
+solution = "r"
+valid = true
+
+[deformatting.Qual.".a2"]
+solution = ".a"
+valid = true
+
+[deformatting.Qual.".c2"]
+solution = ".c"
+valid = true
+
+[deformatting.Qual.a-1]
+solution = "a-"
+valid = true
+
+[deformatting.Qual.ar]
+solution = "ar"
+valid = true
+
+[deformatting.Qual.b-1]
+solution = "b-"
+valid = true
+
+[deformatting.Qual.br]
+solution = "br"
+valid = true
+
+[deformatting.Qual.rc]
+solution = "rc"
+valid = true
+
+[deformatting.Qual.-02]
+solution = "-##"
+valid = true
+
+[deformatting.Qual.".a2r"]
+solution = ".ar"
+valid = true
+
+[deformatting.Qual.".c2r"]
+solution = ".cr"
+valid = true
+
+[deformatting.Qual.DEV5]
+solution = "DEV"
+valid = true
+
+[deformatting.Qual.a01]
+solution = "a##"
+valid = true
+
+[deformatting.Qual.a1dev1]
+solution = "dev"
+valid = true
+
+[deformatting.Qual.rc-1]
+solution = "rc-"
+valid = true
+
+[deformatting.Qual.rcr]
+solution = "rcr"
+valid = true
+
+[deformatting.Qual.-1DEV5]
+solution = "-DEV"
+valid = true
+
+[deformatting.Qual.-1dev1]
+solution = "-dev"
+valid = true
+
+[deformatting.Qual.".a2-1"]
+solution = ".a#-"
+valid = true
+
+[deformatting.Qual.".c2-1"]
+solution = ".c#-"
+valid = true
+
+[deformatting.Qual.".dev"]
+solution = ".dev"
+valid = true
+
+[deformatting.Qual.".rev6"]
+solution = ".rev"
+valid = true
+
+[deformatting.Qual.a01-1]
+solution = "a##-"
+valid = true
+
+[deformatting.Qual.a01r]
+solution = "a##r"
+valid = true
+
+[deformatting.Qual.a-02]
+solution = "a-##"
+valid = true
+
+[deformatting.Qual.aDEV5]
+solution = "aDEV"
+valid = true
+
+[deformatting.Qual.adev1]
+solution = "adev"
+valid = true
+
+[deformatting.Qual.b-02]
+solution = "b-##"
+valid = true
+
+[deformatting.Qual.bDEV5]
+solution = "bDEV"
+valid = true
+
+[deformatting.Qual.bdev1]
+solution = "bdev"
+valid = true
+
+[deformatting.Qual.a1post1]
+solution = "post"
+valid = true
+
+[deformatting.Qual."pre.3"]
+solution = "pre."
+valid = true
+
+[deformatting.Qual.a1r4DEV5]
+solution = "rDEV"
+valid = true
+
+[deformatting.Qual.rc01]
+solution = "rc##"
+valid = true
+
+[deformatting.Qual.a1r4dev1]
+solution = "rdev"
+valid = true
+
+[deformatting.Qual.-1-dev4]
+solution = "--dev"
+valid = true
+
+[deformatting.Qual."-1.dev"]
+solution = "-.dev"
+valid = true
+
+[deformatting.Qual.".a2DEV5"]
+solution = ".aDEV"
+valid = true
+
+[deformatting.Qual.".a2dev1"]
+solution = ".adev"
+valid = true
+
+[deformatting.Qual.".c2DEV5"]
+solution = ".cDEV"
+valid = true
+
+[deformatting.Qual.".c2dev1"]
+solution = ".cdev"
+valid = true
+
+[deformatting.Qual.".post"]
+solution = ".post"
+valid = true
+
+[deformatting.Qual._dev-3]
+solution = "_dev-"
+valid = true
+
+[deformatting.Qual.a-1DEV5]
+solution = "a-DEV"
+valid = true
+
+[deformatting.Qual.a-1dev1]
+solution = "a-dev"
+valid = true
+
+[deformatting.Qual.apost1]
+solution = "apost"
+valid = true
+
+[deformatting.Qual.ar4DEV5]
+solution = "arDEV"
+valid = true
+
+[deformatting.Qual.ar4dev1]
+solution = "ardev"
+valid = true
+
+[deformatting.Qual.b-1DEV5]
+solution = "b-DEV"
+valid = true
+
+[deformatting.Qual.b-1dev1]
+solution = "b-dev"
+valid = true
+
+[deformatting.Qual.bpost1]
+solution = "bpost"
+valid = true
+
+[deformatting.Qual.br4DEV5]
+solution = "brDEV"
+valid = true
+
+[deformatting.Qual.br4dev1]
+solution = "brdev"
+valid = true
+
+[deformatting.Qual."pre.3-1"]
+solution = "pre.-"
+valid = true
+
+[deformatting.Qual."pre.3r"]
+solution = "pre.r"
+valid = true
+
+[deformatting.Qual.rc01-1]
+solution = "rc##-"
+valid = true
+
+[deformatting.Qual.rc01r]
+solution = "rc##r"
+valid = true
+
+[deformatting.Qual.rc-02]
+solution = "rc-##"
+valid = true
+
+[deformatting.Qual.rcDEV5]
+solution = "rcDEV"
+valid = true
+
+[deformatting.Qual.rcdev1]
+solution = "rcdev"
+valid = true
+
+[deformatting.Qual.-02DEV5]
+solution = "-##DEV"
+valid = true
+
+[deformatting.Qual.-02dev1]
+solution = "-##dev"
+valid = true
+
+[deformatting.Qual.-1_dev-3]
+solution = "-_dev-"
+valid = true
+
+[deformatting.Qual.-alpha3]
+solution = "-alpha"
+valid = true
+
+[deformatting.Qual.".a2-02"]
+solution = ".a#-##"
+valid = true
+
+[deformatting.Qual.".a2post1"]
+solution = ".apost"
+valid = true
+
+[deformatting.Qual."a1r a1r4 b2r"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r a1r4 b2r4"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r a1r4 r"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r a1r4 r4"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r a1r4 rc1r"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r a1r4 rc1r4"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r b2r b2r4"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r b2r r"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r b2r r4"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."a1r b2r rc1r"]
+solution = "r"
+valid = true
+
+[deformatting.Qual."-02 -1"]
+valid = false
+
+[deformatting.Qual."-02 -1-dev4"]
+valid = false
+
+[deformatting.Qual."-02 -1.DEV_06"]
+valid = false
+
+[deformatting.Qual."-02 -1.dev"]
+valid = false
+
+[deformatting.Qual."-02 -1DEV5"]
+valid = false
+
+[deformatting.Qual."-02 -1_dev-3"]
+valid = false
+
+[deformatting.Qual."-02 -1dev.02"]
+valid = false
+
+[deformatting.Qual."-02 -1dev1"]
+valid = false
+
+[deformatting.Qual."-02 -alpha3-1"]
+valid = false
+
+[deformatting.Qual."-02 -alpha3-1-dev4"]
+valid = false
+
+[deformatting.Qual.x]
+valid = false
+
+[deformatting.Qual."a."]
+valid = false
+
+[deformatting.Qual.b_]
+valid = false
+
+[deformatting.Qual.rc-]
+valid = false
+
+[deformatting.Qual."post."]
+valid = false
+
+[deformatting.Qual."dev."]
+valid = false
+
+[deformatting.Qual.dev1post2]
+valid = false
+
+[deformatting.Qual.post1a2]
+valid = false
+
+[deformatting.Qual.a1a2]
+valid = false
+
+[deformatting.Qual.-]
 valid = false
 
 [deformatting.Release."1.2.0 9.8.7.6.0.5"]
@@ -848,6 +3508,386 @@ solution = ""
 valid = true
 
 [deformatting.Version."1.2.3 v9.8"]
+valid = false
+
+[deformatting.Version.0]
+solution = ""
+valid = true
+
+[deformatting.Version."10!02"]
+solution = "##"
+valid = true
+
+[deformatting.Version."0+foo_9"]
+solution = "+_"
+valid = true
+
+[deformatting.Version."1.0"]
+solution = ".#"
+valid = true
+
+[deformatting.Version."01!10.20.30"]
+solution = "##!"
+valid = true
+
+[deformatting.Version.007]
+solution = "###"
+valid = true
+
+[deformatting.Version."0+9-A1"]
+solution = "+-^"
+valid = true
+
+[deformatting.Version."100+z99_Foo"]
+solution = "+_^"
+valid = true
+
+[deformatting.Version."0.0.0"]
+solution = "..#"
+valid = true
+
+[deformatting.Version."V0!1.2.3"]
+solution = "V#!"
+valid = true
+
+[deformatting.Version."001!1.2.3"]
+solution = "###!"
+valid = true
+
+[deformatting.Version."10!02+foo_9"]
+solution = "##+_"
+valid = true
+
+[deformatting.Version."100+a1.AB12"]
+solution = "+.^^"
+valid = true
+
+[deformatting.Version."2!10.20+ABC.2"]
+solution = "+^^^"
+valid = true
+
+[deformatting.Version."1!100b2-1DEV5"]
+solution = "-DEV"
+valid = true
+
+[deformatting.Version."01!1.0"]
+solution = "##!.#"
+valid = true
+
+[deformatting.Version."10!02+9-A1"]
+solution = "##+-^"
+valid = true
+
+[deformatting.Version."2!01.02"]
+solution = "##.##"
+valid = true
+
+[deformatting.Version."10!2+01-X"]
+solution = "+##-^"
+valid = true
+
+[deformatting.Version."100+ABC-10"]
+solution = "+^^^-"
+valid = true
+
+[deformatting.Version."2!10.20+a1_ABC"]
+solution = "+_^^^"
+valid = true
+
+[deformatting.Version."10!2+x_AbC"]
+solution = "+_^~^"
+valid = true
+
+[deformatting.Version."1.0+x.A1"]
+solution = ".#+.^"
+valid = true
+
+[deformatting.Version."V0!00"]
+solution = "V#!##"
+valid = true
+
+[deformatting.Version."V001!10.20.30"]
+solution = "V###!"
+valid = true
+
+[deformatting.Version."1!100rcdev1"]
+solution = "rcdev"
+valid = true
+
+[deformatting.Version."01!001"]
+solution = "##!###"
+valid = true
+
+[deformatting.Version."01!10.20.30+1-A1"]
+solution = "##!+-^"
+valid = true
+
+[deformatting.Version."01!99+x.A1"]
+solution = "##!+.^"
+valid = true
+
+[deformatting.Version."001!00"]
+solution = "###!##"
+valid = true
+
+[deformatting.Version."10!002+a1-A1"]
+solution = "###+-^"
+valid = true
+
+[deformatting.Version."099+A1_2"]
+solution = "###+^_"
+valid = true
+
+[deformatting.Version."007+z99_Foo"]
+solution = "###+_^"
+valid = true
+
+[deformatting.Version."0+Foo.FOO"]
+solution = "+^.^^^"
+valid = true
+
+[deformatting.Version."10!2+AB12-01"]
+solution = "+^^-##"
+valid = true
+
+[deformatting.Version."10!2+X09_ABC"]
+solution = "+^_^^^"
+valid = true
+
+[deformatting.Version."1!100b2-1DEV5+foo_9"]
+solution = "-DEV+_"
+valid = true
+
+[deformatting.Version."10!1.2.0+x9-A1"]
+solution = "..#+-^"
+valid = true
+
+[deformatting.Version."0.0.0+x.A1"]
+solution = "..#+.^"
+valid = true
+
+[deformatting.Version."10!0.0.0+A1_2"]
+solution = "..#+^_"
+valid = true
+
+[deformatting.Version."V0!007"]
+solution = "V#!###"
+valid = true
+
+[deformatting.Version."01!10.20.30+ABC.2"]
+solution = "##!+^^^"
+valid = true
+
+[deformatting.Version."001!007"]
+solution = "###!###"
+valid = true
+
+[deformatting.Version."001!1.2.3+x9-A1"]
+solution = "###!+-^"
+valid = true
+
+[deformatting.Version."007+a1.AB12"]
+solution = "###+.^^"
+valid = true
+
+[deformatting.Version."10!002+AB12_10"]
+solution = "###+^^_"
+valid = true
+
+[deformatting.Version."1!100b2-1DEV5+9-A1"]
+solution = "-DEV+-^"
+valid = true
+
+[deformatting.Version."9!7.08.009"]
+solution = ".##.###"
+valid = true
+
+[deformatting.Version."1.0+001-0"]
+solution = ".#+###-"
+valid = true
+
+[deformatting.Version."1.0+9_ABC"]
+solution = ".#+_^^^"
+valid = true
+
+[deformatting.Version."10!1.2.0+X.A1"]
+solution = "..#+^.^"
+valid = true
+
+[deformatting.Version."V001!1.0"]
+solution = "V###!.#"
+valid = true
+
+[deformatting.Version."1!100rcdev1+x-9"]
+solution = "rcdev+-"
+valid = true
+
+[deformatting.Version."01!001+x-9"]
+solution = "##!###+-"
+valid = true
+
+[deformatting.Version."01!99+001-0"]
+solution = "##!+###-"
+valid = true
+
+[deformatting.Version."01!10.20.30+a1_ABC"]
+solution = "##!+_^^^"
+valid = true
+
+[deformatting.Version."01!1.0+AB12.1"]
+solution = "##!.#+^^"
+valid = true
+
+[deformatting.Version."001!09+foo_9"]
+solution = "###!##+_"
+valid = true
+
+[deformatting.Version."001!1.2.3+X.A1"]
+solution = "###!+^.^"
+valid = true
+
+[deformatting.Version."099+001_ab12"]
+solution = "###+###_"
+valid = true
+
+[deformatting.Version."10!002+z99.FOO"]
+solution = "###+.^^^"
+valid = true
+
+[deformatting.Version."099+X09.AB12"]
+solution = "###+^.^^"
+valid = true
+
+[deformatting.Version."007+ABC-10"]
+solution = "###+^^^-"
+valid = true
+
+[deformatting.Version."099+x9_ABC"]
+solution = "###+_^^^"
+valid = true
+
+[deformatting.Version."007+0_AbC"]
+solution = "###+_^~^"
+valid = true
+
+[deformatting.Version."10!02+Foo.FOO"]
+solution = "##+^.^^^"
+valid = true
+
+[deformatting.Version."2!00.00.00"]
+solution = "##.##.##"
+valid = true
+
+[deformatting.Version."1.0+X-ABC"]
+solution = ".#+^-^^^"
+valid = true
+
+[deformatting.Version."0.0.0+001-0"]
+solution = "..#+###-"
+valid = true
+
+[deformatting.Version."10!0.0.0+001_ab12"]
+solution = "..#+###_"
+valid = true
+
+[deformatting.Version."0 0+0 1"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 1+0"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 10!2"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 100"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 2!1"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 2!10.20"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 2!9"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 42!1"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 42!10.20"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0+0 42!9"]
+solution = ""
+valid = true
+
+[deformatting.Version."0 0!001.002-alpha3-02.DEV_06"]
+valid = false
+
+[deformatting.Version."0 0!001.002-alpha3-02.DEV_06+0.0"]
+valid = false
+
+[deformatting.Version."0 0!001.002-alpha3-02.DEV_06+9.AB12"]
+valid = false
+
+[deformatting.Version."0 0!001.002-alpha3-02.DEV_06+Foo_Foo"]
+valid = false
+
+[deformatting.Version."0 0!001.002-alpha3-02.DEV_06+x-9"]
+valid = false
+
+[deformatting.Version."0 0!001.002alpha.04_post-3dev.02"]
+valid = false
+
+[deformatting.Version."0 0!001.002alpha.04_post-3dev.02+001-0"]
+valid = false
+
+[deformatting.Version."0 0!001.002alpha.04_post-3dev.02+9_ABC"]
+valid = false
+
+[deformatting.Version."0 0!001.002alpha.04_post-3dev.02+X-ABC"]
+valid = false
+
+[deformatting.Version."0 0!001.002alpha.04_post-3dev.02+x.A1"]
+valid = false
+
+[deformatting.Version.x]
+valid = false
+
+[deformatting.Version.v]
+valid = false
+
+[deformatting.Version."1."]
+valid = false
+
+[deformatting.Version."1..2"]
+valid = false
+
+[deformatting.Version."1+"]
+valid = false
+
+[deformatting.Version."+abc"]
+valid = false
+
+[deformatting.Version."1++abc"]
+valid = false
+
+[deformatting.Version."1+abc+def"]
+valid = false
+
+[deformatting.Version."1.2+x+y"]
+valid = false
+
+[deformatting.Version."1.2+abc."]
 valid = false
 
 [epoch.test_epoch_as_false]
