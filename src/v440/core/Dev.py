@@ -7,8 +7,9 @@ __all__: list[str] = ["Dev"]
 import operator
 from collections import abc
 from dataclasses import dataclass
-from functools import reduce
 from typing import Any, Self, SupportsIndex
+
+from frozendict import frozendict
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
@@ -20,7 +21,7 @@ from v440.abc.QualABC import QualABC
 @dataclass(frozen=True, kw_only=True)
 class DevDeformat:
     clue: Clue
-    info: dict[str, Dev]
+    info: frozendict[str, Dev]
 
     def __and__(self: Self, other: Self, /) -> Self:
         return type(self)(
@@ -47,12 +48,12 @@ class Dev(NewDeformattable, QualABC):
         if body is None:
             return DevDeformat(
                 clue=Clue(),
-                info=dict(),
+                info=frozendict(),
             )
         else:
             return DevDeformat(
                 clue=Clue.by_example(body),
-                info={body: cls(string=body)},
+                info=frozendict([(body, cls(string=body))]),
             )
 
     @classmethod

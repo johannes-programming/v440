@@ -22,6 +22,7 @@ dependencies = [
     "copyable>=1.1,<2",
     "datahold>=3.0,<4",
     "datarepr>=1.2,<2",
+    "frozendict>=2.4.7,<3",
     "iterflat>=1.1,<2",
     "iterprod>=1.1,<2",
     "packaging>=25.0,<26",
