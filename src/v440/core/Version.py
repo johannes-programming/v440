@@ -16,7 +16,7 @@ from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
 
 
-class Version(NestedABC, OldDeformattable):
+class Version(OldDeformattable, NestedABC):
 
     Public: Final[type[Public_]] = Public_
     Local: Final[type[Local_]] = Local_

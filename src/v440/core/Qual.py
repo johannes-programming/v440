@@ -19,7 +19,7 @@ from v440.core.Post import Post as Post_
 from v440.core.Pre import Pre as Pre_
 
 
-class Qual(NestedABC, OldDeformattable):
+class Qual(OldDeformattable, NestedABC):
 
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_

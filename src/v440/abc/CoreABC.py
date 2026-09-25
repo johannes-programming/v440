@@ -90,6 +90,10 @@ class CoreABC(Copyable):
     def copy(self: Self, /) -> Self:
         return type(self)(self)
 
+    @staticmethod
+    @abstractmethod
+    def deformat(*strings: object) -> str: ...
+
     @property
     @abstractmethod
     def packaging(self: Self, /) -> Any: ...
