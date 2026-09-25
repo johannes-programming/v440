@@ -9,11 +9,12 @@ import operator
 import string as string_
 from typing import Any, Self, SupportsIndex, overload
 
+from v440._utils.deformatting import Deformattable
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
-class Release(ListABC[int]):
+class Release(ListABC[int], Deformattable):
     __slots__ = ()
 
     @classmethod
