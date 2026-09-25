@@ -16,6 +16,75 @@ from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
+def deformat_lits(part: set[str], /) -> str:
+    i: int
+    s: str
+    t: str
+    cases: list[str]
+    cases = ["#"] * max(map(len, part), default=0)
+    for i, s in iterflat(map(enumerate, part)):
+        if s in string_.digits:
+            continue
+        if s in string_.ascii_uppercase:
+            t = "^"
+        else:
+            t = "~"
+        if "#" == cases[i]:
+            cases[i] = t
+            continue
+        if t != cases[i]:
+            raise ValueError
+    s = "".join(cases).replace("#", "~").rstrip("~")
+    return s
+
+
+def deformat_nums(part: set[str], /) -> int:
+    n: int
+    s: str
+    n = 1
+    for s in part:
+        if s.startswith("0"):
+            n = max(n, len(s))
+    if n > min(map(len, part), default=1):
+        raise ValueError
+    elif n == 1:
+        return 0
+    else:
+        return n
+
+
+def deformat_part(part: set[str], /) -> str:
+    lits: set[str]
+    nums: set[str]
+    s: str
+    lits = set()
+    nums = set()
+    for s in part:
+        if s.strip(string_.digits):
+            lits.add(s)
+        else:
+            nums.add(s)
+    s = "#" * deformat_nums(nums)
+    s += deformat_lits(lits)
+    return s
+
+
+def item_parse(value: Any, /) -> int | str:
+    ans: int | str
+    try:
+        ans = operator.index(value)
+    except Exception:
+        ans = str(value).lower()
+        if ans.strip(string_.digits + string_.ascii_lowercase):
+            raise
+        if not ans.strip(string_.digits):
+            ans = int(ans)
+    else:
+        if ans < 0:
+            raise ValueError
+    return ans
+
+
 class Local(OldDeformattable, ListABC[int | str]):
     __slots__ = ()
 
@@ -23,7 +92,7 @@ class Local(OldDeformattable, ListABC[int | str]):
     def _data_parse(
         cls: type[Self], value: list[Any], /
     ) -> tuple[int | str, ...]:
-        return tuple(map(cls._item_parse, value))
+        return tuple(map(item_parse, value))
 
     @classmethod
     def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
@@ -47,62 +116,9 @@ class Local(OldDeformattable, ListABC[int | str]):
             if i % 2:
                 (parts[i],) = parts[i]
             else:
-                parts[i] = cls._deformat_part(parts[i])
+                parts[i] = deformat_part(parts[i])
         s = "".join(parts).rstrip(".")
         return s
-
-    @classmethod
-    def _deformat_part(cls: type[Self], part: set[str], /) -> str:
-        lits: set[str]
-        nums: set[str]
-        s: str
-        lits = set()
-        nums = set()
-        for s in part:
-            if s.strip(string_.digits):
-                lits.add(s)
-            else:
-                nums.add(s)
-        s = "#" * cls._deformat_nums(nums)
-        s += cls._deformat_lits(lits)
-        return s
-
-    @classmethod
-    def _deformat_lits(cls: type[Self], part: set[str], /) -> str:
-        i: int
-        s: str
-        t: str
-        cases: list[str]
-        cases = ["#"] * max(map(len, part), default=0)
-        for i, s in iterflat(map(enumerate, part)):
-            if s in string_.digits:
-                continue
-            if s in string_.ascii_uppercase:
-                t = "^"
-            else:
-                t = "~"
-            if "#" == cases[i]:
-                cases[i] = t
-                continue
-            if t != cases[i]:
-                raise ValueError
-        s = "".join(cases).replace("#", "~").rstrip("~")
-        return s
-
-    @classmethod
-    def _deformat_nums(cls: type[Self], part: set[str], /) -> int:
-        n: int
-        s: str
-        n = 1
-        for s in part:
-            if s.startswith("0"):
-                n = max(n, len(s))
-        if n > min(map(len, part), default=1):
-            raise ValueError
-        elif n == 1:
-            return 0
-        else:
-            return n
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
@@ -153,22 +169,6 @@ class Local(OldDeformattable, ListABC[int | str]):
             ans += item[len(y) :]
             ans += z
         ans = ans[:-1]
-        return ans
-
-    @classmethod
-    def _item_parse(cls: type[Self], value: Any, /) -> int | str:
-        ans: int | str
-        try:
-            ans = operator.index(value)
-        except Exception:
-            ans = str(value).lower()
-            if ans.strip(string_.digits + string_.ascii_lowercase):
-                raise
-            if not ans.strip(string_.digits):
-                ans = int(ans)
-        else:
-            if ans < 0:
-                raise ValueError
         return ans
 
     @classmethod
