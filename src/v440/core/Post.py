@@ -6,17 +6,34 @@ __all__: list[str] = ["Post"]
 
 import operator
 from collections import abc
-from functools import reduce
+from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
+
+from frozendict import frozendict
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import OldDeformattable
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Post(OldDeformattable, QualABC):
+@dataclass(frozen=True, kw_only=True)
+class PostDeformat:
+    clue: Clue
+    info: frozendict[str, Post]
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            clue=self.clue & other.clue,
+            info=self.info | other.info,
+        )
+
+    def best(self: Self, /) -> str:
+        return self.clue.solo(".post")
+
+
+class Post(NewDeformattable, QualABC):
 
     __slots__ = ()
 
@@ -27,10 +44,17 @@ class Post(OldDeformattable, QualABC):
             return -1
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        clues: abc.Iterable[Clue]
-        clues = map(Clue.by_example, info.keys())
-        return reduce(operator.and_, clues, Clue()).solo(".post")
+    def _deformat(cls: type[Self], body: str | None = None, /) -> PostDeformat:
+        if body is None:
+            return PostDeformat(
+                clue=Clue(),
+                info=frozendict(),
+            )
+        else:
+            return PostDeformat(
+                clue=Clue.by_example(body),
+                info=frozendict({body: cls(string=body)}),
+            )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
