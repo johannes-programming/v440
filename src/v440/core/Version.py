@@ -5,18 +5,41 @@ from __future__ import annotations
 __all__: list[str] = ["Version"]
 
 from collections import abc
+from dataclasses import dataclass
 from typing import Any, Final, Self
 
 import packaging.version
+from frozendict import frozendict
 
-from v440._utils.deformatting import OldDeformattable
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
 
 
-class Version(OldDeformattable, NestedABC):
+@dataclass(frozen=True, kw_only=True)
+class VersionDeformat:
+    info: frozendict[str, Version]
+    locals: frozenset[str]
+    publics: frozenset[str]
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            info=self.info | other.info,
+            locals=self.locals | other.locals,
+            publics=self.publics | other.publics,
+        )
+
+    def best(self: Self, /) -> str:
+        public: str
+        local: str
+        public = Public_.deformat(*self.publics)
+        local = Local_.deformat(*self.locals)
+        return Version._join(public, local)
+
+
+class Version(NewDeformattable, NestedABC):
 
     Public: Final[type[Public_]] = Public_
     Local: Final[type[Local_]] = Local_
@@ -29,19 +52,25 @@ class Version(OldDeformattable, NestedABC):
         return self.public, self.local
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[Any, Any], /) -> str:
-        publics: set[str]
-        locals_: set[str]
-        x: str
-        y: str
-        publics = set()
-        locals_ = set()
-        for x, y in map(cls._split, info.keys()):
-            publics.add(x)
-            locals_.add(y)
-        x = Public_.deformat(*publics)
-        y = Local_.deformat(*locals_)
-        return cls._join(x, y)
+    def _deformat(
+        cls: type[Self], body: str | None = None, /
+    ) -> VersionDeformat:
+        local: str
+        public: str
+        version: Self
+        if body is None:
+            return VersionDeformat(
+                info=frozendict(),
+                locals=frozenset(),
+                publics=frozenset(),
+            )
+        version = cls(string=body)
+        public, local = cls._split(body)
+        return VersionDeformat(
+            info=frozendict({body: version}),
+            locals=frozenset({local}),
+            publics=frozenset({public}),
+        )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
