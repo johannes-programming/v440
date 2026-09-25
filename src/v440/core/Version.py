@@ -9,13 +9,14 @@ from typing import Any, Final, Self
 
 import packaging.version
 
+from v440._utils.deformatting import Deformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
 
 
-class Version(NestedABC):
+class Version(NestedABC, Deformattable):
 
     Public: Final[type[Public_]] = Public_
     Local: Final[type[Local_]] = Local_
