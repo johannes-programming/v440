@@ -1,3 +1,5 @@
 --sort
+--sort
+--all-keys
 --
 tests/testdata.toml
