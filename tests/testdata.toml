@@ -338,4691 +338,4692 @@ attrvalue = 42
 string = "0"
 
 [deformatting.Base.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Base.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "!",
 ]
-valid = false
 
 [deformatting.Base.test00000002]
+exceptiontype = "builtins.Exception"
 strings = [
     "!1",
 ]
-valid = false
 
 [deformatting.Base.test00000003]
+exceptiontype = "builtins.Exception"
 strings = [
     "-1",
 ]
-valid = false
 
 [deformatting.Base.test00000004]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
 ]
-valid = true
 
 [deformatting.Base.test00000005]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!0",
 ]
-valid = false
 
 [deformatting.Base.test00000006]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!0.0.0",
 ]
-valid = false
 
 [deformatting.Base.test00000007]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!00",
 ]
-valid = false
 
 [deformatting.Base.test00000008]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!00.00",
 ]
-valid = false
 
 [deformatting.Base.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!00.00.00",
 ]
-valid = false
 
 [deformatting.Base.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001",
 ]
-valid = false
 
 [deformatting.Base.test00000011]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002",
 ]
-valid = false
 
 [deformatting.Base.test00000012]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002.003",
 ]
-valid = false
 
 [deformatting.Base.test00000013]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!002",
 ]
-valid = false
 
 [deformatting.Base.test00000014]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!007",
 ]
-valid = false
 
 [deformatting.Base.test00000015]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!0",
 ]
-valid = true
 
 [deformatting.Base.test00000016]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!1",
 ]
-valid = true
 
 [deformatting.Base.test00000017]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!1.2",
 ]
-valid = true
 
 [deformatting.Base.test00000018]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!1.2.3",
 ]
-valid = true
 
 [deformatting.Base.test00000019]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!10",
 ]
-valid = true
 
 [deformatting.Base.test00000020]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!10.20",
 ]
-valid = true
 
 [deformatting.Base.test00000021]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!10.20.30",
 ]
-valid = true
 
 [deformatting.Base.test00000022]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!100",
 ]
-valid = true
 
 [deformatting.Base.test00000023]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!100.200.300",
 ]
-valid = true
 
 [deformatting.Base.test00000024]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "1",
     "1!2",
 ]
-valid = true
 
 [deformatting.Base.test00000025]
+exceptiontype = ""
 solution = "#!"
 strings = [
     "0!0",
 ]
-valid = true
 
 [deformatting.Base.test00000026]
+exceptiontype = ""
 solution = "#!..#"
 strings = [
     "0!0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000027]
+exceptiontype = ""
 solution = "#!##"
 strings = [
     "0!00",
 ]
-valid = true
 
 [deformatting.Base.test00000028]
+exceptiontype = ""
 solution = "#!##.##"
 strings = [
     "0!00.00",
 ]
-valid = true
 
 [deformatting.Base.test00000029]
+exceptiontype = ""
 solution = "#!###"
 strings = [
     "0!001",
 ]
-valid = true
 
 [deformatting.Base.test00000030]
+exceptiontype = ""
 solution = "#!.#"
 strings = [
     "0!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000031]
+exceptiontype = ""
 solution = "#!...#"
 strings = [
     "0!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000032]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000033]
+exceptiontype = ""
 solution = "##"
 strings = [
     "00",
 ]
-valid = true
 
 [deformatting.Base.test00000034]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "00.00",
 ]
-valid = true
 
 [deformatting.Base.test00000035]
+exceptiontype = ""
 solution = "###"
 strings = [
     "001",
 ]
-valid = true
 
 [deformatting.Base.test00000036]
+exceptiontype = ""
 solution = "###!"
 strings = [
     "001!0",
 ]
-valid = true
 
 [deformatting.Base.test00000037]
+exceptiontype = ""
 solution = "###!..#"
 strings = [
     "001!0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000038]
+exceptiontype = ""
 solution = "###!##"
 strings = [
     "001!00",
 ]
-valid = true
 
 [deformatting.Base.test00000039]
+exceptiontype = ""
 solution = "###!###"
 strings = [
     "001!001",
 ]
-valid = true
 
 [deformatting.Base.test00000040]
+exceptiontype = ""
 solution = "###!.#"
 strings = [
     "001!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000041]
+exceptiontype = ""
 solution = "###.###"
 strings = [
     "001.002",
 ]
-valid = true
 
 [deformatting.Base.test00000042]
+exceptiontype = ""
 solution = "##!"
 strings = [
     "01!0",
 ]
-valid = true
 
 [deformatting.Base.test00000043]
+exceptiontype = ""
 solution = "##!..#"
 strings = [
     "01!0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000044]
+exceptiontype = ""
 solution = "##!##"
 strings = [
     "01!00",
 ]
-valid = true
 
 [deformatting.Base.test00000045]
+exceptiontype = ""
 solution = "##!##.##"
 strings = [
     "01!00.00",
 ]
-valid = true
 
 [deformatting.Base.test00000046]
+exceptiontype = ""
 solution = "##!###"
 strings = [
     "01!001",
 ]
-valid = true
 
 [deformatting.Base.test00000047]
+exceptiontype = ""
 solution = "##!.#"
 strings = [
     "01!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000048]
+exceptiontype = ""
 solution = "##!...#"
 strings = [
     "01!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000049]
+exceptiontype = "builtins.Exception"
 strings = [
     "1!",
 ]
-valid = false
 
 [deformatting.Base.test00000050]
+exceptiontype = ""
 solution = ".#"
 strings = [
     "1!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000051]
+exceptiontype = ""
 solution = "...#"
 strings = [
     "1!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000052]
+exceptiontype = ""
 solution = ".##.###"
 strings = [
     "1!7.08.009",
 ]
-valid = true
 
 [deformatting.Base.test00000053]
+exceptiontype = "builtins.Exception"
 strings = [
     "1+a",
 ]
-valid = false
 
 [deformatting.Base.test00000054]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.",
 ]
-valid = false
 
 [deformatting.Base.test00000055]
+exceptiontype = "builtins.Exception"
 strings = [
     "1..2",
 ]
-valid = false
 
 [deformatting.Base.test00000056]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2.3",
     "v4.5",
 ]
-valid = false
 
 [deformatting.Base.test00000057]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V0",
 ]
-valid = true
 
 [deformatting.Base.test00000058]
+exceptiontype = ""
 solution = "V#!"
 strings = [
     "V0!0",
 ]
-valid = true
 
 [deformatting.Base.test00000059]
+exceptiontype = ""
 solution = "V#!..#"
 strings = [
     "V0!0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000060]
+exceptiontype = ""
 solution = "V#!##"
 strings = [
     "V0!00",
 ]
-valid = true
 
 [deformatting.Base.test00000061]
+exceptiontype = ""
 solution = "V#!###"
 strings = [
     "V0!001",
 ]
-valid = true
 
 [deformatting.Base.test00000062]
+exceptiontype = ""
 solution = "V#!.#"
 strings = [
     "V0!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000063]
+exceptiontype = ""
 solution = "V#!...#"
 strings = [
     "V0!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000064]
+exceptiontype = ""
 solution = "V..#"
 strings = [
     "V0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000065]
+exceptiontype = ""
 solution = "V##"
 strings = [
     "V00",
 ]
-valid = true
 
 [deformatting.Base.test00000066]
+exceptiontype = ""
 solution = "V##.##"
 strings = [
     "V00.00",
 ]
-valid = true
 
 [deformatting.Base.test00000067]
+exceptiontype = ""
 solution = "V###"
 strings = [
     "V001",
 ]
-valid = true
 
 [deformatting.Base.test00000068]
+exceptiontype = ""
 solution = "V###!"
 strings = [
     "V001!0",
 ]
-valid = true
 
 [deformatting.Base.test00000069]
+exceptiontype = ""
 solution = "V###!##"
 strings = [
     "V001!00",
 ]
-valid = true
 
 [deformatting.Base.test00000070]
+exceptiontype = ""
 solution = "V###!.#"
 strings = [
     "V001!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000071]
+exceptiontype = ""
 solution = "V##!"
 strings = [
     "V01!0",
 ]
-valid = true
 
 [deformatting.Base.test00000072]
+exceptiontype = ""
 solution = "V##!..#"
 strings = [
     "V01!0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000073]
+exceptiontype = ""
 solution = "V##!##"
 strings = [
     "V01!00",
 ]
-valid = true
 
 [deformatting.Base.test00000074]
+exceptiontype = ""
 solution = "V##!###"
 strings = [
     "V01!001",
 ]
-valid = true
 
 [deformatting.Base.test00000075]
+exceptiontype = ""
 solution = "V##!.#"
 strings = [
     "V01!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000076]
+exceptiontype = ""
 solution = "V.#"
 strings = [
     "V1!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000077]
+exceptiontype = ""
 solution = "V...#"
 strings = [
     "V1!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000078]
+exceptiontype = "builtins.Exception"
 strings = [
     "V1.2.3",
     "4.5",
 ]
-valid = false
 
 [deformatting.Base.test00000079]
+exceptiontype = "builtins.Exception"
 strings = [
     "v",
 ]
-valid = false
 
 [deformatting.Base.test00000080]
+exceptiontype = ""
 solution = "v"
 strings = [
     "v0",
 ]
-valid = true
 
 [deformatting.Base.test00000081]
+exceptiontype = ""
 solution = "v#!"
 strings = [
     "v0!0",
 ]
-valid = true
 
 [deformatting.Base.test00000082]
+exceptiontype = ""
 solution = "v#!..#"
 strings = [
     "v0!0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000083]
+exceptiontype = ""
 solution = "v#!##"
 strings = [
     "v0!00",
 ]
-valid = true
 
 [deformatting.Base.test00000084]
+exceptiontype = ""
 solution = "v#!###"
 strings = [
     "v0!001",
 ]
-valid = true
 
 [deformatting.Base.test00000085]
+exceptiontype = ""
 solution = "v#!.#"
 strings = [
     "v0!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000086]
+exceptiontype = ""
 solution = "v#!...#"
 strings = [
     "v0!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000087]
+exceptiontype = ""
 solution = "v..#"
 strings = [
     "v0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000088]
+exceptiontype = ""
 solution = "v##"
 strings = [
     "v00",
 ]
-valid = true
 
 [deformatting.Base.test00000089]
+exceptiontype = ""
 solution = "v##.##"
 strings = [
     "v00.00",
 ]
-valid = true
 
 [deformatting.Base.test00000090]
+exceptiontype = ""
 solution = "v###"
 strings = [
     "v001",
 ]
-valid = true
 
 [deformatting.Base.test00000091]
+exceptiontype = ""
 solution = "v###!"
 strings = [
     "v001!0",
 ]
-valid = true
 
 [deformatting.Base.test00000092]
+exceptiontype = ""
 solution = "v###!##"
 strings = [
     "v001!00",
 ]
-valid = true
 
 [deformatting.Base.test00000093]
+exceptiontype = ""
 solution = "v###!.#"
 strings = [
     "v001!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000094]
+exceptiontype = ""
 solution = "v##!"
 strings = [
     "v01!0",
 ]
-valid = true
 
 [deformatting.Base.test00000095]
+exceptiontype = ""
 solution = "v##!..#"
 strings = [
     "v01!0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000096]
+exceptiontype = ""
 solution = "v##!##"
 strings = [
     "v01!00",
 ]
-valid = true
 
 [deformatting.Base.test00000097]
+exceptiontype = ""
 solution = "v##!###"
 strings = [
     "v01!001",
 ]
-valid = true
 
 [deformatting.Base.test00000098]
+exceptiontype = ""
 solution = "v##!.#"
 strings = [
     "v01!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000099]
+exceptiontype = ""
 solution = "v.#"
 strings = [
     "v1!1.0",
 ]
-valid = true
 
 [deformatting.Base.test00000100]
+exceptiontype = ""
 solution = "v...#"
 strings = [
     "v1!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Base.test00000101]
+exceptiontype = "builtins.Exception"
 strings = [
     "vv1",
 ]
-valid = false
 
 [deformatting.Base.test00000102]
+exceptiontype = "builtins.Exception"
 strings = [
     "x",
 ]
-valid = false
 
 [deformatting.Dev.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Dev.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "--dev1",
 ]
-valid = false
 
 [deformatting.Dev.test00000002]
+exceptiontype = ""
 solution = "-DEV"
 strings = [
     "-DEV",
 ]
-valid = true
 
 [deformatting.Dev.test00000003]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV-0",
 ]
-valid = false
 
 [deformatting.Dev.test00000004]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV-0001",
 ]
-valid = false
 
 [deformatting.Dev.test00000005]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV-001",
 ]
-valid = false
 
 [deformatting.Dev.test00000006]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV-007",
 ]
-valid = false
 
 [deformatting.Dev.test00000007]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV-01",
 ]
-valid = false
 
 [deformatting.Dev.test00000008]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV-02",
 ]
-valid = false
 
 [deformatting.Dev.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV-099",
 ]
-valid = false
 
 [deformatting.Dev.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV.0",
 ]
-valid = false
 
 [deformatting.Dev.test00000011]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV.0001",
 ]
-valid = false
 
 [deformatting.Dev.test00000012]
+exceptiontype = "builtins.Exception"
 strings = [
     "-DEV",
     "-DEV.001",
 ]
-valid = false
 
 [deformatting.Dev.test00000013]
+exceptiontype = ""
 solution = "-DEV-"
 strings = [
     "-DEV-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000014]
+exceptiontype = ""
 solution = "-DEV."
 strings = [
     "-DEV.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000015]
+exceptiontype = ""
 solution = "-DEV#"
 strings = [
     "-DEV0",
 ]
-valid = true
 
 [deformatting.Dev.test00000016]
+exceptiontype = ""
 solution = "-DEV_"
 strings = [
     "-DEV_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000017]
+exceptiontype = ""
 solution = "-Dev"
 strings = [
     "-Dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000018]
+exceptiontype = ""
 solution = "-Dev-"
 strings = [
     "-Dev-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000019]
+exceptiontype = ""
 solution = "-Dev."
 strings = [
     "-Dev.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000020]
+exceptiontype = ""
 solution = "-Dev#"
 strings = [
     "-Dev0",
 ]
-valid = true
 
 [deformatting.Dev.test00000021]
+exceptiontype = ""
 solution = "-Dev_"
 strings = [
     "-Dev_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000022]
+exceptiontype = ""
 solution = "-deV"
 strings = [
     "-deV",
 ]
-valid = true
 
 [deformatting.Dev.test00000023]
+exceptiontype = ""
 solution = "-deV-"
 strings = [
     "-deV-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000024]
+exceptiontype = ""
 solution = "-deV."
 strings = [
     "-deV.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000025]
+exceptiontype = ""
 solution = "-deV#"
 strings = [
     "-deV0",
 ]
-valid = true
 
 [deformatting.Dev.test00000026]
+exceptiontype = ""
 solution = "-deV_"
 strings = [
     "-deV_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000027]
+exceptiontype = ""
 solution = "-dev"
 strings = [
     "-dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000028]
+exceptiontype = ""
 solution = "-dev-"
 strings = [
     "-dev-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000029]
+exceptiontype = ""
 solution = "-dev."
 strings = [
     "-dev.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000030]
+exceptiontype = ""
 solution = "-dev#"
 strings = [
     "-dev0",
 ]
-valid = true
 
 [deformatting.Dev.test00000031]
+exceptiontype = ""
 solution = "-dev_"
 strings = [
     "-dev_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000032]
+exceptiontype = ""
 solution = ".DEV"
 strings = [
     ".DEV",
 ]
-valid = true
 
 [deformatting.Dev.test00000033]
+exceptiontype = ""
 solution = ".DEV-"
 strings = [
     ".DEV-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000034]
+exceptiontype = ""
 solution = ".DEV."
 strings = [
     ".DEV.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000035]
+exceptiontype = ""
 solution = ".DEV#"
 strings = [
     ".DEV0",
 ]
-valid = true
 
 [deformatting.Dev.test00000036]
+exceptiontype = ""
 solution = ".DEV_"
 strings = [
     ".DEV_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000037]
+exceptiontype = ""
 solution = ".Dev"
 strings = [
     ".Dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000038]
+exceptiontype = ""
 solution = ".Dev-"
 strings = [
     ".Dev-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000039]
+exceptiontype = ""
 solution = ".Dev."
 strings = [
     ".Dev.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000040]
+exceptiontype = ""
 solution = ".Dev#"
 strings = [
     ".Dev0",
 ]
-valid = true
 
 [deformatting.Dev.test00000041]
+exceptiontype = ""
 solution = ".Dev_"
 strings = [
     ".Dev_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000042]
+exceptiontype = ""
 solution = ".deV"
 strings = [
     ".deV",
 ]
-valid = true
 
 [deformatting.Dev.test00000043]
+exceptiontype = ""
 solution = ".deV-"
 strings = [
     ".deV-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000044]
+exceptiontype = ""
 solution = ".deV."
 strings = [
     ".deV.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000045]
+exceptiontype = ""
 solution = ".deV#"
 strings = [
     ".deV0",
 ]
-valid = true
 
 [deformatting.Dev.test00000046]
+exceptiontype = ""
 solution = ".deV_"
 strings = [
     ".deV_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000047]
+exceptiontype = ""
 solution = ".dev"
 strings = [
     ".dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000048]
+exceptiontype = ""
 solution = ".dev-"
 strings = [
     ".dev-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000049]
+exceptiontype = "builtins.Exception"
 strings = [
     ".dev.",
 ]
-valid = false
 
 [deformatting.Dev.test00000050]
+exceptiontype = ""
 solution = ".dev."
 strings = [
     ".dev.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000051]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
 ]
-valid = true
 
 [deformatting.Dev.test00000052]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev1",
     ".dev10",
 ]
-valid = true
 
 [deformatting.Dev.test00000053]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev1",
     ".dev2",
 ]
-valid = true
 
 [deformatting.Dev.test00000054]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev1",
     ".dev42",
 ]
-valid = true
 
 [deformatting.Dev.test00000055]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev1",
     ".dev9",
 ]
-valid = true
 
 [deformatting.Dev.test00000056]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev10",
     ".dev2",
 ]
-valid = true
 
 [deformatting.Dev.test00000057]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev10",
     ".dev42",
 ]
-valid = true
 
 [deformatting.Dev.test00000058]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev10",
     ".dev9",
 ]
-valid = true
 
 [deformatting.Dev.test00000059]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev2",
     ".dev42",
 ]
-valid = true
 
 [deformatting.Dev.test00000060]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev2",
     ".dev9",
 ]
-valid = true
 
 [deformatting.Dev.test00000061]
+exceptiontype = ""
 solution = ""
 strings = [
     ".dev0",
     ".dev42",
     ".dev9",
 ]
-valid = true
 
 [deformatting.Dev.test00000062]
+exceptiontype = ""
 solution = ".dev_"
 strings = [
     ".dev_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000063]
+exceptiontype = "builtins.Exception"
 strings = [
     "1dev",
 ]
-valid = false
 
 [deformatting.Dev.test00000064]
+exceptiontype = ""
 solution = "DEV"
 strings = [
     "DEV",
 ]
-valid = true
 
 [deformatting.Dev.test00000065]
+exceptiontype = ""
 solution = "DEV-#"
 strings = [
     "DEV-0",
 ]
-valid = true
 
 [deformatting.Dev.test00000066]
+exceptiontype = ""
 solution = "DEV-"
 strings = [
     "DEV-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000067]
+exceptiontype = ""
 solution = "DEV.#"
 strings = [
     "DEV.0",
 ]
-valid = true
 
 [deformatting.Dev.test00000068]
+exceptiontype = ""
 solution = "DEV."
 strings = [
     "DEV.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000069]
+exceptiontype = ""
 solution = "DEV#"
 strings = [
     "DEV0",
 ]
-valid = true
 
 [deformatting.Dev.test00000070]
+exceptiontype = ""
 solution = "DEV##"
 strings = [
     "DEV01",
 ]
-valid = true
 
 [deformatting.Dev.test00000071]
+exceptiontype = ""
 solution = "DEV_#"
 strings = [
     "DEV_0",
 ]
-valid = true
 
 [deformatting.Dev.test00000072]
+exceptiontype = ""
 solution = "DEV_"
 strings = [
     "DEV_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000073]
+exceptiontype = ""
 solution = "Dev"
 strings = [
     "Dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000074]
+exceptiontype = ""
 solution = "Dev-#"
 strings = [
     "Dev-0",
 ]
-valid = true
 
 [deformatting.Dev.test00000075]
+exceptiontype = ""
 solution = "Dev-"
 strings = [
     "Dev-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000076]
+exceptiontype = ""
 solution = "Dev."
 strings = [
     "Dev.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000077]
+exceptiontype = ""
 solution = "Dev#"
 strings = [
     "Dev0",
 ]
-valid = true
 
 [deformatting.Dev.test00000078]
+exceptiontype = ""
 solution = "Dev##"
 strings = [
     "Dev01",
 ]
-valid = true
 
 [deformatting.Dev.test00000079]
+exceptiontype = ""
 solution = "Dev_"
 strings = [
     "Dev_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000080]
+exceptiontype = ""
 solution = "_DEV"
 strings = [
     "_DEV",
 ]
-valid = true
 
 [deformatting.Dev.test00000081]
+exceptiontype = ""
 solution = "_Dev"
 strings = [
     "_Dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000082]
+exceptiontype = ""
 solution = "_deV"
 strings = [
     "_deV",
 ]
-valid = true
 
 [deformatting.Dev.test00000083]
+exceptiontype = ""
 solution = "_dev"
 strings = [
     "_dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000084]
+exceptiontype = "builtins.Exception"
 strings = [
     "d",
 ]
-valid = false
 
 [deformatting.Dev.test00000085]
+exceptiontype = "builtins.Exception"
 strings = [
     "de",
 ]
-valid = false
 
 [deformatting.Dev.test00000086]
+exceptiontype = ""
 solution = "deV"
 strings = [
     "deV",
 ]
-valid = true
 
 [deformatting.Dev.test00000087]
+exceptiontype = ""
 solution = "deV_"
 strings = [
     "deV",
     "deV_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000088]
+exceptiontype = ""
 solution = "deV-"
 strings = [
     "deV-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000089]
+exceptiontype = ""
 solution = "deV."
 strings = [
     "deV.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000090]
+exceptiontype = ""
 solution = "deV#"
 strings = [
     "deV0",
 ]
-valid = true
 
 [deformatting.Dev.test00000091]
+exceptiontype = ""
 solution = "deV_"
 strings = [
     "deV_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000092]
+exceptiontype = ""
 solution = "dev"
 strings = [
     "dev",
 ]
-valid = true
 
 [deformatting.Dev.test00000093]
+exceptiontype = "builtins.Exception"
 strings = [
     "dev",
     "deV_1",
 ]
-valid = false
 
 [deformatting.Dev.test00000094]
+exceptiontype = ""
 solution = "dev."
 strings = [
     "dev",
     "dev.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000095]
+exceptiontype = "builtins.Exception"
 strings = [
     "dev-",
 ]
-valid = false
 
 [deformatting.Dev.test00000096]
+exceptiontype = ""
 solution = "dev-"
 strings = [
     "dev-1",
 ]
-valid = true
 
 [deformatting.Dev.test00000097]
+exceptiontype = "builtins.Exception"
 strings = [
     "dev.",
 ]
-valid = false
 
 [deformatting.Dev.test00000098]
+exceptiontype = ""
 solution = "dev."
 strings = [
     "dev.1",
 ]
-valid = true
 
 [deformatting.Dev.test00000099]
+exceptiontype = ""
 solution = "dev#"
 strings = [
     "dev0",
 ]
-valid = true
 
 [deformatting.Dev.test00000100]
+exceptiontype = "builtins.Exception"
 strings = [
     "dev1x",
 ]
-valid = false
 
 [deformatting.Dev.test00000101]
+exceptiontype = "builtins.Exception"
 strings = [
     "dev_",
 ]
-valid = false
 
 [deformatting.Dev.test00000102]
+exceptiontype = ""
 solution = "dev_"
 strings = [
     "dev_1",
 ]
-valid = true
 
 [deformatting.Dev.test00000103]
+exceptiontype = "builtins.Exception"
 strings = [
     "devx",
 ]
-valid = false
 
 [deformatting.Local.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Local.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "+",
 ]
-valid = false
 
 [deformatting.Local.test00000002]
+exceptiontype = "builtins.Exception"
 strings = [
     ".abc",
 ]
-valid = false
 
 [deformatting.Local.test00000003]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
 ]
-valid = true
 
 [deformatting.Local.test00000004]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.1",
 ]
-valid = true
 
 [deformatting.Local.test00000005]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.10",
 ]
-valid = true
 
 [deformatting.Local.test00000006]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.2",
 ]
-valid = true
 
 [deformatting.Local.test00000007]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.9",
 ]
-valid = true
 
 [deformatting.Local.test00000008]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.a1",
 ]
-valid = true
 
 [deformatting.Local.test00000009]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.ab12",
 ]
-valid = true
 
 [deformatting.Local.test00000010]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.abc",
 ]
-valid = true
 
 [deformatting.Local.test00000011]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.foo",
 ]
-valid = true
 
 [deformatting.Local.test00000012]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.x",
 ]
-valid = true
 
 [deformatting.Local.test00000013]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0.0",
     "0.x9",
 ]
-valid = true
 
 [deformatting.Local.test00000014]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001",
 ]
-valid = false
 
 [deformatting.Local.test00000015]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-0",
 ]
-valid = false
 
 [deformatting.Local.test00000016]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-001",
 ]
-valid = false
 
 [deformatting.Local.test00000017]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-002-003",
 ]
-valid = false
 
 [deformatting.Local.test00000018]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-002.003",
 ]
-valid = false
 
 [deformatting.Local.test00000019]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-002_003",
 ]
-valid = false
 
 [deformatting.Local.test00000020]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-01",
 ]
-valid = false
 
 [deformatting.Local.test00000021]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-1",
 ]
-valid = false
 
 [deformatting.Local.test00000022]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-10",
 ]
-valid = false
 
 [deformatting.Local.test00000023]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "001-2",
 ]
-valid = false
 
 [deformatting.Local.test00000024]
+exceptiontype = ""
 solution = "-"
 strings = [
     "0-0",
 ]
-valid = true
 
 [deformatting.Local.test00000025]
+exceptiontype = ""
 solution = "-###"
 strings = [
     "0-001",
 ]
-valid = true
 
 [deformatting.Local.test00000026]
+exceptiontype = ""
 solution = "-##"
 strings = [
     "0-01",
 ]
-valid = true
 
 [deformatting.Local.test00000027]
+exceptiontype = ""
 solution = "-^"
 strings = [
     "0-A1",
 ]
-valid = true
 
 [deformatting.Local.test00000028]
+exceptiontype = ""
 solution = "-^^"
 strings = [
     "0-AB12",
 ]
-valid = true
 
 [deformatting.Local.test00000029]
+exceptiontype = ""
 solution = "-^^^"
 strings = [
     "0-ABC",
 ]
-valid = true
 
 [deformatting.Local.test00000030]
+exceptiontype = ""
 solution = "-^~^"
 strings = [
     "0-AbC",
 ]
-valid = true
 
 [deformatting.Local.test00000031]
+exceptiontype = ""
 solution = ".###"
 strings = [
     "0.001",
 ]
-valid = true
 
 [deformatting.Local.test00000032]
+exceptiontype = ""
 solution = ".##"
 strings = [
     "0.01",
 ]
-valid = true
 
 [deformatting.Local.test00000033]
+exceptiontype = ""
 solution = ".^"
 strings = [
     "0.A1",
 ]
-valid = true
 
 [deformatting.Local.test00000034]
+exceptiontype = ""
 solution = ".^^"
 strings = [
     "0.AB12",
 ]
-valid = true
 
 [deformatting.Local.test00000035]
+exceptiontype = ""
 solution = ".^^^"
 strings = [
     "0.ABC",
 ]
-valid = true
 
 [deformatting.Local.test00000036]
+exceptiontype = ""
 solution = ".^~^"
 strings = [
     "0.AbC",
 ]
-valid = true
 
 [deformatting.Local.test00000037]
+exceptiontype = ""
 solution = "###"
 strings = [
     "001",
 ]
-valid = true
 
 [deformatting.Local.test00000038]
+exceptiontype = ""
 solution = "###-"
 strings = [
     "001-0",
 ]
-valid = true
 
 [deformatting.Local.test00000039]
+exceptiontype = ""
 solution = "###-^"
 strings = [
     "001-A1",
 ]
-valid = true
 
 [deformatting.Local.test00000040]
+exceptiontype = ""
 solution = "###_"
 strings = [
     "001_0",
 ]
-valid = true
 
 [deformatting.Local.test00000041]
+exceptiontype = ""
 solution = "##"
 strings = [
     "01",
 ]
-valid = true
 
 [deformatting.Local.test00000042]
+exceptiontype = ""
 solution = "##-"
 strings = [
     "01-0",
 ]
-valid = true
 
 [deformatting.Local.test00000043]
+exceptiontype = ""
 solution = "##-^"
 strings = [
     "01-A1",
 ]
-valid = true
 
 [deformatting.Local.test00000044]
+exceptiontype = ""
 solution = "##.^"
 strings = [
     "01.A1",
 ]
-valid = true
 
 [deformatting.Local.test00000045]
+exceptiontype = ""
 solution = "##_"
 strings = [
     "01_0",
 ]
-valid = true
 
 [deformatting.Local.test00000046]
+exceptiontype = ""
 solution = "##_^"
 strings = [
     "01_A1",
 ]
-valid = true
 
 [deformatting.Local.test00000047]
+exceptiontype = ""
 solution = "_"
 strings = [
     "0_0",
 ]
-valid = true
 
 [deformatting.Local.test00000048]
+exceptiontype = ""
 solution = "_###"
 strings = [
     "0_001",
 ]
-valid = true
 
 [deformatting.Local.test00000049]
+exceptiontype = ""
 solution = "_##"
 strings = [
     "0_01",
 ]
-valid = true
 
 [deformatting.Local.test00000050]
+exceptiontype = ""
 solution = "_^"
 strings = [
     "0_A1",
 ]
-valid = true
 
 [deformatting.Local.test00000051]
+exceptiontype = ""
 solution = "_^^"
 strings = [
     "0_AB12",
 ]
-valid = true
 
 [deformatting.Local.test00000052]
+exceptiontype = ""
 solution = "_^^^"
 strings = [
     "0_ABC",
 ]
-valid = true
 
 [deformatting.Local.test00000053]
+exceptiontype = ""
 solution = "_^~^"
 strings = [
     "0_AbC",
 ]
-valid = true
 
 [deformatting.Local.test00000054]
+exceptiontype = ""
 solution = "--"
 strings = [
     "1-2-3",
 ]
-valid = true
 
 [deformatting.Local.test00000055]
+exceptiontype = ""
 solution = "-_"
 strings = [
     "1-2_3",
 ]
-valid = true
 
 [deformatting.Local.test00000056]
+exceptiontype = ""
 solution = ".-"
 strings = [
     "1.2-3",
 ]
-valid = true
 
 [deformatting.Local.test00000057]
+exceptiontype = ""
 solution = "._"
 strings = [
     "1.2_3",
 ]
-valid = true
 
 [deformatting.Local.test00000058]
+exceptiontype = ""
 solution = "_-"
 strings = [
     "1_2-3",
 ]
-valid = true
 
 [deformatting.Local.test00000059]
+exceptiontype = ""
 solution = "__"
 strings = [
     "1_2_3",
 ]
-valid = true
 
 [deformatting.Local.test00000060]
+exceptiontype = ""
 solution = "^"
 strings = [
     "A1",
 ]
-valid = true
 
 [deformatting.Local.test00000061]
+exceptiontype = ""
 solution = "^-"
 strings = [
     "A1-0",
 ]
-valid = true
 
 [deformatting.Local.test00000062]
+exceptiontype = ""
 solution = "^-##"
 strings = [
     "A1-01",
 ]
-valid = true
 
 [deformatting.Local.test00000063]
+exceptiontype = ""
 solution = "^-^"
 strings = [
     "A1-A1",
 ]
-valid = true
 
 [deformatting.Local.test00000064]
+exceptiontype = ""
 solution = "^-^^"
 strings = [
     "A1-AB12",
 ]
-valid = true
 
 [deformatting.Local.test00000065]
+exceptiontype = ""
 solution = "^--^"
 strings = [
     "A1-b2-C3",
 ]
-valid = true
 
 [deformatting.Local.test00000066]
+exceptiontype = ""
 solution = "^-.^"
 strings = [
     "A1-b2.C3",
 ]
-valid = true
 
 [deformatting.Local.test00000067]
+exceptiontype = ""
 solution = "^-_^"
 strings = [
     "A1-b2_C3",
 ]
-valid = true
 
 [deformatting.Local.test00000068]
+exceptiontype = ""
 solution = "^.##"
 strings = [
     "A1.01",
 ]
-valid = true
 
 [deformatting.Local.test00000069]
+exceptiontype = ""
 solution = "^.^"
 strings = [
     "A1.A1",
 ]
-valid = true
 
 [deformatting.Local.test00000070]
+exceptiontype = ""
 solution = "^.^^"
 strings = [
     "A1.AB12",
 ]
-valid = true
 
 [deformatting.Local.test00000071]
+exceptiontype = ""
 solution = "^.-^"
 strings = [
     "A1.b2-C3",
 ]
-valid = true
 
 [deformatting.Local.test00000072]
+exceptiontype = ""
 solution = "^..^"
 strings = [
     "A1.b2.C3",
 ]
-valid = true
 
 [deformatting.Local.test00000073]
+exceptiontype = ""
 solution = "^._^"
 strings = [
     "A1.b2_C3",
 ]
-valid = true
 
 [deformatting.Local.test00000074]
+exceptiontype = ""
 solution = "^_"
 strings = [
     "A1_0",
 ]
-valid = true
 
 [deformatting.Local.test00000075]
+exceptiontype = ""
 solution = "^_##"
 strings = [
     "A1_01",
 ]
-valid = true
 
 [deformatting.Local.test00000076]
+exceptiontype = ""
 solution = "^_^"
 strings = [
     "A1_A1",
 ]
-valid = true
 
 [deformatting.Local.test00000077]
+exceptiontype = ""
 solution = "^_^^"
 strings = [
     "A1_AB12",
 ]
-valid = true
 
 [deformatting.Local.test00000078]
+exceptiontype = ""
 solution = "^_-^"
 strings = [
     "A1_b2-C3",
 ]
-valid = true
 
 [deformatting.Local.test00000079]
+exceptiontype = ""
 solution = "^_.^"
 strings = [
     "A1_b2.C3",
 ]
-valid = true
 
 [deformatting.Local.test00000080]
+exceptiontype = ""
 solution = "^__^"
 strings = [
     "A1_b2_C3",
 ]
-valid = true
 
 [deformatting.Local.test00000081]
+exceptiontype = ""
 solution = "^^"
 strings = [
     "AB12",
 ]
-valid = true
 
 [deformatting.Local.test00000082]
+exceptiontype = ""
 solution = "^^-"
 strings = [
     "AB12-0",
 ]
-valid = true
 
 [deformatting.Local.test00000083]
+exceptiontype = ""
 solution = "^^-^"
 strings = [
     "AB12-A1",
 ]
-valid = true
 
 [deformatting.Local.test00000084]
+exceptiontype = ""
 solution = "^^.^"
 strings = [
     "AB12.A1",
 ]
-valid = true
 
 [deformatting.Local.test00000085]
+exceptiontype = ""
 solution = "^^_"
 strings = [
     "AB12_0",
 ]
-valid = true
 
 [deformatting.Local.test00000086]
+exceptiontype = ""
 solution = "^^_^"
 strings = [
     "AB12_A1",
 ]
-valid = true
 
 [deformatting.Local.test00000087]
+exceptiontype = ""
 solution = "^^^"
 strings = [
     "ABC",
 ]
-valid = true
 
 [deformatting.Local.test00000088]
+exceptiontype = ""
 solution = "^^^-"
 strings = [
     "ABC-0",
 ]
-valid = true
 
 [deformatting.Local.test00000089]
+exceptiontype = ""
 solution = "^^^_"
 strings = [
     "ABC_0",
 ]
-valid = true
 
 [deformatting.Local.test00000090]
+exceptiontype = ""
 solution = "^~^"
 strings = [
     "AbC",
 ]
-valid = true
 
 [deformatting.Local.test00000091]
+exceptiontype = ""
 solution = "^~^-"
 strings = [
     "AbC-0",
 ]
-valid = true
 
 [deformatting.Local.test00000092]
+exceptiontype = ""
 solution = "^~^_"
 strings = [
     "AbC_0",
 ]
-valid = true
 
 [deformatting.Local.test00000093]
+exceptiontype = "builtins.Exception"
 strings = [
     "a$b",
 ]
-valid = false
 
 [deformatting.Local.test00000094]
+exceptiontype = "builtins.Exception"
 strings = [
     "a+b",
 ]
-valid = false
 
 [deformatting.Local.test00000095]
+exceptiontype = "builtins.Exception"
 strings = [
     "a--b",
 ]
-valid = false
 
 [deformatting.Local.test00000096]
+exceptiontype = "builtins.Exception"
 strings = [
     "a..b",
 ]
-valid = false
 
 [deformatting.Local.test00000097]
+exceptiontype = "builtins.Exception"
 strings = [
     "a/b",
 ]
-valid = false
 
 [deformatting.Local.test00000098]
+exceptiontype = "builtins.Exception"
 strings = [
     "a__b",
 ]
-valid = false
 
 [deformatting.Local.test00000099]
+exceptiontype = "builtins.Exception"
 strings = [
     "abc+def",
 ]
-valid = false
 
 [deformatting.Local.test00000100]
+exceptiontype = "builtins.Exception"
 strings = [
     "abc.",
 ]
-valid = false
 
 [deformatting.Local.test00000101]
+exceptiontype = ""
 solution = "~~^^"
 strings = [
     "qwERty",
     "0.0.0",
 ]
-valid = true
 
 [deformatting.Local.test00000102]
+exceptiontype = ""
 solution = "####~~^^_~^~^"
 strings = [
     "qwERty",
     "0123_aBcD",
 ]
-valid = true
 
 [deformatting.Post.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Post.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "-",
 ]
-valid = false
 
 [deformatting.Post.test00000002]
+exceptiontype = "builtins.Exception"
 strings = [
     "--1",
 ]
-valid = false
 
 [deformatting.Post.test00000003]
+exceptiontype = ""
 solution = "-"
 strings = [
     "-0",
 ]
-valid = true
 
 [deformatting.Post.test00000004]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-001",
 ]
-valid = false
 
 [deformatting.Post.test00000005]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-01",
 ]
-valid = false
 
 [deformatting.Post.test00000006]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST",
 ]
-valid = false
 
 [deformatting.Post.test00000007]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST-0",
 ]
-valid = false
 
 [deformatting.Post.test00000008]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST-001",
 ]
-valid = false
 
 [deformatting.Post.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST-007",
 ]
-valid = false
 
 [deformatting.Post.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST-01",
 ]
-valid = false
 
 [deformatting.Post.test00000011]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST-02",
 ]
-valid = false
 
 [deformatting.Post.test00000012]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST-099",
 ]
-valid = false
 
 [deformatting.Post.test00000013]
+exceptiontype = "builtins.Exception"
 strings = [
     "-0",
     "-POST-1",
 ]
-valid = false
 
 [deformatting.Post.test00000014]
+exceptiontype = ""
 solution = "-###"
 strings = [
     "-001",
 ]
-valid = true
 
 [deformatting.Post.test00000015]
+exceptiontype = ""
 solution = "-##"
 strings = [
     "-01",
 ]
-valid = true
 
 [deformatting.Post.test00000016]
+exceptiontype = ""
 solution = "-R"
 strings = [
     "-R",
 ]
-valid = true
 
 [deformatting.Post.test00000017]
+exceptiontype = ""
 solution = "-R-#"
 strings = [
     "-R-0",
 ]
-valid = true
 
 [deformatting.Post.test00000018]
+exceptiontype = ""
 solution = "-R-"
 strings = [
     "-R-1",
 ]
-valid = true
 
 [deformatting.Post.test00000019]
+exceptiontype = ""
 solution = "-R.#"
 strings = [
     "-R.0",
 ]
-valid = true
 
 [deformatting.Post.test00000020]
+exceptiontype = ""
 solution = "-R."
 strings = [
     "-R.1",
 ]
-valid = true
 
 [deformatting.Post.test00000021]
+exceptiontype = ""
 solution = "-R#"
 strings = [
     "-R0",
 ]
-valid = true
 
 [deformatting.Post.test00000022]
+exceptiontype = ""
 solution = "-R##"
 strings = [
     "-R01",
 ]
-valid = true
 
 [deformatting.Post.test00000023]
+exceptiontype = ""
 solution = "-REV"
 strings = [
     "-REV",
 ]
-valid = true
 
 [deformatting.Post.test00000024]
+exceptiontype = ""
 solution = "-R_#"
 strings = [
     "-R_0",
 ]
-valid = true
 
 [deformatting.Post.test00000025]
+exceptiontype = ""
 solution = "-R_"
 strings = [
     "-R_1",
 ]
-valid = true
 
 [deformatting.Post.test00000026]
+exceptiontype = ""
 solution = "-Rev"
 strings = [
     "-Rev",
 ]
-valid = true
 
 [deformatting.Post.test00000027]
+exceptiontype = ""
 solution = "-r"
 strings = [
     "-r",
 ]
-valid = true
 
 [deformatting.Post.test00000028]
+exceptiontype = ""
 solution = "-r-#"
 strings = [
     "-r-0",
 ]
-valid = true
 
 [deformatting.Post.test00000029]
+exceptiontype = ""
 solution = "-r-"
 strings = [
     "-r-1",
 ]
-valid = true
 
 [deformatting.Post.test00000030]
+exceptiontype = ""
 solution = "-r.#"
 strings = [
     "-r.0",
 ]
-valid = true
 
 [deformatting.Post.test00000031]
+exceptiontype = ""
 solution = "-r."
 strings = [
     "-r.1",
 ]
-valid = true
 
 [deformatting.Post.test00000032]
+exceptiontype = ""
 solution = "-r#"
 strings = [
     "-r0",
 ]
-valid = true
 
 [deformatting.Post.test00000033]
+exceptiontype = ""
 solution = "-r##"
 strings = [
     "-r01",
 ]
-valid = true
 
 [deformatting.Post.test00000034]
+exceptiontype = ""
 solution = "-r_#"
 strings = [
     "-r_0",
 ]
-valid = true
 
 [deformatting.Post.test00000035]
+exceptiontype = ""
 solution = "-r_"
 strings = [
     "-r_1",
 ]
-valid = true
 
 [deformatting.Post.test00000036]
+exceptiontype = ""
 solution = "-rev"
 strings = [
     "-rev",
 ]
-valid = true
 
 [deformatting.Post.test00000037]
+exceptiontype = ""
 solution = ".R"
 strings = [
     ".R",
 ]
-valid = true
 
 [deformatting.Post.test00000038]
+exceptiontype = ""
 solution = ".R-#"
 strings = [
     ".R-0",
 ]
-valid = true
 
 [deformatting.Post.test00000039]
+exceptiontype = ""
 solution = ".R-"
 strings = [
     ".R-1",
 ]
-valid = true
 
 [deformatting.Post.test00000040]
+exceptiontype = ""
 solution = ".R.#"
 strings = [
     ".R.0",
 ]
-valid = true
 
 [deformatting.Post.test00000041]
+exceptiontype = ""
 solution = ".R."
 strings = [
     ".R.1",
 ]
-valid = true
 
 [deformatting.Post.test00000042]
+exceptiontype = ""
 solution = ".R#"
 strings = [
     ".R0",
 ]
-valid = true
 
 [deformatting.Post.test00000043]
+exceptiontype = ""
 solution = ".R##"
 strings = [
     ".R01",
 ]
-valid = true
 
 [deformatting.Post.test00000044]
+exceptiontype = ""
 solution = ".REV"
 strings = [
     ".REV",
 ]
-valid = true
 
 [deformatting.Post.test00000045]
+exceptiontype = ""
 solution = ".R_"
 strings = [
     ".R_1",
 ]
-valid = true
 
 [deformatting.Post.test00000046]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
 ]
-valid = true
 
 [deformatting.Post.test00000047]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post1",
     ".post10",
 ]
-valid = true
 
 [deformatting.Post.test00000048]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post1",
     ".post2",
 ]
-valid = true
 
 [deformatting.Post.test00000049]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post1",
     ".post42",
 ]
-valid = true
 
 [deformatting.Post.test00000050]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post1",
     ".post9",
 ]
-valid = true
 
 [deformatting.Post.test00000051]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post10",
     ".post2",
 ]
-valid = true
 
 [deformatting.Post.test00000052]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post10",
     ".post42",
 ]
-valid = true
 
 [deformatting.Post.test00000053]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post10",
     ".post9",
 ]
-valid = true
 
 [deformatting.Post.test00000054]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post2",
     ".post42",
 ]
-valid = true
 
 [deformatting.Post.test00000055]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post2",
     ".post9",
 ]
-valid = true
 
 [deformatting.Post.test00000056]
+exceptiontype = ""
 solution = ""
 strings = [
     ".post0",
     ".post42",
     ".post9",
 ]
-valid = true
 
 [deformatting.Post.test00000057]
+exceptiontype = ""
 solution = ".r"
 strings = [
     ".r",
 ]
-valid = true
 
 [deformatting.Post.test00000058]
+exceptiontype = ""
 solution = ".r-"
 strings = [
     ".r-1",
 ]
-valid = true
 
 [deformatting.Post.test00000059]
+exceptiontype = ""
 solution = ".r."
 strings = [
     ".r.1",
 ]
-valid = true
 
 [deformatting.Post.test00000060]
+exceptiontype = ""
 solution = ".r#"
 strings = [
     ".r0",
 ]
-valid = true
 
 [deformatting.Post.test00000061]
+exceptiontype = ""
 solution = ".r_"
 strings = [
     ".r_1",
 ]
-valid = true
 
 [deformatting.Post.test00000062]
+exceptiontype = ""
 solution = "R"
 strings = [
     "R",
 ]
-valid = true
 
 [deformatting.Post.test00000063]
+exceptiontype = ""
 solution = "R-#"
 strings = [
     "R-0",
 ]
-valid = true
 
 [deformatting.Post.test00000064]
+exceptiontype = ""
 solution = "R-"
 strings = [
     "R-1",
 ]
-valid = true
 
 [deformatting.Post.test00000065]
+exceptiontype = ""
 solution = "R.#"
 strings = [
     "R.0",
 ]
-valid = true
 
 [deformatting.Post.test00000066]
+exceptiontype = ""
 solution = "R."
 strings = [
     "R.1",
 ]
-valid = true
 
 [deformatting.Post.test00000067]
+exceptiontype = ""
 solution = "R#"
 strings = [
     "R0",
 ]
-valid = true
 
 [deformatting.Post.test00000068]
+exceptiontype = ""
 solution = "R##"
 strings = [
     "R01",
 ]
-valid = true
 
 [deformatting.Post.test00000069]
+exceptiontype = ""
 solution = "REV"
 strings = [
     "REV",
 ]
-valid = true
 
 [deformatting.Post.test00000070]
+exceptiontype = ""
 solution = "R_#"
 strings = [
     "R_0",
 ]
-valid = true
 
 [deformatting.Post.test00000071]
+exceptiontype = ""
 solution = "R_"
 strings = [
     "R_1",
 ]
-valid = true
 
 [deformatting.Post.test00000072]
+exceptiontype = ""
 solution = "Rev"
 strings = [
     "Rev",
 ]
-valid = true
 
 [deformatting.Post.test00000073]
+exceptiontype = ""
 solution = "_R"
 strings = [
     "_R",
 ]
-valid = true
 
 [deformatting.Post.test00000074]
+exceptiontype = ""
 solution = "_R-"
 strings = [
     "_R-1",
 ]
-valid = true
 
 [deformatting.Post.test00000075]
+exceptiontype = ""
 solution = "_R."
 strings = [
     "_R.1",
 ]
-valid = true
 
 [deformatting.Post.test00000076]
+exceptiontype = ""
 solution = "_R#"
 strings = [
     "_R0",
 ]
-valid = true
 
 [deformatting.Post.test00000077]
+exceptiontype = ""
 solution = "_R_"
 strings = [
     "_R_1",
 ]
-valid = true
 
 [deformatting.Post.test00000078]
+exceptiontype = ""
 solution = "_r"
 strings = [
     "_r",
 ]
-valid = true
 
 [deformatting.Post.test00000079]
+exceptiontype = ""
 solution = "_r-"
 strings = [
     "_r-1",
 ]
-valid = true
 
 [deformatting.Post.test00000080]
+exceptiontype = ""
 solution = "_r."
 strings = [
     "_r.1",
 ]
-valid = true
 
 [deformatting.Post.test00000081]
+exceptiontype = ""
 solution = "_r#"
 strings = [
     "_r0",
 ]
-valid = true
 
 [deformatting.Post.test00000082]
+exceptiontype = ""
 solution = "_r_"
 strings = [
     "_r_1",
 ]
-valid = true
 
 [deformatting.Post.test00000083]
+exceptiontype = "builtins.Exception"
 strings = [
     "p",
 ]
-valid = false
 
 [deformatting.Post.test00000084]
+exceptiontype = "builtins.Exception"
 strings = [
     "po",
 ]
-valid = false
 
 [deformatting.Post.test00000085]
+exceptiontype = "builtins.Exception"
 strings = [
     "post-",
 ]
-valid = false
 
 [deformatting.Post.test00000086]
+exceptiontype = "builtins.Exception"
 strings = [
     "post.",
 ]
-valid = false
 
 [deformatting.Post.test00000087]
+exceptiontype = "builtins.Exception"
 strings = [
     "post_",
 ]
-valid = false
 
 [deformatting.Post.test00000088]
+exceptiontype = "builtins.Exception"
 strings = [
     "postx",
 ]
-valid = false
 
 [deformatting.Post.test00000089]
+exceptiontype = ""
 solution = "r"
 strings = [
     "r",
 ]
-valid = true
 
 [deformatting.Post.test00000090]
+exceptiontype = ""
 solution = "r."
 strings = [
     "r",
     "r.1",
 ]
-valid = true
 
 [deformatting.Post.test00000091]
+exceptiontype = ""
 solution = "r_"
 strings = [
     "r",
     "r_1",
 ]
-valid = true
 
 [deformatting.Post.test00000092]
+exceptiontype = ""
 solution = "r-#"
 strings = [
     "r-0",
 ]
-valid = true
 
 [deformatting.Post.test00000093]
+exceptiontype = ""
 solution = "r-"
 strings = [
     "r-1",
 ]
-valid = true
 
 [deformatting.Post.test00000094]
+exceptiontype = "builtins.Exception"
 strings = [
     "r.",
 ]
-valid = false
 
 [deformatting.Post.test00000095]
+exceptiontype = ""
 solution = "r.#"
 strings = [
     "r.0",
 ]
-valid = true
 
 [deformatting.Post.test00000096]
+exceptiontype = ""
 solution = "r."
 strings = [
     "r.1",
 ]
-valid = true
 
 [deformatting.Post.test00000097]
+exceptiontype = ""
 solution = "r#"
 strings = [
     "r0",
 ]
-valid = true
 
 [deformatting.Post.test00000098]
+exceptiontype = ""
 solution = "r##"
 strings = [
     "r01",
 ]
-valid = true
 
 [deformatting.Post.test00000099]
+exceptiontype = ""
 solution = "r_#"
 strings = [
     "r_0",
 ]
-valid = true
 
 [deformatting.Post.test00000100]
+exceptiontype = ""
 solution = "r_"
 strings = [
     "r_1",
 ]
-valid = true
 
 [deformatting.Post.test00000101]
+exceptiontype = ""
 solution = "rev"
 strings = [
     "rev",
 ]
-valid = true
 
 [deformatting.Post.test00000102]
+exceptiontype = "builtins.Exception"
 strings = [
     "rev.",
 ]
-valid = false
 
 [deformatting.Pre.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Pre.test00000001]
+exceptiontype = ""
 solution = "-A"
 strings = [
     "-A",
 ]
-valid = true
 
 [deformatting.Pre.test00000002]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A-0",
 ]
-valid = false
 
 [deformatting.Pre.test00000003]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A-001",
 ]
-valid = false
 
 [deformatting.Pre.test00000004]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A-007",
 ]
-valid = false
 
 [deformatting.Pre.test00000005]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A-01",
 ]
-valid = false
 
 [deformatting.Pre.test00000006]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A-02",
 ]
-valid = false
 
 [deformatting.Pre.test00000007]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A-099",
 ]
-valid = false
 
 [deformatting.Pre.test00000008]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A.0",
 ]
-valid = false
 
 [deformatting.Pre.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A.001",
 ]
-valid = false
 
 [deformatting.Pre.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A.007",
 ]
-valid = false
 
 [deformatting.Pre.test00000011]
+exceptiontype = "builtins.Exception"
 strings = [
     "-A",
     "-A.01",
 ]
-valid = false
 
 [deformatting.Pre.test00000012]
+exceptiontype = ""
 solution = "-A-"
 strings = [
     "-A-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000013]
+exceptiontype = ""
 solution = "-A."
 strings = [
     "-A.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000014]
+exceptiontype = ""
 solution = "-A#"
 strings = [
     "-A0",
 ]
-valid = true
 
 [deformatting.Pre.test00000015]
+exceptiontype = ""
 solution = "-A_"
 strings = [
     "-A_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000016]
+exceptiontype = ""
 solution = "-B"
 strings = [
     "-B",
 ]
-valid = true
 
 [deformatting.Pre.test00000017]
+exceptiontype = ""
 solution = "-B-"
 strings = [
     "-B-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000018]
+exceptiontype = ""
 solution = "-B."
 strings = [
     "-B.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000019]
+exceptiontype = ""
 solution = "-B#"
 strings = [
     "-B0",
 ]
-valid = true
 
 [deformatting.Pre.test00000020]
+exceptiontype = ""
 solution = "-B_"
 strings = [
     "-B_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000021]
+exceptiontype = ""
 solution = "-C"
 strings = [
     "-C",
 ]
-valid = true
 
 [deformatting.Pre.test00000022]
+exceptiontype = ""
 solution = "-C-"
 strings = [
     "-C-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000023]
+exceptiontype = ""
 solution = "-C."
 strings = [
     "-C.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000024]
+exceptiontype = ""
 solution = "-C#"
 strings = [
     "-C0",
 ]
-valid = true
 
 [deformatting.Pre.test00000025]
+exceptiontype = ""
 solution = "-C_"
 strings = [
     "-C_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000026]
+exceptiontype = ""
 solution = "-RC"
 strings = [
     "-RC",
 ]
-valid = true
 
 [deformatting.Pre.test00000027]
+exceptiontype = ""
 solution = "-a"
 strings = [
     "-a",
 ]
-valid = true
 
 [deformatting.Pre.test00000028]
+exceptiontype = ""
 solution = "-a-"
 strings = [
     "-a-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000029]
+exceptiontype = ""
 solution = "-a."
 strings = [
     "-a.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000030]
+exceptiontype = ""
 solution = "-a#"
 strings = [
     "-a0",
 ]
-valid = true
 
 [deformatting.Pre.test00000031]
+exceptiontype = ""
 solution = "-a_"
 strings = [
     "-a_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000032]
+exceptiontype = ""
 solution = "-b"
 strings = [
     "-b",
 ]
-valid = true
 
 [deformatting.Pre.test00000033]
+exceptiontype = ""
 solution = "-b-"
 strings = [
     "-b-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000034]
+exceptiontype = ""
 solution = "-b."
 strings = [
     "-b.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000035]
+exceptiontype = ""
 solution = "-b#"
 strings = [
     "-b0",
 ]
-valid = true
 
 [deformatting.Pre.test00000036]
+exceptiontype = ""
 solution = "-b_"
 strings = [
     "-b_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000037]
+exceptiontype = ""
 solution = "-c"
 strings = [
     "-c",
 ]
-valid = true
 
 [deformatting.Pre.test00000038]
+exceptiontype = ""
 solution = ".A"
 strings = [
     ".A",
 ]
-valid = true
 
 [deformatting.Pre.test00000039]
+exceptiontype = ""
 solution = ".B"
 strings = [
     ".B",
 ]
-valid = true
 
 [deformatting.Pre.test00000040]
+exceptiontype = ""
 solution = ".C"
 strings = [
     ".C",
 ]
-valid = true
 
 [deformatting.Pre.test00000041]
+exceptiontype = ""
 solution = ".a"
 strings = [
     ".a",
 ]
-valid = true
 
 [deformatting.Pre.test00000042]
+exceptiontype = ""
 solution = ".b"
 strings = [
     ".b",
 ]
-valid = true
 
 [deformatting.Pre.test00000043]
+exceptiontype = ""
 solution = ".c"
 strings = [
     ".c",
 ]
-valid = true
 
 [deformatting.Pre.test00000044]
+exceptiontype = "builtins.Exception"
 strings = [
     "1a",
 ]
-valid = false
 
 [deformatting.Pre.test00000045]
+exceptiontype = ""
 solution = "A"
 strings = [
     "A",
 ]
-valid = true
 
 [deformatting.Pre.test00000046]
+exceptiontype = ""
 solution = "A-"
 strings = [
     "A-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000047]
+exceptiontype = ""
 solution = "A."
 strings = [
     "A.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000048]
+exceptiontype = ""
 solution = "A#"
 strings = [
     "A0",
 ]
-valid = true
 
 [deformatting.Pre.test00000049]
+exceptiontype = ""
 solution = "A_"
 strings = [
     "A_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000050]
+exceptiontype = ""
 solution = "B"
 strings = [
     "B",
 ]
-valid = true
 
 [deformatting.Pre.test00000051]
+exceptiontype = ""
 solution = "B-"
 strings = [
     "B-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000052]
+exceptiontype = ""
 solution = "B."
 strings = [
     "B.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000053]
+exceptiontype = ""
 solution = "B#"
 strings = [
     "B0",
 ]
-valid = true
 
 [deformatting.Pre.test00000054]
+exceptiontype = ""
 solution = "B_"
 strings = [
     "B_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000055]
+exceptiontype = ""
 solution = "C"
 strings = [
     "C",
 ]
-valid = true
 
 [deformatting.Pre.test00000056]
+exceptiontype = ""
 solution = "C-"
 strings = [
     "C-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000057]
+exceptiontype = ""
 solution = "C."
 strings = [
     "C.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000058]
+exceptiontype = ""
 solution = "C#"
 strings = [
     "C0",
 ]
-valid = true
 
 [deformatting.Pre.test00000059]
+exceptiontype = ""
 solution = "C_"
 strings = [
     "C_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000060]
+exceptiontype = ""
 solution = "RC"
 strings = [
     "RC",
 ]
-valid = true
 
 [deformatting.Pre.test00000061]
+exceptiontype = ""
 solution = "_A"
 strings = [
     "_A",
 ]
-valid = true
 
 [deformatting.Pre.test00000062]
+exceptiontype = ""
 solution = "_B"
 strings = [
     "_B",
 ]
-valid = true
 
 [deformatting.Pre.test00000063]
+exceptiontype = ""
 solution = "_C"
 strings = [
     "_C",
 ]
-valid = true
 
 [deformatting.Pre.test00000064]
+exceptiontype = ""
 solution = "_a"
 strings = [
     "_a",
 ]
-valid = true
 
 [deformatting.Pre.test00000065]
+exceptiontype = ""
 solution = "_b"
 strings = [
     "_b",
 ]
-valid = true
 
 [deformatting.Pre.test00000066]
+exceptiontype = ""
 solution = "_c"
 strings = [
     "_c",
 ]
-valid = true
 
 [deformatting.Pre.test00000067]
+exceptiontype = ""
 solution = "a"
 strings = [
     "a",
 ]
-valid = true
 
 [deformatting.Pre.test00000068]
+exceptiontype = "builtins.Exception"
 strings = [
     "a",
     "alpha",
 ]
-valid = false
 
 [deformatting.Pre.test00000069]
+exceptiontype = "builtins.Exception"
 strings = [
     "a+1",
 ]
-valid = false
 
 [deformatting.Pre.test00000070]
+exceptiontype = ""
 solution = "a-"
 strings = [
     "a-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000071]
+exceptiontype = "builtins.Exception"
 strings = [
     "a..1",
 ]
-valid = false
 
 [deformatting.Pre.test00000072]
+exceptiontype = ""
 solution = "a."
 strings = [
     "a.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000073]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
 ]
-valid = true
 
 [deformatting.Pre.test00000074]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "a10",
 ]
-valid = true
 
 [deformatting.Pre.test00000075]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "a2",
 ]
-valid = true
 
 [deformatting.Pre.test00000076]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "a42",
 ]
-valid = true
 
 [deformatting.Pre.test00000077]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "a9",
 ]
-valid = true
 
 [deformatting.Pre.test00000078]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "b0",
 ]
-valid = true
 
 [deformatting.Pre.test00000079]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "b1",
 ]
-valid = true
 
 [deformatting.Pre.test00000080]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "b10",
 ]
-valid = true
 
 [deformatting.Pre.test00000081]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "b2",
 ]
-valid = true
 
 [deformatting.Pre.test00000082]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "b42",
 ]
-valid = true
 
 [deformatting.Pre.test00000083]
+exceptiontype = ""
 solution = ""
 strings = [
     "a0",
     "a1",
     "b9",
 ]
-valid = true
 
 [deformatting.Pre.test00000084]
+exceptiontype = ""
 solution = "a##"
 strings = [
     "a10",
     "a01",
 ]
-valid = true
 
 [deformatting.Pre.test00000085]
+exceptiontype = ""
 solution = "a_"
 strings = [
     "a_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000086]
+exceptiontype = "builtins.Exception"
 strings = [
     "aa",
 ]
-valid = false
 
 [deformatting.Pre.test00000087]
+exceptiontype = ""
 solution = "alphaB#.pre"
 strings = [
     "alpha",
     "alpha4",
     ".pre5",
 ]
-valid = true
 
 [deformatting.Pre.test00000088]
+exceptiontype = "builtins.Exception"
 strings = [
     "alpha.",
 ]
-valid = false
 
 [deformatting.Pre.test00000089]
+exceptiontype = ""
 solution = "b"
 strings = [
     "b",
 ]
-valid = true
 
 [deformatting.Pre.test00000090]
+exceptiontype = ""
 solution = "b-"
 strings = [
     "b-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000091]
+exceptiontype = ""
 solution = "b."
 strings = [
     "b.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000092]
+exceptiontype = ""
 solution = "b_"
 strings = [
     "b_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000093]
+exceptiontype = ""
 solution = "beTA."
 strings = [
     "beTA",
     "a12",
     "beTA.19",
 ]
-valid = true
 
 [deformatting.Pre.test00000094]
+exceptiontype = "builtins.Exception"
 strings = [
     "beta_",
 ]
-valid = false
 
 [deformatting.Pre.test00000095]
+exceptiontype = ""
 solution = "c"
 strings = [
     "c",
 ]
-valid = true
 
 [deformatting.Pre.test00000096]
+exceptiontype = ""
 solution = "c-"
 strings = [
     "c-1",
 ]
-valid = true
 
 [deformatting.Pre.test00000097]
+exceptiontype = ""
 solution = "c."
 strings = [
     "c.1",
 ]
-valid = true
 
 [deformatting.Pre.test00000098]
+exceptiontype = ""
 solution = "c#"
 strings = [
     "c0",
 ]
-valid = true
 
 [deformatting.Pre.test00000099]
+exceptiontype = ""
 solution = "c_"
 strings = [
     "c_1",
 ]
-valid = true
 
 [deformatting.Pre.test00000100]
+exceptiontype = "builtins.Exception"
 strings = [
     "pre.",
 ]
-valid = false
 
 [deformatting.Pre.test00000101]
+exceptiontype = "builtins.Exception"
 strings = [
     "preview_",
 ]
-valid = false
 
 [deformatting.Pre.test00000102]
+exceptiontype = ""
 solution = "rc"
 strings = [
     "rc",
 ]
-valid = true
 
 [deformatting.Pre.test00000103]
+exceptiontype = "builtins.Exception"
 strings = [
     "rc-",
 ]
-valid = false
 
 [deformatting.Pre.test00000104]
+exceptiontype = "builtins.Exception"
 strings = [
     "x",
 ]
-valid = false
 
 [deformatting.Public.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Public.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "!1",
 ]
-valid = false
 
 [deformatting.Public.test00000002]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
 ]
-valid = true
 
 [deformatting.Public.test00000003]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002",
 ]
-valid = false
 
 [deformatting.Public.test00000004]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06",
 ]
-valid = false
 
 [deformatting.Public.test00000005]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002_beta.4_post-3DEV5",
 ]
-valid = false
 
 [deformatting.Public.test00000006]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02",
 ]
-valid = false
 
 [deformatting.Public.test00000007]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002bpost1dev1",
 ]
-valid = false
 
 [deformatting.Public.test00000008]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002rc01post.02dev.02",
 ]
-valid = false
 
 [deformatting.Public.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!01.02.03.004",
 ]
-valid = false
 
 [deformatting.Public.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!01.02.03.004-alpha3.post.DEV_06",
 ]
-valid = false
 
 [deformatting.Public.test00000011]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!01.02.03.004_beta.4post1_dev-3",
 ]
-valid = false
 
 [deformatting.Public.test00000012]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!01.02.03.004alpha.04post1dev1",
 ]
-valid = false
 
 [deformatting.Public.test00000013]
+exceptiontype = ""
 solution = "#!###.###"
 strings = [
     "0!001.002",
 ]
-valid = true
 
 [deformatting.Public.test00000014]
+exceptiontype = ""
 solution = "#!...#"
 strings = [
     "0!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Public.test00000015]
+exceptiontype = ""
 solution = "#!"
 strings = [
     "0!100",
 ]
-valid = true
 
 [deformatting.Public.test00000016]
+exceptiontype = ""
 solution = "-##"
 strings = [
     "0-02",
 ]
-valid = true
 
 [deformatting.Public.test00000017]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "0.0.0",
 ]
-valid = true
 
 [deformatting.Public.test00000018]
+exceptiontype = ""
 solution = "###!##"
 strings = [
     "001!00",
 ]
-valid = true
 
 [deformatting.Public.test00000019]
+exceptiontype = ""
 solution = "###!###"
 strings = [
     "001!007",
 ]
-valid = true
 
 [deformatting.Public.test00000020]
+exceptiontype = ""
 solution = "###!"
 strings = [
     "001!1.2.3",
 ]
-valid = true
 
 [deformatting.Public.test00000021]
+exceptiontype = ""
 solution = "###!-##"
 strings = [
     "001!1.2.3-02",
 ]
-valid = true
 
 [deformatting.Public.test00000022]
+exceptiontype = ""
 solution = "###"
 strings = [
     "007",
 ]
-valid = true
 
 [deformatting.Public.test00000023]
+exceptiontype = ""
 solution = "##!###"
 strings = [
     "01!001",
 ]
-valid = true
 
 [deformatting.Public.test00000024]
+exceptiontype = ""
 solution = "##!.#"
 strings = [
     "01!1.0",
 ]
-valid = true
 
 [deformatting.Public.test00000025]
+exceptiontype = ""
 solution = "##!"
 strings = [
     "01!10.20.30",
 ]
-valid = true
 
 [deformatting.Public.test00000026]
+exceptiontype = ""
 solution = "##!rev_##"
 strings = [
     "01!99rc1rev_05",
 ]
-valid = true
 
 [deformatting.Public.test00000027]
+exceptiontype = ""
 solution = "###!...#"
 strings = [
     "099!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Public.test00000028]
+exceptiontype = ""
 solution = "###-DEV"
 strings = [
     "099b2-1DEV5",
 ]
-valid = true
 
 [deformatting.Public.test00000029]
+exceptiontype = ""
 solution = "###rcdev"
 strings = [
     "099rcdev1",
 ]
-valid = true
 
 [deformatting.Public.test00000030]
+exceptiontype = "builtins.Exception"
 strings = [
     "1!",
 ]
-valid = false
 
 [deformatting.Public.test00000031]
+exceptiontype = ""
 solution = "###.###"
 strings = [
     "1!001.002",
 ]
-valid = true
 
 [deformatting.Public.test00000032]
+exceptiontype = ""
 solution = "...#"
 strings = [
     "1!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Public.test00000033]
+exceptiontype = ""
 solution = ".adev.##"
 strings = [
     "1!100.a2dev.02",
 ]
-valid = true
 
 [deformatting.Public.test00000034]
+exceptiontype = ""
 solution = "-DEV"
 strings = [
     "1!100b2-1DEV5",
 ]
-valid = true
 
 [deformatting.Public.test00000035]
+exceptiontype = ""
 solution = "rcdev"
 strings = [
     "1!100rcdev1",
 ]
-valid = true
 
 [deformatting.Public.test00000036]
+exceptiontype = "builtins.Exception"
 strings = [
     "1+a",
 ]
-valid = false
 
 [deformatting.Public.test00000037]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.",
 ]
-valid = false
 
 [deformatting.Public.test00000038]
+exceptiontype = "builtins.Exception"
 strings = [
     "1..2",
 ]
-valid = false
 
 [deformatting.Public.test00000039]
+exceptiontype = ""
 solution = ".#"
 strings = [
     "1.0",
 ]
-valid = true
 
 [deformatting.Public.test00000040]
+exceptiontype = ""
 solution = ".#-##"
 strings = [
     "1.0-02",
 ]
-valid = true
 
 [deformatting.Public.test00000041]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2+abc",
 ]
-valid = false
 
 [deformatting.Public.test00000042]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2x",
 ]
-valid = false
 
 [deformatting.Public.test00000043]
+exceptiontype = ""
 solution = "##"
 strings = [
     "10!02",
 ]
-valid = true
 
 [deformatting.Public.test00000044]
+exceptiontype = ""
 solution = "##-##.dev"
 strings = [
     "10!02rc1-02.dev",
 ]
-valid = true
 
 [deformatting.Public.test00000045]
+exceptiontype = ""
 solution = "arev_##"
 strings = [
     "10!2arev_05",
 ]
-valid = true
 
 [deformatting.Public.test00000046]
+exceptiontype = ""
 solution = ".a#-##dev"
 strings = [
     "100.a2-02dev1",
 ]
-valid = true
 
 [deformatting.Public.test00000047]
+exceptiontype = ""
 solution = "##.##.##"
 strings = [
     "2!00.00.00",
 ]
-valid = true
 
 [deformatting.Public.test00000048]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "2!01.02",
 ]
-valid = true
 
 [deformatting.Public.test00000049]
+exceptiontype = ""
 solution = "##.##-DEV"
 strings = [
     "2!01.02b2-1DEV5",
 ]
-valid = true
 
 [deformatting.Public.test00000050]
+exceptiontype = ""
 solution = "bpostdev"
 strings = [
     "2!10.20bpost1dev1",
 ]
-valid = true
 
 [deformatting.Public.test00000051]
+exceptiontype = ""
 solution = "rev_##"
 strings = [
     "42!9rc1rev_05",
 ]
-valid = true
 
 [deformatting.Public.test00000052]
+exceptiontype = ""
 solution = "##-##"
 strings = [
     "9!01-02",
 ]
-valid = true
 
 [deformatting.Public.test00000053]
+exceptiontype = ""
 solution = ".##.###"
 strings = [
     "9!7.08.009",
 ]
-valid = true
 
 [deformatting.Public.test00000054]
+exceptiontype = ""
 solution = "V#!##"
 strings = [
     "V0!00",
 ]
-valid = true
 
 [deformatting.Public.test00000055]
+exceptiontype = ""
 solution = "V#!###"
 strings = [
     "V0!007",
 ]
-valid = true
 
 [deformatting.Public.test00000056]
+exceptiontype = ""
 solution = "V#!"
 strings = [
     "V0!1.2.3",
 ]
-valid = true
 
 [deformatting.Public.test00000057]
+exceptiontype = ""
 solution = "V#!rev_##"
 strings = [
     "V0!1.2.3rc1rev_05",
 ]
-valid = true
 
 [deformatting.Public.test00000058]
+exceptiontype = ""
 solution = "V#!-DEV"
 strings = [
     "V0!42b2-1DEV5",
 ]
-valid = true
 
 [deformatting.Public.test00000059]
+exceptiontype = ""
 solution = "V#!rcdev"
 strings = [
     "V0!42rcdev1",
 ]
-valid = true
 
 [deformatting.Public.test00000060]
+exceptiontype = ""
 solution = "V###!###"
 strings = [
     "V001!001",
 ]
-valid = true
 
 [deformatting.Public.test00000061]
+exceptiontype = ""
 solution = "V###!.#"
 strings = [
     "V001!1.0",
 ]
-valid = true
 
 [deformatting.Public.test00000062]
+exceptiontype = ""
 solution = "V###!"
 strings = [
     "V001!10.20.30",
 ]
-valid = true
 
 [deformatting.Public.test00000063]
+exceptiontype = ""
 solution = "V##!..#"
 strings = [
     "V01!0.0.0",
 ]
-valid = true
 
 [deformatting.Public.test00000064]
+exceptiontype = ""
 solution = "V##!###"
 strings = [
     "V01!002",
 ]
-valid = true
 
 [deformatting.Public.test00000065]
+exceptiontype = ""
 solution = "V##!##"
 strings = [
     "V01!02",
 ]
-valid = true
 
 [deformatting.Public.test00000066]
+exceptiontype = ""
 solution = "V##!"
 strings = [
     "V01!2",
 ]
-valid = true
 
 [deformatting.Public.test00000067]
+exceptiontype = ""
 solution = "V###!##"
 strings = [
     "V099!00",
 ]
-valid = true
 
 [deformatting.Public.test00000068]
+exceptiontype = ""
 solution = "V##"
 strings = [
     "V1!00",
 ]
-valid = true
 
 [deformatting.Public.test00000069]
+exceptiontype = ""
 solution = "V###"
 strings = [
     "V1!007",
 ]
-valid = true
 
 [deformatting.Public.test00000070]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
 ]
-valid = true
 
 [deformatting.Public.test00000071]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V10!1",
 ]
-valid = true
 
 [deformatting.Public.test00000072]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V10!10.20",
 ]
-valid = true
 
 [deformatting.Public.test00000073]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V10!9",
 ]
-valid = true
 
 [deformatting.Public.test00000074]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V2!0",
 ]
-valid = true
 
 [deformatting.Public.test00000075]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V2!1.2",
 ]
-valid = true
 
 [deformatting.Public.test00000076]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V2!100.200.300",
 ]
-valid = true
 
 [deformatting.Public.test00000077]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V42!0",
 ]
-valid = true
 
 [deformatting.Public.test00000078]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V42!1.2",
 ]
-valid = true
 
 [deformatting.Public.test00000079]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V42!100.200.300",
 ]
-valid = true
 
 [deformatting.Public.test00000080]
+exceptiontype = ""
 solution = "V"
 strings = [
     "V1!1.2.3",
     "V1!42",
     "V9",
 ]
-valid = true
 
 [deformatting.Public.test00000081]
+exceptiontype = ""
 solution = "V..#"
 strings = [
     "V1.2.0",
 ]
-valid = true
 
 [deformatting.Public.test00000082]
+exceptiontype = ""
 solution = "V##.##"
 strings = [
     "V10!01.02",
 ]
-valid = true
 
 [deformatting.Public.test00000083]
+exceptiontype = ""
 solution = "V###.###"
 strings = [
     "V9!001.002",
 ]
-valid = true
 
 [deformatting.Public.test00000084]
+exceptiontype = ""
 solution = "V...#"
 strings = [
     "V9!1.0.0.0",
 ]
-valid = true
 
 [deformatting.Public.test00000085]
+exceptiontype = "builtins.Exception"
 strings = [
     "v",
 ]
-valid = false
 
 [deformatting.Public.test00000086]
+exceptiontype = "builtins.Exception"
 strings = [
     "v!1",
 ]
-valid = false
 
 [deformatting.Public.test00000087]
+exceptiontype = ""
 solution = "v#!###"
 strings = [
     "v0!001",
 ]
-valid = true
 
 [deformatting.Public.test00000088]
+exceptiontype = ""
 solution = "v#!.#"
 strings = [
     "v0!1.0",
 ]
-valid = true
 
 [deformatting.Public.test00000089]
+exceptiontype = ""
 solution = "v#!"
 strings = [
     "v0!10.20.30",
 ]
-valid = true
 
 [deformatting.Public.test00000090]
+exceptiontype = ""
 solution = "v###!..#"
 strings = [
     "v001!0.0.0",
 ]
-valid = true
 
 [deformatting.Public.test00000091]
+exceptiontype = ""
 solution = "v###!###"
 strings = [
     "v001!002",
 ]
-valid = true
 
 [deformatting.Public.test00000092]
+exceptiontype = ""
 solution = "v###!##"
 strings = [
     "v001!02",
 ]
-valid = true
 
 [deformatting.Public.test00000093]
+exceptiontype = ""
 solution = "v###!"
 strings = [
     "v001!2",
 ]
-valid = true
 
 [deformatting.Public.test00000094]
+exceptiontype = ""
 solution = "v###"
 strings = [
     "v002",
 ]
-valid = true
 
 [deformatting.Public.test00000095]
+exceptiontype = ""
 solution = "v##!"
 strings = [
     "v01!1",
 ]
-valid = true
 
 [deformatting.Public.test00000096]
+exceptiontype = ""
 solution = "v##"
 strings = [
     "v09",
 ]
-valid = true
 
 [deformatting.Public.test00000097]
+exceptiontype = ""
 solution = "v###!.#"
 strings = [
     "v099!1.0",
 ]
-valid = true
 
 [deformatting.Public.test00000098]
+exceptiontype = ""
 solution = "v.#"
 strings = [
     "v1!1.0",
 ]
-valid = true
 
 [deformatting.Public.test00000099]
+exceptiontype = ""
 solution = "v"
 strings = [
     "v1!10.20.30",
 ]
-valid = true
 
 [deformatting.Public.test00000100]
+exceptiontype = "builtins.Exception"
 strings = [
     "x",
 ]
-valid = false
 
 [deformatting.Qual.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Qual.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "-",
 ]
-valid = false
 
 [deformatting.Qual.test00000002]
+exceptiontype = ""
 solution = "-##"
 strings = [
     "-02",
 ]
-valid = true
 
 [deformatting.Qual.test00000003]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1",
 ]
-valid = false
 
 [deformatting.Qual.test00000004]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1-dev4",
 ]
-valid = false
 
 [deformatting.Qual.test00000005]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1.DEV_06",
 ]
-valid = false
 
 [deformatting.Qual.test00000006]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1.dev",
 ]
-valid = false
 
 [deformatting.Qual.test00000007]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1DEV5",
 ]
-valid = false
 
 [deformatting.Qual.test00000008]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1_dev-3",
 ]
-valid = false
 
 [deformatting.Qual.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1dev.02",
 ]
-valid = false
 
 [deformatting.Qual.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-1dev1",
 ]
-valid = false
 
 [deformatting.Qual.test00000011]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-alpha3-1",
 ]
-valid = false
 
 [deformatting.Qual.test00000012]
+exceptiontype = "builtins.Exception"
 strings = [
     "-02",
     "-alpha3-1-dev4",
 ]
-valid = false
 
 [deformatting.Qual.test00000013]
+exceptiontype = ""
 solution = "-##DEV"
 strings = [
     "-02DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000014]
+exceptiontype = ""
 solution = "-##dev"
 strings = [
     "-02dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000015]
+exceptiontype = ""
 solution = "-"
 strings = [
     "-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000016]
+exceptiontype = ""
 solution = "--dev"
 strings = [
     "-1-dev4",
 ]
-valid = true
 
 [deformatting.Qual.test00000017]
+exceptiontype = ""
 solution = "-.dev"
 strings = [
     "-1.dev",
 ]
-valid = true
 
 [deformatting.Qual.test00000018]
+exceptiontype = ""
 solution = "-DEV"
 strings = [
     "-1DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000019]
+exceptiontype = ""
 solution = "-_dev-"
 strings = [
     "-1_dev-3",
 ]
-valid = true
 
 [deformatting.Qual.test00000020]
+exceptiontype = ""
 solution = "-dev"
 strings = [
     "-1dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000021]
+exceptiontype = ""
 solution = "-"
 strings = [
     "-2",
 ]
-valid = true
 
 [deformatting.Qual.test00000022]
+exceptiontype = ""
 solution = "-alpha"
 strings = [
     "-alpha3",
 ]
-valid = true
 
 [deformatting.Qual.test00000023]
+exceptiontype = ""
 solution = ".a"
 strings = [
     ".a2",
 ]
-valid = true
 
 [deformatting.Qual.test00000024]
+exceptiontype = ""
 solution = ".a#-##"
 strings = [
     ".a2-02",
 ]
-valid = true
 
 [deformatting.Qual.test00000025]
+exceptiontype = ""
 solution = ".a#-"
 strings = [
     ".a2-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000026]
+exceptiontype = ""
 solution = ".aDEV"
 strings = [
     ".a2DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000027]
+exceptiontype = ""
 solution = ".adev"
 strings = [
     ".a2dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000028]
+exceptiontype = ""
 solution = ".apost"
 strings = [
     ".a2post1",
 ]
-valid = true
 
 [deformatting.Qual.test00000029]
+exceptiontype = ""
 solution = ".ar"
 strings = [
     ".a2r",
 ]
-valid = true
 
 [deformatting.Qual.test00000030]
+exceptiontype = ""
 solution = ".c"
 strings = [
     ".c2",
 ]
-valid = true
 
 [deformatting.Qual.test00000031]
+exceptiontype = ""
 solution = ".c#-"
 strings = [
     ".c2-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000032]
+exceptiontype = ""
 solution = ".cDEV"
 strings = [
     ".c2DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000033]
+exceptiontype = ""
 solution = ".cdev"
 strings = [
     ".c2dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000034]
+exceptiontype = ""
 solution = ".cr"
 strings = [
     ".c2r",
 ]
-valid = true
 
 [deformatting.Qual.test00000035]
+exceptiontype = ""
 solution = ".dev"
 strings = [
     ".dev",
 ]
-valid = true
 
 [deformatting.Qual.test00000036]
+exceptiontype = ""
 solution = ".post"
 strings = [
     ".post",
 ]
-valid = true
 
 [deformatting.Qual.test00000037]
+exceptiontype = ""
 solution = ".rev"
 strings = [
     ".rev6",
 ]
-valid = true
 
 [deformatting.Qual.test00000038]
+exceptiontype = ""
 solution = "DEV"
 strings = [
     "DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000039]
+exceptiontype = ""
 solution = "_dev-"
 strings = [
     "_dev-3",
 ]
-valid = true
 
 [deformatting.Qual.test00000040]
+exceptiontype = ""
 solution = "a"
 strings = [
     "a",
 ]
-valid = true
 
 [deformatting.Qual.test00000041]
+exceptiontype = ""
 solution = "aB#-"
 strings = [
     "a",
     "a1",
     "-9",
 ]
-valid = true
 
 [deformatting.Qual.test00000042]
+exceptiontype = ""
 solution = "abcrdev"
 strings = [
     "a",
@@ -5031,1997 +5032,1996 @@ strings = [
     "r",
     "dev",
 ]
-valid = true
 
 [deformatting.Qual.test00000043]
+exceptiontype = ""
 solution = "a-##"
 strings = [
     "a-02",
 ]
-valid = true
 
 [deformatting.Qual.test00000044]
+exceptiontype = ""
 solution = "a-"
 strings = [
     "a-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000045]
+exceptiontype = ""
 solution = "a-DEV"
 strings = [
     "a-1DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000046]
+exceptiontype = ""
 solution = "a-dev"
 strings = [
     "a-1dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000047]
+exceptiontype = "builtins.Exception"
 strings = [
     "a.",
 ]
-valid = false
 
 [deformatting.Qual.test00000048]
+exceptiontype = ""
 solution = "a##"
 strings = [
     "a01",
 ]
-valid = true
 
 [deformatting.Qual.test00000049]
+exceptiontype = ""
 solution = "a##-"
 strings = [
     "a01-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000050]
+exceptiontype = ""
 solution = "a##r"
 strings = [
     "a01r",
 ]
-valid = true
 
 [deformatting.Qual.test00000051]
+exceptiontype = ""
 solution = ""
 strings = [
     "a1",
 ]
-valid = true
 
 [deformatting.Qual.test00000052]
+exceptiontype = "builtins.Exception"
 strings = [
     "a1a2",
 ]
-valid = false
 
 [deformatting.Qual.test00000053]
+exceptiontype = ""
 solution = "dev"
 strings = [
     "a1dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000054]
+exceptiontype = ""
 solution = "post"
 strings = [
     "a1post1",
 ]
-valid = true
 
 [deformatting.Qual.test00000055]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
 ]
-valid = true
 
 [deformatting.Qual.test00000056]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "a1r4",
     "b2r",
 ]
-valid = true
 
 [deformatting.Qual.test00000057]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "a1r4",
     "b2r4",
 ]
-valid = true
 
 [deformatting.Qual.test00000058]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "a1r4",
     "r",
 ]
-valid = true
 
 [deformatting.Qual.test00000059]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "a1r4",
     "r4",
 ]
-valid = true
 
 [deformatting.Qual.test00000060]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "a1r4",
     "rc1r",
 ]
-valid = true
 
 [deformatting.Qual.test00000061]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "a1r4",
     "rc1r4",
 ]
-valid = true
 
 [deformatting.Qual.test00000062]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "b2r",
     "b2r4",
 ]
-valid = true
 
 [deformatting.Qual.test00000063]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "b2r",
     "r",
 ]
-valid = true
 
 [deformatting.Qual.test00000064]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "b2r",
     "r4",
 ]
-valid = true
 
 [deformatting.Qual.test00000065]
+exceptiontype = ""
 solution = "r"
 strings = [
     "a1r",
     "b2r",
     "rc1r",
 ]
-valid = true
 
 [deformatting.Qual.test00000066]
+exceptiontype = ""
 solution = "rDEV"
 strings = [
     "a1r4DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000067]
+exceptiontype = ""
 solution = "rdev"
 strings = [
     "a1r4dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000068]
+exceptiontype = ""
 solution = "aDEV"
 strings = [
     "aDEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000069]
+exceptiontype = ""
 solution = "adev"
 strings = [
     "adev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000070]
+exceptiontype = ""
 solution = "apost"
 strings = [
     "apost1",
 ]
-valid = true
 
 [deformatting.Qual.test00000071]
+exceptiontype = ""
 solution = "ar"
 strings = [
     "ar",
 ]
-valid = true
 
 [deformatting.Qual.test00000072]
+exceptiontype = ""
 solution = "arDEV"
 strings = [
     "ar4DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000073]
+exceptiontype = ""
 solution = "ardev"
 strings = [
     "ar4dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000074]
+exceptiontype = ""
 solution = "b"
 strings = [
     "b",
 ]
-valid = true
 
 [deformatting.Qual.test00000075]
+exceptiontype = ""
 solution = "bC#-"
 strings = [
     "b",
     "b1",
     "-9",
 ]
-valid = true
 
 [deformatting.Qual.test00000076]
+exceptiontype = ""
 solution = "b-##"
 strings = [
     "b-02",
 ]
-valid = true
 
 [deformatting.Qual.test00000077]
+exceptiontype = ""
 solution = "b-"
 strings = [
     "b-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000078]
+exceptiontype = ""
 solution = "b-DEV"
 strings = [
     "b-1DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000079]
+exceptiontype = ""
 solution = "b-dev"
 strings = [
     "b-1dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000080]
+exceptiontype = ""
 solution = "bDEV"
 strings = [
     "bDEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000081]
+exceptiontype = "builtins.Exception"
 strings = [
     "b_",
 ]
-valid = false
 
 [deformatting.Qual.test00000082]
+exceptiontype = ""
 solution = "bdev"
 strings = [
     "bdev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000083]
+exceptiontype = ""
 solution = "betadev."
 strings = [
     "beta1",
     "dev.2",
 ]
-valid = true
 
 [deformatting.Qual.test00000084]
+exceptiontype = ""
 solution = "bpost"
 strings = [
     "bpost1",
 ]
-valid = true
 
 [deformatting.Qual.test00000085]
+exceptiontype = ""
 solution = "br"
 strings = [
     "br",
 ]
-valid = true
 
 [deformatting.Qual.test00000086]
+exceptiontype = ""
 solution = "brDEV"
 strings = [
     "br4DEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000087]
+exceptiontype = ""
 solution = "brdev"
 strings = [
     "br4dev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000088]
+exceptiontype = ""
 solution = "c-"
 strings = [
     "c",
     "c-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000089]
+exceptiontype = ""
 solution = "c--"
 strings = [
     "c",
     "c-1",
     "-2",
 ]
-valid = true
 
 [deformatting.Qual.test00000090]
+exceptiontype = ""
 solution = "c"
 strings = [
     "c",
     "c1",
 ]
-valid = true
 
 [deformatting.Qual.test00000091]
+exceptiontype = "builtins.Exception"
 strings = [
     "c",
     "c1",
     "-2",
 ]
-valid = false
 
 [deformatting.Qual.test00000092]
+exceptiontype = ""
 solution = "c#-"
 strings = [
     "c1",
     "-2",
 ]
-valid = true
 
 [deformatting.Qual.test00000093]
+exceptiontype = "builtins.Exception"
 strings = [
     "dev.",
 ]
-valid = false
 
 [deformatting.Qual.test00000094]
+exceptiontype = "builtins.Exception"
 strings = [
     "dev1post2",
 ]
-valid = false
 
 [deformatting.Qual.test00000095]
+exceptiontype = "builtins.Exception"
 strings = [
     "post.",
 ]
-valid = false
 
 [deformatting.Qual.test00000096]
+exceptiontype = "builtins.Exception"
 strings = [
     "post1a2",
 ]
-valid = false
 
 [deformatting.Qual.test00000097]
+exceptiontype = ""
 solution = "pre."
 strings = [
     "pre.3",
 ]
-valid = true
 
 [deformatting.Qual.test00000098]
+exceptiontype = ""
 solution = "pre.-"
 strings = [
     "pre.3-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000099]
+exceptiontype = ""
 solution = "pre.r"
 strings = [
     "pre.3r",
 ]
-valid = true
 
 [deformatting.Qual.test00000100]
+exceptiontype = ""
 solution = "rc"
 strings = [
     "rc",
 ]
-valid = true
 
 [deformatting.Qual.test00000101]
+exceptiontype = "builtins.Exception"
 strings = [
     "rc",
     "rc1",
     "-9",
 ]
-valid = false
 
 [deformatting.Qual.test00000102]
+exceptiontype = "builtins.Exception"
 strings = [
     "rc-",
 ]
-valid = false
 
 [deformatting.Qual.test00000103]
+exceptiontype = ""
 solution = "rc-##"
 strings = [
     "rc-02",
 ]
-valid = true
 
 [deformatting.Qual.test00000104]
+exceptiontype = ""
 solution = "rc-"
 strings = [
     "rc-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000105]
+exceptiontype = ""
 solution = "rc##"
 strings = [
     "rc01",
 ]
-valid = true
 
 [deformatting.Qual.test00000106]
+exceptiontype = ""
 solution = "rc##-"
 strings = [
     "rc01-1",
 ]
-valid = true
 
 [deformatting.Qual.test00000107]
+exceptiontype = ""
 solution = "rc##r"
 strings = [
     "rc01r",
 ]
-valid = true
 
 [deformatting.Qual.test00000108]
+exceptiontype = ""
 solution = "rcDEV"
 strings = [
     "rcDEV5",
 ]
-valid = true
 
 [deformatting.Qual.test00000109]
+exceptiontype = ""
 solution = "rcdev"
 strings = [
     "rcdev1",
 ]
-valid = true
 
 [deformatting.Qual.test00000110]
+exceptiontype = ""
 solution = "rcr"
 strings = [
     "rcr",
 ]
-valid = true
 
 [deformatting.Qual.test00000111]
+exceptiontype = "builtins.Exception"
 strings = [
     "x",
 ]
-valid = false
 
 [deformatting.Release.test00000000]
+exceptiontype = "builtins.Exception"
 strings = [
     "+1",
 ]
-valid = false
 
 [deformatting.Release.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "-1",
 ]
-valid = false
 
 [deformatting.Release.test00000002]
+exceptiontype = "builtins.Exception"
 strings = [
     ".",
 ]
-valid = false
 
 [deformatting.Release.test00000003]
+exceptiontype = "builtins.Exception"
 strings = [
     "..",
 ]
-valid = false
 
 [deformatting.Release.test00000004]
+exceptiontype = "builtins.Exception"
 strings = [
     ".1",
 ]
-valid = false
 
 [deformatting.Release.test00000005]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
 ]
-valid = true
 
 [deformatting.Release.test00000006]
+exceptiontype = ""
 solution = ".#"
 strings = [
     "0.0",
 ]
-valid = true
 
 [deformatting.Release.test00000007]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "0.0.0",
 ]
-valid = true
 
 [deformatting.Release.test00000008]
+exceptiontype = ""
 solution = "##"
 strings = [
     "00",
 ]
-valid = true
 
 [deformatting.Release.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "00",
     "0",
 ]
-valid = false
 
 [deformatting.Release.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "00.00",
     "0.0",
 ]
-valid = false
 
 [deformatting.Release.test00000011]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "00.00",
     "10.20",
 ]
-valid = true
 
 [deformatting.Release.test00000012]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "00.00",
     "100.200",
 ]
-valid = true
 
 [deformatting.Release.test00000013]
+exceptiontype = ""
 solution = "##.##.##"
 strings = [
     "00.00.00",
 ]
-valid = true
 
 [deformatting.Release.test00000014]
+exceptiontype = ""
 solution = "###"
 strings = [
     "000",
 ]
-valid = true
 
 [deformatting.Release.test00000015]
+exceptiontype = "builtins.Exception"
 strings = [
     "0001.0002",
     "100.200",
 ]
-valid = false
 
 [deformatting.Release.test00000016]
+exceptiontype = "builtins.Exception"
 strings = [
     "0001.0002",
     "1000.200",
 ]
-valid = false
 
 [deformatting.Release.test00000017]
+exceptiontype = ""
 solution = "####.####"
 strings = [
     "0001.0002",
     "1000.2000",
     "9999.8888",
 ]
-valid = true
 
 [deformatting.Release.test00000018]
+exceptiontype = ""
 solution = "####.####.####"
 strings = [
     "0001.0002.0003",
 ]
-valid = true
 
 [deformatting.Release.test00000019]
+exceptiontype = ""
 solution = "###"
 strings = [
     "001",
 ]
-valid = true
 
 [deformatting.Release.test00000020]
+exceptiontype = "builtins.Exception"
 strings = [
     "001",
     "10",
 ]
-valid = false
 
 [deformatting.Release.test00000021]
+exceptiontype = ""
 solution = "###"
 strings = [
     "001",
     "100",
 ]
-valid = true
 
 [deformatting.Release.test00000022]
+exceptiontype = "builtins.Exception"
 strings = [
     "001",
     "100",
     "10",
 ]
-valid = false
 
 [deformatting.Release.test00000023]
+exceptiontype = ""
 solution = "###"
 strings = [
     "001",
     "1000",
 ]
-valid = true
 
 [deformatting.Release.test00000024]
+exceptiontype = ""
 solution = "###.###"
 strings = [
     "001.002",
     "100.200",
 ]
-valid = true
 
 [deformatting.Release.test00000025]
+exceptiontype = ""
 solution = "###.###"
 strings = [
     "001.002",
     "1000.2000",
 ]
-valid = true
 
 [deformatting.Release.test00000026]
+exceptiontype = ""
 solution = "###.###.###"
 strings = [
     "001.002.003",
     "100.200.300",
     "999.888.777",
 ]
-valid = true
 
 [deformatting.Release.test00000027]
+exceptiontype = "builtins.Exception"
 strings = [
     "001.02",
     "10.20",
 ]
-valid = false
 
 [deformatting.Release.test00000028]
+exceptiontype = ""
 solution = "##"
 strings = [
     "01",
 ]
-valid = true
 
 [deformatting.Release.test00000029]
+exceptiontype = "builtins.Exception"
 strings = [
     "01",
     "001",
 ]
-valid = false
 
 [deformatting.Release.test00000030]
+exceptiontype = "builtins.Exception"
 strings = [
     "01",
     "1",
 ]
-valid = false
 
 [deformatting.Release.test00000031]
+exceptiontype = ""
 solution = "##"
 strings = [
     "01",
     "10",
 ]
-valid = true
 
 [deformatting.Release.test00000032]
+exceptiontype = ""
 solution = "##"
 strings = [
     "01",
     "100",
 ]
-valid = true
 
 [deformatting.Release.test00000033]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.00",
     "10.0",
 ]
-valid = false
 
 [deformatting.Release.test00000034]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "01.00",
     "10.20",
 ]
-valid = true
 
 [deformatting.Release.test00000035]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "01.00",
     "100.200",
 ]
-valid = true
 
 [deformatting.Release.test00000036]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.002",
     "10.20",
 ]
-valid = false
 
 [deformatting.Release.test00000037]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02",
     "001.02",
 ]
-valid = false
 
 [deformatting.Release.test00000038]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02",
     "01.002",
 ]
-valid = false
 
 [deformatting.Release.test00000039]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02",
     "1.2",
 ]
-valid = false
 
 [deformatting.Release.test00000040]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02",
     "1.20",
 ]
-valid = false
 
 [deformatting.Release.test00000041]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "01.02",
     "10.20",
 ]
-valid = true
 
 [deformatting.Release.test00000042]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02",
     "10.20",
     "1.2",
 ]
-valid = false
 
 [deformatting.Release.test00000043]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "01.02",
     "10.20",
     "999.888",
 ]
-valid = true
 
 [deformatting.Release.test00000044]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "01.02",
     "100.200",
 ]
-valid = true
 
 [deformatting.Release.test00000045]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02.00",
     "10.20.0",
 ]
-valid = false
 
 [deformatting.Release.test00000046]
+exceptiontype = ""
 solution = "##.##.##"
 strings = [
     "01.02.00",
     "10.20.30",
 ]
-valid = true
 
 [deformatting.Release.test00000047]
+exceptiontype = ""
 solution = "##.##.##"
 strings = [
     "01.02.00",
     "100.200.300",
 ]
-valid = true
 
 [deformatting.Release.test00000048]
+exceptiontype = ""
 solution = "##.##.###"
 strings = [
     "01.02.003",
 ]
-valid = true
 
 [deformatting.Release.test00000049]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02.003",
     "10.2.300",
 ]
-valid = false
 
 [deformatting.Release.test00000050]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02.003",
     "10.20.30",
 ]
-valid = false
 
 [deformatting.Release.test00000051]
+exceptiontype = ""
 solution = "##.##.###"
 strings = [
     "01.02.003",
     "10.20.300",
 ]
-valid = true
 
 [deformatting.Release.test00000052]
+exceptiontype = "builtins.Exception"
 strings = [
     "01.02.003",
     "100.200.300",
     "1.2.3",
 ]
-valid = false
 
 [deformatting.Release.test00000053]
+exceptiontype = ""
 solution = "##.##.###.####"
 strings = [
     "01.02.003.0000",
     "10.20.300.4000",
 ]
-valid = true
 
 [deformatting.Release.test00000054]
+exceptiontype = ""
 solution = "##.##.##"
 strings = [
     "01.02.03",
     "10.20.30",
     "99.88.77",
 ]
-valid = true
 
 [deformatting.Release.test00000055]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "01.02.3",
 ]
-valid = true
 
 [deformatting.Release.test00000056]
+exceptiontype = ""
 solution = "##..###"
 strings = [
     "01.2.003",
     "10.20.300",
 ]
-valid = true
 
 [deformatting.Release.test00000057]
+exceptiontype = ""
 solution = "##"
 strings = [
     "01.2.3",
 ]
-valid = true
 
 [deformatting.Release.test00000058]
+exceptiontype = ""
 solution = "##"
 strings = [
     "09",
 ]
-valid = true
 
 [deformatting.Release.test00000059]
+exceptiontype = ""
 solution = "###"
 strings = [
     "099",
 ]
-valid = true
 
 [deformatting.Release.test00000060]
+exceptiontype = ""
 solution = ""
 strings = [
     "1",
 ]
-valid = true
 
 [deformatting.Release.test00000061]
+exceptiontype = ""
 solution = ""
 strings = [
     "1",
     "10",
 ]
-valid = true
 
 [deformatting.Release.test00000062]
+exceptiontype = ""
 solution = ""
 strings = [
     "1",
     "9",
 ]
-valid = true
 
 [deformatting.Release.test00000063]
+exceptiontype = "builtins.Exception"
 strings = [
     "1,2",
 ]
-valid = false
 
 [deformatting.Release.test00000064]
+exceptiontype = "builtins.Exception"
 strings = [
     "1-2",
 ]
-valid = false
 
 [deformatting.Release.test00000065]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.",
 ]
-valid = false
 
 [deformatting.Release.test00000066]
+exceptiontype = "builtins.Exception"
 strings = [
     "1...2",
 ]
-valid = false
 
 [deformatting.Release.test00000067]
+exceptiontype = "builtins.Exception"
 strings = [
     "1..2",
 ]
-valid = false
 
 [deformatting.Release.test00000068]
+exceptiontype = ""
 solution = ".#"
 strings = [
     "1.0",
 ]
-valid = true
 
 [deformatting.Release.test00000069]
+exceptiontype = ""
 solution = "...#"
 strings = [
     "1.0",
     "9.8.7.0",
 ]
-valid = true
 
 [deformatting.Release.test00000070]
+exceptiontype = ""
 solution = "...#"
 strings = [
     "1.0.0.0",
 ]
-valid = true
 
 [deformatting.Release.test00000071]
+exceptiontype = ""
 solution = ".##"
 strings = [
     "1.00",
 ]
-valid = true
 
 [deformatting.Release.test00000072]
+exceptiontype = ""
 solution = ".###"
 strings = [
     "1.000",
 ]
-valid = true
 
 [deformatting.Release.test00000073]
+exceptiontype = ""
 solution = ""
 strings = [
     "1.2",
 ]
-valid = true
 
 [deformatting.Release.test00000074]
+exceptiontype = ""
 solution = ""
 strings = [
     "1.2",
     "1.2.3",
 ]
-valid = true
 
 [deformatting.Release.test00000075]
+exceptiontype = ""
 solution = ""
 strings = [
     "1.2",
     "10.20",
 ]
-valid = true
 
 [deformatting.Release.test00000076]
+exceptiontype = ""
 solution = ""
 strings = [
     "1.2",
     "9.8",
 ]
-valid = true
 
 [deformatting.Release.test00000077]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2.",
 ]
-valid = false
 
 [deformatting.Release.test00000078]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "1.2.0",
 ]
-valid = true
 
 [deformatting.Release.test00000079]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "1.2.0",
     "9.8.0",
     "7.6.5",
 ]
-valid = true
 
 [deformatting.Release.test00000080]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "1.2.0",
     "9.8.7",
 ]
-valid = true
 
 [deformatting.Release.test00000081]
+exceptiontype = ""
 solution = "....#"
 strings = [
     "1.2.0",
     "9.8.7.0",
     "7.6.5.4.0",
 ]
-valid = true
 
 [deformatting.Release.test00000082]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "1.2.0",
     "9.8.7.6.0.5",
 ]
-valid = true
 
 [deformatting.Release.test00000083]
+exceptiontype = ""
 solution = "..##"
 strings = [
     "1.2.00",
 ]
-valid = true
 
 [deformatting.Release.test00000084]
+exceptiontype = ""
 solution = "..##"
 strings = [
     "1.2.00",
     "10.20.30",
     "999.888.777",
 ]
-valid = true
 
 [deformatting.Release.test00000085]
+exceptiontype = ""
 solution = ""
 strings = [
     "1.2.3",
 ]
-valid = true
 
 [deformatting.Release.test00000086]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "1.2.3",
     "9.8.0",
 ]
-valid = true
 
 [deformatting.Release.test00000087]
+exceptiontype = ""
 solution = ""
 strings = [
     "1.2.3",
     "9.8.7",
 ]
-valid = true
 
 [deformatting.Release.test00000088]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.a",
 ]
-valid = false
 
 [deformatting.Release.test00000089]
+exceptiontype = ""
 solution = ""
 strings = [
     "10",
 ]
-valid = true
 
 [deformatting.Release.test00000090]
+exceptiontype = ""
 solution = ""
 strings = [
     "10",
     "999",
 ]
-valid = true
 
 [deformatting.Release.test00000091]
+exceptiontype = ""
 solution = ".###"
 strings = [
     "10.020.3000",
 ]
-valid = true
 
 [deformatting.Release.test00000092]
+exceptiontype = ""
 solution = ""
 strings = [
     "10.20.30",
     "1.2",
     "999.888.777.666",
 ]
-valid = true
 
 [deformatting.Release.test00000093]
+exceptiontype = ""
 solution = ""
 strings = [
     "123.456.789",
 ]
-valid = true
 
 [deformatting.Release.test00000094]
+exceptiontype = "builtins.Exception"
 strings = [
     "1_2",
 ]
-valid = false
 
 [deformatting.Release.test00000095]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "4.0",
     "1.2.0",
 ]
-valid = true
 
 [deformatting.Release.test00000096]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "4.0",
     "1.2.0",
     "9.8.7.6.0.5",
 ]
-valid = true
 
 [deformatting.Release.test00000097]
+exceptiontype = ""
 solution = ".#"
 strings = [
     "4.0",
     "9.8.7.6.0.5",
 ]
-valid = true
 
 [deformatting.Release.test00000098]
+exceptiontype = ""
 solution = ".##.###"
 strings = [
     "7.08.009",
 ]
-valid = true
 
 [deformatting.Release.test00000099]
+exceptiontype = ""
 solution = ""
 strings = [
     "9",
 ]
-valid = true
 
 [deformatting.Release.test00000100]
+exceptiontype = ""
 solution = ""
 strings = [
     "999",
 ]
-valid = true
 
 [deformatting.Release.test00000101]
+exceptiontype = ""
 solution = ".####"
 strings = [
     "9999.0000",
 ]
-valid = true
 
 [deformatting.Release.test00000102]
+exceptiontype = "builtins.Exception"
 strings = [
     "a",
 ]
-valid = false
 
 [deformatting.Release.test00000103]
+exceptiontype = "builtins.Exception"
 strings = [
     "a.1",
 ]
-valid = false
 
 [deformatting.Version.test00000000]
+exceptiontype = ""
 solution = ""
 strings = []
-valid = true
 
 [deformatting.Version.test00000001]
+exceptiontype = "builtins.Exception"
 strings = [
     "+abc",
 ]
-valid = false
 
 [deformatting.Version.test00000002]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
 ]
-valid = true
 
 [deformatting.Version.test00000003]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06",
 ]
-valid = false
 
 [deformatting.Version.test00000004]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+0.0",
 ]
-valid = false
 
 [deformatting.Version.test00000005]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+9.AB12",
 ]
-valid = false
 
 [deformatting.Version.test00000006]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+Foo_Foo",
 ]
-valid = false
 
 [deformatting.Version.test00000007]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+x-9",
 ]
-valid = false
 
 [deformatting.Version.test00000008]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02",
 ]
-valid = false
 
 [deformatting.Version.test00000009]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+001-0",
 ]
-valid = false
 
 [deformatting.Version.test00000010]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+9_ABC",
 ]
-valid = false
 
 [deformatting.Version.test00000011]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+X-ABC",
 ]
-valid = false
 
 [deformatting.Version.test00000012]
+exceptiontype = "builtins.Exception"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+x.A1",
 ]
-valid = false
 
 [deformatting.Version.test00000013]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "1",
 ]
-valid = true
 
 [deformatting.Version.test00000014]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "1+0",
 ]
-valid = true
 
 [deformatting.Version.test00000015]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "10!2",
 ]
-valid = true
 
 [deformatting.Version.test00000016]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "100",
 ]
-valid = true
 
 [deformatting.Version.test00000017]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "2!1",
 ]
-valid = true
 
 [deformatting.Version.test00000018]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "2!10.20",
 ]
-valid = true
 
 [deformatting.Version.test00000019]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "2!9",
 ]
-valid = true
 
 [deformatting.Version.test00000020]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "42!1",
 ]
-valid = true
 
 [deformatting.Version.test00000021]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "42!10.20",
 ]
-valid = true
 
 [deformatting.Version.test00000022]
+exceptiontype = ""
 solution = ""
 strings = [
     "0",
     "0+0",
     "42!9",
 ]
-valid = true
 
 [deformatting.Version.test00000023]
+exceptiontype = ""
 solution = "+-^"
 strings = [
     "0+9-A1",
 ]
-valid = true
 
 [deformatting.Version.test00000024]
+exceptiontype = ""
 solution = "+^.^^^"
 strings = [
     "0+Foo.FOO",
 ]
-valid = true
 
 [deformatting.Version.test00000025]
+exceptiontype = ""
 solution = "+_"
 strings = [
     "0+foo_9",
 ]
-valid = true
 
 [deformatting.Version.test00000026]
+exceptiontype = ""
 solution = "..#"
 strings = [
     "0.0.0",
 ]
-valid = true
 
 [deformatting.Version.test00000027]
+exceptiontype = ""
 solution = "..#+###-"
 strings = [
     "0.0.0+001-0",
 ]
-valid = true
 
 [deformatting.Version.test00000028]
+exceptiontype = ""
 solution = "..#+.^"
 strings = [
     "0.0.0+x.A1",
 ]
-valid = true
 
 [deformatting.Version.test00000029]
+exceptiontype = ""
 solution = "###!##"
 strings = [
     "001!00",
 ]
-valid = true
 
 [deformatting.Version.test00000030]
+exceptiontype = ""
 solution = "###!###"
 strings = [
     "001!007",
 ]
-valid = true
 
 [deformatting.Version.test00000031]
+exceptiontype = ""
 solution = "###!##+_"
 strings = [
     "001!09+foo_9",
 ]
-valid = true
 
 [deformatting.Version.test00000032]
+exceptiontype = ""
 solution = "###!"
 strings = [
     "001!1.2.3",
 ]
-valid = true
 
 [deformatting.Version.test00000033]
+exceptiontype = ""
 solution = "###!+^.^"
 strings = [
     "001!1.2.3+X.A1",
 ]
-valid = true
 
 [deformatting.Version.test00000034]
+exceptiontype = ""
 solution = "###!+-^"
 strings = [
     "001!1.2.3+x9-A1",
 ]
-valid = true
 
 [deformatting.Version.test00000035]
+exceptiontype = ""
 solution = "###"
 strings = [
     "007",
 ]
-valid = true
 
 [deformatting.Version.test00000036]
+exceptiontype = ""
 solution = "###+_^~^"
 strings = [
     "007+0_AbC",
 ]
-valid = true
 
 [deformatting.Version.test00000037]
+exceptiontype = ""
 solution = "###+^^^-"
 strings = [
     "007+ABC-10",
 ]
-valid = true
 
 [deformatting.Version.test00000038]
+exceptiontype = ""
 solution = "###+.^^"
 strings = [
     "007+a1.AB12",
 ]
-valid = true
 
 [deformatting.Version.test00000039]
+exceptiontype = ""
 solution = "###+_^"
 strings = [
     "007+z99_Foo",
 ]
-valid = true
 
 [deformatting.Version.test00000040]
+exceptiontype = ""
 solution = "##!###"
 strings = [
     "01!001",
 ]
-valid = true
 
 [deformatting.Version.test00000041]
+exceptiontype = ""
 solution = "##!###+-"
 strings = [
     "01!001+x-9",
 ]
-valid = true
 
 [deformatting.Version.test00000042]
+exceptiontype = ""
 solution = "##!.#"
 strings = [
     "01!1.0",
 ]
-valid = true
 
 [deformatting.Version.test00000043]
+exceptiontype = ""
 solution = "##!.#+^^"
 strings = [
     "01!1.0+AB12.1",
 ]
-valid = true
 
 [deformatting.Version.test00000044]
+exceptiontype = ""
 solution = "##!"
 strings = [
     "01!10.20.30",
 ]
-valid = true
 
 [deformatting.Version.test00000045]
+exceptiontype = ""
 solution = "##!+-^"
 strings = [
     "01!10.20.30+1-A1",
 ]
-valid = true
 
 [deformatting.Version.test00000046]
+exceptiontype = ""
 solution = "##!+^^^"
 strings = [
     "01!10.20.30+ABC.2",
 ]
-valid = true
 
 [deformatting.Version.test00000047]
+exceptiontype = ""
 solution = "##!+_^^^"
 strings = [
     "01!10.20.30+a1_ABC",
 ]
-valid = true
 
 [deformatting.Version.test00000048]
+exceptiontype = ""
 solution = "##!+###-"
 strings = [
     "01!99+001-0",
 ]
-valid = true
 
 [deformatting.Version.test00000049]
+exceptiontype = ""
 solution = "##!+.^"
 strings = [
     "01!99+x.A1",
 ]
-valid = true
 
 [deformatting.Version.test00000050]
+exceptiontype = ""
 solution = "###+###_"
 strings = [
     "099+001_ab12",
 ]
-valid = true
 
 [deformatting.Version.test00000051]
+exceptiontype = ""
 solution = "###+^_"
 strings = [
     "099+A1_2",
 ]
-valid = true
 
 [deformatting.Version.test00000052]
+exceptiontype = ""
 solution = "###+^.^^"
 strings = [
     "099+X09.AB12",
 ]
-valid = true
 
 [deformatting.Version.test00000053]
+exceptiontype = ""
 solution = "###+_^^^"
 strings = [
     "099+x9_ABC",
 ]
-valid = true
 
 [deformatting.Version.test00000054]
+exceptiontype = ""
 solution = "-DEV"
 strings = [
     "1!100b2-1DEV5",
 ]
-valid = true
 
 [deformatting.Version.test00000055]
+exceptiontype = ""
 solution = "-DEV+-^"
 strings = [
     "1!100b2-1DEV5+9-A1",
 ]
-valid = true
 
 [deformatting.Version.test00000056]
+exceptiontype = ""
 solution = "-DEV+_"
 strings = [
     "1!100b2-1DEV5+foo_9",
 ]
-valid = true
 
 [deformatting.Version.test00000057]
+exceptiontype = ""
 solution = "rcdev"
 strings = [
     "1!100rcdev1",
 ]
-valid = true
 
 [deformatting.Version.test00000058]
+exceptiontype = ""
 solution = "rcdev+-"
 strings = [
     "1!100rcdev1+x-9",
 ]
-valid = true
 
 [deformatting.Version.test00000059]
+exceptiontype = "builtins.Exception"
 strings = [
     "1+",
 ]
-valid = false
 
 [deformatting.Version.test00000060]
+exceptiontype = "builtins.Exception"
 strings = [
     "1++abc",
 ]
-valid = false
 
 [deformatting.Version.test00000061]
+exceptiontype = "builtins.Exception"
 strings = [
     "1+abc+def",
 ]
-valid = false
 
 [deformatting.Version.test00000062]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.",
 ]
-valid = false
 
 [deformatting.Version.test00000063]
+exceptiontype = "builtins.Exception"
 strings = [
     "1..2",
 ]
-valid = false
 
 [deformatting.Version.test00000064]
+exceptiontype = ""
 solution = ".#"
 strings = [
     "1.0",
 ]
-valid = true
 
 [deformatting.Version.test00000065]
+exceptiontype = ""
 solution = ".#+###-"
 strings = [
     "1.0+001-0",
 ]
-valid = true
 
 [deformatting.Version.test00000066]
+exceptiontype = ""
 solution = ".#+_^^^"
 strings = [
     "1.0+9_ABC",
 ]
-valid = true
 
 [deformatting.Version.test00000067]
+exceptiontype = ""
 solution = ".#+^-^^^"
 strings = [
     "1.0+X-ABC",
 ]
-valid = true
 
 [deformatting.Version.test00000068]
+exceptiontype = ""
 solution = ".#+.^"
 strings = [
     "1.0+x.A1",
 ]
-valid = true
 
 [deformatting.Version.test00000069]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2+abc.",
 ]
-valid = false
 
 [deformatting.Version.test00000070]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2+x+y",
 ]
-valid = false
 
 [deformatting.Version.test00000071]
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2.3",
     "v9.8",
 ]
-valid = false
 
 [deformatting.Version.test00000072]
+exceptiontype = ""
 solution = "..#+###_"
 strings = [
     "10!0.0.0+001_ab12",
 ]
-valid = true
 
 [deformatting.Version.test00000073]
+exceptiontype = ""
 solution = "..#+^_"
 strings = [
     "10!0.0.0+A1_2",
 ]
-valid = true
 
 [deformatting.Version.test00000074]
+exceptiontype = ""
 solution = "###+^^_"
 strings = [
     "10!002+AB12_10",
 ]
-valid = true
 
 [deformatting.Version.test00000075]
+exceptiontype = ""
 solution = "###+-^"
 strings = [
     "10!002+a1-A1",
 ]
-valid = true
 
 [deformatting.Version.test00000076]
+exceptiontype = ""
 solution = "###+.^^^"
 strings = [
     "10!002+z99.FOO",
 ]
-valid = true
 
 [deformatting.Version.test00000077]
+exceptiontype = ""
 solution = "##"
 strings = [
     "10!02",
 ]
-valid = true
 
 [deformatting.Version.test00000078]
+exceptiontype = ""
 solution = "##+-^"
 strings = [
     "10!02+9-A1",
 ]
-valid = true
 
 [deformatting.Version.test00000079]
+exceptiontype = ""
 solution = "##+^.^^^"
 strings = [
     "10!02+Foo.FOO",
 ]
-valid = true
 
 [deformatting.Version.test00000080]
+exceptiontype = ""
 solution = "##+_"
 strings = [
     "10!02+foo_9",
 ]
-valid = true
 
 [deformatting.Version.test00000081]
+exceptiontype = ""
 solution = "..#+^.^"
 strings = [
     "10!1.2.0+X.A1",
 ]
-valid = true
 
 [deformatting.Version.test00000082]
+exceptiontype = ""
 solution = "..#+-^"
 strings = [
     "10!1.2.0+x9-A1",
 ]
-valid = true
 
 [deformatting.Version.test00000083]
+exceptiontype = ""
 solution = "+##-^"
 strings = [
     "10!2+01-X",
 ]
-valid = true
 
 [deformatting.Version.test00000084]
+exceptiontype = ""
 solution = "+^^-##"
 strings = [
     "10!2+AB12-01",
 ]
-valid = true
 
 [deformatting.Version.test00000085]
+exceptiontype = ""
 solution = "+^_^^^"
 strings = [
     "10!2+X09_ABC",
 ]
-valid = true
 
 [deformatting.Version.test00000086]
+exceptiontype = ""
 solution = "+_^~^"
 strings = [
     "10!2+x_AbC",
 ]
-valid = true
 
 [deformatting.Version.test00000087]
+exceptiontype = ""
 solution = "+^^^-"
 strings = [
     "100+ABC-10",
 ]
-valid = true
 
 [deformatting.Version.test00000088]
+exceptiontype = ""
 solution = "+.^^"
 strings = [
     "100+a1.AB12",
 ]
-valid = true
 
 [deformatting.Version.test00000089]
+exceptiontype = ""
 solution = "+_^"
 strings = [
     "100+z99_Foo",
 ]
-valid = true
 
 [deformatting.Version.test00000090]
+exceptiontype = ""
 solution = "##.##.##"
 strings = [
     "2!00.00.00",
 ]
-valid = true
 
 [deformatting.Version.test00000091]
+exceptiontype = ""
 solution = "##.##"
 strings = [
     "2!01.02",
 ]
-valid = true
 
 [deformatting.Version.test00000092]
+exceptiontype = ""
 solution = "+^^^"
 strings = [
     "2!10.20+ABC.2",
 ]
-valid = true
 
 [deformatting.Version.test00000093]
+exceptiontype = ""
 solution = "+_^^^"
 strings = [
     "2!10.20+a1_ABC",
 ]
-valid = true
 
 [deformatting.Version.test00000094]
+exceptiontype = ""
 solution = ".##.###"
 strings = [
     "9!7.08.009",
 ]
-valid = true
 
 [deformatting.Version.test00000095]
+exceptiontype = ""
 solution = "V#!##"
 strings = [
     "V0!00",
 ]
-valid = true
 
 [deformatting.Version.test00000096]
+exceptiontype = ""
 solution = "V#!###"
 strings = [
     "V0!007",
 ]
-valid = true
 
 [deformatting.Version.test00000097]
+exceptiontype = ""
 solution = "V#!"
 strings = [
     "V0!1.2.3",
 ]
-valid = true
 
 [deformatting.Version.test00000098]
+exceptiontype = ""
 solution = "V###!.#"
 strings = [
     "V001!1.0",
 ]
-valid = true
 
 [deformatting.Version.test00000099]
+exceptiontype = ""
 solution = "V###!"
 strings = [
     "V001!10.20.30",
 ]
-valid = true
 
 [deformatting.Version.test00000100]
+exceptiontype = "builtins.Exception"
 strings = [
     "v",
 ]
-valid = false
 
 [deformatting.Version.test00000101]
+exceptiontype = "builtins.Exception"
 strings = [
     "x",
 ]
-valid = false
 
 [epoch."".test_epoch_as_false]
 full = "1.2.3"

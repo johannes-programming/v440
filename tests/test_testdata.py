@@ -68,38 +68,20 @@ class TestDeformatting(unittest.TestCase):
         cls: type[Any],
         /,
         *,
-        valid: bool,
-        **kwargs: Any,
-    ) -> None:
-        with self.subTest(valid=valid):
-            if valid:
-                self.go_blob_valid(cls, **kwargs)
-            else:
-                self.go_blob_invalid(cls, **kwargs)
-
-    def go_blob_invalid(
-        self: Self,
-        cls: type[Any],
-        /,
-        *,
-        strings: list[str],
-        **kwargs: Any,
-    ) -> None:
-        with self.assertRaises(VersionError):
-            cls.deformat(*strings)
-
-    def go_blob_valid(
-        self: Self,
-        cls: type[Any],
-        /,
-        *,
-        solution: str,
+        exceptiontype: str,
+        solution: str | None = None,
         strings: list[str],
         **kwargs: Any,
     ) -> None:
         answer: str
-        answer = cls.deformat(*strings)
-        self.assertEqual(answer, solution)
+        ctx: Any
+        if exceptiontype == "":
+            ctx = contextlib.nullcontext()
+        else:
+            ctx = self.assertRaises(Util.import_(exceptiontype))
+        with ctx:
+            answer = cls.deformat(*strings)
+            self.assertEqual(answer, solution)
 
     def go_cls(
         self: Self,
