@@ -42,18 +42,18 @@ class Dev(QualABC):
         else:
             return (1,)
 
-    @classmethod
-    def _deformat(cls: type[Self], body: str | None = None, /) -> DevDeformat:
-        if body is None:
-            return DevDeformat(
-                clue=Clue(),
-                info=frozendict(),
-            )
-        else:
-            return DevDeformat(
-                clue=Clue.by_example(body),
-                info=frozendict([(body, cls(string=body))]),
-            )
+    def _deformat(self: Self, body: str, /) -> DevDeformat:
+        return DevDeformat(
+            clue=Clue.by_example(body),
+            info=frozendict({body: self}),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> DevDeformat:
+        return DevDeformat(
+            clue=Clue(),
+            info=frozendict(),
+        )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:

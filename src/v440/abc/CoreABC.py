@@ -68,9 +68,12 @@ class CoreABC(Copyable):
     def __str__(self: Self, /) -> str:
         return format(self, "")
 
-    @classmethod
     @abstractmethod
-    def _deformat(cls: type[Self], body: str | None = None, /) -> Any: ...
+    def _deformat(self: Self, body: str) -> Any: ...
+
+    @staticmethod
+    @abstractmethod
+    def _deformat_origin() -> Any: ...
 
     @classmethod
     @abstractmethod
@@ -99,10 +102,10 @@ class CoreABC(Copyable):
     def deformat(cls: type[Self], /, *strings: object) -> str:
         x: str
         y: Any
-        y = cls._deformat()
+        y = cls._deformat_origin()
         try:
             for x in set(map(str, strings)):
-                y &= cls._deformat(x)
+                y &= cls(string=x)._deformat(x)
             return y.best()  # type: ignore[no-any-return]
         except VersionError:
             raise

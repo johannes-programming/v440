@@ -59,25 +59,22 @@ class Public(NestedABC):
     def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
         return self.base, self.qual
 
-    @classmethod
-    def _deformat(
-        cls: type[Self], body: str | None = None, /
-    ) -> PublicDeformat:
+    def _deformat(self: Self, body: str, /) -> PublicDeformat:
         base: str
-        public: Self
         qual: str
-        if body is None:
-            return PublicDeformat(
-                bases=frozenset(),
-                info=frozendict(),
-                quals=frozenset(),
-            )
-        public = cls(string=body)
         base, qual = split_public(body)
         return PublicDeformat(
             bases=frozenset({base}),
-            info=frozendict({body: public}),
+            info=frozendict({body: self}),
             quals=frozenset({qual}),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> PublicDeformat:
+        return PublicDeformat(
+            bases=frozenset(),
+            info=frozendict(),
+            quals=frozenset(),
         )
 
     @classmethod

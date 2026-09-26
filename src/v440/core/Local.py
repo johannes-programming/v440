@@ -135,27 +135,24 @@ class Local(ListABC[int | str]):
     ) -> tuple[int | str, ...]:
         return tuple(map(item_parse, value))
 
-    @classmethod
-    def _deformat(
-        cls: type[Self], body: str | None = None, /
-    ) -> LocalDeformat:
-        local: Self
-        if body is None:
-            return LocalDeformat(
-                info=frozendict(),
-                parts=(),
-            )
-        local = cls(string=body)
+    def _deformat(self: Self, body: str, /) -> LocalDeformat:
         return LocalDeformat(
-            info=frozendict({body: local}),
+            info=frozendict({body: self}),
             parts=(
                 tuple(
                     frozenset({part})
                     for part in Cfg.cfg.patterns["local_splitter"].split(body)
                 )
-                if local
+                if self
                 else ()
             ),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> LocalDeformat:
+        return LocalDeformat(
+            info=frozendict(),
+            parts=(),
         )
 
     @classmethod

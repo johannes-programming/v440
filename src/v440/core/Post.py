@@ -41,18 +41,18 @@ class Post(QualABC):
         else:
             return -1
 
-    @classmethod
-    def _deformat(cls: type[Self], body: str | None = None, /) -> PostDeformat:
-        if body is None:
-            return PostDeformat(
-                clue=Clue(),
-                info=frozendict(),
-            )
-        else:
-            return PostDeformat(
-                clue=Clue.by_example(body),
-                info=frozendict({body: cls(string=body)}),
-            )
+    def _deformat(self: Self, body: str, /) -> PostDeformat:
+        return PostDeformat(
+            clue=Clue.by_example(body),
+            info=frozendict({body: self}),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> PostDeformat:
+        return PostDeformat(
+            clue=Clue(),
+            info=frozendict(),
+        )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:

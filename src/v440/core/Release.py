@@ -93,26 +93,23 @@ class Release(ListABC[int]):
             v.pop()
         return v
 
-    @classmethod
-    def _deformat(
-        cls: type[Self], body: str | None = None, /
-    ) -> ReleaseDeformat:
+    def _deformat(self: Self, body: str, /) -> ReleaseDeformat:
         k: int
-        release: Self
         t: str
-        if body is None:
-            return ReleaseDeformat(
-                end=-1,
-                info=frozendict(),
-                table=(),
-            )
-        release = cls(string=body)
         k = body.count(".")
         t = body.rstrip("0")
         return ReleaseDeformat(
             end=k if k > 0 and (t.endswith(".") or t == "") else -1,
-            info=frozendict({body: release}),
+            info=frozendict({body: self}),
             table=tuple(map(deformat_force, body.split("."))),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> ReleaseDeformat:
+        return ReleaseDeformat(
+            end=-1,
+            info=frozendict(),
+            table=(),
         )
 
     def _delitem(

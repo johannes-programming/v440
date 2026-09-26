@@ -66,25 +66,22 @@ class Version(NestedABC):
     def _cmp(self: Self, /) -> tuple[Public_, Local_]:
         return self.public, self.local
 
-    @classmethod
-    def _deformat(
-        cls: type[Self], body: str | None = None, /
-    ) -> VersionDeformat:
+    def _deformat(self: Self, body: str, /) -> VersionDeformat:
         local: str
         public: str
-        version: Self
-        if body is None:
-            return VersionDeformat(
-                info=frozendict(),
-                locals=frozenset(),
-                publics=frozenset(),
-            )
-        version = cls(string=body)
         public, local = split_version(body)
         return VersionDeformat(
-            info=frozendict({body: version}),
+            info=frozendict({body: self}),
             locals=frozenset({local}),
             publics=frozenset({public}),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> VersionDeformat:
+        return VersionDeformat(
+            info=frozendict(),
+            locals=frozenset(),
+            publics=frozenset(),
         )
 
     @classmethod

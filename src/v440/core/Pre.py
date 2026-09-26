@@ -61,22 +61,21 @@ class Pre(QualABC):
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
 
-    @classmethod
-    def _deformat(cls: type[Self], body: str | None = None, /) -> PreDeformat:
+    def _deformat(self: Self, body: str, /) -> PreDeformat:
         clues: list[Clue]
-        pre: Self
-        if body is None:
-            return PreDeformat(
-                clues=(Clue(), Clue(), Clue()),
-                info=frozendict(),
-            )
-        pre = cls(string=body)
         clues = [Clue(), Clue(), Clue()]
-        if pre:
-            clues[("a", "b", "rc").index(pre.lit)] = Clue.by_example(body)
+        if self:
+            clues[("a", "b", "rc").index(self.lit)] = Clue.by_example(body)
         return PreDeformat(
             clues=(clues[0], clues[1], clues[2]),
-            info=frozendict({body: pre}),
+            info=frozendict({body: self}),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> PreDeformat:
+        return PreDeformat(
+            clues=(Clue(), Clue(), Clue()),
+            info=frozendict(),
         )
 
     @classmethod

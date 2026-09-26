@@ -72,26 +72,27 @@ class Base(NestedABC):
     def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
-    @classmethod
-    def _deformat(cls: type[Self], body: str | None = None, /) -> BaseDeformat:
+    def _deformat(self: Self, body: str, /) -> BaseDeformat:
         epoch: str
         matches: dict[str, str]
-        if body is None:
-            return BaseDeformat(
-                basev=None,
-                epoch_mag=0,
-                epoch_min=None,
-                info=frozendict(),
-                releases=frozenset(),
-            )
         matches = Cfg.fullmatches("base", body)
         epoch = matches["epoch"]
         return BaseDeformat(
             basev=matches["basev"],
             epoch_mag=len(epoch) if epoch.startswith("0") else 0,
             epoch_min=len(epoch),
-            info=frozendict({body: cls(string=body)}),
+            info=frozendict({body: self}),
             releases=frozenset({matches["release"]}),
+        )
+
+    @staticmethod
+    def _deformat_origin() -> BaseDeformat:
+        return BaseDeformat(
+            basev=None,
+            epoch_mag=0,
+            epoch_min=None,
+            info=frozendict(),
+            releases=frozenset(),
         )
 
     @classmethod

@@ -81,29 +81,24 @@ class Qual(NestedABC):
             ans = ("", 0)
         return ans + (self.post, self.dev)
 
-    @staticmethod
-    def _deformat(body: str | None = None, /) -> QualDeformat:
+    def _deformat(self: Self, body: str, /) -> QualDeformat:
         clues: list[Clue]
         matches: dict[str, str]
-        o: Qual
-        if body is None:
-            return QualDeformat()
-        o = Qual(string=body)
         matches = Cfg.fullmatches("qual", body)
         clues = list()
-        if o.pre.lit == "":
+        if self.pre.lit == "":
             clues.append(Clue())
             clues.append(Clue())
             clues.append(Clue())
-        if o.pre.lit == "a":
+        if self.pre.lit == "a":
             clues.append(Clue.by_example(matches["pre"]))
             clues.append(Clue())
             clues.append(Clue())
-        if o.pre.lit == "b":
+        if self.pre.lit == "b":
             clues.append(Clue())
             clues.append(Clue.by_example(matches["pre"]))
             clues.append(Clue())
-        if o.pre.lit == "rc":
+        if self.pre.lit == "rc":
             clues.append(Clue())
             clues.append(Clue())
             clues.append(Clue.by_example(matches["pre"]))
@@ -111,8 +106,12 @@ class Qual(NestedABC):
         clues.append(Clue.by_example(matches["dev"]))
         return QualDeformat(
             clues=tuple(clues),
-            info=frozendict({body: o}),
+            info=frozendict({body: self}),
         )
+
+    @staticmethod
+    def _deformat_origin() -> QualDeformat:
+        return QualDeformat()
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
