@@ -6,12 +6,14 @@ __all__: list[str] = ["Local"]
 
 import operator
 import string as string_
+from dataclasses import dataclass
 from typing import Any, Self
 
+from frozendict import frozendict
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
-from v440._utils.deformatting import OldDeformattable
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
@@ -85,7 +87,47 @@ def item_parse(value: Any, /) -> int | str:
     return ans
 
 
-class Local(OldDeformattable, ListABC[int | str]):
+@dataclass(frozen=True, kw_only=True)
+class LocalDeformat:
+    info: frozendict[str, Local]
+    parts: tuple[frozenset[str], ...]
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        i: int
+        part: frozenset[str]
+        parts: list[frozenset[str]]
+        parts = []
+        for i in range(max(len(self.parts), len(other.parts))):
+            part = (self.parts[i] if i < len(self.parts) else frozenset()) | (
+                other.parts[i] if i < len(other.parts) else frozenset()
+            )
+            if i % 2:
+                if len(part) > 1:
+                    raise ValueError
+            else:
+                deformat_part(set(part))
+            parts.append(part)
+        return type(self)(
+            info=self.info | other.info,
+            parts=tuple(parts),
+        )
+
+    def best(self: Self, /) -> str:
+        i: int
+        part: frozenset[str]
+        parts: list[str]
+        s: str
+        parts = []
+        for i, part in enumerate(self.parts):
+            if i % 2:
+                (s,) = part
+            else:
+                s = deformat_part(set(part))
+            parts.append(s)
+        return "".join(parts).rstrip(".")
+
+
+class Local(NewDeformattable, ListABC[int | str]):
     __slots__ = ()
 
     @classmethod
@@ -95,30 +137,27 @@ class Local(OldDeformattable, ListABC[int | str]):
         return tuple(map(item_parse, value))
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        m: int
-        s: str
-        t: str
-        i: int
-        parts: list[Any]
-        if 0 == len(info):
-            return ""
-        m = max(map(len, info.values()))
-        if m == 0:
-            return ""
-        parts = list(map(set, [""] * (2 * m - 1)))
-        for s in info.keys():
-            if s == "":
-                continue
-            for i, t in enumerate(Cfg.cfg.patterns["local_splitter"].split(s)):
-                parts[i].add(t)
-        for i in range(len(parts)):
-            if i % 2:
-                (parts[i],) = parts[i]
-            else:
-                parts[i] = deformat_part(parts[i])
-        s = "".join(parts).rstrip(".")
-        return s
+    def _deformat(
+        cls: type[Self], body: str | None = None, /
+    ) -> LocalDeformat:
+        local: Self
+        if body is None:
+            return LocalDeformat(
+                info=frozendict(),
+                parts=(),
+            )
+        local = cls(string=body)
+        return LocalDeformat(
+            info=frozendict({body: local}),
+            parts=(
+                tuple(
+                    frozenset({part})
+                    for part in Cfg.cfg.patterns["local_splitter"].split(body)
+                )
+                if local
+                else ()
+            ),
+        )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
