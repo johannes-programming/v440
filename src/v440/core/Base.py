@@ -49,11 +49,13 @@ class BaseDeformat:
             releases=self.releases | other.releases,
         )
 
-    def best(self: Self, /) -> str:
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
         ans = self.basev or ""
         ans += "#" * self.epoch_mag + "!" * bool(self.epoch_mag)
         ans += Release_.deformat(*self.releases)
+        if forbids_empty and not ans:
+            return "#"
         return ans
 
 

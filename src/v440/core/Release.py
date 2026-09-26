@@ -64,7 +64,7 @@ class ReleaseDeformat:
             table=tuple(table),
         )
 
-    def best(self: Self, /) -> str:
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
         i: int
         mag: int
@@ -75,7 +75,10 @@ class ReleaseDeformat:
             elif i == self.end:
                 ans += "#"
             ans += "."
-        return ans.rstrip(".")
+        ans = ans.rstrip(".")
+        if forbids_empty and not ans:
+            return "#"
+        return ans
 
 
 class Release(ListABC[int]):

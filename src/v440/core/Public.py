@@ -39,8 +39,12 @@ class PublicDeformat:
             quals=self.quals | other.quals,
         )
 
-    def best(self: Self, /) -> str:
-        return Base_.deformat(*self.bases) + Qual_.deformat(*self.quals)
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        ans = Base_.deformat(*self.bases) + Qual_.deformat(*self.quals)
+        if forbids_empty and not ans:
+            return "#"
+        return ans
 
 
 class Public(NestedABC):

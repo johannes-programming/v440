@@ -27,15 +27,25 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
+        body: str
+        head: str
         parsed: tuple[Any, ...]
+        spec: str
+        tail: str
         msg: str
         try:
-            parsed = self._format_parse(str(format_spec))
+            spec = str(format_spec)
+            body = spec.strip()
+            if spec and not body:
+                raise ValueError
+            head = spec[: len(spec) - len(spec.lstrip())]
+            tail = spec[len(spec.rstrip()) :]
+            parsed = self._format_parse(body)
         except Exception:
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return str(self._format_parsed(parsed))
+        return head + str(self._format_parsed(parsed)) + tail
 
     @abstractmethod
     @setdoc.basic
@@ -100,13 +110,41 @@ class CoreABC(Copyable):
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
+        ans: str
+        bodies: set[str]
+        body: str
+        head: str
+        heads: set[str]
+        tail: str
+        tails: set[str]
         x: str
         y: Any
         y = cls._deformat_origin()
         try:
-            for x in set(map(str, strings)):
-                y &= cls(string=x)._deformat(x)
-            return y.best()  # type: ignore[no-any-return]
+            bodies = set()
+            heads = set()
+            tails = set()
+            for x in map(str, strings):
+                body = x.strip()
+                if body:
+                    head = x[: len(x) - len(x.lstrip())]
+                    tail = x[len(x.rstrip()) :]
+                else:
+                    head = x
+                    tail = ""
+                bodies.add(body)
+                heads.add(head)
+                tails.add(tail)
+            if strings:
+                (head,) = heads
+                (tail,) = tails
+            else:
+                head = ""
+                tail = ""
+            for body in bodies:
+                y &= cls(string=body)._deformat(body)
+            ans = y.best(forbids_empty=bool(head or tail))
+            return head + ans + tail
         except VersionError:
             raise
         except Exception:
@@ -126,4 +164,4 @@ class CoreABC(Copyable):
     @string.setter
     @setter
     def string(self: Self, value: object, /) -> None:
-        self._string_fset(str(value).lower())
+        self._string_fset(str(value).strip().lower())

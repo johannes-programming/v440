@@ -43,12 +43,16 @@ class VersionDeformat:
             publics=self.publics | other.publics,
         )
 
-    def best(self: Self, /) -> str:
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
         public: str
         local: str
         public = Public_.deformat(*self.publics)
         local = Local_.deformat(*self.locals)
-        return join_version(public, local)
+        ans = join_version(public, local)
+        if forbids_empty and not ans:
+            return "#"
+        return ans
 
 
 class Version(NestedABC):

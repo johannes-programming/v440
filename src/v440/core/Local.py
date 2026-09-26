@@ -108,10 +108,11 @@ class LocalDeformat:
             parts=tuple(parts),
         )
 
-    def best(self: Self, /) -> str:
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         i: int
         part: frozenset[str]
         parts: list[str]
+        ans: str
         s: str
         parts = []
         for i, part in enumerate(self.parts):
@@ -120,7 +121,10 @@ class LocalDeformat:
             else:
                 s = deformat_part(set(part))
             parts.append(s)
-        return "".join(parts).rstrip(".")
+        ans = "".join(parts).rstrip(".")
+        if forbids_empty and not ans:
+            return "#"
+        return ans
 
 
 class Local(ListABC[int | str]):

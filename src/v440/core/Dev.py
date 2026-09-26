@@ -14,8 +14,16 @@ from v440.abc.QualABC import QualABC
 
 
 class DevDeformat(Clue):
-    def best(self: Self, /) -> str:
-        return self.solo(".dev")
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        possible: set[str]
+        ans = self.solo(".dev")
+        if ans or not forbids_empty:
+            return ans
+        if not self.head:
+            return "DEV"
+        possible = self.possible(hollow=".dev", short="DEV") - {""}
+        return min(possible, key=lambda x: (len(x), x))
 
 
 class Dev(QualABC):
