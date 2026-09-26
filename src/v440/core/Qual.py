@@ -5,13 +5,15 @@ from __future__ import annotations
 __all__: list[str] = ["Qual"]
 
 import operator
+from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from frozendict import frozendict
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import OldDeformattable
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
@@ -19,7 +21,47 @@ from v440.core.Post import Post as Post_
 from v440.core.Pre import Pre as Pre_
 
 
-class Qual(OldDeformattable, NestedABC):
+@dataclass(frozen=True, kw_only=True)
+class QualDeformat:
+
+    clues: tuple[Clue, ...] = (Clue(), Clue(), Clue(), Clue(), Clue())
+    info: frozendict[str, Qual] = frozendict()
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            info=self.info | other.info,
+            clues=tuple(map(operator.and_, self.clues, other.clues)),
+        )
+
+    def best(self: Self, /) -> str:
+        s: str
+        t: str
+        matches: dict[str, str]
+        parts: list[str]
+        pos: list[set[str]]
+        sols: list[str]
+        way: tuple[Any, ...]
+        pos = list()
+        pos.append(self.clues[0].possible(hollow="a", short="A"))
+        pos.append(self.clues[1].possible(hollow="b", short="B"))
+        pos.append(self.clues[2].possible(hollow="rc", short="C"))
+        pos.append(self.clues[3].possible(hollow=".post", short="R"))
+        pos.append(self.clues[4].possible(hollow=".dev", short="DEV"))
+        sols = list()
+        for way in iterprod(*pos):
+            s = "".join(way)
+            matches = Cfg.fullmatches("qual_f", s)
+            parts = list()
+            for t in ("a", "b", "rc", "post", "dev"):
+                parts.append(matches[t + "_f"])
+            if way == tuple(parts):
+                sols.append(s)
+        sols.sort()
+        sols.sort(key=len)
+        return sols[0]
+
+
+class Qual(NewDeformattable, NestedABC):
 
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_
@@ -40,59 +82,38 @@ class Qual(OldDeformattable, NestedABC):
             ans = ("", 0)
         return ans + (self.post, self.dev)
 
-    @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        s: str
-        t: str
-        o: Self
+    @staticmethod
+    def _deformat(body: str | None = None, /) -> QualDeformat:
         clues: list[Clue]
         matches: dict[str, str]
-        parts: list[str]
-        pos: list[set[str]]
-        sols: list[str]
-        table: tuple[Clue, ...]
-        way: tuple[Any, ...]
-        table = (Clue(),) * 5
-        for s, o in info.items():
-            matches = Cfg.fullmatches("qual", s)
-            clues = list()
-            if o.pre.lit == "":
-                clues.append(Clue())
-                clues.append(Clue())
-                clues.append(Clue())
-            if o.pre.lit == "a":
-                clues.append(Clue.by_example(matches["pre"]))
-                clues.append(Clue())
-                clues.append(Clue())
-            if o.pre.lit == "b":
-                clues.append(Clue())
-                clues.append(Clue.by_example(matches["pre"]))
-                clues.append(Clue())
-            if o.pre.lit == "rc":
-                clues.append(Clue())
-                clues.append(Clue())
-                clues.append(Clue.by_example(matches["pre"]))
-            clues.append(Clue.by_example(matches["post"]))
-            clues.append(Clue.by_example(matches["dev"]))
-            table = tuple(map(operator.and_, clues, table))
-        pos = list()
-        pos.append(table[0].possible(hollow="a", short="A"))
-        pos.append(table[1].possible(hollow="b", short="B"))
-        pos.append(table[2].possible(hollow="rc", short="C"))
-        pos.append(table[3].possible(hollow=".post", short="R"))
-        pos.append(table[4].possible(hollow=".dev", short="DEV"))
-        sols = list()
-        for way in iterprod(*pos):
-            s = "".join(way)
-            matches = Cfg.fullmatches("qual_f", s)
-            parts = list()
-            for t in ("a", "b", "rc", "post", "dev"):
-                parts.append(matches[t + "_f"])
-            if way == tuple(parts):
-                sols.append(s)
-        sols.sort()
-        sols.sort(key=len)
-        return sols[0]
+        o: Self
+        if body is None:
+            return QualDeformat()
+        o = Qual(body)
+        matches = Cfg.fullmatches("qual", body)
+        clues = list()
+        if o.pre.lit == "":
+            clues.append(Clue())
+            clues.append(Clue())
+            clues.append(Clue())
+        if o.pre.lit == "a":
+            clues.append(Clue.by_example(matches["pre"]))
+            clues.append(Clue())
+            clues.append(Clue())
+        if o.pre.lit == "b":
+            clues.append(Clue())
+            clues.append(Clue.by_example(matches["pre"]))
+            clues.append(Clue())
+        if o.pre.lit == "rc":
+            clues.append(Clue())
+            clues.append(Clue())
+            clues.append(Clue.by_example(matches["pre"]))
+        clues.append(Clue.by_example(matches["post"]))
+        clues.append(Clue.by_example(matches["dev"]))
+        return QualDeformat(
+            clues=tuple(clues),
+            info=frozendict({body: o}),
+        )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
