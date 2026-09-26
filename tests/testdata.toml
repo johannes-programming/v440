@@ -1068,7 +1068,7 @@ strings = [
 
 [deformatting.Base.whitespace-a-000103]
 exceptiontype = ""
-solution = " # "
+solution = " ! "
 strings = [
     " 1 ",
 ]
@@ -9124,11 +9124,50 @@ strings = [
 
 [deformatting.Version.whitespace-c-00000006]
 exceptiontype = ""
-solution = "\r\n#!##+^^^\r\n"
+solution = "\r\n##\r\n"
 strings = [
     "\r\n1!01+foo\r\n",
     "\r\n2!02+bar\r\n",
     "\r\n3!03+baz\r\n",
+    "\r\n4!04+qux\r\n",
+]
+
+[deformatting.Version.whitespace-c-00000006a]
+exceptiontype = ""
+solution = "\r\n#!##\r\n"
+strings = [
+    "\r\n1!01+foo\r\n",
+    "\r\n2!02+bar\r\n",
+    "\r\n0!03+baz\r\n",
+    "\r\n4!04+qux\r\n",
+]
+
+[deformatting.Version.whitespace-c-00000006b]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\r\n1!01+foo\r\n",
+    "\r\n2!02+bar\r\n",
+    "\r\n03!03+baz\r\n",
+    "\r\n4!04+qux\r\n",
+]
+
+[deformatting.Version.whitespace-c-00000006c]
+exceptiontype = ""
+solution = "\r\n##!##\r\n"
+strings = [
+    "\r\n01!01+foo\r\n",
+    "\r\n20!02+bar\r\n",
+    "\r\n30!03+baz\r\n",
+    "\r\n04!04+qux\r\n",
+]
+
+[deformatting.Version.whitespace-c-00000006d]
+exceptiontype = ""
+solution = "\r\n#!##\r\n"
+strings = [
+    "\r\n1!01+foo\r\n",
+    "\r\n2!02+bar\r\n",
+    "\r\n03+baz\r\n",
     "\r\n4!04+qux\r\n",
 ]
 
