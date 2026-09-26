@@ -86,7 +86,7 @@ class Qual(NewDeformattable, NestedABC):
     def _deformat(body: str | None = None, /) -> QualDeformat:
         clues: list[Clue]
         matches: dict[str, str]
-        o: Self
+        o: Qual
         if body is None:
             return QualDeformat()
         o = Qual(string=body)
