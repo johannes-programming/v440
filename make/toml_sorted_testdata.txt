@@ -4,5 +4,9 @@
 --sort
 --all-keys
 --all-keys
+--sort
+--all-keys
+--all-keys
+--all-keys
 --
 tests/testdata.toml
