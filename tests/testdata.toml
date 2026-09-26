@@ -7016,7 +7016,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-a-000121]
-exceptiontype = "v440.VersionError"
+exceptiontype = ""
 solution = "   -"
 strings = [
     "   ",
@@ -9156,8 +9156,7 @@ strings = [
 ]
 
 [deformatting.Version.whitespace-c-00000006d]
-exceptiontype = ""
-solution = "\r\n#!##\r\n"
+exceptiontype = "builtins.Exception"
 strings = [
     "\r\n1!01+foo\r\n",
     "\r\n2!02+bar\r\n",
