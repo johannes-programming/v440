@@ -8187,11 +8187,6 @@ strings = [
     "\n42.24.66\n",
 ]
 
-[deformatting.Version.test00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Version.test00000001]
 exceptiontype = "builtins.Exception"
 strings = [
@@ -9052,7 +9047,7 @@ strings = [
     "  001!1.2.3  ",
 ]
 
-[deformatting.Version.whitespace-c-00000000]
+[deformatting.Version.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
