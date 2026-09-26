@@ -16,6 +16,37 @@ from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
+def deformat_comb(x: int, y: int, /) -> int:
+    if 0 > x * y:
+        if x + y <= 0:
+            return max(x, y)
+        raise ValueError
+    elif 0 < x * y:
+        if x < 0:
+            return max(x, y)
+        if x == y:
+            return x
+        raise ValueError
+    else:
+        return x + y
+
+
+def deformat_force(part: str, /) -> int:
+    if part == "0":
+        return -1
+    if part.startswith("0"):
+        return len(part)
+    return -len(part)
+
+
+def item_parse(value: SupportsIndex, /) -> int:
+    ans: int
+    ans = operator.index(value)
+    if ans < 0:
+        raise ValueError
+    return ans
+
+
 @dataclass(frozen=True, kw_only=True)
 class ReleaseDeformat:
     end: int
@@ -27,7 +58,7 @@ class ReleaseDeformat:
         table: list[int]
         table = [0] * max(len(self.table), len(other.table))
         for i in range(len(table)):
-            table[i] = Release._deformat_comb(
+            table[i] = deformat_comb(
                 self.table[i] if i < len(self.table) else 0,
                 other.table[i] if i < len(other.table) else 0,
             )
@@ -57,7 +88,7 @@ class Release(ListABC[int]):
     @classmethod
     def _data_parse(cls: type[Self], value: list[Any], /) -> list[int]:
         v: list[int]
-        v = list(map(cls._item_parse, value))
+        v = list(map(item_parse, value))
         while v and v[-1] == 0:
             v.pop()
         return v
@@ -81,31 +112,8 @@ class Release(ListABC[int]):
         return ReleaseDeformat(
             end=k if k > 0 and (t.endswith(".") or t == "") else -1,
             info=frozendict({body: release}),
-            table=tuple(map(cls._deformat_force, body.split("."))),
+            table=tuple(map(deformat_force, body.split("."))),
         )
-
-    @classmethod
-    def _deformat_force(cls: type[Self], part: str, /) -> int:
-        if part == "0":
-            return -1
-        if part.startswith("0"):
-            return len(part)
-        return -len(part)
-
-    @classmethod
-    def _deformat_comb(cls: type[Self], x: int, y: int, /) -> int:
-        if 0 > x * y:
-            if x + y <= 0:
-                return max(x, y)
-            raise ValueError
-        elif 0 < x * y:
-            if x < 0:
-                return max(x, y)
-            if x == y:
-                return x
-            raise ValueError
-        else:
-            return x + y
 
     def _delitem(
         self: Self,
@@ -169,14 +177,6 @@ class Release(ListABC[int]):
         index = operator.index(minlen)
         data.extend([0] * max(0, index - len(self)))
         return data
-
-    @classmethod
-    def _item_parse(cls: type[Self], value: SupportsIndex, /) -> int:
-        ans: int
-        ans = operator.index(value)
-        if ans < 0:
-            raise ValueError
-        return ans
 
     def _setitem(
         self: Self, /, key: Any, value: Any, *, minlen: Any = None
