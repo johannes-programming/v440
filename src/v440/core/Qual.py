@@ -5,8 +5,7 @@ from __future__ import annotations
 __all__: list[str] = ["Qual"]
 
 import operator
-from dataclasses import dataclass
-from typing import Any, Final, Self
+from typing import Any, Final, NamedTuple, Self
 
 from iterprod import iterprod
 
@@ -19,15 +18,16 @@ from v440.core.Post import Post as Post_
 from v440.core.Pre import Pre as Pre_
 
 
-@dataclass(frozen=True, kw_only=True)
-class QualDeformat:
+class QualDeformat(NamedTuple):
 
-    clues: tuple[Clue, ...] = (Clue(), Clue(), Clue(), Clue(), Clue())
+    a: Clue = Clue()
+    b: Clue = Clue()
+    rc: Clue = Clue()
+    post: Clue = Clue()
+    dev: Clue = Clue()
 
     def __and__(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            clues=tuple(map(operator.and_, self.clues, other.clues)),
-        )
+        return type(self)(*map(operator.and_, self, other))
 
     def best(self: Self, /) -> str:
         s: str
@@ -38,11 +38,11 @@ class QualDeformat:
         sols: list[str]
         way: tuple[Any, ...]
         pos = list()
-        pos.append(self.clues[0].possible(hollow="a", short="A"))
-        pos.append(self.clues[1].possible(hollow="b", short="B"))
-        pos.append(self.clues[2].possible(hollow="rc", short="C"))
-        pos.append(self.clues[3].possible(hollow=".post", short="R"))
-        pos.append(self.clues[4].possible(hollow=".dev", short="DEV"))
+        pos.append(self[0].possible(hollow="a", short="A"))
+        pos.append(self[1].possible(hollow="b", short="B"))
+        pos.append(self[2].possible(hollow="rc", short="C"))
+        pos.append(self[3].possible(hollow=".post", short="R"))
+        pos.append(self[4].possible(hollow=".dev", short="DEV"))
         sols = list()
         for way in iterprod(*pos):
             s = "".join(way)
@@ -101,9 +101,7 @@ class Qual(NestedABC):
             clues.append(Clue.by_example(matches["pre"]))
         clues.append(Clue.by_example(matches["post"]))
         clues.append(Clue.by_example(matches["dev"]))
-        return QualDeformat(
-            clues=tuple(clues),
-        )
+        return QualDeformat(*clues)
 
     @staticmethod
     def _deformat_origin() -> QualDeformat:
