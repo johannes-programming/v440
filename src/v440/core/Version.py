@@ -17,6 +17,15 @@ from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
 
 
+def split_version(string: str, /) -> abc.Iterable[str]:
+    if string.endswith("+"):
+        raise ValueError
+    if "+" in string:
+        return string.split("+")
+    else:
+        return string, ""
+
+
 @dataclass(frozen=True, kw_only=True)
 class VersionDeformat:
     info: frozendict[str, Version]
@@ -64,7 +73,7 @@ class Version(NestedABC):
                 publics=frozenset(),
             )
         version = cls(string=body)
-        public, local = cls._split(body)
+        public, local = split_version(body)
         return VersionDeformat(
             info=frozendict({body: version}),
             locals=frozenset({local}),
@@ -73,7 +82,7 @@ class Version(NestedABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        return tuple(cls._split(spec))
+        return tuple(split_version(spec))
 
     def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         public_f: str
@@ -96,16 +105,7 @@ class Version(NestedABC):
             return public
 
     def _string_fset(self: Self, value: str, /) -> None:
-        self.public.string, self.local.string = self._split(value)
-
-    @classmethod
-    def _split(cls: type[Self], string: str, /) -> abc.Iterable[str]:
-        if string.endswith("+"):
-            raise ValueError
-        if "+" in string:
-            return string.split("+")
-        else:
-            return string, ""
+        self.public.string, self.local.string = split_version(value)
 
     def _todict(self: Self, /) -> dict[str, Any]:
         return dict(public=self.public, local=self.local)
