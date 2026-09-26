@@ -702,7 +702,7 @@ class TestReleaseAlias(unittest.TestCase):
     def test_0(self: Self, /) -> None:
         x: Any
         y: Any
-        for x, y in Util.util.data["release-key"].items():
+        for x, y in Util.util.data["release-key"][""].items():
             with self.subTest(test_label=x):
                 self.go(**y)
 
