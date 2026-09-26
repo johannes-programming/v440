@@ -31,30 +31,53 @@ def core_split(flat: str, /) -> tuple[str, str, str]:
 
 @dataclass(frozen=True, kw_only=True)
 class CoreAccumulation:
-    head: str
+    insert: int | None
+    white: str
     body: Any
-    tail: str
 
     def __and__(self: Self, other: Self, /) -> Self:
-        (head,) = {self.head, other.head}
+        (white,) = {self.white, other.white}
         body = self.body & other.body
-        (tail,) = {self.tail, other.tail}
-        return type(self)(head=head, body=body, tail=tail)
+        if self.insert is None:
+            insert = other.insert
+        elif other.insert is None:
+            insert = self.insert
+        else:
+            (insert,) = {self.insert, other.insert}
+        return type(self)(white=white, body=body, insert=insert)
 
     def best(self: Self, /) -> str:
-        body_ = self.body.best(forbids_empty=bool(self.head or self.tail))
-        return self.head + body_ + self.tail
+        body_ = self.body.best(forbids_empty=bool(self.white))
+        if self.insert is None:
+            return self.white + body_
+        return self.white[: self.insert] + body_ + self.white[self.insert :]
 
     @classmethod
     def by_parsing(
         cls_: type[Self], /, *, cls: type[Any], string: str
     ) -> Self:
-        head, body_, tail = core_split(string)
-        body = cls(string=string)._deformat(body_)
+        x: str
+        y: str
+        z: str
+        y = string.strip()
+        body = cls(string=string)._deformat(y)
+        if string == "":
+            return cls_(
+                body=body,
+                insert=0,
+                white="",
+            )
+        if y == "":
+            return cls_(
+                body=body,
+                insert=None,
+                white=string,
+            )
+        x, z = string.split(y)
         return cls_(
-            head=head,
             body=body,
-            tail=tail,
+            insert=len(x),
+            white=x + z,
         )
 
 
