@@ -5527,6 +5527,16 @@ solution = [
     5,
 ]
 
+[slicing.Local.test_slicing_6]
+change = [
+    777,
+]
+query = "abc.123.def"
+solution = "abc.777.def"
+start = 1
+stop = 2
+exceptiontype = ""
+
 [slicing.Release.test_slicing_1]
 change = [
     7,
@@ -5582,16 +5592,6 @@ query = "1"
 solution = "1.777"
 start = 3
 stop = 4
-exceptiontype = ""
-
-[slicing.Local.test_slicing_6]
-change = [
-    777,
-]
-query = "abc.123.def"
-solution = "abc.777.def"
-start = 1
-stop = 2
 exceptiontype = ""
 
 [synonymous-to-empty.Base.""]
