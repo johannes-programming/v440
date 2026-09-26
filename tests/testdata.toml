@@ -1066,6 +1066,259 @@ strings = [
     "x",
 ]
 
+[deformatting.Base.whitespace-a-000103]
+exceptiontype = ""
+solution = " # "
+strings = [
+    " 1 ",
+]
+
+[deformatting.Base.whitespace-a-000104]
+exceptiontype = ""
+solution = "	##	"
+strings = [
+    "	01	",
+]
+
+[deformatting.Base.whitespace-a-000105]
+exceptiontype = ""
+solution = "  v	"
+strings = [
+    "  v1	",
+]
+
+[deformatting.Base.whitespace-a-000106]
+exceptiontype = ""
+solution = " ## "
+strings = [
+    " 01 ",
+    " 02 ",
+]
+
+[deformatting.Base.whitespace-a-000106a]
+exceptiontype = ""
+solution = " ## "
+strings = [
+    " 01 ",
+    " 42 ",
+]
+
+[deformatting.Base.whitespace-a-000107]
+exceptiontype = ""
+solution = "	v	"
+strings = [
+    "	v1	",
+    "	v2	",
+]
+
+[deformatting.Base.whitespace-a-000108]
+exceptiontype = ""
+solution = "  ###!.##"
+strings = [
+    "  001!2.03",
+    "  002!3.04",
+]
+
+[deformatting.Base.whitespace-a-000109]
+exceptiontype = ""
+solution = "#  "
+strings = [
+    "1.2  ",
+    "2.3  ",
+]
+
+[deformatting.Base.whitespace-a-000110]
+exceptiontype = "v440.VersionError"
+strings = [
+    " 1 ",
+    "  2 ",
+]
+
+[deformatting.Base.whitespace-a-000111]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	1 ",
+    "	2  ",
+]
+
+[deformatting.Base.whitespace-a-000112]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Base.whitespace-b-00000000]
+exceptiontype = ""
+solution = " #!"
+strings = [
+    " 0!0",
+]
+
+[deformatting.Base.whitespace-b-00000000a]
+exceptiontype = ""
+solution = " !"
+strings = [
+    " 1!0",
+]
+
+[deformatting.Base.whitespace-b-00000001]
+exceptiontype = ""
+solution = "#!..# "
+strings = [
+    "0!0.0.0 ",
+]
+
+[deformatting.Base.whitespace-b-00000001a]
+exceptiontype = ""
+solution = "#!..#\n	"
+strings = [
+    "0!0.0.0\n	",
+]
+
+[deformatting.Base.whitespace-b-00000002]
+exceptiontype = ""
+solution = " #!## "
+strings = [
+    " 0!00 ",
+]
+
+[deformatting.Base.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	#!##.##"
+strings = [
+    "	0!00.00",
+]
+
+[deformatting.Base.whitespace-b-00000004]
+exceptiontype = ""
+solution = "#!###	"
+strings = [
+    "0!001	",
+]
+
+[deformatting.Base.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	#!.#	"
+strings = [
+    "	0!1.0	",
+]
+
+[deformatting.Base.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n#!...#\n"
+strings = [
+    "\n0!1.0.0.0\n",
+]
+
+[deformatting.Base.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	..#	 "
+strings = [
+    " 	0.0.0	 ",
+]
+
+[deformatting.Base.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n##\r\n"
+strings = [
+    "\r\n00\r\n",
+]
+
+[deformatting.Base.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  ##.##  "
+strings = [
+    "  00.00  ",
+]
+
+[deformatting.Base.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Base.whitespace-c-00000001]
+exceptiontype = ""
+solution = " ## "
+strings = [
+    " 1!01 ",
+    " 2!02 ",
+    " 3!03 ",
+]
+
+[deformatting.Base.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	##	"
+strings = [
+    "	1!01	",
+    "	2!02	",
+    "	3!03	",
+]
+
+[deformatting.Base.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\n##\n"
+strings = [
+    "\n1!01\n",
+    "\n2!02\n",
+    "\n3!03\n",
+]
+
+[deformatting.Base.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  ##  "
+strings = [
+    "  1!01  ",
+    "  2!02  ",
+    "  3!03  ",
+    "  4!04  ",
+]
+
+[deformatting.Base.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	##	 "
+strings = [
+    " 	1!01	 ",
+    " 	2!02	 ",
+    " 	3!03	 ",
+    " 	4!04	 ",
+]
+
+[deformatting.Base.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\n##\r\n"
+strings = [
+    "\r\n1!01\r\n",
+    "\r\n2!02\r\n",
+    "\r\n3!03\r\n",
+    "\r\n4!04\r\n",
+]
+
+[deformatting.Base.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 1!01 ",
+    "	2!02 ",
+    " 3!03 ",
+]
+
+[deformatting.Base.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 1!01 ",
+    " 2!02	",
+    " 3!03 ",
+    " 4!04 ",
+]
+
+[deformatting.Base.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\n1!01\n",
+    "\r\n2!02\r\n",
+    "\n3!03\n",
+    "\n4!04\n",
+]
+
 [deformatting.Dev.test00000000]
 exceptiontype = ""
 solution = ""
@@ -1804,6 +2057,237 @@ strings = [
     "devx",
 ]
 
+[deformatting.Dev.whitespace-a-000104]
+exceptiontype = ""
+solution = " .dev "
+strings = [
+    " .dev1 ",
+]
+
+[deformatting.Dev.whitespace-a-000105]
+exceptiontype = ""
+solution = "	dev##	"
+strings = [
+    "	dev01	",
+]
+
+[deformatting.Dev.whitespace-a-000106]
+exceptiontype = ""
+solution = "  -dev	"
+strings = [
+    "  -dev1	",
+]
+
+[deformatting.Dev.whitespace-a-000107]
+exceptiontype = ""
+solution = " dev "
+strings = [
+    " dev1 ",
+    " dev2 ",
+]
+
+[deformatting.Dev.whitespace-a-000108]
+exceptiontype = ""
+solution = "	.dev	"
+strings = [
+    "	.dev1	",
+    "	.dev2	",
+]
+
+[deformatting.Dev.whitespace-a-000109]
+exceptiontype = ""
+solution = "  _dev##"
+strings = [
+    "  _dev01",
+    "  _dev02",
+]
+
+[deformatting.Dev.whitespace-a-000110]
+exceptiontype = ""
+solution = "dev#  "
+strings = [
+    "dev0  ",
+    "dev1  ",
+]
+
+[deformatting.Dev.whitespace-a-000111]
+exceptiontype = "v440.VersionError"
+strings = [
+    " dev1 ",
+    "  dev2 ",
+]
+
+[deformatting.Dev.whitespace-a-000112]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	dev1 ",
+    "	dev2  ",
+]
+
+[deformatting.Dev.whitespace-a-000113]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Dev.whitespace-b-00000000]
+exceptiontype = ""
+solution = " -DEV"
+strings = [
+    " -DEV",
+]
+
+[deformatting.Dev.whitespace-b-00000001]
+exceptiontype = ""
+solution = "-DEV- "
+strings = [
+    "-DEV-1 ",
+]
+
+[deformatting.Dev.whitespace-b-00000002]
+exceptiontype = ""
+solution = " -DEV. "
+strings = [
+    " -DEV.1 ",
+]
+
+[deformatting.Dev.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	-DEV#"
+strings = [
+    "	-DEV0",
+]
+
+[deformatting.Dev.whitespace-b-00000004]
+exceptiontype = ""
+solution = "-DEV_	"
+strings = [
+    "-DEV_1	",
+]
+
+[deformatting.Dev.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	-Dev	"
+strings = [
+    "	-Dev	",
+]
+
+[deformatting.Dev.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n-Dev-\n"
+strings = [
+    "\n-Dev-1\n",
+]
+
+[deformatting.Dev.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	-Dev.	 "
+strings = [
+    " 	-Dev.1	 ",
+]
+
+[deformatting.Dev.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n-Dev#\r\n"
+strings = [
+    "\r\n-Dev0\r\n",
+]
+
+[deformatting.Dev.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  -Dev_  "
+strings = [
+    "  -Dev_1  ",
+]
+
+[deformatting.Dev.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Dev.whitespace-c-00000001]
+exceptiontype = ""
+solution = " -DEV# "
+strings = [
+    " -DEV1 ",
+    " -DEV2 ",
+    " -DEV3 ",
+]
+
+[deformatting.Dev.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	-DEV#	"
+strings = [
+    "	-DEV1	",
+    "	-DEV2	",
+    "	-DEV3	",
+]
+
+[deformatting.Dev.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\n-DEV#\n"
+strings = [
+    "\n-DEV1\n",
+    "\n-DEV2\n",
+    "\n-DEV3\n",
+]
+
+[deformatting.Dev.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  -DEV#  "
+strings = [
+    "  -DEV1  ",
+    "  -DEV2  ",
+    "  -DEV3  ",
+    "  -DEV4  ",
+]
+
+[deformatting.Dev.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	-DEV#	 "
+strings = [
+    " 	-DEV1	 ",
+    " 	-DEV2	 ",
+    " 	-DEV3	 ",
+    " 	-DEV4	 ",
+]
+
+[deformatting.Dev.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\n-DEV#\r\n"
+strings = [
+    "\r\n-DEV1\r\n",
+    "\r\n-DEV2\r\n",
+    "\r\n-DEV3\r\n",
+    "\r\n-DEV4\r\n",
+]
+
+[deformatting.Dev.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " -DEV1 ",
+    "	-DEV2 ",
+    " -DEV3 ",
+]
+
+[deformatting.Dev.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " -DEV1 ",
+    " -DEV2	",
+    " -DEV3 ",
+    " -DEV4 ",
+]
+
+[deformatting.Dev.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\n-DEV1\n",
+    "\r\n-DEV2\r\n",
+    "\n-DEV3\n",
+    "\n-DEV4\n",
+]
+
 [deformatting.Local.test00000000]
 exceptiontype = ""
 solution = ""
@@ -2535,6 +3019,237 @@ strings = [
     "0123_aBcD",
 ]
 
+[deformatting.Local.whitespace-a-000103]
+exceptiontype = ""
+solution = " # "
+strings = [
+    " abc ",
+]
+
+[deformatting.Local.whitespace-a-000104]
+exceptiontype = ""
+solution = "	^^^	"
+strings = [
+    "	ABC	",
+]
+
+[deformatting.Local.whitespace-a-000105]
+exceptiontype = ""
+solution = "  ##	"
+strings = [
+    "  01	",
+]
+
+[deformatting.Local.whitespace-a-000106]
+exceptiontype = ""
+solution = " ^^^ "
+strings = [
+    " ABC ",
+    " DEF ",
+]
+
+[deformatting.Local.whitespace-a-000107]
+exceptiontype = ""
+solution = "	_##	"
+strings = [
+    "	abc_01	",
+    "	def_02	",
+]
+
+[deformatting.Local.whitespace-a-000108]
+exceptiontype = ""
+solution = "  ##"
+strings = [
+    "  01",
+    "  02",
+]
+
+[deformatting.Local.whitespace-a-000109]
+exceptiontype = ""
+solution = "#  "
+strings = [
+    "abc.1  ",
+    "def.2  ",
+]
+
+[deformatting.Local.whitespace-a-000110]
+exceptiontype = "v440.VersionError"
+strings = [
+    " abc ",
+    "  def ",
+]
+
+[deformatting.Local.whitespace-a-000111]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	abc ",
+    "	def  ",
+]
+
+[deformatting.Local.whitespace-a-000112]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Local.whitespace-b-00000000]
+exceptiontype = ""
+solution = " -"
+strings = [
+    " 0-0",
+]
+
+[deformatting.Local.whitespace-b-00000001]
+exceptiontype = ""
+solution = "-### "
+strings = [
+    "0-001 ",
+]
+
+[deformatting.Local.whitespace-b-00000002]
+exceptiontype = ""
+solution = " -## "
+strings = [
+    " 0-01 ",
+]
+
+[deformatting.Local.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	-^"
+strings = [
+    "	0-A1",
+]
+
+[deformatting.Local.whitespace-b-00000004]
+exceptiontype = ""
+solution = "-^^	"
+strings = [
+    "0-AB12	",
+]
+
+[deformatting.Local.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	-^^^	"
+strings = [
+    "	0-ABC	",
+]
+
+[deformatting.Local.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n-^~^\n"
+strings = [
+    "\n0-AbC\n",
+]
+
+[deformatting.Local.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	.###	 "
+strings = [
+    " 	0.001	 ",
+]
+
+[deformatting.Local.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n.##\r\n"
+strings = [
+    "\r\n0.01\r\n",
+]
+
+[deformatting.Local.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  .^  "
+strings = [
+    "  0.A1  ",
+]
+
+[deformatting.Local.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Local.whitespace-c-00000001]
+exceptiontype = ""
+solution = " -### "
+strings = [
+    " 0-001 ",
+    " 0-002 ",
+    " 0-003 ",
+]
+
+[deformatting.Local.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	-###	"
+strings = [
+    "	0-001	",
+    "	0-002	",
+    "	0-003	",
+]
+
+[deformatting.Local.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\n-###\n"
+strings = [
+    "\n0-001\n",
+    "\n0-002\n",
+    "\n0-003\n",
+]
+
+[deformatting.Local.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  -###  "
+strings = [
+    "  0-001  ",
+    "  0-002  ",
+    "  0-003  ",
+    "  0-004  ",
+]
+
+[deformatting.Local.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	-###	 "
+strings = [
+    " 	0-001	 ",
+    " 	0-002	 ",
+    " 	0-003	 ",
+    " 	0-004	 ",
+]
+
+[deformatting.Local.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\n-###\r\n"
+strings = [
+    "\r\n0-001\r\n",
+    "\r\n0-002\r\n",
+    "\r\n0-003\r\n",
+    "\r\n0-004\r\n",
+]
+
+[deformatting.Local.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 0-001 ",
+    "	0-002 ",
+    " 0-003 ",
+]
+
+[deformatting.Local.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 0-001 ",
+    " 0-002	",
+    " 0-003 ",
+    " 0-004 ",
+]
+
+[deformatting.Local.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\n0-001\n",
+    "\r\n0-002\r\n",
+    "\n0-003\n",
+    "\n0-004\n",
+]
+
 [deformatting.Post.test00000000]
 exceptiontype = ""
 solution = ""
@@ -3264,6 +3979,237 @@ strings = [
 exceptiontype = "builtins.Exception"
 strings = [
     "rev.",
+]
+
+[deformatting.Post.whitespace-a-000103]
+exceptiontype = ""
+solution = " .post "
+strings = [
+    " .post1 ",
+]
+
+[deformatting.Post.whitespace-a-000104]
+exceptiontype = ""
+solution = "	post##	"
+strings = [
+    "	post01	",
+]
+
+[deformatting.Post.whitespace-a-000105]
+exceptiontype = ""
+solution = "  -	"
+strings = [
+    "  -1	",
+]
+
+[deformatting.Post.whitespace-a-000106]
+exceptiontype = ""
+solution = " post "
+strings = [
+    " post1 ",
+    " post2 ",
+]
+
+[deformatting.Post.whitespace-a-000107]
+exceptiontype = ""
+solution = "	.post	"
+strings = [
+    "	.post1	",
+    "	.post2	",
+]
+
+[deformatting.Post.whitespace-a-000108]
+exceptiontype = ""
+solution = "  rev"
+strings = [
+    "  rev1",
+    "  rev2",
+]
+
+[deformatting.Post.whitespace-a-000109]
+exceptiontype = ""
+solution = "-  "
+strings = [
+    "-1  ",
+    "-2  ",
+]
+
+[deformatting.Post.whitespace-a-000110]
+exceptiontype = "v440.VersionError"
+strings = [
+    " post1 ",
+    "  post2 ",
+]
+
+[deformatting.Post.whitespace-a-000111]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	post1 ",
+    "	post2  ",
+]
+
+[deformatting.Post.whitespace-a-000112]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Post.whitespace-b-00000000]
+exceptiontype = ""
+solution = " -"
+strings = [
+    " -0",
+]
+
+[deformatting.Post.whitespace-b-00000001]
+exceptiontype = ""
+solution = "-### "
+strings = [
+    "-001 ",
+]
+
+[deformatting.Post.whitespace-b-00000002]
+exceptiontype = ""
+solution = " -## "
+strings = [
+    " -01 ",
+]
+
+[deformatting.Post.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	-R"
+strings = [
+    "	-R",
+]
+
+[deformatting.Post.whitespace-b-00000004]
+exceptiontype = ""
+solution = "-R-#	"
+strings = [
+    "-R-0	",
+]
+
+[deformatting.Post.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	-R-	"
+strings = [
+    "	-R-1	",
+]
+
+[deformatting.Post.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n-R.#\n"
+strings = [
+    "\n-R.0\n",
+]
+
+[deformatting.Post.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	-R.	 "
+strings = [
+    " 	-R.1	 ",
+]
+
+[deformatting.Post.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n-R#\r\n"
+strings = [
+    "\r\n-R0\r\n",
+]
+
+[deformatting.Post.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  -R##  "
+strings = [
+    "  -R01  ",
+]
+
+[deformatting.Post.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Post.whitespace-c-00000001]
+exceptiontype = ""
+solution = " -### "
+strings = [
+    " -001 ",
+    " -002 ",
+    " -003 ",
+]
+
+[deformatting.Post.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	-###	"
+strings = [
+    "	-001	",
+    "	-002	",
+    "	-003	",
+]
+
+[deformatting.Post.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\n-###\n"
+strings = [
+    "\n-001\n",
+    "\n-002\n",
+    "\n-003\n",
+]
+
+[deformatting.Post.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  -###  "
+strings = [
+    "  -001  ",
+    "  -002  ",
+    "  -003  ",
+    "  -004  ",
+]
+
+[deformatting.Post.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	-###	 "
+strings = [
+    " 	-001	 ",
+    " 	-002	 ",
+    " 	-003	 ",
+    " 	-004	 ",
+]
+
+[deformatting.Post.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\n-###\r\n"
+strings = [
+    "\r\n-001\r\n",
+    "\r\n-002\r\n",
+    "\r\n-003\r\n",
+    "\r\n-004\r\n",
+]
+
+[deformatting.Post.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " -001 ",
+    "	-002 ",
+    " -003 ",
+]
+
+[deformatting.Post.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " -001 ",
+    " -002	",
+    " -003 ",
+    " -004 ",
+]
+
+[deformatting.Post.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\n-001\n",
+    "\r\n-002\r\n",
+    "\n-003\n",
+    "\n-004\n",
 ]
 
 [deformatting.Pre.test00000000]
@@ -4014,6 +4960,237 @@ strings = [
     "x",
 ]
 
+[deformatting.Pre.whitespace-a-000105]
+exceptiontype = ""
+solution = " B "
+strings = [
+    " a1 ",
+]
+
+[deformatting.Pre.whitespace-a-000106]
+exceptiontype = ""
+solution = "	alpha	"
+strings = [
+    "	alpha1	",
+]
+
+[deformatting.Pre.whitespace-a-000107]
+exceptiontype = ""
+solution = "  a##	"
+strings = [
+    "  a01	",
+]
+
+[deformatting.Pre.whitespace-a-000108]
+exceptiontype = ""
+solution = " B "
+strings = [
+    " a1 ",
+    " a2 ",
+]
+
+[deformatting.Pre.whitespace-a-000109]
+exceptiontype = ""
+solution = "	beta	"
+strings = [
+    "	beta1	",
+    "	beta2	",
+]
+
+[deformatting.Pre.whitespace-a-000110]
+exceptiontype = ""
+solution = "  A"
+strings = [
+    "  rc1",
+    "  rc2",
+]
+
+[deformatting.Pre.whitespace-a-000111]
+exceptiontype = ""
+solution = "preview  "
+strings = [
+    "preview1  ",
+    "preview2  ",
+]
+
+[deformatting.Pre.whitespace-a-000112]
+exceptiontype = "v440.VersionError"
+strings = [
+    " a1 ",
+    "  a2 ",
+]
+
+[deformatting.Pre.whitespace-a-000113]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	rc1 ",
+    "	rc2  ",
+]
+
+[deformatting.Pre.whitespace-a-000114]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Pre.whitespace-b-00000000]
+exceptiontype = ""
+solution = " -A"
+strings = [
+    " -A",
+]
+
+[deformatting.Pre.whitespace-b-00000001]
+exceptiontype = ""
+solution = "-A- "
+strings = [
+    "-A-1 ",
+]
+
+[deformatting.Pre.whitespace-b-00000002]
+exceptiontype = ""
+solution = " -A. "
+strings = [
+    " -A.1 ",
+]
+
+[deformatting.Pre.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	-A#"
+strings = [
+    "	-A0",
+]
+
+[deformatting.Pre.whitespace-b-00000004]
+exceptiontype = ""
+solution = "-A_	"
+strings = [
+    "-A_1	",
+]
+
+[deformatting.Pre.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	-B	"
+strings = [
+    "	-B	",
+]
+
+[deformatting.Pre.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n-B-\n"
+strings = [
+    "\n-B-1\n",
+]
+
+[deformatting.Pre.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	-B.	 "
+strings = [
+    " 	-B.1	 ",
+]
+
+[deformatting.Pre.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n-B#\r\n"
+strings = [
+    "\r\n-B0\r\n",
+]
+
+[deformatting.Pre.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  -B_  "
+strings = [
+    "  -B_1  ",
+]
+
+[deformatting.Pre.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Pre.whitespace-c-00000001]
+exceptiontype = ""
+solution = " -A# "
+strings = [
+    " -A0 ",
+    " -A1 ",
+    " -A2 ",
+]
+
+[deformatting.Pre.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	-A#	"
+strings = [
+    "	-A0	",
+    "	-A1	",
+    "	-A2	",
+]
+
+[deformatting.Pre.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\n-A#\n"
+strings = [
+    "\n-A0\n",
+    "\n-A1\n",
+    "\n-A2\n",
+]
+
+[deformatting.Pre.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  -A#  "
+strings = [
+    "  -A0  ",
+    "  -A1  ",
+    "  -A2  ",
+    "  -A3  ",
+]
+
+[deformatting.Pre.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	-A#	 "
+strings = [
+    " 	-A0	 ",
+    " 	-A1	 ",
+    " 	-A2	 ",
+    " 	-A3	 ",
+]
+
+[deformatting.Pre.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\n-A#\r\n"
+strings = [
+    "\r\n-A0\r\n",
+    "\r\n-A1\r\n",
+    "\r\n-A2\r\n",
+    "\r\n-A3\r\n",
+]
+
+[deformatting.Pre.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " -A0 ",
+    "	-A1 ",
+    " -A2 ",
+]
+
+[deformatting.Pre.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " -A0 ",
+    " -A1	",
+    " -A2 ",
+    " -A3 ",
+]
+
+[deformatting.Pre.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\n-A0\n",
+    "\r\n-A1\r\n",
+    "\n-A2\n",
+    "\n-A3\n",
+]
+
 [deformatting.Public.test00000000]
 exceptiontype = ""
 solution = ""
@@ -4727,6 +5904,237 @@ strings = [
 exceptiontype = "builtins.Exception"
 strings = [
     "x",
+]
+
+[deformatting.Public.whitespace-a-000101]
+exceptiontype = ""
+solution = " # "
+strings = [
+    " 1 ",
+]
+
+[deformatting.Public.whitespace-a-000102]
+exceptiontype = ""
+solution = "	##	"
+strings = [
+    "	01	",
+]
+
+[deformatting.Public.whitespace-a-000103]
+exceptiontype = ""
+solution = "  v	"
+strings = [
+    "  v1	",
+]
+
+[deformatting.Public.whitespace-a-000104]
+exceptiontype = ""
+solution = " ## "
+strings = [
+    " 01 ",
+    " 02 ",
+]
+
+[deformatting.Public.whitespace-a-000105]
+exceptiontype = ""
+solution = "	v	"
+strings = [
+    "	v1	",
+    "	v2	",
+]
+
+[deformatting.Public.whitespace-a-000106]
+exceptiontype = ""
+solution = "  #"
+strings = [
+    "  1a1",
+    "  2a2",
+]
+
+[deformatting.Public.whitespace-a-000107]
+exceptiontype = ""
+solution = "#  "
+strings = [
+    "1.post1  ",
+    "2.post2  ",
+]
+
+[deformatting.Public.whitespace-a-000108]
+exceptiontype = "v440.VersionError"
+strings = [
+    " 1 ",
+    "  2 ",
+]
+
+[deformatting.Public.whitespace-a-000109]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	1 ",
+    "	2  ",
+]
+
+[deformatting.Public.whitespace-a-000110]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Public.whitespace-b-00000000]
+exceptiontype = ""
+solution = " #!###.###"
+strings = [
+    " 0!001.002",
+]
+
+[deformatting.Public.whitespace-b-00000001]
+exceptiontype = ""
+solution = "#!...# "
+strings = [
+    "0!1.0.0.0 ",
+]
+
+[deformatting.Public.whitespace-b-00000002]
+exceptiontype = ""
+solution = " #! "
+strings = [
+    " 0!100 ",
+]
+
+[deformatting.Public.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	-##"
+strings = [
+    "	0-02",
+]
+
+[deformatting.Public.whitespace-b-00000004]
+exceptiontype = ""
+solution = "..#	"
+strings = [
+    "0.0.0	",
+]
+
+[deformatting.Public.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	###!##	"
+strings = [
+    "	001!00	",
+]
+
+[deformatting.Public.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n###!###\n"
+strings = [
+    "\n001!007\n",
+]
+
+[deformatting.Public.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	###!	 "
+strings = [
+    " 	001!1.2.3	 ",
+]
+
+[deformatting.Public.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n###!-##\r\n"
+strings = [
+    "\r\n001!1.2.3-02\r\n",
+]
+
+[deformatting.Public.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  ###  "
+strings = [
+    "  007  ",
+]
+
+[deformatting.Public.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Public.whitespace-c-00000001]
+exceptiontype = ""
+solution = " V "
+strings = [
+    " V1!1.2.3 ",
+    " V1!42 ",
+    " V10!1 ",
+]
+
+[deformatting.Public.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	V	"
+strings = [
+    "	V1!1.2.3	",
+    "	V1!42	",
+    "	V10!1	",
+]
+
+[deformatting.Public.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\nV\n"
+strings = [
+    "\nV1!1.2.3\n",
+    "\nV1!42\n",
+    "\nV10!1\n",
+]
+
+[deformatting.Public.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  V  "
+strings = [
+    "  V1!1.2.3  ",
+    "  V1!42  ",
+    "  V10!1  ",
+    "  V10!10.20  ",
+]
+
+[deformatting.Public.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	V	 "
+strings = [
+    " 	V1!1.2.3	 ",
+    " 	V1!42	 ",
+    " 	V10!1	 ",
+    " 	V10!10.20	 ",
+]
+
+[deformatting.Public.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\nV\r\n"
+strings = [
+    "\r\nV1!1.2.3\r\n",
+    "\r\nV1!42\r\n",
+    "\r\nV10!1\r\n",
+    "\r\nV10!10.20\r\n",
+]
+
+[deformatting.Public.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " V1!1.2.3 ",
+    "	V1!42 ",
+    " V10!1 ",
+]
+
+[deformatting.Public.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " V1!1.2.3 ",
+    " V1!42	",
+    " V10!1 ",
+    " V10!10.20 ",
+]
+
+[deformatting.Public.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\nV1!1.2.3\n",
+    "\r\nV1!42\r\n",
+    "\nV10!1\n",
+    "\nV10!10.20\n",
 ]
 
 [deformatting.Qual.test00000000]
@@ -5537,6 +6945,237 @@ strings = [
     "x",
 ]
 
+[deformatting.Qual.whitespace-a-000112]
+exceptiontype = ""
+solution = " - "
+strings = [
+    " a1 ",
+]
+
+[deformatting.Qual.whitespace-a-000113]
+exceptiontype = ""
+solution = "	A	"
+strings = [
+    "	.post1	",
+]
+
+[deformatting.Qual.whitespace-a-000114]
+exceptiontype = ""
+solution = "  -	"
+strings = [
+    "  .dev1	",
+]
+
+[deformatting.Qual.whitespace-a-000115]
+exceptiontype = ""
+solution = " - "
+strings = [
+    " a1 ",
+    " a2 ",
+]
+
+[deformatting.Qual.whitespace-a-000116]
+exceptiontype = ""
+solution = "	post	"
+strings = [
+    "	post1	",
+    "	post2	",
+]
+
+[deformatting.Qual.whitespace-a-000117]
+exceptiontype = ""
+solution = "  dev"
+strings = [
+    "  dev1",
+    "  dev2",
+]
+
+[deformatting.Qual.whitespace-a-000118]
+exceptiontype = ""
+solution = "B  "
+strings = [
+    "a1.post2.dev3  ",
+    "a2.post3.dev4  ",
+]
+
+[deformatting.Qual.whitespace-a-000119]
+exceptiontype = "v440.VersionError"
+strings = [
+    " a1 ",
+    "  a2 ",
+]
+
+[deformatting.Qual.whitespace-a-000120]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	post1 ",
+    "	post2  ",
+]
+
+[deformatting.Qual.whitespace-a-000121]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Qual.whitespace-b-00000000]
+exceptiontype = ""
+solution = " -##"
+strings = [
+    " -02",
+]
+
+[deformatting.Qual.whitespace-b-00000001]
+exceptiontype = ""
+solution = "-##DEV "
+strings = [
+    "-02DEV5 ",
+]
+
+[deformatting.Qual.whitespace-b-00000002]
+exceptiontype = ""
+solution = " -##dev "
+strings = [
+    " -02dev1 ",
+]
+
+[deformatting.Qual.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	-"
+strings = [
+    "	-1",
+]
+
+[deformatting.Qual.whitespace-b-00000004]
+exceptiontype = ""
+solution = "--dev	"
+strings = [
+    "-1-dev4	",
+]
+
+[deformatting.Qual.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	-.dev	"
+strings = [
+    "	-1.dev	",
+]
+
+[deformatting.Qual.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n-DEV\n"
+strings = [
+    "\n-1DEV5\n",
+]
+
+[deformatting.Qual.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	-_dev-	 "
+strings = [
+    " 	-1_dev-3	 ",
+]
+
+[deformatting.Qual.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n-dev\r\n"
+strings = [
+    "\r\n-1dev1\r\n",
+]
+
+[deformatting.Qual.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  -  "
+strings = [
+    "  -2  ",
+]
+
+[deformatting.Qual.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Qual.whitespace-c-00000001]
+exceptiontype = ""
+solution = " r "
+strings = [
+    " a1r ",
+    " a1r4 ",
+    " b2r ",
+]
+
+[deformatting.Qual.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	r	"
+strings = [
+    "	a1r	",
+    "	a1r4	",
+    "	b2r	",
+]
+
+[deformatting.Qual.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\nr\n"
+strings = [
+    "\na1r\n",
+    "\na1r4\n",
+    "\nb2r\n",
+]
+
+[deformatting.Qual.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  r  "
+strings = [
+    "  a1r  ",
+    "  a1r4  ",
+    "  b2r  ",
+    "  b2r4  ",
+]
+
+[deformatting.Qual.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	r	 "
+strings = [
+    " 	a1r	 ",
+    " 	a1r4	 ",
+    " 	b2r	 ",
+    " 	b2r4	 ",
+]
+
+[deformatting.Qual.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\nr\r\n"
+strings = [
+    "\r\na1r\r\n",
+    "\r\na1r4\r\n",
+    "\r\nb2r\r\n",
+    "\r\nb2r4\r\n",
+]
+
+[deformatting.Qual.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " a1r ",
+    "	a1r4 ",
+    " b2r ",
+]
+
+[deformatting.Qual.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " a1r ",
+    " a1r4	",
+    " b2r ",
+    " b2r4 ",
+]
+
+[deformatting.Qual.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\na1r\n",
+    "\r\na1r4\r\n",
+    "\nb2r\n",
+    "\nb2r4\n",
+]
+
 [deformatting.Release.test00000000]
 exceptiontype = "builtins.Exception"
 strings = [
@@ -6301,6 +7940,237 @@ strings = [
     "a.1",
 ]
 
+[deformatting.Release.whitespace-a-000104]
+exceptiontype = ""
+solution = " # "
+strings = [
+    " 1 ",
+]
+
+[deformatting.Release.whitespace-a-000105]
+exceptiontype = ""
+solution = "	##	"
+strings = [
+    "	01	",
+]
+
+[deformatting.Release.whitespace-a-000106]
+exceptiontype = ""
+solution = "  ..#	"
+strings = [
+    "  1.2.0	",
+]
+
+[deformatting.Release.whitespace-a-000107]
+exceptiontype = ""
+solution = " ## "
+strings = [
+    " 01 ",
+    " 02 ",
+]
+
+[deformatting.Release.whitespace-a-000108]
+exceptiontype = ""
+solution = "	##.##	"
+strings = [
+    "	01.02	",
+    "	02.03	",
+]
+
+[deformatting.Release.whitespace-a-000109]
+exceptiontype = ""
+solution = "  ..#"
+strings = [
+    "  1.2.0",
+    "  2.3.0",
+]
+
+[deformatting.Release.whitespace-a-000110]
+exceptiontype = ""
+solution = "###.##  "
+strings = [
+    "001.02.3  ",
+    "002.03.4  ",
+]
+
+[deformatting.Release.whitespace-a-000111]
+exceptiontype = "v440.VersionError"
+strings = [
+    " 1 ",
+    "  2 ",
+]
+
+[deformatting.Release.whitespace-a-000112]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	1 ",
+    "	2  ",
+]
+
+[deformatting.Release.whitespace-a-000113]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Release.whitespace-b-00000000]
+exceptiontype = ""
+solution = " .#"
+strings = [
+    " 0.0",
+]
+
+[deformatting.Release.whitespace-b-00000001]
+exceptiontype = ""
+solution = "..# "
+strings = [
+    "0.0.0 ",
+]
+
+[deformatting.Release.whitespace-b-00000002]
+exceptiontype = ""
+solution = " ## "
+strings = [
+    " 00 ",
+]
+
+[deformatting.Release.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	##.##.##"
+strings = [
+    "	00.00.00",
+]
+
+[deformatting.Release.whitespace-b-00000004]
+exceptiontype = ""
+solution = "###	"
+strings = [
+    "000	",
+]
+
+[deformatting.Release.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	####.####.####	"
+strings = [
+    "	0001.0002.0003	",
+]
+
+[deformatting.Release.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n###\n"
+strings = [
+    "\n001\n",
+]
+
+[deformatting.Release.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	##	 "
+strings = [
+    " 	01	 ",
+]
+
+[deformatting.Release.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n##.##.###\r\n"
+strings = [
+    "\r\n01.02.003\r\n",
+]
+
+[deformatting.Release.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  ##.##  "
+strings = [
+    "  01.02.3  ",
+]
+
+[deformatting.Release.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Release.whitespace-c-00000001]
+exceptiontype = ""
+solution = " ##.##.## "
+strings = [
+    " 01.02.03 ",
+    " 10.20.30 ",
+    " 99.88.77 ",
+]
+
+[deformatting.Release.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	##.##.##	"
+strings = [
+    "	01.02.03	",
+    "	10.20.30	",
+    "	99.88.77	",
+]
+
+[deformatting.Release.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\n##.##.##\n"
+strings = [
+    "\n01.02.03\n",
+    "\n10.20.30\n",
+    "\n99.88.77\n",
+]
+
+[deformatting.Release.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  ##.##.##  "
+strings = [
+    "  01.02.03  ",
+    "  10.20.30  ",
+    "  99.88.77  ",
+    "  42.24.66  ",
+]
+
+[deformatting.Release.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	##.##.##	 "
+strings = [
+    " 	01.02.03	 ",
+    " 	10.20.30	 ",
+    " 	99.88.77	 ",
+    " 	42.24.66	 ",
+]
+
+[deformatting.Release.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\n##.##.##\r\n"
+strings = [
+    "\r\n01.02.03\r\n",
+    "\r\n10.20.30\r\n",
+    "\r\n99.88.77\r\n",
+    "\r\n42.24.66\r\n",
+]
+
+[deformatting.Release.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 01.02.03 ",
+    "	10.20.30 ",
+    " 99.88.77 ",
+]
+
+[deformatting.Release.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 01.02.03 ",
+    " 10.20.30	",
+    " 99.88.77 ",
+    " 42.24.66 ",
+]
+
+[deformatting.Release.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\n01.02.03\n",
+    "\r\n10.20.30\r\n",
+    "\n99.88.77\n",
+    "\n42.24.66\n",
+]
+
 [deformatting.Version.test00000000]
 exceptiontype = ""
 solution = ""
@@ -7021,6 +8891,237 @@ strings = [
 exceptiontype = "builtins.Exception"
 strings = [
     "x",
+]
+
+[deformatting.Version.whitespace-a-000102]
+exceptiontype = ""
+solution = " # "
+strings = [
+    " 1 ",
+]
+
+[deformatting.Version.whitespace-a-000103]
+exceptiontype = ""
+solution = "	##	"
+strings = [
+    "	01	",
+]
+
+[deformatting.Version.whitespace-a-000104]
+exceptiontype = ""
+solution = "  v	"
+strings = [
+    "  v1	",
+]
+
+[deformatting.Version.whitespace-a-000105]
+exceptiontype = ""
+solution = " ## "
+strings = [
+    " 01 ",
+    " 02 ",
+]
+
+[deformatting.Version.whitespace-a-000106]
+exceptiontype = ""
+solution = "	v	"
+strings = [
+    "	v1	",
+    "	v2	",
+]
+
+[deformatting.Version.whitespace-a-000107]
+exceptiontype = ""
+solution = "  #"
+strings = [
+    "  1+abc",
+    "  2+def",
+]
+
+[deformatting.Version.whitespace-a-000108]
+exceptiontype = ""
+solution = "#  "
+strings = [
+    "1.2a1+abc.1  ",
+    "2.3a2+def.2  ",
+]
+
+[deformatting.Version.whitespace-a-000109]
+exceptiontype = "v440.VersionError"
+strings = [
+    " 1 ",
+    "  2 ",
+]
+
+[deformatting.Version.whitespace-a-000110]
+exceptiontype = "v440.VersionError"
+strings = [
+    "	1 ",
+    "	2  ",
+]
+
+[deformatting.Version.whitespace-a-000111]
+exceptiontype = "v440.VersionError"
+strings = [
+    "   ",
+]
+
+[deformatting.Version.whitespace-b-00000000]
+exceptiontype = ""
+solution = " +-^"
+strings = [
+    " 0+9-A1",
+]
+
+[deformatting.Version.whitespace-b-00000001]
+exceptiontype = ""
+solution = "+^.^^^ "
+strings = [
+    "0+Foo.FOO ",
+]
+
+[deformatting.Version.whitespace-b-00000002]
+exceptiontype = ""
+solution = " +_ "
+strings = [
+    " 0+foo_9 ",
+]
+
+[deformatting.Version.whitespace-b-00000003]
+exceptiontype = ""
+solution = "	..#"
+strings = [
+    "	0.0.0",
+]
+
+[deformatting.Version.whitespace-b-00000004]
+exceptiontype = ""
+solution = "..#+###-	"
+strings = [
+    "0.0.0+001-0	",
+]
+
+[deformatting.Version.whitespace-b-00000005]
+exceptiontype = ""
+solution = "	..#+.^	"
+strings = [
+    "	0.0.0+x.A1	",
+]
+
+[deformatting.Version.whitespace-b-00000006]
+exceptiontype = ""
+solution = "\n###!##\n"
+strings = [
+    "\n001!00\n",
+]
+
+[deformatting.Version.whitespace-b-00000007]
+exceptiontype = ""
+solution = " 	###!###	 "
+strings = [
+    " 	001!007	 ",
+]
+
+[deformatting.Version.whitespace-b-00000008]
+exceptiontype = ""
+solution = "\r\n###!##+_\r\n"
+strings = [
+    "\r\n001!09+foo_9\r\n",
+]
+
+[deformatting.Version.whitespace-b-00000009]
+exceptiontype = ""
+solution = "  ###!  "
+strings = [
+    "  001!1.2.3  ",
+]
+
+[deformatting.Version.whitespace-c-00000000]
+exceptiontype = ""
+solution = ""
+strings = []
+
+[deformatting.Version.whitespace-c-00000001]
+exceptiontype = ""
+solution = " #!##+^^^ "
+strings = [
+    " 1!01+foo ",
+    " 2!02+bar ",
+    " 3!03+baz ",
+]
+
+[deformatting.Version.whitespace-c-00000002]
+exceptiontype = ""
+solution = "	#!##+^^^	"
+strings = [
+    "	1!01+foo	",
+    "	2!02+bar	",
+    "	3!03+baz	",
+]
+
+[deformatting.Version.whitespace-c-00000003]
+exceptiontype = ""
+solution = "\n#!##+^^^\n"
+strings = [
+    "\n1!01+foo\n",
+    "\n2!02+bar\n",
+    "\n3!03+baz\n",
+]
+
+[deformatting.Version.whitespace-c-00000004]
+exceptiontype = ""
+solution = "  #!##+^^^  "
+strings = [
+    "  1!01+foo  ",
+    "  2!02+bar  ",
+    "  3!03+baz  ",
+    "  4!04+qux  ",
+]
+
+[deformatting.Version.whitespace-c-00000005]
+exceptiontype = ""
+solution = " 	#!##+^^^	 "
+strings = [
+    " 	1!01+foo	 ",
+    " 	2!02+bar	 ",
+    " 	3!03+baz	 ",
+    " 	4!04+qux	 ",
+]
+
+[deformatting.Version.whitespace-c-00000006]
+exceptiontype = ""
+solution = "\r\n#!##+^^^\r\n"
+strings = [
+    "\r\n1!01+foo\r\n",
+    "\r\n2!02+bar\r\n",
+    "\r\n3!03+baz\r\n",
+    "\r\n4!04+qux\r\n",
+]
+
+[deformatting.Version.whitespace-c-00000007]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 1!01+foo ",
+    "	2!02+bar ",
+    " 3!03+baz ",
+]
+
+[deformatting.Version.whitespace-c-00000008]
+exceptiontype = "builtins.Exception"
+strings = [
+    " 1!01+foo ",
+    " 2!02+bar	",
+    " 3!03+baz ",
+    " 4!04+qux ",
+]
+
+[deformatting.Version.whitespace-c-00000009]
+exceptiontype = "builtins.Exception"
+strings = [
+    "\n1!01+foo\n",
+    "\r\n2!02+bar\r\n",
+    "\n3!03+baz\n",
+    "\n4!04+qux\n",
 ]
 
 [epoch."".test_epoch_as_false]
