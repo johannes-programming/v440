@@ -74,6 +74,7 @@ test: dist
 
 toml_sorted: py311
 	conda run -n py311 pip install 'toml_sorted>=2.1,<3' >/dev/null;
+	conda run -n py311 python -m toml_sorted @make/toml_sorted_cfg.txt;
 	conda run -n py311 python -m toml_sorted @make/toml_sorted_pyproject.txt;
 	conda run -n py311 python -m toml_sorted @make/toml_sorted_testdata.txt;
 
