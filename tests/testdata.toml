@@ -7187,6 +7187,11 @@ strings = [
     " rc42 ",
 ]
 
+[deformatting.Release.no-strings]
+exceptiontype = ""
+solution = ""
+strings = []
+
 [deformatting.Release.test00000000]
 exceptiontype = "builtins.Exception"
 strings = [
@@ -8093,11 +8098,6 @@ solution = "  ##.##  "
 strings = [
     "  01.02.3  ",
 ]
-
-[deformatting.Release.no-strings]
-exceptiontype = ""
-solution = ""
-strings = []
 
 [deformatting.Release.whitespace-c-00000001]
 exceptiontype = ""
