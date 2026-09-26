@@ -298,13 +298,12 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
-        bool_: bool | None
+        bool_: bool
         obj: Any
         repr_: str | None
         obj = cls(string=example)
-        bool_ = cast(bool | None, kwargs.get("bool"))
-        if bool_ is not None:
-            self.assertEqual(bool(obj), bool_)
+        bool_ = kwargs.get("bool", True)
+        self.assertEqual(bool(obj), bool_)
         repr_ = cast(str | None, kwargs.get("repr"))
         if repr_ is not None:
             self.assertEqual(repr(obj), repr_)
