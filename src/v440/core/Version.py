@@ -17,6 +17,13 @@ from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
 
 
+def join_version(public: str, local: str = "") -> str:
+    if local:
+        return public + "+" + local
+    else:
+        return public
+
+
 def split_version(string: str, /) -> abc.Iterable[str]:
     if string.endswith("+"):
         raise ValueError
@@ -44,7 +51,7 @@ class VersionDeformat:
         local: str
         public = Public_.deformat(*self.publics)
         local = Local_.deformat(*self.locals)
-        return Version._join(public, local)
+        return join_version(public, local)
 
 
 class Version(NestedABC):
@@ -88,7 +95,7 @@ class Version(NestedABC):
         public_f: str
         local_f: str
         public_f, local_f = parsed
-        return self._join(
+        return join_version(
             format(self.public, public_f),
             format(self.local, local_f),
         )
@@ -96,13 +103,6 @@ class Version(NestedABC):
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_public=Public_, _local=Local_)
-
-    @classmethod
-    def _join(cls: type[Self], /, public: str, local: str = "") -> str:
-        if local:
-            return public + "+" + local
-        else:
-            return public
 
     def _string_fset(self: Self, value: str, /) -> None:
         self.public.string, self.local.string = split_version(value)
