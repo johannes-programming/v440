@@ -5,16 +5,64 @@ from __future__ import annotations
 __all__: list[str] = ["Base"]
 
 import operator
+from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from frozendict import frozendict
+
 from v440._utils.Cfg import Cfg
-from v440._utils.deformatting import OldDeformattable
+from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
 
 
-class Base(OldDeformattable, NestedABC):
+@dataclass(frozen=True, kw_only=True)
+class BaseDeformat:
+    basev: str | None
+    epoch_mag: int
+    epoch_min: int | None
+    info: frozendict[str, Base]
+    releases: frozenset[str]
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        basev: str | None
+        epoch_mag: int
+        epoch_min: int | None
+        if self.basev is None:
+            basev = other.basev
+        elif other.basev is None:
+            basev = self.basev
+        elif self.basev == other.basev:
+            basev = self.basev
+        else:
+            raise ValueError
+        epoch_mag = max(self.epoch_mag, other.epoch_mag)
+        if self.epoch_min is None:
+            epoch_min = other.epoch_min
+        elif other.epoch_min is None:
+            epoch_min = self.epoch_min
+        else:
+            epoch_min = min(self.epoch_min, other.epoch_min)
+        if epoch_min is not None and epoch_mag > epoch_min:
+            raise ValueError
+        return type(self)(
+            basev=basev,
+            epoch_mag=epoch_mag,
+            epoch_min=epoch_min,
+            info=self.info | other.info,
+            releases=self.releases | other.releases,
+        )
+
+    def best(self: Self, /) -> str:
+        ans: str
+        ans = self.basev or ""
+        ans += "#" * self.epoch_mag + "!" * bool(self.epoch_mag)
+        ans += Release_.deformat(*self.releases)
+        return ans
+
+
+class Base(NewDeformattable, NestedABC):
 
     Release: Final[type[Release_]] = Release_
     _epoch: int
@@ -26,39 +74,26 @@ class Base(OldDeformattable, NestedABC):
         return self.epoch, self.release
 
     @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
+    def _deformat(cls: type[Self], body: str | None = None, /) -> BaseDeformat:
+        epoch: str
         matches: dict[str, str]
-        table: dict[str, set[Any]]
-        s: str
-        t: str
-        table = dict()
-        table["basev"] = set()
-        table["epoch"] = set()
-        table["release"] = set()
-        for s in info.keys():
-            matches = Cfg.fullmatches("base", s)
-            for t in ("basev", "epoch", "release"):
-                table[t].add(matches[t])
-        s = cls._deformat_basev(*table["basev"])
-        s += cls._deformat_epoch(*table["epoch"])
-        s += Release_.deformat(*table["release"])
-        return s
-
-    @classmethod
-    def _deformat_basev(cls: type[Self], value: str = "", /) -> str:
-        return value
-
-    @classmethod
-    def _deformat_epoch(cls: type[Self], /, *table: str) -> str:
-        n: int
-        s: str
-        n = 0
-        for s in table:
-            if s.startswith("0"):
-                n = max(n, len(s))
-        if n > min(map(len, table), default=0):
-            raise ValueError
-        return "#" * n + "!" * bool(n)
+        if body is None:
+            return BaseDeformat(
+                basev=None,
+                epoch_mag=0,
+                epoch_min=None,
+                info=frozendict(),
+                releases=frozenset(),
+            )
+        matches = Cfg.fullmatches("base", body)
+        epoch = matches["epoch"]
+        return BaseDeformat(
+            basev=matches["basev"],
+            epoch_mag=len(epoch) if epoch.startswith("0") else 0,
+            epoch_min=len(epoch),
+            info=frozendict({body: cls(string=body)}),
+            releases=frozenset({matches["release"]}),
+        )
 
     @classmethod
     def _format_parse(
