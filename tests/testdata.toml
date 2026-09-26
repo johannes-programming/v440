@@ -302,45 +302,38 @@ queryname = "data"
 solution = []
 exceptiontype = ""
 
-[core-non-attributes.test-0000]
+[core-non-attributes.Base.test-0000]
 string = "0"
-clsname = "Base"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[core-non-attributes.test-0100]
+[core-non-attributes.Local.test-0100]
 string = ""
-clsname = "Local"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[core-non-attributes.test-0200]
+[core-non-attributes.Public.test-0200]
 string = "0"
-clsname = "Public"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[core-non-attributes.test-0300]
+[core-non-attributes.Public.test-0500]
+string = "0"
+attrname = "fdsfvdsff"
+attrvalue = 42
+
+[core-non-attributes.Qual.test-0300]
 string = ""
-clsname = "Qual"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[core-non-attributes.test-0400]
+[core-non-attributes.Release.test-0400]
 string = "0"
-clsname = "Release"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
-[core-non-attributes.test-0500]
+[core-non-attributes.Version.test-0600]
 string = "0"
-clsname = "Public"
-attrname = "fdsfvdsff"
-attrvalue = 42
-
-[core-non-attributes.test-0600]
-string = "0"
-clsname = "Version"
 attrname = "fdsfvdsff"
 attrvalue = 42
 
