@@ -337,107 +337,107 @@ attrname = "fdsfvdsff"
 attrvalue = 42
 string = "0"
 
-[deformatting.Base.00000000]
+[deformatting.Base.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Base.00000001]
+[deformatting.Base.test00000001]
 strings = [
     "!",
 ]
 valid = false
 
-[deformatting.Base.00000002]
+[deformatting.Base.test00000002]
 strings = [
     "!1",
 ]
 valid = false
 
-[deformatting.Base.00000003]
+[deformatting.Base.test00000003]
 strings = [
     "-1",
 ]
 valid = false
 
-[deformatting.Base.00000004]
+[deformatting.Base.test00000004]
 solution = ""
 strings = [
     "0",
 ]
 valid = true
 
-[deformatting.Base.00000005]
+[deformatting.Base.test00000005]
 strings = [
     "0",
     "0!0",
 ]
 valid = false
 
-[deformatting.Base.00000006]
+[deformatting.Base.test00000006]
 strings = [
     "0",
     "0!0.0.0",
 ]
 valid = false
 
-[deformatting.Base.00000007]
+[deformatting.Base.test00000007]
 strings = [
     "0",
     "0!00",
 ]
 valid = false
 
-[deformatting.Base.00000008]
+[deformatting.Base.test00000008]
 strings = [
     "0",
     "0!00.00",
 ]
 valid = false
 
-[deformatting.Base.00000009]
+[deformatting.Base.test00000009]
 strings = [
     "0",
     "0!00.00.00",
 ]
 valid = false
 
-[deformatting.Base.00000010]
+[deformatting.Base.test00000010]
 strings = [
     "0",
     "0!001",
 ]
 valid = false
 
-[deformatting.Base.00000011]
+[deformatting.Base.test00000011]
 strings = [
     "0",
     "0!001.002",
 ]
 valid = false
 
-[deformatting.Base.00000012]
+[deformatting.Base.test00000012]
 strings = [
     "0",
     "0!001.002.003",
 ]
 valid = false
 
-[deformatting.Base.00000013]
+[deformatting.Base.test00000013]
 strings = [
     "0",
     "0!002",
 ]
 valid = false
 
-[deformatting.Base.00000014]
+[deformatting.Base.test00000014]
 strings = [
     "0",
     "0!007",
 ]
 valid = false
 
-[deformatting.Base.00000015]
+[deformatting.Base.test00000015]
 solution = ""
 strings = [
     "0",
@@ -446,7 +446,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000016]
+[deformatting.Base.test00000016]
 solution = ""
 strings = [
     "0",
@@ -455,7 +455,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000017]
+[deformatting.Base.test00000017]
 solution = ""
 strings = [
     "0",
@@ -464,7 +464,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000018]
+[deformatting.Base.test00000018]
 solution = ""
 strings = [
     "0",
@@ -473,7 +473,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000019]
+[deformatting.Base.test00000019]
 solution = ""
 strings = [
     "0",
@@ -482,7 +482,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000020]
+[deformatting.Base.test00000020]
 solution = ""
 strings = [
     "0",
@@ -491,7 +491,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000021]
+[deformatting.Base.test00000021]
 solution = ""
 strings = [
     "0",
@@ -500,7 +500,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000022]
+[deformatting.Base.test00000022]
 solution = ""
 strings = [
     "0",
@@ -509,7 +509,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000023]
+[deformatting.Base.test00000023]
 solution = ""
 strings = [
     "0",
@@ -518,7 +518,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000024]
+[deformatting.Base.test00000024]
 solution = ""
 strings = [
     "0",
@@ -527,906 +527,906 @@ strings = [
 ]
 valid = true
 
-[deformatting.Base.00000025]
+[deformatting.Base.test00000025]
 solution = "#!"
 strings = [
     "0!0",
 ]
 valid = true
 
-[deformatting.Base.00000026]
+[deformatting.Base.test00000026]
 solution = "#!..#"
 strings = [
     "0!0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000027]
+[deformatting.Base.test00000027]
 solution = "#!##"
 strings = [
     "0!00",
 ]
 valid = true
 
-[deformatting.Base.00000028]
+[deformatting.Base.test00000028]
 solution = "#!##.##"
 strings = [
     "0!00.00",
 ]
 valid = true
 
-[deformatting.Base.00000029]
+[deformatting.Base.test00000029]
 solution = "#!###"
 strings = [
     "0!001",
 ]
 valid = true
 
-[deformatting.Base.00000030]
+[deformatting.Base.test00000030]
 solution = "#!.#"
 strings = [
     "0!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000031]
+[deformatting.Base.test00000031]
 solution = "#!...#"
 strings = [
     "0!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000032]
+[deformatting.Base.test00000032]
 solution = "..#"
 strings = [
     "0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000033]
+[deformatting.Base.test00000033]
 solution = "##"
 strings = [
     "00",
 ]
 valid = true
 
-[deformatting.Base.00000034]
+[deformatting.Base.test00000034]
 solution = "##.##"
 strings = [
     "00.00",
 ]
 valid = true
 
-[deformatting.Base.00000035]
+[deformatting.Base.test00000035]
 solution = "###"
 strings = [
     "001",
 ]
 valid = true
 
-[deformatting.Base.00000036]
+[deformatting.Base.test00000036]
 solution = "###!"
 strings = [
     "001!0",
 ]
 valid = true
 
-[deformatting.Base.00000037]
+[deformatting.Base.test00000037]
 solution = "###!..#"
 strings = [
     "001!0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000038]
+[deformatting.Base.test00000038]
 solution = "###!##"
 strings = [
     "001!00",
 ]
 valid = true
 
-[deformatting.Base.00000039]
+[deformatting.Base.test00000039]
 solution = "###!###"
 strings = [
     "001!001",
 ]
 valid = true
 
-[deformatting.Base.00000040]
+[deformatting.Base.test00000040]
 solution = "###!.#"
 strings = [
     "001!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000041]
+[deformatting.Base.test00000041]
 solution = "###.###"
 strings = [
     "001.002",
 ]
 valid = true
 
-[deformatting.Base.00000042]
+[deformatting.Base.test00000042]
 solution = "##!"
 strings = [
     "01!0",
 ]
 valid = true
 
-[deformatting.Base.00000043]
+[deformatting.Base.test00000043]
 solution = "##!..#"
 strings = [
     "01!0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000044]
+[deformatting.Base.test00000044]
 solution = "##!##"
 strings = [
     "01!00",
 ]
 valid = true
 
-[deformatting.Base.00000045]
+[deformatting.Base.test00000045]
 solution = "##!##.##"
 strings = [
     "01!00.00",
 ]
 valid = true
 
-[deformatting.Base.00000046]
+[deformatting.Base.test00000046]
 solution = "##!###"
 strings = [
     "01!001",
 ]
 valid = true
 
-[deformatting.Base.00000047]
+[deformatting.Base.test00000047]
 solution = "##!.#"
 strings = [
     "01!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000048]
+[deformatting.Base.test00000048]
 solution = "##!...#"
 strings = [
     "01!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000049]
+[deformatting.Base.test00000049]
 strings = [
     "1!",
 ]
 valid = false
 
-[deformatting.Base.00000050]
+[deformatting.Base.test00000050]
 solution = ".#"
 strings = [
     "1!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000051]
+[deformatting.Base.test00000051]
 solution = "...#"
 strings = [
     "1!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000052]
+[deformatting.Base.test00000052]
 solution = ".##.###"
 strings = [
     "1!7.08.009",
 ]
 valid = true
 
-[deformatting.Base.00000053]
+[deformatting.Base.test00000053]
 strings = [
     "1+a",
 ]
 valid = false
 
-[deformatting.Base.00000054]
+[deformatting.Base.test00000054]
 strings = [
     "1.",
 ]
 valid = false
 
-[deformatting.Base.00000055]
+[deformatting.Base.test00000055]
 strings = [
     "1..2",
 ]
 valid = false
 
-[deformatting.Base.00000056]
+[deformatting.Base.test00000056]
 strings = [
     "1.2.3",
     "v4.5",
 ]
 valid = false
 
-[deformatting.Base.00000057]
+[deformatting.Base.test00000057]
 solution = "V"
 strings = [
     "V0",
 ]
 valid = true
 
-[deformatting.Base.00000058]
+[deformatting.Base.test00000058]
 solution = "V#!"
 strings = [
     "V0!0",
 ]
 valid = true
 
-[deformatting.Base.00000059]
+[deformatting.Base.test00000059]
 solution = "V#!..#"
 strings = [
     "V0!0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000060]
+[deformatting.Base.test00000060]
 solution = "V#!##"
 strings = [
     "V0!00",
 ]
 valid = true
 
-[deformatting.Base.00000061]
+[deformatting.Base.test00000061]
 solution = "V#!###"
 strings = [
     "V0!001",
 ]
 valid = true
 
-[deformatting.Base.00000062]
+[deformatting.Base.test00000062]
 solution = "V#!.#"
 strings = [
     "V0!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000063]
+[deformatting.Base.test00000063]
 solution = "V#!...#"
 strings = [
     "V0!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000064]
+[deformatting.Base.test00000064]
 solution = "V..#"
 strings = [
     "V0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000065]
+[deformatting.Base.test00000065]
 solution = "V##"
 strings = [
     "V00",
 ]
 valid = true
 
-[deformatting.Base.00000066]
+[deformatting.Base.test00000066]
 solution = "V##.##"
 strings = [
     "V00.00",
 ]
 valid = true
 
-[deformatting.Base.00000067]
+[deformatting.Base.test00000067]
 solution = "V###"
 strings = [
     "V001",
 ]
 valid = true
 
-[deformatting.Base.00000068]
+[deformatting.Base.test00000068]
 solution = "V###!"
 strings = [
     "V001!0",
 ]
 valid = true
 
-[deformatting.Base.00000069]
+[deformatting.Base.test00000069]
 solution = "V###!##"
 strings = [
     "V001!00",
 ]
 valid = true
 
-[deformatting.Base.00000070]
+[deformatting.Base.test00000070]
 solution = "V###!.#"
 strings = [
     "V001!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000071]
+[deformatting.Base.test00000071]
 solution = "V##!"
 strings = [
     "V01!0",
 ]
 valid = true
 
-[deformatting.Base.00000072]
+[deformatting.Base.test00000072]
 solution = "V##!..#"
 strings = [
     "V01!0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000073]
+[deformatting.Base.test00000073]
 solution = "V##!##"
 strings = [
     "V01!00",
 ]
 valid = true
 
-[deformatting.Base.00000074]
+[deformatting.Base.test00000074]
 solution = "V##!###"
 strings = [
     "V01!001",
 ]
 valid = true
 
-[deformatting.Base.00000075]
+[deformatting.Base.test00000075]
 solution = "V##!.#"
 strings = [
     "V01!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000076]
+[deformatting.Base.test00000076]
 solution = "V.#"
 strings = [
     "V1!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000077]
+[deformatting.Base.test00000077]
 solution = "V...#"
 strings = [
     "V1!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000078]
+[deformatting.Base.test00000078]
 strings = [
     "V1.2.3",
     "4.5",
 ]
 valid = false
 
-[deformatting.Base.00000079]
+[deformatting.Base.test00000079]
 strings = [
     "v",
 ]
 valid = false
 
-[deformatting.Base.00000080]
+[deformatting.Base.test00000080]
 solution = "v"
 strings = [
     "v0",
 ]
 valid = true
 
-[deformatting.Base.00000081]
+[deformatting.Base.test00000081]
 solution = "v#!"
 strings = [
     "v0!0",
 ]
 valid = true
 
-[deformatting.Base.00000082]
+[deformatting.Base.test00000082]
 solution = "v#!..#"
 strings = [
     "v0!0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000083]
+[deformatting.Base.test00000083]
 solution = "v#!##"
 strings = [
     "v0!00",
 ]
 valid = true
 
-[deformatting.Base.00000084]
+[deformatting.Base.test00000084]
 solution = "v#!###"
 strings = [
     "v0!001",
 ]
 valid = true
 
-[deformatting.Base.00000085]
+[deformatting.Base.test00000085]
 solution = "v#!.#"
 strings = [
     "v0!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000086]
+[deformatting.Base.test00000086]
 solution = "v#!...#"
 strings = [
     "v0!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000087]
+[deformatting.Base.test00000087]
 solution = "v..#"
 strings = [
     "v0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000088]
+[deformatting.Base.test00000088]
 solution = "v##"
 strings = [
     "v00",
 ]
 valid = true
 
-[deformatting.Base.00000089]
+[deformatting.Base.test00000089]
 solution = "v##.##"
 strings = [
     "v00.00",
 ]
 valid = true
 
-[deformatting.Base.00000090]
+[deformatting.Base.test00000090]
 solution = "v###"
 strings = [
     "v001",
 ]
 valid = true
 
-[deformatting.Base.00000091]
+[deformatting.Base.test00000091]
 solution = "v###!"
 strings = [
     "v001!0",
 ]
 valid = true
 
-[deformatting.Base.00000092]
+[deformatting.Base.test00000092]
 solution = "v###!##"
 strings = [
     "v001!00",
 ]
 valid = true
 
-[deformatting.Base.00000093]
+[deformatting.Base.test00000093]
 solution = "v###!.#"
 strings = [
     "v001!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000094]
+[deformatting.Base.test00000094]
 solution = "v##!"
 strings = [
     "v01!0",
 ]
 valid = true
 
-[deformatting.Base.00000095]
+[deformatting.Base.test00000095]
 solution = "v##!..#"
 strings = [
     "v01!0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000096]
+[deformatting.Base.test00000096]
 solution = "v##!##"
 strings = [
     "v01!00",
 ]
 valid = true
 
-[deformatting.Base.00000097]
+[deformatting.Base.test00000097]
 solution = "v##!###"
 strings = [
     "v01!001",
 ]
 valid = true
 
-[deformatting.Base.00000098]
+[deformatting.Base.test00000098]
 solution = "v##!.#"
 strings = [
     "v01!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000099]
+[deformatting.Base.test00000099]
 solution = "v.#"
 strings = [
     "v1!1.0",
 ]
 valid = true
 
-[deformatting.Base.00000100]
+[deformatting.Base.test00000100]
 solution = "v...#"
 strings = [
     "v1!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Base.00000101]
+[deformatting.Base.test00000101]
 strings = [
     "vv1",
 ]
 valid = false
 
-[deformatting.Base.00000102]
+[deformatting.Base.test00000102]
 strings = [
     "x",
 ]
 valid = false
 
-[deformatting.Dev.00000000]
+[deformatting.Dev.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Dev.00000001]
+[deformatting.Dev.test00000001]
 strings = [
     "--dev1",
 ]
 valid = false
 
-[deformatting.Dev.00000002]
+[deformatting.Dev.test00000002]
 solution = "-DEV"
 strings = [
     "-DEV",
 ]
 valid = true
 
-[deformatting.Dev.00000003]
+[deformatting.Dev.test00000003]
 strings = [
     "-DEV",
     "-DEV-0",
 ]
 valid = false
 
-[deformatting.Dev.00000004]
+[deformatting.Dev.test00000004]
 strings = [
     "-DEV",
     "-DEV-0001",
 ]
 valid = false
 
-[deformatting.Dev.00000005]
+[deformatting.Dev.test00000005]
 strings = [
     "-DEV",
     "-DEV-001",
 ]
 valid = false
 
-[deformatting.Dev.00000006]
+[deformatting.Dev.test00000006]
 strings = [
     "-DEV",
     "-DEV-007",
 ]
 valid = false
 
-[deformatting.Dev.00000007]
+[deformatting.Dev.test00000007]
 strings = [
     "-DEV",
     "-DEV-01",
 ]
 valid = false
 
-[deformatting.Dev.00000008]
+[deformatting.Dev.test00000008]
 strings = [
     "-DEV",
     "-DEV-02",
 ]
 valid = false
 
-[deformatting.Dev.00000009]
+[deformatting.Dev.test00000009]
 strings = [
     "-DEV",
     "-DEV-099",
 ]
 valid = false
 
-[deformatting.Dev.00000010]
+[deformatting.Dev.test00000010]
 strings = [
     "-DEV",
     "-DEV.0",
 ]
 valid = false
 
-[deformatting.Dev.00000011]
+[deformatting.Dev.test00000011]
 strings = [
     "-DEV",
     "-DEV.0001",
 ]
 valid = false
 
-[deformatting.Dev.00000012]
+[deformatting.Dev.test00000012]
 strings = [
     "-DEV",
     "-DEV.001",
 ]
 valid = false
 
-[deformatting.Dev.00000013]
+[deformatting.Dev.test00000013]
 solution = "-DEV-"
 strings = [
     "-DEV-1",
 ]
 valid = true
 
-[deformatting.Dev.00000014]
+[deformatting.Dev.test00000014]
 solution = "-DEV."
 strings = [
     "-DEV.1",
 ]
 valid = true
 
-[deformatting.Dev.00000015]
+[deformatting.Dev.test00000015]
 solution = "-DEV#"
 strings = [
     "-DEV0",
 ]
 valid = true
 
-[deformatting.Dev.00000016]
+[deformatting.Dev.test00000016]
 solution = "-DEV_"
 strings = [
     "-DEV_1",
 ]
 valid = true
 
-[deformatting.Dev.00000017]
+[deformatting.Dev.test00000017]
 solution = "-Dev"
 strings = [
     "-Dev",
 ]
 valid = true
 
-[deformatting.Dev.00000018]
+[deformatting.Dev.test00000018]
 solution = "-Dev-"
 strings = [
     "-Dev-1",
 ]
 valid = true
 
-[deformatting.Dev.00000019]
+[deformatting.Dev.test00000019]
 solution = "-Dev."
 strings = [
     "-Dev.1",
 ]
 valid = true
 
-[deformatting.Dev.00000020]
+[deformatting.Dev.test00000020]
 solution = "-Dev#"
 strings = [
     "-Dev0",
 ]
 valid = true
 
-[deformatting.Dev.00000021]
+[deformatting.Dev.test00000021]
 solution = "-Dev_"
 strings = [
     "-Dev_1",
 ]
 valid = true
 
-[deformatting.Dev.00000022]
+[deformatting.Dev.test00000022]
 solution = "-deV"
 strings = [
     "-deV",
 ]
 valid = true
 
-[deformatting.Dev.00000023]
+[deformatting.Dev.test00000023]
 solution = "-deV-"
 strings = [
     "-deV-1",
 ]
 valid = true
 
-[deformatting.Dev.00000024]
+[deformatting.Dev.test00000024]
 solution = "-deV."
 strings = [
     "-deV.1",
 ]
 valid = true
 
-[deformatting.Dev.00000025]
+[deformatting.Dev.test00000025]
 solution = "-deV#"
 strings = [
     "-deV0",
 ]
 valid = true
 
-[deformatting.Dev.00000026]
+[deformatting.Dev.test00000026]
 solution = "-deV_"
 strings = [
     "-deV_1",
 ]
 valid = true
 
-[deformatting.Dev.00000027]
+[deformatting.Dev.test00000027]
 solution = "-dev"
 strings = [
     "-dev",
 ]
 valid = true
 
-[deformatting.Dev.00000028]
+[deformatting.Dev.test00000028]
 solution = "-dev-"
 strings = [
     "-dev-1",
 ]
 valid = true
 
-[deformatting.Dev.00000029]
+[deformatting.Dev.test00000029]
 solution = "-dev."
 strings = [
     "-dev.1",
 ]
 valid = true
 
-[deformatting.Dev.00000030]
+[deformatting.Dev.test00000030]
 solution = "-dev#"
 strings = [
     "-dev0",
 ]
 valid = true
 
-[deformatting.Dev.00000031]
+[deformatting.Dev.test00000031]
 solution = "-dev_"
 strings = [
     "-dev_1",
 ]
 valid = true
 
-[deformatting.Dev.00000032]
+[deformatting.Dev.test00000032]
 solution = ".DEV"
 strings = [
     ".DEV",
 ]
 valid = true
 
-[deformatting.Dev.00000033]
+[deformatting.Dev.test00000033]
 solution = ".DEV-"
 strings = [
     ".DEV-1",
 ]
 valid = true
 
-[deformatting.Dev.00000034]
+[deformatting.Dev.test00000034]
 solution = ".DEV."
 strings = [
     ".DEV.1",
 ]
 valid = true
 
-[deformatting.Dev.00000035]
+[deformatting.Dev.test00000035]
 solution = ".DEV#"
 strings = [
     ".DEV0",
 ]
 valid = true
 
-[deformatting.Dev.00000036]
+[deformatting.Dev.test00000036]
 solution = ".DEV_"
 strings = [
     ".DEV_1",
 ]
 valid = true
 
-[deformatting.Dev.00000037]
+[deformatting.Dev.test00000037]
 solution = ".Dev"
 strings = [
     ".Dev",
 ]
 valid = true
 
-[deformatting.Dev.00000038]
+[deformatting.Dev.test00000038]
 solution = ".Dev-"
 strings = [
     ".Dev-1",
 ]
 valid = true
 
-[deformatting.Dev.00000039]
+[deformatting.Dev.test00000039]
 solution = ".Dev."
 strings = [
     ".Dev.1",
 ]
 valid = true
 
-[deformatting.Dev.00000040]
+[deformatting.Dev.test00000040]
 solution = ".Dev#"
 strings = [
     ".Dev0",
 ]
 valid = true
 
-[deformatting.Dev.00000041]
+[deformatting.Dev.test00000041]
 solution = ".Dev_"
 strings = [
     ".Dev_1",
 ]
 valid = true
 
-[deformatting.Dev.00000042]
+[deformatting.Dev.test00000042]
 solution = ".deV"
 strings = [
     ".deV",
 ]
 valid = true
 
-[deformatting.Dev.00000043]
+[deformatting.Dev.test00000043]
 solution = ".deV-"
 strings = [
     ".deV-1",
 ]
 valid = true
 
-[deformatting.Dev.00000044]
+[deformatting.Dev.test00000044]
 solution = ".deV."
 strings = [
     ".deV.1",
 ]
 valid = true
 
-[deformatting.Dev.00000045]
+[deformatting.Dev.test00000045]
 solution = ".deV#"
 strings = [
     ".deV0",
 ]
 valid = true
 
-[deformatting.Dev.00000046]
+[deformatting.Dev.test00000046]
 solution = ".deV_"
 strings = [
     ".deV_1",
 ]
 valid = true
 
-[deformatting.Dev.00000047]
+[deformatting.Dev.test00000047]
 solution = ".dev"
 strings = [
     ".dev",
 ]
 valid = true
 
-[deformatting.Dev.00000048]
+[deformatting.Dev.test00000048]
 solution = ".dev-"
 strings = [
     ".dev-1",
 ]
 valid = true
 
-[deformatting.Dev.00000049]
+[deformatting.Dev.test00000049]
 strings = [
     ".dev.",
 ]
 valid = false
 
-[deformatting.Dev.00000050]
+[deformatting.Dev.test00000050]
 solution = ".dev."
 strings = [
     ".dev.1",
 ]
 valid = true
 
-[deformatting.Dev.00000051]
+[deformatting.Dev.test00000051]
 solution = ""
 strings = [
     ".dev0",
 ]
 valid = true
 
-[deformatting.Dev.00000052]
+[deformatting.Dev.test00000052]
 solution = ""
 strings = [
     ".dev0",
@@ -1435,7 +1435,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000053]
+[deformatting.Dev.test00000053]
 solution = ""
 strings = [
     ".dev0",
@@ -1444,7 +1444,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000054]
+[deformatting.Dev.test00000054]
 solution = ""
 strings = [
     ".dev0",
@@ -1453,7 +1453,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000055]
+[deformatting.Dev.test00000055]
 solution = ""
 strings = [
     ".dev0",
@@ -1462,7 +1462,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000056]
+[deformatting.Dev.test00000056]
 solution = ""
 strings = [
     ".dev0",
@@ -1471,7 +1471,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000057]
+[deformatting.Dev.test00000057]
 solution = ""
 strings = [
     ".dev0",
@@ -1480,7 +1480,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000058]
+[deformatting.Dev.test00000058]
 solution = ""
 strings = [
     ".dev0",
@@ -1489,7 +1489,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000059]
+[deformatting.Dev.test00000059]
 solution = ""
 strings = [
     ".dev0",
@@ -1498,7 +1498,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000060]
+[deformatting.Dev.test00000060]
 solution = ""
 strings = [
     ".dev0",
@@ -1507,7 +1507,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000061]
+[deformatting.Dev.test00000061]
 solution = ""
 strings = [
     ".dev0",
@@ -1516,179 +1516,179 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000062]
+[deformatting.Dev.test00000062]
 solution = ".dev_"
 strings = [
     ".dev_1",
 ]
 valid = true
 
-[deformatting.Dev.00000063]
+[deformatting.Dev.test00000063]
 strings = [
     "1dev",
 ]
 valid = false
 
-[deformatting.Dev.00000064]
+[deformatting.Dev.test00000064]
 solution = "DEV"
 strings = [
     "DEV",
 ]
 valid = true
 
-[deformatting.Dev.00000065]
+[deformatting.Dev.test00000065]
 solution = "DEV-#"
 strings = [
     "DEV-0",
 ]
 valid = true
 
-[deformatting.Dev.00000066]
+[deformatting.Dev.test00000066]
 solution = "DEV-"
 strings = [
     "DEV-1",
 ]
 valid = true
 
-[deformatting.Dev.00000067]
+[deformatting.Dev.test00000067]
 solution = "DEV.#"
 strings = [
     "DEV.0",
 ]
 valid = true
 
-[deformatting.Dev.00000068]
+[deformatting.Dev.test00000068]
 solution = "DEV."
 strings = [
     "DEV.1",
 ]
 valid = true
 
-[deformatting.Dev.00000069]
+[deformatting.Dev.test00000069]
 solution = "DEV#"
 strings = [
     "DEV0",
 ]
 valid = true
 
-[deformatting.Dev.00000070]
+[deformatting.Dev.test00000070]
 solution = "DEV##"
 strings = [
     "DEV01",
 ]
 valid = true
 
-[deformatting.Dev.00000071]
+[deformatting.Dev.test00000071]
 solution = "DEV_#"
 strings = [
     "DEV_0",
 ]
 valid = true
 
-[deformatting.Dev.00000072]
+[deformatting.Dev.test00000072]
 solution = "DEV_"
 strings = [
     "DEV_1",
 ]
 valid = true
 
-[deformatting.Dev.00000073]
+[deformatting.Dev.test00000073]
 solution = "Dev"
 strings = [
     "Dev",
 ]
 valid = true
 
-[deformatting.Dev.00000074]
+[deformatting.Dev.test00000074]
 solution = "Dev-#"
 strings = [
     "Dev-0",
 ]
 valid = true
 
-[deformatting.Dev.00000075]
+[deformatting.Dev.test00000075]
 solution = "Dev-"
 strings = [
     "Dev-1",
 ]
 valid = true
 
-[deformatting.Dev.00000076]
+[deformatting.Dev.test00000076]
 solution = "Dev."
 strings = [
     "Dev.1",
 ]
 valid = true
 
-[deformatting.Dev.00000077]
+[deformatting.Dev.test00000077]
 solution = "Dev#"
 strings = [
     "Dev0",
 ]
 valid = true
 
-[deformatting.Dev.00000078]
+[deformatting.Dev.test00000078]
 solution = "Dev##"
 strings = [
     "Dev01",
 ]
 valid = true
 
-[deformatting.Dev.00000079]
+[deformatting.Dev.test00000079]
 solution = "Dev_"
 strings = [
     "Dev_1",
 ]
 valid = true
 
-[deformatting.Dev.00000080]
+[deformatting.Dev.test00000080]
 solution = "_DEV"
 strings = [
     "_DEV",
 ]
 valid = true
 
-[deformatting.Dev.00000081]
+[deformatting.Dev.test00000081]
 solution = "_Dev"
 strings = [
     "_Dev",
 ]
 valid = true
 
-[deformatting.Dev.00000082]
+[deformatting.Dev.test00000082]
 solution = "_deV"
 strings = [
     "_deV",
 ]
 valid = true
 
-[deformatting.Dev.00000083]
+[deformatting.Dev.test00000083]
 solution = "_dev"
 strings = [
     "_dev",
 ]
 valid = true
 
-[deformatting.Dev.00000084]
+[deformatting.Dev.test00000084]
 strings = [
     "d",
 ]
 valid = false
 
-[deformatting.Dev.00000085]
+[deformatting.Dev.test00000085]
 strings = [
     "de",
 ]
 valid = false
 
-[deformatting.Dev.00000086]
+[deformatting.Dev.test00000086]
 solution = "deV"
 strings = [
     "deV",
 ]
 valid = true
 
-[deformatting.Dev.00000087]
+[deformatting.Dev.test00000087]
 solution = "deV_"
 strings = [
     "deV",
@@ -1696,49 +1696,49 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000088]
+[deformatting.Dev.test00000088]
 solution = "deV-"
 strings = [
     "deV-1",
 ]
 valid = true
 
-[deformatting.Dev.00000089]
+[deformatting.Dev.test00000089]
 solution = "deV."
 strings = [
     "deV.1",
 ]
 valid = true
 
-[deformatting.Dev.00000090]
+[deformatting.Dev.test00000090]
 solution = "deV#"
 strings = [
     "deV0",
 ]
 valid = true
 
-[deformatting.Dev.00000091]
+[deformatting.Dev.test00000091]
 solution = "deV_"
 strings = [
     "deV_1",
 ]
 valid = true
 
-[deformatting.Dev.00000092]
+[deformatting.Dev.test00000092]
 solution = "dev"
 strings = [
     "dev",
 ]
 valid = true
 
-[deformatting.Dev.00000093]
+[deformatting.Dev.test00000093]
 strings = [
     "dev",
     "deV_1",
 ]
 valid = false
 
-[deformatting.Dev.00000094]
+[deformatting.Dev.test00000094]
 solution = "dev."
 strings = [
     "dev",
@@ -1746,89 +1746,89 @@ strings = [
 ]
 valid = true
 
-[deformatting.Dev.00000095]
+[deformatting.Dev.test00000095]
 strings = [
     "dev-",
 ]
 valid = false
 
-[deformatting.Dev.00000096]
+[deformatting.Dev.test00000096]
 solution = "dev-"
 strings = [
     "dev-1",
 ]
 valid = true
 
-[deformatting.Dev.00000097]
+[deformatting.Dev.test00000097]
 strings = [
     "dev.",
 ]
 valid = false
 
-[deformatting.Dev.00000098]
+[deformatting.Dev.test00000098]
 solution = "dev."
 strings = [
     "dev.1",
 ]
 valid = true
 
-[deformatting.Dev.00000099]
+[deformatting.Dev.test00000099]
 solution = "dev#"
 strings = [
     "dev0",
 ]
 valid = true
 
-[deformatting.Dev.00000100]
+[deformatting.Dev.test00000100]
 strings = [
     "dev1x",
 ]
 valid = false
 
-[deformatting.Dev.00000101]
+[deformatting.Dev.test00000101]
 strings = [
     "dev_",
 ]
 valid = false
 
-[deformatting.Dev.00000102]
+[deformatting.Dev.test00000102]
 solution = "dev_"
 strings = [
     "dev_1",
 ]
 valid = true
 
-[deformatting.Dev.00000103]
+[deformatting.Dev.test00000103]
 strings = [
     "devx",
 ]
 valid = false
 
-[deformatting.Local.00000000]
+[deformatting.Local.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Local.00000001]
+[deformatting.Local.test00000001]
 strings = [
     "+",
 ]
 valid = false
 
-[deformatting.Local.00000002]
+[deformatting.Local.test00000002]
 strings = [
     ".abc",
 ]
 valid = false
 
-[deformatting.Local.00000003]
+[deformatting.Local.test00000003]
 solution = ""
 strings = [
     "0",
 ]
 valid = true
 
-[deformatting.Local.00000004]
+[deformatting.Local.test00000004]
 solution = ""
 strings = [
     "0",
@@ -1837,7 +1837,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000005]
+[deformatting.Local.test00000005]
 solution = ""
 strings = [
     "0",
@@ -1846,7 +1846,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000006]
+[deformatting.Local.test00000006]
 solution = ""
 strings = [
     "0",
@@ -1855,7 +1855,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000007]
+[deformatting.Local.test00000007]
 solution = ""
 strings = [
     "0",
@@ -1864,7 +1864,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000008]
+[deformatting.Local.test00000008]
 solution = ""
 strings = [
     "0",
@@ -1873,7 +1873,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000009]
+[deformatting.Local.test00000009]
 solution = ""
 strings = [
     "0",
@@ -1882,7 +1882,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000010]
+[deformatting.Local.test00000010]
 solution = ""
 strings = [
     "0",
@@ -1891,7 +1891,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000011]
+[deformatting.Local.test00000011]
 solution = ""
 strings = [
     "0",
@@ -1900,7 +1900,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000012]
+[deformatting.Local.test00000012]
 solution = ""
 strings = [
     "0",
@@ -1909,7 +1909,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000013]
+[deformatting.Local.test00000013]
 solution = ""
 strings = [
     "0",
@@ -1918,608 +1918,608 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000014]
+[deformatting.Local.test00000014]
 strings = [
     "0",
     "001",
 ]
 valid = false
 
-[deformatting.Local.00000015]
+[deformatting.Local.test00000015]
 strings = [
     "0",
     "001-0",
 ]
 valid = false
 
-[deformatting.Local.00000016]
+[deformatting.Local.test00000016]
 strings = [
     "0",
     "001-001",
 ]
 valid = false
 
-[deformatting.Local.00000017]
+[deformatting.Local.test00000017]
 strings = [
     "0",
     "001-002-003",
 ]
 valid = false
 
-[deformatting.Local.00000018]
+[deformatting.Local.test00000018]
 strings = [
     "0",
     "001-002.003",
 ]
 valid = false
 
-[deformatting.Local.00000019]
+[deformatting.Local.test00000019]
 strings = [
     "0",
     "001-002_003",
 ]
 valid = false
 
-[deformatting.Local.00000020]
+[deformatting.Local.test00000020]
 strings = [
     "0",
     "001-01",
 ]
 valid = false
 
-[deformatting.Local.00000021]
+[deformatting.Local.test00000021]
 strings = [
     "0",
     "001-1",
 ]
 valid = false
 
-[deformatting.Local.00000022]
+[deformatting.Local.test00000022]
 strings = [
     "0",
     "001-10",
 ]
 valid = false
 
-[deformatting.Local.00000023]
+[deformatting.Local.test00000023]
 strings = [
     "0",
     "001-2",
 ]
 valid = false
 
-[deformatting.Local.00000024]
+[deformatting.Local.test00000024]
 solution = "-"
 strings = [
     "0-0",
 ]
 valid = true
 
-[deformatting.Local.00000025]
+[deformatting.Local.test00000025]
 solution = "-###"
 strings = [
     "0-001",
 ]
 valid = true
 
-[deformatting.Local.00000026]
+[deformatting.Local.test00000026]
 solution = "-##"
 strings = [
     "0-01",
 ]
 valid = true
 
-[deformatting.Local.00000027]
+[deformatting.Local.test00000027]
 solution = "-^"
 strings = [
     "0-A1",
 ]
 valid = true
 
-[deformatting.Local.00000028]
+[deformatting.Local.test00000028]
 solution = "-^^"
 strings = [
     "0-AB12",
 ]
 valid = true
 
-[deformatting.Local.00000029]
+[deformatting.Local.test00000029]
 solution = "-^^^"
 strings = [
     "0-ABC",
 ]
 valid = true
 
-[deformatting.Local.00000030]
+[deformatting.Local.test00000030]
 solution = "-^~^"
 strings = [
     "0-AbC",
 ]
 valid = true
 
-[deformatting.Local.00000031]
+[deformatting.Local.test00000031]
 solution = ".###"
 strings = [
     "0.001",
 ]
 valid = true
 
-[deformatting.Local.00000032]
+[deformatting.Local.test00000032]
 solution = ".##"
 strings = [
     "0.01",
 ]
 valid = true
 
-[deformatting.Local.00000033]
+[deformatting.Local.test00000033]
 solution = ".^"
 strings = [
     "0.A1",
 ]
 valid = true
 
-[deformatting.Local.00000034]
+[deformatting.Local.test00000034]
 solution = ".^^"
 strings = [
     "0.AB12",
 ]
 valid = true
 
-[deformatting.Local.00000035]
+[deformatting.Local.test00000035]
 solution = ".^^^"
 strings = [
     "0.ABC",
 ]
 valid = true
 
-[deformatting.Local.00000036]
+[deformatting.Local.test00000036]
 solution = ".^~^"
 strings = [
     "0.AbC",
 ]
 valid = true
 
-[deformatting.Local.00000037]
+[deformatting.Local.test00000037]
 solution = "###"
 strings = [
     "001",
 ]
 valid = true
 
-[deformatting.Local.00000038]
+[deformatting.Local.test00000038]
 solution = "###-"
 strings = [
     "001-0",
 ]
 valid = true
 
-[deformatting.Local.00000039]
+[deformatting.Local.test00000039]
 solution = "###-^"
 strings = [
     "001-A1",
 ]
 valid = true
 
-[deformatting.Local.00000040]
+[deformatting.Local.test00000040]
 solution = "###_"
 strings = [
     "001_0",
 ]
 valid = true
 
-[deformatting.Local.00000041]
+[deformatting.Local.test00000041]
 solution = "##"
 strings = [
     "01",
 ]
 valid = true
 
-[deformatting.Local.00000042]
+[deformatting.Local.test00000042]
 solution = "##-"
 strings = [
     "01-0",
 ]
 valid = true
 
-[deformatting.Local.00000043]
+[deformatting.Local.test00000043]
 solution = "##-^"
 strings = [
     "01-A1",
 ]
 valid = true
 
-[deformatting.Local.00000044]
+[deformatting.Local.test00000044]
 solution = "##.^"
 strings = [
     "01.A1",
 ]
 valid = true
 
-[deformatting.Local.00000045]
+[deformatting.Local.test00000045]
 solution = "##_"
 strings = [
     "01_0",
 ]
 valid = true
 
-[deformatting.Local.00000046]
+[deformatting.Local.test00000046]
 solution = "##_^"
 strings = [
     "01_A1",
 ]
 valid = true
 
-[deformatting.Local.00000047]
+[deformatting.Local.test00000047]
 solution = "_"
 strings = [
     "0_0",
 ]
 valid = true
 
-[deformatting.Local.00000048]
+[deformatting.Local.test00000048]
 solution = "_###"
 strings = [
     "0_001",
 ]
 valid = true
 
-[deformatting.Local.00000049]
+[deformatting.Local.test00000049]
 solution = "_##"
 strings = [
     "0_01",
 ]
 valid = true
 
-[deformatting.Local.00000050]
+[deformatting.Local.test00000050]
 solution = "_^"
 strings = [
     "0_A1",
 ]
 valid = true
 
-[deformatting.Local.00000051]
+[deformatting.Local.test00000051]
 solution = "_^^"
 strings = [
     "0_AB12",
 ]
 valid = true
 
-[deformatting.Local.00000052]
+[deformatting.Local.test00000052]
 solution = "_^^^"
 strings = [
     "0_ABC",
 ]
 valid = true
 
-[deformatting.Local.00000053]
+[deformatting.Local.test00000053]
 solution = "_^~^"
 strings = [
     "0_AbC",
 ]
 valid = true
 
-[deformatting.Local.00000054]
+[deformatting.Local.test00000054]
 solution = "--"
 strings = [
     "1-2-3",
 ]
 valid = true
 
-[deformatting.Local.00000055]
+[deformatting.Local.test00000055]
 solution = "-_"
 strings = [
     "1-2_3",
 ]
 valid = true
 
-[deformatting.Local.00000056]
+[deformatting.Local.test00000056]
 solution = ".-"
 strings = [
     "1.2-3",
 ]
 valid = true
 
-[deformatting.Local.00000057]
+[deformatting.Local.test00000057]
 solution = "._"
 strings = [
     "1.2_3",
 ]
 valid = true
 
-[deformatting.Local.00000058]
+[deformatting.Local.test00000058]
 solution = "_-"
 strings = [
     "1_2-3",
 ]
 valid = true
 
-[deformatting.Local.00000059]
+[deformatting.Local.test00000059]
 solution = "__"
 strings = [
     "1_2_3",
 ]
 valid = true
 
-[deformatting.Local.00000060]
+[deformatting.Local.test00000060]
 solution = "^"
 strings = [
     "A1",
 ]
 valid = true
 
-[deformatting.Local.00000061]
+[deformatting.Local.test00000061]
 solution = "^-"
 strings = [
     "A1-0",
 ]
 valid = true
 
-[deformatting.Local.00000062]
+[deformatting.Local.test00000062]
 solution = "^-##"
 strings = [
     "A1-01",
 ]
 valid = true
 
-[deformatting.Local.00000063]
+[deformatting.Local.test00000063]
 solution = "^-^"
 strings = [
     "A1-A1",
 ]
 valid = true
 
-[deformatting.Local.00000064]
+[deformatting.Local.test00000064]
 solution = "^-^^"
 strings = [
     "A1-AB12",
 ]
 valid = true
 
-[deformatting.Local.00000065]
+[deformatting.Local.test00000065]
 solution = "^--^"
 strings = [
     "A1-b2-C3",
 ]
 valid = true
 
-[deformatting.Local.00000066]
+[deformatting.Local.test00000066]
 solution = "^-.^"
 strings = [
     "A1-b2.C3",
 ]
 valid = true
 
-[deformatting.Local.00000067]
+[deformatting.Local.test00000067]
 solution = "^-_^"
 strings = [
     "A1-b2_C3",
 ]
 valid = true
 
-[deformatting.Local.00000068]
+[deformatting.Local.test00000068]
 solution = "^.##"
 strings = [
     "A1.01",
 ]
 valid = true
 
-[deformatting.Local.00000069]
+[deformatting.Local.test00000069]
 solution = "^.^"
 strings = [
     "A1.A1",
 ]
 valid = true
 
-[deformatting.Local.00000070]
+[deformatting.Local.test00000070]
 solution = "^.^^"
 strings = [
     "A1.AB12",
 ]
 valid = true
 
-[deformatting.Local.00000071]
+[deformatting.Local.test00000071]
 solution = "^.-^"
 strings = [
     "A1.b2-C3",
 ]
 valid = true
 
-[deformatting.Local.00000072]
+[deformatting.Local.test00000072]
 solution = "^..^"
 strings = [
     "A1.b2.C3",
 ]
 valid = true
 
-[deformatting.Local.00000073]
+[deformatting.Local.test00000073]
 solution = "^._^"
 strings = [
     "A1.b2_C3",
 ]
 valid = true
 
-[deformatting.Local.00000074]
+[deformatting.Local.test00000074]
 solution = "^_"
 strings = [
     "A1_0",
 ]
 valid = true
 
-[deformatting.Local.00000075]
+[deformatting.Local.test00000075]
 solution = "^_##"
 strings = [
     "A1_01",
 ]
 valid = true
 
-[deformatting.Local.00000076]
+[deformatting.Local.test00000076]
 solution = "^_^"
 strings = [
     "A1_A1",
 ]
 valid = true
 
-[deformatting.Local.00000077]
+[deformatting.Local.test00000077]
 solution = "^_^^"
 strings = [
     "A1_AB12",
 ]
 valid = true
 
-[deformatting.Local.00000078]
+[deformatting.Local.test00000078]
 solution = "^_-^"
 strings = [
     "A1_b2-C3",
 ]
 valid = true
 
-[deformatting.Local.00000079]
+[deformatting.Local.test00000079]
 solution = "^_.^"
 strings = [
     "A1_b2.C3",
 ]
 valid = true
 
-[deformatting.Local.00000080]
+[deformatting.Local.test00000080]
 solution = "^__^"
 strings = [
     "A1_b2_C3",
 ]
 valid = true
 
-[deformatting.Local.00000081]
+[deformatting.Local.test00000081]
 solution = "^^"
 strings = [
     "AB12",
 ]
 valid = true
 
-[deformatting.Local.00000082]
+[deformatting.Local.test00000082]
 solution = "^^-"
 strings = [
     "AB12-0",
 ]
 valid = true
 
-[deformatting.Local.00000083]
+[deformatting.Local.test00000083]
 solution = "^^-^"
 strings = [
     "AB12-A1",
 ]
 valid = true
 
-[deformatting.Local.00000084]
+[deformatting.Local.test00000084]
 solution = "^^.^"
 strings = [
     "AB12.A1",
 ]
 valid = true
 
-[deformatting.Local.00000085]
+[deformatting.Local.test00000085]
 solution = "^^_"
 strings = [
     "AB12_0",
 ]
 valid = true
 
-[deformatting.Local.00000086]
+[deformatting.Local.test00000086]
 solution = "^^_^"
 strings = [
     "AB12_A1",
 ]
 valid = true
 
-[deformatting.Local.00000087]
+[deformatting.Local.test00000087]
 solution = "^^^"
 strings = [
     "ABC",
 ]
 valid = true
 
-[deformatting.Local.00000088]
+[deformatting.Local.test00000088]
 solution = "^^^-"
 strings = [
     "ABC-0",
 ]
 valid = true
 
-[deformatting.Local.00000089]
+[deformatting.Local.test00000089]
 solution = "^^^_"
 strings = [
     "ABC_0",
 ]
 valid = true
 
-[deformatting.Local.00000090]
+[deformatting.Local.test00000090]
 solution = "^~^"
 strings = [
     "AbC",
 ]
 valid = true
 
-[deformatting.Local.00000091]
+[deformatting.Local.test00000091]
 solution = "^~^-"
 strings = [
     "AbC-0",
 ]
 valid = true
 
-[deformatting.Local.00000092]
+[deformatting.Local.test00000092]
 solution = "^~^_"
 strings = [
     "AbC_0",
 ]
 valid = true
 
-[deformatting.Local.00000093]
+[deformatting.Local.test00000093]
 strings = [
     "a$b",
 ]
 valid = false
 
-[deformatting.Local.00000094]
+[deformatting.Local.test00000094]
 strings = [
     "a+b",
 ]
 valid = false
 
-[deformatting.Local.00000095]
+[deformatting.Local.test00000095]
 strings = [
     "a--b",
 ]
 valid = false
 
-[deformatting.Local.00000096]
+[deformatting.Local.test00000096]
 strings = [
     "a..b",
 ]
 valid = false
 
-[deformatting.Local.00000097]
+[deformatting.Local.test00000097]
 strings = [
     "a/b",
 ]
 valid = false
 
-[deformatting.Local.00000098]
+[deformatting.Local.test00000098]
 strings = [
     "a__b",
 ]
 valid = false
 
-[deformatting.Local.00000099]
+[deformatting.Local.test00000099]
 strings = [
     "abc+def",
 ]
 valid = false
 
-[deformatting.Local.00000100]
+[deformatting.Local.test00000100]
 strings = [
     "abc.",
 ]
 valid = false
 
-[deformatting.Local.00000101]
+[deformatting.Local.test00000101]
 solution = "~~^^"
 strings = [
     "qwERty",
@@ -2527,7 +2527,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Local.00000102]
+[deformatting.Local.test00000102]
 solution = "####~~^^_~^~^"
 strings = [
     "qwERty",
@@ -2535,332 +2535,332 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000000]
+[deformatting.Post.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Post.00000001]
+[deformatting.Post.test00000001]
 strings = [
     "-",
 ]
 valid = false
 
-[deformatting.Post.00000002]
+[deformatting.Post.test00000002]
 strings = [
     "--1",
 ]
 valid = false
 
-[deformatting.Post.00000003]
+[deformatting.Post.test00000003]
 solution = "-"
 strings = [
     "-0",
 ]
 valid = true
 
-[deformatting.Post.00000004]
+[deformatting.Post.test00000004]
 strings = [
     "-0",
     "-001",
 ]
 valid = false
 
-[deformatting.Post.00000005]
+[deformatting.Post.test00000005]
 strings = [
     "-0",
     "-01",
 ]
 valid = false
 
-[deformatting.Post.00000006]
+[deformatting.Post.test00000006]
 strings = [
     "-0",
     "-POST",
 ]
 valid = false
 
-[deformatting.Post.00000007]
+[deformatting.Post.test00000007]
 strings = [
     "-0",
     "-POST-0",
 ]
 valid = false
 
-[deformatting.Post.00000008]
+[deformatting.Post.test00000008]
 strings = [
     "-0",
     "-POST-001",
 ]
 valid = false
 
-[deformatting.Post.00000009]
+[deformatting.Post.test00000009]
 strings = [
     "-0",
     "-POST-007",
 ]
 valid = false
 
-[deformatting.Post.00000010]
+[deformatting.Post.test00000010]
 strings = [
     "-0",
     "-POST-01",
 ]
 valid = false
 
-[deformatting.Post.00000011]
+[deformatting.Post.test00000011]
 strings = [
     "-0",
     "-POST-02",
 ]
 valid = false
 
-[deformatting.Post.00000012]
+[deformatting.Post.test00000012]
 strings = [
     "-0",
     "-POST-099",
 ]
 valid = false
 
-[deformatting.Post.00000013]
+[deformatting.Post.test00000013]
 strings = [
     "-0",
     "-POST-1",
 ]
 valid = false
 
-[deformatting.Post.00000014]
+[deformatting.Post.test00000014]
 solution = "-###"
 strings = [
     "-001",
 ]
 valid = true
 
-[deformatting.Post.00000015]
+[deformatting.Post.test00000015]
 solution = "-##"
 strings = [
     "-01",
 ]
 valid = true
 
-[deformatting.Post.00000016]
+[deformatting.Post.test00000016]
 solution = "-R"
 strings = [
     "-R",
 ]
 valid = true
 
-[deformatting.Post.00000017]
+[deformatting.Post.test00000017]
 solution = "-R-#"
 strings = [
     "-R-0",
 ]
 valid = true
 
-[deformatting.Post.00000018]
+[deformatting.Post.test00000018]
 solution = "-R-"
 strings = [
     "-R-1",
 ]
 valid = true
 
-[deformatting.Post.00000019]
+[deformatting.Post.test00000019]
 solution = "-R.#"
 strings = [
     "-R.0",
 ]
 valid = true
 
-[deformatting.Post.00000020]
+[deformatting.Post.test00000020]
 solution = "-R."
 strings = [
     "-R.1",
 ]
 valid = true
 
-[deformatting.Post.00000021]
+[deformatting.Post.test00000021]
 solution = "-R#"
 strings = [
     "-R0",
 ]
 valid = true
 
-[deformatting.Post.00000022]
+[deformatting.Post.test00000022]
 solution = "-R##"
 strings = [
     "-R01",
 ]
 valid = true
 
-[deformatting.Post.00000023]
+[deformatting.Post.test00000023]
 solution = "-REV"
 strings = [
     "-REV",
 ]
 valid = true
 
-[deformatting.Post.00000024]
+[deformatting.Post.test00000024]
 solution = "-R_#"
 strings = [
     "-R_0",
 ]
 valid = true
 
-[deformatting.Post.00000025]
+[deformatting.Post.test00000025]
 solution = "-R_"
 strings = [
     "-R_1",
 ]
 valid = true
 
-[deformatting.Post.00000026]
+[deformatting.Post.test00000026]
 solution = "-Rev"
 strings = [
     "-Rev",
 ]
 valid = true
 
-[deformatting.Post.00000027]
+[deformatting.Post.test00000027]
 solution = "-r"
 strings = [
     "-r",
 ]
 valid = true
 
-[deformatting.Post.00000028]
+[deformatting.Post.test00000028]
 solution = "-r-#"
 strings = [
     "-r-0",
 ]
 valid = true
 
-[deformatting.Post.00000029]
+[deformatting.Post.test00000029]
 solution = "-r-"
 strings = [
     "-r-1",
 ]
 valid = true
 
-[deformatting.Post.00000030]
+[deformatting.Post.test00000030]
 solution = "-r.#"
 strings = [
     "-r.0",
 ]
 valid = true
 
-[deformatting.Post.00000031]
+[deformatting.Post.test00000031]
 solution = "-r."
 strings = [
     "-r.1",
 ]
 valid = true
 
-[deformatting.Post.00000032]
+[deformatting.Post.test00000032]
 solution = "-r#"
 strings = [
     "-r0",
 ]
 valid = true
 
-[deformatting.Post.00000033]
+[deformatting.Post.test00000033]
 solution = "-r##"
 strings = [
     "-r01",
 ]
 valid = true
 
-[deformatting.Post.00000034]
+[deformatting.Post.test00000034]
 solution = "-r_#"
 strings = [
     "-r_0",
 ]
 valid = true
 
-[deformatting.Post.00000035]
+[deformatting.Post.test00000035]
 solution = "-r_"
 strings = [
     "-r_1",
 ]
 valid = true
 
-[deformatting.Post.00000036]
+[deformatting.Post.test00000036]
 solution = "-rev"
 strings = [
     "-rev",
 ]
 valid = true
 
-[deformatting.Post.00000037]
+[deformatting.Post.test00000037]
 solution = ".R"
 strings = [
     ".R",
 ]
 valid = true
 
-[deformatting.Post.00000038]
+[deformatting.Post.test00000038]
 solution = ".R-#"
 strings = [
     ".R-0",
 ]
 valid = true
 
-[deformatting.Post.00000039]
+[deformatting.Post.test00000039]
 solution = ".R-"
 strings = [
     ".R-1",
 ]
 valid = true
 
-[deformatting.Post.00000040]
+[deformatting.Post.test00000040]
 solution = ".R.#"
 strings = [
     ".R.0",
 ]
 valid = true
 
-[deformatting.Post.00000041]
+[deformatting.Post.test00000041]
 solution = ".R."
 strings = [
     ".R.1",
 ]
 valid = true
 
-[deformatting.Post.00000042]
+[deformatting.Post.test00000042]
 solution = ".R#"
 strings = [
     ".R0",
 ]
 valid = true
 
-[deformatting.Post.00000043]
+[deformatting.Post.test00000043]
 solution = ".R##"
 strings = [
     ".R01",
 ]
 valid = true
 
-[deformatting.Post.00000044]
+[deformatting.Post.test00000044]
 solution = ".REV"
 strings = [
     ".REV",
 ]
 valid = true
 
-[deformatting.Post.00000045]
+[deformatting.Post.test00000045]
 solution = ".R_"
 strings = [
     ".R_1",
 ]
 valid = true
 
-[deformatting.Post.00000046]
+[deformatting.Post.test00000046]
 solution = ""
 strings = [
     ".post0",
 ]
 valid = true
 
-[deformatting.Post.00000047]
+[deformatting.Post.test00000047]
 solution = ""
 strings = [
     ".post0",
@@ -2869,7 +2869,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000048]
+[deformatting.Post.test00000048]
 solution = ""
 strings = [
     ".post0",
@@ -2878,7 +2878,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000049]
+[deformatting.Post.test00000049]
 solution = ""
 strings = [
     ".post0",
@@ -2887,7 +2887,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000050]
+[deformatting.Post.test00000050]
 solution = ""
 strings = [
     ".post0",
@@ -2896,7 +2896,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000051]
+[deformatting.Post.test00000051]
 solution = ""
 strings = [
     ".post0",
@@ -2905,7 +2905,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000052]
+[deformatting.Post.test00000052]
 solution = ""
 strings = [
     ".post0",
@@ -2914,7 +2914,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000053]
+[deformatting.Post.test00000053]
 solution = ""
 strings = [
     ".post0",
@@ -2923,7 +2923,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000054]
+[deformatting.Post.test00000054]
 solution = ""
 strings = [
     ".post0",
@@ -2932,7 +2932,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000055]
+[deformatting.Post.test00000055]
 solution = ""
 strings = [
     ".post0",
@@ -2941,7 +2941,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000056]
+[deformatting.Post.test00000056]
 solution = ""
 strings = [
     ".post0",
@@ -2950,232 +2950,232 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000057]
+[deformatting.Post.test00000057]
 solution = ".r"
 strings = [
     ".r",
 ]
 valid = true
 
-[deformatting.Post.00000058]
+[deformatting.Post.test00000058]
 solution = ".r-"
 strings = [
     ".r-1",
 ]
 valid = true
 
-[deformatting.Post.00000059]
+[deformatting.Post.test00000059]
 solution = ".r."
 strings = [
     ".r.1",
 ]
 valid = true
 
-[deformatting.Post.00000060]
+[deformatting.Post.test00000060]
 solution = ".r#"
 strings = [
     ".r0",
 ]
 valid = true
 
-[deformatting.Post.00000061]
+[deformatting.Post.test00000061]
 solution = ".r_"
 strings = [
     ".r_1",
 ]
 valid = true
 
-[deformatting.Post.00000062]
+[deformatting.Post.test00000062]
 solution = "R"
 strings = [
     "R",
 ]
 valid = true
 
-[deformatting.Post.00000063]
+[deformatting.Post.test00000063]
 solution = "R-#"
 strings = [
     "R-0",
 ]
 valid = true
 
-[deformatting.Post.00000064]
+[deformatting.Post.test00000064]
 solution = "R-"
 strings = [
     "R-1",
 ]
 valid = true
 
-[deformatting.Post.00000065]
+[deformatting.Post.test00000065]
 solution = "R.#"
 strings = [
     "R.0",
 ]
 valid = true
 
-[deformatting.Post.00000066]
+[deformatting.Post.test00000066]
 solution = "R."
 strings = [
     "R.1",
 ]
 valid = true
 
-[deformatting.Post.00000067]
+[deformatting.Post.test00000067]
 solution = "R#"
 strings = [
     "R0",
 ]
 valid = true
 
-[deformatting.Post.00000068]
+[deformatting.Post.test00000068]
 solution = "R##"
 strings = [
     "R01",
 ]
 valid = true
 
-[deformatting.Post.00000069]
+[deformatting.Post.test00000069]
 solution = "REV"
 strings = [
     "REV",
 ]
 valid = true
 
-[deformatting.Post.00000070]
+[deformatting.Post.test00000070]
 solution = "R_#"
 strings = [
     "R_0",
 ]
 valid = true
 
-[deformatting.Post.00000071]
+[deformatting.Post.test00000071]
 solution = "R_"
 strings = [
     "R_1",
 ]
 valid = true
 
-[deformatting.Post.00000072]
+[deformatting.Post.test00000072]
 solution = "Rev"
 strings = [
     "Rev",
 ]
 valid = true
 
-[deformatting.Post.00000073]
+[deformatting.Post.test00000073]
 solution = "_R"
 strings = [
     "_R",
 ]
 valid = true
 
-[deformatting.Post.00000074]
+[deformatting.Post.test00000074]
 solution = "_R-"
 strings = [
     "_R-1",
 ]
 valid = true
 
-[deformatting.Post.00000075]
+[deformatting.Post.test00000075]
 solution = "_R."
 strings = [
     "_R.1",
 ]
 valid = true
 
-[deformatting.Post.00000076]
+[deformatting.Post.test00000076]
 solution = "_R#"
 strings = [
     "_R0",
 ]
 valid = true
 
-[deformatting.Post.00000077]
+[deformatting.Post.test00000077]
 solution = "_R_"
 strings = [
     "_R_1",
 ]
 valid = true
 
-[deformatting.Post.00000078]
+[deformatting.Post.test00000078]
 solution = "_r"
 strings = [
     "_r",
 ]
 valid = true
 
-[deformatting.Post.00000079]
+[deformatting.Post.test00000079]
 solution = "_r-"
 strings = [
     "_r-1",
 ]
 valid = true
 
-[deformatting.Post.00000080]
+[deformatting.Post.test00000080]
 solution = "_r."
 strings = [
     "_r.1",
 ]
 valid = true
 
-[deformatting.Post.00000081]
+[deformatting.Post.test00000081]
 solution = "_r#"
 strings = [
     "_r0",
 ]
 valid = true
 
-[deformatting.Post.00000082]
+[deformatting.Post.test00000082]
 solution = "_r_"
 strings = [
     "_r_1",
 ]
 valid = true
 
-[deformatting.Post.00000083]
+[deformatting.Post.test00000083]
 strings = [
     "p",
 ]
 valid = false
 
-[deformatting.Post.00000084]
+[deformatting.Post.test00000084]
 strings = [
     "po",
 ]
 valid = false
 
-[deformatting.Post.00000085]
+[deformatting.Post.test00000085]
 strings = [
     "post-",
 ]
 valid = false
 
-[deformatting.Post.00000086]
+[deformatting.Post.test00000086]
 strings = [
     "post.",
 ]
 valid = false
 
-[deformatting.Post.00000087]
+[deformatting.Post.test00000087]
 strings = [
     "post_",
 ]
 valid = false
 
-[deformatting.Post.00000088]
+[deformatting.Post.test00000088]
 strings = [
     "postx",
 ]
 valid = false
 
-[deformatting.Post.00000089]
+[deformatting.Post.test00000089]
 solution = "r"
 strings = [
     "r",
 ]
 valid = true
 
-[deformatting.Post.00000090]
+[deformatting.Post.test00000090]
 solution = "r."
 strings = [
     "r",
@@ -3183,7 +3183,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000091]
+[deformatting.Post.test00000091]
 solution = "r_"
 strings = [
     "r",
@@ -3191,595 +3191,595 @@ strings = [
 ]
 valid = true
 
-[deformatting.Post.00000092]
+[deformatting.Post.test00000092]
 solution = "r-#"
 strings = [
     "r-0",
 ]
 valid = true
 
-[deformatting.Post.00000093]
+[deformatting.Post.test00000093]
 solution = "r-"
 strings = [
     "r-1",
 ]
 valid = true
 
-[deformatting.Post.00000094]
+[deformatting.Post.test00000094]
 strings = [
     "r.",
 ]
 valid = false
 
-[deformatting.Post.00000095]
+[deformatting.Post.test00000095]
 solution = "r.#"
 strings = [
     "r.0",
 ]
 valid = true
 
-[deformatting.Post.00000096]
+[deformatting.Post.test00000096]
 solution = "r."
 strings = [
     "r.1",
 ]
 valid = true
 
-[deformatting.Post.00000097]
+[deformatting.Post.test00000097]
 solution = "r#"
 strings = [
     "r0",
 ]
 valid = true
 
-[deformatting.Post.00000098]
+[deformatting.Post.test00000098]
 solution = "r##"
 strings = [
     "r01",
 ]
 valid = true
 
-[deformatting.Post.00000099]
+[deformatting.Post.test00000099]
 solution = "r_#"
 strings = [
     "r_0",
 ]
 valid = true
 
-[deformatting.Post.00000100]
+[deformatting.Post.test00000100]
 solution = "r_"
 strings = [
     "r_1",
 ]
 valid = true
 
-[deformatting.Post.00000101]
+[deformatting.Post.test00000101]
 solution = "rev"
 strings = [
     "rev",
 ]
 valid = true
 
-[deformatting.Post.00000102]
+[deformatting.Post.test00000102]
 strings = [
     "rev.",
 ]
 valid = false
 
-[deformatting.Pre.00000000]
+[deformatting.Pre.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Pre.00000001]
+[deformatting.Pre.test00000001]
 solution = "-A"
 strings = [
     "-A",
 ]
 valid = true
 
-[deformatting.Pre.00000002]
+[deformatting.Pre.test00000002]
 strings = [
     "-A",
     "-A-0",
 ]
 valid = false
 
-[deformatting.Pre.00000003]
+[deformatting.Pre.test00000003]
 strings = [
     "-A",
     "-A-001",
 ]
 valid = false
 
-[deformatting.Pre.00000004]
+[deformatting.Pre.test00000004]
 strings = [
     "-A",
     "-A-007",
 ]
 valid = false
 
-[deformatting.Pre.00000005]
+[deformatting.Pre.test00000005]
 strings = [
     "-A",
     "-A-01",
 ]
 valid = false
 
-[deformatting.Pre.00000006]
+[deformatting.Pre.test00000006]
 strings = [
     "-A",
     "-A-02",
 ]
 valid = false
 
-[deformatting.Pre.00000007]
+[deformatting.Pre.test00000007]
 strings = [
     "-A",
     "-A-099",
 ]
 valid = false
 
-[deformatting.Pre.00000008]
+[deformatting.Pre.test00000008]
 strings = [
     "-A",
     "-A.0",
 ]
 valid = false
 
-[deformatting.Pre.00000009]
+[deformatting.Pre.test00000009]
 strings = [
     "-A",
     "-A.001",
 ]
 valid = false
 
-[deformatting.Pre.00000010]
+[deformatting.Pre.test00000010]
 strings = [
     "-A",
     "-A.007",
 ]
 valid = false
 
-[deformatting.Pre.00000011]
+[deformatting.Pre.test00000011]
 strings = [
     "-A",
     "-A.01",
 ]
 valid = false
 
-[deformatting.Pre.00000012]
+[deformatting.Pre.test00000012]
 solution = "-A-"
 strings = [
     "-A-1",
 ]
 valid = true
 
-[deformatting.Pre.00000013]
+[deformatting.Pre.test00000013]
 solution = "-A."
 strings = [
     "-A.1",
 ]
 valid = true
 
-[deformatting.Pre.00000014]
+[deformatting.Pre.test00000014]
 solution = "-A#"
 strings = [
     "-A0",
 ]
 valid = true
 
-[deformatting.Pre.00000015]
+[deformatting.Pre.test00000015]
 solution = "-A_"
 strings = [
     "-A_1",
 ]
 valid = true
 
-[deformatting.Pre.00000016]
+[deformatting.Pre.test00000016]
 solution = "-B"
 strings = [
     "-B",
 ]
 valid = true
 
-[deformatting.Pre.00000017]
+[deformatting.Pre.test00000017]
 solution = "-B-"
 strings = [
     "-B-1",
 ]
 valid = true
 
-[deformatting.Pre.00000018]
+[deformatting.Pre.test00000018]
 solution = "-B."
 strings = [
     "-B.1",
 ]
 valid = true
 
-[deformatting.Pre.00000019]
+[deformatting.Pre.test00000019]
 solution = "-B#"
 strings = [
     "-B0",
 ]
 valid = true
 
-[deformatting.Pre.00000020]
+[deformatting.Pre.test00000020]
 solution = "-B_"
 strings = [
     "-B_1",
 ]
 valid = true
 
-[deformatting.Pre.00000021]
+[deformatting.Pre.test00000021]
 solution = "-C"
 strings = [
     "-C",
 ]
 valid = true
 
-[deformatting.Pre.00000022]
+[deformatting.Pre.test00000022]
 solution = "-C-"
 strings = [
     "-C-1",
 ]
 valid = true
 
-[deformatting.Pre.00000023]
+[deformatting.Pre.test00000023]
 solution = "-C."
 strings = [
     "-C.1",
 ]
 valid = true
 
-[deformatting.Pre.00000024]
+[deformatting.Pre.test00000024]
 solution = "-C#"
 strings = [
     "-C0",
 ]
 valid = true
 
-[deformatting.Pre.00000025]
+[deformatting.Pre.test00000025]
 solution = "-C_"
 strings = [
     "-C_1",
 ]
 valid = true
 
-[deformatting.Pre.00000026]
+[deformatting.Pre.test00000026]
 solution = "-RC"
 strings = [
     "-RC",
 ]
 valid = true
 
-[deformatting.Pre.00000027]
+[deformatting.Pre.test00000027]
 solution = "-a"
 strings = [
     "-a",
 ]
 valid = true
 
-[deformatting.Pre.00000028]
+[deformatting.Pre.test00000028]
 solution = "-a-"
 strings = [
     "-a-1",
 ]
 valid = true
 
-[deformatting.Pre.00000029]
+[deformatting.Pre.test00000029]
 solution = "-a."
 strings = [
     "-a.1",
 ]
 valid = true
 
-[deformatting.Pre.00000030]
+[deformatting.Pre.test00000030]
 solution = "-a#"
 strings = [
     "-a0",
 ]
 valid = true
 
-[deformatting.Pre.00000031]
+[deformatting.Pre.test00000031]
 solution = "-a_"
 strings = [
     "-a_1",
 ]
 valid = true
 
-[deformatting.Pre.00000032]
+[deformatting.Pre.test00000032]
 solution = "-b"
 strings = [
     "-b",
 ]
 valid = true
 
-[deformatting.Pre.00000033]
+[deformatting.Pre.test00000033]
 solution = "-b-"
 strings = [
     "-b-1",
 ]
 valid = true
 
-[deformatting.Pre.00000034]
+[deformatting.Pre.test00000034]
 solution = "-b."
 strings = [
     "-b.1",
 ]
 valid = true
 
-[deformatting.Pre.00000035]
+[deformatting.Pre.test00000035]
 solution = "-b#"
 strings = [
     "-b0",
 ]
 valid = true
 
-[deformatting.Pre.00000036]
+[deformatting.Pre.test00000036]
 solution = "-b_"
 strings = [
     "-b_1",
 ]
 valid = true
 
-[deformatting.Pre.00000037]
+[deformatting.Pre.test00000037]
 solution = "-c"
 strings = [
     "-c",
 ]
 valid = true
 
-[deformatting.Pre.00000038]
+[deformatting.Pre.test00000038]
 solution = ".A"
 strings = [
     ".A",
 ]
 valid = true
 
-[deformatting.Pre.00000039]
+[deformatting.Pre.test00000039]
 solution = ".B"
 strings = [
     ".B",
 ]
 valid = true
 
-[deformatting.Pre.00000040]
+[deformatting.Pre.test00000040]
 solution = ".C"
 strings = [
     ".C",
 ]
 valid = true
 
-[deformatting.Pre.00000041]
+[deformatting.Pre.test00000041]
 solution = ".a"
 strings = [
     ".a",
 ]
 valid = true
 
-[deformatting.Pre.00000042]
+[deformatting.Pre.test00000042]
 solution = ".b"
 strings = [
     ".b",
 ]
 valid = true
 
-[deformatting.Pre.00000043]
+[deformatting.Pre.test00000043]
 solution = ".c"
 strings = [
     ".c",
 ]
 valid = true
 
-[deformatting.Pre.00000044]
+[deformatting.Pre.test00000044]
 strings = [
     "1a",
 ]
 valid = false
 
-[deformatting.Pre.00000045]
+[deformatting.Pre.test00000045]
 solution = "A"
 strings = [
     "A",
 ]
 valid = true
 
-[deformatting.Pre.00000046]
+[deformatting.Pre.test00000046]
 solution = "A-"
 strings = [
     "A-1",
 ]
 valid = true
 
-[deformatting.Pre.00000047]
+[deformatting.Pre.test00000047]
 solution = "A."
 strings = [
     "A.1",
 ]
 valid = true
 
-[deformatting.Pre.00000048]
+[deformatting.Pre.test00000048]
 solution = "A#"
 strings = [
     "A0",
 ]
 valid = true
 
-[deformatting.Pre.00000049]
+[deformatting.Pre.test00000049]
 solution = "A_"
 strings = [
     "A_1",
 ]
 valid = true
 
-[deformatting.Pre.00000050]
+[deformatting.Pre.test00000050]
 solution = "B"
 strings = [
     "B",
 ]
 valid = true
 
-[deformatting.Pre.00000051]
+[deformatting.Pre.test00000051]
 solution = "B-"
 strings = [
     "B-1",
 ]
 valid = true
 
-[deformatting.Pre.00000052]
+[deformatting.Pre.test00000052]
 solution = "B."
 strings = [
     "B.1",
 ]
 valid = true
 
-[deformatting.Pre.00000053]
+[deformatting.Pre.test00000053]
 solution = "B#"
 strings = [
     "B0",
 ]
 valid = true
 
-[deformatting.Pre.00000054]
+[deformatting.Pre.test00000054]
 solution = "B_"
 strings = [
     "B_1",
 ]
 valid = true
 
-[deformatting.Pre.00000055]
+[deformatting.Pre.test00000055]
 solution = "C"
 strings = [
     "C",
 ]
 valid = true
 
-[deformatting.Pre.00000056]
+[deformatting.Pre.test00000056]
 solution = "C-"
 strings = [
     "C-1",
 ]
 valid = true
 
-[deformatting.Pre.00000057]
+[deformatting.Pre.test00000057]
 solution = "C."
 strings = [
     "C.1",
 ]
 valid = true
 
-[deformatting.Pre.00000058]
+[deformatting.Pre.test00000058]
 solution = "C#"
 strings = [
     "C0",
 ]
 valid = true
 
-[deformatting.Pre.00000059]
+[deformatting.Pre.test00000059]
 solution = "C_"
 strings = [
     "C_1",
 ]
 valid = true
 
-[deformatting.Pre.00000060]
+[deformatting.Pre.test00000060]
 solution = "RC"
 strings = [
     "RC",
 ]
 valid = true
 
-[deformatting.Pre.00000061]
+[deformatting.Pre.test00000061]
 solution = "_A"
 strings = [
     "_A",
 ]
 valid = true
 
-[deformatting.Pre.00000062]
+[deformatting.Pre.test00000062]
 solution = "_B"
 strings = [
     "_B",
 ]
 valid = true
 
-[deformatting.Pre.00000063]
+[deformatting.Pre.test00000063]
 solution = "_C"
 strings = [
     "_C",
 ]
 valid = true
 
-[deformatting.Pre.00000064]
+[deformatting.Pre.test00000064]
 solution = "_a"
 strings = [
     "_a",
 ]
 valid = true
 
-[deformatting.Pre.00000065]
+[deformatting.Pre.test00000065]
 solution = "_b"
 strings = [
     "_b",
 ]
 valid = true
 
-[deformatting.Pre.00000066]
+[deformatting.Pre.test00000066]
 solution = "_c"
 strings = [
     "_c",
 ]
 valid = true
 
-[deformatting.Pre.00000067]
+[deformatting.Pre.test00000067]
 solution = "a"
 strings = [
     "a",
 ]
 valid = true
 
-[deformatting.Pre.00000068]
+[deformatting.Pre.test00000068]
 strings = [
     "a",
     "alpha",
 ]
 valid = false
 
-[deformatting.Pre.00000069]
+[deformatting.Pre.test00000069]
 strings = [
     "a+1",
 ]
 valid = false
 
-[deformatting.Pre.00000070]
+[deformatting.Pre.test00000070]
 solution = "a-"
 strings = [
     "a-1",
 ]
 valid = true
 
-[deformatting.Pre.00000071]
+[deformatting.Pre.test00000071]
 strings = [
     "a..1",
 ]
 valid = false
 
-[deformatting.Pre.00000072]
+[deformatting.Pre.test00000072]
 solution = "a."
 strings = [
     "a.1",
 ]
 valid = true
 
-[deformatting.Pre.00000073]
+[deformatting.Pre.test00000073]
 solution = ""
 strings = [
     "a0",
 ]
 valid = true
 
-[deformatting.Pre.00000074]
+[deformatting.Pre.test00000074]
 solution = ""
 strings = [
     "a0",
@@ -3788,7 +3788,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000075]
+[deformatting.Pre.test00000075]
 solution = ""
 strings = [
     "a0",
@@ -3797,7 +3797,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000076]
+[deformatting.Pre.test00000076]
 solution = ""
 strings = [
     "a0",
@@ -3806,7 +3806,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000077]
+[deformatting.Pre.test00000077]
 solution = ""
 strings = [
     "a0",
@@ -3815,7 +3815,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000078]
+[deformatting.Pre.test00000078]
 solution = ""
 strings = [
     "a0",
@@ -3824,7 +3824,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000079]
+[deformatting.Pre.test00000079]
 solution = ""
 strings = [
     "a0",
@@ -3833,7 +3833,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000080]
+[deformatting.Pre.test00000080]
 solution = ""
 strings = [
     "a0",
@@ -3842,7 +3842,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000081]
+[deformatting.Pre.test00000081]
 solution = ""
 strings = [
     "a0",
@@ -3851,7 +3851,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000082]
+[deformatting.Pre.test00000082]
 solution = ""
 strings = [
     "a0",
@@ -3860,7 +3860,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000083]
+[deformatting.Pre.test00000083]
 solution = ""
 strings = [
     "a0",
@@ -3869,7 +3869,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000084]
+[deformatting.Pre.test00000084]
 solution = "a##"
 strings = [
     "a10",
@@ -3877,20 +3877,20 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000085]
+[deformatting.Pre.test00000085]
 solution = "a_"
 strings = [
     "a_1",
 ]
 valid = true
 
-[deformatting.Pre.00000086]
+[deformatting.Pre.test00000086]
 strings = [
     "aa",
 ]
 valid = false
 
-[deformatting.Pre.00000087]
+[deformatting.Pre.test00000087]
 solution = "alphaB#.pre"
 strings = [
     "alpha",
@@ -3899,41 +3899,41 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000088]
+[deformatting.Pre.test00000088]
 strings = [
     "alpha.",
 ]
 valid = false
 
-[deformatting.Pre.00000089]
+[deformatting.Pre.test00000089]
 solution = "b"
 strings = [
     "b",
 ]
 valid = true
 
-[deformatting.Pre.00000090]
+[deformatting.Pre.test00000090]
 solution = "b-"
 strings = [
     "b-1",
 ]
 valid = true
 
-[deformatting.Pre.00000091]
+[deformatting.Pre.test00000091]
 solution = "b."
 strings = [
     "b.1",
 ]
 valid = true
 
-[deformatting.Pre.00000092]
+[deformatting.Pre.test00000092]
 solution = "b_"
 strings = [
     "b_1",
 ]
 valid = true
 
-[deformatting.Pre.00000093]
+[deformatting.Pre.test00000093]
 solution = "beTA."
 strings = [
     "beTA",
@@ -3942,567 +3942,567 @@ strings = [
 ]
 valid = true
 
-[deformatting.Pre.00000094]
+[deformatting.Pre.test00000094]
 strings = [
     "beta_",
 ]
 valid = false
 
-[deformatting.Pre.00000095]
+[deformatting.Pre.test00000095]
 solution = "c"
 strings = [
     "c",
 ]
 valid = true
 
-[deformatting.Pre.00000096]
+[deformatting.Pre.test00000096]
 solution = "c-"
 strings = [
     "c-1",
 ]
 valid = true
 
-[deformatting.Pre.00000097]
+[deformatting.Pre.test00000097]
 solution = "c."
 strings = [
     "c.1",
 ]
 valid = true
 
-[deformatting.Pre.00000098]
+[deformatting.Pre.test00000098]
 solution = "c#"
 strings = [
     "c0",
 ]
 valid = true
 
-[deformatting.Pre.00000099]
+[deformatting.Pre.test00000099]
 solution = "c_"
 strings = [
     "c_1",
 ]
 valid = true
 
-[deformatting.Pre.00000100]
+[deformatting.Pre.test00000100]
 strings = [
     "pre.",
 ]
 valid = false
 
-[deformatting.Pre.00000101]
+[deformatting.Pre.test00000101]
 strings = [
     "preview_",
 ]
 valid = false
 
-[deformatting.Pre.00000102]
+[deformatting.Pre.test00000102]
 solution = "rc"
 strings = [
     "rc",
 ]
 valid = true
 
-[deformatting.Pre.00000103]
+[deformatting.Pre.test00000103]
 strings = [
     "rc-",
 ]
 valid = false
 
-[deformatting.Pre.00000104]
+[deformatting.Pre.test00000104]
 strings = [
     "x",
 ]
 valid = false
 
-[deformatting.Public.00000000]
+[deformatting.Public.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Public.00000001]
+[deformatting.Public.test00000001]
 strings = [
     "!1",
 ]
 valid = false
 
-[deformatting.Public.00000002]
+[deformatting.Public.test00000002]
 solution = ""
 strings = [
     "0",
 ]
 valid = true
 
-[deformatting.Public.00000003]
+[deformatting.Public.test00000003]
 strings = [
     "0",
     "0!001.002",
 ]
 valid = false
 
-[deformatting.Public.00000004]
+[deformatting.Public.test00000004]
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06",
 ]
 valid = false
 
-[deformatting.Public.00000005]
+[deformatting.Public.test00000005]
 strings = [
     "0",
     "0!001.002_beta.4_post-3DEV5",
 ]
 valid = false
 
-[deformatting.Public.00000006]
+[deformatting.Public.test00000006]
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02",
 ]
 valid = false
 
-[deformatting.Public.00000007]
+[deformatting.Public.test00000007]
 strings = [
     "0",
     "0!001.002bpost1dev1",
 ]
 valid = false
 
-[deformatting.Public.00000008]
+[deformatting.Public.test00000008]
 strings = [
     "0",
     "0!001.002rc01post.02dev.02",
 ]
 valid = false
 
-[deformatting.Public.00000009]
+[deformatting.Public.test00000009]
 strings = [
     "0",
     "0!01.02.03.004",
 ]
 valid = false
 
-[deformatting.Public.00000010]
+[deformatting.Public.test00000010]
 strings = [
     "0",
     "0!01.02.03.004-alpha3.post.DEV_06",
 ]
 valid = false
 
-[deformatting.Public.00000011]
+[deformatting.Public.test00000011]
 strings = [
     "0",
     "0!01.02.03.004_beta.4post1_dev-3",
 ]
 valid = false
 
-[deformatting.Public.00000012]
+[deformatting.Public.test00000012]
 strings = [
     "0",
     "0!01.02.03.004alpha.04post1dev1",
 ]
 valid = false
 
-[deformatting.Public.00000013]
+[deformatting.Public.test00000013]
 solution = "#!###.###"
 strings = [
     "0!001.002",
 ]
 valid = true
 
-[deformatting.Public.00000014]
+[deformatting.Public.test00000014]
 solution = "#!...#"
 strings = [
     "0!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Public.00000015]
+[deformatting.Public.test00000015]
 solution = "#!"
 strings = [
     "0!100",
 ]
 valid = true
 
-[deformatting.Public.00000016]
+[deformatting.Public.test00000016]
 solution = "-##"
 strings = [
     "0-02",
 ]
 valid = true
 
-[deformatting.Public.00000017]
+[deformatting.Public.test00000017]
 solution = "..#"
 strings = [
     "0.0.0",
 ]
 valid = true
 
-[deformatting.Public.00000018]
+[deformatting.Public.test00000018]
 solution = "###!##"
 strings = [
     "001!00",
 ]
 valid = true
 
-[deformatting.Public.00000019]
+[deformatting.Public.test00000019]
 solution = "###!###"
 strings = [
     "001!007",
 ]
 valid = true
 
-[deformatting.Public.00000020]
+[deformatting.Public.test00000020]
 solution = "###!"
 strings = [
     "001!1.2.3",
 ]
 valid = true
 
-[deformatting.Public.00000021]
+[deformatting.Public.test00000021]
 solution = "###!-##"
 strings = [
     "001!1.2.3-02",
 ]
 valid = true
 
-[deformatting.Public.00000022]
+[deformatting.Public.test00000022]
 solution = "###"
 strings = [
     "007",
 ]
 valid = true
 
-[deformatting.Public.00000023]
+[deformatting.Public.test00000023]
 solution = "##!###"
 strings = [
     "01!001",
 ]
 valid = true
 
-[deformatting.Public.00000024]
+[deformatting.Public.test00000024]
 solution = "##!.#"
 strings = [
     "01!1.0",
 ]
 valid = true
 
-[deformatting.Public.00000025]
+[deformatting.Public.test00000025]
 solution = "##!"
 strings = [
     "01!10.20.30",
 ]
 valid = true
 
-[deformatting.Public.00000026]
+[deformatting.Public.test00000026]
 solution = "##!rev_##"
 strings = [
     "01!99rc1rev_05",
 ]
 valid = true
 
-[deformatting.Public.00000027]
+[deformatting.Public.test00000027]
 solution = "###!...#"
 strings = [
     "099!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Public.00000028]
+[deformatting.Public.test00000028]
 solution = "###-DEV"
 strings = [
     "099b2-1DEV5",
 ]
 valid = true
 
-[deformatting.Public.00000029]
+[deformatting.Public.test00000029]
 solution = "###rcdev"
 strings = [
     "099rcdev1",
 ]
 valid = true
 
-[deformatting.Public.00000030]
+[deformatting.Public.test00000030]
 strings = [
     "1!",
 ]
 valid = false
 
-[deformatting.Public.00000031]
+[deformatting.Public.test00000031]
 solution = "###.###"
 strings = [
     "1!001.002",
 ]
 valid = true
 
-[deformatting.Public.00000032]
+[deformatting.Public.test00000032]
 solution = "...#"
 strings = [
     "1!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Public.00000033]
+[deformatting.Public.test00000033]
 solution = ".adev.##"
 strings = [
     "1!100.a2dev.02",
 ]
 valid = true
 
-[deformatting.Public.00000034]
+[deformatting.Public.test00000034]
 solution = "-DEV"
 strings = [
     "1!100b2-1DEV5",
 ]
 valid = true
 
-[deformatting.Public.00000035]
+[deformatting.Public.test00000035]
 solution = "rcdev"
 strings = [
     "1!100rcdev1",
 ]
 valid = true
 
-[deformatting.Public.00000036]
+[deformatting.Public.test00000036]
 strings = [
     "1+a",
 ]
 valid = false
 
-[deformatting.Public.00000037]
+[deformatting.Public.test00000037]
 strings = [
     "1.",
 ]
 valid = false
 
-[deformatting.Public.00000038]
+[deformatting.Public.test00000038]
 strings = [
     "1..2",
 ]
 valid = false
 
-[deformatting.Public.00000039]
+[deformatting.Public.test00000039]
 solution = ".#"
 strings = [
     "1.0",
 ]
 valid = true
 
-[deformatting.Public.00000040]
+[deformatting.Public.test00000040]
 solution = ".#-##"
 strings = [
     "1.0-02",
 ]
 valid = true
 
-[deformatting.Public.00000041]
+[deformatting.Public.test00000041]
 strings = [
     "1.2+abc",
 ]
 valid = false
 
-[deformatting.Public.00000042]
+[deformatting.Public.test00000042]
 strings = [
     "1.2x",
 ]
 valid = false
 
-[deformatting.Public.00000043]
+[deformatting.Public.test00000043]
 solution = "##"
 strings = [
     "10!02",
 ]
 valid = true
 
-[deformatting.Public.00000044]
+[deformatting.Public.test00000044]
 solution = "##-##.dev"
 strings = [
     "10!02rc1-02.dev",
 ]
 valid = true
 
-[deformatting.Public.00000045]
+[deformatting.Public.test00000045]
 solution = "arev_##"
 strings = [
     "10!2arev_05",
 ]
 valid = true
 
-[deformatting.Public.00000046]
+[deformatting.Public.test00000046]
 solution = ".a#-##dev"
 strings = [
     "100.a2-02dev1",
 ]
 valid = true
 
-[deformatting.Public.00000047]
+[deformatting.Public.test00000047]
 solution = "##.##.##"
 strings = [
     "2!00.00.00",
 ]
 valid = true
 
-[deformatting.Public.00000048]
+[deformatting.Public.test00000048]
 solution = "##.##"
 strings = [
     "2!01.02",
 ]
 valid = true
 
-[deformatting.Public.00000049]
+[deformatting.Public.test00000049]
 solution = "##.##-DEV"
 strings = [
     "2!01.02b2-1DEV5",
 ]
 valid = true
 
-[deformatting.Public.00000050]
+[deformatting.Public.test00000050]
 solution = "bpostdev"
 strings = [
     "2!10.20bpost1dev1",
 ]
 valid = true
 
-[deformatting.Public.00000051]
+[deformatting.Public.test00000051]
 solution = "rev_##"
 strings = [
     "42!9rc1rev_05",
 ]
 valid = true
 
-[deformatting.Public.00000052]
+[deformatting.Public.test00000052]
 solution = "##-##"
 strings = [
     "9!01-02",
 ]
 valid = true
 
-[deformatting.Public.00000053]
+[deformatting.Public.test00000053]
 solution = ".##.###"
 strings = [
     "9!7.08.009",
 ]
 valid = true
 
-[deformatting.Public.00000054]
+[deformatting.Public.test00000054]
 solution = "V#!##"
 strings = [
     "V0!00",
 ]
 valid = true
 
-[deformatting.Public.00000055]
+[deformatting.Public.test00000055]
 solution = "V#!###"
 strings = [
     "V0!007",
 ]
 valid = true
 
-[deformatting.Public.00000056]
+[deformatting.Public.test00000056]
 solution = "V#!"
 strings = [
     "V0!1.2.3",
 ]
 valid = true
 
-[deformatting.Public.00000057]
+[deformatting.Public.test00000057]
 solution = "V#!rev_##"
 strings = [
     "V0!1.2.3rc1rev_05",
 ]
 valid = true
 
-[deformatting.Public.00000058]
+[deformatting.Public.test00000058]
 solution = "V#!-DEV"
 strings = [
     "V0!42b2-1DEV5",
 ]
 valid = true
 
-[deformatting.Public.00000059]
+[deformatting.Public.test00000059]
 solution = "V#!rcdev"
 strings = [
     "V0!42rcdev1",
 ]
 valid = true
 
-[deformatting.Public.00000060]
+[deformatting.Public.test00000060]
 solution = "V###!###"
 strings = [
     "V001!001",
 ]
 valid = true
 
-[deformatting.Public.00000061]
+[deformatting.Public.test00000061]
 solution = "V###!.#"
 strings = [
     "V001!1.0",
 ]
 valid = true
 
-[deformatting.Public.00000062]
+[deformatting.Public.test00000062]
 solution = "V###!"
 strings = [
     "V001!10.20.30",
 ]
 valid = true
 
-[deformatting.Public.00000063]
+[deformatting.Public.test00000063]
 solution = "V##!..#"
 strings = [
     "V01!0.0.0",
 ]
 valid = true
 
-[deformatting.Public.00000064]
+[deformatting.Public.test00000064]
 solution = "V##!###"
 strings = [
     "V01!002",
 ]
 valid = true
 
-[deformatting.Public.00000065]
+[deformatting.Public.test00000065]
 solution = "V##!##"
 strings = [
     "V01!02",
 ]
 valid = true
 
-[deformatting.Public.00000066]
+[deformatting.Public.test00000066]
 solution = "V##!"
 strings = [
     "V01!2",
 ]
 valid = true
 
-[deformatting.Public.00000067]
+[deformatting.Public.test00000067]
 solution = "V###!##"
 strings = [
     "V099!00",
 ]
 valid = true
 
-[deformatting.Public.00000068]
+[deformatting.Public.test00000068]
 solution = "V##"
 strings = [
     "V1!00",
 ]
 valid = true
 
-[deformatting.Public.00000069]
+[deformatting.Public.test00000069]
 solution = "V###"
 strings = [
     "V1!007",
 ]
 valid = true
 
-[deformatting.Public.00000070]
+[deformatting.Public.test00000070]
 solution = "V"
 strings = [
     "V1!1.2.3",
 ]
 valid = true
 
-[deformatting.Public.00000071]
+[deformatting.Public.test00000071]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4511,7 +4511,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000072]
+[deformatting.Public.test00000072]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4520,7 +4520,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000073]
+[deformatting.Public.test00000073]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4529,7 +4529,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000074]
+[deformatting.Public.test00000074]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4538,7 +4538,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000075]
+[deformatting.Public.test00000075]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4547,7 +4547,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000076]
+[deformatting.Public.test00000076]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4556,7 +4556,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000077]
+[deformatting.Public.test00000077]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4565,7 +4565,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000078]
+[deformatting.Public.test00000078]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4574,7 +4574,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000079]
+[deformatting.Public.test00000079]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4583,7 +4583,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000080]
+[deformatting.Public.test00000080]
 solution = "V"
 strings = [
     "V1!1.2.3",
@@ -4592,428 +4592,428 @@ strings = [
 ]
 valid = true
 
-[deformatting.Public.00000081]
+[deformatting.Public.test00000081]
 solution = "V..#"
 strings = [
     "V1.2.0",
 ]
 valid = true
 
-[deformatting.Public.00000082]
+[deformatting.Public.test00000082]
 solution = "V##.##"
 strings = [
     "V10!01.02",
 ]
 valid = true
 
-[deformatting.Public.00000083]
+[deformatting.Public.test00000083]
 solution = "V###.###"
 strings = [
     "V9!001.002",
 ]
 valid = true
 
-[deformatting.Public.00000084]
+[deformatting.Public.test00000084]
 solution = "V...#"
 strings = [
     "V9!1.0.0.0",
 ]
 valid = true
 
-[deformatting.Public.00000085]
+[deformatting.Public.test00000085]
 strings = [
     "v",
 ]
 valid = false
 
-[deformatting.Public.00000086]
+[deformatting.Public.test00000086]
 strings = [
     "v!1",
 ]
 valid = false
 
-[deformatting.Public.00000087]
+[deformatting.Public.test00000087]
 solution = "v#!###"
 strings = [
     "v0!001",
 ]
 valid = true
 
-[deformatting.Public.00000088]
+[deformatting.Public.test00000088]
 solution = "v#!.#"
 strings = [
     "v0!1.0",
 ]
 valid = true
 
-[deformatting.Public.00000089]
+[deformatting.Public.test00000089]
 solution = "v#!"
 strings = [
     "v0!10.20.30",
 ]
 valid = true
 
-[deformatting.Public.00000090]
+[deformatting.Public.test00000090]
 solution = "v###!..#"
 strings = [
     "v001!0.0.0",
 ]
 valid = true
 
-[deformatting.Public.00000091]
+[deformatting.Public.test00000091]
 solution = "v###!###"
 strings = [
     "v001!002",
 ]
 valid = true
 
-[deformatting.Public.00000092]
+[deformatting.Public.test00000092]
 solution = "v###!##"
 strings = [
     "v001!02",
 ]
 valid = true
 
-[deformatting.Public.00000093]
+[deformatting.Public.test00000093]
 solution = "v###!"
 strings = [
     "v001!2",
 ]
 valid = true
 
-[deformatting.Public.00000094]
+[deformatting.Public.test00000094]
 solution = "v###"
 strings = [
     "v002",
 ]
 valid = true
 
-[deformatting.Public.00000095]
+[deformatting.Public.test00000095]
 solution = "v##!"
 strings = [
     "v01!1",
 ]
 valid = true
 
-[deformatting.Public.00000096]
+[deformatting.Public.test00000096]
 solution = "v##"
 strings = [
     "v09",
 ]
 valid = true
 
-[deformatting.Public.00000097]
+[deformatting.Public.test00000097]
 solution = "v###!.#"
 strings = [
     "v099!1.0",
 ]
 valid = true
 
-[deformatting.Public.00000098]
+[deformatting.Public.test00000098]
 solution = "v.#"
 strings = [
     "v1!1.0",
 ]
 valid = true
 
-[deformatting.Public.00000099]
+[deformatting.Public.test00000099]
 solution = "v"
 strings = [
     "v1!10.20.30",
 ]
 valid = true
 
-[deformatting.Public.00000100]
+[deformatting.Public.test00000100]
 strings = [
     "x",
 ]
 valid = false
 
-[deformatting.Qual.00000000]
+[deformatting.Qual.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Qual.00000001]
+[deformatting.Qual.test00000001]
 strings = [
     "-",
 ]
 valid = false
 
-[deformatting.Qual.00000002]
+[deformatting.Qual.test00000002]
 solution = "-##"
 strings = [
     "-02",
 ]
 valid = true
 
-[deformatting.Qual.00000003]
+[deformatting.Qual.test00000003]
 strings = [
     "-02",
     "-1",
 ]
 valid = false
 
-[deformatting.Qual.00000004]
+[deformatting.Qual.test00000004]
 strings = [
     "-02",
     "-1-dev4",
 ]
 valid = false
 
-[deformatting.Qual.00000005]
+[deformatting.Qual.test00000005]
 strings = [
     "-02",
     "-1.DEV_06",
 ]
 valid = false
 
-[deformatting.Qual.00000006]
+[deformatting.Qual.test00000006]
 strings = [
     "-02",
     "-1.dev",
 ]
 valid = false
 
-[deformatting.Qual.00000007]
+[deformatting.Qual.test00000007]
 strings = [
     "-02",
     "-1DEV5",
 ]
 valid = false
 
-[deformatting.Qual.00000008]
+[deformatting.Qual.test00000008]
 strings = [
     "-02",
     "-1_dev-3",
 ]
 valid = false
 
-[deformatting.Qual.00000009]
+[deformatting.Qual.test00000009]
 strings = [
     "-02",
     "-1dev.02",
 ]
 valid = false
 
-[deformatting.Qual.00000010]
+[deformatting.Qual.test00000010]
 strings = [
     "-02",
     "-1dev1",
 ]
 valid = false
 
-[deformatting.Qual.00000011]
+[deformatting.Qual.test00000011]
 strings = [
     "-02",
     "-alpha3-1",
 ]
 valid = false
 
-[deformatting.Qual.00000012]
+[deformatting.Qual.test00000012]
 strings = [
     "-02",
     "-alpha3-1-dev4",
 ]
 valid = false
 
-[deformatting.Qual.00000013]
+[deformatting.Qual.test00000013]
 solution = "-##DEV"
 strings = [
     "-02DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000014]
+[deformatting.Qual.test00000014]
 solution = "-##dev"
 strings = [
     "-02dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000015]
+[deformatting.Qual.test00000015]
 solution = "-"
 strings = [
     "-1",
 ]
 valid = true
 
-[deformatting.Qual.00000016]
+[deformatting.Qual.test00000016]
 solution = "--dev"
 strings = [
     "-1-dev4",
 ]
 valid = true
 
-[deformatting.Qual.00000017]
+[deformatting.Qual.test00000017]
 solution = "-.dev"
 strings = [
     "-1.dev",
 ]
 valid = true
 
-[deformatting.Qual.00000018]
+[deformatting.Qual.test00000018]
 solution = "-DEV"
 strings = [
     "-1DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000019]
+[deformatting.Qual.test00000019]
 solution = "-_dev-"
 strings = [
     "-1_dev-3",
 ]
 valid = true
 
-[deformatting.Qual.00000020]
+[deformatting.Qual.test00000020]
 solution = "-dev"
 strings = [
     "-1dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000021]
+[deformatting.Qual.test00000021]
 solution = "-"
 strings = [
     "-2",
 ]
 valid = true
 
-[deformatting.Qual.00000022]
+[deformatting.Qual.test00000022]
 solution = "-alpha"
 strings = [
     "-alpha3",
 ]
 valid = true
 
-[deformatting.Qual.00000023]
+[deformatting.Qual.test00000023]
 solution = ".a"
 strings = [
     ".a2",
 ]
 valid = true
 
-[deformatting.Qual.00000024]
+[deformatting.Qual.test00000024]
 solution = ".a#-##"
 strings = [
     ".a2-02",
 ]
 valid = true
 
-[deformatting.Qual.00000025]
+[deformatting.Qual.test00000025]
 solution = ".a#-"
 strings = [
     ".a2-1",
 ]
 valid = true
 
-[deformatting.Qual.00000026]
+[deformatting.Qual.test00000026]
 solution = ".aDEV"
 strings = [
     ".a2DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000027]
+[deformatting.Qual.test00000027]
 solution = ".adev"
 strings = [
     ".a2dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000028]
+[deformatting.Qual.test00000028]
 solution = ".apost"
 strings = [
     ".a2post1",
 ]
 valid = true
 
-[deformatting.Qual.00000029]
+[deformatting.Qual.test00000029]
 solution = ".ar"
 strings = [
     ".a2r",
 ]
 valid = true
 
-[deformatting.Qual.00000030]
+[deformatting.Qual.test00000030]
 solution = ".c"
 strings = [
     ".c2",
 ]
 valid = true
 
-[deformatting.Qual.00000031]
+[deformatting.Qual.test00000031]
 solution = ".c#-"
 strings = [
     ".c2-1",
 ]
 valid = true
 
-[deformatting.Qual.00000032]
+[deformatting.Qual.test00000032]
 solution = ".cDEV"
 strings = [
     ".c2DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000033]
+[deformatting.Qual.test00000033]
 solution = ".cdev"
 strings = [
     ".c2dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000034]
+[deformatting.Qual.test00000034]
 solution = ".cr"
 strings = [
     ".c2r",
 ]
 valid = true
 
-[deformatting.Qual.00000035]
+[deformatting.Qual.test00000035]
 solution = ".dev"
 strings = [
     ".dev",
 ]
 valid = true
 
-[deformatting.Qual.00000036]
+[deformatting.Qual.test00000036]
 solution = ".post"
 strings = [
     ".post",
 ]
 valid = true
 
-[deformatting.Qual.00000037]
+[deformatting.Qual.test00000037]
 solution = ".rev"
 strings = [
     ".rev6",
 ]
 valid = true
 
-[deformatting.Qual.00000038]
+[deformatting.Qual.test00000038]
 solution = "DEV"
 strings = [
     "DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000039]
+[deformatting.Qual.test00000039]
 solution = "_dev-"
 strings = [
     "_dev-3",
 ]
 valid = true
 
-[deformatting.Qual.00000040]
+[deformatting.Qual.test00000040]
 solution = "a"
 strings = [
     "a",
 ]
 valid = true
 
-[deformatting.Qual.00000041]
+[deformatting.Qual.test00000041]
 solution = "aB#-"
 strings = [
     "a",
@@ -5022,7 +5022,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000042]
+[deformatting.Qual.test00000042]
 solution = "abcrdev"
 strings = [
     "a",
@@ -5033,96 +5033,96 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000043]
+[deformatting.Qual.test00000043]
 solution = "a-##"
 strings = [
     "a-02",
 ]
 valid = true
 
-[deformatting.Qual.00000044]
+[deformatting.Qual.test00000044]
 solution = "a-"
 strings = [
     "a-1",
 ]
 valid = true
 
-[deformatting.Qual.00000045]
+[deformatting.Qual.test00000045]
 solution = "a-DEV"
 strings = [
     "a-1DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000046]
+[deformatting.Qual.test00000046]
 solution = "a-dev"
 strings = [
     "a-1dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000047]
+[deformatting.Qual.test00000047]
 strings = [
     "a.",
 ]
 valid = false
 
-[deformatting.Qual.00000048]
+[deformatting.Qual.test00000048]
 solution = "a##"
 strings = [
     "a01",
 ]
 valid = true
 
-[deformatting.Qual.00000049]
+[deformatting.Qual.test00000049]
 solution = "a##-"
 strings = [
     "a01-1",
 ]
 valid = true
 
-[deformatting.Qual.00000050]
+[deformatting.Qual.test00000050]
 solution = "a##r"
 strings = [
     "a01r",
 ]
 valid = true
 
-[deformatting.Qual.00000051]
+[deformatting.Qual.test00000051]
 solution = ""
 strings = [
     "a1",
 ]
 valid = true
 
-[deformatting.Qual.00000052]
+[deformatting.Qual.test00000052]
 strings = [
     "a1a2",
 ]
 valid = false
 
-[deformatting.Qual.00000053]
+[deformatting.Qual.test00000053]
 solution = "dev"
 strings = [
     "a1dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000054]
+[deformatting.Qual.test00000054]
 solution = "post"
 strings = [
     "a1post1",
 ]
 valid = true
 
-[deformatting.Qual.00000055]
+[deformatting.Qual.test00000055]
 solution = "r"
 strings = [
     "a1r",
 ]
 valid = true
 
-[deformatting.Qual.00000056]
+[deformatting.Qual.test00000056]
 solution = "r"
 strings = [
     "a1r",
@@ -5131,7 +5131,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000057]
+[deformatting.Qual.test00000057]
 solution = "r"
 strings = [
     "a1r",
@@ -5140,7 +5140,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000058]
+[deformatting.Qual.test00000058]
 solution = "r"
 strings = [
     "a1r",
@@ -5149,7 +5149,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000059]
+[deformatting.Qual.test00000059]
 solution = "r"
 strings = [
     "a1r",
@@ -5158,7 +5158,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000060]
+[deformatting.Qual.test00000060]
 solution = "r"
 strings = [
     "a1r",
@@ -5167,7 +5167,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000061]
+[deformatting.Qual.test00000061]
 solution = "r"
 strings = [
     "a1r",
@@ -5176,7 +5176,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000062]
+[deformatting.Qual.test00000062]
 solution = "r"
 strings = [
     "a1r",
@@ -5185,7 +5185,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000063]
+[deformatting.Qual.test00000063]
 solution = "r"
 strings = [
     "a1r",
@@ -5194,7 +5194,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000064]
+[deformatting.Qual.test00000064]
 solution = "r"
 strings = [
     "a1r",
@@ -5203,7 +5203,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000065]
+[deformatting.Qual.test00000065]
 solution = "r"
 strings = [
     "a1r",
@@ -5212,70 +5212,70 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000066]
+[deformatting.Qual.test00000066]
 solution = "rDEV"
 strings = [
     "a1r4DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000067]
+[deformatting.Qual.test00000067]
 solution = "rdev"
 strings = [
     "a1r4dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000068]
+[deformatting.Qual.test00000068]
 solution = "aDEV"
 strings = [
     "aDEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000069]
+[deformatting.Qual.test00000069]
 solution = "adev"
 strings = [
     "adev1",
 ]
 valid = true
 
-[deformatting.Qual.00000070]
+[deformatting.Qual.test00000070]
 solution = "apost"
 strings = [
     "apost1",
 ]
 valid = true
 
-[deformatting.Qual.00000071]
+[deformatting.Qual.test00000071]
 solution = "ar"
 strings = [
     "ar",
 ]
 valid = true
 
-[deformatting.Qual.00000072]
+[deformatting.Qual.test00000072]
 solution = "arDEV"
 strings = [
     "ar4DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000073]
+[deformatting.Qual.test00000073]
 solution = "ardev"
 strings = [
     "ar4dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000074]
+[deformatting.Qual.test00000074]
 solution = "b"
 strings = [
     "b",
 ]
 valid = true
 
-[deformatting.Qual.00000075]
+[deformatting.Qual.test00000075]
 solution = "bC#-"
 strings = [
     "b",
@@ -5284,55 +5284,55 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000076]
+[deformatting.Qual.test00000076]
 solution = "b-##"
 strings = [
     "b-02",
 ]
 valid = true
 
-[deformatting.Qual.00000077]
+[deformatting.Qual.test00000077]
 solution = "b-"
 strings = [
     "b-1",
 ]
 valid = true
 
-[deformatting.Qual.00000078]
+[deformatting.Qual.test00000078]
 solution = "b-DEV"
 strings = [
     "b-1DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000079]
+[deformatting.Qual.test00000079]
 solution = "b-dev"
 strings = [
     "b-1dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000080]
+[deformatting.Qual.test00000080]
 solution = "bDEV"
 strings = [
     "bDEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000081]
+[deformatting.Qual.test00000081]
 strings = [
     "b_",
 ]
 valid = false
 
-[deformatting.Qual.00000082]
+[deformatting.Qual.test00000082]
 solution = "bdev"
 strings = [
     "bdev1",
 ]
 valid = true
 
-[deformatting.Qual.00000083]
+[deformatting.Qual.test00000083]
 solution = "betadev."
 strings = [
     "beta1",
@@ -5340,35 +5340,35 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000084]
+[deformatting.Qual.test00000084]
 solution = "bpost"
 strings = [
     "bpost1",
 ]
 valid = true
 
-[deformatting.Qual.00000085]
+[deformatting.Qual.test00000085]
 solution = "br"
 strings = [
     "br",
 ]
 valid = true
 
-[deformatting.Qual.00000086]
+[deformatting.Qual.test00000086]
 solution = "brDEV"
 strings = [
     "br4DEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000087]
+[deformatting.Qual.test00000087]
 solution = "brdev"
 strings = [
     "br4dev1",
 ]
 valid = true
 
-[deformatting.Qual.00000088]
+[deformatting.Qual.test00000088]
 solution = "c-"
 strings = [
     "c",
@@ -5376,7 +5376,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000089]
+[deformatting.Qual.test00000089]
 solution = "c--"
 strings = [
     "c",
@@ -5385,7 +5385,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000090]
+[deformatting.Qual.test00000090]
 solution = "c"
 strings = [
     "c",
@@ -5393,7 +5393,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000091]
+[deformatting.Qual.test00000091]
 strings = [
     "c",
     "c1",
@@ -5401,7 +5401,7 @@ strings = [
 ]
 valid = false
 
-[deformatting.Qual.00000092]
+[deformatting.Qual.test00000092]
 solution = "c#-"
 strings = [
     "c1",
@@ -5409,59 +5409,59 @@ strings = [
 ]
 valid = true
 
-[deformatting.Qual.00000093]
+[deformatting.Qual.test00000093]
 strings = [
     "dev.",
 ]
 valid = false
 
-[deformatting.Qual.00000094]
+[deformatting.Qual.test00000094]
 strings = [
     "dev1post2",
 ]
 valid = false
 
-[deformatting.Qual.00000095]
+[deformatting.Qual.test00000095]
 strings = [
     "post.",
 ]
 valid = false
 
-[deformatting.Qual.00000096]
+[deformatting.Qual.test00000096]
 strings = [
     "post1a2",
 ]
 valid = false
 
-[deformatting.Qual.00000097]
+[deformatting.Qual.test00000097]
 solution = "pre."
 strings = [
     "pre.3",
 ]
 valid = true
 
-[deformatting.Qual.00000098]
+[deformatting.Qual.test00000098]
 solution = "pre.-"
 strings = [
     "pre.3-1",
 ]
 valid = true
 
-[deformatting.Qual.00000099]
+[deformatting.Qual.test00000099]
 solution = "pre.r"
 strings = [
     "pre.3r",
 ]
 valid = true
 
-[deformatting.Qual.00000100]
+[deformatting.Qual.test00000100]
 solution = "rc"
 strings = [
     "rc",
 ]
 valid = true
 
-[deformatting.Qual.00000101]
+[deformatting.Qual.test00000101]
 strings = [
     "rc",
     "rc1",
@@ -5469,147 +5469,147 @@ strings = [
 ]
 valid = false
 
-[deformatting.Qual.00000102]
+[deformatting.Qual.test00000102]
 strings = [
     "rc-",
 ]
 valid = false
 
-[deformatting.Qual.00000103]
+[deformatting.Qual.test00000103]
 solution = "rc-##"
 strings = [
     "rc-02",
 ]
 valid = true
 
-[deformatting.Qual.00000104]
+[deformatting.Qual.test00000104]
 solution = "rc-"
 strings = [
     "rc-1",
 ]
 valid = true
 
-[deformatting.Qual.00000105]
+[deformatting.Qual.test00000105]
 solution = "rc##"
 strings = [
     "rc01",
 ]
 valid = true
 
-[deformatting.Qual.00000106]
+[deformatting.Qual.test00000106]
 solution = "rc##-"
 strings = [
     "rc01-1",
 ]
 valid = true
 
-[deformatting.Qual.00000107]
+[deformatting.Qual.test00000107]
 solution = "rc##r"
 strings = [
     "rc01r",
 ]
 valid = true
 
-[deformatting.Qual.00000108]
+[deformatting.Qual.test00000108]
 solution = "rcDEV"
 strings = [
     "rcDEV5",
 ]
 valid = true
 
-[deformatting.Qual.00000109]
+[deformatting.Qual.test00000109]
 solution = "rcdev"
 strings = [
     "rcdev1",
 ]
 valid = true
 
-[deformatting.Qual.00000110]
+[deformatting.Qual.test00000110]
 solution = "rcr"
 strings = [
     "rcr",
 ]
 valid = true
 
-[deformatting.Qual.00000111]
+[deformatting.Qual.test00000111]
 strings = [
     "x",
 ]
 valid = false
 
-[deformatting.Release.00000000]
+[deformatting.Release.test00000000]
 strings = [
     "+1",
 ]
 valid = false
 
-[deformatting.Release.00000001]
+[deformatting.Release.test00000001]
 strings = [
     "-1",
 ]
 valid = false
 
-[deformatting.Release.00000002]
+[deformatting.Release.test00000002]
 strings = [
     ".",
 ]
 valid = false
 
-[deformatting.Release.00000003]
+[deformatting.Release.test00000003]
 strings = [
     "..",
 ]
 valid = false
 
-[deformatting.Release.00000004]
+[deformatting.Release.test00000004]
 strings = [
     ".1",
 ]
 valid = false
 
-[deformatting.Release.00000005]
+[deformatting.Release.test00000005]
 solution = ""
 strings = [
     "0",
 ]
 valid = true
 
-[deformatting.Release.00000006]
+[deformatting.Release.test00000006]
 solution = ".#"
 strings = [
     "0.0",
 ]
 valid = true
 
-[deformatting.Release.00000007]
+[deformatting.Release.test00000007]
 solution = "..#"
 strings = [
     "0.0.0",
 ]
 valid = true
 
-[deformatting.Release.00000008]
+[deformatting.Release.test00000008]
 solution = "##"
 strings = [
     "00",
 ]
 valid = true
 
-[deformatting.Release.00000009]
+[deformatting.Release.test00000009]
 strings = [
     "00",
     "0",
 ]
 valid = false
 
-[deformatting.Release.00000010]
+[deformatting.Release.test00000010]
 strings = [
     "00.00",
     "0.0",
 ]
 valid = false
 
-[deformatting.Release.00000011]
+[deformatting.Release.test00000011]
 solution = "##.##"
 strings = [
     "00.00",
@@ -5617,7 +5617,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000012]
+[deformatting.Release.test00000012]
 solution = "##.##"
 strings = [
     "00.00",
@@ -5625,35 +5625,35 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000013]
+[deformatting.Release.test00000013]
 solution = "##.##.##"
 strings = [
     "00.00.00",
 ]
 valid = true
 
-[deformatting.Release.00000014]
+[deformatting.Release.test00000014]
 solution = "###"
 strings = [
     "000",
 ]
 valid = true
 
-[deformatting.Release.00000015]
+[deformatting.Release.test00000015]
 strings = [
     "0001.0002",
     "100.200",
 ]
 valid = false
 
-[deformatting.Release.00000016]
+[deformatting.Release.test00000016]
 strings = [
     "0001.0002",
     "1000.200",
 ]
 valid = false
 
-[deformatting.Release.00000017]
+[deformatting.Release.test00000017]
 solution = "####.####"
 strings = [
     "0001.0002",
@@ -5662,28 +5662,28 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000018]
+[deformatting.Release.test00000018]
 solution = "####.####.####"
 strings = [
     "0001.0002.0003",
 ]
 valid = true
 
-[deformatting.Release.00000019]
+[deformatting.Release.test00000019]
 solution = "###"
 strings = [
     "001",
 ]
 valid = true
 
-[deformatting.Release.00000020]
+[deformatting.Release.test00000020]
 strings = [
     "001",
     "10",
 ]
 valid = false
 
-[deformatting.Release.00000021]
+[deformatting.Release.test00000021]
 solution = "###"
 strings = [
     "001",
@@ -5691,7 +5691,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000022]
+[deformatting.Release.test00000022]
 strings = [
     "001",
     "100",
@@ -5699,7 +5699,7 @@ strings = [
 ]
 valid = false
 
-[deformatting.Release.00000023]
+[deformatting.Release.test00000023]
 solution = "###"
 strings = [
     "001",
@@ -5707,7 +5707,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000024]
+[deformatting.Release.test00000024]
 solution = "###.###"
 strings = [
     "001.002",
@@ -5715,7 +5715,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000025]
+[deformatting.Release.test00000025]
 solution = "###.###"
 strings = [
     "001.002",
@@ -5723,7 +5723,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000026]
+[deformatting.Release.test00000026]
 solution = "###.###.###"
 strings = [
     "001.002.003",
@@ -5732,35 +5732,35 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000027]
+[deformatting.Release.test00000027]
 strings = [
     "001.02",
     "10.20",
 ]
 valid = false
 
-[deformatting.Release.00000028]
+[deformatting.Release.test00000028]
 solution = "##"
 strings = [
     "01",
 ]
 valid = true
 
-[deformatting.Release.00000029]
+[deformatting.Release.test00000029]
 strings = [
     "01",
     "001",
 ]
 valid = false
 
-[deformatting.Release.00000030]
+[deformatting.Release.test00000030]
 strings = [
     "01",
     "1",
 ]
 valid = false
 
-[deformatting.Release.00000031]
+[deformatting.Release.test00000031]
 solution = "##"
 strings = [
     "01",
@@ -5768,7 +5768,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000032]
+[deformatting.Release.test00000032]
 solution = "##"
 strings = [
     "01",
@@ -5776,14 +5776,14 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000033]
+[deformatting.Release.test00000033]
 strings = [
     "01.00",
     "10.0",
 ]
 valid = false
 
-[deformatting.Release.00000034]
+[deformatting.Release.test00000034]
 solution = "##.##"
 strings = [
     "01.00",
@@ -5791,7 +5791,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000035]
+[deformatting.Release.test00000035]
 solution = "##.##"
 strings = [
     "01.00",
@@ -5799,42 +5799,42 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000036]
+[deformatting.Release.test00000036]
 strings = [
     "01.002",
     "10.20",
 ]
 valid = false
 
-[deformatting.Release.00000037]
+[deformatting.Release.test00000037]
 strings = [
     "01.02",
     "001.02",
 ]
 valid = false
 
-[deformatting.Release.00000038]
+[deformatting.Release.test00000038]
 strings = [
     "01.02",
     "01.002",
 ]
 valid = false
 
-[deformatting.Release.00000039]
+[deformatting.Release.test00000039]
 strings = [
     "01.02",
     "1.2",
 ]
 valid = false
 
-[deformatting.Release.00000040]
+[deformatting.Release.test00000040]
 strings = [
     "01.02",
     "1.20",
 ]
 valid = false
 
-[deformatting.Release.00000041]
+[deformatting.Release.test00000041]
 solution = "##.##"
 strings = [
     "01.02",
@@ -5842,7 +5842,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000042]
+[deformatting.Release.test00000042]
 strings = [
     "01.02",
     "10.20",
@@ -5850,7 +5850,7 @@ strings = [
 ]
 valid = false
 
-[deformatting.Release.00000043]
+[deformatting.Release.test00000043]
 solution = "##.##"
 strings = [
     "01.02",
@@ -5859,7 +5859,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000044]
+[deformatting.Release.test00000044]
 solution = "##.##"
 strings = [
     "01.02",
@@ -5867,14 +5867,14 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000045]
+[deformatting.Release.test00000045]
 strings = [
     "01.02.00",
     "10.20.0",
 ]
 valid = false
 
-[deformatting.Release.00000046]
+[deformatting.Release.test00000046]
 solution = "##.##.##"
 strings = [
     "01.02.00",
@@ -5882,7 +5882,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000047]
+[deformatting.Release.test00000047]
 solution = "##.##.##"
 strings = [
     "01.02.00",
@@ -5890,28 +5890,28 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000048]
+[deformatting.Release.test00000048]
 solution = "##.##.###"
 strings = [
     "01.02.003",
 ]
 valid = true
 
-[deformatting.Release.00000049]
+[deformatting.Release.test00000049]
 strings = [
     "01.02.003",
     "10.2.300",
 ]
 valid = false
 
-[deformatting.Release.00000050]
+[deformatting.Release.test00000050]
 strings = [
     "01.02.003",
     "10.20.30",
 ]
 valid = false
 
-[deformatting.Release.00000051]
+[deformatting.Release.test00000051]
 solution = "##.##.###"
 strings = [
     "01.02.003",
@@ -5919,7 +5919,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000052]
+[deformatting.Release.test00000052]
 strings = [
     "01.02.003",
     "100.200.300",
@@ -5927,7 +5927,7 @@ strings = [
 ]
 valid = false
 
-[deformatting.Release.00000053]
+[deformatting.Release.test00000053]
 solution = "##.##.###.####"
 strings = [
     "01.02.003.0000",
@@ -5935,7 +5935,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000054]
+[deformatting.Release.test00000054]
 solution = "##.##.##"
 strings = [
     "01.02.03",
@@ -5944,14 +5944,14 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000055]
+[deformatting.Release.test00000055]
 solution = "##.##"
 strings = [
     "01.02.3",
 ]
 valid = true
 
-[deformatting.Release.00000056]
+[deformatting.Release.test00000056]
 solution = "##..###"
 strings = [
     "01.2.003",
@@ -5959,35 +5959,35 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000057]
+[deformatting.Release.test00000057]
 solution = "##"
 strings = [
     "01.2.3",
 ]
 valid = true
 
-[deformatting.Release.00000058]
+[deformatting.Release.test00000058]
 solution = "##"
 strings = [
     "09",
 ]
 valid = true
 
-[deformatting.Release.00000059]
+[deformatting.Release.test00000059]
 solution = "###"
 strings = [
     "099",
 ]
 valid = true
 
-[deformatting.Release.00000060]
+[deformatting.Release.test00000060]
 solution = ""
 strings = [
     "1",
 ]
 valid = true
 
-[deformatting.Release.00000061]
+[deformatting.Release.test00000061]
 solution = ""
 strings = [
     "1",
@@ -5995,7 +5995,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000062]
+[deformatting.Release.test00000062]
 solution = ""
 strings = [
     "1",
@@ -6003,44 +6003,44 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000063]
+[deformatting.Release.test00000063]
 strings = [
     "1,2",
 ]
 valid = false
 
-[deformatting.Release.00000064]
+[deformatting.Release.test00000064]
 strings = [
     "1-2",
 ]
 valid = false
 
-[deformatting.Release.00000065]
+[deformatting.Release.test00000065]
 strings = [
     "1.",
 ]
 valid = false
 
-[deformatting.Release.00000066]
+[deformatting.Release.test00000066]
 strings = [
     "1...2",
 ]
 valid = false
 
-[deformatting.Release.00000067]
+[deformatting.Release.test00000067]
 strings = [
     "1..2",
 ]
 valid = false
 
-[deformatting.Release.00000068]
+[deformatting.Release.test00000068]
 solution = ".#"
 strings = [
     "1.0",
 ]
 valid = true
 
-[deformatting.Release.00000069]
+[deformatting.Release.test00000069]
 solution = "...#"
 strings = [
     "1.0",
@@ -6048,35 +6048,35 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000070]
+[deformatting.Release.test00000070]
 solution = "...#"
 strings = [
     "1.0.0.0",
 ]
 valid = true
 
-[deformatting.Release.00000071]
+[deformatting.Release.test00000071]
 solution = ".##"
 strings = [
     "1.00",
 ]
 valid = true
 
-[deformatting.Release.00000072]
+[deformatting.Release.test00000072]
 solution = ".###"
 strings = [
     "1.000",
 ]
 valid = true
 
-[deformatting.Release.00000073]
+[deformatting.Release.test00000073]
 solution = ""
 strings = [
     "1.2",
 ]
 valid = true
 
-[deformatting.Release.00000074]
+[deformatting.Release.test00000074]
 solution = ""
 strings = [
     "1.2",
@@ -6084,7 +6084,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000075]
+[deformatting.Release.test00000075]
 solution = ""
 strings = [
     "1.2",
@@ -6092,7 +6092,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000076]
+[deformatting.Release.test00000076]
 solution = ""
 strings = [
     "1.2",
@@ -6100,20 +6100,20 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000077]
+[deformatting.Release.test00000077]
 strings = [
     "1.2.",
 ]
 valid = false
 
-[deformatting.Release.00000078]
+[deformatting.Release.test00000078]
 solution = "..#"
 strings = [
     "1.2.0",
 ]
 valid = true
 
-[deformatting.Release.00000079]
+[deformatting.Release.test00000079]
 solution = "..#"
 strings = [
     "1.2.0",
@@ -6122,7 +6122,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000080]
+[deformatting.Release.test00000080]
 solution = "..#"
 strings = [
     "1.2.0",
@@ -6130,7 +6130,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000081]
+[deformatting.Release.test00000081]
 solution = "....#"
 strings = [
     "1.2.0",
@@ -6139,7 +6139,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000082]
+[deformatting.Release.test00000082]
 solution = "..#"
 strings = [
     "1.2.0",
@@ -6147,14 +6147,14 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000083]
+[deformatting.Release.test00000083]
 solution = "..##"
 strings = [
     "1.2.00",
 ]
 valid = true
 
-[deformatting.Release.00000084]
+[deformatting.Release.test00000084]
 solution = "..##"
 strings = [
     "1.2.00",
@@ -6163,14 +6163,14 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000085]
+[deformatting.Release.test00000085]
 solution = ""
 strings = [
     "1.2.3",
 ]
 valid = true
 
-[deformatting.Release.00000086]
+[deformatting.Release.test00000086]
 solution = "..#"
 strings = [
     "1.2.3",
@@ -6178,7 +6178,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000087]
+[deformatting.Release.test00000087]
 solution = ""
 strings = [
     "1.2.3",
@@ -6186,20 +6186,20 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000088]
+[deformatting.Release.test00000088]
 strings = [
     "1.a",
 ]
 valid = false
 
-[deformatting.Release.00000089]
+[deformatting.Release.test00000089]
 solution = ""
 strings = [
     "10",
 ]
 valid = true
 
-[deformatting.Release.00000090]
+[deformatting.Release.test00000090]
 solution = ""
 strings = [
     "10",
@@ -6207,14 +6207,14 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000091]
+[deformatting.Release.test00000091]
 solution = ".###"
 strings = [
     "10.020.3000",
 ]
 valid = true
 
-[deformatting.Release.00000092]
+[deformatting.Release.test00000092]
 solution = ""
 strings = [
     "10.20.30",
@@ -6223,20 +6223,20 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000093]
+[deformatting.Release.test00000093]
 solution = ""
 strings = [
     "123.456.789",
 ]
 valid = true
 
-[deformatting.Release.00000094]
+[deformatting.Release.test00000094]
 strings = [
     "1_2",
 ]
 valid = false
 
-[deformatting.Release.00000095]
+[deformatting.Release.test00000095]
 solution = "..#"
 strings = [
     "4.0",
@@ -6244,7 +6244,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000096]
+[deformatting.Release.test00000096]
 solution = "..#"
 strings = [
     "4.0",
@@ -6253,7 +6253,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000097]
+[deformatting.Release.test00000097]
 solution = ".#"
 strings = [
     "4.0",
@@ -6261,135 +6261,135 @@ strings = [
 ]
 valid = true
 
-[deformatting.Release.00000098]
+[deformatting.Release.test00000098]
 solution = ".##.###"
 strings = [
     "7.08.009",
 ]
 valid = true
 
-[deformatting.Release.00000099]
+[deformatting.Release.test00000099]
 solution = ""
 strings = [
     "9",
 ]
 valid = true
 
-[deformatting.Release.00000100]
+[deformatting.Release.test00000100]
 solution = ""
 strings = [
     "999",
 ]
 valid = true
 
-[deformatting.Release.00000101]
+[deformatting.Release.test00000101]
 solution = ".####"
 strings = [
     "9999.0000",
 ]
 valid = true
 
-[deformatting.Release.00000102]
+[deformatting.Release.test00000102]
 strings = [
     "a",
 ]
 valid = false
 
-[deformatting.Release.00000103]
+[deformatting.Release.test00000103]
 strings = [
     "a.1",
 ]
 valid = false
 
-[deformatting.Version.00000000]
+[deformatting.Version.test00000000]
 solution = ""
 strings = []
 valid = true
 
-[deformatting.Version.00000001]
+[deformatting.Version.test00000001]
 strings = [
     "+abc",
 ]
 valid = false
 
-[deformatting.Version.00000002]
+[deformatting.Version.test00000002]
 solution = ""
 strings = [
     "0",
 ]
 valid = true
 
-[deformatting.Version.00000003]
+[deformatting.Version.test00000003]
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06",
 ]
 valid = false
 
-[deformatting.Version.00000004]
+[deformatting.Version.test00000004]
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+0.0",
 ]
 valid = false
 
-[deformatting.Version.00000005]
+[deformatting.Version.test00000005]
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+9.AB12",
 ]
 valid = false
 
-[deformatting.Version.00000006]
+[deformatting.Version.test00000006]
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+Foo_Foo",
 ]
 valid = false
 
-[deformatting.Version.00000007]
+[deformatting.Version.test00000007]
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+x-9",
 ]
 valid = false
 
-[deformatting.Version.00000008]
+[deformatting.Version.test00000008]
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02",
 ]
 valid = false
 
-[deformatting.Version.00000009]
+[deformatting.Version.test00000009]
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+001-0",
 ]
 valid = false
 
-[deformatting.Version.00000010]
+[deformatting.Version.test00000010]
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+9_ABC",
 ]
 valid = false
 
-[deformatting.Version.00000011]
+[deformatting.Version.test00000011]
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+X-ABC",
 ]
 valid = false
 
-[deformatting.Version.00000012]
+[deformatting.Version.test00000012]
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+x.A1",
 ]
 valid = false
 
-[deformatting.Version.00000013]
+[deformatting.Version.test00000013]
 solution = ""
 strings = [
     "0",
@@ -6398,7 +6398,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000014]
+[deformatting.Version.test00000014]
 solution = ""
 strings = [
     "0",
@@ -6407,7 +6407,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000015]
+[deformatting.Version.test00000015]
 solution = ""
 strings = [
     "0",
@@ -6416,7 +6416,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000016]
+[deformatting.Version.test00000016]
 solution = ""
 strings = [
     "0",
@@ -6425,7 +6425,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000017]
+[deformatting.Version.test00000017]
 solution = ""
 strings = [
     "0",
@@ -6434,7 +6434,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000018]
+[deformatting.Version.test00000018]
 solution = ""
 strings = [
     "0",
@@ -6443,7 +6443,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000019]
+[deformatting.Version.test00000019]
 solution = ""
 strings = [
     "0",
@@ -6452,7 +6452,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000020]
+[deformatting.Version.test00000020]
 solution = ""
 strings = [
     "0",
@@ -6461,7 +6461,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000021]
+[deformatting.Version.test00000021]
 solution = ""
 strings = [
     "0",
@@ -6470,7 +6470,7 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000022]
+[deformatting.Version.test00000022]
 solution = ""
 strings = [
     "0",
@@ -6479,545 +6479,545 @@ strings = [
 ]
 valid = true
 
-[deformatting.Version.00000023]
+[deformatting.Version.test00000023]
 solution = "+-^"
 strings = [
     "0+9-A1",
 ]
 valid = true
 
-[deformatting.Version.00000024]
+[deformatting.Version.test00000024]
 solution = "+^.^^^"
 strings = [
     "0+Foo.FOO",
 ]
 valid = true
 
-[deformatting.Version.00000025]
+[deformatting.Version.test00000025]
 solution = "+_"
 strings = [
     "0+foo_9",
 ]
 valid = true
 
-[deformatting.Version.00000026]
+[deformatting.Version.test00000026]
 solution = "..#"
 strings = [
     "0.0.0",
 ]
 valid = true
 
-[deformatting.Version.00000027]
+[deformatting.Version.test00000027]
 solution = "..#+###-"
 strings = [
     "0.0.0+001-0",
 ]
 valid = true
 
-[deformatting.Version.00000028]
+[deformatting.Version.test00000028]
 solution = "..#+.^"
 strings = [
     "0.0.0+x.A1",
 ]
 valid = true
 
-[deformatting.Version.00000029]
+[deformatting.Version.test00000029]
 solution = "###!##"
 strings = [
     "001!00",
 ]
 valid = true
 
-[deformatting.Version.00000030]
+[deformatting.Version.test00000030]
 solution = "###!###"
 strings = [
     "001!007",
 ]
 valid = true
 
-[deformatting.Version.00000031]
+[deformatting.Version.test00000031]
 solution = "###!##+_"
 strings = [
     "001!09+foo_9",
 ]
 valid = true
 
-[deformatting.Version.00000032]
+[deformatting.Version.test00000032]
 solution = "###!"
 strings = [
     "001!1.2.3",
 ]
 valid = true
 
-[deformatting.Version.00000033]
+[deformatting.Version.test00000033]
 solution = "###!+^.^"
 strings = [
     "001!1.2.3+X.A1",
 ]
 valid = true
 
-[deformatting.Version.00000034]
+[deformatting.Version.test00000034]
 solution = "###!+-^"
 strings = [
     "001!1.2.3+x9-A1",
 ]
 valid = true
 
-[deformatting.Version.00000035]
+[deformatting.Version.test00000035]
 solution = "###"
 strings = [
     "007",
 ]
 valid = true
 
-[deformatting.Version.00000036]
+[deformatting.Version.test00000036]
 solution = "###+_^~^"
 strings = [
     "007+0_AbC",
 ]
 valid = true
 
-[deformatting.Version.00000037]
+[deformatting.Version.test00000037]
 solution = "###+^^^-"
 strings = [
     "007+ABC-10",
 ]
 valid = true
 
-[deformatting.Version.00000038]
+[deformatting.Version.test00000038]
 solution = "###+.^^"
 strings = [
     "007+a1.AB12",
 ]
 valid = true
 
-[deformatting.Version.00000039]
+[deformatting.Version.test00000039]
 solution = "###+_^"
 strings = [
     "007+z99_Foo",
 ]
 valid = true
 
-[deformatting.Version.00000040]
+[deformatting.Version.test00000040]
 solution = "##!###"
 strings = [
     "01!001",
 ]
 valid = true
 
-[deformatting.Version.00000041]
+[deformatting.Version.test00000041]
 solution = "##!###+-"
 strings = [
     "01!001+x-9",
 ]
 valid = true
 
-[deformatting.Version.00000042]
+[deformatting.Version.test00000042]
 solution = "##!.#"
 strings = [
     "01!1.0",
 ]
 valid = true
 
-[deformatting.Version.00000043]
+[deformatting.Version.test00000043]
 solution = "##!.#+^^"
 strings = [
     "01!1.0+AB12.1",
 ]
 valid = true
 
-[deformatting.Version.00000044]
+[deformatting.Version.test00000044]
 solution = "##!"
 strings = [
     "01!10.20.30",
 ]
 valid = true
 
-[deformatting.Version.00000045]
+[deformatting.Version.test00000045]
 solution = "##!+-^"
 strings = [
     "01!10.20.30+1-A1",
 ]
 valid = true
 
-[deformatting.Version.00000046]
+[deformatting.Version.test00000046]
 solution = "##!+^^^"
 strings = [
     "01!10.20.30+ABC.2",
 ]
 valid = true
 
-[deformatting.Version.00000047]
+[deformatting.Version.test00000047]
 solution = "##!+_^^^"
 strings = [
     "01!10.20.30+a1_ABC",
 ]
 valid = true
 
-[deformatting.Version.00000048]
+[deformatting.Version.test00000048]
 solution = "##!+###-"
 strings = [
     "01!99+001-0",
 ]
 valid = true
 
-[deformatting.Version.00000049]
+[deformatting.Version.test00000049]
 solution = "##!+.^"
 strings = [
     "01!99+x.A1",
 ]
 valid = true
 
-[deformatting.Version.00000050]
+[deformatting.Version.test00000050]
 solution = "###+###_"
 strings = [
     "099+001_ab12",
 ]
 valid = true
 
-[deformatting.Version.00000051]
+[deformatting.Version.test00000051]
 solution = "###+^_"
 strings = [
     "099+A1_2",
 ]
 valid = true
 
-[deformatting.Version.00000052]
+[deformatting.Version.test00000052]
 solution = "###+^.^^"
 strings = [
     "099+X09.AB12",
 ]
 valid = true
 
-[deformatting.Version.00000053]
+[deformatting.Version.test00000053]
 solution = "###+_^^^"
 strings = [
     "099+x9_ABC",
 ]
 valid = true
 
-[deformatting.Version.00000054]
+[deformatting.Version.test00000054]
 solution = "-DEV"
 strings = [
     "1!100b2-1DEV5",
 ]
 valid = true
 
-[deformatting.Version.00000055]
+[deformatting.Version.test00000055]
 solution = "-DEV+-^"
 strings = [
     "1!100b2-1DEV5+9-A1",
 ]
 valid = true
 
-[deformatting.Version.00000056]
+[deformatting.Version.test00000056]
 solution = "-DEV+_"
 strings = [
     "1!100b2-1DEV5+foo_9",
 ]
 valid = true
 
-[deformatting.Version.00000057]
+[deformatting.Version.test00000057]
 solution = "rcdev"
 strings = [
     "1!100rcdev1",
 ]
 valid = true
 
-[deformatting.Version.00000058]
+[deformatting.Version.test00000058]
 solution = "rcdev+-"
 strings = [
     "1!100rcdev1+x-9",
 ]
 valid = true
 
-[deformatting.Version.00000059]
+[deformatting.Version.test00000059]
 strings = [
     "1+",
 ]
 valid = false
 
-[deformatting.Version.00000060]
+[deformatting.Version.test00000060]
 strings = [
     "1++abc",
 ]
 valid = false
 
-[deformatting.Version.00000061]
+[deformatting.Version.test00000061]
 strings = [
     "1+abc+def",
 ]
 valid = false
 
-[deformatting.Version.00000062]
+[deformatting.Version.test00000062]
 strings = [
     "1.",
 ]
 valid = false
 
-[deformatting.Version.00000063]
+[deformatting.Version.test00000063]
 strings = [
     "1..2",
 ]
 valid = false
 
-[deformatting.Version.00000064]
+[deformatting.Version.test00000064]
 solution = ".#"
 strings = [
     "1.0",
 ]
 valid = true
 
-[deformatting.Version.00000065]
+[deformatting.Version.test00000065]
 solution = ".#+###-"
 strings = [
     "1.0+001-0",
 ]
 valid = true
 
-[deformatting.Version.00000066]
+[deformatting.Version.test00000066]
 solution = ".#+_^^^"
 strings = [
     "1.0+9_ABC",
 ]
 valid = true
 
-[deformatting.Version.00000067]
+[deformatting.Version.test00000067]
 solution = ".#+^-^^^"
 strings = [
     "1.0+X-ABC",
 ]
 valid = true
 
-[deformatting.Version.00000068]
+[deformatting.Version.test00000068]
 solution = ".#+.^"
 strings = [
     "1.0+x.A1",
 ]
 valid = true
 
-[deformatting.Version.00000069]
+[deformatting.Version.test00000069]
 strings = [
     "1.2+abc.",
 ]
 valid = false
 
-[deformatting.Version.00000070]
+[deformatting.Version.test00000070]
 strings = [
     "1.2+x+y",
 ]
 valid = false
 
-[deformatting.Version.00000071]
+[deformatting.Version.test00000071]
 strings = [
     "1.2.3",
     "v9.8",
 ]
 valid = false
 
-[deformatting.Version.00000072]
+[deformatting.Version.test00000072]
 solution = "..#+###_"
 strings = [
     "10!0.0.0+001_ab12",
 ]
 valid = true
 
-[deformatting.Version.00000073]
+[deformatting.Version.test00000073]
 solution = "..#+^_"
 strings = [
     "10!0.0.0+A1_2",
 ]
 valid = true
 
-[deformatting.Version.00000074]
+[deformatting.Version.test00000074]
 solution = "###+^^_"
 strings = [
     "10!002+AB12_10",
 ]
 valid = true
 
-[deformatting.Version.00000075]
+[deformatting.Version.test00000075]
 solution = "###+-^"
 strings = [
     "10!002+a1-A1",
 ]
 valid = true
 
-[deformatting.Version.00000076]
+[deformatting.Version.test00000076]
 solution = "###+.^^^"
 strings = [
     "10!002+z99.FOO",
 ]
 valid = true
 
-[deformatting.Version.00000077]
+[deformatting.Version.test00000077]
 solution = "##"
 strings = [
     "10!02",
 ]
 valid = true
 
-[deformatting.Version.00000078]
+[deformatting.Version.test00000078]
 solution = "##+-^"
 strings = [
     "10!02+9-A1",
 ]
 valid = true
 
-[deformatting.Version.00000079]
+[deformatting.Version.test00000079]
 solution = "##+^.^^^"
 strings = [
     "10!02+Foo.FOO",
 ]
 valid = true
 
-[deformatting.Version.00000080]
+[deformatting.Version.test00000080]
 solution = "##+_"
 strings = [
     "10!02+foo_9",
 ]
 valid = true
 
-[deformatting.Version.00000081]
+[deformatting.Version.test00000081]
 solution = "..#+^.^"
 strings = [
     "10!1.2.0+X.A1",
 ]
 valid = true
 
-[deformatting.Version.00000082]
+[deformatting.Version.test00000082]
 solution = "..#+-^"
 strings = [
     "10!1.2.0+x9-A1",
 ]
 valid = true
 
-[deformatting.Version.00000083]
+[deformatting.Version.test00000083]
 solution = "+##-^"
 strings = [
     "10!2+01-X",
 ]
 valid = true
 
-[deformatting.Version.00000084]
+[deformatting.Version.test00000084]
 solution = "+^^-##"
 strings = [
     "10!2+AB12-01",
 ]
 valid = true
 
-[deformatting.Version.00000085]
+[deformatting.Version.test00000085]
 solution = "+^_^^^"
 strings = [
     "10!2+X09_ABC",
 ]
 valid = true
 
-[deformatting.Version.00000086]
+[deformatting.Version.test00000086]
 solution = "+_^~^"
 strings = [
     "10!2+x_AbC",
 ]
 valid = true
 
-[deformatting.Version.00000087]
+[deformatting.Version.test00000087]
 solution = "+^^^-"
 strings = [
     "100+ABC-10",
 ]
 valid = true
 
-[deformatting.Version.00000088]
+[deformatting.Version.test00000088]
 solution = "+.^^"
 strings = [
     "100+a1.AB12",
 ]
 valid = true
 
-[deformatting.Version.00000089]
+[deformatting.Version.test00000089]
 solution = "+_^"
 strings = [
     "100+z99_Foo",
 ]
 valid = true
 
-[deformatting.Version.00000090]
+[deformatting.Version.test00000090]
 solution = "##.##.##"
 strings = [
     "2!00.00.00",
 ]
 valid = true
 
-[deformatting.Version.00000091]
+[deformatting.Version.test00000091]
 solution = "##.##"
 strings = [
     "2!01.02",
 ]
 valid = true
 
-[deformatting.Version.00000092]
+[deformatting.Version.test00000092]
 solution = "+^^^"
 strings = [
     "2!10.20+ABC.2",
 ]
 valid = true
 
-[deformatting.Version.00000093]
+[deformatting.Version.test00000093]
 solution = "+_^^^"
 strings = [
     "2!10.20+a1_ABC",
 ]
 valid = true
 
-[deformatting.Version.00000094]
+[deformatting.Version.test00000094]
 solution = ".##.###"
 strings = [
     "9!7.08.009",
 ]
 valid = true
 
-[deformatting.Version.00000095]
+[deformatting.Version.test00000095]
 solution = "V#!##"
 strings = [
     "V0!00",
 ]
 valid = true
 
-[deformatting.Version.00000096]
+[deformatting.Version.test00000096]
 solution = "V#!###"
 strings = [
     "V0!007",
 ]
 valid = true
 
-[deformatting.Version.00000097]
+[deformatting.Version.test00000097]
 solution = "V#!"
 strings = [
     "V0!1.2.3",
 ]
 valid = true
 
-[deformatting.Version.00000098]
+[deformatting.Version.test00000098]
 solution = "V###!.#"
 strings = [
     "V001!1.0",
 ]
 valid = true
 
-[deformatting.Version.00000099]
+[deformatting.Version.test00000099]
 solution = "V###!"
 strings = [
     "V001!10.20.30",
 ]
 valid = true
 
-[deformatting.Version.00000100]
+[deformatting.Version.test00000100]
 strings = [
     "v",
 ]
 valid = false
 
-[deformatting.Version.00000101]
+[deformatting.Version.test00000101]
 strings = [
     "x",
 ]
