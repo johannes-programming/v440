@@ -47,6 +47,7 @@ class CoreAccumulation:
         return type(self)(white=white, body=body, insert=insert)
 
     def best(self: Self, /) -> str:
+        body_: str
         body_ = self.body.best(forbids_empty=bool(self.white))
         if self.insert is None:
             return self.white + body_
