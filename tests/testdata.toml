@@ -337,7 +337,7 @@ attrname = "fdsfvdsff"
 attrvalue = 42
 string = "0"
 
-[deformatting.Base.test00000000]
+[deformatting.Base.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -1231,11 +1231,6 @@ strings = [
     "  00.00  ",
 ]
 
-[deformatting.Base.whitespace-c-00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Base.whitespace-c-00000001]
 exceptiontype = ""
 solution = " ## "
@@ -1319,7 +1314,7 @@ strings = [
     "\n4!04\n",
 ]
 
-[deformatting.Dev.test00000000]
+[deformatting.Dev.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -2200,14 +2195,9 @@ strings = [
     "  -Dev_1  ",
 ]
 
-[deformatting.Dev.whitespace-c-00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Dev.whitespace-c-00000001]
 exceptiontype = ""
-solution = " -DEV# "
+solution = " -DEV "
 strings = [
     " -DEV1 ",
     " -DEV2 ",
@@ -2216,25 +2206,55 @@ strings = [
 
 [deformatting.Dev.whitespace-c-00000002]
 exceptiontype = ""
-solution = "	-DEV#	"
+solution = "	-DEV	"
 strings = [
     "	-DEV1	",
     "	-DEV2	",
     "	-DEV3	",
 ]
 
+[deformatting.Dev.whitespace-c-00000002a]
+exceptiontype = ""
+solution = "	_DEV	"
+strings = [
+    "	_DEV1	",
+    "	_DEV2	",
+    "	_DEV3	",
+]
+
+[deformatting.Dev.whitespace-c-00000002b]
+exceptiontype = ""
+solution = "	_DeV	"
+strings = [
+    "	_DeV1	",
+    "	_DeV2	",
+    "	_DeV3	",
+]
+
 [deformatting.Dev.whitespace-c-00000003]
 exceptiontype = ""
-solution = "\n-DEV#\n"
+solution = "\n-DEV\n"
 strings = [
     "\n-DEV1\n",
     "\n-DEV2\n",
     "\n-DEV3\n",
 ]
 
+[deformatting.Dev.whitespace-c-00000003a]
+exceptiontype = ""
+solution = "\nDEV\n"
+strings = [
+    "\n\n",
+    "\n\n",
+    "\n\n",
+    "\n\n",
+    "\n\n",
+    "\n\n",
+]
+
 [deformatting.Dev.whitespace-c-00000004]
 exceptiontype = ""
-solution = "  -DEV#  "
+solution = "  -DEV  "
 strings = [
     "  -DEV1  ",
     "  -DEV2  ",
@@ -2244,7 +2264,7 @@ strings = [
 
 [deformatting.Dev.whitespace-c-00000005]
 exceptiontype = ""
-solution = " 	-DEV#	 "
+solution = " 	-DEV	 "
 strings = [
     " 	-DEV1	 ",
     " 	-DEV2	 ",
@@ -2254,7 +2274,7 @@ strings = [
 
 [deformatting.Dev.whitespace-c-00000006]
 exceptiontype = ""
-solution = "\r\n-DEV#\r\n"
+solution = "\r\n-DEV\r\n"
 strings = [
     "\r\n-DEV1\r\n",
     "\r\n-DEV2\r\n",
@@ -2288,7 +2308,7 @@ strings = [
     "\n-DEV4\n",
 ]
 
-[deformatting.Local.test00000000]
+[deformatting.Local.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -3162,11 +3182,6 @@ strings = [
     "  0.A1  ",
 ]
 
-[deformatting.Local.whitespace-c-00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Local.whitespace-c-00000001]
 exceptiontype = ""
 solution = " -### "
@@ -3250,7 +3265,7 @@ strings = [
     "\n0-004\n",
 ]
 
-[deformatting.Post.test00000000]
+[deformatting.Post.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -4124,11 +4139,6 @@ strings = [
     "  -R01  ",
 ]
 
-[deformatting.Post.whitespace-c-00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Post.whitespace-c-00000001]
 exceptiontype = ""
 solution = " -### "
@@ -4212,7 +4222,7 @@ strings = [
     "\n-004\n",
 ]
 
-[deformatting.Pre.test00000000]
+[deformatting.Pre.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -5103,11 +5113,6 @@ strings = [
     "  -B_1  ",
 ]
 
-[deformatting.Pre.whitespace-c-00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Pre.whitespace-c-00000001]
 exceptiontype = ""
 solution = " -A# "
@@ -5191,7 +5196,7 @@ strings = [
     "\n-A3\n",
 ]
 
-[deformatting.Public.test00000000]
+[deformatting.Public.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -6049,11 +6054,6 @@ strings = [
     "  007  ",
 ]
 
-[deformatting.Public.whitespace-c-00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Public.whitespace-c-00000001]
 exceptiontype = ""
 solution = " V "
@@ -6137,7 +6137,7 @@ strings = [
     "\nV10!10.20\n",
 ]
 
-[deformatting.Qual.test00000000]
+[deformatting.Qual.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -7174,6 +7174,22 @@ strings = [
     "\r\na1r4\r\n",
     "\nb2r\n",
     "\nb2r4\n",
+]
+
+[deformatting.Qual.whitespace-c-00000100]
+exceptiontype = ""
+solution = " A "
+strings = [
+    " b1000 ",
+    " rc42 ",
+]
+
+[deformatting.Qual.whitespace-c-00000101]
+exceptiontype = ""
+solution = " B "
+strings = [
+    " B1000 ",
+    " rc42 ",
 ]
 
 [deformatting.Release.test00000000]
@@ -9043,16 +9059,34 @@ strings = []
 
 [deformatting.Version.whitespace-c-00000001]
 exceptiontype = ""
-solution = " #!##+^^^ "
+solution = " ## "
 strings = [
     " 1!01+foo ",
     " 2!02+bar ",
     " 3!03+baz ",
 ]
 
+[deformatting.Version.whitespace-c-00000001a]
+exceptiontype = ""
+solution = " ##+~^ "
+strings = [
+    " 1!01+fOo ",
+    " 2!02+bAr ",
+    " 3!03+bAz ",
+]
+
+[deformatting.Version.whitespace-c-00000001b]
+exceptiontype = ""
+solution = " #!## "
+strings = [
+    " 0!01+foo ",
+    " 2!02+bar ",
+    " 3!03+baz ",
+]
+
 [deformatting.Version.whitespace-c-00000002]
 exceptiontype = ""
-solution = "	#!##+^^^	"
+solution = "	##	"
 strings = [
     "	1!01+foo	",
     "	2!02+bar	",
@@ -9061,7 +9095,7 @@ strings = [
 
 [deformatting.Version.whitespace-c-00000003]
 exceptiontype = ""
-solution = "\n#!##+^^^\n"
+solution = "\n##\n"
 strings = [
     "\n1!01+foo\n",
     "\n2!02+bar\n",
@@ -9070,7 +9104,7 @@ strings = [
 
 [deformatting.Version.whitespace-c-00000004]
 exceptiontype = ""
-solution = "  #!##+^^^  "
+solution = "  ##  "
 strings = [
     "  1!01+foo  ",
     "  2!02+bar  ",
@@ -9080,7 +9114,7 @@ strings = [
 
 [deformatting.Version.whitespace-c-00000005]
 exceptiontype = ""
-solution = " 	#!##+^^^	 "
+solution = " 	##	 "
 strings = [
     " 	1!01+foo	 ",
     " 	2!02+bar	 ",
