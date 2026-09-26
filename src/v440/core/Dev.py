@@ -5,7 +5,6 @@ from __future__ import annotations
 __all__: list[str] = ["Dev"]
 
 import operator
-from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
 
 from v440._utils.Cfg import Cfg
@@ -14,17 +13,9 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-@dataclass(frozen=True, kw_only=True)
-class DevDeformat:
-    clue: Clue
-
-    def __and__(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            clue=self.clue & other.clue,
-        )
-
+class DevDeformat(Clue):
     def best(self: Self, /) -> str:
-        return self.clue.solo(".dev")
+        return self.solo(".dev")
 
 
 class Dev(QualABC):
@@ -38,15 +29,11 @@ class Dev(QualABC):
             return (1,)
 
     def _deformat(self: Self, body: str, /) -> DevDeformat:
-        return DevDeformat(
-            clue=Clue.by_example(body),
-        )
+        return DevDeformat.by_example(body)
 
     @staticmethod
     def _deformat_origin() -> DevDeformat:
-        return DevDeformat(
-            clue=Clue(),
-        )
+        return DevDeformat()
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
