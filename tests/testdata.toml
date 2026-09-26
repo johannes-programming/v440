@@ -9219,8 +9219,72 @@ query = true
 [examples.Base.""]
 valid = false
 
+[examples.Base."	0!00.00"]
+deformatted = "	#!##.##"
+valid = true
+
+[examples.Base."	0!1.0	"]
+deformatted = "	#!.#	"
+valid = true
+
+[examples.Base."	01	"]
+deformatted = "	##	"
+valid = true
+
+[examples.Base."\n0!1.0.0.0\n"]
+deformatted = "\n#!...#\n"
+valid = true
+
+[examples.Base."\r\n00\r\n"]
+deformatted = "\r\n##\r\n"
+valid = true
+
+[examples.Base." 	0.0.0	 "]
+deformatted = " 	..#	 "
+valid = true
+
+[examples.Base."   "]
+valid = false
+
+[examples.Base."  00.00  "]
+deformatted = "  ##.##  "
+valid = true
+
+[examples.Base."  v1	"]
+deformatted = "  v	"
+valid = true
+
+[examples.Base." 0!0"]
+deformatted = " #!"
+valid = true
+
+[examples.Base." 0!00 "]
+deformatted = " #!## "
+valid = true
+
+[examples.Base." 1 "]
+deformatted = " ! "
+valid = true
+
+[examples.Base." 1!0"]
+deformatted = " !"
+valid = true
+
+[examples.Base."!"]
+valid = false
+
+[examples.Base."!1"]
+valid = false
+
 [examples.Base."!1.2"]
 valid = false
+
+[examples.Base.-1]
+valid = false
+
+[examples.Base.0]
+deformatted = ""
+valid = true
 
 [examples.Base."0!0"]
 bool = false
@@ -9229,11 +9293,123 @@ repr = "Base(epoch=0, release=Release([]))"
 str = "0"
 valid = true
 
+[examples.Base."0!0.0.0"]
+deformatted = "#!..#"
+valid = true
+
+[examples.Base."0!0.0.0\n	"]
+deformatted = "#!..#\n	"
+valid = true
+
+[examples.Base."0!0.0.0 "]
+deformatted = "#!..# "
+valid = true
+
+[examples.Base."0!00"]
+deformatted = "#!##"
+valid = true
+
+[examples.Base."0!00.00"]
+deformatted = "#!##.##"
+valid = true
+
+[examples.Base."0!001"]
+deformatted = "#!###"
+valid = true
+
+[examples.Base."0!001	"]
+deformatted = "#!###	"
+valid = true
+
+[examples.Base."0!1.0"]
+deformatted = "#!.#"
+valid = true
+
+[examples.Base."0!1.0.0.0"]
+deformatted = "#!...#"
+valid = true
+
+[examples.Base."0.0.0"]
+deformatted = "..#"
+valid = true
+
+[examples.Base.00]
+deformatted = "##"
+valid = true
+
+[examples.Base."00.00"]
+deformatted = "##.##"
+valid = true
+
+[examples.Base.001]
+deformatted = "###"
+valid = true
+
+[examples.Base."001!0"]
+deformatted = "###!"
+valid = true
+
+[examples.Base."001!0.0.0"]
+deformatted = "###!..#"
+valid = true
+
+[examples.Base."001!00"]
+deformatted = "###!##"
+valid = true
+
+[examples.Base."001!001"]
+deformatted = "###!###"
+valid = true
+
+[examples.Base."001!1.0"]
+deformatted = "###!.#"
+valid = true
+
+[examples.Base."001.002"]
+deformatted = "###.###"
+valid = true
+
+[examples.Base."01!0"]
+deformatted = "##!"
+valid = true
+
+[examples.Base."01!0.0.0"]
+deformatted = "##!..#"
+valid = true
+
+[examples.Base."01!00"]
+deformatted = "##!##"
+valid = true
+
+[examples.Base."01!00.00"]
+deformatted = "##!##.##"
+valid = true
+
+[examples.Base."01!001"]
+deformatted = "##!###"
+valid = true
+
+[examples.Base."01!1.0"]
+deformatted = "##!.#"
+valid = true
+
+[examples.Base."01!1.0.0.0"]
+deformatted = "##!...#"
+valid = true
+
 [examples.Base."1!"]
 valid = false
 
 [examples.Base."1!-1"]
 valid = false
+
+[examples.Base."1!1.0"]
+deformatted = ".#"
+valid = true
+
+[examples.Base."1!1.0.0.0"]
+deformatted = "...#"
+valid = true
 
 [examples.Base."1!1.2.3"]
 bool = true
@@ -9241,6 +9417,19 @@ deformatted = ""
 valid = true
 
 [examples.Base."1!1.2.a"]
+valid = false
+
+[examples.Base."1!7.08.009"]
+deformatted = ".##.###"
+valid = true
+
+[examples.Base."1+a"]
+valid = false
+
+[examples.Base."1."]
+valid = false
+
+[examples.Base."1..2"]
 valid = false
 
 [examples.Base."1.2.3"]
@@ -9256,15 +9445,410 @@ bool = true
 deformatted = ""
 valid = true
 
+[examples.Base.V0]
+deformatted = "V"
+valid = true
+
+[examples.Base."V0!0"]
+deformatted = "V#!"
+valid = true
+
+[examples.Base."V0!0.0.0"]
+deformatted = "V#!..#"
+valid = true
+
+[examples.Base."V0!00"]
+deformatted = "V#!##"
+valid = true
+
+[examples.Base."V0!001"]
+deformatted = "V#!###"
+valid = true
+
+[examples.Base."V0!1.0"]
+deformatted = "V#!.#"
+valid = true
+
+[examples.Base."V0!1.0.0.0"]
+deformatted = "V#!...#"
+valid = true
+
+[examples.Base."V0.0.0"]
+deformatted = "V..#"
+valid = true
+
+[examples.Base.V00]
+deformatted = "V##"
+valid = true
+
+[examples.Base."V00.00"]
+deformatted = "V##.##"
+valid = true
+
+[examples.Base.V001]
+deformatted = "V###"
+valid = true
+
+[examples.Base."V001!0"]
+deformatted = "V###!"
+valid = true
+
+[examples.Base."V001!00"]
+deformatted = "V###!##"
+valid = true
+
+[examples.Base."V001!1.0"]
+deformatted = "V###!.#"
+valid = true
+
+[examples.Base."V01!0"]
+deformatted = "V##!"
+valid = true
+
+[examples.Base."V01!0.0.0"]
+deformatted = "V##!..#"
+valid = true
+
+[examples.Base."V01!00"]
+deformatted = "V##!##"
+valid = true
+
+[examples.Base."V01!001"]
+deformatted = "V##!###"
+valid = true
+
+[examples.Base."V01!1.0"]
+deformatted = "V##!.#"
+valid = true
+
+[examples.Base."V1!1.0"]
+deformatted = "V.#"
+valid = true
+
+[examples.Base."V1!1.0.0.0"]
+deformatted = "V...#"
+valid = true
+
+[examples.Base.v]
+valid = false
+
+[examples.Base.v0]
+deformatted = "v"
+valid = true
+
+[examples.Base."v0!0"]
+deformatted = "v#!"
+valid = true
+
+[examples.Base."v0!0.0.0"]
+deformatted = "v#!..#"
+valid = true
+
+[examples.Base."v0!00"]
+deformatted = "v#!##"
+valid = true
+
+[examples.Base."v0!001"]
+deformatted = "v#!###"
+valid = true
+
+[examples.Base."v0!1.0"]
+deformatted = "v#!.#"
+valid = true
+
+[examples.Base."v0!1.0.0.0"]
+deformatted = "v#!...#"
+valid = true
+
+[examples.Base."v0.0.0"]
+deformatted = "v..#"
+valid = true
+
+[examples.Base.v00]
+deformatted = "v##"
+valid = true
+
+[examples.Base."v00.00"]
+deformatted = "v##.##"
+valid = true
+
+[examples.Base.v001]
+deformatted = "v###"
+valid = true
+
+[examples.Base."v001!0"]
+deformatted = "v###!"
+valid = true
+
+[examples.Base."v001!00"]
+deformatted = "v###!##"
+valid = true
+
+[examples.Base."v001!1.0"]
+deformatted = "v###!.#"
+valid = true
+
+[examples.Base."v01!0"]
+deformatted = "v##!"
+valid = true
+
+[examples.Base."v01!0.0.0"]
+deformatted = "v##!..#"
+valid = true
+
+[examples.Base."v01!00"]
+deformatted = "v##!##"
+valid = true
+
+[examples.Base."v01!001"]
+deformatted = "v##!###"
+valid = true
+
+[examples.Base."v01!1.0"]
+deformatted = "v##!.#"
+valid = true
+
+[examples.Base."v1!1.0"]
+deformatted = "v.#"
+valid = true
+
+[examples.Base."v1!1.0.0.0"]
+deformatted = "v...#"
+valid = true
+
+[examples.Base.vv1]
+valid = false
+
+[examples.Base.x]
+valid = false
+
 [examples.Dev.""]
 bool = false
 deformatted = ""
+valid = true
+
+[examples.Dev."	-DEV0"]
+deformatted = "	-DEV#"
+valid = true
+
+[examples.Dev."	-Dev	"]
+deformatted = "	-Dev	"
+valid = true
+
+[examples.Dev."	dev01	"]
+deformatted = "	dev##	"
+valid = true
+
+[examples.Dev."\n-Dev-1\n"]
+deformatted = "\n-Dev-\n"
+valid = true
+
+[examples.Dev."\r\n-Dev0\r\n"]
+deformatted = "\r\n-Dev#\r\n"
+valid = true
+
+[examples.Dev." 	-Dev.1	 "]
+deformatted = " 	-Dev.	 "
+valid = true
+
+[examples.Dev."   "]
+deformatted = "   DEV"
+valid = true
+
+[examples.Dev."  -Dev_1  "]
+deformatted = "  -Dev_  "
+valid = true
+
+[examples.Dev."  -dev1	"]
+deformatted = "  -dev	"
+valid = true
+
+[examples.Dev." -DEV"]
+deformatted = " -DEV"
+valid = true
+
+[examples.Dev." -DEV.1 "]
+deformatted = " -DEV. "
+valid = true
+
+[examples.Dev." .dev1 "]
+deformatted = " .dev "
+valid = true
+
+[examples.Dev.--dev1]
+valid = false
+
+[examples.Dev.-DEV]
+deformatted = "-DEV"
+valid = true
+
+[examples.Dev.-DEV-1]
+deformatted = "-DEV-"
+valid = true
+
+[examples.Dev."-DEV-1 "]
+deformatted = "-DEV- "
+valid = true
+
+[examples.Dev."-DEV.1"]
+deformatted = "-DEV."
+valid = true
+
+[examples.Dev.-DEV0]
+deformatted = "-DEV#"
+valid = true
+
+[examples.Dev.-DEV_1]
+deformatted = "-DEV_"
+valid = true
+
+[examples.Dev."-DEV_1	"]
+deformatted = "-DEV_	"
+valid = true
+
+[examples.Dev.-Dev]
+deformatted = "-Dev"
+valid = true
+
+[examples.Dev.-Dev-1]
+deformatted = "-Dev-"
+valid = true
+
+[examples.Dev."-Dev.1"]
+deformatted = "-Dev."
+valid = true
+
+[examples.Dev.-Dev0]
+deformatted = "-Dev#"
+valid = true
+
+[examples.Dev.-Dev_1]
+deformatted = "-Dev_"
+valid = true
+
+[examples.Dev.-deV]
+deformatted = "-deV"
+valid = true
+
+[examples.Dev.-deV-1]
+deformatted = "-deV-"
+valid = true
+
+[examples.Dev."-deV.1"]
+deformatted = "-deV."
+valid = true
+
+[examples.Dev.-deV0]
+deformatted = "-deV#"
+valid = true
+
+[examples.Dev.-deV_1]
+deformatted = "-deV_"
+valid = true
+
+[examples.Dev.-dev]
+deformatted = "-dev"
+valid = true
+
+[examples.Dev.-dev-1]
+deformatted = "-dev-"
+valid = true
+
+[examples.Dev."-dev.1"]
+deformatted = "-dev."
+valid = true
+
+[examples.Dev.-dev0]
+deformatted = "-dev#"
 valid = true
 
 [examples.Dev.-dev5]
 bool = true
 deformatted = "-dev"
 str = ".dev5"
+valid = true
+
+[examples.Dev.-dev_1]
+deformatted = "-dev_"
+valid = true
+
+[examples.Dev.".DEV"]
+deformatted = ".DEV"
+valid = true
+
+[examples.Dev.".DEV-1"]
+deformatted = ".DEV-"
+valid = true
+
+[examples.Dev.".DEV.1"]
+deformatted = ".DEV."
+valid = true
+
+[examples.Dev.".DEV0"]
+deformatted = ".DEV#"
+valid = true
+
+[examples.Dev.".DEV_1"]
+deformatted = ".DEV_"
+valid = true
+
+[examples.Dev.".Dev"]
+deformatted = ".Dev"
+valid = true
+
+[examples.Dev.".Dev-1"]
+deformatted = ".Dev-"
+valid = true
+
+[examples.Dev.".Dev.1"]
+deformatted = ".Dev."
+valid = true
+
+[examples.Dev.".Dev0"]
+deformatted = ".Dev#"
+valid = true
+
+[examples.Dev.".Dev_1"]
+deformatted = ".Dev_"
+valid = true
+
+[examples.Dev.".deV"]
+deformatted = ".deV"
+valid = true
+
+[examples.Dev.".deV-1"]
+deformatted = ".deV-"
+valid = true
+
+[examples.Dev.".deV.1"]
+deformatted = ".deV."
+valid = true
+
+[examples.Dev.".deV0"]
+deformatted = ".deV#"
+valid = true
+
+[examples.Dev.".deV_1"]
+deformatted = ".deV_"
+valid = true
+
+[examples.Dev.".dev"]
+deformatted = ".dev"
+valid = true
+
+[examples.Dev.".dev-1"]
+deformatted = ".dev-"
+valid = true
+
+[examples.Dev.".dev."]
+valid = false
+
+[examples.Dev.".dev.1"]
+deformatted = ".dev."
+valid = true
+
+[examples.Dev.".dev0"]
+deformatted = ""
 valid = true
 
 [examples.Dev.".dev5"]
@@ -9274,17 +9858,140 @@ repr = "Dev(lit='dev', num=5)"
 str = ".dev5"
 valid = true
 
+[examples.Dev.".dev_1"]
+deformatted = ".dev_"
+valid = true
+
+[examples.Dev.1dev]
+valid = false
+
+[examples.Dev.DEV]
+deformatted = "DEV"
+valid = true
+
+[examples.Dev.DEV-0]
+deformatted = "DEV-#"
+valid = true
+
+[examples.Dev.DEV-1]
+deformatted = "DEV-"
+valid = true
+
+[examples.Dev."DEV.0"]
+deformatted = "DEV.#"
+valid = true
+
+[examples.Dev."DEV.1"]
+deformatted = "DEV."
+valid = true
+
+[examples.Dev.DEV0]
+deformatted = "DEV#"
+valid = true
+
+[examples.Dev.DEV01]
+deformatted = "DEV##"
+valid = true
+
+[examples.Dev.DEV_0]
+deformatted = "DEV_#"
+valid = true
+
+[examples.Dev.DEV_1]
+deformatted = "DEV_"
+valid = true
+
+[examples.Dev.Dev]
+deformatted = "Dev"
+valid = true
+
+[examples.Dev.Dev-0]
+deformatted = "Dev-#"
+valid = true
+
+[examples.Dev.Dev-1]
+deformatted = "Dev-"
+valid = true
+
+[examples.Dev."Dev.1"]
+deformatted = "Dev."
+valid = true
+
+[examples.Dev.Dev0]
+deformatted = "Dev#"
+valid = true
+
+[examples.Dev.Dev01]
+deformatted = "Dev##"
+valid = true
+
+[examples.Dev.Dev_1]
+deformatted = "Dev_"
+valid = true
+
+[examples.Dev._DEV]
+deformatted = "_DEV"
+valid = true
+
+[examples.Dev._Dev]
+deformatted = "_Dev"
+valid = true
+
+[examples.Dev._deV]
+deformatted = "_deV"
+valid = true
+
+[examples.Dev._dev]
+deformatted = "_dev"
+valid = true
+
+[examples.Dev.d]
+valid = false
+
 [examples.Dev.d1]
 valid = false
+
+[examples.Dev.de]
+valid = false
+
+[examples.Dev.deV]
+deformatted = "deV"
+valid = true
+
+[examples.Dev.deV-1]
+deformatted = "deV-"
+valid = true
+
+[examples.Dev."deV.1"]
+deformatted = "deV."
+valid = true
+
+[examples.Dev.deV0]
+deformatted = "deV#"
+valid = true
+
+[examples.Dev.deV_1]
+deformatted = "deV_"
+valid = true
 
 [examples.Dev.dev]
 deformatted = "dev"
 str = ".dev0"
 valid = true
 
+[examples.Dev.dev-]
+valid = false
+
 [examples.Dev.dev-1]
 deformatted = "dev-"
 str = ".dev1"
+valid = true
+
+[examples.Dev."dev."]
+valid = false
+
+[examples.Dev."dev.1"]
+deformatted = "dev."
 valid = true
 
 [examples.Dev.dev0]
@@ -9309,11 +10016,24 @@ valid = true
 [examples.Dev.dev1a]
 valid = false
 
+[examples.Dev.dev1x]
+valid = false
+
 [examples.Dev.dev2]
 deformatted = "dev"
 valid = true
 
+[examples.Dev.dev_]
+valid = false
+
+[examples.Dev.dev_1]
+deformatted = "dev_"
+valid = true
+
 [examples.Dev.deva]
+valid = false
+
+[examples.Dev.devx]
 valid = false
 
 [examples.Local.""]
@@ -9322,18 +10042,365 @@ deformatted = ""
 str = ""
 valid = true
 
+[examples.Local."	0-A1"]
+deformatted = "	-^"
+valid = true
+
+[examples.Local."	0-ABC	"]
+deformatted = "	-^^^	"
+valid = true
+
+[examples.Local."	ABC	"]
+deformatted = "	^^^	"
+valid = true
+
+[examples.Local."\n0-AbC\n"]
+deformatted = "\n-^~^\n"
+valid = true
+
+[examples.Local."\r\n0.01\r\n"]
+deformatted = "\r\n.##\r\n"
+valid = true
+
+[examples.Local." 	0.001	 "]
+deformatted = " 	.###	 "
+valid = true
+
+[examples.Local."   "]
+deformatted = "   #"
+valid = true
+
+[examples.Local."  0.A1  "]
+deformatted = "  .^  "
+valid = true
+
+[examples.Local."  01	"]
+deformatted = "  ##	"
+valid = true
+
+[examples.Local." 0-0"]
+deformatted = " -"
+valid = true
+
+[examples.Local." 0-01 "]
+deformatted = " -## "
+valid = true
+
+[examples.Local." abc "]
+deformatted = " # "
+valid = true
+
+[examples.Local."+"]
+valid = false
+
 [examples.Local.".abc"]
 valid = false
+
+[examples.Local.0]
+deformatted = ""
+valid = true
+
+[examples.Local.0-0]
+deformatted = "-"
+valid = true
+
+[examples.Local.0-001]
+deformatted = "-###"
+valid = true
+
+[examples.Local."0-001 "]
+deformatted = "-### "
+valid = true
+
+[examples.Local.0-01]
+deformatted = "-##"
+valid = true
+
+[examples.Local.0-A1]
+deformatted = "-^"
+valid = true
+
+[examples.Local.0-AB12]
+deformatted = "-^^"
+valid = true
+
+[examples.Local."0-AB12	"]
+deformatted = "-^^	"
+valid = true
+
+[examples.Local.0-ABC]
+deformatted = "-^^^"
+valid = true
+
+[examples.Local.0-AbC]
+deformatted = "-^~^"
+valid = true
+
+[examples.Local."0.001"]
+deformatted = ".###"
+valid = true
+
+[examples.Local."0.01"]
+deformatted = ".##"
+valid = true
+
+[examples.Local."0.A1"]
+deformatted = ".^"
+valid = true
+
+[examples.Local."0.AB12"]
+deformatted = ".^^"
+valid = true
+
+[examples.Local."0.ABC"]
+deformatted = ".^^^"
+valid = true
+
+[examples.Local."0.AbC"]
+deformatted = ".^~^"
+valid = true
 
 [examples.Local.001]
 deformatted = "###"
 str = "1"
 valid = true
 
+[examples.Local.001-0]
+deformatted = "###-"
+valid = true
+
+[examples.Local.001-A1]
+deformatted = "###-^"
+valid = true
+
+[examples.Local.001_0]
+deformatted = "###_"
+valid = true
+
+[examples.Local.01]
+deformatted = "##"
+valid = true
+
+[examples.Local.01-0]
+deformatted = "##-"
+valid = true
+
+[examples.Local.01-A1]
+deformatted = "##-^"
+valid = true
+
+[examples.Local."01.A1"]
+deformatted = "##.^"
+valid = true
+
+[examples.Local.01_0]
+deformatted = "##_"
+valid = true
+
+[examples.Local.01_A1]
+deformatted = "##_^"
+valid = true
+
+[examples.Local.0_0]
+deformatted = "_"
+valid = true
+
+[examples.Local.0_001]
+deformatted = "_###"
+valid = true
+
+[examples.Local.0_01]
+deformatted = "_##"
+valid = true
+
+[examples.Local.0_A1]
+deformatted = "_^"
+valid = true
+
+[examples.Local.0_AB12]
+deformatted = "_^^"
+valid = true
+
+[examples.Local.0_ABC]
+deformatted = "_^^^"
+valid = true
+
+[examples.Local.0_AbC]
+deformatted = "_^~^"
+valid = true
+
+[examples.Local.1-2-3]
+deformatted = "--"
+valid = true
+
+[examples.Local.1-2_3]
+deformatted = "-_"
+valid = true
+
+[examples.Local."1.2-3"]
+deformatted = ".-"
+valid = true
+
+[examples.Local."1.2_3"]
+deformatted = "._"
+valid = true
+
+[examples.Local.1_2-3]
+deformatted = "_-"
+valid = true
+
+[examples.Local.1_2_3]
+deformatted = "__"
+valid = true
+
+[examples.Local.A1]
+deformatted = "^"
+valid = true
+
+[examples.Local.A1-0]
+deformatted = "^-"
+valid = true
+
+[examples.Local.A1-01]
+deformatted = "^-##"
+valid = true
+
+[examples.Local.A1-A1]
+deformatted = "^-^"
+valid = true
+
+[examples.Local.A1-AB12]
+deformatted = "^-^^"
+valid = true
+
+[examples.Local.A1-b2-C3]
+deformatted = "^--^"
+valid = true
+
+[examples.Local."A1-b2.C3"]
+deformatted = "^-.^"
+valid = true
+
+[examples.Local.A1-b2_C3]
+deformatted = "^-_^"
+valid = true
+
+[examples.Local."A1.01"]
+deformatted = "^.##"
+valid = true
+
+[examples.Local."A1.A1"]
+deformatted = "^.^"
+valid = true
+
+[examples.Local."A1.AB12"]
+deformatted = "^.^^"
+valid = true
+
+[examples.Local."A1.b2-C3"]
+deformatted = "^.-^"
+valid = true
+
+[examples.Local."A1.b2.C3"]
+deformatted = "^..^"
+valid = true
+
+[examples.Local."A1.b2_C3"]
+deformatted = "^._^"
+valid = true
+
+[examples.Local.A1_0]
+deformatted = "^_"
+valid = true
+
+[examples.Local.A1_01]
+deformatted = "^_##"
+valid = true
+
+[examples.Local.A1_A1]
+deformatted = "^_^"
+valid = true
+
+[examples.Local.A1_AB12]
+deformatted = "^_^^"
+valid = true
+
+[examples.Local.A1_b2-C3]
+deformatted = "^_-^"
+valid = true
+
+[examples.Local."A1_b2.C3"]
+deformatted = "^_.^"
+valid = true
+
+[examples.Local.A1_b2_C3]
+deformatted = "^__^"
+valid = true
+
+[examples.Local.AB12]
+deformatted = "^^"
+valid = true
+
+[examples.Local.AB12-0]
+deformatted = "^^-"
+valid = true
+
+[examples.Local.AB12-A1]
+deformatted = "^^-^"
+valid = true
+
+[examples.Local."AB12.A1"]
+deformatted = "^^.^"
+valid = true
+
+[examples.Local.AB12_0]
+deformatted = "^^_"
+valid = true
+
+[examples.Local.AB12_A1]
+deformatted = "^^_^"
+valid = true
+
+[examples.Local.ABC]
+deformatted = "^^^"
+valid = true
+
+[examples.Local.ABC-0]
+deformatted = "^^^-"
+valid = true
+
+[examples.Local.ABC_0]
+deformatted = "^^^_"
+valid = true
+
+[examples.Local.AbC]
+deformatted = "^~^"
+valid = true
+
+[examples.Local.AbC-0]
+deformatted = "^~^-"
+valid = true
+
+[examples.Local.AbC_0]
+deformatted = "^~^_"
+valid = true
+
 [examples.Local."a b"]
 valid = false
 
+[examples.Local."a$b"]
+valid = false
+
+[examples.Local."a+b"]
+valid = false
+
+[examples.Local.a--b]
+valid = false
+
 [examples.Local."a..b"]
+valid = false
+
+[examples.Local."a/b"]
 valid = false
 
 [examples.Local."a1.b2"]
@@ -9341,10 +10408,16 @@ deformatted = ""
 str = "a1.b2"
 valid = true
 
+[examples.Local.a__b]
+valid = false
+
 [examples.Local.abc]
 deformatted = ""
 str = "abc"
 valid = true
+
+[examples.Local."abc+def"]
+valid = false
 
 [examples.Local."abc."]
 valid = false
@@ -9373,7 +10446,315 @@ deformatted = ""
 str = ""
 valid = true
 
+[examples.Post."	-R"]
+deformatted = "	-R"
+valid = true
+
+[examples.Post."	-R-1	"]
+deformatted = "	-R-	"
+valid = true
+
+[examples.Post."	post01	"]
+deformatted = "	post##	"
+valid = true
+
+[examples.Post."\n-R.0\n"]
+deformatted = "\n-R.#\n"
+valid = true
+
+[examples.Post."\r\n-R0\r\n"]
+deformatted = "\r\n-R#\r\n"
+valid = true
+
+[examples.Post." 	-R.1	 "]
+deformatted = " 	-R.	 "
+valid = true
+
+[examples.Post."   "]
+deformatted = "   -"
+valid = true
+
+[examples.Post."  -1	"]
+deformatted = "  -	"
+valid = true
+
+[examples.Post."  -R01  "]
+deformatted = "  -R##  "
+valid = true
+
+[examples.Post." -0"]
+deformatted = " -"
+valid = true
+
+[examples.Post." -01 "]
+deformatted = " -## "
+valid = true
+
+[examples.Post." .post1 "]
+deformatted = " .post "
+valid = true
+
+[examples.Post.-]
+valid = false
+
+[examples.Post.--1]
+valid = false
+
+[examples.Post.-0]
+deformatted = "-"
+valid = true
+
+[examples.Post.-001]
+deformatted = "-###"
+valid = true
+
+[examples.Post."-001 "]
+deformatted = "-### "
+valid = true
+
+[examples.Post.-01]
+deformatted = "-##"
+valid = true
+
+[examples.Post.-R]
+deformatted = "-R"
+valid = true
+
+[examples.Post.-R-0]
+deformatted = "-R-#"
+valid = true
+
+[examples.Post."-R-0	"]
+deformatted = "-R-#	"
+valid = true
+
+[examples.Post.-R-1]
+deformatted = "-R-"
+valid = true
+
+[examples.Post."-R.0"]
+deformatted = "-R.#"
+valid = true
+
+[examples.Post."-R.1"]
+deformatted = "-R."
+valid = true
+
+[examples.Post.-R0]
+deformatted = "-R#"
+valid = true
+
+[examples.Post.-R01]
+deformatted = "-R##"
+valid = true
+
+[examples.Post.-REV]
+deformatted = "-REV"
+valid = true
+
+[examples.Post.-R_0]
+deformatted = "-R_#"
+valid = true
+
+[examples.Post.-R_1]
+deformatted = "-R_"
+valid = true
+
+[examples.Post.-Rev]
+deformatted = "-Rev"
+valid = true
+
+[examples.Post.-r]
+deformatted = "-r"
+valid = true
+
+[examples.Post.-r-0]
+deformatted = "-r-#"
+valid = true
+
+[examples.Post.-r-1]
+deformatted = "-r-"
+valid = true
+
+[examples.Post."-r.0"]
+deformatted = "-r.#"
+valid = true
+
+[examples.Post."-r.1"]
+deformatted = "-r."
+valid = true
+
+[examples.Post.-r0]
+deformatted = "-r#"
+valid = true
+
+[examples.Post.-r01]
+deformatted = "-r##"
+valid = true
+
+[examples.Post.-r_0]
+deformatted = "-r_#"
+valid = true
+
+[examples.Post.-r_1]
+deformatted = "-r_"
+valid = true
+
+[examples.Post.-rev]
+deformatted = "-rev"
+valid = true
+
+[examples.Post.".R"]
+deformatted = ".R"
+valid = true
+
+[examples.Post.".R-0"]
+deformatted = ".R-#"
+valid = true
+
+[examples.Post.".R-1"]
+deformatted = ".R-"
+valid = true
+
+[examples.Post.".R.0"]
+deformatted = ".R.#"
+valid = true
+
+[examples.Post.".R.1"]
+deformatted = ".R."
+valid = true
+
+[examples.Post.".R0"]
+deformatted = ".R#"
+valid = true
+
+[examples.Post.".R01"]
+deformatted = ".R##"
+valid = true
+
+[examples.Post.".REV"]
+deformatted = ".REV"
+valid = true
+
+[examples.Post.".R_1"]
+deformatted = ".R_"
+valid = true
+
+[examples.Post.".post0"]
+deformatted = ""
+valid = true
+
+[examples.Post.".r"]
+deformatted = ".r"
+valid = true
+
+[examples.Post.".r-1"]
+deformatted = ".r-"
+valid = true
+
+[examples.Post.".r.1"]
+deformatted = ".r."
+valid = true
+
+[examples.Post.".r0"]
+deformatted = ".r#"
+valid = true
+
+[examples.Post.".r_1"]
+deformatted = ".r_"
+valid = true
+
+[examples.Post.R]
+deformatted = "R"
+valid = true
+
+[examples.Post.R-0]
+deformatted = "R-#"
+valid = true
+
+[examples.Post.R-1]
+deformatted = "R-"
+valid = true
+
+[examples.Post."R.0"]
+deformatted = "R.#"
+valid = true
+
+[examples.Post."R.1"]
+deformatted = "R."
+valid = true
+
+[examples.Post.R0]
+deformatted = "R#"
+valid = true
+
+[examples.Post.R01]
+deformatted = "R##"
+valid = true
+
+[examples.Post.REV]
+deformatted = "REV"
+valid = true
+
+[examples.Post.R_0]
+deformatted = "R_#"
+valid = true
+
+[examples.Post.R_1]
+deformatted = "R_"
+valid = true
+
+[examples.Post.Rev]
+deformatted = "Rev"
+valid = true
+
+[examples.Post._R]
+deformatted = "_R"
+valid = true
+
+[examples.Post._R-1]
+deformatted = "_R-"
+valid = true
+
+[examples.Post."_R.1"]
+deformatted = "_R."
+valid = true
+
+[examples.Post._R0]
+deformatted = "_R#"
+valid = true
+
+[examples.Post._R_1]
+deformatted = "_R_"
+valid = true
+
+[examples.Post._r]
+deformatted = "_r"
+valid = true
+
+[examples.Post._r-1]
+deformatted = "_r-"
+valid = true
+
+[examples.Post."_r.1"]
+deformatted = "_r."
+valid = true
+
+[examples.Post._r0]
+deformatted = "_r#"
+valid = true
+
+[examples.Post._r_1]
+deformatted = "_r_"
+valid = true
+
+[examples.Post.p]
+valid = false
+
 [examples.Post.p1]
+valid = false
+
+[examples.Post.po]
 valid = false
 
 [examples.Post.post]
@@ -9382,11 +10763,17 @@ deformatted = "post"
 str = ".post0"
 valid = true
 
+[examples.Post.post-]
+valid = false
+
 [examples.Post.post-1]
 bool = true
 deformatted = "post-"
 str = ".post1"
 valid = true
+
+[examples.Post."post."]
+valid = false
 
 [examples.Post.post0]
 deformatted = "post#"
@@ -9416,9 +10803,320 @@ deformatted = "post"
 str = ".post2"
 valid = true
 
+[examples.Post.post_]
+valid = false
+
+[examples.Post.postx]
+valid = false
+
+[examples.Post.r]
+deformatted = "r"
+valid = true
+
+[examples.Post.r-0]
+deformatted = "r-#"
+valid = true
+
+[examples.Post.r-1]
+deformatted = "r-"
+valid = true
+
+[examples.Post."r."]
+valid = false
+
+[examples.Post."r.0"]
+deformatted = "r.#"
+valid = true
+
+[examples.Post."r.1"]
+deformatted = "r."
+valid = true
+
+[examples.Post.r0]
+deformatted = "r#"
+valid = true
+
+[examples.Post.r01]
+deformatted = "r##"
+valid = true
+
+[examples.Post.r_0]
+deformatted = "r_#"
+valid = true
+
+[examples.Post.r_1]
+deformatted = "r_"
+valid = true
+
+[examples.Post.rev]
+deformatted = "rev"
+valid = true
+
+[examples.Post."rev."]
+valid = false
+
 [examples.Pre.""]
 deformatted = ""
 str = ""
+valid = true
+
+[examples.Pre."	-A0"]
+deformatted = "	-A#"
+valid = true
+
+[examples.Pre."	-B	"]
+deformatted = "	-B	"
+valid = true
+
+[examples.Pre."	alpha1	"]
+deformatted = "	alpha	"
+valid = true
+
+[examples.Pre."\n-B-1\n"]
+deformatted = "\n-B-\n"
+valid = true
+
+[examples.Pre."\r\n-B0\r\n"]
+deformatted = "\r\n-B#\r\n"
+valid = true
+
+[examples.Pre." 	-B.1	 "]
+deformatted = " 	-B.	 "
+valid = true
+
+[examples.Pre."   "]
+deformatted = "   A"
+valid = true
+
+[examples.Pre."  -B_1  "]
+deformatted = "  -B_  "
+valid = true
+
+[examples.Pre."  a01	"]
+deformatted = "  a##	"
+valid = true
+
+[examples.Pre." -A"]
+deformatted = " -A"
+valid = true
+
+[examples.Pre." -A.1 "]
+deformatted = " -A. "
+valid = true
+
+[examples.Pre." a1 "]
+deformatted = " B "
+valid = true
+
+[examples.Pre.-A]
+deformatted = "-A"
+valid = true
+
+[examples.Pre.-A-1]
+deformatted = "-A-"
+valid = true
+
+[examples.Pre."-A-1 "]
+deformatted = "-A- "
+valid = true
+
+[examples.Pre."-A.1"]
+deformatted = "-A."
+valid = true
+
+[examples.Pre.-A0]
+deformatted = "-A#"
+valid = true
+
+[examples.Pre.-A_1]
+deformatted = "-A_"
+valid = true
+
+[examples.Pre."-A_1	"]
+deformatted = "-A_	"
+valid = true
+
+[examples.Pre.-B]
+deformatted = "-B"
+valid = true
+
+[examples.Pre.-B-1]
+deformatted = "-B-"
+valid = true
+
+[examples.Pre."-B.1"]
+deformatted = "-B."
+valid = true
+
+[examples.Pre.-B0]
+deformatted = "-B#"
+valid = true
+
+[examples.Pre.-B_1]
+deformatted = "-B_"
+valid = true
+
+[examples.Pre.-C]
+deformatted = "-C"
+valid = true
+
+[examples.Pre.-C-1]
+deformatted = "-C-"
+valid = true
+
+[examples.Pre."-C.1"]
+deformatted = "-C."
+valid = true
+
+[examples.Pre.-C0]
+deformatted = "-C#"
+valid = true
+
+[examples.Pre.-C_1]
+deformatted = "-C_"
+valid = true
+
+[examples.Pre.-RC]
+deformatted = "-RC"
+valid = true
+
+[examples.Pre.-a]
+deformatted = "-a"
+valid = true
+
+[examples.Pre.-a-1]
+deformatted = "-a-"
+valid = true
+
+[examples.Pre."-a.1"]
+deformatted = "-a."
+valid = true
+
+[examples.Pre.-a0]
+deformatted = "-a#"
+valid = true
+
+[examples.Pre.-a_1]
+deformatted = "-a_"
+valid = true
+
+[examples.Pre.-b]
+deformatted = "-b"
+valid = true
+
+[examples.Pre.-b-1]
+deformatted = "-b-"
+valid = true
+
+[examples.Pre."-b.1"]
+deformatted = "-b."
+valid = true
+
+[examples.Pre.-b0]
+deformatted = "-b#"
+valid = true
+
+[examples.Pre.-b_1]
+deformatted = "-b_"
+valid = true
+
+[examples.Pre.-c]
+deformatted = "-c"
+valid = true
+
+[examples.Pre.".A"]
+deformatted = ".A"
+valid = true
+
+[examples.Pre.".B"]
+deformatted = ".B"
+valid = true
+
+[examples.Pre.".C"]
+deformatted = ".C"
+valid = true
+
+[examples.Pre.".a"]
+deformatted = ".a"
+valid = true
+
+[examples.Pre.".b"]
+deformatted = ".b"
+valid = true
+
+[examples.Pre.".c"]
+deformatted = ".c"
+valid = true
+
+[examples.Pre.1a]
+valid = false
+
+[examples.Pre.A]
+deformatted = "A"
+valid = true
+
+[examples.Pre.A-1]
+deformatted = "A-"
+valid = true
+
+[examples.Pre."A.1"]
+deformatted = "A."
+valid = true
+
+[examples.Pre.A0]
+deformatted = "A#"
+valid = true
+
+[examples.Pre.A_1]
+deformatted = "A_"
+valid = true
+
+[examples.Pre.B]
+deformatted = "B"
+valid = true
+
+[examples.Pre.B-1]
+deformatted = "B-"
+valid = true
+
+[examples.Pre."B.1"]
+deformatted = "B."
+valid = true
+
+[examples.Pre.B0]
+deformatted = "B#"
+valid = true
+
+[examples.Pre.B_1]
+deformatted = "B_"
+valid = true
+
+[examples.Pre.C]
+deformatted = "C"
+valid = true
+
+[examples.Pre.C-1]
+deformatted = "C-"
+valid = true
+
+[examples.Pre."C.1"]
+deformatted = "C."
+valid = true
+
+[examples.Pre.C0]
+deformatted = "C#"
+valid = true
+
+[examples.Pre.C_1]
+deformatted = "C_"
+valid = true
+
+[examples.Pre.RC]
+deformatted = "RC"
+valid = true
+
+[examples.Pre._A]
+deformatted = "_A"
 valid = true
 
 [examples.Pre._AlPhA_0]
@@ -9426,9 +11124,47 @@ deformatted = "_AlPhA_#"
 str = "a0"
 valid = true
 
+[examples.Pre._B]
+deformatted = "_B"
+valid = true
+
+[examples.Pre._C]
+deformatted = "_C"
+valid = true
+
+[examples.Pre._a]
+deformatted = "_a"
+valid = true
+
+[examples.Pre._b]
+deformatted = "_b"
+valid = true
+
+[examples.Pre._c]
+deformatted = "_c"
+valid = true
+
 [examples.Pre.a]
 deformatted = "a"
 str = "a0"
+valid = true
+
+[examples.Pre."a+1"]
+valid = false
+
+[examples.Pre.a-1]
+deformatted = "a-"
+valid = true
+
+[examples.Pre."a..1"]
+valid = false
+
+[examples.Pre."a.1"]
+deformatted = "a."
+valid = true
+
+[examples.Pre.a0]
+deformatted = ""
 valid = true
 
 [examples.Pre.a1]
@@ -9441,14 +11177,36 @@ deformatted = "aLPha"
 str = "a0"
 valid = true
 
+[examples.Pre.a_1]
+deformatted = "a_"
+valid = true
+
+[examples.Pre.aa]
+valid = false
+
 [examples.Pre.alpha]
 deformatted = "alpha"
 str = "a0"
 valid = true
 
+[examples.Pre."alpha."]
+valid = false
+
 [examples.Pre.alpha1]
 deformatted = "alpha"
 str = "a1"
+valid = true
+
+[examples.Pre.b]
+deformatted = "b"
+valid = true
+
+[examples.Pre.b-1]
+deformatted = "b-"
+valid = true
+
+[examples.Pre."b.1"]
+deformatted = "b."
 valid = true
 
 [examples.Pre.b1]
@@ -9466,25 +11224,64 @@ deformatted = ""
 str = "b2"
 valid = true
 
+[examples.Pre.b_1]
+deformatted = "b_"
+valid = true
+
+[examples.Pre.beta_]
+valid = false
+
+[examples.Pre.c]
+deformatted = "c"
+valid = true
+
+[examples.Pre.c-1]
+deformatted = "c-"
+valid = true
+
+[examples.Pre."c.1"]
+deformatted = "c."
+valid = true
+
+[examples.Pre.c0]
+deformatted = "c#"
+valid = true
+
 [examples.Pre.c3]
 deformatted = "c"
 str = "rc3"
 valid = true
+
+[examples.Pre.c_1]
+deformatted = "c_"
+valid = true
+
+[examples.Pre."pre."]
+valid = false
 
 [examples.Pre.pre1]
 deformatted = "pre"
 str = "rc1"
 valid = true
 
+[examples.Pre.preview_]
+valid = false
+
 [examples.Pre.rc]
 deformatted = "rc"
 str = "rc0"
 valid = true
 
+[examples.Pre.rc-]
+valid = false
+
 [examples.Pre.rc1]
 deformatted = ""
 str = "rc1"
 valid = true
+
+[examples.Pre.x]
+valid = false
 
 [examples.Pre.x1]
 valid = false
@@ -9492,21 +11289,188 @@ valid = false
 [examples.Public.""]
 valid = false
 
+[examples.Public."	0-02"]
+deformatted = "	-##"
+valid = true
+
+[examples.Public."	001!00	"]
+deformatted = "	###!##	"
+valid = true
+
+[examples.Public."	01	"]
+deformatted = "	##	"
+valid = true
+
+[examples.Public."\n001!007\n"]
+deformatted = "\n###!###\n"
+valid = true
+
+[examples.Public."\r\n001!1.2.3-02\r\n"]
+deformatted = "\r\n###!-##\r\n"
+valid = true
+
+[examples.Public." 	001!1.2.3	 "]
+deformatted = " 	###!	 "
+valid = true
+
+[examples.Public."   "]
+valid = false
+
+[examples.Public."  007  "]
+deformatted = "  ###  "
+valid = true
+
+[examples.Public."  v1	"]
+deformatted = "  v	"
+valid = true
+
+[examples.Public." 0!001.002"]
+deformatted = " #!###.###"
+valid = true
+
+[examples.Public." 0!100 "]
+deformatted = " #! "
+valid = true
+
+[examples.Public." 1 "]
+deformatted = " # "
+valid = true
+
+[examples.Public."!1"]
+valid = false
+
+[examples.Public.0]
+deformatted = ""
+valid = true
+
 [examples.Public."0!0"]
 deformatted = "#!"
 str = "0"
 valid = true
 
+[examples.Public."0!001.002"]
+deformatted = "#!###.###"
+valid = true
+
+[examples.Public."0!1.0.0.0"]
+deformatted = "#!...#"
+valid = true
+
+[examples.Public."0!1.0.0.0 "]
+deformatted = "#!...# "
+valid = true
+
+[examples.Public."0!100"]
+deformatted = "#!"
+valid = true
+
+[examples.Public.0-02]
+deformatted = "-##"
+valid = true
+
+[examples.Public."0.0.0"]
+deformatted = "..#"
+valid = true
+
+[examples.Public."0.0.0	"]
+deformatted = "..#	"
+valid = true
+
+[examples.Public."001!00"]
+deformatted = "###!##"
+valid = true
+
+[examples.Public."001!007"]
+deformatted = "###!###"
+valid = true
+
+[examples.Public."001!1.2.3"]
+deformatted = "###!"
+valid = true
+
+[examples.Public."001!1.2.3-02"]
+deformatted = "###!-##"
+valid = true
+
+[examples.Public.007]
+deformatted = "###"
+valid = true
+
+[examples.Public."01!001"]
+deformatted = "##!###"
+valid = true
+
+[examples.Public."01!1.0"]
+deformatted = "##!.#"
+valid = true
+
+[examples.Public."01!10.20.30"]
+deformatted = "##!"
+valid = true
+
+[examples.Public."01!99rc1rev_05"]
+deformatted = "##!rev_##"
+valid = true
+
+[examples.Public."099!1.0.0.0"]
+deformatted = "###!...#"
+valid = true
+
+[examples.Public.099b2-1DEV5]
+deformatted = "###-DEV"
+valid = true
+
+[examples.Public.099rcdev1]
+deformatted = "###rcdev"
+valid = true
+
 [examples.Public."1!"]
 valid = false
+
+[examples.Public."1!001.002"]
+deformatted = "###.###"
+valid = true
+
+[examples.Public."1!1.0.0.0"]
+deformatted = "...#"
+valid = true
 
 [examples.Public."1!1.0rc1.post2"]
 deformatted = ".#"
 str = "1!1rc1.post2"
 valid = true
 
+[examples.Public."1!100.a2dev.02"]
+deformatted = ".adev.##"
+valid = true
+
+[examples.Public."1!100b2-1DEV5"]
+deformatted = "-DEV"
+valid = true
+
+[examples.Public."1!100rcdev1"]
+deformatted = "rcdev"
+valid = true
+
+[examples.Public."1+a"]
+valid = false
+
+[examples.Public."1."]
+valid = false
+
+[examples.Public."1..2"]
+valid = false
+
+[examples.Public."1.0"]
+deformatted = ".#"
+valid = true
+
 [examples.Public."1.0+loc"]
 valid = false
+
+[examples.Public."1.0-02"]
+deformatted = ".#-##"
+valid = true
 
 [examples.Public."1.0.post"]
 deformatted = ".#.post"
@@ -9514,6 +11478,9 @@ str = "1.post0"
 valid = true
 
 [examples.Public."1.0.post1a1"]
+valid = false
+
+[examples.Public."1.2+abc"]
 valid = false
 
 [examples.Public."1.2.3"]
@@ -9533,15 +11500,370 @@ bool = true
 deformatted = ""
 valid = true
 
+[examples.Public."1.2x"]
+valid = false
+
+[examples.Public."10!02"]
+deformatted = "##"
+valid = true
+
+[examples.Public."10!02rc1-02.dev"]
+deformatted = "##-##.dev"
+valid = true
+
+[examples.Public."10!2arev_05"]
+deformatted = "arev_##"
+valid = true
+
+[examples.Public."100.a2-02dev1"]
+deformatted = ".a#-##dev"
+valid = true
+
+[examples.Public."2!00.00.00"]
+deformatted = "##.##.##"
+valid = true
+
+[examples.Public."2!01.02"]
+deformatted = "##.##"
+valid = true
+
+[examples.Public."2!01.02b2-1DEV5"]
+deformatted = "##.##-DEV"
+valid = true
+
+[examples.Public."2!10.20bpost1dev1"]
+deformatted = "bpostdev"
+valid = true
+
+[examples.Public."42!9rc1rev_05"]
+deformatted = "rev_##"
+valid = true
+
+[examples.Public."9!01-02"]
+deformatted = "##-##"
+valid = true
+
+[examples.Public."9!7.08.009"]
+deformatted = ".##.###"
+valid = true
+
+[examples.Public."V0!00"]
+deformatted = "V#!##"
+valid = true
+
+[examples.Public."V0!007"]
+deformatted = "V#!###"
+valid = true
+
+[examples.Public."V0!1.2.3"]
+deformatted = "V#!"
+valid = true
+
+[examples.Public."V0!1.2.3rc1rev_05"]
+deformatted = "V#!rev_##"
+valid = true
+
+[examples.Public."V0!42b2-1DEV5"]
+deformatted = "V#!-DEV"
+valid = true
+
+[examples.Public."V0!42rcdev1"]
+deformatted = "V#!rcdev"
+valid = true
+
+[examples.Public."V001!001"]
+deformatted = "V###!###"
+valid = true
+
+[examples.Public."V001!1.0"]
+deformatted = "V###!.#"
+valid = true
+
+[examples.Public."V001!10.20.30"]
+deformatted = "V###!"
+valid = true
+
+[examples.Public."V01!0.0.0"]
+deformatted = "V##!..#"
+valid = true
+
+[examples.Public."V01!002"]
+deformatted = "V##!###"
+valid = true
+
+[examples.Public."V01!02"]
+deformatted = "V##!##"
+valid = true
+
+[examples.Public."V01!2"]
+deformatted = "V##!"
+valid = true
+
+[examples.Public."V099!00"]
+deformatted = "V###!##"
+valid = true
+
+[examples.Public."V1!00"]
+deformatted = "V##"
+valid = true
+
+[examples.Public."V1!007"]
+deformatted = "V###"
+valid = true
+
+[examples.Public."V1!1.2.3"]
+deformatted = "V"
+valid = true
+
+[examples.Public."V1.2.0"]
+deformatted = "V..#"
+valid = true
+
+[examples.Public."V10!01.02"]
+deformatted = "V##.##"
+valid = true
+
+[examples.Public."V9!001.002"]
+deformatted = "V###.###"
+valid = true
+
+[examples.Public."V9!1.0.0.0"]
+deformatted = "V...#"
+valid = true
+
+[examples.Public.v]
+valid = false
+
+[examples.Public."v!1"]
+valid = false
+
+[examples.Public."v0!001"]
+deformatted = "v#!###"
+valid = true
+
+[examples.Public."v0!1.0"]
+deformatted = "v#!.#"
+valid = true
+
+[examples.Public."v0!10.20.30"]
+deformatted = "v#!"
+valid = true
+
+[examples.Public."v001!0.0.0"]
+deformatted = "v###!..#"
+valid = true
+
+[examples.Public."v001!002"]
+deformatted = "v###!###"
+valid = true
+
+[examples.Public."v001!02"]
+deformatted = "v###!##"
+valid = true
+
+[examples.Public."v001!2"]
+deformatted = "v###!"
+valid = true
+
+[examples.Public.v002]
+deformatted = "v###"
+valid = true
+
+[examples.Public."v01!1"]
+deformatted = "v##!"
+valid = true
+
+[examples.Public.v09]
+deformatted = "v##"
+valid = true
+
+[examples.Public."v099!1.0"]
+deformatted = "v###!.#"
+valid = true
+
+[examples.Public."v1!1.0"]
+deformatted = "v.#"
+valid = true
+
+[examples.Public."v1!10.20.30"]
+deformatted = "v"
+valid = true
+
+[examples.Public.x]
+valid = false
+
 [examples.Qual.""]
 bool = false
 deformatted = ""
 str = ""
 valid = true
 
+[examples.Qual."	-1"]
+deformatted = "	-"
+valid = true
+
+[examples.Qual."	-1.dev	"]
+deformatted = "	-.dev	"
+valid = true
+
+[examples.Qual."	.post1	"]
+deformatted = "	A	"
+valid = true
+
+[examples.Qual."\n-1DEV5\n"]
+deformatted = "\n-DEV\n"
+valid = true
+
+[examples.Qual."\r\n-1dev1\r\n"]
+deformatted = "\r\n-dev\r\n"
+valid = true
+
+[examples.Qual." 	-1_dev-3	 "]
+deformatted = " 	-_dev-	 "
+valid = true
+
+[examples.Qual."   "]
+deformatted = "   -"
+valid = true
+
+[examples.Qual."  -2  "]
+deformatted = "  -  "
+valid = true
+
+[examples.Qual."  .dev1	"]
+deformatted = "  -	"
+valid = true
+
+[examples.Qual." -02"]
+deformatted = " -##"
+valid = true
+
+[examples.Qual." -02dev1 "]
+deformatted = " -##dev "
+valid = true
+
+[examples.Qual." a1 "]
+deformatted = " - "
+valid = true
+
+[examples.Qual.-]
+valid = false
+
+[examples.Qual.-02]
+deformatted = "-##"
+valid = true
+
+[examples.Qual.-02DEV5]
+deformatted = "-##DEV"
+valid = true
+
+[examples.Qual."-02DEV5 "]
+deformatted = "-##DEV "
+valid = true
+
+[examples.Qual.-02dev1]
+deformatted = "-##dev"
+valid = true
+
+[examples.Qual.-1]
+deformatted = "-"
+valid = true
+
+[examples.Qual.-1-dev4]
+deformatted = "--dev"
+valid = true
+
+[examples.Qual."-1-dev4	"]
+deformatted = "--dev	"
+valid = true
+
+[examples.Qual."-1.dev"]
+deformatted = "-.dev"
+valid = true
+
+[examples.Qual.-1DEV5]
+deformatted = "-DEV"
+valid = true
+
+[examples.Qual.-1_dev-3]
+deformatted = "-_dev-"
+valid = true
+
+[examples.Qual.-1dev1]
+deformatted = "-dev"
+valid = true
+
 [examples.Qual.-2]
 deformatted = "-"
 str = ".post2"
+valid = true
+
+[examples.Qual.-alpha3]
+deformatted = "-alpha"
+valid = true
+
+[examples.Qual.".a2"]
+deformatted = ".a"
+valid = true
+
+[examples.Qual.".a2-02"]
+deformatted = ".a#-##"
+valid = true
+
+[examples.Qual.".a2-1"]
+deformatted = ".a#-"
+valid = true
+
+[examples.Qual.".a2DEV5"]
+deformatted = ".aDEV"
+valid = true
+
+[examples.Qual.".a2dev1"]
+deformatted = ".adev"
+valid = true
+
+[examples.Qual.".a2post1"]
+deformatted = ".apost"
+valid = true
+
+[examples.Qual.".a2r"]
+deformatted = ".ar"
+valid = true
+
+[examples.Qual.".c2"]
+deformatted = ".c"
+valid = true
+
+[examples.Qual.".c2-1"]
+deformatted = ".c#-"
+valid = true
+
+[examples.Qual.".c2DEV5"]
+deformatted = ".cDEV"
+valid = true
+
+[examples.Qual.".c2dev1"]
+deformatted = ".cdev"
+valid = true
+
+[examples.Qual.".c2r"]
+deformatted = ".cr"
+valid = true
+
+[examples.Qual.".dev"]
+deformatted = ".dev"
+valid = true
+
+[examples.Qual.".post"]
+deformatted = ".post"
+valid = true
+
+[examples.Qual.".rev6"]
+deformatted = ".rev"
+valid = true
+
+[examples.Qual.DEV5]
+deformatted = "DEV"
 valid = true
 
 [examples.Qual._AlPhA]
@@ -9558,6 +11880,10 @@ deformatted = "_AlPhA_#"
 str = "a0"
 valid = true
 
+[examples.Qual._dev-3]
+deformatted = "_dev-"
+valid = true
+
 [examples.Qual._post-1]
 deformatted = "_post-"
 str = ".post1"
@@ -9569,6 +11895,37 @@ valid = true
 [examples.Qual.a]
 deformatted = "a"
 str = "a0"
+valid = true
+
+[examples.Qual.a-02]
+deformatted = "a-##"
+valid = true
+
+[examples.Qual.a-1]
+deformatted = "a-"
+valid = true
+
+[examples.Qual.a-1DEV5]
+deformatted = "a-DEV"
+valid = true
+
+[examples.Qual.a-1dev1]
+deformatted = "a-dev"
+valid = true
+
+[examples.Qual."a."]
+valid = false
+
+[examples.Qual.a01]
+deformatted = "a##"
+valid = true
+
+[examples.Qual.a01-1]
+deformatted = "a##-"
+valid = true
+
+[examples.Qual.a01r]
+deformatted = "a##r"
 valid = true
 
 [examples.Qual.a1]
@@ -9596,6 +11953,37 @@ deformatted = ""
 str = "a1.post2.dev3"
 valid = true
 
+[examples.Qual.a1a2]
+valid = false
+
+[examples.Qual.a1dev1]
+deformatted = "dev"
+valid = true
+
+[examples.Qual.a1post1]
+deformatted = "post"
+valid = true
+
+[examples.Qual.a1r]
+deformatted = "r"
+valid = true
+
+[examples.Qual.a1r4DEV5]
+deformatted = "rDEV"
+valid = true
+
+[examples.Qual.a1r4dev1]
+deformatted = "rdev"
+valid = true
+
+[examples.Qual.aDEV5]
+deformatted = "aDEV"
+valid = true
+
+[examples.Qual.adev1]
+deformatted = "adev"
+valid = true
+
 [examples.Qual.alpha]
 deformatted = "alpha"
 str = "a0"
@@ -9612,6 +12000,42 @@ deformatted = "alpha"
 str = "a1"
 valid = true
 
+[examples.Qual.apost1]
+deformatted = "apost"
+valid = true
+
+[examples.Qual.ar]
+deformatted = "ar"
+valid = true
+
+[examples.Qual.ar4DEV5]
+deformatted = "arDEV"
+valid = true
+
+[examples.Qual.ar4dev1]
+deformatted = "ardev"
+valid = true
+
+[examples.Qual.b]
+deformatted = "b"
+valid = true
+
+[examples.Qual.b-02]
+deformatted = "b-##"
+valid = true
+
+[examples.Qual.b-1]
+deformatted = "b-"
+valid = true
+
+[examples.Qual.b-1DEV5]
+deformatted = "b-DEV"
+valid = true
+
+[examples.Qual.b-1dev1]
+deformatted = "b-dev"
+valid = true
+
 [examples.Qual.b1]
 deformatted = ""
 str = "b1"
@@ -9622,6 +12046,17 @@ valid = true
 BETA = "BETA1"
 "a###" = "b1"
 
+[examples.Qual.bDEV5]
+deformatted = "bDEV"
+valid = true
+
+[examples.Qual.b_]
+valid = false
+
+[examples.Qual.bdev1]
+deformatted = "bdev"
+valid = true
+
 [examples.Qual."beta1.post2.dev3"]
 deformatted = "beta"
 str = "b1.post2.dev3"
@@ -9631,16 +12066,38 @@ valid = true
 "r#-dev" = "b1r2-dev3"
 -dev = "b1-2dev3"
 
+[examples.Qual.bpost1]
+deformatted = "bpost"
+valid = true
+
+[examples.Qual.br]
+deformatted = "br"
+valid = true
+
+[examples.Qual.br4DEV5]
+deformatted = "brDEV"
+valid = true
+
+[examples.Qual.br4dev1]
+deformatted = "brdev"
+valid = true
+
 [examples.Qual.dev]
 bool = true
 deformatted = "dev"
 str = ".dev0"
 valid = true
 
+[examples.Qual."dev."]
+valid = false
+
 [examples.Qual.dev1]
 deformatted = "dev"
 str = ".dev1"
 valid = true
+
+[examples.Qual.dev1post2]
+valid = false
 
 [examples.Qual.post]
 deformatted = "post"
@@ -9652,9 +12109,54 @@ deformatted = "post-"
 str = ".post1"
 valid = true
 
+[examples.Qual."post."]
+valid = false
+
 [examples.Qual.post1]
 deformatted = "post"
 str = ".post1"
+valid = true
+
+[examples.Qual.post1a2]
+valid = false
+
+[examples.Qual."pre.3"]
+deformatted = "pre."
+valid = true
+
+[examples.Qual."pre.3-1"]
+deformatted = "pre.-"
+valid = true
+
+[examples.Qual."pre.3r"]
+deformatted = "pre.r"
+valid = true
+
+[examples.Qual.rc]
+deformatted = "rc"
+valid = true
+
+[examples.Qual.rc-]
+valid = false
+
+[examples.Qual.rc-02]
+deformatted = "rc-##"
+valid = true
+
+[examples.Qual.rc-1]
+deformatted = "rc-"
+valid = true
+
+[examples.Qual.rc01]
+deformatted = "rc##"
+valid = true
+
+[examples.Qual.rc01-1]
+deformatted = "rc##-"
+valid = true
+
+[examples.Qual.rc01r]
+deformatted = "rc##r"
 valid = true
 
 [examples.Qual."rc1.dev2"]
@@ -9662,7 +12164,81 @@ deformatted = ""
 str = "rc1.dev2"
 valid = true
 
+[examples.Qual.rcDEV5]
+deformatted = "rcDEV"
+valid = true
+
+[examples.Qual.rcdev1]
+deformatted = "rcdev"
+valid = true
+
+[examples.Qual.rcr]
+deformatted = "rcr"
+valid = true
+
+[examples.Qual.x]
+valid = false
+
 [examples.Release.""]
+valid = false
+
+[examples.Release."	00.00.00"]
+deformatted = "	##.##.##"
+valid = true
+
+[examples.Release."	0001.0002.0003	"]
+deformatted = "	####.####.####	"
+valid = true
+
+[examples.Release."	01	"]
+deformatted = "	##	"
+valid = true
+
+[examples.Release."\n001\n"]
+deformatted = "\n###\n"
+valid = true
+
+[examples.Release."\r\n01.02.003\r\n"]
+deformatted = "\r\n##.##.###\r\n"
+valid = true
+
+[examples.Release." 	01	 "]
+deformatted = " 	##	 "
+valid = true
+
+[examples.Release."   "]
+valid = false
+
+[examples.Release."  01.02.3  "]
+deformatted = "  ##.##  "
+valid = true
+
+[examples.Release."  1.2.0	"]
+deformatted = "  ..#	"
+valid = true
+
+[examples.Release." 0.0"]
+deformatted = " .#"
+valid = true
+
+[examples.Release." 00 "]
+deformatted = " ## "
+valid = true
+
+[examples.Release." 1 "]
+deformatted = " # "
+valid = true
+
+[examples.Release."+1"]
+valid = false
+
+[examples.Release.-1]
+valid = false
+
+[examples.Release."."]
+valid = false
+
+[examples.Release.".."]
 valid = false
 
 [examples.Release.".1"]
@@ -9673,9 +12249,69 @@ deformatted = ""
 str = "0"
 valid = true
 
+[examples.Release."0.0"]
+deformatted = ".#"
+valid = true
+
+[examples.Release."0.0.0"]
+deformatted = "..#"
+valid = true
+
+[examples.Release."0.0.0 "]
+deformatted = "..# "
+valid = true
+
 [examples.Release."0.0.1"]
 deformatted = ""
 str = "0.0.1"
+valid = true
+
+[examples.Release.00]
+deformatted = "##"
+valid = true
+
+[examples.Release."00.00.00"]
+deformatted = "##.##.##"
+valid = true
+
+[examples.Release.000]
+deformatted = "###"
+valid = true
+
+[examples.Release."000	"]
+deformatted = "###	"
+valid = true
+
+[examples.Release."0001.0002.0003"]
+deformatted = "####.####.####"
+valid = true
+
+[examples.Release.001]
+deformatted = "###"
+valid = true
+
+[examples.Release.01]
+deformatted = "##"
+valid = true
+
+[examples.Release."01.02.003"]
+deformatted = "##.##.###"
+valid = true
+
+[examples.Release."01.02.3"]
+deformatted = "##.##"
+valid = true
+
+[examples.Release."01.2.3"]
+deformatted = "##"
+valid = true
+
+[examples.Release.09]
+deformatted = "##"
+valid = true
+
+[examples.Release.099]
+deformatted = "###"
 valid = true
 
 [examples.Release.1]
@@ -9683,11 +12319,39 @@ deformatted = ""
 str = "1"
 valid = true
 
+[examples.Release."1,2"]
+valid = false
+
+[examples.Release.1-2]
+valid = false
+
 [examples.Release."1."]
 valid = false
 
 [examples.Release."1.-1"]
 valid = false
+
+[examples.Release."1...2"]
+valid = false
+
+[examples.Release."1..2"]
+valid = false
+
+[examples.Release."1.0"]
+deformatted = ".#"
+valid = true
+
+[examples.Release."1.0.0.0"]
+deformatted = "...#"
+valid = true
+
+[examples.Release."1.00"]
+deformatted = ".##"
+valid = true
+
+[examples.Release."1.000"]
+deformatted = ".###"
+valid = true
 
 [examples.Release."1.002.3"]
 deformatted = ".###"
@@ -9712,6 +12376,17 @@ deformatted = ""
 str = "1.2"
 valid = true
 
+[examples.Release."1.2."]
+valid = false
+
+[examples.Release."1.2.0"]
+deformatted = "..#"
+valid = true
+
+[examples.Release."1.2.00"]
+deformatted = "..##"
+valid = true
+
 [examples.Release."1.2.3"]
 deformatted = ""
 str = "1.2.3"
@@ -9720,10 +12395,25 @@ valid = true
 [examples.Release."1.a"]
 valid = false
 
+[examples.Release.10]
+deformatted = ""
+valid = true
+
 [examples.Release."10.0.0"]
 deformatted = "..#"
 str = "10"
 valid = true
+
+[examples.Release."10.020.3000"]
+deformatted = ".###"
+valid = true
+
+[examples.Release."123.456.789"]
+deformatted = ""
+valid = true
+
+[examples.Release.1_2]
+valid = false
 
 [examples.Release."3.4.5.6"]
 deformatted = ""
@@ -9731,7 +12421,79 @@ repr = "Release([3, 4, 5, 6])"
 str = "3.4.5.6"
 valid = true
 
+[examples.Release."7.08.009"]
+deformatted = ".##.###"
+valid = true
+
+[examples.Release.9]
+deformatted = ""
+valid = true
+
+[examples.Release.999]
+deformatted = ""
+valid = true
+
+[examples.Release."9999.0000"]
+deformatted = ".####"
+valid = true
+
+[examples.Release.a]
+valid = false
+
+[examples.Release."a.1"]
+valid = false
+
 [examples.Version.""]
+valid = false
+
+[examples.Version."	0.0.0"]
+deformatted = "	..#"
+valid = true
+
+[examples.Version."	0.0.0+x.A1	"]
+deformatted = "	..#+.^	"
+valid = true
+
+[examples.Version."	01	"]
+deformatted = "	##	"
+valid = true
+
+[examples.Version."\n001!00\n"]
+deformatted = "\n###!##\n"
+valid = true
+
+[examples.Version."\r\n001!09+foo_9\r\n"]
+deformatted = "\r\n###!##+_\r\n"
+valid = true
+
+[examples.Version." 	001!007	 "]
+deformatted = " 	###!###	 "
+valid = true
+
+[examples.Version."   "]
+valid = false
+
+[examples.Version."  001!1.2.3  "]
+deformatted = "  ###!  "
+valid = true
+
+[examples.Version."  v1	"]
+deformatted = "  v	"
+valid = true
+
+[examples.Version." 0+9-A1"]
+deformatted = " +-^"
+valid = true
+
+[examples.Version." 0+foo_9 "]
+deformatted = " +_ "
+valid = true
+
+[examples.Version." 1 "]
+deformatted = " # "
+valid = true
+
+[examples.Version."+abc"]
 valid = false
 
 [examples.Version.0]
@@ -9777,9 +12539,37 @@ deformatted = "#!"
 legacy = "Very large versions with long numeric parts"
 valid = true
 
+[examples.Version."0+9-A1"]
+deformatted = "+-^"
+valid = true
+
+[examples.Version."0+Foo.FOO"]
+deformatted = "+^.^^^"
+valid = true
+
+[examples.Version."0+Foo.FOO "]
+deformatted = "+^.^^^ "
+valid = true
+
+[examples.Version."0+foo_9"]
+deformatted = "+_"
+valid = true
+
 [examples.Version."0.0.0"]
 deformatted = "..#"
 legacy = "Basic Versioning"
+valid = true
+
+[examples.Version."0.0.0+001-0"]
+deformatted = "..#+###-"
+valid = true
+
+[examples.Version."0.0.0+001-0	"]
+deformatted = "..#+###-	"
+valid = true
+
+[examples.Version."0.0.0+x.A1"]
+deformatted = "..#+.^"
 valid = true
 
 [examples.Version."0.0.0a1.post0.dev0+local.build.invalid_character#"]
@@ -9872,10 +12662,110 @@ deformatted = "##..#"
 str = "0.5.dev4"
 valid = true
 
+[examples.Version."001!00"]
+deformatted = "###!##"
+valid = true
+
+[examples.Version."001!007"]
+deformatted = "###!###"
+valid = true
+
+[examples.Version."001!09+foo_9"]
+deformatted = "###!##+_"
+valid = true
+
+[examples.Version."001!1.2.3"]
+deformatted = "###!"
+valid = true
+
+[examples.Version."001!1.2.3+X.A1"]
+deformatted = "###!+^.^"
+valid = true
+
+[examples.Version."001!1.2.3+x9-A1"]
+deformatted = "###!+-^"
+valid = true
+
+[examples.Version.007]
+deformatted = "###"
+valid = true
+
+[examples.Version."007+0_AbC"]
+deformatted = "###+_^~^"
+valid = true
+
+[examples.Version."007+ABC-10"]
+deformatted = "###+^^^-"
+valid = true
+
+[examples.Version."007+a1.AB12"]
+deformatted = "###+.^^"
+valid = true
+
+[examples.Version."007+z99_Foo"]
+deformatted = "###+_^"
+valid = true
+
+[examples.Version."01!001"]
+deformatted = "##!###"
+valid = true
+
+[examples.Version."01!001+x-9"]
+deformatted = "##!###+-"
+valid = true
+
+[examples.Version."01!1.0"]
+deformatted = "##!.#"
+valid = true
+
+[examples.Version."01!1.0+AB12.1"]
+deformatted = "##!.#+^^"
+valid = true
+
+[examples.Version."01!10.20.30"]
+deformatted = "##!"
+valid = true
+
+[examples.Version."01!10.20.30+1-A1"]
+deformatted = "##!+-^"
+valid = true
+
+[examples.Version."01!10.20.30+ABC.2"]
+deformatted = "##!+^^^"
+valid = true
+
+[examples.Version."01!10.20.30+a1_ABC"]
+deformatted = "##!+_^^^"
+valid = true
+
+[examples.Version."01!99+001-0"]
+deformatted = "##!+###-"
+valid = true
+
+[examples.Version."01!99+x.A1"]
+deformatted = "##!+.^"
+valid = true
+
 [examples.Version."01.0.0"]
 deformatted = "##..#"
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
 str = "1"
+valid = true
+
+[examples.Version."099+001_ab12"]
+deformatted = "###+###_"
+valid = true
+
+[examples.Version."099+A1_2"]
+deformatted = "###+^_"
+valid = true
+
+[examples.Version."099+X09.AB12"]
+deformatted = "###+^.^^"
+valid = true
+
+[examples.Version."099+x9_ABC"]
+deformatted = "###+_^^^"
 valid = true
 
 [examples.Version."1!"]
@@ -9928,6 +12818,26 @@ deformatted = ""
 legacy = "Increasing complexity with more combinations"
 valid = true
 
+[examples.Version."1!100b2-1DEV5"]
+deformatted = "-DEV"
+valid = true
+
+[examples.Version."1!100b2-1DEV5+9-A1"]
+deformatted = "-DEV+-^"
+valid = true
+
+[examples.Version."1!100b2-1DEV5+foo_9"]
+deformatted = "-DEV+_"
+valid = true
+
+[examples.Version."1!100rcdev1"]
+deformatted = "rcdev"
+valid = true
+
+[examples.Version."1!100rcdev1+x-9"]
+deformatted = "rcdev+-"
+valid = true
+
 [examples.Version."1!2.0.0+"]
 legacy = "Invalid cases (testing error handling for extreme cases)"
 valid = false
@@ -9947,14 +12857,29 @@ deformatted = ""
 legacy = "Epoch Versions"
 valid = true
 
+[examples.Version."1+"]
+valid = false
+
+[examples.Version."1++abc"]
+valid = false
+
 [examples.Version."1+1"]
 valid = true
 
 [examples.Version."1+a"]
 valid = true
 
+[examples.Version."1+abc+def"]
+valid = false
+
+[examples.Version."1."]
+valid = false
+
 [examples.Version."1..0"]
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
+valid = false
+
+[examples.Version."1..2"]
 valid = false
 
 [examples.Version."1.0"]
@@ -9966,9 +12891,25 @@ valid = true
 [examples.Version."1.0++a"]
 valid = false
 
+[examples.Version."1.0+001-0"]
+deformatted = ".#+###-"
+valid = true
+
+[examples.Version."1.0+9_ABC"]
+deformatted = ".#+_^^^"
+valid = true
+
+[examples.Version."1.0+X-ABC"]
+deformatted = ".#+^-^^^"
+valid = true
+
 [examples.Version."1.0+deadbeef"]
 deformatted = ".#"
 legacy = "Edge Cases / Special Forms"
+valid = true
+
+[examples.Version."1.0+x.A1"]
+deformatted = ".#+.^"
 valid = true
 
 [examples.Version."1.0..1"]
@@ -10149,6 +13090,12 @@ valid = true
 deformatted = ""
 legacy = "Basic Versioning"
 valid = true
+
+[examples.Version."1.2+abc."]
+valid = false
+
+[examples.Version."1.2+x+y"]
+valid = false
 
 [examples.Version."1.2.0-post4"]
 deformatted = "..#-post"
@@ -10540,6 +13487,66 @@ deformatted = ".post."
 legacy = "Post-releases"
 valid = true
 
+[examples.Version."10!0.0.0+001_ab12"]
+deformatted = "..#+###_"
+valid = true
+
+[examples.Version."10!0.0.0+A1_2"]
+deformatted = "..#+^_"
+valid = true
+
+[examples.Version."10!002+AB12_10"]
+deformatted = "###+^^_"
+valid = true
+
+[examples.Version."10!002+a1-A1"]
+deformatted = "###+-^"
+valid = true
+
+[examples.Version."10!002+z99.FOO"]
+deformatted = "###+.^^^"
+valid = true
+
+[examples.Version."10!02"]
+deformatted = "##"
+valid = true
+
+[examples.Version."10!02+9-A1"]
+deformatted = "##+-^"
+valid = true
+
+[examples.Version."10!02+Foo.FOO"]
+deformatted = "##+^.^^^"
+valid = true
+
+[examples.Version."10!02+foo_9"]
+deformatted = "##+_"
+valid = true
+
+[examples.Version."10!1.2.0+X.A1"]
+deformatted = "..#+^.^"
+valid = true
+
+[examples.Version."10!1.2.0+x9-A1"]
+deformatted = "..#+-^"
+valid = true
+
+[examples.Version."10!2+01-X"]
+deformatted = "+##-^"
+valid = true
+
+[examples.Version."10!2+AB12-01"]
+deformatted = "+^^-##"
+valid = true
+
+[examples.Version."10!2+X09_ABC"]
+deformatted = "+^_^^^"
+valid = true
+
+[examples.Version."10!2+x_AbC"]
+deformatted = "+_^~^"
+valid = true
+
 [examples.Version."10!9999.8888.7777a6666.post5555.dev4444+build.hash123abc"]
 deformatted = ""
 legacy = "Complex strings with multiple epochs, large numbers, and combinations"
@@ -10553,6 +13560,26 @@ valid = true
 [examples.Version."100!0.0.0a0.post0.dev0+exp.sha.0"]
 deformatted = "..#"
 legacy = "Very large versions with long numeric parts"
+valid = true
+
+[examples.Version."100+ABC-10"]
+deformatted = "+^^^-"
+valid = true
+
+[examples.Version."100+a1.AB12"]
+deformatted = "+.^^"
+valid = true
+
+[examples.Version."100+z99_Foo"]
+deformatted = "+_^"
+valid = true
+
+[examples.Version."2!00.00.00"]
+deformatted = "##.##.##"
+valid = true
+
+[examples.Version."2!01.02"]
+deformatted = "##.##"
 valid = true
 
 [examples.Version."2!1..0"]
@@ -10577,6 +13604,14 @@ valid = false
 [examples.Version."2!1.2.3-4-5"]
 legacy = "Test version with invalid specifiers that should raise an error"
 valid = false
+
+[examples.Version."2!10.20+ABC.2"]
+deformatted = "+^^^"
+valid = true
+
+[examples.Version."2!10.20+a1_ABC"]
+deformatted = "+_^^^"
+valid = true
 
 [examples.Version."2!3.4.5a2+ubuntu1"]
 deformatted = ""
@@ -10718,7 +13753,34 @@ deformatted = ".#"
 legacy = "Pre-releases (alpha, beta, release candidate)"
 valid = true
 
+[examples.Version."9!7.08.009"]
+deformatted = ".##.###"
+valid = true
+
+[examples.Version."V0!00"]
+deformatted = "V#!##"
+valid = true
+
+[examples.Version."V0!007"]
+deformatted = "V#!###"
+valid = true
+
+[examples.Version."V0!1.2.3"]
+deformatted = "V#!"
+valid = true
+
+[examples.Version."V001!1.0"]
+deformatted = "V###!.#"
+valid = true
+
+[examples.Version."V001!10.20.30"]
+deformatted = "V###!"
+valid = true
+
 [examples.Version."not a version"]
+valid = false
+
+[examples.Version.v]
 valid = false
 
 [examples.Version."v1.0.0"]
@@ -10751,6 +13813,9 @@ deformatted = "v.#"
 legacy = "Edge Cases / Special Forms"
 str = "2"
 valid = true
+
+[examples.Version.x]
+valid = false
 
 [function.Version."data-property.dragon"]
 query = 9001
