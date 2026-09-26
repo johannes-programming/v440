@@ -47,10 +47,6 @@ class Util(enum.Enum):
             return tomllib.load(stream)
 
     @functools.cached_property
-    def deformatting(self: Self, /) -> dict[str, Any]:
-        return cast(dict[str, Any], Util.util.data.get("deformatting", {}))
-
-    @functools.cached_property
     def examples(self: Self, /) -> dict[str, Any]:
         return cast(dict[str, Any], Util.util.data.get("examples", {}))
 
@@ -69,7 +65,7 @@ class TestDeformatting(unittest.TestCase):
     def test_0(self: Self, /) -> None:
         x: str
         y: dict[Any, Any]
-        for x, y in Util.util.deformatting.items():
+        for x, y in Util.util.data["deformatting"].items():
             with self.subTest(clsname=x):
                 self.go_examples(x, y)
 
@@ -333,7 +329,9 @@ class TestStringExamples0(unittest.TestCase):
     ) -> None:
         obj: Any
         syn: str
-        syn = Util.util.data["synonymous-to-empty"][cls.__name__]
+        syn = Util.util.data["synonymous-to-empty"][cls.__name__][""][
+            "synonym"
+        ]
         obj = cls(string=example)
         x = format(obj, "")
         y = format(obj, syn)
