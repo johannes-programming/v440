@@ -62,6 +62,55 @@ class Util(enum.Enum):
 
 
 class TestDeformatting(unittest.TestCase):
+
+    def go_blob(
+        self: Self,
+        cls: type[Any],
+        /,
+        *,
+        valid: bool,
+        strings: list[str],
+        **kwargs: Any,
+    ) -> None:
+        example: tuple[str, ...]
+        example = tuple(strings)
+        with self.subTest(valid=valid, example=example):
+            if valid:
+                self.go_blob_valid(cls, example, **kwargs)
+            else:
+                self.go_blob_invalid(cls, example, **kwargs)
+
+    def go_blob_invalid(
+        self: Self,
+        cls: type[Any],
+        example: tuple[str, ...],
+        /,
+        **kwargs: Any,
+    ) -> None:
+        with self.assertRaises(VersionError):
+            cls.deformat(*example)
+
+    def go_blob_valid(
+        self: Self,
+        cls: type[Any],
+        example: tuple[str, ...],
+        /,
+        *,
+        solution: str,
+        **kwargs: Any,
+    ) -> None:
+        self.assertEqual(solution, cls.deformat(*example))
+
+    def go_cls(
+        self: Self,
+        cls: type[Any],
+        /,
+        **typedict: dict[str, Any],
+    ) -> None:
+        for testname, testdict in typedict.items():
+            with self.subTest(testname=testname):
+                self.go_blob(cls, **testdict)
+
     def test_0(self: Self, /) -> None:
         cls: type[Any]
         typename: str
@@ -69,44 +118,7 @@ class TestDeformatting(unittest.TestCase):
         for typename, typedict in Util.util.data["deformatting"].items():
             cls = Util.import_("v440.core.{0}.{0}".format(typename))
             with self.subTest(typename=typename):
-                self.go_examples(cls, **typedict)
-
-    def go_examples(
-        self: Self,
-        cls: type[Any],
-        /,
-        **typedict: dict[str, Any],
-    ) -> None:
-        split: dict[bool, dict[tuple[str, ...], Any]]
-        x: Any
-        y: dict[Any, Any]
-        split = {False: dict(), True: dict()}
-        for testdict in typedict.values():
-            split[testdict["valid"]][tuple(testdict["strings"])] = testdict
-        for x, y in split[False].items():
-            with self.subTest(valid=False, example=x):
-                self.go_invalid_example(cls, x, **y)
-        for x, y in split[True].items():
-            with self.subTest(valid=True, example=x):
-                self.go_valid_example(cls, x, **y)
-
-    def go_invalid_example(
-        self: Self, cls: Any, example: tuple[str, ...], /, **kwargs: Any
-    ) -> None:
-        with self.assertRaises(VersionError):
-            cls.deformat(*example)
-
-    def go_valid_example(
-        self: Self,
-        cls: Any,
-        example: tuple[str, ...],
-        /,
-        *,
-        solution: str | None = None,
-        **kwargs: Any,
-    ) -> None:
-        if solution is not None:
-            self.assertEqual(solution, cls.deformat(*example))
+                self.go_cls(cls, **typedict)
 
 
 class TestStringExamples(unittest.TestCase):
