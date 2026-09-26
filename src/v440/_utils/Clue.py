@@ -1,4 +1,8 @@
-from typing import *
+"""Provide the Clue helper class for version de/formatting in v440."""
+
+__all__: list[str] = ["Clue"]
+
+from typing import NamedTuple, Self
 
 from v440._utils.Cfg import Cfg
 
@@ -8,7 +12,7 @@ class Clue(NamedTuple):
     sep: str = "?"
     mag: int = 0
 
-    def __and__(self: Self, other: Self) -> Self:
+    def __and__(self: Self, other: Self, /) -> Self:
         s: str
         m: int
         if self.head == "":
@@ -56,21 +60,12 @@ class Clue(NamedTuple):
         return cls(matches["head"], sep, mag)
 
     @classmethod
-    def by_examples(cls: type[Self], *values: str) -> Self:
-        ans: Self
-        s: str
-        ans = cls()
-        for s in values:
-            ans &= cls.by_string(s)
-        return ans
-
-    @classmethod
     def by_spec(cls: type[Self], value: str, /) -> Self:
         matches: dict[str, str]
         matches = Cfg.fullmatches("clue_f", value)
         return cls(matches["head_f"], matches["sep_f"], len(matches["num_f"]))
 
-    def possible(self: Self, *, hollow: str, short: str) -> set[str]:
+    def possible(self: Self, /, *, hollow: str, short: str) -> set[str]:
         s: str
         n: str
         seps: set[str]
@@ -97,12 +92,12 @@ class Clue(NamedTuple):
             ans.add("")
         return ans
 
-    def seal(self: Self) -> Self:
+    def seal(self: Self, /) -> Self:
         mag: int
         mag = self.mag if self.mag >= -1 else -1
         return type(self)(self.head, self.sep, mag)
 
-    def solo(self: Self, hollow: str) -> str:
+    def solo(self: Self, /, hollow: str) -> str:
         sep: str
         mag: int
         if self.head == "":

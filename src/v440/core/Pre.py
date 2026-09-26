@@ -1,72 +1,92 @@
+"""Provide the Pre class for pre-releases in v440."""
+
 from __future__ import annotations
 
-from typing import *
+__all__: list[str] = ["Pre"]
+
+import operator
+from dataclasses import dataclass
+from typing import Any, NamedTuple, Self, SupportsIndex
 
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
+from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
-__all__ = ["Pre"]
+
+class PreAccumulation(NamedTuple):
+    a: Clue = Clue()
+    b: Clue = Clue()
+    rc: Clue = Clue()
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        return type(self)(*map(operator.and_, self, other))
+
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        matches: dict[str, str]
+        pos: list[set[str]]
+        sols: list[str]
+        s: str
+        way: tuple[Any, ...]
+        pos = list()
+        pos.append(self.a.possible(hollow="a", short="A"))
+        pos.append(self.b.possible(hollow="b", short="B"))
+        pos.append(self.rc.possible(hollow="rc", short="C"))
+        if forbids_empty and self.a == Clue():
+            pos[0].add("A")
+        if forbids_empty and self.b == Clue():
+            pos[1].add("B")
+        if forbids_empty and self.rc == Clue():
+            pos[2].add("C")
+        sols = list()
+        for way in iterprod(*pos):
+            s = "".join(way)
+            matches = Cfg.fullmatches("pre_f", s)
+            if way == (matches["a_f"], matches["b_f"], matches["rc_f"]):
+                if s or not forbids_empty:
+                    sols.append(s)
+        sols.sort()
+        sols.sort(key=len)
+        return sols[0]
 
 
 class Pre(QualABC):
 
     __slots__ = ()
 
-    lit: str
-    num: int
-    packaging: Optional[tuple[str, int]]
-    string: str
-
-    def _cmp(self: Self) -> tuple:
+    def _cmp(self: Self, /) -> tuple[Any, ...]:
         if not self:
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
 
-    @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
-        s: str
-        o: Self
+    def _deformat(self: Self, body: str, /) -> PreAccumulation:
         clues: list[Clue]
-        matches: dict[str, str]
-        pos: list[set]
-        sols: list[str]
-        way: tuple[set[str], set[str], set[str]]
-        clues = [Clue()] * 3
-        for s, o in info.items():
-            if not o:
-                continue
-            clues[("a", "b", "rc").index(o.lit)] &= Clue.by_example(s)
-        pos = list()
-        pos.append(clues[0].possible(hollow="a", short="A"))
-        pos.append(clues[1].possible(hollow="b", short="B"))
-        pos.append(clues[2].possible(hollow="rc", short="C"))
-        sols = list()
-        for way in iterprod(*pos):
-            s = "".join(way)
-            matches = Cfg.fullmatches("pre_f", s)
-            if way == (matches["a_f"], matches["b_f"], matches["rc_f"]):
-                sols.append(s)
-        sols.sort()
-        sols.sort(key=len)
-        return sols[0]
+        clues = [Clue(), Clue(), Clue()]
+        if self:
+            clues[("a", "b", "rc").index(self.lit)] = Clue.by_example(body)
+        return PreAccumulation(*clues)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> dict[str, Clue]:
-        ans: dict[str, Clue]
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        a: Clue
+        b: Clue
         matches: dict[str, str]
+        rc: Clue
         matches = Cfg.fullmatches("pre_f", spec)
-        ans = dict()
-        ans["a"] = Clue.by_spec(matches["a_f"])
-        ans["b"] = Clue.by_spec(matches["b_f"])
-        ans["rc"] = Clue.by_spec(matches["rc_f"])
-        return ans
+        a = Clue.by_spec(matches["a_f"])
+        b = Clue.by_spec(matches["b_f"])
+        rc = Clue.by_spec(matches["rc_f"])
+        return a, b, rc
 
-    def _format_parsed(self: Self, *, a: Clue, b: Clue, rc: Clue) -> str:
+    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
         ans: str
+        a: Clue
+        b: Clue
         clue: Clue
+        rc: Clue
+        a, b, rc = parsed
         if self.lit == "a":
             clue = a
         elif self.lit == "b":
@@ -85,16 +105,21 @@ class Pre(QualABC):
         return ans
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str) -> str:
-        return Cfg.cfg.data["consts"]["phases"][value]
+    def _lit_parse(cls: type[Self], value: str, /) -> str:
+        return Cfg.cfg.phases[value]
 
     @property
-    def packaging(self: Self) -> Optional[tuple[str, int]]:
+    def packaging(self: Self, /) -> tuple[str, int] | None:
         if self:
             return self.lit, self.num
+        else:
+            return None
 
     @packaging.setter
-    def packaging(self: Self, value: Optional[Iterable]) -> None:
+    @setter
+    def packaging(
+        self: Self, value: tuple[str, SupportsIndex] | None, /
+    ) -> None:
         if value is None:
             self.num = 0
             self.lit = ""
