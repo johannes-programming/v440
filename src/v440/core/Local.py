@@ -9,7 +9,6 @@ import string as string_
 from dataclasses import dataclass
 from typing import Any, Self
 
-from frozendict import frozendict
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
@@ -88,7 +87,6 @@ def item_parse(value: Any, /) -> int | str:
 
 @dataclass(frozen=True, kw_only=True)
 class LocalDeformat:
-    info: frozendict[str, Local]
     parts: tuple[frozenset[str], ...]
 
     def __and__(self: Self, other: Self, /) -> Self:
@@ -107,7 +105,6 @@ class LocalDeformat:
                 deformat_part(set(part))
             parts.append(part)
         return type(self)(
-            info=self.info | other.info,
             parts=tuple(parts),
         )
 
@@ -137,7 +134,6 @@ class Local(ListABC[int | str]):
 
     def _deformat(self: Self, body: str, /) -> LocalDeformat:
         return LocalDeformat(
-            info=frozendict({body: self}),
             parts=(
                 tuple(
                     frozenset({part})
@@ -151,7 +147,6 @@ class Local(ListABC[int | str]):
     @staticmethod
     def _deformat_origin() -> LocalDeformat:
         return LocalDeformat(
-            info=frozendict(),
             parts=(),
         )
 

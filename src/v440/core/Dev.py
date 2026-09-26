@@ -5,11 +5,8 @@ from __future__ import annotations
 __all__: list[str] = ["Dev"]
 
 import operator
-from collections import abc
 from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
-
-from frozendict import frozendict
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
@@ -20,12 +17,10 @@ from v440.abc.QualABC import QualABC
 @dataclass(frozen=True, kw_only=True)
 class DevDeformat:
     clue: Clue
-    info: frozendict[str, Dev]
 
     def __and__(self: Self, other: Self, /) -> Self:
         return type(self)(
             clue=self.clue & other.clue,
-            info=self.info | other.info,
         )
 
     def best(self: Self, /) -> str:
@@ -45,14 +40,12 @@ class Dev(QualABC):
     def _deformat(self: Self, body: str, /) -> DevDeformat:
         return DevDeformat(
             clue=Clue.by_example(body),
-            info=frozendict({body: self}),
         )
 
     @staticmethod
     def _deformat_origin() -> DevDeformat:
         return DevDeformat(
             clue=Clue(),
-            info=frozendict(),
         )
 
     @classmethod

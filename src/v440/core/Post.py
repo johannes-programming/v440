@@ -8,8 +8,6 @@ import operator
 from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
 
-from frozendict import frozendict
-
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
 from v440._utils.setter import setter
@@ -19,12 +17,10 @@ from v440.abc.QualABC import QualABC
 @dataclass(frozen=True, kw_only=True)
 class PostDeformat:
     clue: Clue
-    info: frozendict[str, Post]
 
     def __and__(self: Self, other: Self, /) -> Self:
         return type(self)(
             clue=self.clue & other.clue,
-            info=self.info | other.info,
         )
 
     def best(self: Self, /) -> str:
@@ -44,14 +40,12 @@ class Post(QualABC):
     def _deformat(self: Self, body: str, /) -> PostDeformat:
         return PostDeformat(
             clue=Clue.by_example(body),
-            info=frozendict({body: self}),
         )
 
     @staticmethod
     def _deformat_origin() -> PostDeformat:
         return PostDeformat(
             clue=Clue(),
-            info=frozendict(),
         )
 
     @classmethod

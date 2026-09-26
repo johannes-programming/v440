@@ -10,8 +10,6 @@ import string as string_
 from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex, overload
 
-from frozendict import frozendict
-
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
@@ -50,7 +48,6 @@ def item_parse(value: SupportsIndex, /) -> int:
 @dataclass(frozen=True, kw_only=True)
 class ReleaseDeformat:
     end: int
-    info: frozendict[str, Release]
     table: tuple[int, ...]
 
     def __and__(self: Self, other: Self, /) -> Self:
@@ -64,7 +61,6 @@ class ReleaseDeformat:
             )
         return type(self)(
             end=max(self.end, other.end),
-            info=self.info | other.info,
             table=tuple(table),
         )
 
@@ -100,7 +96,6 @@ class Release(ListABC[int]):
         t = body.rstrip("0")
         return ReleaseDeformat(
             end=k if k > 0 and (t.endswith(".") or t == "") else -1,
-            info=frozendict({body: self}),
             table=tuple(map(deformat_force, body.split("."))),
         )
 
@@ -108,7 +103,6 @@ class Release(ListABC[int]):
     def _deformat_origin() -> ReleaseDeformat:
         return ReleaseDeformat(
             end=-1,
-            info=frozendict(),
             table=(),
         )
 

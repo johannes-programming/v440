@@ -8,7 +8,6 @@ import operator
 from dataclasses import dataclass
 from typing import Any, Final, Self
 
-from frozendict import frozendict
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
@@ -24,11 +23,9 @@ from v440.core.Pre import Pre as Pre_
 class QualDeformat:
 
     clues: tuple[Clue, ...] = (Clue(), Clue(), Clue(), Clue(), Clue())
-    info: frozendict[str, Qual] = frozendict()
 
     def __and__(self: Self, other: Self, /) -> Self:
         return type(self)(
-            info=self.info | other.info,
             clues=tuple(map(operator.and_, self.clues, other.clues)),
         )
 
@@ -106,7 +103,6 @@ class Qual(NestedABC):
         clues.append(Clue.by_example(matches["dev"]))
         return QualDeformat(
             clues=tuple(clues),
-            info=frozendict({body: self}),
         )
 
     @staticmethod

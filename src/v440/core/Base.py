@@ -8,8 +8,6 @@ import operator
 from dataclasses import dataclass
 from typing import Any, Final, Self
 
-from frozendict import frozendict
-
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
@@ -21,7 +19,6 @@ class BaseDeformat:
     basev: str | None
     epoch_mag: int
     epoch_min: int | None
-    info: frozendict[str, Base]
     releases: frozenset[str]
 
     def __and__(self: Self, other: Self, /) -> Self:
@@ -49,7 +46,6 @@ class BaseDeformat:
             basev=basev,
             epoch_mag=epoch_mag,
             epoch_min=epoch_min,
-            info=self.info | other.info,
             releases=self.releases | other.releases,
         )
 
@@ -81,7 +77,6 @@ class Base(NestedABC):
             basev=matches["basev"],
             epoch_mag=len(epoch) if epoch.startswith("0") else 0,
             epoch_min=len(epoch),
-            info=frozendict({body: self}),
             releases=frozenset({matches["release"]}),
         )
 
@@ -91,7 +86,6 @@ class Base(NestedABC):
             basev=None,
             epoch_mag=0,
             epoch_min=None,
-            info=frozendict(),
             releases=frozenset(),
         )
 

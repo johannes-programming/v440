@@ -7,7 +7,6 @@ __all__: list[str] = ["Pre"]
 from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
 
-from frozendict import frozendict
 from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
@@ -19,7 +18,6 @@ from v440.abc.QualABC import QualABC
 @dataclass(frozen=True, kw_only=True)
 class PreDeformat:
     clues: tuple[Clue, Clue, Clue]
-    info: frozendict[str, Pre]
 
     def __and__(self: Self, other: Self, /) -> Self:
         return type(self)(
@@ -28,7 +26,6 @@ class PreDeformat:
                 self.clues[1] & other.clues[1],
                 self.clues[2] & other.clues[2],
             ),
-            info=self.info | other.info,
         )
 
     def best(self: Self, /) -> str:
@@ -68,14 +65,12 @@ class Pre(QualABC):
             clues[("a", "b", "rc").index(self.lit)] = Clue.by_example(body)
         return PreDeformat(
             clues=(clues[0], clues[1], clues[2]),
-            info=frozendict({body: self}),
         )
 
     @staticmethod
     def _deformat_origin() -> PreDeformat:
         return PreDeformat(
             clues=(Clue(), Clue(), Clue()),
-            info=frozendict(),
         )
 
     @classmethod

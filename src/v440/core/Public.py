@@ -9,8 +9,6 @@ import string as string_
 from dataclasses import dataclass
 from typing import Any, Final, Self
 
-from frozendict import frozendict
-
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
@@ -33,13 +31,11 @@ def split_public(value: str, /) -> tuple[str, str]:
 @dataclass(frozen=True, kw_only=True)
 class PublicDeformat:
     bases: frozenset[str]
-    info: frozendict[str, Public]
     quals: frozenset[str]
 
     def __and__(self: Self, other: Self, /) -> Self:
         return type(self)(
             bases=self.bases | other.bases,
-            info=self.info | other.info,
             quals=self.quals | other.quals,
         )
 
@@ -65,7 +61,6 @@ class Public(NestedABC):
         base, qual = split_public(body)
         return PublicDeformat(
             bases=frozenset({base}),
-            info=frozendict({body: self}),
             quals=frozenset({qual}),
         )
 
@@ -73,7 +68,6 @@ class Public(NestedABC):
     def _deformat_origin() -> PublicDeformat:
         return PublicDeformat(
             bases=frozenset(),
-            info=frozendict(),
             quals=frozenset(),
         )
 

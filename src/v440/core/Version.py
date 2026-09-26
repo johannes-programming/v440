@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from typing import Any, Final, Self
 
 import packaging.version
-from frozendict import frozendict
 
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
@@ -35,13 +34,11 @@ def split_version(string: str, /) -> abc.Iterable[str]:
 
 @dataclass(frozen=True, kw_only=True)
 class VersionDeformat:
-    info: frozendict[str, Version]
     locals: frozenset[str]
     publics: frozenset[str]
 
     def __and__(self: Self, other: Self, /) -> Self:
         return type(self)(
-            info=self.info | other.info,
             locals=self.locals | other.locals,
             publics=self.publics | other.publics,
         )
@@ -71,7 +68,6 @@ class Version(NestedABC):
         public: str
         public, local = split_version(body)
         return VersionDeformat(
-            info=frozendict({body: self}),
             locals=frozenset({local}),
             publics=frozenset({public}),
         )
@@ -79,7 +75,6 @@ class Version(NestedABC):
     @staticmethod
     def _deformat_origin() -> VersionDeformat:
         return VersionDeformat(
-            info=frozendict(),
             locals=frozenset(),
             publics=frozenset(),
         )
