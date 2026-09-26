@@ -12,7 +12,6 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
@@ -53,7 +52,7 @@ class PreDeformat:
         return sols[0]
 
 
-class Pre(NewDeformattable, QualABC):
+class Pre(QualABC):
 
     __slots__ = ()
 

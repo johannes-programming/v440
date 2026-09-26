@@ -7,6 +7,7 @@ from typing import Any, Self
 
 import setdoc
 from copyable import Copyable
+from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
@@ -69,6 +70,10 @@ class CoreABC(Copyable):
 
     @classmethod
     @abstractmethod
+    def _deformat(cls: type[Self], body: str | None = None, /) -> Any: ...
+
+    @classmethod
+    @abstractmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
 
     @abstractmethod
@@ -90,9 +95,21 @@ class CoreABC(Copyable):
     def copy(self: Self, /) -> Self:
         return type(self)(self)
 
-    @staticmethod
-    @abstractmethod
-    def deformat(*strings: object) -> str: ...
+    @classmethod
+    def deformat(cls: type[Self], /, *strings: object) -> str:
+        x: str
+        y: Any
+        y = cls._deformat()
+        try:
+            for x in set(map(str, strings)):
+                y &= cls._deformat(x)
+            return y.best()  # type: ignore[no-any-return]
+        except VersionError:
+            raise
+        except Exception:
+            msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
+            msg %= oxford(*strings)
+            raise VersionError(msg)
 
     @property
     @abstractmethod

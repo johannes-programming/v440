@@ -11,7 +11,6 @@ from typing import Any, Final, Self
 
 from frozendict import frozendict
 
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
@@ -48,7 +47,7 @@ class PublicDeformat:
         return Base_.deformat(*self.bases) + Qual_.deformat(*self.quals)
 
 
-class Public(NewDeformattable, NestedABC):
+class Public(NestedABC):
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_

@@ -13,7 +13,6 @@ from frozendict import frozendict
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
@@ -33,7 +32,7 @@ class DevDeformat:
         return self.clue.solo(".dev")
 
 
-class Dev(NewDeformattable, QualABC):
+class Dev(QualABC):
 
     __slots__ = ()
 
