@@ -14,6 +14,20 @@ from v440._utils.setter import setter
 from v440.errors.VersionError import VersionError
 
 
+def core_split(flat: str, /) -> tuple[str, str, str]:
+    x: str
+    y: str
+    z: str
+    y = flat.strip()
+    if y:
+        x, z = flat.split(y)
+    elif flat:
+        raise ValueError
+    else:
+        x, z = "", ""
+    return x, y, z
+
+
 class CoreABC(Copyable):
     __slots__ = ()
 
@@ -110,41 +124,26 @@ class CoreABC(Copyable):
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
-        ans: str
-        bodies: set[str]
-        body: str
+        body: Any
+        body_: str
+        flat: str
         head: str
-        heads: set[str]
+        head_: str
         tail: str
-        tails: set[str]
-        x: str
-        y: Any
-        y = cls._deformat_origin()
+        tail_: str
+        if strings == ():
+            return ""
+        flats = list(sorted(set(map(str, strings))))
         try:
-            bodies = set()
-            heads = set()
-            tails = set()
-            for x in map(str, strings):
-                body = x.strip()
-                if body:
-                    head = x[: len(x) - len(x.lstrip())]
-                    tail = x[len(x.rstrip()) :]
-                else:
-                    head = x
-                    tail = ""
-                bodies.add(body)
-                heads.add(head)
-                tails.add(tail)
-            if strings:
-                (head,) = heads
-                (tail,) = tails
-            else:
-                head = ""
-                tail = ""
-            for body in bodies:
-                y &= cls(string=body)._deformat(body)
-            ans = y.best(forbids_empty=bool(head or tail))
-            return head + ans + tail
+            head, body_, tail = core_split(flats[0])
+            body = cls(string=flats[0])._deformat(body_)
+            for flat in set(map(str, strings)):
+                head_, body_, tail_ = core_split(flat)
+                (head,) = {head, head_}
+                body &= cls(string=flat)._deformat(body_)
+                (tail,) = {tail, tail_}
+            body_ = body.best(forbids_empty=bool(head or tail))
+            return head + body_ + tail
         except VersionError:
             raise
         except Exception:
