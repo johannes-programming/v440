@@ -63,23 +63,26 @@ class Util(enum.Enum):
 
 class TestDeformatting(unittest.TestCase):
     def test_0(self: Self, /) -> None:
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.data["deformatting"].items():
-            with self.subTest(clsname=x):
-                self.go_examples(x, y)
+        cls: type[Any]
+        typename: str
+        typedict: dict[Any, Any]
+        for typename, typedict in Util.util.data["deformatting"].items():
+            cls = Util.import_("v440.core.{0}.{0}".format(typename))
+            with self.subTest(typename=typename):
+                self.go_examples(cls, **typedict)
 
     def go_examples(
-        self: Self, /, clsname: str, tables: dict[str, Any]
+        self: Self,
+        cls: type[Any],
+        /,
+        **typedict: dict[str, Any],
     ) -> None:
-        cls: Any
-        split: dict[bool, dict[Any, Any]]
+        split: dict[bool, dict[tuple[str, ...], Any]]
         x: Any
         y: dict[Any, Any]
-        cls = getattr(getattr(core, clsname), clsname)
         split = {False: dict(), True: dict()}
-        for x, y in tables.items():
-            split[y["valid"]][tuple(shlex.split(x))] = y
+        for testdict in typedict.values():
+            split[testdict["valid"]][tuple(testdict["strings"])] = testdict
         for x, y in split[False].items():
             with self.subTest(valid=False, example=x):
                 self.go_invalid_example(cls, x, **y)
