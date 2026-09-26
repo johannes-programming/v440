@@ -3890,27 +3890,27 @@ valid = false
 [deformatting.Version."1.2+abc."]
 valid = false
 
-[epoch.test_epoch_as_false]
+[epoch."".test_epoch_as_false]
 full = "1.2.3"
 part = 0
 query = false
 
-[epoch.test_epoch_as_int]
+[epoch."".test_epoch_as_int]
 full = "1!1.2.3"
 part = 1
 query = 1
 
-[epoch.test_epoch_as_string_number]
+[epoch."".test_epoch_as_string_number]
 full = "42!1.2.3"
 part = 42
 query = 42
 
-[epoch.test_epoch_as_string_with_non_digit]
+[epoch."".test_epoch_as_string_with_non_digit]
 full = "9001!1.2.3"
 part = 9001
 query = 9001
 
-[epoch.test_epoch_as_true]
+[epoch."".test_epoch_as_true]
 full = "1!1.2.3"
 part = 1
 query = true

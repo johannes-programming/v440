@@ -509,7 +509,7 @@ class TestVersionEpochGo(unittest.TestCase):
     def test_0(self: Self, /) -> None:
         x: str
         y: dict[str, Any]
-        for x, y in Util.util.data["epoch"].items():
+        for x, y in Util.util.data["epoch"][""].items():
             with self.subTest(key=x):
                 self.go(**y)
 
