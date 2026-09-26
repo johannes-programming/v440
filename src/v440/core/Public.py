@@ -29,7 +29,7 @@ def split_public(value: str, /) -> tuple[str, str]:
 
 
 @dataclass(frozen=True, kw_only=True)
-class PublicDeformat:
+class PublicAccumulation:
     bases: frozenset[str]
     quals: frozenset[str]
 
@@ -59,18 +59,18 @@ class Public(NestedABC):
     def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
         return self.base, self.qual
 
-    def _deformat(self: Self, body: str, /) -> PublicDeformat:
+    def _deformat(self: Self, body: str, /) -> PublicAccumulation:
         base: str
         qual: str
         base, qual = split_public(body)
-        return PublicDeformat(
+        return PublicAccumulation(
             bases=frozenset({base}),
             quals=frozenset({qual}),
         )
 
     @staticmethod
-    def _deformat_origin() -> PublicDeformat:
-        return PublicDeformat(
+    def _deformat_origin() -> PublicAccumulation:
+        return PublicAccumulation(
             bases=frozenset(),
             quals=frozenset(),
         )

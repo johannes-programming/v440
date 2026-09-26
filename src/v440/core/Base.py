@@ -15,7 +15,7 @@ from v440.core.Release import Release as Release_
 
 
 @dataclass(frozen=True, kw_only=True)
-class BaseDeformat:
+class BaseAccumulation:
     basev: str | None
     epoch_mag: int
     epoch_min: int | None
@@ -70,12 +70,12 @@ class Base(NestedABC):
     def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
-    def _deformat(self: Self, body: str, /) -> BaseDeformat:
+    def _deformat(self: Self, body: str, /) -> BaseAccumulation:
         epoch: str
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", body)
         epoch = matches["epoch"]
-        return BaseDeformat(
+        return BaseAccumulation(
             basev=matches["basev"],
             epoch_mag=len(epoch) if epoch.startswith("0") else 0,
             epoch_min=len(epoch),
@@ -83,8 +83,8 @@ class Base(NestedABC):
         )
 
     @staticmethod
-    def _deformat_origin() -> BaseDeformat:
-        return BaseDeformat(
+    def _deformat_origin() -> BaseAccumulation:
+        return BaseAccumulation(
             basev=None,
             epoch_mag=0,
             epoch_min=None,

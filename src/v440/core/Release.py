@@ -46,7 +46,7 @@ def item_parse(value: SupportsIndex, /) -> int:
 
 
 @dataclass(frozen=True, kw_only=True)
-class ReleaseDeformat:
+class ReleaseAccumulation:
     end: int
     table: tuple[int, ...]
 
@@ -92,19 +92,19 @@ class Release(ListABC[int]):
             v.pop()
         return v
 
-    def _deformat(self: Self, body: str, /) -> ReleaseDeformat:
+    def _deformat(self: Self, body: str, /) -> ReleaseAccumulation:
         k: int
         t: str
         k = body.count(".")
         t = body.rstrip("0")
-        return ReleaseDeformat(
+        return ReleaseAccumulation(
             end=k if k > 0 and (t.endswith(".") or t == "") else -1,
             table=tuple(map(deformat_force, body.split("."))),
         )
 
     @staticmethod
-    def _deformat_origin() -> ReleaseDeformat:
-        return ReleaseDeformat(
+    def _deformat_origin() -> ReleaseAccumulation:
+        return ReleaseAccumulation(
             end=-1,
             table=(),
         )

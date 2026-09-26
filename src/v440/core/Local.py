@@ -86,7 +86,7 @@ def item_parse(value: Any, /) -> int | str:
 
 
 @dataclass(frozen=True, kw_only=True)
-class LocalDeformat:
+class LocalAccumulation:
     parts: tuple[frozenset[str], ...]
 
     def __and__(self: Self, other: Self, /) -> Self:
@@ -136,8 +136,8 @@ class Local(ListABC[int | str]):
     ) -> tuple[int | str, ...]:
         return tuple(map(item_parse, value))
 
-    def _deformat(self: Self, body: str, /) -> LocalDeformat:
-        return LocalDeformat(
+    def _deformat(self: Self, body: str, /) -> LocalAccumulation:
+        return LocalAccumulation(
             parts=(
                 tuple(
                     frozenset({part})
@@ -149,8 +149,8 @@ class Local(ListABC[int | str]):
         )
 
     @staticmethod
-    def _deformat_origin() -> LocalDeformat:
-        return LocalDeformat(
+    def _deformat_origin() -> LocalAccumulation:
+        return LocalAccumulation(
             parts=(),
         )
 

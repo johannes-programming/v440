@@ -18,7 +18,7 @@ from v440.core.Post import Post as Post_
 from v440.core.Pre import Pre as Pre_
 
 
-class QualDeformat(NamedTuple):
+class QualAccumulation(NamedTuple):
 
     a: Clue = Clue()
     b: Clue = Clue()
@@ -89,7 +89,7 @@ class Qual(NestedABC):
             ans = ("", 0)
         return ans + (self.post, self.dev)
 
-    def _deformat(self: Self, body: str, /) -> QualDeformat:
+    def _deformat(self: Self, body: str, /) -> QualAccumulation:
         clues: list[Clue]
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual", body)
@@ -112,11 +112,11 @@ class Qual(NestedABC):
             clues.append(Clue.by_example(matches["pre"]))
         clues.append(Clue.by_example(matches["post"]))
         clues.append(Clue.by_example(matches["dev"]))
-        return QualDeformat(*clues)
+        return QualAccumulation(*clues)
 
     @staticmethod
-    def _deformat_origin() -> QualDeformat:
-        return QualDeformat()
+    def _deformat_origin() -> QualAccumulation:
+        return QualAccumulation()
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:

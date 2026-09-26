@@ -13,7 +13,7 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class PostDeformat(Clue):
+class PostAccumulation(Clue):
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
         possible: set[str]
@@ -36,12 +36,12 @@ class Post(QualABC):
         else:
             return -1
 
-    def _deformat(self: Self, body: str, /) -> PostDeformat:
-        return PostDeformat.by_example(body)
+    def _deformat(self: Self, body: str, /) -> PostAccumulation:
+        return PostAccumulation.by_example(body)
 
     @staticmethod
-    def _deformat_origin() -> PostDeformat:
-        return PostDeformat()
+    def _deformat_origin() -> PostAccumulation:
+        return PostAccumulation()
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:

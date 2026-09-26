@@ -16,7 +16,7 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class PreDeformat(NamedTuple):
+class PreAccumulation(NamedTuple):
     a: Clue = Clue()
     b: Clue = Clue()
     rc: Clue = Clue()
@@ -61,16 +61,16 @@ class Pre(QualABC):
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
 
-    def _deformat(self: Self, body: str, /) -> PreDeformat:
+    def _deformat(self: Self, body: str, /) -> PreAccumulation:
         clues: list[Clue]
         clues = [Clue(), Clue(), Clue()]
         if self:
             clues[("a", "b", "rc").index(self.lit)] = Clue.by_example(body)
-        return PreDeformat(*clues)
+        return PreAccumulation(*clues)
 
     @staticmethod
-    def _deformat_origin() -> PreDeformat:
-        return PreDeformat()
+    def _deformat_origin() -> PreAccumulation:
+        return PreAccumulation()
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
