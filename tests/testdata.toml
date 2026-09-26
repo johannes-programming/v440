@@ -5040,7 +5040,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-a-000114]
-exceptiontype = "v440.VersionError"
+exceptiontype = ""
 solution = "   A"
 strings = [
     "   ",
