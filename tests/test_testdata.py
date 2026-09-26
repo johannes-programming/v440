@@ -109,6 +109,7 @@ class TestDeformatting(unittest.TestCase):
     ) -> None:
         example: tuple[str]
         log: dict[tuple[str], str]
+        self.assertGreaterEqual(len(typedict), 100)
         log = dict()
         for testname, testdict in typedict.items():
             example = tuple(testdict["strings"])
