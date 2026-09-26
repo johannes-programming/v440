@@ -21,16 +21,16 @@ class NewDeformattable(ABC):
         x: str
         y: Any
         y = cls._deformat()
-        for x in set(map(str, strings)):
-            try:
+        try:
+            for x in set(map(str, strings)):
                 y &= cls._deformat(x)
-            except VersionError:
-                raise
-            except Exception:
-                msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
-                msg %= oxford(*strings)
-                raise VersionError(msg)
-        return y.best()  # type: ignore[no-any-return]
+            return y.best()  # type: ignore[no-any-return]
+        except VersionError:
+            raise
+        except Exception:
+            msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
+            msg %= oxford(*strings)
+            raise VersionError(msg)
 
 
 class OldDeformattable(ABC):
