@@ -7088,11 +7088,6 @@ strings = [
     "  -2  ",
 ]
 
-[deformatting.Qual.whitespace-c-00000000]
-exceptiontype = ""
-solution = ""
-strings = []
-
 [deformatting.Qual.whitespace-c-00000001]
 exceptiontype = ""
 solution = " r "
@@ -8099,7 +8094,7 @@ strings = [
     "  01.02.3  ",
 ]
 
-[deformatting.Release.whitespace-c-00000000]
+[deformatting.Release.no-strings]
 exceptiontype = ""
 solution = ""
 strings = []
@@ -8186,6 +8181,11 @@ strings = [
     "\n99.88.77\n",
     "\n42.24.66\n",
 ]
+
+[deformatting.Version.no-strings]
+exceptiontype = ""
+solution = ""
+strings = []
 
 [deformatting.Version.test00000001]
 exceptiontype = "builtins.Exception"
@@ -9046,11 +9046,6 @@ solution = "  ###!  "
 strings = [
     "  001!1.2.3  ",
 ]
-
-[deformatting.Version.no-strings]
-exceptiontype = ""
-solution = ""
-strings = []
 
 [deformatting.Version.whitespace-c-00000001]
 exceptiontype = ""
