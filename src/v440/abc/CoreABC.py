@@ -3,6 +3,7 @@
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
+from dataclasses import dataclass
 from typing import Any, Self
 
 import setdoc
@@ -26,6 +27,35 @@ def core_split(flat: str, /) -> tuple[str, str, str]:
     else:
         x, z = "", ""
     return x, y, z
+
+
+@dataclass(frozen=True, kw_only=True)
+class CoreAccumulation:
+    head: str
+    body: Any
+    tail: str
+
+    def __and__(self: Self, other: Self, /) -> Self:
+        (head,) = {self.head, other.head}
+        body = self.body & other.body
+        (tail,) = {self.tail, other.tail}
+        return type(self)(head=head, body=body, tail=tail)
+
+    def best(self: Self, /) -> str:
+        body_ = self.body.best(forbids_empty=bool(self.head or self.tail))
+        return self.head + body_ + self.tail
+
+    @classmethod
+    def by_parsing(
+        cls_: type[Self], /, *, cls: type[Any], string: str
+    ) -> Self:
+        head, body_, tail = core_split(string)
+        body = cls(string=string)._deformat(body_)
+        return cls_(
+            head=head,
+            body=body,
+            tail=tail,
+        )
 
 
 class CoreABC(Copyable):
@@ -120,26 +150,15 @@ class CoreABC(Copyable):
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
-        body: Any
-        body_: str
         flat: str
-        head: str
-        head_: str
-        tail: str
-        tail_: str
         if strings == ():
             return ""
         flats = list(sorted(set(map(str, strings))))
         try:
-            head, body_, tail = core_split(flats[0])
-            body = cls(string=flats[0])._deformat(body_)
+            acc = CoreAccumulation.by_parsing(cls=cls, string=flats[0])
             for flat in flats[1:]:
-                head_, body_, tail_ = core_split(flat)
-                (head,) = {head, head_}
-                body &= cls(string=flat)._deformat(body_)
-                (tail,) = {tail, tail_}
-            body_ = body.best(forbids_empty=bool(head or tail))
-            return head + body_ + tail
+                acc &= CoreAccumulation.by_parsing(cls=cls, string=flat)
+            return acc.best()
         except VersionError:
             raise
         except Exception:
