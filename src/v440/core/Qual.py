@@ -89,7 +89,7 @@ class Qual(NewDeformattable, NestedABC):
         o: Self
         if body is None:
             return QualDeformat()
-        o = Qual(body)
+        o = Qual(string=body)
         matches = Cfg.fullmatches("qual", body)
         clues = list()
         if o.pre.lit == "":
