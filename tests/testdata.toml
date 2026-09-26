@@ -1121,7 +1121,7 @@ strings = [
 
 [deformatting.Base.whitespace-a-000109]
 exceptiontype = ""
-solution = "#  "
+solution = "!  "
 strings = [
     "1.2  ",
     "2.3  ",
@@ -2121,6 +2121,7 @@ strings = [
 
 [deformatting.Dev.whitespace-a-000113]
 exceptiontype = "v440.VersionError"
+solution = "   DEV"
 strings = [
     "   ",
 ]
@@ -4065,6 +4066,7 @@ strings = [
 
 [deformatting.Post.whitespace-a-000112]
 exceptiontype = "v440.VersionError"
+solution = "   -"
 strings = [
     "   ",
 ]
@@ -5039,6 +5041,7 @@ strings = [
 
 [deformatting.Pre.whitespace-a-000114]
 exceptiontype = "v440.VersionError"
+solution = "   A"
 strings = [
     "   ",
 ]
