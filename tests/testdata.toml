@@ -8610,62 +8610,62 @@ solutionname = "builtins.str"
 
 [[release-key."".modify-increase-length.steps]]
 name = "data"
-value = [
+solution = [
     1,
 ]
-solution = [
+value = [
     1,
 ]
 
 [[release-key."".modify-increase-length.steps]]
 name = "minor"
-value = 5
 solution = [
     1,
     5,
 ]
+value = 5
 
 [[release-key."".modify-increase-length.steps]]
 name = "micro"
-value = 3
 solution = [
     1,
     5,
     3,
 ]
+value = 3
 
 [[release-key."".test-major.steps]]
 name = "major"
-value = 10
 solution = [
     10,
 ]
+value = 10
 
 [[release-key."".test-micro.steps]]
 name = "micro"
-value = 1
 solution = [
     0,
     0,
     1,
 ]
+value = 1
 
 [[release-key."".test-minor.steps]]
 name = "minor"
-value = 1
 solution = [
     0,
     1,
 ]
+value = 1
 
 [[release-key."".test-patch.steps]]
 name = "patch"
-value = 5
 solution = [
     0,
     0,
     5,
 ]
+value = 5
 
 [slicing.Local.test_slicing_6]
 change = [
