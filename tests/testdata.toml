@@ -7017,6 +7017,7 @@ strings = [
 
 [deformatting.Qual.whitespace-a-000121]
 exceptiontype = "v440.VersionError"
+solution = "   -"
 strings = [
     "   ",
 ]
@@ -7176,7 +7177,7 @@ strings = [
 
 [deformatting.Qual.whitespace-c-00000100]
 exceptiontype = ""
-solution = " A "
+solution = " - "
 strings = [
     " b1000 ",
     " rc42 ",
