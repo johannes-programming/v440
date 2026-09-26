@@ -95,10 +95,6 @@ class CoreABC(Copyable):
     @abstractmethod
     def _deformat(self: Self, body: str) -> Any: ...
 
-    @staticmethod
-    @abstractmethod
-    def _deformat_origin() -> Any: ...
-
     @classmethod
     @abstractmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
@@ -137,7 +133,7 @@ class CoreABC(Copyable):
         try:
             head, body_, tail = core_split(flats[0])
             body = cls(string=flats[0])._deformat(body_)
-            for flat in set(map(str, strings)):
+            for flat in flats[1:]:
                 head_, body_, tail_ = core_split(flat)
                 (head,) = {head, head_}
                 body &= cls(string=flat)._deformat(body_)

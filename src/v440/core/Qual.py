@@ -114,10 +114,6 @@ class Qual(NestedABC):
         clues.append(Clue.by_example(matches["dev"]))
         return QualAccumulation(*clues)
 
-    @staticmethod
-    def _deformat_origin() -> QualAccumulation:
-        return QualAccumulation()
-
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         matches: dict[str, str]

@@ -102,13 +102,6 @@ class Release(ListABC[int]):
             table=tuple(map(deformat_force, body.split("."))),
         )
 
-    @staticmethod
-    def _deformat_origin() -> ReleaseAccumulation:
-        return ReleaseAccumulation(
-            end=-1,
-            table=(),
-        )
-
     def _delitem(
         self: Self,
         /,

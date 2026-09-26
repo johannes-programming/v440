@@ -68,10 +68,6 @@ class Pre(QualABC):
             clues[("a", "b", "rc").index(self.lit)] = Clue.by_example(body)
         return PreAccumulation(*clues)
 
-    @staticmethod
-    def _deformat_origin() -> PreAccumulation:
-        return PreAccumulation()
-
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         a: Clue

@@ -148,12 +148,6 @@ class Local(ListABC[int | str]):
             ),
         )
 
-    @staticmethod
-    def _deformat_origin() -> LocalAccumulation:
-        return LocalAccumulation(
-            parts=(),
-        )
-
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         l: str

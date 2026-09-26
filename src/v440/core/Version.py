@@ -76,13 +76,6 @@ class Version(NestedABC):
             publics=frozenset({public}),
         )
 
-    @staticmethod
-    def _deformat_origin() -> VersionAccumulation:
-        return VersionAccumulation(
-            locals=frozenset(),
-            publics=frozenset(),
-        )
-
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         return tuple(split_version(spec))

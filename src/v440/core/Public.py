@@ -68,13 +68,6 @@ class Public(NestedABC):
             quals=frozenset({qual}),
         )
 
-    @staticmethod
-    def _deformat_origin() -> PublicAccumulation:
-        return PublicAccumulation(
-            bases=frozenset(),
-            quals=frozenset(),
-        )
-
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         i: int

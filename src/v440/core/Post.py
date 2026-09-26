@@ -39,10 +39,6 @@ class Post(QualABC):
     def _deformat(self: Self, body: str, /) -> PostAccumulation:
         return PostAccumulation.by_example(body)
 
-    @staticmethod
-    def _deformat_origin() -> PostAccumulation:
-        return PostAccumulation()
-
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         clue: Clue

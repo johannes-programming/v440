@@ -82,15 +82,6 @@ class Base(NestedABC):
             releases=frozenset({matches["release"]}),
         )
 
-    @staticmethod
-    def _deformat_origin() -> BaseAccumulation:
-        return BaseAccumulation(
-            basev=None,
-            epoch_mag=0,
-            epoch_min=None,
-            releases=frozenset(),
-        )
-
     @classmethod
     def _format_parse(
         cls: type[Self],
