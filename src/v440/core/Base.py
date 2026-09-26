@@ -54,9 +54,9 @@ class BaseAccumulation:
         ans = self.basev or ""
         ans += "#" * self.epoch_mag + "!" * bool(self.epoch_mag)
         ans += Release_.deformat(*self.releases)
-        if forbids_empty and not ans:
-            return "#"
-        return ans
+        if ans or not forbids_empty:
+            return ans
+        return "!"
 
 
 class Base(NestedABC):
