@@ -11,7 +11,6 @@ from typing import Any, Final, Self
 from frozendict import frozendict
 
 from v440._utils.Cfg import Cfg
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
@@ -62,7 +61,7 @@ class BaseDeformat:
         return ans
 
 
-class Base(NewDeformattable, NestedABC):
+class Base(NestedABC):
 
     Release: Final[type[Release_]] = Release_
     _epoch: int

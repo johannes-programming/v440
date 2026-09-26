@@ -13,7 +13,6 @@ from frozendict import frozendict
 from iterflat import iterflat
 
 from v440._utils.Cfg import Cfg
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
@@ -127,7 +126,7 @@ class LocalDeformat:
         return "".join(parts).rstrip(".")
 
 
-class Local(NewDeformattable, ListABC[int | str]):
+class Local(ListABC[int | str]):
     __slots__ = ()
 
     @classmethod

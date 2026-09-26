@@ -12,7 +12,6 @@ from typing import Any, Self, SupportsIndex, overload
 
 from frozendict import frozendict
 
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
@@ -52,7 +51,7 @@ class ReleaseDeformat:
         return ans.rstrip(".")
 
 
-class Release(NewDeformattable, ListABC[int]):
+class Release(ListABC[int]):
     __slots__ = ()
 
     @classmethod

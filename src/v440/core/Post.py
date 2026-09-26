@@ -5,7 +5,6 @@ from __future__ import annotations
 __all__: list[str] = ["Post"]
 
 import operator
-from collections import abc
 from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
 
@@ -13,7 +12,6 @@ from frozendict import frozendict
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
@@ -33,7 +31,7 @@ class PostDeformat:
         return self.clue.solo(".post")
 
 
-class Post(NewDeformattable, QualABC):
+class Post(QualABC):
 
     __slots__ = ()
 

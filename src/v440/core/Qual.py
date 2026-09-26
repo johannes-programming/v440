@@ -13,7 +13,6 @@ from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 from v440._utils.Clue import Clue
-from v440._utils.deformatting import NewDeformattable
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
@@ -61,7 +60,7 @@ class QualDeformat:
         return sols[0]
 
 
-class Qual(NewDeformattable, NestedABC):
+class Qual(NestedABC):
 
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_
