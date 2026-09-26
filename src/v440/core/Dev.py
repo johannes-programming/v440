@@ -45,9 +45,8 @@ class Dev(QualABC):
         matches: dict[str, str]
         matches = Cfg.fullmatches("dev_f", spec)
         clue = Clue(
-            matches["dev_head_f"],
-            matches["dev_sep_f"],
-            len(matches["dev_num_f"]),
+            head=matches["dev_head_f"],
+            mag=len(matches["dev_num_f"]),
         )
         return (clue,)
 
@@ -58,9 +57,9 @@ class Dev(QualABC):
             return ""
         if "" == clue.head:
             return ".dev" + str(self.num)
-        if 0 == clue.mag and 0 == self.num:
-            return clue.head
-        return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
+        if self.num or clue.mag:
+            return clue.head + format(self.num, f"0{clue.mag}d")
+        return clue.head
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> str:

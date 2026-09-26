@@ -98,8 +98,6 @@ class Pre(QualABC):
         if clue.head == "":
             return self.lit + str(self.num)
         ans = clue.head
-        if clue.sep != "?":
-            ans += clue.sep
         if self.num or clue.mag:
             ans += format(self.num, f"0{clue.mag}d")
         return ans

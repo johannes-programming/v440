@@ -46,7 +46,6 @@ class Post(QualABC):
         matches = Cfg.fullmatches("post_f", spec)
         clue = Clue(
             head=matches["post_head_f"] or matches["post_hyphen_f"],
-            sep=matches["post_sep_f"],
             mag=len(matches["post_num_f"]),
         )
         return (clue,)
@@ -58,9 +57,9 @@ class Post(QualABC):
             return ""
         if "" == clue.head:
             return ".post" + str(self.num)
-        if 0 == clue.mag and 0 == self.num and "-" != clue.head:
-            return clue.head
-        return clue.head + clue.sep + format(self.num, f"0{clue.mag}d")
+        if self.num or clue.mag or "-" == clue.head:
+            return clue.head + format(self.num, f"0{clue.mag}d")
+        return clue.head
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> str:

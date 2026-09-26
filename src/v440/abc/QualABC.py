@@ -46,8 +46,6 @@ class QualABC(NestedABC):
         x = x.replace("_", ".")
         if x.endswith("."):
             x = x[:-1]
-            if not y:
-                raise ValueError
         if x.startswith("."):
             x = x[1:]
         if not x:
