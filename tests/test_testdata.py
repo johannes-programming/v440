@@ -125,6 +125,8 @@ class TestStringExamples(unittest.TestCase):
         if not valid:
             with self.assertRaises(InvalidVersion):
                 Version_(example)
+            with self.assertRaises(VersionError):
+                Version(string=example)
             return
         x = Version(string=example)
         y = Version_(example)
