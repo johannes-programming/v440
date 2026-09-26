@@ -69,37 +69,37 @@ class TestDeformatting(unittest.TestCase):
         /,
         *,
         valid: bool,
-        strings: list[str],
         **kwargs: Any,
     ) -> None:
-        example: tuple[str, ...]
-        example = tuple(strings)
-        with self.subTest(valid=valid, example=example):
+        with self.subTest(valid=valid):
             if valid:
-                self.go_blob_valid(cls, example, **kwargs)
+                self.go_blob_valid(cls, **kwargs)
             else:
-                self.go_blob_invalid(cls, example, **kwargs)
+                self.go_blob_invalid(cls, **kwargs)
 
     def go_blob_invalid(
         self: Self,
         cls: type[Any],
-        example: tuple[str, ...],
         /,
+        *,
+        strings: list[str],
         **kwargs: Any,
     ) -> None:
         with self.assertRaises(VersionError):
-            cls.deformat(*example)
+            cls.deformat(*strings)
 
     def go_blob_valid(
         self: Self,
         cls: type[Any],
-        example: tuple[str, ...],
         /,
         *,
         solution: str,
+        strings: list[str],
         **kwargs: Any,
     ) -> None:
-        self.assertEqual(solution, cls.deformat(*example))
+        answer: str
+        answer = cls.deformat(*strings)
+        self.assertEqual(answer, solution)
 
     def go_cls(
         self: Self,
@@ -107,8 +107,18 @@ class TestDeformatting(unittest.TestCase):
         /,
         **typedict: dict[str, Any],
     ) -> None:
+        example: tuple[str]
+        log: dict[tuple[str], str]
+        log = dict()
         for testname, testdict in typedict.items():
-            with self.subTest(testname=testname):
+            example = tuple(testdict["strings"])
+            with self.subTest(testname=testname, example=example):
+                self.assertNotIn(
+                    example,
+                    log,
+                    "conflict with %r" % log.get(example),
+                )
+                log[example] = testname
                 self.go_blob(cls, **testdict)
 
     def test_0(self: Self, /) -> None:
