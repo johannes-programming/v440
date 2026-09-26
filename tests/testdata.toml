@@ -5468,7 +5468,7 @@ queryname = "string"
 solution = "1701!4.5.6rc255+reset"
 solutionname = "builtins.str"
 
-[[release-key.modify-increase-length.steps]]
+[[release-key."".modify-increase-length.steps]]
 name = "data"
 value = [
     1,
@@ -5477,7 +5477,7 @@ solution = [
     1,
 ]
 
-[[release-key.modify-increase-length.steps]]
+[[release-key."".modify-increase-length.steps]]
 name = "minor"
 value = 5
 solution = [
@@ -5485,7 +5485,7 @@ solution = [
     5,
 ]
 
-[[release-key.modify-increase-length.steps]]
+[[release-key."".modify-increase-length.steps]]
 name = "micro"
 value = 3
 solution = [
@@ -5494,14 +5494,14 @@ solution = [
     3,
 ]
 
-[[release-key.test-major.steps]]
+[[release-key."".test-major.steps]]
 name = "major"
 value = 10
 solution = [
     10,
 ]
 
-[[release-key.test-micro.steps]]
+[[release-key."".test-micro.steps]]
 name = "micro"
 value = 1
 solution = [
@@ -5510,7 +5510,7 @@ solution = [
     1,
 ]
 
-[[release-key.test-minor.steps]]
+[[release-key."".test-minor.steps]]
 name = "minor"
 value = 1
 solution = [
@@ -5518,7 +5518,7 @@ solution = [
     1,
 ]
 
-[[release-key.test-patch.steps]]
+[[release-key."".test-patch.steps]]
 name = "patch"
 value = 5
 solution = [
