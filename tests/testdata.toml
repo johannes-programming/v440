@@ -2120,7 +2120,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-a-000113]
-exceptiontype = "v440.VersionError"
+exceptiontype = ""
 solution = "   DEV"
 strings = [
     "   ",
@@ -3109,7 +3109,7 @@ strings = [
 
 [deformatting.Local.whitespace-a-000112]
 exceptiontype = ""
-solution = "#"
+solution = "   #"
 strings = [
     "   ",
 ]
