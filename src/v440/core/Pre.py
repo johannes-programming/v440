@@ -4,8 +4,9 @@ from __future__ import annotations
 
 __all__: list[str] = ["Pre"]
 
+import operator
 from dataclasses import dataclass
-from typing import Any, Self, SupportsIndex
+from typing import Any, NamedTuple, Self, SupportsIndex
 
 from iterprod import iterprod
 
@@ -15,18 +16,13 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-@dataclass(frozen=True, kw_only=True)
-class PreDeformat:
-    clues: tuple[Clue, Clue, Clue]
+class PreDeformat(NamedTuple):
+    a: Clue = Clue()
+    b: Clue = Clue()
+    rc: Clue = Clue()
 
     def __and__(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            clues=(
-                self.clues[0] & other.clues[0],
-                self.clues[1] & other.clues[1],
-                self.clues[2] & other.clues[2],
-            ),
-        )
+        return type(self)(*map(operator.and_, self, other))
 
     def best(self: Self, /) -> str:
         matches: dict[str, str]
@@ -35,9 +31,9 @@ class PreDeformat:
         s: str
         way: tuple[Any, ...]
         pos = list()
-        pos.append(self.clues[0].possible(hollow="a", short="A"))
-        pos.append(self.clues[1].possible(hollow="b", short="B"))
-        pos.append(self.clues[2].possible(hollow="rc", short="C"))
+        pos.append(self.a.possible(hollow="a", short="A"))
+        pos.append(self.b.possible(hollow="b", short="B"))
+        pos.append(self.rc.possible(hollow="rc", short="C"))
         sols = list()
         for way in iterprod(*pos):
             s = "".join(way)
@@ -63,15 +59,11 @@ class Pre(QualABC):
         clues = [Clue(), Clue(), Clue()]
         if self:
             clues[("a", "b", "rc").index(self.lit)] = Clue.by_example(body)
-        return PreDeformat(
-            clues=(clues[0], clues[1], clues[2]),
-        )
+        return PreDeformat(*clues)
 
     @staticmethod
     def _deformat_origin() -> PreDeformat:
-        return PreDeformat(
-            clues=(Clue(), Clue(), Clue()),
-        )
+        return PreDeformat()
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
