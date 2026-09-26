@@ -664,27 +664,38 @@ class TestOrder(unittest.TestCase):
 
 
 class TestSlots(unittest.TestCase):
-    def test_0(self: Self, /) -> None:
-        x: Any
-        y: Any
-        for x, y in Util.util.data["core-non-attributes"].items():
-            with self.subTest(test_label=x):
-                self.go(**y)
-
-    def go(
+    def go_blob(
         self: Self,
+        cls: type[Any],
         /,
-        clsname: str,
         attrname: str,
         attrvalue: Any,
         string: Any = None,
     ) -> None:
-        cls: type
         obj: Any
-        cls = getattr(getattr(core, clsname), clsname)
         obj = cls(string=string)
         with self.assertRaises(AttributeError):
             setattr(obj, attrname, attrvalue)
+
+    def go_cls(
+        self: Self, cls: type[Any], /, **typetests: dict[str, Any]
+    ) -> None:
+        testdict: dict[str, Any]
+        testname: str
+        for testname, testdict in typetests.items():
+            with self.subTest(testname=testname):
+                self.go_blob(cls, **testdict)
+
+    def test_0(self: Self, /) -> None:
+        cls: type[Any]
+        typename: str
+        typetests: dict[str, dict[str, Any]]
+        for typename, typetests in Util.util.data[
+            "core-non-attributes"
+        ].items():
+            cls = Util.import_("v440.core.{0}.{0}".format(typename))
+            with self.subTest(typename=typename):
+                self.go_cls(cls, **typetests)
 
 
 class TestReleaseAlias(unittest.TestCase):
