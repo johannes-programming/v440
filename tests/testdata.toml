@@ -1,4 +1,5 @@
 [attr-setter.Local.test_local_basic_assignment]
+exceptiontype = ""
 query = [
     1,
     "local",
@@ -10,9 +11,9 @@ solution = [
     "local",
     "dev",
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_boolean_assignment]
+exceptiontype = ""
 query = [
     true,
     false,
@@ -24,9 +25,9 @@ solution = [
     0,
     "dev",
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_conversion_mixed]
+exceptiontype = ""
 query = [
     "1",
     2,
@@ -42,9 +43,9 @@ solution = [
     4,
     1,
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_conversion_string]
+exceptiontype = ""
 query = [
     "1",
     "2",
@@ -58,9 +59,9 @@ solution = [
     "local",
     "test",
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_data_setter]
+exceptiontype = ""
 query = [
     "custom",
     "data",
@@ -70,15 +71,15 @@ solution = [
     "custom",
     "data",
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_empty_list]
+exceptiontype = ""
 query = []
 queryname = "data"
 solution = []
-exceptiontype = ""
 
 [attr-setter.Local.test_local_equality_with_list]
+exceptiontype = ""
 query = [
     1,
     "dev",
@@ -88,18 +89,18 @@ solution = [
     1,
     "dev",
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_invalid_value]
+exceptiontype = "v440.VersionError"
 query = [
     "a",
     {},
     "3",
 ]
 queryname = "data"
-exceptiontype = "v440.VersionError"
 
 [attr-setter.Local.test_local_iterable]
+exceptiontype = ""
 query = "1.dev.build"
 queryname = "string"
 solution = [
@@ -107,9 +108,9 @@ solution = [
     "dev",
     "build",
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_large_integers]
+exceptiontype = ""
 query = [
     1000000000000000000,
 ]
@@ -117,18 +118,18 @@ queryname = "data"
 solution = [
     1000000000000000000,
 ]
-exceptiontype = ""
 
 [attr-setter.Local.test_local_non_string_elements]
+exceptiontype = "v440.VersionError"
 query = [
     1,
     [],
     "test",
 ]
 queryname = "data"
-exceptiontype = "v440.VersionError"
 
 [attr-setter.Release.test_release_assignment_with_bool_conversion]
+exceptiontype = ""
 query = [
     true,
     false,
@@ -140,9 +141,9 @@ solution = [
     0,
     3,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_basic_assignment]
+exceptiontype = ""
 query = [
     1,
     2,
@@ -154,9 +155,9 @@ solution = [
     2,
     3,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_boolean_assignment]
+exceptiontype = ""
 query = [
     true,
     false,
@@ -168,21 +169,21 @@ solution = [
     0,
     1,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_data_property_empty]
+exceptiontype = ""
 query = []
 queryname = "data"
 solution = []
-exceptiontype = ""
 
 [attr-setter.Release.test_release_empty_list]
+exceptiontype = ""
 query = []
 queryname = "data"
 solution = []
-exceptiontype = ""
 
 [attr-setter.Release.test_release_equality_with_list]
+exceptiontype = ""
 query = [
     1,
     2,
@@ -194,9 +195,9 @@ solution = [
     2,
     3,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_integer_float]
+exceptiontype = ""
 query = [
     true,
     false,
@@ -208,44 +209,44 @@ solution = [
     0,
     3,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_invalid_assignment]
+exceptiontype = "v440.VersionError"
 query = [
     "1",
     "invalid",
     "3",
 ]
 queryname = "data"
-exceptiontype = "v440.VersionError"
 
 [attr-setter.Release.test_release_invalid_boolean_assignment]
+exceptiontype = "v440.VersionError"
 query = [
     "true",
     "false",
 ]
 queryname = "data"
-exceptiontype = "v440.VersionError"
 
 [attr-setter.Release.test_release_invalid_float_value]
+exceptiontype = "v440.VersionError"
 query = [
     1,
     2.5,
     3,
 ]
 queryname = "data"
-exceptiontype = "v440.VersionError"
 
 [attr-setter.Release.test_release_invalid_value]
+exceptiontype = "v440.VersionError"
 query = [
     "a",
     2,
     "3",
 ]
 queryname = "data"
-exceptiontype = "v440.VersionError"
 
 [attr-setter.Release.test_release_large_numbers]
+exceptiontype = ""
 query = [
     1000000000,
     2000000000,
@@ -257,9 +258,9 @@ solution = [
     2000000000,
     3000000000,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_max_integer]
+exceptiontype = ""
 query = [
     1000000000000000000,
 ]
@@ -267,18 +268,18 @@ queryname = "data"
 solution = [
     1000000000000000000,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_non_integer_elements]
+exceptiontype = "v440.VersionError"
 query = [
     "invalid",
     2,
     3,
 ]
 queryname = "data"
-exceptiontype = "v440.VersionError"
 
 [attr-setter.Release.test_release_trailing_zeros]
+exceptiontype = ""
 query = [
     1,
     2,
@@ -292,50 +293,49 @@ solution = [
     2,
     3,
 ]
-exceptiontype = ""
 
 [attr-setter.Release.test_release_zero]
+exceptiontype = ""
 query = [
     0,
 ]
 queryname = "data"
 solution = []
-exceptiontype = ""
 
 [core-non-attributes.Base.test-0000]
-string = "0"
 attrname = "fdsfvdsff"
 attrvalue = 42
+string = "0"
 
 [core-non-attributes.Local.test-0100]
-string = ""
 attrname = "fdsfvdsff"
 attrvalue = 42
+string = ""
 
 [core-non-attributes.Public.test-0200]
-string = "0"
 attrname = "fdsfvdsff"
 attrvalue = 42
+string = "0"
 
 [core-non-attributes.Public.test-0500]
-string = "0"
 attrname = "fdsfvdsff"
 attrvalue = 42
+string = "0"
 
 [core-non-attributes.Qual.test-0300]
-string = ""
 attrname = "fdsfvdsff"
 attrvalue = 42
+string = ""
 
 [core-non-attributes.Release.test-0400]
-string = "0"
 attrname = "fdsfvdsff"
 attrvalue = 42
+string = "0"
 
 [core-non-attributes.Version.test-0600]
-string = "0"
 attrname = "fdsfvdsff"
 attrvalue = 42
+string = "0"
 
 [deformatting.Base.""]
 solution = ""
@@ -5531,11 +5531,11 @@ solution = [
 change = [
     777,
 ]
+exceptiontype = ""
 query = "abc.123.def"
 solution = "abc.777.def"
 start = 1
 stop = 2
-exceptiontype = ""
 
 [slicing.Release.test_slicing_1]
 change = [
@@ -5543,22 +5543,22 @@ change = [
     7,
     7,
 ]
+exceptiontype = "builtins.Exception"
 query = "1.2.3.4.5.6.7.8.9.10"
 solution = "1.2.3.4.5.6.7.8.9.10"
 start = -8
 step = 5
 stop = 15
-exceptiontype = "builtins.Exception"
 
 [slicing.Release.test_slicing_3]
 change = [
     777,
 ]
+exceptiontype = ""
 query = "1.2.3.4.5.6.7.8.9.10"
 solution = "1.2.3.777.5.6.7.8.9.10"
 start = 3
 stop = 4
-exceptiontype = ""
 
 [slicing.Release.test_slicing_4]
 change = [
@@ -5566,11 +5566,11 @@ change = [
     7,
     7,
 ]
+exceptiontype = ""
 query = "1.2.3.4.5.6.7.8.9.10"
 solution = "1.2.3.7.7.7.5.6.7.8.9.10"
 start = 3
 stop = 4
-exceptiontype = ""
 
 [slicing.Release.test_slicing_5]
 change = [
@@ -5578,21 +5578,21 @@ change = [
     7,
     7,
 ]
+exceptiontype = ""
 query = "1"
 solution = "1.7.7.7"
 start = 3
 stop = 4
-exceptiontype = ""
 
 [slicing.Release.test_slicing_6]
 change = [
     777,
 ]
+exceptiontype = ""
 query = "1"
 solution = "1.777"
 start = 3
 stop = 4
-exceptiontype = ""
 
 [synonymous-to-empty.Base.""]
 synonym = "!"
