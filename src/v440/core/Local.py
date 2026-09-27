@@ -119,13 +119,10 @@ class LocalAccumulation(NamedTuple):
         part: frozenset[str]
         evens: list[frozenset[str]]
         odds: list[frozenset[str]]
-        evens = []
-        for part in map(operator.or_, self.evens, other.evens):
+        evens = list(map(operator.or_, self.evens, other.evens))
+        evens += self.evens[len(evens) :] or other.evens[len(evens) :]
+        for part in evens:
             deformat_part(set(part))
-            evens.append(part)
-        for part in self.evens[len(evens) :] or other.evens[len(evens) :]:
-            deformat_part(set(part))
-            evens.append(part)
         odds = []
         for i in range(max(len(self.odds), len(other.odds))):
             part = (self.odds[i] if i < len(self.odds) else frozenset()) | (
