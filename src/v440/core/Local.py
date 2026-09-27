@@ -115,7 +115,6 @@ class LocalAccumulation(NamedTuple):
         )
 
     def intersection(self: Self, other: Self, /) -> Self:
-        i: int
         part: frozenset[str]
         evens: list[frozenset[str]]
         odds: list[frozenset[str]]
