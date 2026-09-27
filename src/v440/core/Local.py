@@ -7,7 +7,7 @@ __all__: list[str] = ["Local"]
 import operator
 import string as string_
 from dataclasses import dataclass
-from typing import Any, Self
+from typing import Any, NamedTuple, Self
 
 from iterflat import iterflat
 
@@ -85,9 +85,16 @@ def item_parse(value: Any, /) -> int | str:
     return ans
 
 
-@dataclass(frozen=True, kw_only=True)
-class LocalAccumulation:
-    parts: tuple[frozenset[str], ...]
+class LocalAccumulation(NamedTuple):
+    evens: tuple[frozenset[str], ...]
+    odds: tuple[frozenset[str], ...]
+
+    @classmethod
+    def by_parts(cls: type[Self], /, *parts: frozenset[str]) -> Self:
+        return cls(
+            evens=parts[::2],
+            odds=parts[1::2],
+        )
 
     def intersection(self: Self, other: Self, /) -> Self:
         i: int
@@ -104,9 +111,18 @@ class LocalAccumulation:
             else:
                 deformat_part(set(part))
             parts.append(part)
-        return type(self)(
-            parts=tuple(parts),
-        )
+        return self.by_parts(*parts)
+
+    @property
+    def parts(self: Self, /) -> tuple[frozenset[str], ...]:
+        ans: list[frozenset[str]]
+        ans = list()
+        while True:
+            try:
+                ans.append(self[len(ans) % 2][len(ans) // 2])
+            except IndexError:
+                break
+        return tuple(ans)
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         i: int
@@ -137,15 +153,15 @@ class Local(ListABC[int | str]):
         return tuple(map(item_parse, value))
 
     def _deformat(self: Self, body: str, /) -> LocalAccumulation:
-        return LocalAccumulation(
-            parts=(
+        return LocalAccumulation.by_parts(
+            *(
                 tuple(
                     frozenset({part})
                     for part in Cfg.cfg.patterns["local_splitter"].split(body)
                 )
                 if self
                 else ()
-            ),
+            )
         )
 
     @classmethod
