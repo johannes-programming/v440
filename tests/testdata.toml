@@ -1940,8 +1940,25 @@ strings = [
 exceptiontype = ""
 solution = "deV_"
 strings = [
+    "deV_",
+    "deV_1",
+]
+
+[deformatting.Dev.test00000087a]
+exceptiontype = "v440.VersionError"
+solution = "deV_"
+strings = [
     "deV",
     "deV_1",
+]
+
+[deformatting.Dev.test00000087b]
+exceptiontype = ""
+solution = "deV_"
+strings = [
+    "deV_",
+    "deV_1",
+    "",
 ]
 
 [deformatting.Dev.test00000088]
@@ -1987,10 +2004,17 @@ strings = [
 ]
 
 [deformatting.Dev.test00000094]
+exceptiontype = "v440.VersionError"
+
+strings = [
+    "dev",
+    "dev.1",
+]
+[deformatting.Dev.test00000094a]
 exceptiontype = ""
 solution = "dev."
 strings = [
-    "dev",
+    "dev.",
     "dev.1",
 ]
 
@@ -3883,7 +3907,8 @@ strings = [
 ]
 
 [deformatting.Post.test00000086]
-exceptiontype = "builtins.Exception"
+exceptiontype = ""
+solution = "post."
 strings = [
     "post.",
 ]
@@ -3908,18 +3933,32 @@ strings = [
 ]
 
 [deformatting.Post.test00000090]
-exceptiontype = ""
-solution = "r."
+exceptiontype = "builtins.Exception"
 strings = [
     "r",
     "r.1",
 ]
 
+[deformatting.Post.test00000090a]
+exceptiontype = ""
+solution = "r."
+strings = [
+    "r.",
+    "r.1",
+]
+
 [deformatting.Post.test00000091]
+exceptiontype = "builtins.Exception"
+strings = [
+    "r",
+    "r_1",
+]
+
+[deformatting.Post.test00000091a]
 exceptiontype = ""
 solution = "r_"
 strings = [
-    "r",
+    "r_",
     "r_1",
 ]
 
@@ -4893,10 +4932,18 @@ strings = [
 ]
 
 [deformatting.Pre.test00000093]
+exceptiontype = "builtins.Exception"
+strings = [
+    "beTA",
+    "a12",
+    "beTA.19",
+]
+
+[deformatting.Pre.test00000093a]
 exceptiontype = ""
 solution = "beTA."
 strings = [
-    "beTA",
+    "beTA.",
     "a12",
     "beTA.19",
 ]
@@ -10019,7 +10066,9 @@ str = ".dev1"
 valid = true
 
 [examples.Dev."dev."]
-valid = false
+deformatted = "dev."
+str = ".dev0"
+valid = true
 
 [examples.Dev."dev.1"]
 deformatted = "dev."
@@ -11096,6 +11145,11 @@ valid = true
 [examples.Pre.1a]
 valid = false
 
+[examples.Pre."1pre."]
+deformatted = "pre."
+str = "1rc0"
+valid = true
+
 [examples.Pre.A]
 deformatted = "A"
 valid = true
@@ -11302,7 +11356,9 @@ deformatted = "c_"
 valid = true
 
 [examples.Pre."pre."]
-valid = false
+deformatted = "pre."
+str = "rc0"
+valid = true
 
 [examples.Pre.pre1]
 deformatted = "pre"
@@ -11310,7 +11366,9 @@ str = "rc1"
 valid = true
 
 [examples.Pre.preview_]
-valid = false
+deformatted = "preview_"
+str = "rc0"
+valid = true
 
 [examples.Pre.rc]
 deformatted = "rc"
@@ -11318,7 +11376,9 @@ str = "rc0"
 valid = true
 
 [examples.Pre.rc-]
-valid = false
+deformatted = "rc-"
+str = "rc0"
+valid = true
 
 [examples.Pre.rc1]
 deformatted = ""
@@ -11924,7 +11984,9 @@ str = "a0"
 valid = true
 
 [examples.Qual._AlPhA_]
-valid = false
+deformatted = "_AlPhA_"
+str = "a0"
+valid = true
 
 [examples.Qual._AlPhA_0]
 deformatted = "_AlPhA_#"
@@ -11965,7 +12027,9 @@ deformatted = "a-dev"
 valid = true
 
 [examples.Qual."a."]
-valid = false
+deformatted = "a."
+str = "a0"
+valid = true
 
 [examples.Qual.a01]
 deformatted = "a##"
@@ -12102,7 +12166,9 @@ deformatted = "bDEV"
 valid = true
 
 [examples.Qual.b_]
-valid = false
+deformatted = "b_"
+str = "b0"
+valid = true
 
 [examples.Qual.bdev1]
 deformatted = "bdev"
@@ -12140,7 +12206,10 @@ str = ".dev0"
 valid = true
 
 [examples.Qual."dev."]
-valid = false
+bool = true
+deformatted = "dev."
+str = ".dev0"
+valid = true
 
 [examples.Qual.dev1]
 deformatted = "dev"
@@ -12161,7 +12230,9 @@ str = ".post1"
 valid = true
 
 [examples.Qual."post."]
-valid = false
+deformatted = "post."
+str = ".post0"
+valid = true
 
 [examples.Qual.post1]
 deformatted = "post"
@@ -12188,10 +12259,13 @@ deformatted = "rc"
 valid = true
 
 [examples.Qual.rc-]
-valid = false
+deformatted = "rc-"
+str = "rc0"
+valid = true
 
 [examples.Qual.rc-02]
 deformatted = "rc-##"
+str = "rc2"
 valid = true
 
 [examples.Qual.rc-1]
@@ -13639,6 +13713,11 @@ valid = true
 deformatted = "+_^"
 valid = true
 
+[examples.Version.1b_]
+deformatted = "b_"
+str = "1b0"
+valid = true
+
 [examples.Version."2!00.00.00"]
 deformatted = "##.##.##"
 valid = true
@@ -13872,6 +13951,11 @@ valid = true
 deformatted = "v"
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
 str = "1.2.3"
+valid = true
+
+[examples.Version.v1_AlPhA_-post-]
+deformatted = "v_AlPhA_-post-"
+str = "1a0.post0"
 valid = true
 
 [examples.Version."v2.0"]
