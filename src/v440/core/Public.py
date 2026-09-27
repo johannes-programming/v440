@@ -33,7 +33,7 @@ class PublicAccumulation:
     bases: frozenset[str]
     quals: frozenset[str]
 
-    def __and__(self: Self, other: Self, /) -> Self:
+    def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
             bases=self.bases | other.bases,
             quals=self.quals | other.quals,

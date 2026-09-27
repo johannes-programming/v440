@@ -4,7 +4,6 @@ from __future__ import annotations
 
 __all__: list[str] = ["Pre"]
 
-import operator
 from dataclasses import dataclass
 from typing import Any, NamedTuple, Self, SupportsIndex
 
@@ -21,8 +20,8 @@ class PreAccumulation(NamedTuple):
     b: Clue = Clue()
     rc: Clue = Clue()
 
-    def __and__(self: Self, other: Self, /) -> Self:
-        return type(self)(*map(operator.and_, self, other))
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         matches: dict[str, str]

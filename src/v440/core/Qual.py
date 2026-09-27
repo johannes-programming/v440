@@ -4,7 +4,6 @@ from __future__ import annotations
 
 __all__: list[str] = ["Qual"]
 
-import operator
 from typing import Any, Final, NamedTuple, Self
 
 from iterprod import iterprod
@@ -26,8 +25,8 @@ class QualAccumulation(NamedTuple):
     post: Clue = Clue()
     dev: Clue = Clue()
 
-    def __and__(self: Self, other: Self, /) -> Self:
-        return type(self)(*map(operator.and_, self, other))
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         s: str

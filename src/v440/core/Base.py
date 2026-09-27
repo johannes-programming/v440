@@ -21,7 +21,7 @@ class BaseAccumulation:
     epoch_min: int | None
     releases: frozenset[str]
 
-    def __and__(self: Self, other: Self, /) -> Self:
+    def intersection(self: Self, other: Self, /) -> Self:
         basev: str | None
         epoch_mag: int
         epoch_min: int | None

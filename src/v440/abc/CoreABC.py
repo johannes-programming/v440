@@ -35,9 +35,9 @@ class CoreAccumulation:
     white: str
     body: Any
 
-    def __and__(self: Self, other: Self, /) -> Self:
+    def intersection(self: Self, other: Self, /) -> Self:
         (white,) = {self.white, other.white}
-        body = self.body & other.body
+        body = self.body.intersection(other.body)
         if self.insert is None:
             insert = other.insert
         elif other.insert is None:
@@ -181,7 +181,9 @@ class CoreABC(Copyable):
         try:
             acc = CoreAccumulation.by_parsing(cls=cls, string=flats[0])
             for flat in flats[1:]:
-                acc &= CoreAccumulation.by_parsing(cls=cls, string=flat)
+                acc = acc.intersection(
+                    CoreAccumulation.by_parsing(cls=cls, string=flat)
+                )
             return acc.best()
         except VersionError:
             raise

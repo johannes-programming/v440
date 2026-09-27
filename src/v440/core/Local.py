@@ -89,7 +89,7 @@ def item_parse(value: Any, /) -> int | str:
 class LocalAccumulation:
     parts: tuple[frozenset[str], ...]
 
-    def __and__(self: Self, other: Self, /) -> Self:
+    def intersection(self: Self, other: Self, /) -> Self:
         i: int
         part: frozenset[str]
         parts: list[frozenset[str]]

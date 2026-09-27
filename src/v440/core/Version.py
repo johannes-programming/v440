@@ -37,7 +37,7 @@ class VersionAccumulation:
     locals: frozenset[str]
     publics: frozenset[str]
 
-    def __and__(self: Self, other: Self, /) -> Self:
+    def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
             locals=self.locals | other.locals,
             publics=self.publics | other.publics,

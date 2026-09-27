@@ -50,7 +50,7 @@ class ReleaseAccumulation:
     end: int
     table: tuple[int, ...]
 
-    def __and__(self: Self, other: Self, /) -> Self:
+    def intersection(self: Self, other: Self, /) -> Self:
         i: int
         table: list[int]
         table = [0] * max(len(self.table), len(other.table))

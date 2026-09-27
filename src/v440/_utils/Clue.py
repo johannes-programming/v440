@@ -13,7 +13,7 @@ class Clue:
     head: str = ""
     mag: int = 0
 
-    def __and__(self: Self, other: Self, /) -> Self:
+    def intersection(self: Self, other: Self, /) -> Self:
         m: int
         if self.head == "":
             return other
