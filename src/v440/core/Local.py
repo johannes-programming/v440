@@ -153,7 +153,7 @@ class Local(ListABC[int | str]):
     def _deformat(self: Self, body: str, /) -> LocalAccumulation:
         if self:
             return LocalAccumulation.by_parts(
-                *tuple(
+                *(
                     frozenset({part})
                     for part in Cfg.cfg.patterns["local_splitter"].split(body)
                 )
