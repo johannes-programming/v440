@@ -108,10 +108,12 @@ class LocalAccumulation(NamedTuple):
         return ans
 
     @classmethod
-    def by_parts(cls: type[Self], /, *parts: frozenset[str]) -> Self:
+    def by_parts(cls: type[Self], /, *parts: str) -> Self:
+        parts_: tuple[frozenset[str], ...]
+        parts_ = tuple(frozenset({x}) for x in parts)
         return cls(
-            evens=parts[::2],
-            odds=parts[1::2],
+            evens=parts_[::2],
+            odds=parts_[1::2],
         )
 
     def intersection(self: Self, other: Self, /) -> Self:
@@ -153,10 +155,7 @@ class Local(ListABC[int | str]):
     def _deformat(self: Self, body: str, /) -> LocalAccumulation:
         if self:
             return LocalAccumulation.by_parts(
-                *(
-                    frozenset({part})
-                    for part in Cfg.cfg.patterns["local_splitter"].split(body)
-                )
+                *Cfg.cfg.patterns["local_splitter"].split(body)
             )
         else:
             return LocalAccumulation.by_parts()
