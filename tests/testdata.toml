@@ -2005,11 +2005,11 @@ strings = [
 
 [deformatting.Dev.test00000094]
 exceptiontype = "v440.VersionError"
-
 strings = [
     "dev",
     "dev.1",
 ]
+
 [deformatting.Dev.test00000094a]
 exceptiontype = ""
 solution = "dev."
@@ -6831,15 +6831,32 @@ strings = [
 exceptiontype = ""
 solution = "c-"
 strings = [
+    "c-",
+    "c-1",
+]
+
+[deformatting.Qual.test00000088a]
+exceptiontype = "builtins.VersionError"
+solution = "c-"
+strings = [
     "c",
     "c-1",
 ]
 
 [deformatting.Qual.test00000089]
-exceptiontype = ""
+exceptiontype = "builtins.VersionError"
 solution = "c--"
 strings = [
     "c",
+    "c-1",
+    "-2",
+]
+
+[deformatting.Qual.test00000089a]
+exceptiontype = ""
+solution = "c--"
+strings = [
+    "c-",
     "c-1",
     "-2",
 ]
@@ -9919,7 +9936,9 @@ deformatted = ".dev-"
 valid = true
 
 [examples.Dev.".dev."]
-valid = false
+deformatted = ".dev."
+str = ".dev0"
+valid = true
 
 [examples.Dev.".dev.1"]
 deformatted = ".dev."
@@ -10058,7 +10077,9 @@ str = ".dev0"
 valid = true
 
 [examples.Dev.dev-]
-valid = false
+deformatted = "dev-"
+str = ".dev0"
+valid = true
 
 [examples.Dev.dev-1]
 deformatted = "dev-"
@@ -10914,10 +10935,13 @@ deformatted = "r-"
 valid = true
 
 [examples.Post."r."]
-valid = false
+deformatted = "r."
+str = ".post0"
+valid = true
 
 [examples.Post."r.0"]
 deformatted = "r.#"
+str = ".post0"
 valid = true
 
 [examples.Post."r.1"]
@@ -10945,7 +10969,9 @@ deformatted = "rev"
 valid = true
 
 [examples.Post."rev."]
-valid = false
+deformatted = "rev."
+str = ".post0"
+valid = true
 
 [examples.Pre.""]
 bool = false
@@ -11146,9 +11172,7 @@ valid = true
 valid = false
 
 [examples.Pre."1pre."]
-deformatted = "pre."
-str = "1rc0"
-valid = true
+valid = false
 
 [examples.Pre.A]
 deformatted = "A"
@@ -11289,7 +11313,9 @@ str = "a0"
 valid = true
 
 [examples.Pre."alpha."]
-valid = false
+deformatted = "alpha."
+str = "a0"
+valid = true
 
 [examples.Pre.alpha1]
 deformatted = "alpha"
@@ -11325,10 +11351,13 @@ valid = true
 
 [examples.Pre.b_1]
 deformatted = "b_"
+str = "b1"
 valid = true
 
 [examples.Pre.beta_]
-valid = false
+deformatted = "beta_"
+str = "b0"
+valid = true
 
 [examples.Pre.c]
 deformatted = "c"
@@ -11626,6 +11655,11 @@ valid = true
 
 [examples.Public."100.a2-02dev1"]
 deformatted = ".a#-##dev"
+valid = true
+
+[examples.Public."1pre."]
+deformatted = "pre."
+str = "1rc0"
 valid = true
 
 [examples.Public."2!00.00.00"]
@@ -13716,6 +13750,11 @@ valid = true
 [examples.Version.1b_]
 deformatted = "b_"
 str = "1b0"
+valid = true
+
+[examples.Version."1pre."]
+deformatted = "pre."
+str = "1rc0"
 valid = true
 
 [examples.Version."2!00.00.00"]
