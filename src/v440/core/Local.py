@@ -89,6 +89,24 @@ class LocalAccumulation(NamedTuple):
     evens: tuple[frozenset[str], ...]
     odds: tuple[frozenset[str], ...]
 
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        i: int
+        part: frozenset[str]
+        parts: list[str]
+        ans: str
+        s: str
+        parts = []
+        for i, part in enumerate(self.parts):
+            if i % 2:
+                (s,) = part
+            else:
+                s = deformat_part(set(part))
+            parts.append(s)
+        ans = "".join(parts).rstrip(".")
+        if forbids_empty and not ans:
+            return "#"
+        return ans
+
     @classmethod
     def by_parts(cls: type[Self], /, *parts: frozenset[str]) -> Self:
         return cls(
@@ -124,24 +142,6 @@ class LocalAccumulation(NamedTuple):
                 break
         return tuple(ans)
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        i: int
-        part: frozenset[str]
-        parts: list[str]
-        ans: str
-        s: str
-        parts = []
-        for i, part in enumerate(self.parts):
-            if i % 2:
-                (s,) = part
-            else:
-                s = deformat_part(set(part))
-            parts.append(s)
-        ans = "".join(parts).rstrip(".")
-        if forbids_empty and not ans:
-            return "#"
-        return ans
-
 
 class Local(ListABC[int | str]):
     __slots__ = ()
@@ -153,16 +153,15 @@ class Local(ListABC[int | str]):
         return tuple(map(item_parse, value))
 
     def _deformat(self: Self, body: str, /) -> LocalAccumulation:
-        return LocalAccumulation.by_parts(
-            *(
-                tuple(
+        if self:
+            return LocalAccumulation.by_parts(
+                *tuple(
                     frozenset({part})
                     for part in Cfg.cfg.patterns["local_splitter"].split(body)
                 )
-                if self
-                else ()
             )
-        )
+        else:
+            return LocalAccumulation.by_parts()
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
