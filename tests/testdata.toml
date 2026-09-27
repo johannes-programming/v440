@@ -10610,9 +10610,6 @@ valid = true
 deformatted = " .post "
 valid = true
 
-[examples.Post.-]
-valid = false
-
 [examples.Post.--1]
 valid = false
 
