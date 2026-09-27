@@ -87,60 +87,43 @@ def item_parse(value: Any, /) -> int | str:
 
 class LocalAccumulation(NamedTuple):
     evens: tuple[frozenset[str], ...]
-    odds: tuple[frozenset[str], ...]
+    odds: tuple[str, ...]
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        i: int
-        part: frozenset[str]
-        parts: list[str]
         ans: str
-        s: str
-        parts = []
-        for i, part in enumerate(self.parts):
-            if i % 2:
-                (s,) = part
-            else:
-                s = deformat_part(set(part))
-            parts.append(s)
-        ans = "".join(parts).rstrip(".")
+        even: frozenset[str]
+        odd: str
+        ans = ""
+        for even, odd in zip(self.evens, self.odds):
+            ans += deformat_part(set(even))
+            ans += odd
+        if len(self.odds) < len(self.evens):
+            ans += deformat_part(set(self.evens[-1]))
+        ans = ans.rstrip(".")
         if forbids_empty and not ans:
             return "#"
         return ans
 
     @classmethod
     def by_parts(cls: type[Self], /, *parts: str) -> Self:
-        parts_: tuple[frozenset[str], ...]
-        parts_ = tuple(frozenset({x}) for x in parts)
         return cls(
-            evens=parts_[::2],
-            odds=parts_[1::2],
+            evens=tuple(frozenset({x}) for x in parts[::2]),
+            odds=parts[1::2],
         )
 
     def intersection(self: Self, other: Self, /) -> Self:
         part: frozenset[str]
         evens: list[frozenset[str]]
-        odds: list[frozenset[str]]
         evens = list(map(operator.or_, self.evens, other.evens))
         evens += self.evens[len(evens) :] or other.evens[len(evens) :]
         for part in evens:
             deformat_part(set(part))
-        odds = list(map(operator.or_, self.odds, other.odds))
-        odds += self.odds[len(odds) :] or other.odds[len(odds) :]
-        for part in odds:
-            if len(part) > 1:
-                raise ValueError
-        return type(self)(evens=tuple(evens), odds=tuple(odds))
-
-    @property
-    def parts(self: Self, /) -> tuple[frozenset[str], ...]:
-        ans: list[frozenset[str]]
-        ans = list()
-        while True:
-            try:
-                ans.append(self[len(ans) % 2][len(ans) // 2])
-            except IndexError:
-                break
-        return tuple(ans)
+        if any(map(operator.ne, self.odds, other.odds)):
+            raise ValueError
+        return type(self)(
+            evens=tuple(evens),
+            odds=max(self.odds, other.odds, key=len),
+        )
 
 
 class Local(ListABC[int | str]):
