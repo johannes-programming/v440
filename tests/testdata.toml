@@ -6836,16 +6836,14 @@ strings = [
 ]
 
 [deformatting.Qual.test00000088a]
-exceptiontype = "builtins.VersionError"
-solution = "c-"
+exceptiontype = "v440.VersionError"
 strings = [
     "c",
     "c-1",
 ]
 
 [deformatting.Qual.test00000089]
-exceptiontype = "builtins.VersionError"
-solution = "c--"
+exceptiontype = "v440.VersionError"
 strings = [
     "c",
     "c-1",
