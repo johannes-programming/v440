@@ -10125,14 +10125,14 @@ deformatted = "dev"
 valid = true
 
 [examples.Dev.dev_]
-valid = true
 deformatted = "dev_"
-str=".dev0"
+str = ".dev0"
+valid = true
 
 [examples.Dev.dev_1]
 deformatted = "dev_"
+str = ".dev1"
 valid = true
-str=".dev1"
 
 [examples.Dev.deva]
 valid = false
@@ -10610,6 +10610,9 @@ valid = true
 deformatted = " .post "
 valid = true
 
+[examples.Post.-]
+valid = false
+
 [examples.Post.--1]
 valid = false
 
@@ -10876,18 +10879,10 @@ deformatted = "post"
 str = ".post0"
 valid = true
 
-[examples.Post.-]
-valid = false
-[examples.Version.1-]
-valid = false
-[examples.Version.1-1]
-valid = true
-str="1.post1"
-
 [examples.Post.post-]
-valid = true
 deformatted = "post-"
-str= ".post0"
+str = ".post0"
+valid = true
 
 [examples.Post.post-1]
 bool = true
@@ -10896,9 +10891,9 @@ str = ".post1"
 valid = true
 
 [examples.Post."post."]
-valid = true
 deformatted = "post."
 str = ".post0"
+valid = true
 
 [examples.Post.post0]
 deformatted = "post#"
@@ -10929,9 +10924,9 @@ str = ".post2"
 valid = true
 
 [examples.Post.post_]
-valid = true
 deformatted = "post_"
 str = ".post0"
+valid = true
 
 [examples.Post.postx]
 valid = false
@@ -13058,6 +13053,13 @@ valid = true
 
 [examples.Version."1+abc+def"]
 valid = false
+
+[examples.Version.1-]
+valid = false
+
+[examples.Version.1-1]
+str = "1.post1"
+valid = true
 
 [examples.Version."1."]
 valid = false
