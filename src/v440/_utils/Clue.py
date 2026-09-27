@@ -7,6 +7,8 @@ from typing import Self
 
 from v440._utils.Cfg import Cfg
 
+from .magand import magand
+
 
 @dataclass(frozen=True, kw_only=True)
 class Clue:
@@ -21,16 +23,7 @@ class Clue:
             return self
         if self.head != other.head:
             raise ValueError
-        if self.mag < 0 and other.mag < 0:
-            m = max(self.mag, other.mag)
-        elif self.mag < 0 or other.mag < 0:
-            if 0 < self.mag + other.mag:
-                raise ValueError
-            m = max(self.mag, other.mag)
-        else:
-            if self.mag != other.mag:
-                raise ValueError
-            m = self.mag
+        m = magand(self.mag, other.mag)
         return type(self)(head=self.head, mag=m)
 
     @classmethod
