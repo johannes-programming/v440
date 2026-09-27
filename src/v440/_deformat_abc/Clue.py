@@ -7,31 +7,31 @@ from typing import Self
 
 from v440._utils.Cfg import Cfg
 
+from .Mag import Mag
+
 
 @dataclass(frozen=True, kw_only=True)
-class Clue:
+class BaseClue:
     head: str = ""
-    mag: int = 0
+    mag: Mag = Mag()
 
     def intersection(self: Self, other: Self, /) -> Self:
-        m: int
         if self.head == "":
             return other
         if other.head == "":
             return self
         if self.head != other.head:
             raise ValueError
-        if self.mag < 0 and other.mag < 0:
-            m = max(self.mag, other.mag)
-        elif self.mag < 0 or other.mag < 0:
-            if 0 < self.mag + other.mag:
-                raise ValueError
-            m = max(self.mag, other.mag)
-        else:
-            if self.mag != other.mag:
-                raise ValueError
-            m = self.mag
-        return type(self)(head=self.head, mag=m)
+        return type(self)(
+            head=self.head,
+            mag=self.mag.intersection(other.mag),
+        )
+
+
+class Clue(BaseClue):
+
+    def __init__(self: Self, /, *, head: str = "", mag: int = 0) -> None:
+        super().__init__(head=head, mag=Mag(mag))
 
     @classmethod
     def by_example(cls: type[Self], value: str, /) -> Self:
