@@ -117,19 +117,24 @@ class LocalAccumulation(NamedTuple):
     def intersection(self: Self, other: Self, /) -> Self:
         i: int
         part: frozenset[str]
-        parts: list[frozenset[str]]
-        parts = []
-        for i in range(max(len(self.parts), len(other.parts))):
-            part = (self.parts[i] if i < len(self.parts) else frozenset()) | (
-                other.parts[i] if i < len(other.parts) else frozenset()
+        evens: list[frozenset[str]]
+        odds: list[frozenset[str]]
+        evens = []
+        for i in range(max(len(self.evens), len(other.evens))):
+            part = (self.evens[i] if i < len(self.evens) else frozenset()) | (
+                other.evens[i] if i < len(other.evens) else frozenset()
             )
-            if i % 2:
-                if len(part) > 1:
-                    raise ValueError
-            else:
-                deformat_part(set(part))
-            parts.append(part)
-        return self.by_parts(*parts)
+            deformat_part(set(part))
+            evens.append(part)
+        odds = []
+        for i in range(max(len(self.odds), len(other.odds))):
+            part = (self.odds[i] if i < len(self.odds) else frozenset()) | (
+                other.odds[i] if i < len(other.odds) else frozenset()
+            )
+            if len(part) > 1:
+                raise ValueError
+            odds.append(part)
+        return type(self)(evens=tuple(evens), odds=tuple(odds))
 
     @property
     def parts(self: Self, /) -> tuple[frozenset[str], ...]:
