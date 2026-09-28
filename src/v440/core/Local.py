@@ -32,31 +32,26 @@ def item_parse(value: Any, /) -> int | str:
     return ans
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, kw_only=True)
 class EvenAccumulation:
-    data: frozenset[str]
+    lits: frozenset[str] = frozenset()
+    nums: frozenset[str] = frozenset()
 
     def best(self: Self, /) -> str:
-        lits: set[str]
-        nums: set[str]
         s: str
-        lits = set()
-        nums = set()
-        for s in self.data:
-            if s.strip(string_.digits):
-                lits.add(s)
-            else:
-                nums.add(s)
-        s = "#" * self.deformat_nums(nums)
-        s += self.deformat_lits(lits)
+        s = "#" * self.deformat_nums(self.nums)
+        s += self.deformat_lits(self.lits)
         return s
 
     @classmethod
     def by_item(cls: type[Self], item: str, /) -> Self:
-        return cls(frozenset({item}))
+        if item.strip(string_.digits):
+            return cls(lits=frozenset({item}))
+        else:
+            return cls(nums=frozenset({item}))
 
     @staticmethod
-    def deformat_lits(part: set[str], /) -> str:
+    def deformat_lits(part: frozenset[str], /) -> str:
         i: int
         s: str
         t: str
@@ -78,7 +73,7 @@ class EvenAccumulation:
         return s
 
     @staticmethod
-    def deformat_nums(part: set[str], /) -> int:
+    def deformat_nums(part: frozenset[str], /) -> int:
         n: int
         s: str
         n = 1
@@ -93,7 +88,10 @@ class EvenAccumulation:
             return n
 
     def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(self.data | other.data)
+        return type(self)(
+            lits=self.lits | other.lits,
+            nums=self.nums | other.nums,
+        )
 
 
 class LocalAccumulation(NamedTuple):
