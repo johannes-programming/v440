@@ -118,7 +118,7 @@ class LocalAccumulation(NamedTuple):
     @classmethod
     def by_parts(cls: type[Self], /, *parts: str) -> Self:
         return cls(
-            evens=tuple(EvenAccumulation.by_item(x) for x in parts[::2]),
+            evens=tuple(map(EvenAccumulation.by_item, parts[::2])),
             odds=parts[1::2],
         )
 
