@@ -265,10 +265,12 @@ class TestStringExamples0(unittest.TestCase):
         example: str,
         /,
         *,
-        formatted: abc.Iterable[Any] = (),
+        formatted: dict[str, str] | tuple[()] = (),
         **kwargs: Any,
     ) -> None:
         obj: Any
+        x: str
+        y: str
         obj = cls(string=example)
         for x, y in dict(formatted).items():
             with self.subTest(spec=x, target=y):
