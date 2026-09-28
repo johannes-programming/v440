@@ -6,7 +6,6 @@ __all__: list[str] = ["Release"]
 
 import operator
 import string as string_
-from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex, overload
 
 from v440._utils.setter import setter
@@ -178,13 +177,11 @@ class Release(ListABC[int]):
         self.data = sorted(self, key=key, reverse=reverse)
 
 
-@dataclass(frozen=True)
-class ReleaseAccumulation:
-    data: tuple[Mag, ...] = ()
+class ReleaseAccumulation(tuple[Mag, ...]):
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
-        ans = ".".join("#" * mag for mag in self.data).rstrip(".")
+        ans = ".".join("#" * mag for mag in self).rstrip(".")
         if forbids_empty and not ans:
             return "#"
         return ans
@@ -205,9 +202,9 @@ class ReleaseAccumulation:
     def intersection(self: Self, other: Self, /) -> Self:
         mags: list[Mag]
         mags = list()
-        for x, y in zip(self.data, other.data):
+        for x, y in zip(self, other):
             mags.append(x.intersection(y))
-        for x in self.data[len(mags) :] or other.data[len(mags) :]:
+        for x in self[len(mags) :] or other[len(mags) :]:
             Mag(0).intersection(x)
         return type(self)(tuple(mags))
 

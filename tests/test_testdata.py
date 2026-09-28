@@ -94,7 +94,7 @@ class TestDeformatting(unittest.TestCase):
         cls: type[Any],
         /,
         *,
-        solution: str | None = None,
+        solution: str,
         strings: list[str],
         **kwargs: Any,
     ) -> None:
