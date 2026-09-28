@@ -33,38 +33,17 @@ def item_parse(value: Any, /) -> int | str:
     return ans
 
 
-@dataclass(frozen=True, kw_only=True)
-class EvenAccumulation:
-    lits: frozenset[str] = frozenset()
-    nums: Mag | None = None
+@dataclass(frozen=True)
+class LitAccumulation:
+    data: frozenset[str] = frozenset()
 
     def best(self: Self, /) -> str:
-        s: str
-        if self.nums is None:
-            s = ""
-        else:
-            s = "#" * self.nums
-        s += self.deformat_lits(self.lits)
-        return s
-
-    @classmethod
-    def by_item(cls: type[Self], item: str, /) -> Self:
-        if item.strip(string_.digits):
-            return cls(lits=frozenset({item}))
-        if len(item) == 1:
-            return cls(nums=Mag())
-        if item.startswith("0"):
-            return cls(nums=Mag(len(item)))
-        return cls(nums=Mag(-len(item)))
-
-    @staticmethod
-    def deformat_lits(part: frozenset[str], /) -> str:
         i: int
         s: str
         t: str
         cases: list[str]
-        cases = ["#"] * max(map(len, part), default=0)
-        for i, s in iterflat(map(enumerate, part)):
+        cases = ["#"] * max(map(len, self.data), default=0)
+        for i, s in iterflat(map(enumerate, self.data)):
             if s in string_.digits:
                 continue
             if s in string_.ascii_uppercase:
@@ -79,15 +58,51 @@ class EvenAccumulation:
         s = "".join(cases).replace("#", "~").rstrip("~")
         return s
 
+    @classmethod
+    def by_item(cls: type[Self], item: str, /) -> Self:
+        return cls(frozenset({item}))
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(self.data | other.data)
+
+
+@dataclass(frozen=True, kw_only=True)
+class EvenAccumulation:
+    lit: LitAccumulation = LitAccumulation()
+    nums: Mag | None = None
+
+    def best(self: Self, /) -> str:
+        s: str
+        if self.nums is None:
+            s = ""
+        else:
+            s = "#" * self.nums
+        s += self.lit.best()
+        return s
+
+    @classmethod
+    def by_item(cls: type[Self], item: str, /) -> Self:
+        if item.strip(string_.digits):
+            return cls(lit=LitAccumulation.by_item(item))
+        if len(item) == 1:
+            return cls(nums=Mag())
+        if item.startswith("0"):
+            return cls(nums=Mag(len(item)))
+        return cls(nums=Mag(-len(item)))
+
     def intersection(self: Self, other: Self, /) -> Self:
         if self.nums is None and other.nums is None:
-            return type(self)(lits=self.lits | other.lits)
+            return type(self)(lit=self.lit.intersection(other.lit))
         if self.nums is None:
-            return type(self)(lits=self.lits | other.lits, nums=other.nums)
+            return type(self)(
+                lit=self.lit.intersection(other.lit), nums=other.nums
+            )
         if other.nums is None:
-            return type(self)(lits=self.lits | other.lits, nums=self.nums)
+            return type(self)(
+                lit=self.lit.intersection(other.lit), nums=self.nums
+            )
         return type(self)(
-            lits=self.lits | other.lits,
+            lit=self.lit.intersection(other.lit),
             nums=self.nums.intersection(other.nums),
         )
 
