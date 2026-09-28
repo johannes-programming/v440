@@ -16,41 +16,6 @@ from v440.core.Release import Release as Release_
 from v440.core.Release import ReleaseAccumulation
 
 
-@dataclass(frozen=True, kw_only=True)
-class BaseAccumulation:
-    basev: str | None
-    epoch: Mag
-    release: ReleaseAccumulation
-
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        ans = self.basev or ""
-        ans += "#" * self.epoch
-        ans += "!" * (self.epoch > 0)
-        ans += self.release.best(forbids_empty=False)
-        if ans or not forbids_empty:
-            return ans
-        return "!"
-
-    def intersection(self: Self, other: Self, /) -> Self:
-        basev: str | None
-        epoch: Mag
-        if self.basev is None:
-            basev = other.basev
-        elif other.basev is None:
-            basev = self.basev
-        elif self.basev == other.basev:
-            basev = self.basev
-        else:
-            raise ValueError
-        epoch = self.epoch.intersection(other.epoch)
-        return type(self)(
-            basev=basev,
-            epoch=epoch,
-            release=self.release.intersection(other.release),
-        )
-
-
 class Base(NestedABC):
 
     Release: Final[type[Release_]] = Release_
@@ -145,3 +110,38 @@ class Base(NestedABC):
     @setter
     def release(self: Self, value: object, /) -> None:
         self.release.string = value
+
+
+@dataclass(frozen=True, kw_only=True)
+class BaseAccumulation:
+    basev: str | None
+    epoch: Mag
+    release: ReleaseAccumulation
+
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        ans = self.basev or ""
+        ans += "#" * self.epoch
+        ans += "!" * (self.epoch > 0)
+        ans += self.release.best(forbids_empty=False)
+        if ans or not forbids_empty:
+            return ans
+        return "!"
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        basev: str | None
+        epoch: Mag
+        if self.basev is None:
+            basev = other.basev
+        elif other.basev is None:
+            basev = self.basev
+        elif self.basev == other.basev:
+            basev = self.basev
+        else:
+            raise ValueError
+        epoch = self.epoch.intersection(other.epoch)
+        return type(self)(
+            basev=basev,
+            epoch=epoch,
+            release=self.release.intersection(other.release),
+        )

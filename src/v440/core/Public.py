@@ -17,39 +17,6 @@ from v440.core.Qual import Qual as Qual_
 from v440.core.Qual import QualAccumulation
 
 
-def split_public(value: str, /) -> tuple[str, str]:
-    i: int
-    i = int(value.lower().startswith("v"))
-    while i < len(value):
-        if value[i] in (string_.digits + "!."):
-            i += 1
-        else:
-            break
-    if i and (value[i - 1] == "."):
-        i -= 1
-    return value[:i], value[i:]
-
-
-@dataclass(frozen=True, kw_only=True)
-class PublicAccumulation:
-    base: BaseAccumulation
-    qual: QualAccumulation
-
-    def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            base=self.base.intersection(other.base),
-            qual=self.qual.intersection(other.qual),
-        )
-
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        ans = self.base.best(forbids_empty=False)
-        ans += self.qual.best(forbids_empty=False)
-        if forbids_empty and not ans:
-            return "#"
-        return ans
-
-
 class Public(NestedABC):
 
     Base: Final[type[Base_]] = Base_
@@ -126,3 +93,36 @@ class Public(NestedABC):
     @setter
     def qual(self: Self, value: object, /) -> None:
         self.qual.string = value
+
+
+@dataclass(frozen=True, kw_only=True)
+class PublicAccumulation:
+    base: BaseAccumulation
+    qual: QualAccumulation
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            base=self.base.intersection(other.base),
+            qual=self.qual.intersection(other.qual),
+        )
+
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        ans = self.base.best(forbids_empty=False)
+        ans += self.qual.best(forbids_empty=False)
+        if forbids_empty and not ans:
+            return "#"
+        return ans
+
+
+def split_public(value: str, /) -> tuple[str, str]:
+    i: int
+    i = int(value.lower().startswith("v"))
+    while i < len(value):
+        if value[i] in (string_.digits + "!."):
+            i += 1
+        else:
+            break
+    if i and (value[i - 1] == "."):
+        i -= 1
+    return value[:i], value[i:]

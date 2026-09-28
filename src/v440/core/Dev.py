@@ -13,19 +13,6 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class DevAccumulation(Clue):
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        possible: set[str]
-        ans = self.solo(".dev")
-        if ans or not forbids_empty:
-            return ans
-        if not self.head:
-            return "DEV"
-        possible = self.possible(hollow=".dev", short="DEV") - {""}
-        return min(possible, key=lambda x: (len(x), x))
-
-
 class Dev(QualABC):
 
     __slots__ = ()
@@ -84,3 +71,16 @@ class Dev(QualABC):
         else:
             self.lit = "dev"
             self.num = operator.index(value)
+
+
+class DevAccumulation(Clue):
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        possible: set[str]
+        ans = self.solo(".dev")
+        if ans or not forbids_empty:
+            return ans
+        if not self.head:
+            return "DEV"
+        possible = self.possible(hollow=".dev", short="DEV") - {""}
+        return min(possible, key=lambda x: (len(x), x))

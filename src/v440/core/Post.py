@@ -13,19 +13,6 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class PostAccumulation(Clue):
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        possible: set[str]
-        ans = self.solo(".post")
-        if ans or not forbids_empty:
-            return ans
-        if not self.head:
-            return "-"
-        possible = self.possible(hollow=".post", short="R") - {""}
-        return min(possible, key=lambda x: (len(x), x))
-
-
 class Post(QualABC):
 
     __slots__ = ()
@@ -81,3 +68,16 @@ class Post(QualABC):
         else:
             self.lit = "post"
             self.num = operator.index(value)
+
+
+class PostAccumulation(Clue):
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        possible: set[str]
+        ans = self.solo(".post")
+        if ans or not forbids_empty:
+            return ans
+        if not self.head:
+            return "-"
+        possible = self.possible(hollow=".post", short="R") - {""}
+        return min(possible, key=lambda x: (len(x), x))

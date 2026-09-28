@@ -14,73 +14,6 @@ from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
-def deformat_comb(x: int, y: int, /) -> int:
-    if 0 > x * y:
-        if x + y <= 0:
-            return max(x, y)
-        raise ValueError
-    elif 0 < x * y:
-        if x < 0:
-            return max(x, y)
-        if x == y:
-            return x
-        raise ValueError
-    else:
-        return x + y
-
-
-def deformat_force(part: str, /) -> int:
-    if part == "0":
-        return -1
-    if part.startswith("0"):
-        return len(part)
-    return -len(part)
-
-
-def item_parse(value: SupportsIndex, /) -> int:
-    ans: int
-    ans = operator.index(value)
-    if ans < 0:
-        raise ValueError
-    return ans
-
-
-@dataclass(frozen=True, kw_only=True)
-class ReleaseAccumulation:
-    end: int
-    table: tuple[int, ...]
-
-    def intersection(self: Self, other: Self, /) -> Self:
-        i: int
-        table: list[int]
-        table = [0] * max(len(self.table), len(other.table))
-        for i in range(len(table)):
-            table[i] = deformat_comb(
-                self.table[i] if i < len(self.table) else 0,
-                other.table[i] if i < len(other.table) else 0,
-            )
-        return type(self)(
-            end=max(self.end, other.end),
-            table=tuple(table),
-        )
-
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        i: int
-        mag: int
-        ans = ""
-        for i, mag in enumerate(self.table):
-            if mag > 1:
-                ans += "#" * mag
-            elif i == self.end:
-                ans += "#"
-            ans += "."
-        ans = ans.rstrip(".")
-        if forbids_empty and not ans:
-            return "#"
-        return ans
-
-
 class Release(ListABC[int]):
     __slots__ = ()
 
@@ -249,3 +182,70 @@ class Release(ListABC[int]):
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
         "This method sorts the data."
         self.data = sorted(self, key=key, reverse=reverse)
+
+
+@dataclass(frozen=True, kw_only=True)
+class ReleaseAccumulation:
+    end: int
+    table: tuple[int, ...]
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        i: int
+        table: list[int]
+        table = [0] * max(len(self.table), len(other.table))
+        for i in range(len(table)):
+            table[i] = deformat_comb(
+                self.table[i] if i < len(self.table) else 0,
+                other.table[i] if i < len(other.table) else 0,
+            )
+        return type(self)(
+            end=max(self.end, other.end),
+            table=tuple(table),
+        )
+
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        i: int
+        mag: int
+        ans = ""
+        for i, mag in enumerate(self.table):
+            if mag > 1:
+                ans += "#" * mag
+            elif i == self.end:
+                ans += "#"
+            ans += "."
+        ans = ans.rstrip(".")
+        if forbids_empty and not ans:
+            return "#"
+        return ans
+
+
+def deformat_comb(x: int, y: int, /) -> int:
+    if 0 > x * y:
+        if x + y <= 0:
+            return max(x, y)
+        raise ValueError
+    elif 0 < x * y:
+        if x < 0:
+            return max(x, y)
+        if x == y:
+            return x
+        raise ValueError
+    else:
+        return x + y
+
+
+def deformat_force(part: str, /) -> int:
+    if part == "0":
+        return -1
+    if part.startswith("0"):
+        return len(part)
+    return -len(part)
+
+
+def item_parse(value: SupportsIndex, /) -> int:
+    ans: int
+    ans = operator.index(value)
+    if ans < 0:
+        raise ValueError
+    return ans

@@ -18,45 +18,6 @@ from v440.core.Public import Public as Public_
 from v440.core.Public import PublicAccumulation
 
 
-def join_version(public: str, local: str = "") -> str:
-    if local:
-        return public + "+" + local
-    else:
-        return public
-
-
-def split_version(string: str, /) -> abc.Iterable[str]:
-    if string.endswith("+"):
-        raise ValueError
-    if "+" in string:
-        return string.split("+")
-    else:
-        return string, ""
-
-
-@dataclass(frozen=True, kw_only=True)
-class VersionAccumulation:
-    local: LocalAccumulation
-    public: PublicAccumulation
-
-    def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            local=self.local.intersection(other.local),
-            public=self.public.intersection(other.public),
-        )
-
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        public: str
-        local: str
-        local = self.local.best(forbids_empty=False)
-        public = self.public.best(forbids_empty=False)
-        ans = join_version(public, local)
-        if forbids_empty and not ans:
-            return "#"
-        return ans
-
-
 class Version(NestedABC):
 
     Public: Final[type[Public_]] = Public_
@@ -130,3 +91,42 @@ class Version(NestedABC):
     @setter
     def public(self: Self, value: object, /) -> None:
         self.public.string = value
+
+
+@dataclass(frozen=True, kw_only=True)
+class VersionAccumulation:
+    local: LocalAccumulation
+    public: PublicAccumulation
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            local=self.local.intersection(other.local),
+            public=self.public.intersection(other.public),
+        )
+
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        public: str
+        local: str
+        local = self.local.best(forbids_empty=False)
+        public = self.public.best(forbids_empty=False)
+        ans = join_version(public, local)
+        if forbids_empty and not ans:
+            return "#"
+        return ans
+
+
+def join_version(public: str, local: str = "") -> str:
+    if local:
+        return public + "+" + local
+    else:
+        return public
+
+
+def split_version(string: str, /) -> abc.Iterable[str]:
+    if string.endswith("+"):
+        raise ValueError
+    if "+" in string:
+        return string.split("+")
+    else:
+        return string, ""

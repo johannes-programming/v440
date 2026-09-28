@@ -15,42 +15,6 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class PreAccumulation(NamedTuple):
-    a: Clue = Clue()
-    b: Clue = Clue()
-    rc: Clue = Clue()
-
-    def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
-
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        matches: dict[str, str]
-        pos: list[set[str]]
-        sols: list[str]
-        s: str
-        way: tuple[Any, ...]
-        pos = list()
-        pos.append(self.a.possible(hollow="a", short="A"))
-        pos.append(self.b.possible(hollow="b", short="B"))
-        pos.append(self.rc.possible(hollow="rc", short="C"))
-        if forbids_empty and self.a == Clue():
-            pos[0].add("A")
-        if forbids_empty and self.b == Clue():
-            pos[1].add("B")
-        if forbids_empty and self.rc == Clue():
-            pos[2].add("C")
-        sols = list()
-        for way in iterprod(*pos):
-            s = "".join(way)
-            matches = Cfg.fullmatches("pre_f", s)
-            if way == (matches["a_f"], matches["b_f"], matches["rc_f"]):
-                if s or not forbids_empty:
-                    sols.append(s)
-        sols.sort()
-        sols.sort(key=len)
-        return sols[0]
-
-
 class Pre(QualABC):
 
     __slots__ = ()
@@ -123,3 +87,39 @@ class Pre(QualABC):
         else:
             self.num = 0
             self.lit, self.num = value
+
+
+class PreAccumulation(NamedTuple):
+    a: Clue = Clue()
+    b: Clue = Clue()
+    rc: Clue = Clue()
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
+
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        matches: dict[str, str]
+        pos: list[set[str]]
+        sols: list[str]
+        s: str
+        way: tuple[Any, ...]
+        pos = list()
+        pos.append(self.a.possible(hollow="a", short="A"))
+        pos.append(self.b.possible(hollow="b", short="B"))
+        pos.append(self.rc.possible(hollow="rc", short="C"))
+        if forbids_empty and self.a == Clue():
+            pos[0].add("A")
+        if forbids_empty and self.b == Clue():
+            pos[1].add("B")
+        if forbids_empty and self.rc == Clue():
+            pos[2].add("C")
+        sols = list()
+        for way in iterprod(*pos):
+            s = "".join(way)
+            matches = Cfg.fullmatches("pre_f", s)
+            if way == (matches["a_f"], matches["b_f"], matches["rc_f"]):
+                if s or not forbids_empty:
+                    sols.append(s)
+        sols.sort()
+        sols.sort(key=len)
+        return sols[0]
