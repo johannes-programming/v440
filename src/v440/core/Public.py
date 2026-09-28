@@ -12,7 +12,9 @@ from typing import Any, Final, Self
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
+from v440.core.Base import BaseAccumulation
 from v440.core.Qual import Qual as Qual_
+from v440.core.Qual import QualAccumulation
 
 
 def split_public(value: str, /) -> tuple[str, str]:
@@ -30,18 +32,19 @@ def split_public(value: str, /) -> tuple[str, str]:
 
 @dataclass(frozen=True, kw_only=True)
 class PublicAccumulation:
-    bases: frozenset[str]
-    quals: frozenset[str]
+    base: BaseAccumulation
+    qual: QualAccumulation
 
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
-            bases=self.bases | other.bases,
-            quals=self.quals | other.quals,
+            base=self.base.intersection(other.base),
+            qual=self.qual.intersection(other.qual),
         )
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
-        ans = Base_.deformat(*self.bases) + Qual_.deformat(*self.quals)
+        ans = self.base.best(forbids_empty=False)
+        ans += self.qual.best(forbids_empty=False)
         if forbids_empty and not ans:
             return "#"
         return ans
@@ -64,8 +67,8 @@ class Public(NestedABC):
         qual: str
         base, qual = split_public(body)
         return PublicAccumulation(
-            bases=frozenset({base}),
-            quals=frozenset({qual}),
+            base=self.base._deformat(base),
+            qual=self.qual._deformat(qual),
         )
 
     @classmethod
