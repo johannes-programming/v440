@@ -79,6 +79,8 @@ class TestDeformatting(unittest.TestCase):
                 cls.deformat(*strings)
             return
         self.assertEqual(cls.deformat(*strings), solution)
+        for x in strings:
+            self.assertEqual(format(cls(string=x), solution), x)
 
     def go_cls(
         self: Self,
