@@ -53,22 +53,6 @@ def deformat_nums(part: set[str], /) -> int:
         return n
 
 
-def deformat_part(part: frozenset[str], /) -> str:
-    lits: set[str]
-    nums: set[str]
-    s: str
-    lits = set()
-    nums = set()
-    for s in part:
-        if s.strip(string_.digits):
-            lits.add(s)
-        else:
-            nums.add(s)
-    s = "#" * deformat_nums(nums)
-    s += deformat_lits(lits)
-    return s
-
-
 def item_parse(value: Any, /) -> int | str:
     ans: int | str
     try:
@@ -85,20 +69,43 @@ def item_parse(value: Any, /) -> int | str:
     return ans
 
 
+@dataclass(frozen=True)
+class EvenAccumulation:
+    data: frozenset[str]
+
+    def best(self: EvenAccumulation, /) -> str:
+        lits: set[str]
+        nums: set[str]
+        s: str
+        lits = set()
+        nums = set()
+        for s in self.data:
+            if s.strip(string_.digits):
+                lits.add(s)
+            else:
+                nums.add(s)
+        s = "#" * deformat_nums(nums)
+        s += deformat_lits(lits)
+        return s
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(self.data | other.data)
+
+
 class LocalAccumulation(NamedTuple):
-    evens: tuple[frozenset[str], ...]
+    evens: tuple[EvenAccumulation, ...]
     odds: tuple[str, ...]
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
-        even: frozenset[str]
+        even: EvenAccumulation
         odd: str
         ans = ""
         for even, odd in zip(self.evens, self.odds):
-            ans += deformat_part(even)
+            ans += even.best()
             ans += odd
         if len(self.odds) < len(self.evens):
-            ans += deformat_part(self.evens[-1])
+            ans += self.evens[-1].best()
         ans = ans.rstrip(".")
         if forbids_empty and not ans:
             return "#"
@@ -107,18 +114,20 @@ class LocalAccumulation(NamedTuple):
     @classmethod
     def by_parts(cls: type[Self], /, *parts: str) -> Self:
         return cls(
-            evens=tuple(frozenset({x}) for x in parts[::2]),
+            evens=tuple(EvenAccumulation(frozenset({x})) for x in parts[::2]),
             odds=parts[1::2],
         )
 
     def intersection(self: Self, other: Self, /) -> Self:
-        evens: list[frozenset[str]]
-        evens = list(map(operator.or_, self.evens, other.evens))
+        evens: tuple[EvenAccumulation, ...]
+        evens = tuple(
+            map(EvenAccumulation.intersection, self.evens, other.evens)
+        )
         evens += self.evens[len(evens) :] or other.evens[len(evens) :]
         if any(map(operator.ne, self.odds, other.odds)):
             raise ValueError
         return type(self)(
-            evens=tuple(evens),
+            evens=evens,
             odds=max(self.odds, other.odds, key=len),
         )
 
