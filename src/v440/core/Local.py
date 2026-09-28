@@ -51,6 +51,10 @@ class EvenAccumulation:
         s += self.deformat_lits(lits)
         return s
 
+    @classmethod
+    def by_item(cls: type[Self], item: str, /) -> Self:
+        return cls(frozenset({item}))
+
     @staticmethod
     def deformat_lits(part: set[str], /) -> str:
         i: int
@@ -114,7 +118,7 @@ class LocalAccumulation(NamedTuple):
     @classmethod
     def by_parts(cls: type[Self], /, *parts: str) -> Self:
         return cls(
-            evens=tuple(EvenAccumulation(frozenset({x})) for x in parts[::2]),
+            evens=tuple(EvenAccumulation.by_item(x) for x in parts[::2]),
             odds=parts[1::2],
         )
 
