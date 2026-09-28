@@ -66,44 +66,51 @@ class LitAccumulation:
         return type(self)(self.data | other.data)
 
 
+@dataclass(frozen=True)
+class NumAccumulation:
+    data: Mag | None = None
+
+    def best(self: Self, /) -> str:
+        if self.data is None:
+            return ""
+        else:
+            return "#" * self.data
+
+    @classmethod
+    def by_item(cls: type[Self], item: str, /) -> Self:
+        if len(item) == 1:
+            return cls(data=Mag())
+        if item.startswith("0"):
+            return cls(data=Mag(len(item)))
+        return cls(data=Mag(-len(item)))
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        if self.data is None:
+            return other
+        if other.data is None:
+            return self
+        return type(self)(self.data.intersection(other.data))
+
+
 @dataclass(frozen=True, kw_only=True)
 class EvenAccumulation:
     lit: LitAccumulation = LitAccumulation()
-    nums: Mag | None = None
+    num: NumAccumulation = NumAccumulation()
 
     def best(self: Self, /) -> str:
-        s: str
-        if self.nums is None:
-            s = ""
-        else:
-            s = "#" * self.nums
-        s += self.lit.best()
-        return s
+        return self.num.best() + self.lit.best()
 
     @classmethod
     def by_item(cls: type[Self], item: str, /) -> Self:
         if item.strip(string_.digits):
             return cls(lit=LitAccumulation.by_item(item))
-        if len(item) == 1:
-            return cls(nums=Mag())
-        if item.startswith("0"):
-            return cls(nums=Mag(len(item)))
-        return cls(nums=Mag(-len(item)))
+        else:
+            return cls(num=NumAccumulation.by_item(item))
 
     def intersection(self: Self, other: Self, /) -> Self:
-        if self.nums is None and other.nums is None:
-            return type(self)(lit=self.lit.intersection(other.lit))
-        if self.nums is None:
-            return type(self)(
-                lit=self.lit.intersection(other.lit), nums=other.nums
-            )
-        if other.nums is None:
-            return type(self)(
-                lit=self.lit.intersection(other.lit), nums=self.nums
-            )
         return type(self)(
             lit=self.lit.intersection(other.lit),
-            nums=self.nums.intersection(other.nums),
+            num=self.num.intersection(other.num),
         )
 
 
