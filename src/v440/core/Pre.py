@@ -9,7 +9,7 @@ from typing import Any, NamedTuple, Self, SupportsIndex
 
 from iterprod import iterprod
 
-from v440._deformat_abc.Clue import Clue
+from v440._deformatting.Clue import Clue
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC

@@ -11,7 +11,7 @@ from typing import Any, Final, NamedTuple, Self
 
 from iterflat import iterflat
 
-from v440._deformat_abc.Mag import Mag
+from v440._deformatting.Mag import Mag
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
