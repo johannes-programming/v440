@@ -13,7 +13,9 @@ import packaging.version
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
+from v440.core.Local import LocalAccumulation
 from v440.core.Public import Public as Public_
+from v440.core.Public import PublicAccumulation
 
 
 def join_version(public: str, local: str = "") -> str:
@@ -34,21 +36,21 @@ def split_version(string: str, /) -> abc.Iterable[str]:
 
 @dataclass(frozen=True, kw_only=True)
 class VersionAccumulation:
-    locals_: frozenset[str]
-    publics: frozenset[str]
+    local: LocalAccumulation
+    public: PublicAccumulation
 
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
-            locals_=self.locals_ | other.locals_,
-            publics=self.publics | other.publics,
+            local=self.local.intersection(other.local),
+            public=self.public.intersection(other.public),
         )
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
         public: str
         local: str
-        public = Public_.deformat(*self.publics)
-        local = Local_.deformat(*self.locals_)
+        local = self.local.best(forbids_empty=False)
+        public = self.public.best(forbids_empty=False)
         ans = join_version(public, local)
         if forbids_empty and not ans:
             return "#"
@@ -72,8 +74,8 @@ class Version(NestedABC):
         public: str
         public, local = split_version(body)
         return VersionAccumulation(
-            locals_=frozenset({local}),
-            publics=frozenset({public}),
+            local=self.local._deformat(local),
+            public=self.public._deformat(public),
         )
 
     @classmethod
