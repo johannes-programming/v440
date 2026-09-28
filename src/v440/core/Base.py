@@ -8,6 +8,7 @@ import operator
 from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from v440._deformatting.Mag import Mag
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
@@ -18,14 +19,12 @@ from v440.core.Release import ReleaseAccumulation
 @dataclass(frozen=True, kw_only=True)
 class BaseAccumulation:
     basev: str | None
-    epoch_mag: int
-    epoch_min: int | None
+    epoch: Mag
     release: ReleaseAccumulation
 
     def intersection(self: Self, other: Self, /) -> Self:
         basev: str | None
-        epoch_mag: int
-        epoch_min: int | None
+        epoch: Mag
         if self.basev is None:
             basev = other.basev
         elif other.basev is None:
@@ -34,26 +33,18 @@ class BaseAccumulation:
             basev = self.basev
         else:
             raise ValueError
-        epoch_mag = max(self.epoch_mag, other.epoch_mag)
-        if self.epoch_min is None:
-            epoch_min = other.epoch_min
-        elif other.epoch_min is None:
-            epoch_min = self.epoch_min
-        else:
-            epoch_min = min(self.epoch_min, other.epoch_min)
-        if epoch_min is not None and epoch_mag > epoch_min:
-            raise ValueError
+        epoch = self.epoch.intersection(other.epoch)
         return type(self)(
             basev=basev,
-            epoch_mag=epoch_mag,
-            epoch_min=epoch_min,
+            epoch=epoch,
             release=self.release.intersection(other.release),
         )
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
         ans = self.basev or ""
-        ans += "#" * self.epoch_mag + "!" * bool(self.epoch_mag)
+        ans += "#" * self.epoch
+        ans += "!" * (self.epoch > 0)
         ans += self.release.best(forbids_empty=False)
         if ans or not forbids_empty:
             return ans
@@ -78,8 +69,7 @@ class Base(NestedABC):
         epoch = matches["epoch"]
         return BaseAccumulation(
             basev=matches["basev"],
-            epoch_mag=len(epoch) if epoch.startswith("0") else 0,
-            epoch_min=len(epoch),
+            epoch=Mag(len(epoch) if epoch.startswith("0") else -len(epoch)),
             release=self.release._deformat(matches["release"]),
         )
 
