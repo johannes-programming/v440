@@ -11,6 +11,7 @@ from typing import Any, NamedTuple, Self
 
 from iterflat import iterflat
 
+from v440._deformat_abc.Mag import Mag
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
@@ -35,11 +36,14 @@ def item_parse(value: Any, /) -> int | str:
 @dataclass(frozen=True, kw_only=True)
 class EvenAccumulation:
     lits: frozenset[str] = frozenset()
-    nums: frozenset[str] = frozenset()
+    nums: Mag | None = None
 
     def best(self: Self, /) -> str:
         s: str
-        s = "#" * self.deformat_nums(self.nums)
+        if self.nums is None:
+            s = ""
+        else:
+            s = "#" * self.nums
         s += self.deformat_lits(self.lits)
         return s
 
@@ -47,8 +51,11 @@ class EvenAccumulation:
     def by_item(cls: type[Self], item: str, /) -> Self:
         if item.strip(string_.digits):
             return cls(lits=frozenset({item}))
-        else:
-            return cls(nums=frozenset({item}))
+        if len(item) == 1:
+            return cls(nums=Mag())
+        if item.startswith("0"):
+            return cls(nums=Mag(len(item)))
+        return cls(nums=Mag(-len(item)))
 
     @staticmethod
     def deformat_lits(part: frozenset[str], /) -> str:
@@ -72,25 +79,16 @@ class EvenAccumulation:
         s = "".join(cases).replace("#", "~").rstrip("~")
         return s
 
-    @staticmethod
-    def deformat_nums(part: frozenset[str], /) -> int:
-        n: int
-        s: str
-        n = 1
-        for s in part:
-            if s.startswith("0"):
-                n = max(n, len(s))
-        if n > min(map(len, part), default=1):
-            raise ValueError
-        elif n == 1:
-            return 0
-        else:
-            return n
-
     def intersection(self: Self, other: Self, /) -> Self:
+        if self.nums is None and other.nums is None:
+            return type(self)(lits=self.lits | other.lits)
+        if self.nums is None:
+            return type(self)(lits=self.lits | other.lits, nums=other.nums)
+        if other.nums is None:
+            return type(self)(lits=self.lits | other.lits, nums=self.nums)
         return type(self)(
             lits=self.lits | other.lits,
-            nums=self.nums | other.nums,
+            nums=self.nums.intersection(other.nums),
         )
 
 
