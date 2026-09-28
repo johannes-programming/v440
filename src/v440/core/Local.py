@@ -112,12 +112,9 @@ class LocalAccumulation(NamedTuple):
         )
 
     def intersection(self: Self, other: Self, /) -> Self:
-        part: frozenset[str]
         evens: list[frozenset[str]]
         evens = list(map(operator.or_, self.evens, other.evens))
         evens += self.evens[len(evens) :] or other.evens[len(evens) :]
-        for part in evens:
-            deformat_part(part)
         if any(map(operator.ne, self.odds, other.odds)):
             raise ValueError
         return type(self)(
