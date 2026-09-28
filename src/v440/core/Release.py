@@ -4,7 +4,6 @@ from __future__ import annotations
 
 __all__: list[str] = ["Release"]
 
-
 import operator
 import string as string_
 from dataclasses import dataclass
@@ -12,6 +11,8 @@ from typing import Any, Self, SupportsIndex, overload
 
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
+
+from .._deformatting.Mag import Mag
 
 
 class Release(ListABC[int]):
@@ -26,14 +27,7 @@ class Release(ListABC[int]):
         return v
 
     def _deformat(self: Self, body: str, /) -> ReleaseAccumulation:
-        k: int
-        t: str
-        k = body.count(".")
-        t = body.rstrip("0")
-        return ReleaseAccumulation(
-            end=k if k > 0 and (t.endswith(".") or t == "") else -1,
-            table=tuple(map(deformat_force, body.split("."))),
-        )
+        return ReleaseAccumulation.by_string(body)
 
     def _delitem(
         self: Self,
@@ -184,63 +178,48 @@ class Release(ListABC[int]):
         self.data = sorted(self, key=key, reverse=reverse)
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class ReleaseAccumulation:
-    end: int
-    table: tuple[int, ...]
+    data: tuple[Mag, ...] = ()
+
+    @classmethod
+    def by_string(cls: type[Self], body: str, /) -> Self:
+        mags: list[Mag]
+        if body == "0":
+            return cls()
+        mags = list()
+        for part in body.split("."):
+            if part == "0" or not part.startswith("0"):
+                mags.append(Mag(-len(part)))
+            else:
+                mags.append(Mag(len(part)))
+        if body.endswith(".0"):
+            mags[-1] = Mag(1)
+        return cls(tuple(mags))
 
     def intersection(self: Self, other: Self, /) -> Self:
-        i: int
-        table: list[int]
-        table = [0] * max(len(self.table), len(other.table))
-        for i in range(len(table)):
-            table[i] = deformat_comb(
-                self.table[i] if i < len(self.table) else 0,
-                other.table[i] if i < len(other.table) else 0,
-            )
-        return type(self)(
-            end=max(self.end, other.end),
-            table=tuple(table),
-        )
+        mags: list[Mag]
+        mags = list()
+        for x, y in zip(self.data, other.data):
+            mags.append(x.intersection(y))
+        for x in self.data[len(mags) :] or other.data[len(mags) :]:
+            Mag(0).intersection(x)
+        return type(self)(tuple(mags))
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
-        i: int
-        mag: int
-        ans = ""
-        for i, mag in enumerate(self.table):
-            if mag > 1:
-                ans += "#" * mag
-            elif i == self.end:
-                ans += "#"
-            ans += "."
-        ans = ans.rstrip(".")
+        ans = ".".join("#" * mag for mag in self.data).rstrip(".")
         if forbids_empty and not ans:
             return "#"
         return ans
 
 
-def deformat_comb(x: int, y: int, /) -> int:
-    if 0 > x * y:
-        if x + y <= 0:
-            return max(x, y)
-        raise ValueError
-    elif 0 < x * y:
-        if x < 0:
-            return max(x, y)
-        if x == y:
-            return x
-        raise ValueError
-    else:
-        return x + y
-
-
-def deformat_force(part: str, /) -> int:
-    if part == "0":
-        return -1
+def deformat_force(part: str, /) -> Mag:
+    if len(part) == 1:
+        return Mag()
     if part.startswith("0"):
-        return len(part)
-    return -len(part)
+        return Mag(len(part))
+    return Mag(-len(part))
 
 
 def item_parse(value: SupportsIndex, /) -> int:
