@@ -135,8 +135,6 @@ class LocalAccumulation(NamedTuple):
 class Local(ListABC[int | str]):
     __slots__ = ()
 
-    _Deformat: Final[type[LocalAccumulation]] = LocalAccumulation
-
     @classmethod
     def _data_parse(
         cls: type[Self], value: list[Any], /
