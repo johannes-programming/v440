@@ -76,6 +76,7 @@ class TestDeformatting(unittest.TestCase):
         answer: str
         ctx: Any
         x: str
+        self.assertNotEqual(len(strings), 1)
         if exceptiontype == "":
             ctx = contextlib.nullcontext()
         else:
