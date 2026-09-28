@@ -43,9 +43,9 @@ class NestedABC(cmp3.CmpABC, CoreABC):
         y: Any
         for x, y in self._init_factories().items():
             if other is None:
-                object.__setattr__(self, x, y())
+                setattr(self, x, y())
             else:
-                object.__setattr__(self, x, y(getattr(other, x)))
+                setattr(self, x, y(getattr(other, x)))
 
     @abstractmethod
     def _todict(self: Self, /) -> dict[str, Any]: ...
