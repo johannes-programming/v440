@@ -3035,8 +3035,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000069]
-exceptiontype = ""
-solution = "...#"
+exceptiontype = "builtins.Exception"
 strings = [
     "1.0",
     "9.8.7.0",
@@ -3084,8 +3083,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000081]
-exceptiontype = ""
-solution = "....#"
+exceptiontype = "builtins.Exception"
 strings = [
     "1.2.0",
     "9.8.7.0",
@@ -3143,16 +3141,14 @@ strings = [
 ]
 
 [deformatting.Release.test00000095]
-exceptiontype = ""
-solution = "..#"
+exceptiontype = "builtins.Exception"
 strings = [
     "4.0",
     "1.2.0",
 ]
 
 [deformatting.Release.test00000096]
-exceptiontype = ""
-solution = "..#"
+exceptiontype = "builtins.Exception"
 strings = [
     "4.0",
     "1.2.0",

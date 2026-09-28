@@ -185,8 +185,6 @@ class ReleaseAccumulation:
     @classmethod
     def by_string(cls: type[Self], body: str, /) -> Self:
         mags: list[Mag]
-        if body == "0":
-            return cls()
         mags = list()
         for part in body.split("."):
             if part == "0" or not part.startswith("0"):
