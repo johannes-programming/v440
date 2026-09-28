@@ -9,8 +9,6 @@ import string as string_
 from dataclasses import dataclass
 from typing import Any, Final, NamedTuple, Self
 
-from iterflat import iterflat
-
 from v440._deformatting.Mag import Mag
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
@@ -35,35 +33,39 @@ def item_parse(value: Any, /) -> int | str:
 
 @dataclass(frozen=True)
 class LitAccumulation:
-    data: frozenset[str] = frozenset()
+    data: str = ""
 
     def best(self: Self, /) -> str:
-        i: int
-        s: str
-        t: str
-        cases: list[str]
-        cases = ["#"] * max(map(len, self.data), default=0)
-        for i, s in iterflat(map(enumerate, self.data)):
-            if s in string_.digits:
-                continue
-            if s in string_.ascii_uppercase:
-                t = "^"
-            else:
-                t = "~"
-            if "#" == cases[i]:
-                cases[i] = t
-                continue
-            if t != cases[i]:
-                raise ValueError
-        s = "".join(cases).replace("#", "~").rstrip("~")
-        return s
+        return self.data.replace("#", "~").rstrip("~")
 
     @classmethod
     def by_item(cls: type[Self], item: str, /) -> Self:
-        return cls(frozenset({item}))
+        data: str
+        s: str
+        data = "".join(
+            (
+                "#"
+                if s in string_.digits
+                else "^" if s in string_.ascii_uppercase else "~"
+            )
+            for s in item
+        ).rstrip("#")
+        return cls(data)
 
     def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(self.data | other.data)
+        ans: list[str]
+        x: str
+        y: str
+        ans = []
+        for x, y in zip(self.data, other.data):
+            if x == "#":
+                ans.append(y)
+            elif y == "#" or x == y:
+                ans.append(x)
+            else:
+                raise ValueError
+        ans.extend(self.data[len(ans) :] or other.data[len(ans) :])
+        return type(self)("".join(ans))
 
 
 @dataclass(frozen=True)
