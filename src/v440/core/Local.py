@@ -53,7 +53,7 @@ def deformat_nums(part: set[str], /) -> int:
         return n
 
 
-def deformat_part(part: set[str], /) -> str:
+def deformat_part(part: frozenset[str], /) -> str:
     lits: set[str]
     nums: set[str]
     s: str
@@ -95,10 +95,10 @@ class LocalAccumulation(NamedTuple):
         odd: str
         ans = ""
         for even, odd in zip(self.evens, self.odds):
-            ans += deformat_part(set(even))
+            ans += deformat_part(even)
             ans += odd
         if len(self.odds) < len(self.evens):
-            ans += deformat_part(set(self.evens[-1]))
+            ans += deformat_part(self.evens[-1])
         ans = ans.rstrip(".")
         if forbids_empty and not ans:
             return "#"
@@ -117,7 +117,7 @@ class LocalAccumulation(NamedTuple):
         evens = list(map(operator.or_, self.evens, other.evens))
         evens += self.evens[len(evens) :] or other.evens[len(evens) :]
         for part in evens:
-            deformat_part(set(part))
+            deformat_part(part)
         if any(map(operator.ne, self.odds, other.odds)):
             raise ValueError
         return type(self)(
