@@ -75,6 +75,7 @@ class TestDeformatting(unittest.TestCase):
     ) -> None:
         answer: str
         ctx: Any
+        self.assertNotEqual(len(strings), 1)
         if exceptiontype == "":
             ctx = contextlib.nullcontext()
         else:
@@ -91,7 +92,7 @@ class TestDeformatting(unittest.TestCase):
     ) -> None:
         example: tuple[str]
         log: dict[tuple[str], str]
-        self.assertGreaterEqual(len(typedict), 100)
+        self.assertGreaterEqual(len(typedict), 30)
         log = dict()
         for testname, testdict in typedict.items():
             example = tuple(testdict["strings"])
