@@ -98,12 +98,6 @@ class VersionAccumulation:
     local: LocalAccumulation
     public: PublicAccumulation
 
-    def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            local=self.local.intersection(other.local),
-            public=self.public.intersection(other.public),
-        )
-
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
         public: str
@@ -114,6 +108,12 @@ class VersionAccumulation:
         if forbids_empty and not ans:
             return "#"
         return ans
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            local=self.local.intersection(other.local),
+            public=self.public.intersection(other.public),
+        )
 
 
 def join_version(public: str, local: str = "") -> str:
