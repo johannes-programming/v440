@@ -75,13 +75,19 @@ class TestDeformatting(unittest.TestCase):
     ) -> None:
         answer: str
         ctx: Any
+        x: str
         if exceptiontype == "":
             ctx = contextlib.nullcontext()
         else:
             ctx = self.assertRaises(Util.import_(exceptiontype))
         with ctx:
             answer = cls.deformat(*strings)
-            self.assertEqual(answer, solution)
+        if exceptiontype:
+            return
+        self.assertEqual(answer, solution)
+        for x in strings:
+            answer = format(cls(string=x), solution)
+            self.assertEqual(answer, x)
 
     def go_cls(
         self: Self,
