@@ -34,12 +34,12 @@ def split_version(string: str, /) -> abc.Iterable[str]:
 
 @dataclass(frozen=True, kw_only=True)
 class VersionAccumulation:
-    locals: frozenset[str]
+    locals_: frozenset[str]
     publics: frozenset[str]
 
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
-            locals=self.locals | other.locals,
+            locals_=self.locals_ | other.locals_,
             publics=self.publics | other.publics,
         )
 
@@ -48,7 +48,7 @@ class VersionAccumulation:
         public: str
         local: str
         public = Public_.deformat(*self.publics)
-        local = Local_.deformat(*self.locals)
+        local = Local_.deformat(*self.locals_)
         ans = join_version(public, local)
         if forbids_empty and not ans:
             return "#"
@@ -72,7 +72,7 @@ class Version(NestedABC):
         public: str
         public, local = split_version(body)
         return VersionAccumulation(
-            locals=frozenset({local}),
+            locals_=frozenset({local}),
             publics=frozenset({public}),
         )
 
