@@ -182,6 +182,13 @@ class Release(ListABC[int]):
 class ReleaseAccumulation:
     data: tuple[Mag, ...] = ()
 
+    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+        ans: str
+        ans = ".".join("#" * mag for mag in self.data).rstrip(".")
+        if forbids_empty and not ans:
+            return "#"
+        return ans
+
     @classmethod
     def by_string(cls: type[Self], body: str, /) -> Self:
         mags: list[Mag]
@@ -203,21 +210,6 @@ class ReleaseAccumulation:
         for x in self.data[len(mags) :] or other.data[len(mags) :]:
             Mag(0).intersection(x)
         return type(self)(tuple(mags))
-
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        ans = ".".join("#" * mag for mag in self.data).rstrip(".")
-        if forbids_empty and not ans:
-            return "#"
-        return ans
-
-
-def deformat_force(part: str, /) -> Mag:
-    if len(part) == 1:
-        return Mag()
-    if part.startswith("0"):
-        return Mag(len(part))
-    return Mag(-len(part))
 
 
 def item_parse(value: SupportsIndex, /) -> int:
