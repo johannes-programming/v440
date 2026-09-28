@@ -69,15 +69,35 @@ class TestDeformatting(unittest.TestCase):
         /,
         *,
         exceptiontype: str,
+        **kwargs: Any,
+    ) -> None:
+        self.assertNotEqual(len(kwargs["strings"]), 1)
+        if exceptiontype:
+            self.go_blob_invalid(cls, **kwargs, exceptiontype=exceptiontype)
+        else:
+            self.go_blob_valid(cls, **kwargs)
+
+    def go_blob_invalid(
+        self: Self,
+        cls: type[Any],
+        /,
+        *,
+        exceptiontype: str,
+        strings: list[str],
+        **kwargs: Any,
+    ) -> None:
+        with self.assertRaises(Util.import_(exceptiontype)):
+            cls.deformat(*strings)
+
+    def go_blob_valid(
+        self: Self,
+        cls: type[Any],
+        /,
+        *,
         solution: str | None = None,
         strings: list[str],
         **kwargs: Any,
     ) -> None:
-        self.assertNotEqual(len(strings), 1)
-        if exceptiontype:
-            with self.assertRaises(Util.import_(exceptiontype)):
-                cls.deformat(*strings)
-            return
         self.assertEqual(cls.deformat(*strings), solution)
         for x in strings:
             self.assertEqual(format(cls(string=x), solution), x)
