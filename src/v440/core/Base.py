@@ -12,6 +12,7 @@ from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
+from v440.core.Release import ReleaseAccumulation
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -19,7 +20,7 @@ class BaseAccumulation:
     basev: str | None
     epoch_mag: int
     epoch_min: int | None
-    releases: frozenset[str]
+    release: ReleaseAccumulation
 
     def intersection(self: Self, other: Self, /) -> Self:
         basev: str | None
@@ -46,14 +47,14 @@ class BaseAccumulation:
             basev=basev,
             epoch_mag=epoch_mag,
             epoch_min=epoch_min,
-            releases=self.releases | other.releases,
+            release=self.release.intersection(other.release),
         )
 
     def best(self: Self, /, *, forbids_empty: bool = False) -> str:
         ans: str
         ans = self.basev or ""
         ans += "#" * self.epoch_mag + "!" * bool(self.epoch_mag)
-        ans += Release_.deformat(*self.releases)
+        ans += self.release.best(forbids_empty=False)
         if ans or not forbids_empty:
             return ans
         return "!"
@@ -79,7 +80,7 @@ class Base(NestedABC):
             basev=matches["basev"],
             epoch_mag=len(epoch) if epoch.startswith("0") else 0,
             epoch_min=len(epoch),
-            releases=frozenset({matches["release"]}),
+            release=self.release._deformat(matches["release"]),
         )
 
     @classmethod
