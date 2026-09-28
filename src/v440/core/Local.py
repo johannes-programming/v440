@@ -16,43 +16,6 @@ from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
 
-def deformat_lits(part: set[str], /) -> str:
-    i: int
-    s: str
-    t: str
-    cases: list[str]
-    cases = ["#"] * max(map(len, part), default=0)
-    for i, s in iterflat(map(enumerate, part)):
-        if s in string_.digits:
-            continue
-        if s in string_.ascii_uppercase:
-            t = "^"
-        else:
-            t = "~"
-        if "#" == cases[i]:
-            cases[i] = t
-            continue
-        if t != cases[i]:
-            raise ValueError
-    s = "".join(cases).replace("#", "~").rstrip("~")
-    return s
-
-
-def deformat_nums(part: set[str], /) -> int:
-    n: int
-    s: str
-    n = 1
-    for s in part:
-        if s.startswith("0"):
-            n = max(n, len(s))
-    if n > min(map(len, part), default=1):
-        raise ValueError
-    elif n == 1:
-        return 0
-    else:
-        return n
-
-
 def item_parse(value: Any, /) -> int | str:
     ans: int | str
     try:
@@ -73,7 +36,7 @@ def item_parse(value: Any, /) -> int | str:
 class EvenAccumulation:
     data: frozenset[str]
 
-    def best(self: EvenAccumulation, /) -> str:
+    def best(self: Self, /) -> str:
         lits: set[str]
         nums: set[str]
         s: str
@@ -84,9 +47,46 @@ class EvenAccumulation:
                 lits.add(s)
             else:
                 nums.add(s)
-        s = "#" * deformat_nums(nums)
-        s += deformat_lits(lits)
+        s = "#" * self.deformat_nums(nums)
+        s += self.deformat_lits(lits)
         return s
+
+    @staticmethod
+    def deformat_lits(part: set[str], /) -> str:
+        i: int
+        s: str
+        t: str
+        cases: list[str]
+        cases = ["#"] * max(map(len, part), default=0)
+        for i, s in iterflat(map(enumerate, part)):
+            if s in string_.digits:
+                continue
+            if s in string_.ascii_uppercase:
+                t = "^"
+            else:
+                t = "~"
+            if "#" == cases[i]:
+                cases[i] = t
+                continue
+            if t != cases[i]:
+                raise ValueError
+        s = "".join(cases).replace("#", "~").rstrip("~")
+        return s
+
+    @staticmethod
+    def deformat_nums(part: set[str], /) -> int:
+        n: int
+        s: str
+        n = 1
+        for s in part:
+            if s.startswith("0"):
+                n = max(n, len(s))
+        if n > min(map(len, part), default=1):
+            raise ValueError
+        elif n == 1:
+            return 0
+        else:
+            return n
 
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(self.data | other.data)
