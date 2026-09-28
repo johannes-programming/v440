@@ -73,16 +73,12 @@ class TestDeformatting(unittest.TestCase):
         strings: list[str],
         **kwargs: Any,
     ) -> None:
-        answer: str
-        ctx: Any
         self.assertNotEqual(len(strings), 1)
-        if exceptiontype == "":
-            ctx = contextlib.nullcontext()
-        else:
-            ctx = self.assertRaises(Util.import_(exceptiontype))
-        with ctx:
-            answer = cls.deformat(*strings)
-            self.assertEqual(answer, solution)
+        if exceptiontype:
+            with self.assertRaises(Util.import_(exceptiontype)):
+                cls.deformat(*strings)
+            return
+        self.assertEqual(cls.deformat(*strings), solution)
 
     def go_cls(
         self: Self,

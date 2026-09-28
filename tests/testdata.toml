@@ -3619,7 +3619,8 @@ strings = [
 ]
 
 [deformatting.Version.whitespace-c-00000006d]
-exceptiontype = "builtins.Exception"
+exceptiontype = ""
+solution = "\r\n##\r\n"
 strings = [
     "\r\n1!01+foo\r\n",
     "\r\n2!02+bar\r\n",
