@@ -7,7 +7,7 @@ __all__: list[str] = ["Local"]
 import operator
 import string as string_
 from dataclasses import dataclass
-from typing import Any, NamedTuple, Self
+from typing import Any, Final, NamedTuple, Self
 
 from iterflat import iterflat
 
@@ -134,6 +134,8 @@ class LocalAccumulation(NamedTuple):
 
 class Local(ListABC[int | str]):
     __slots__ = ()
+
+    _Deformat: Final[type[LocalAccumulation]] = LocalAccumulation
 
     @classmethod
     def _data_parse(

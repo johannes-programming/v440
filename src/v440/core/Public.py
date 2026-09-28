@@ -49,6 +49,7 @@ class PublicAccumulation:
 
 class Public(NestedABC):
 
+    _Deformat: Final[type[PublicAccumulation]] = PublicAccumulation
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
     _base: Base_
