@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["inactive_specs", "token_specs"]
+__all__ = ["token_specs"]
 
 from functools import lru_cache
 from typing import Literal
@@ -15,18 +15,6 @@ Relation = Literal["contains", "exact", "prefix", "suffix"]
 # ``.preview.`` (nine characters).  Hash marks, which describe numeric width,
 # are added separately below.
 _MAX_HEAD = 9
-
-# These are the shortest representatives of the syntactically useful forms of
-# a token whose component is absent from every example.  Although such a token
-# emits no text, it can be required as a fence between two neighbouring tokens
-# in the combined regex grammar (for example ``B#`` in ``alphaB#.pre``).
-_INACTIVE: dict[str, tuple[str, ...]] = {
-    "a_f": ("", "A", "A#"),
-    "b_f": ("", "B", "B#"),
-    "rc_f": ("", "C", "C#"),
-    "post_f": ("", "-", "R", "-#", "R#"),
-    "dev_f": ("", "DEV", "DEV#"),
-}
 
 
 def _matches(pattern: str, value: str, /) -> bool:
@@ -62,7 +50,3 @@ def token_specs(pattern: str, body: str, /) -> tuple[str, ...]:
             if _matches(pattern, spec):
                 specs.add(spec)
     return tuple(sorted(specs, key=lambda s: (len(s), s)))
-
-
-def inactive_specs(pattern: str, /) -> tuple[str, ...]:
-    return _INACTIVE[pattern]

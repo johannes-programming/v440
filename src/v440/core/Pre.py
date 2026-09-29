@@ -9,8 +9,9 @@ from itertools import product
 from typing import Any, Self, SupportsIndex
 
 from v440._deformatting.Clue import Clue
+from v440._deformatting.inactive_specs import inactive_specs
 from v440._deformatting.matching_specs import matching_specs
-from v440._deformatting.Search import inactive_specs, token_specs
+from v440._deformatting.token_specs import token_specs
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
