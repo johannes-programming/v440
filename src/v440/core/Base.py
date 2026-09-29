@@ -27,10 +27,10 @@ class Base(NestedABC):
     def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
-    def _deformat(self: Self, body: str, /) -> BaseAccumulation:
+    def _deformat(self: Self, string: str, /) -> BaseAccumulation:
         epoch: str
         matches: dict[str, str]
-        matches = Cfg.fullmatches("base", body)
+        matches = Cfg.fullmatches("base", string)
         epoch = matches["epoch"]
         return BaseAccumulation(
             basev=matches["basev"],
@@ -54,8 +54,8 @@ class Base(NestedABC):
 
     def _format_parsed(
         self: Self,
-        parsed: tuple[Any, ...],
         /,
+        *parsed: Any,
     ) -> str:
         basev_f: str
         epoch_mag: int

@@ -37,9 +37,7 @@ class Dev(QualABC):
         )
         return (clue,)
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
-        clue: Clue
-        (clue,) = parsed
+    def _format_parsed(self: Self, clue: Clue, /) -> str:
         if not self:
             return ""
         if "" == clue.head:
@@ -75,7 +73,4 @@ class Dev(QualABC):
 
 class DevAccumulation(Clue):
     def best(self: Self, /) -> str:
-        ans: str
-        possible: set[str]
-        ans = self.solo(".dev")
-        return ans
+        return self.solo(".dev")

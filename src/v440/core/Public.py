@@ -56,10 +56,7 @@ class Public(NestedABC):
             i -= 1
         return spec[:i], spec[i:]
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
-        base_f: str
-        qual_f: str
-        base_f, qual_f = parsed
+    def _format_parsed(self: Self, base_f: str, qual_f: str, /) -> str:
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod

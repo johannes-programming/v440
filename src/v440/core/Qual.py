@@ -73,12 +73,10 @@ class Qual(NestedABC):
             matches["dev_f"],
         )
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(
+        self: Self, pre_f: str, post_f: str, dev_f: str, /
+    ) -> str:
         ans: str
-        pre_f: str
-        post_f: str
-        dev_f: str
-        pre_f, post_f, dev_f = parsed
         ans = format(self.pre, pre_f)
         ans += format(self.post, post_f)
         ans += format(self.dev, dev_f)

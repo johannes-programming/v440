@@ -57,7 +57,7 @@ class Local(ListABC[int | str]):
             split.pop()
         return tuple(split)
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(self: Self, /, *parsed: tuple[Any, ...]) -> str:
         ans: str
         item: int | str
         index: int

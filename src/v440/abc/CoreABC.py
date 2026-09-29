@@ -50,7 +50,7 @@ class CoreABC(Copyable):
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return str(self._format_parsed(parsed))
+        return str(self._format_parsed(*parsed))
 
     @abstractmethod
     @setdoc.basic
@@ -91,7 +91,7 @@ class CoreABC(Copyable):
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
 
     @abstractmethod
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> object: ...
+    def _format_parsed(self: Self, /, *parsed: Any) -> object: ...
 
     def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
         x: str

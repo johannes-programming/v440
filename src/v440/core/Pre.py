@@ -43,7 +43,7 @@ class Pre(QualABC):
         rc = Clue.by_spec(matches["rc_f"])
         return a, b, rc
 
-    def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
+    def _format_parsed(self: Self, /, *parsed: Any) -> str:
         ans: str
         a: Clue
         b: Clue
