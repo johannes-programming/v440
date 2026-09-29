@@ -43,7 +43,7 @@ class Base(NestedABC):
         cls: type[Self],
         spec: str,
         /,
-    ) -> tuple[Any, ...]:
+    ) -> tuple[str, int, str]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         return (
@@ -55,13 +55,11 @@ class Base(NestedABC):
     def _format_parsed(
         self: Self,
         /,
-        *parsed: Any,
+        basev_f: str,
+        epoch_mag: int,
+        release_f: str,
     ) -> str:
-        basev_f: str
-        epoch_mag: int
-        release_f: str
         ans: str
-        basev_f, epoch_mag, release_f = parsed
         ans = basev_f
         if epoch_mag or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_mag)

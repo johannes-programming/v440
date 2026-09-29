@@ -43,12 +43,12 @@ class Version(NestedABC):
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         return (VersionSplit.by_string(spec),)
 
-    def _format_parsed(self: Self, split: Any, /) -> str:
+    def _format_parsed(self: Self, split: VersionSplit, /) -> str:
         local: str
         local = format(self.local, split.local)
         if local:
             local = "+" + local
-        return (  # type: ignore[no-any-return]
+        return (
             split.leading
             + format(self.public, split.public)
             + local

@@ -72,7 +72,4 @@ class Post(QualABC):
 
 class PostAccumulation(Clue):
     def best(self: Self, /) -> str:
-        ans: str
-        possible: set[str]
-        ans = self.solo(".post")
-        return ans
+        return self.solo(".post")
