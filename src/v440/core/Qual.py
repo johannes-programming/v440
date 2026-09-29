@@ -162,7 +162,7 @@ class QualAccumulation(NamedTuple):
         pos.append(self[0].possible("A", hollow="a"))
         pos.append(self[1].possible("B", hollow="b"))
         pos.append(self[2].possible("C", hollow="rc"))
-        pos.append(self[3].possible("R", hollow=".post"))
+        pos.append(self[3].possible("-", "R", hollow=".post"))
         pos.append(self[4].possible("DEV", hollow=".dev"))
         sols = list()
         for way in iterprod(*pos):

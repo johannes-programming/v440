@@ -66,6 +66,7 @@ class Clue(BaseClue):
         else:
             ans = {""}
             for short in shorts:
+                ans.add(short)
                 ans.add(short + "#")
             return ans
 
