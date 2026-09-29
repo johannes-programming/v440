@@ -179,12 +179,8 @@ class Release(ListABC[int]):
 
 class ReleaseAccumulation(tuple[Mag, ...]):
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        ans = ".".join("#" * mag for mag in self).rstrip(".")
-        if forbids_empty and not ans:
-            return "#"
-        return ans
+    def best(self: Self, /) -> str:
+        return ".".join("#" * mag for mag in self).rstrip(".")
 
     @classmethod
     def by_string(cls: type[Self], body: str, /) -> Self:

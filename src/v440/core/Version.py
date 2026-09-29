@@ -30,13 +30,20 @@ class Version(NestedABC):
     def _cmp(self: Self, /) -> tuple[Public_, Local_]:
         return self.public, self.local
 
-    def _deformat(self: Self, body: str, /) -> VersionAccumulation:
+    def _deformat(self: Self, spec: str, /) -> VersionAccumulation:
+        body: str
+        leading: str
         local: str
         public: str
+        trailing: str
+        body = spec.strip()
+        leading, trailing = spec.split(body)
         public, local = split_version(body)
         return VersionAccumulation(
-            local=self.local._deformat(local),
+            leading=White(leading),
             public=self.public._deformat(public),
+            local=self.local._deformat(local),
+            trailing=White(trailing),
         )
 
     @classmethod
@@ -93,26 +100,43 @@ class Version(NestedABC):
         self.public.string = value
 
 
+class White(str):
+    def best(self: Self, /) -> str:
+        return self
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        if self == other:
+            return self
+        else:
+            raise ArithmeticError
+
+
 @dataclass(frozen=True, kw_only=True)
 class VersionAccumulation:
+    leading: White
     local: LocalAccumulation
     public: PublicAccumulation
+    trailing: White
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
-        ans: str
-        public: str
+    def best(self: Self, /) -> str:
+        joined: str
         local: str
-        local = self.local.best(forbids_empty=False)
-        public = self.public.best(forbids_empty=False)
-        ans = join_version(public, local)
-        if forbids_empty and not ans:
-            return "#"
-        return ans
+        public: str
+        public = self.public.best()
+        local = self.local.best()
+        joined = join_version(public, local)
+        if joined:
+            return self.leading + joined + self.trailing
+        if self.leading or self.trailing:
+            return self.leading + "#" + self.trailing
+        return ""
 
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
-            local=self.local.intersection(other.local),
+            leading=self.leading.intersection(other.leading),
             public=self.public.intersection(other.public),
+            local=self.local.intersection(other.local),
+            trailing=self.trailing.intersection(other.trailing),
         )
 
 

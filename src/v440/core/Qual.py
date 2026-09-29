@@ -152,7 +152,7 @@ class QualAccumulation(NamedTuple):
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+    def best(self: Self, /) -> str:
         s: str
         t: str
         matches: dict[str, str]
@@ -166,16 +166,6 @@ class QualAccumulation(NamedTuple):
         pos.append(self[2].possible(hollow="rc", short="C"))
         pos.append(self[3].possible(hollow=".post", short="R"))
         pos.append(self[4].possible(hollow=".dev", short="DEV"))
-        if forbids_empty and self[0] == Clue():
-            pos[0].add("A")
-        if forbids_empty and self[1] == Clue():
-            pos[1].add("B")
-        if forbids_empty and self[2] == Clue():
-            pos[2].add("C")
-        if forbids_empty and self[3] == Clue():
-            pos[3].add("-")
-        if forbids_empty and self[4] == Clue():
-            pos[4].add("DEV")
         sols = list()
         for way in iterprod(*pos):
             s = "".join(way)
@@ -184,8 +174,7 @@ class QualAccumulation(NamedTuple):
             for t in ("a", "b", "rc", "post", "dev"):
                 parts.append(matches[t + "_f"])
             if way == tuple(parts):
-                if s or not forbids_empty:
-                    sols.append(s)
+                sols.append(s)
         sols.sort()
         sols.sort(key=len)
         return sols[0]

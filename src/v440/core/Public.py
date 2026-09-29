@@ -106,12 +106,10 @@ class PublicAccumulation:
             qual=self.qual.intersection(other.qual),
         )
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+    def best(self: Self, /) -> str:
         ans: str
-        ans = self.base.best(forbids_empty=False)
-        ans += self.qual.best(forbids_empty=False)
-        if forbids_empty and not ans:
-            return "#"
+        ans = self.base.best()
+        ans += self.qual.best()
         return ans
 
 

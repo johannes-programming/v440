@@ -118,15 +118,13 @@ class BaseAccumulation:
     epoch: Mag
     release: ReleaseAccumulation
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+    def best(self: Self, /) -> str:
         ans: str
         ans = self.basev or ""
         ans += "#" * self.epoch
         ans += "!" * (self.epoch > 0)
-        ans += self.release.best(forbids_empty=False)
-        if ans or not forbids_empty:
-            return ans
-        return "!"
+        ans += self.release.best()
+        return ans
 
     def intersection(self: Self, other: Self, /) -> Self:
         basev: str | None
