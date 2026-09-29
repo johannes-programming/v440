@@ -198,7 +198,8 @@ class QualAccumulation:
                         for dev_spec in dev_group:
                             spec = pre_spec + post_spec + dev_spec
                             if best is not None and (len(spec), spec) >= (
-                                len(best), best
+                                len(best),
+                                best,
                             ):
                                 continue
                             try:

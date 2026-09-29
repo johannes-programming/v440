@@ -3638,6 +3638,14 @@ exceptiontype = ""
 solution = ""
 strings = []
 
+[deformatting.Version.reform-00000001]
+exceptiontype = ""
+solution = "r"
+strings = [
+    "2r.dev3",
+    "1.dev2",
+]
+
 [deformatting.Version.test00000003]
 exceptiontype = "builtins.Exception"
 strings = [
@@ -10404,6 +10412,14 @@ valid = true
 
 [examples.Version."1.2.post.3".formatted]
 
+[examples.Version."1.dev2"]
+deformatted = ""
+valid = true
+
+[examples.Version."1.dev2".formatted]
+"" = "1.dev2"
+r = "1.dev2"
+
 [examples.Version."10!0.0.0+001_ab12"]
 deformatted = "..#+###_"
 valid = true
@@ -10546,6 +10562,14 @@ str = "1rc0"
 valid = true
 
 [examples.Version."1pre.".formatted]
+
+[examples.Version."1r.dev2"]
+deformatted = "r"
+valid = true
+
+[examples.Version."1r.dev2".formatted]
+r = "1r.dev2"
+"r.dev" = "1r.dev2"
 
 [examples.Version."2!00.00.00"]
 deformatted = "##.##.##"
@@ -10719,6 +10743,13 @@ legacy = "Basic Versioning"
 valid = true
 
 [examples.Version."2.4".formatted]
+
+[examples.Version."2r.dev3"]
+deformatted = "r"
+valid = true
+
+[examples.Version."2r.dev3".formatted]
+r = "2r.dev3"
 
 [examples.Version."3!1.0.0a1.dev1rc1+build123"]
 legacy = "Cases with inconsistent pre-release and post-release ordering"
