@@ -52,8 +52,9 @@ class Clue(BaseClue):
         matches = Cfg.fullmatches("clue_f", value)
         return cls(head=matches["head_f"], mag=len(matches["num_f"]))
 
-    def possible(self: Self, short: str, /, *, hollow: str) -> set[str]:
+    def possible(self: Self, /, *shorts: str, hollow: str) -> set[str]:
         ans: set[str]
+        short: str
         if self.head:
             if self.mag < 0:
                 ans = {self.head, self.head + "#"}
@@ -63,7 +64,10 @@ class Clue(BaseClue):
                 ans.add("")
             return ans
         else:
-            return {"", short + "#"}
+            ans = {""}
+            for short in shorts:
+                ans.add(short + "#")
+            return ans
 
     def seal(self: Self, /) -> Self:
         mag: int
