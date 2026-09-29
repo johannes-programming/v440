@@ -30,41 +30,41 @@ class Version(NestedABC):
     def _cmp(self: Self, /) -> tuple[Public_, Local_]:
         return self.public, self.local
 
-    def _deformat(self: Self, spec: str, /) -> VersionAccumulation:
-        body: str
-        leading: str
-        local: str
-        public: str
-        trailing: str
-        body = spec.strip()
-        leading, trailing = spec.split(body)
-        public, local = split_version(body)
+    def _deformat(self: Self, string: str, /) -> VersionAccumulation:
+        splitted: Splitted
+        splitted = Splitted.by_string(string)
         return VersionAccumulation(
-            leading=White(leading),
-            public=self.public._deformat(public),
-            local=self.local._deformat(local),
-            trailing=White(trailing),
+            leading=White(splitted.leading),
+            public=self.public._deformat(splitted.public),
+            local=self.local._deformat(splitted.local),
+            trailing=White(splitted.trailing),
         )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        return tuple(split_version(spec))
+        return (Splitted.by_string(spec),)
 
     def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
-        public_f: str
-        local_f: str
-        public_f, local_f = parsed
-        return join_version(
-            format(self.public, public_f),
-            format(self.local, local_f),
+        ans: str
+        ans = parsed[0].leading
+        ans += join_version(
+            format(self.public, parsed[0].public),
+            format(self.local, parsed[0].local),
         )
+        ans += parsed[0].trailing
+        return ans
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
         return dict(_public=Public_, _local=Local_)
 
     def _string_fset(self: Self, value: str, /) -> None:
-        self.public.string, self.local.string = split_version(value.strip())
+        splitted: Splitted
+        splitted = Splitted.by_string(value)
+        if splitted.plus and not splitted.local:
+            raise ValueError
+        self.public.string = splitted.public
+        self.local.string = splitted.local
 
     def _todict(self: Self, /) -> dict[str, Any]:
         return dict(public=self.public, local=self.local)
@@ -114,8 +114,8 @@ class White(str):
 @dataclass(frozen=True, kw_only=True)
 class VersionAccumulation:
     leading: White
-    local: LocalAccumulation
     public: PublicAccumulation
+    local: LocalAccumulation
     trailing: White
 
     def best(self: Self, /) -> str:
@@ -147,10 +147,29 @@ def join_version(public: str, local: str = "") -> str:
         return public
 
 
-def split_version(string: str, /) -> abc.Iterable[str]:
-    if string.endswith("+"):
-        raise ValueError
-    if "+" in string:
-        return string.split("+")
-    else:
-        return string, ""
+@dataclass(frozen=True, kw_only=True)
+class Splitted:
+    leading: str = ""
+    public: str = ""
+    plus: str = ""
+    local: str = ""
+    trailing: str = ""
+
+    @classmethod
+    def by_string(cls: type[Self], /, string: str) -> Self:
+        stripped = string.strip()
+        leading, trailing = string.split(stripped)
+        if "+" in stripped:
+            public, local = stripped.split("+")
+            plus = "+"
+        else:
+            public = stripped
+            local = ""
+            plus = ""
+        return cls(
+            leading=leading,
+            public=public,
+            plus=plus,
+            local=local,
+            trailing=trailing,
+        )
