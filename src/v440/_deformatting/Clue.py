@@ -53,24 +53,17 @@ class Clue(BaseClue):
         return cls(head=matches["head_f"], mag=len(matches["num_f"]))
 
     def possible(self: Self, short: str, /, *, hollow: str) -> set[str]:
-        n: str
-        nums: set[str]
         ans: set[str]
-        ans = set()
-        if self.head == "":
-            ans.add("")
-            ans.add(short + "#")
+        if self.head:
+            if self.mag < 0:
+                ans = {self.head, self.head + "#"}
+            else:
+                ans = {self.head + "#" * self.mag}
+            if (hollow + "#") in ans:
+                ans.add("")
             return ans
-        if self.mag < 0:
-            nums = {"", "#"}
         else:
-            nums = {"#" * self.mag}
-        ans = set()
-        for n in nums:
-            ans.add(self.head + n)
-        if (hollow + "#") in ans:
-            ans.add("")
-        return ans
+            return {"", short + "#"}
 
     def seal(self: Self, /) -> Self:
         mag: int
