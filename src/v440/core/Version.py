@@ -64,7 +64,7 @@ class Version(NestedABC):
         return dict(_public=Public_, _local=Local_)
 
     def _string_fset(self: Self, value: str, /) -> None:
-        self.public.string, self.local.string = split_version(value)
+        self.public.string, self.local.string = split_version(value.strip())
 
     def _todict(self: Self, /) -> dict[str, Any]:
         return dict(public=self.public, local=self.local)
