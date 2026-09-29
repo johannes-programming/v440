@@ -29,59 +29,6 @@ def core_split(flat: str, /) -> tuple[str, str, str]:
     return x, y, z
 
 
-@dataclass(frozen=True, kw_only=True)
-class CoreAccumulation:
-    insert: int | None
-    white: str
-    body: Any
-
-    def intersection(self: Self, other: Self, /) -> Self:
-        (white,) = {self.white, other.white}
-        body = self.body.intersection(other.body)
-        if self.insert is None:
-            insert = other.insert
-        elif other.insert is None:
-            insert = self.insert
-        else:
-            (insert,) = {self.insert, other.insert}
-        return type(self)(white=white, body=body, insert=insert)
-
-    def best(self: Self, /) -> str:
-        body_: str
-        body_ = self.body.best(forbids_empty=bool(self.white))
-        if self.insert is None:
-            return self.white + body_
-        return self.white[: self.insert] + body_ + self.white[self.insert :]
-
-    @classmethod
-    def by_parsing(
-        cls_: type[Self], /, *, cls: type[Any], string: str
-    ) -> Self:
-        x: str
-        y: str
-        z: str
-        y = string.strip()
-        body = cls(string=string)._deformat(y)
-        if string == "":
-            return cls_(
-                body=body,
-                insert=0,
-                white="",
-            )
-        if y == "":
-            return cls_(
-                body=body,
-                insert=None,
-                white=string,
-            )
-        x, z = string.split(y)
-        return cls_(
-            body=body,
-            insert=len(x),
-            white=x + z,
-        )
-
-
 class CoreABC(Copyable):
     __slots__ = ()
 
@@ -95,25 +42,15 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
-        body: str
-        head: str
-        parsed: tuple[Any, ...]
-        spec: str
-        tail: str
         msg: str
+        parsed: tuple[Any, ...]
         try:
-            spec = str(format_spec)
-            body = spec.strip()
-            if spec and not body:
-                raise ValueError
-            head = spec[: len(spec) - len(spec.lstrip())]
-            tail = spec[len(spec.rstrip()) :]
-            parsed = self._format_parse(body)
+            parsed = self._format_parse(str(format_spec))
         except Exception:
             msg = Cfg.cfg.data["consts"]["errors"]["format"]
             msg %= (format_spec, type(self).__name__)
             raise VersionError(msg)  # from None
-        return head + str(self._format_parsed(parsed)) + tail
+        return str(self._format_parsed(parsed))
 
     @abstractmethod
     @setdoc.basic
@@ -179,12 +116,10 @@ class CoreABC(Copyable):
             return ""
         flats = list(sorted(set(map(str, strings))))
         try:
-            acc = CoreAccumulation.by_parsing(cls=cls, string=flats[0])
+            acc = cls(string=flats[0])._deformat(flats[0])
             for flat in flats[1:]:
-                acc = acc.intersection(
-                    CoreAccumulation.by_parsing(cls=cls, string=flat)
-                )
-            return acc.best()
+                acc = acc.intersection(cls(string=flat)._deformat(flat))
+            return acc.best()  # type: ignore[no-any-return]
         except VersionError:
             raise
         except Exception:
@@ -204,4 +139,4 @@ class CoreABC(Copyable):
     @string.setter
     @setter
     def string(self: Self, value: object, /) -> None:
-        self._string_fset(str(value).strip().lower())
+        self._string_fset(str(value).lower())

@@ -4,9 +4,8 @@ from __future__ import annotations
 
 __all__: list[str] = ["Version"]
 
-from collections import abc
 from dataclasses import dataclass
-from typing import Any, Final, Self
+from typing import Any, Final, NamedTuple, Self
 
 import packaging.version
 
@@ -30,26 +29,30 @@ class Version(NestedABC):
     def _cmp(self: Self, /) -> tuple[Public_, Local_]:
         return self.public, self.local
 
-    def _deformat(self: Self, body: str, /) -> VersionAccumulation:
-        local: str
-        public: str
-        public, local = split_version(body)
+    def _deformat(self: Self, string: str, /) -> VersionAccumulation:
+        split: VersionSplit
+        split = VersionSplit.by_string(string)
         return VersionAccumulation(
-            local=self.local._deformat(local),
-            public=self.public._deformat(public),
+            leading=split.leading,
+            public=self.public._deformat(split.public),
+            local=self.local._deformat(split.local),
+            trailing=split.trailing,
         )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        return tuple(split_version(spec))
+        return (VersionSplit.by_string(spec),)
 
     def _format_parsed(self: Self, parsed: tuple[Any, ...], /) -> str:
-        public_f: str
-        local_f: str
-        public_f, local_f = parsed
-        return join_version(
-            format(self.public, public_f),
-            format(self.local, local_f),
+        local: str
+        local = format(self.local, parsed[0].local)
+        if local:
+            local = "+" + local
+        return (  # type: ignore[no-any-return]
+            parsed[0].leading
+            + format(self.public, parsed[0].public)
+            + local
+            + parsed[0].trailing
         )
 
     @classmethod
@@ -57,7 +60,15 @@ class Version(NestedABC):
         return dict(_public=Public_, _local=Local_)
 
     def _string_fset(self: Self, value: str, /) -> None:
-        self.public.string, self.local.string = split_version(value)
+        stripped: str
+        stripped = value.strip()
+        if stripped.endswith("+"):
+            raise ValueError
+        if "+" in stripped:
+            self.public.string, self.local.string = stripped.split("+")
+        else:
+            self.public.string = stripped
+            self.local.string = ""
 
     def _todict(self: Self, /) -> dict[str, Any]:
         return dict(public=self.public, local=self.local)
@@ -95,38 +106,58 @@ class Version(NestedABC):
 
 @dataclass(frozen=True, kw_only=True)
 class VersionAccumulation:
-    local: LocalAccumulation
+    leading: str
     public: PublicAccumulation
+    local: LocalAccumulation
+    trailing: str
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+    def best(self: Self, /) -> str:
         ans: str
-        public: str
-        local: str
-        local = self.local.best(forbids_empty=False)
-        public = self.public.best(forbids_empty=False)
-        ans = join_version(public, local)
-        if forbids_empty and not ans:
-            return "#"
-        return ans
+        ans = self.local.best()
+        if ans:
+            ans = "+" + ans
+        ans = self.public.best() + ans
+        if ans or self.leading == self.trailing == "":
+            return self.leading + ans + self.trailing
+        else:
+            return self.leading + "!" + self.trailing
 
     def intersection(self: Self, other: Self, /) -> Self:
+        if self.leading != other.leading or self.trailing != other.trailing:
+            raise ArithmeticError
         return type(self)(
-            local=self.local.intersection(other.local),
+            leading=self.leading,
             public=self.public.intersection(other.public),
+            local=self.local.intersection(other.local),
+            trailing=self.trailing,
         )
 
 
-def join_version(public: str, local: str = "") -> str:
-    if local:
-        return public + "+" + local
-    else:
-        return public
+class VersionSplit(NamedTuple):
+    leading: str
+    public: str
+    local: str
+    trailing: str
 
-
-def split_version(string: str, /) -> abc.Iterable[str]:
-    if string.endswith("+"):
-        raise ValueError
-    if "+" in string:
-        return string.split("+")
-    else:
-        return string, ""
+    @classmethod
+    def by_string(cls: type[Self], /, string: str) -> Self:
+        leading: str
+        local: str
+        public: str
+        stripped: str
+        trailing: str
+        if string == "":
+            return cls("", "", "", "")
+        stripped = string.strip()
+        leading, trailing = string.split(stripped)
+        if "+" in stripped:
+            public, local = stripped.split("+")
+        else:
+            public = stripped
+            local = ""
+        return cls(
+            leading=leading,
+            public=public,
+            local=local,
+            trailing=trailing,
+        )

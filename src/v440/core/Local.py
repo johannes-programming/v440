@@ -212,7 +212,7 @@ class LocalAccumulation(NamedTuple):
     evens: tuple[EvenAccumulation, ...]
     odds: tuple[str, ...]
 
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+    def best(self: Self, /) -> str:
         ans: str
         even: EvenAccumulation
         odd: str
@@ -223,8 +223,6 @@ class LocalAccumulation(NamedTuple):
         if len(self.odds) < len(self.evens):
             ans += self.evens[-1].best()
         ans = ans.rstrip(".")
-        if forbids_empty and not ans:
-            return "#"
         return ans
 
     @classmethod

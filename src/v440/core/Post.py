@@ -71,13 +71,8 @@ class Post(QualABC):
 
 
 class PostAccumulation(Clue):
-    def best(self: Self, /, *, forbids_empty: bool = False) -> str:
+    def best(self: Self, /) -> str:
         ans: str
         possible: set[str]
         ans = self.solo(".post")
-        if ans or not forbids_empty:
-            return ans
-        if not self.head:
-            return "-"
-        possible = self.possible(hollow=".post", short="R") - {""}
-        return min(possible, key=lambda x: (len(x), x))
+        return ans
