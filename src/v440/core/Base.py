@@ -118,7 +118,7 @@ class BaseAccumulation:
 
     def best(self: Self, /) -> str:
         ans: str
-        ans = self.basev or ""
+        ans = self.basev
         ans += "#" * self.epoch
         ans += "!" * (self.epoch > 0)
         ans += self.release.best()
