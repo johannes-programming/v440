@@ -112,7 +112,7 @@ class Base(NestedABC):
 
 @dataclass(frozen=True, kw_only=True)
 class BaseAccumulation:
-    basev: str | None
+    basev: str
     epoch: Mag
     release: ReleaseAccumulation
 
@@ -125,19 +125,12 @@ class BaseAccumulation:
         return ans
 
     def intersection(self: Self, other: Self, /) -> Self:
-        basev: str | None
         epoch: Mag
-        if self.basev is None:
-            basev = other.basev
-        elif other.basev is None:
-            basev = self.basev
-        elif self.basev == other.basev:
-            basev = self.basev
-        else:
+        if self.basev != other.basev:
             raise ValueError
         epoch = self.epoch.intersection(other.epoch)
         return type(self)(
-            basev=basev,
+            basev=self.basev,
             epoch=epoch,
             release=self.release.intersection(other.release),
         )
