@@ -13,7 +13,7 @@ from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
 from v440.core.Dev import DevCandidatePool
 from v440.core.Post import Post as Post_
-from v440.core.Post import _candidate_specs_for as _post_candidate_specs_for
+from v440.core.Post import PostCandidatePool
 from v440.core.Pre import Pre as Pre_
 from v440.core.Pre import _candidate_specs_for as _pre_candidate_specs_for
 
@@ -146,7 +146,7 @@ class QualAccumulation:
         pre_specs = _pre_candidate_specs_for(
             pre_objects, self.strings, "prefix"
         )
-        post_specs = _post_candidate_specs_for(
+        post_specs = PostCandidatePool.by_specs(
             post_objects, self.strings, "contains"
         )
         dev_specs = DevCandidatePool.by_specs(
