@@ -94,9 +94,6 @@ class PreAccumulation(NamedTuple):
     b: Clue = Clue()
     rc: Clue = Clue()
 
-    def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
-
     def best(self: Self, /) -> str:
         matches: dict[str, str]
         pos: list[set[str]]
@@ -116,3 +113,6 @@ class PreAccumulation(NamedTuple):
         sols.sort()
         sols.sort(key=len)
         return sols[0]
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
