@@ -170,14 +170,6 @@ class NumAccumulation:
         else:
             return "#" * self.data
 
-    @classmethod
-    def by_item(cls: type[Self], item: str, /) -> Self:
-        if len(item) == 1:
-            return cls(data=Mag())
-        if item.startswith("0"):
-            return cls(data=Mag(len(item)))
-        return cls(data=Mag(-len(item)))
-
     def intersection(self: Self, other: Self, /) -> Self:
         if self.data is None:
             return other
@@ -198,8 +190,11 @@ class EvenAccumulation:
     def by_item(cls: type[Self], item: str, /) -> Self:
         if item.strip(string_.digits):
             return cls(lit=LitAccumulation.by_item(item))
-        else:
-            return cls(num=NumAccumulation.by_item(item))
+        if len(item) == 1:
+            return cls(num=NumAccumulation(data=Mag()))
+        if item.startswith("0"):
+            return cls(num=NumAccumulation(data=Mag(len(item))))
+        return cls(num=NumAccumulation(data=Mag(-len(item))))
 
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
