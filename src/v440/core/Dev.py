@@ -81,7 +81,7 @@ class DevAccumulation:
 
     def best(self: Self, /) -> str:
         objects = tuple(Dev(string=body) for body in self.strings)
-        candidates = _candidate_specs_for(objects, self.strings, "exact")
+        candidates = DevCandidatePool.by_specs(objects, self.strings, "exact")
         if not candidates:
             raise ValueError
         return candidates[0]
@@ -90,20 +90,27 @@ class DevAccumulation:
         return type(self)(tuple(sorted(set(self.strings + other.strings))))
 
 
-def _candidate_specs_for(
-    objects: tuple[Dev, ...], strings: tuple[str, ...], relation: str, /
-) -> tuple[str, ...]:
-    if not objects:
-        return ("",)
-    active = next((i for i, obj in enumerate(objects) if obj), None)
-    specs = (
-        inactive_specs("dev_f")
-        if active is None
-        else token_specs("dev_f", strings[active])
-    )
-    return matching_specs(
-        objects,
-        strings,
-        specs,
-        relation,  # type: ignore[arg-type]
-    )
+class DevCandidatePool(tuple[str]):
+    @classmethod
+    def by_specs(
+        cls: type[Self],
+        objects: tuple[Dev, ...],
+        strings: tuple[str, ...],
+        relation: str,
+        /,
+    ) -> tuple[str, ...]:
+        if not objects:
+            return ("",)
+        active = next((i for i, obj in enumerate(objects) if obj), None)
+        specs = (
+            inactive_specs("dev_f")
+            if active is None
+            else token_specs("dev_f", strings[active])
+        )
+        data = matching_specs(
+            objects,
+            strings,
+            specs,
+            relation,  # type: ignore[arg-type]
+        )
+        return cls(data)

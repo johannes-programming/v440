@@ -11,7 +11,7 @@ from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
-from v440.core.Dev import _candidate_specs_for as _dev_candidate_specs_for
+from v440.core.Dev import DevCandidatePool
 from v440.core.Post import Post as Post_
 from v440.core.Post import _candidate_specs_for as _post_candidate_specs_for
 from v440.core.Pre import Pre as Pre_
@@ -149,7 +149,7 @@ class QualAccumulation:
         post_specs = _post_candidate_specs_for(
             post_objects, self.strings, "contains"
         )
-        dev_specs = _dev_candidate_specs_for(
+        dev_specs = DevCandidatePool.by_specs(
             dev_objects, self.strings, "suffix"
         )
 
