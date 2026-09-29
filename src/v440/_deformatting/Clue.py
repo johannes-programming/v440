@@ -52,7 +52,7 @@ class Clue(BaseClue):
         matches = Cfg.fullmatches("clue_f", value)
         return cls(head=matches["head_f"], mag=len(matches["num_f"]))
 
-    def possible(self: Self, /, *, hollow: str, short: str) -> set[str]:
+    def possible(self: Self, short: str, /, *, hollow: str) -> set[str]:
         n: str
         nums: set[str]
         ans: set[str]

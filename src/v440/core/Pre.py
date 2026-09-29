@@ -104,9 +104,9 @@ class PreAccumulation(NamedTuple):
         s: str
         way: tuple[Any, ...]
         pos = list()
-        pos.append(self.a.possible(hollow="a", short="A"))
-        pos.append(self.b.possible(hollow="b", short="B"))
-        pos.append(self.rc.possible(hollow="rc", short="C"))
+        pos.append(self.a.possible("A", hollow="a"))
+        pos.append(self.b.possible("B", hollow="b"))
+        pos.append(self.rc.possible("C", hollow="rc"))
         sols = list()
         for way in iterprod(*pos):
             s = "".join(way)
