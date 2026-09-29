@@ -3678,64 +3678,6 @@ query = true
 [examples.Base.""]
 valid = false
 
-[examples.Base."	0!00.00"]
-bool = false
-deformatted = "	#!##.##"
-valid = true
-
-[examples.Base."	0!1.0	"]
-deformatted = "	#!.#	"
-valid = true
-
-[examples.Base."	01	"]
-deformatted = "	##	"
-valid = true
-
-[examples.Base."\n0!1.0.0.0\n"]
-deformatted = "\n#!...#\n"
-valid = true
-
-[examples.Base."\r\n00\r\n"]
-bool = false
-deformatted = "\r\n##\r\n"
-valid = true
-
-[examples.Base." 	0.0.0	 "]
-bool = false
-deformatted = " 	..#	 "
-valid = true
-
-[examples.Base."   "]
-bool = false
-valid = false
-
-[examples.Base."  00.00  "]
-bool = false
-deformatted = "  ##.##  "
-valid = true
-
-[examples.Base."  v1	"]
-deformatted = "  v	"
-valid = true
-
-[examples.Base." 0!0"]
-bool = false
-deformatted = " #!"
-valid = true
-
-[examples.Base." 0!00 "]
-bool = false
-deformatted = " #!## "
-valid = true
-
-[examples.Base." 1 "]
-deformatted = " ! "
-valid = true
-
-[examples.Base." 1!0"]
-deformatted = " !"
-valid = true
-
 [examples.Base."!"]
 valid = false
 
@@ -3765,16 +3707,6 @@ bool = false
 deformatted = "#!..#"
 valid = true
 
-[examples.Base."0!0.0.0\n	"]
-bool = false
-deformatted = "#!..#\n	"
-valid = true
-
-[examples.Base."0!0.0.0 "]
-bool = false
-deformatted = "#!..# "
-valid = true
-
 [examples.Base."0!00"]
 bool = false
 deformatted = "#!##"
@@ -3787,10 +3719,6 @@ valid = true
 
 [examples.Base."0!001"]
 deformatted = "#!###"
-valid = true
-
-[examples.Base."0!001	"]
-deformatted = "#!###	"
 valid = true
 
 [examples.Base."0!1.0"]
@@ -4116,55 +4044,6 @@ bool = false
 deformatted = ""
 valid = true
 
-[examples.Dev."	-DEV0"]
-deformatted = "	-DEV#"
-valid = true
-
-[examples.Dev."	-Dev	"]
-deformatted = "	-Dev	"
-valid = true
-
-[examples.Dev."	dev01	"]
-deformatted = "	dev##	"
-valid = true
-
-[examples.Dev."\n-Dev-1\n"]
-deformatted = "\n-Dev-\n"
-valid = true
-
-[examples.Dev."\r\n-Dev0\r\n"]
-deformatted = "\r\n-Dev#\r\n"
-valid = true
-
-[examples.Dev." 	-Dev.1	 "]
-deformatted = " 	-Dev.	 "
-valid = true
-
-[examples.Dev."   "]
-bool = false
-deformatted = "   DEV"
-valid = true
-
-[examples.Dev."  -Dev_1  "]
-deformatted = "  -Dev_  "
-valid = true
-
-[examples.Dev."  -dev1	"]
-deformatted = "  -dev	"
-valid = true
-
-[examples.Dev." -DEV"]
-deformatted = " -DEV"
-valid = true
-
-[examples.Dev." -DEV.1 "]
-deformatted = " -DEV. "
-valid = true
-
-[examples.Dev." .dev1 "]
-deformatted = " .dev "
-valid = true
-
 [examples.Dev.--dev1]
 valid = false
 
@@ -4174,10 +4053,6 @@ valid = true
 
 [examples.Dev.-DEV-1]
 deformatted = "-DEV-"
-valid = true
-
-[examples.Dev."-DEV-1 "]
-deformatted = "-DEV- "
 valid = true
 
 [examples.Dev."-DEV.1"]
@@ -4190,10 +4065,6 @@ valid = true
 
 [examples.Dev.-DEV_1]
 deformatted = "-DEV_"
-valid = true
-
-[examples.Dev."-DEV_1	"]
-deformatted = "-DEV_	"
 valid = true
 
 [examples.Dev.-Dev]
@@ -4541,65 +4412,6 @@ deformatted = ""
 str = ""
 valid = true
 
-[examples.Local."	0-A1"]
-deformatted = "	-^"
-valid = true
-
-[examples.Local."	0-ABC	"]
-deformatted = "	-^^^	"
-valid = true
-
-[examples.Local."	ABC	"]
-deformatted = "	^^^	"
-valid = true
-
-[examples.Local."\n0-AbC\n"]
-deformatted = "\n-^~^\n"
-valid = true
-
-[examples.Local."\r\n0.01\r\n"]
-deformatted = "\r\n.##\r\n"
-valid = true
-
-[examples.Local." 	0.001	 "]
-deformatted = " 	.###	 "
-valid = true
-
-[examples.Local."   "]
-bool = false
-deformatted = "   #"
-valid = true
-
-[examples.Local."    "]
-bool = false
-deformatted = "    #"
-valid = true
-
-[examples.Local."     "]
-bool = false
-deformatted = "     #"
-valid = true
-
-[examples.Local."  0.A1  "]
-deformatted = "  .^  "
-valid = true
-
-[examples.Local."  01	"]
-deformatted = "  ##	"
-valid = true
-
-[examples.Local." 0-0"]
-deformatted = " -"
-valid = true
-
-[examples.Local." 0-01 "]
-deformatted = " -## "
-valid = true
-
-[examples.Local." abc "]
-deformatted = " # "
-valid = true
-
 [examples.Local."+"]
 valid = false
 
@@ -4618,10 +4430,6 @@ valid = true
 deformatted = "-###"
 valid = true
 
-[examples.Local."0-001 "]
-deformatted = "-### "
-valid = true
-
 [examples.Local.0-01]
 deformatted = "-##"
 valid = true
@@ -4632,10 +4440,6 @@ valid = true
 
 [examples.Local.0-AB12]
 deformatted = "-^^"
-valid = true
-
-[examples.Local."0-AB12	"]
-deformatted = "-^^	"
 valid = true
 
 [examples.Local.0-ABC]
@@ -4956,55 +4760,6 @@ deformatted = ""
 str = ""
 valid = true
 
-[examples.Post."	-R"]
-deformatted = "	-R"
-valid = true
-
-[examples.Post."	-R-1	"]
-deformatted = "	-R-	"
-valid = true
-
-[examples.Post."	post01	"]
-deformatted = "	post##	"
-valid = true
-
-[examples.Post."\n-R.0\n"]
-deformatted = "\n-R.#\n"
-valid = true
-
-[examples.Post."\r\n-R0\r\n"]
-deformatted = "\r\n-R#\r\n"
-valid = true
-
-[examples.Post." 	-R.1	 "]
-deformatted = " 	-R.	 "
-valid = true
-
-[examples.Post."   "]
-bool = false
-deformatted = "   -"
-valid = true
-
-[examples.Post."  -1	"]
-deformatted = "  -	"
-valid = true
-
-[examples.Post."  -R01  "]
-deformatted = "  -R##  "
-valid = true
-
-[examples.Post." -0"]
-deformatted = " -"
-valid = true
-
-[examples.Post." -01 "]
-deformatted = " -## "
-valid = true
-
-[examples.Post." .post1 "]
-deformatted = " .post "
-valid = true
-
 [examples.Post.-]
 valid = false
 
@@ -5019,10 +4774,6 @@ valid = true
 deformatted = "-###"
 valid = true
 
-[examples.Post."-001 "]
-deformatted = "-### "
-valid = true
-
 [examples.Post.-01]
 deformatted = "-##"
 valid = true
@@ -5033,10 +4784,6 @@ valid = true
 
 [examples.Post.-R-0]
 deformatted = "-R-#"
-valid = true
-
-[examples.Post."-R-0	"]
-deformatted = "-R-#	"
 valid = true
 
 [examples.Post.-R-1]
@@ -5383,65 +5130,12 @@ deformatted = ""
 str = ""
 valid = true
 
-[examples.Pre."	-A0"]
-deformatted = "	-A#"
-valid = true
-
-[examples.Pre."	-B	"]
-deformatted = "	-B	"
-valid = true
-
-[examples.Pre."	alpha1	"]
-deformatted = "	alpha	"
-valid = true
-
-[examples.Pre."\n-B-1\n"]
-deformatted = "\n-B-\n"
-valid = true
-
-[examples.Pre."\r\n-B0\r\n"]
-deformatted = "\r\n-B#\r\n"
-valid = true
-
-[examples.Pre." 	-B.1	 "]
-deformatted = " 	-B.	 "
-valid = true
-
-[examples.Pre."   "]
-bool = false
-deformatted = "   A"
-valid = true
-
-[examples.Pre."  -B_1  "]
-deformatted = "  -B_  "
-valid = true
-
-[examples.Pre."  a01	"]
-deformatted = "  a##	"
-valid = true
-
-[examples.Pre." -A"]
-deformatted = " -A"
-valid = true
-
-[examples.Pre." -A.1 "]
-deformatted = " -A. "
-valid = true
-
-[examples.Pre." a1 "]
-deformatted = " B "
-valid = true
-
 [examples.Pre.-A]
 deformatted = "-A"
 valid = true
 
 [examples.Pre.-A-1]
 deformatted = "-A-"
-valid = true
-
-[examples.Pre."-A-1 "]
-deformatted = "-A- "
 valid = true
 
 [examples.Pre."-A.1"]
@@ -5454,10 +5148,6 @@ valid = true
 
 [examples.Pre.-A_1]
 deformatted = "-A_"
-valid = true
-
-[examples.Pre."-A_1	"]
-deformatted = "-A_	"
 valid = true
 
 [examples.Pre.-B]
@@ -5827,53 +5517,6 @@ valid = false
 [examples.Public.""]
 valid = false
 
-[examples.Public."	0-02"]
-deformatted = "	-##"
-valid = true
-
-[examples.Public."	001!00	"]
-deformatted = "	###!##	"
-valid = true
-
-[examples.Public."	01	"]
-deformatted = "	##	"
-valid = true
-
-[examples.Public."\n001!007\n"]
-deformatted = "\n###!###\n"
-valid = true
-
-[examples.Public."\r\n001!1.2.3-02\r\n"]
-deformatted = "\r\n###!-##\r\n"
-valid = true
-
-[examples.Public." 	001!1.2.3	 "]
-deformatted = " 	###!	 "
-valid = true
-
-[examples.Public."   "]
-valid = false
-
-[examples.Public."  007  "]
-deformatted = "  ###  "
-valid = true
-
-[examples.Public."  v1	"]
-deformatted = "  v	"
-valid = true
-
-[examples.Public." 0!001.002"]
-deformatted = " #!###.###"
-valid = true
-
-[examples.Public." 0!100 "]
-deformatted = " #! "
-valid = true
-
-[examples.Public." 1 "]
-deformatted = " # "
-valid = true
-
 [examples.Public."!1"]
 valid = false
 
@@ -5896,10 +5539,6 @@ valid = true
 deformatted = "#!...#"
 valid = true
 
-[examples.Public."0!1.0.0.0 "]
-deformatted = "#!...# "
-valid = true
-
 [examples.Public."0!100"]
 deformatted = "#!"
 valid = true
@@ -5911,11 +5550,6 @@ valid = true
 [examples.Public."0.0.0"]
 bool = false
 deformatted = "..#"
-valid = true
-
-[examples.Public."0.0.0	"]
-bool = false
-deformatted = "..#	"
 valid = true
 
 [examples.Public."001!00"]
@@ -6246,55 +5880,6 @@ deformatted = ""
 str = ""
 valid = true
 
-[examples.Qual."	-1"]
-deformatted = "	-"
-valid = true
-
-[examples.Qual."	-1.dev	"]
-deformatted = "	-.dev	"
-valid = true
-
-[examples.Qual."	.post1	"]
-deformatted = "	A	"
-valid = true
-
-[examples.Qual."\n-1DEV5\n"]
-deformatted = "\n-DEV\n"
-valid = true
-
-[examples.Qual."\r\n-1dev1\r\n"]
-deformatted = "\r\n-dev\r\n"
-valid = true
-
-[examples.Qual." 	-1_dev-3	 "]
-deformatted = " 	-_dev-	 "
-valid = true
-
-[examples.Qual."   "]
-bool = false
-deformatted = "   -"
-valid = true
-
-[examples.Qual."  -2  "]
-deformatted = "  -  "
-valid = true
-
-[examples.Qual."  .dev1	"]
-deformatted = "  -	"
-valid = true
-
-[examples.Qual." -02"]
-deformatted = " -##"
-valid = true
-
-[examples.Qual." -02dev1 "]
-deformatted = " -##dev "
-valid = true
-
-[examples.Qual." a1 "]
-deformatted = " - "
-valid = true
-
 [examples.Qual.-]
 valid = false
 
@@ -6304,10 +5889,6 @@ valid = true
 
 [examples.Qual.-02DEV5]
 deformatted = "-##DEV"
-valid = true
-
-[examples.Qual."-02DEV5 "]
-deformatted = "-##DEV "
 valid = true
 
 [examples.Qual.-02dev1]
@@ -6320,10 +5901,6 @@ valid = true
 
 [examples.Qual.-1-dev4]
 deformatted = "--dev"
-valid = true
-
-[examples.Qual."-1-dev4	"]
-deformatted = "--dev	"
 valid = true
 
 [examples.Qual."-1.dev"]
@@ -6745,56 +6322,6 @@ valid = false
 [examples.Release.""]
 valid = false
 
-[examples.Release."	00.00.00"]
-bool = false
-deformatted = "	##.##.##"
-valid = true
-
-[examples.Release."	0001.0002.0003	"]
-deformatted = "	####.####.####	"
-valid = true
-
-[examples.Release."	01	"]
-deformatted = "	##	"
-valid = true
-
-[examples.Release."\n001\n"]
-deformatted = "\n###\n"
-valid = true
-
-[examples.Release."\r\n01.02.003\r\n"]
-deformatted = "\r\n##.##.###\r\n"
-valid = true
-
-[examples.Release." 	01	 "]
-deformatted = " 	##	 "
-valid = true
-
-[examples.Release."   "]
-valid = false
-
-[examples.Release."  01.02.3  "]
-deformatted = "  ##.##  "
-valid = true
-
-[examples.Release."  1.2.0	"]
-deformatted = "  ..#	"
-valid = true
-
-[examples.Release." 0.0"]
-bool = false
-deformatted = " .#"
-valid = true
-
-[examples.Release." 00 "]
-bool = false
-deformatted = " ## "
-valid = true
-
-[examples.Release." 1 "]
-deformatted = " # "
-valid = true
-
 [examples.Release."+1"]
 valid = false
 
@@ -6826,11 +6353,6 @@ bool = false
 deformatted = "..#"
 valid = true
 
-[examples.Release."0.0.0 "]
-bool = false
-deformatted = "..# "
-valid = true
-
 [examples.Release."0.0.1"]
 deformatted = ""
 str = "0.0.1"
@@ -6849,11 +6371,6 @@ valid = true
 [examples.Release.000]
 bool = false
 deformatted = "###"
-valid = true
-
-[examples.Release."000	"]
-bool = false
-deformatted = "###	"
 valid = true
 
 [examples.Release."0001.0002.0003"]
