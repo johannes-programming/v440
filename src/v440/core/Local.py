@@ -7,9 +7,10 @@ __all__: list[str] = ["Local"]
 import operator
 import string as string_
 from dataclasses import dataclass
-from typing import Any, Final, NamedTuple, Self
+from typing import Any, NamedTuple, Self
 
 from v440._deformatting.Mag import Mag
+from v440._deformatting.MagJoker import MagJoker
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
@@ -160,28 +161,10 @@ class LitAccumulation:
         return type(self)("".join(ans))
 
 
-@dataclass(frozen=True)
-class NumAccumulation:
-    data: Mag | None = None
-
-    def best(self: Self, /) -> str:
-        if self.data is None:
-            return ""
-        else:
-            return "#" * self.data
-
-    def intersection(self: Self, other: Self, /) -> Self:
-        if self.data is None:
-            return other
-        if other.data is None:
-            return self
-        return type(self)(self.data.intersection(other.data))
-
-
 @dataclass(frozen=True, kw_only=True)
 class EvenAccumulation:
+    num: Mag | MagJoker = MagJoker.JOKER
     lit: LitAccumulation = LitAccumulation()
-    num: NumAccumulation = NumAccumulation()
 
     def best(self: Self, /) -> str:
         return self.num.best() + self.lit.best()
@@ -191,10 +174,10 @@ class EvenAccumulation:
         if item.strip(string_.digits):
             return cls(lit=LitAccumulation.by_item(item))
         if len(item) == 1:
-            return cls(num=NumAccumulation(data=Mag()))
+            return cls(num=Mag())
         if item.startswith("0"):
-            return cls(num=NumAccumulation(data=Mag(len(item))))
-        return cls(num=NumAccumulation(data=Mag(-len(item))))
+            return cls(num=Mag(len(item)))
+        return cls(num=Mag(-len(item)))
 
     def intersection(self: Self, other: Self, /) -> Self:
         return type(self)(
