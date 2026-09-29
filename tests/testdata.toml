@@ -6272,6 +6272,9 @@ valid = true
 [examples.Public."1+a"]
 valid = false
 
+[examples.Public.1-dev2]
+valid = true
+
 [examples.Public."1."]
 valid = false
 
@@ -6609,6 +6612,9 @@ valid = true
 
 [examples.Qual.-alpha3]
 deformatted = "-alpha"
+valid = true
+
+[examples.Qual.-dev2]
 valid = true
 
 [examples.Qual.".a2"]
@@ -7699,11 +7705,6 @@ str = "1.post1"
 valid = true
 
 [examples.Version.1-dev2]
-valid = true
-[examples.Public.1-dev2]
-valid = true
-
-[examples.Qual.-dev2]
 valid = true
 
 [examples.Version.1-dev2.formatted]
