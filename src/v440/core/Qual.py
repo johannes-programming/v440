@@ -4,17 +4,18 @@ from __future__ import annotations
 
 __all__: list[str] = ["Qual"]
 
-from typing import Any, Final, NamedTuple, Self
+from dataclasses import dataclass
+from typing import Any, Final, Self
 
-from iterprod import iterprod
-
-from v440._deformatting.Clue import Clue
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Dev import Dev as Dev_
+from v440.core.Dev import _candidate_specs_for as _dev_candidate_specs_for
 from v440.core.Post import Post as Post_
+from v440.core.Post import _candidate_specs_for as _post_candidate_specs_for
 from v440.core.Pre import Pre as Pre_
+from v440.core.Pre import _candidate_specs_for as _pre_candidate_specs_for
 
 
 class Qual(NestedABC):
@@ -39,29 +40,7 @@ class Qual(NestedABC):
         return ans + (self.post, self.dev)
 
     def _deformat(self: Self, body: str, /) -> QualAccumulation:
-        clues: list[Clue]
-        matches: dict[str, str]
-        matches = Cfg.fullmatches("qual", body)
-        clues = list()
-        if self.pre.lit == "":
-            clues.append(Clue())
-            clues.append(Clue())
-            clues.append(Clue())
-        if self.pre.lit == "a":
-            clues.append(Clue.by_example(matches["pre"]))
-            clues.append(Clue())
-            clues.append(Clue())
-        if self.pre.lit == "b":
-            clues.append(Clue())
-            clues.append(Clue.by_example(matches["pre"]))
-            clues.append(Clue())
-        if self.pre.lit == "rc":
-            clues.append(Clue())
-            clues.append(Clue())
-            clues.append(Clue.by_example(matches["pre"]))
-        clues.append(Clue.by_example(matches["post"]))
-        clues.append(Clue.by_example(matches["dev"]))
-        return QualAccumulation(*clues)
+        return QualAccumulation((body,))
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
@@ -139,40 +118,99 @@ class Qual(NestedABC):
         self.pre.string = value
 
 
-class QualAccumulation(NamedTuple):
-
-    a: Clue = Clue()
-    b: Clue = Clue()
-    rc: Clue = Clue()
-    post: Clue = Clue()
-    dev: Clue = Clue()
+@dataclass(frozen=True)
+class QualAccumulation:
+    strings: tuple[str, ...] = ()
 
     def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
+        return type(self)(tuple(sorted(set(self.strings + other.strings))))
 
     def best(self: Self, /) -> str:
-        s: str
-        t: str
-        matches: dict[str, str]
-        parts: list[str]
-        pos: list[set[str]]
-        sols: list[str]
-        way: tuple[Any, ...]
-        pos = list()
-        pos.append(self[0].possible("A", hollow="a"))
-        pos.append(self[1].possible("B", hollow="b"))
-        pos.append(self[2].possible("C", hollow="rc"))
-        pos.append(self[3].possible("-", "R", hollow=".post"))
-        pos.append(self[4].possible("DEV", hollow=".dev"))
-        sols = list()
-        for way in iterprod(*pos):
-            s = "".join(way)
-            matches = Cfg.fullmatches("qual_f", s)
-            parts = list()
-            for t in ("a", "b", "rc", "post", "dev"):
-                parts.append(matches[t + "_f"])
-            if way == tuple(parts):
-                sols.append(s)
-        sols.sort()
-        sols.sort(key=len)
-        return sols[0]
+        """Return the actual shortest common qualification format specifier.
+
+        A qualification spelling can have more than one decomposition at a
+        component boundary.  For example, the dot in ``r.dev2`` may be read as
+        part of the post spelling while formatting can instead obtain it from
+        Dev's default ``.dev`` spelling.  Search component output vectors rather
+        than committing to the regex parser's one decomposition of each input.
+        """
+
+        objects = tuple(Qual(string=body) for body in self.strings)
+        if not objects:
+            return ""
+
+        pre_objects = tuple(obj.pre for obj in objects)
+        post_objects = tuple(obj.post for obj in objects)
+        dev_objects = tuple(obj.dev for obj in objects)
+
+        pre_specs = _pre_candidate_specs_for(
+            pre_objects, self.strings, "prefix"
+        )
+        post_specs = _post_candidate_specs_for(
+            post_objects, self.strings, "contains"
+        )
+        dev_specs = _dev_candidate_specs_for(
+            dev_objects, self.strings, "suffix"
+        )
+
+        pre_groups: dict[tuple[str, ...], list[str]] = {}
+        for spec in pre_specs:
+            outputs = tuple(format(obj.pre, spec) for obj in objects)
+            pre_groups.setdefault(outputs, []).append(spec)
+
+        post_groups: dict[tuple[str, ...], list[str]] = {}
+        for spec in post_specs:
+            outputs = tuple(format(obj.post, spec) for obj in objects)
+            post_groups.setdefault(outputs, []).append(spec)
+
+        dev_groups: dict[tuple[str, ...], list[str]] = {}
+        for spec in dev_specs:
+            outputs = tuple(format(obj.dev, spec) for obj in objects)
+            dev_groups.setdefault(outputs, []).append(spec)
+
+        best: str | None = None
+        for pre_outputs, pre_group in pre_groups.items():
+            for dev_outputs, dev_group in dev_groups.items():
+                middle: list[str] = []
+                possible = True
+                for body, pre_output, dev_output in zip(
+                    self.strings, pre_outputs, dev_outputs
+                ):
+                    if not body.startswith(pre_output):
+                        possible = False
+                        break
+                    if not body.endswith(dev_output):
+                        possible = False
+                        break
+                    if len(pre_output) + len(dev_output) > len(body):
+                        possible = False
+                        break
+                    end = len(body) - len(dev_output)
+                    middle.append(body[len(pre_output) : end])
+                if not possible:
+                    continue
+
+                post_group = post_groups.get(tuple(middle))
+                if post_group is None:
+                    continue
+                for pre_spec in pre_group:
+                    for post_spec in post_group:
+                        for dev_spec in dev_group:
+                            spec = pre_spec + post_spec + dev_spec
+                            if best is not None and (len(spec), spec) >= (
+                                len(best), best
+                            ):
+                                continue
+                            try:
+                                recreates = all(
+                                    format(obj, spec) == body
+                                    for obj, body in zip(objects, self.strings)
+                                )
+                            except Exception:
+                                recreates = False
+                            if recreates:
+                                best = spec
+
+        if best is None:
+            raise ValueError
+        return best

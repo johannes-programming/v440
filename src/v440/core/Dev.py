@@ -5,9 +5,11 @@ from __future__ import annotations
 __all__: list[str] = ["Dev"]
 
 import operator
+from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
 
 from v440._deformatting.Clue import Clue
+from v440._deformatting.Search import inactive_specs, matching_specs, token_specs
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
@@ -24,7 +26,7 @@ class Dev(QualABC):
             return (1,)
 
     def _deformat(self: Self, body: str, /) -> DevAccumulation:
-        return DevAccumulation.by_example(body)
+        return DevAccumulation((body,))
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
@@ -71,6 +73,35 @@ class Dev(QualABC):
             self.num = operator.index(value)
 
 
-class DevAccumulation(Clue):
+@dataclass(frozen=True)
+class DevAccumulation:
+    strings: tuple[str, ...] = ()
+
     def best(self: Self, /) -> str:
-        return self.solo(".dev")
+        objects = tuple(Dev(string=body) for body in self.strings)
+        candidates = _candidate_specs_for(objects, self.strings, "exact")
+        if not candidates:
+            raise ValueError
+        return candidates[0]
+
+    def intersection(self: Self, other: Self, /) -> Self:
+        return type(self)(tuple(sorted(set(self.strings + other.strings))))
+
+
+def _candidate_specs_for(
+    objects: tuple[Dev, ...], strings: tuple[str, ...], relation: str, /
+) -> tuple[str, ...]:
+    if not objects:
+        return ("",)
+    active = next((i for i, obj in enumerate(objects) if obj), None)
+    specs = (
+        inactive_specs("dev_f")
+        if active is None
+        else token_specs("dev_f", strings[active])
+    )
+    return matching_specs(
+        objects,
+        strings,
+        specs,
+        relation,  # type: ignore[arg-type]
+    )

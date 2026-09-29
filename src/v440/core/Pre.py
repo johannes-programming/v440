@@ -5,11 +5,11 @@ from __future__ import annotations
 __all__: list[str] = ["Pre"]
 
 from dataclasses import dataclass
-from typing import Any, NamedTuple, Self, SupportsIndex
-
-from iterprod import iterprod
+from itertools import product
+from typing import Any, Self, SupportsIndex
 
 from v440._deformatting.Clue import Clue
+from v440._deformatting.Search import inactive_specs, matching_specs, token_specs
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
@@ -25,11 +25,7 @@ class Pre(QualABC):
         return frozenset("1"), self.lit, self.num
 
     def _deformat(self: Self, body: str, /) -> PreAccumulation:
-        clues: list[Clue]
-        clues = [Clue(), Clue(), Clue()]
-        if self:
-            clues[("a", "b", "rc").index(self.lit)] = Clue.by_example(body)
-        return PreAccumulation(*clues)
+        return PreAccumulation((body,))
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
@@ -89,30 +85,53 @@ class Pre(QualABC):
             self.lit, self.num = value
 
 
-class PreAccumulation(NamedTuple):
-    a: Clue = Clue()
-    b: Clue = Clue()
-    rc: Clue = Clue()
+@dataclass(frozen=True)
+class PreAccumulation:
+    strings: tuple[str, ...] = ()
 
     def best(self: Self, /) -> str:
-        matches: dict[str, str]
-        pos: list[set[str]]
-        sols: list[str]
-        s: str
-        way: tuple[Any, ...]
-        pos = list()
-        pos.append(self.a.possible("A", hollow="a"))
-        pos.append(self.b.possible("B", hollow="b"))
-        pos.append(self.rc.possible("C", hollow="rc"))
-        sols = list()
-        for way in iterprod(*pos):
-            s = "".join(way)
-            matches = Cfg.fullmatches("pre_f", s)
-            if way == (matches["a_f"], matches["b_f"], matches["rc_f"]):
-                sols.append(s)
-        sols.sort()
-        sols.sort(key=len)
-        return sols[0]
+        objects = tuple(Pre(string=body) for body in self.strings)
+        candidates = _candidate_specs_for(objects, self.strings, "exact")
+        if not candidates:
+            raise ValueError
+        return candidates[0]
 
     def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(*(x.intersection(y) for x, y in zip(self, other)))
+        return type(self)(tuple(sorted(set(self.strings + other.strings))))
+
+
+def _candidate_specs_for(
+    objects: tuple[Pre, ...], strings: tuple[str, ...], relation: str, /
+) -> tuple[str, ...]:
+    """Return all potentially shortest pre-format specs for the examples."""
+
+    if not objects:
+        return ("",)
+    if not any(objects):
+        return ("",)
+
+    token_groups: list[tuple[str, ...]] = []
+    for lit, pattern in (("a", "a_f"), ("b", "b_f"), ("rc", "rc_f")):
+        indexes = tuple(i for i, obj in enumerate(objects) if obj.lit == lit)
+        if not indexes:
+            token_groups.append(inactive_specs(pattern))
+            continue
+        sample = strings[indexes[0]]
+        phase_objects = tuple(objects[i] for i in indexes)
+        phase_bodies = tuple(strings[i] for i in indexes)
+        token_groups.append(
+            matching_specs(
+                phase_objects,
+                phase_bodies,
+                token_specs(pattern, sample),
+                relation,  # type: ignore[arg-type]
+            )
+        )
+
+    specs = ("".join(parts) for parts in product(*token_groups))
+    return matching_specs(
+        objects,
+        strings,
+        specs,
+        relation,  # type: ignore[arg-type]
+    )
