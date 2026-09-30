@@ -7,6 +7,8 @@ __all__: list[str] = ["Qual"]
 from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from iterprod import iterprod
+
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
@@ -169,48 +171,50 @@ class QualAccumulation:
             dev_groups.setdefault(outputs, []).append(spec)
 
         best: str | None = None
-        for pre_outputs, pre_group in pre_groups.items():
-            for dev_outputs, dev_group in dev_groups.items():
-                middle: list[str] = []
-                possible = True
-                for body, pre_output, dev_output in zip(
-                    self.strings, pre_outputs, dev_outputs
-                ):
-                    if not body.startswith(pre_output):
-                        possible = False
-                        break
-                    if not body.endswith(dev_output):
-                        possible = False
-                        break
-                    if len(pre_output) + len(dev_output) > len(body):
-                        possible = False
-                        break
-                    end = len(body) - len(dev_output)
-                    middle.append(body[len(pre_output) : end])
-                if not possible:
-                    continue
+        for pre_outputs, dev_outputs in iterprod(pre_groups, dev_groups):
+            pre_group = pre_groups[pre_outputs]
+            dev_group = dev_groups[dev_outputs]
 
-                post_group = post_groups.get(tuple(middle))
-                if post_group is None:
+            middle: list[str] = []
+            possible = True
+            for body, pre_output, dev_output in zip(
+                self.strings, pre_outputs, dev_outputs
+            ):
+                if not body.startswith(pre_output):
+                    possible = False
+                    break
+                if not body.endswith(dev_output):
+                    possible = False
+                    break
+                if len(pre_output) + len(dev_output) > len(body):
+                    possible = False
+                    break
+                end = len(body) - len(dev_output)
+                middle.append(body[len(pre_output) : end])
+            if not possible:
+                continue
+
+            post_group = post_groups.get(tuple(middle))
+            if post_group is None:
+                continue
+            for pre_spec, post_spec, dev_spec in iterprod(
+                pre_group, post_group, dev_group
+            ):
+                spec = pre_spec + post_spec + dev_spec
+                if best is not None and (len(spec), spec) >= (
+                    len(best),
+                    best,
+                ):
                     continue
-                for pre_spec in pre_group:
-                    for post_spec in post_group:
-                        for dev_spec in dev_group:
-                            spec = pre_spec + post_spec + dev_spec
-                            if best is not None and (len(spec), spec) >= (
-                                len(best),
-                                best,
-                            ):
-                                continue
-                            try:
-                                recreates = all(
-                                    format(obj, spec) == body
-                                    for obj, body in zip(objects, self.strings)
-                                )
-                            except Exception:
-                                recreates = False
-                            if recreates:
-                                best = spec
+                try:
+                    recreates = all(
+                        format(obj, spec) == body
+                        for obj, body in zip(objects, self.strings)
+                    )
+                except Exception:
+                    recreates = False
+                if recreates:
+                    best = spec
 
         if best is None:
             raise ValueError
