@@ -93,7 +93,7 @@ class PreAccumulation:
 
     def best(self: Self, /) -> str:
         objects = tuple(Pre(string=body) for body in self.strings)
-        candidates = _candidate_specs_for(objects, self.strings, "exact")
+        candidates = PreCandidatePool.by_specs(objects, self.strings, "exact")
         if not candidates:
             raise ValueError
         return candidates[0]
@@ -102,38 +102,47 @@ class PreAccumulation:
         return type(self)(tuple(sorted(set(self.strings + other.strings))))
 
 
-def _candidate_specs_for(
-    objects: tuple[Pre, ...], strings: tuple[str, ...], relation: str, /
-) -> tuple[str, ...]:
-    """Return all potentially shortest pre-format specs for the examples."""
+class PreCandidatePool(tuple[str]):
+    @classmethod
+    def by_specs(
+        cls: type[Self],
+        objects: tuple[Pre, ...],
+        strings: tuple[str, ...],
+        relation: str,
+        /,
+    ) -> tuple[str, ...]:
+        """Return all potentially shortest pre-format specs for the examples."""
 
-    if not objects:
-        return ("",)
-    if not any(objects):
-        return ("",)
+        if not objects:
+            return ("",)
+        if not any(objects):
+            return ("",)
 
-    token_groups: list[tuple[str, ...]] = []
-    for lit, pattern in (("a", "a_f"), ("b", "b_f"), ("rc", "rc_f")):
-        indexes = tuple(i for i, obj in enumerate(objects) if obj.lit == lit)
-        if not indexes:
-            token_groups.append(inactive_specs(pattern))
-            continue
-        sample = strings[indexes[0]]
-        phase_objects = tuple(objects[i] for i in indexes)
-        phase_bodies = tuple(strings[i] for i in indexes)
-        token_groups.append(
-            matching_specs(
-                phase_objects,
-                phase_bodies,
-                token_specs(pattern, sample),
-                relation,  # type: ignore[arg-type]
+        token_groups: list[tuple[str, ...]] = []
+        for lit, pattern in (("a", "a_f"), ("b", "b_f"), ("rc", "rc_f")):
+            indexes = tuple(
+                i for i, obj in enumerate(objects) if obj.lit == lit
             )
-        )
+            if not indexes:
+                token_groups.append(inactive_specs(pattern))
+                continue
+            sample = strings[indexes[0]]
+            phase_objects = tuple(objects[i] for i in indexes)
+            phase_bodies = tuple(strings[i] for i in indexes)
+            token_groups.append(
+                matching_specs(
+                    phase_objects,
+                    phase_bodies,
+                    token_specs(pattern, sample),
+                    relation,  # type: ignore[arg-type]
+                )
+            )
 
-    specs = ("".join(parts) for parts in product(*token_groups))
-    return matching_specs(
-        objects,
-        strings,
-        specs,
-        relation,  # type: ignore[arg-type]
-    )
+        specs = ("".join(parts) for parts in product(*token_groups))
+        data = matching_specs(
+            objects,
+            strings,
+            specs,
+            relation,  # type: ignore[arg-type]
+        )
+        return cls(data)

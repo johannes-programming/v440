@@ -15,7 +15,7 @@ from v440.core.Dev import DevCandidatePool
 from v440.core.Post import Post as Post_
 from v440.core.Post import PostCandidatePool
 from v440.core.Pre import Pre as Pre_
-from v440.core.Pre import _candidate_specs_for as _pre_candidate_specs_for
+from v440.core.Pre import PreCandidatePool
 
 
 class Qual(NestedABC):
@@ -143,7 +143,7 @@ class QualAccumulation:
         post_objects = tuple(obj.post for obj in objects)
         dev_objects = tuple(obj.dev for obj in objects)
 
-        pre_specs = _pre_candidate_specs_for(
+        pre_specs = PreCandidatePool.by_specs(
             pre_objects, self.strings, "prefix"
         )
         post_specs = PostCandidatePool.by_specs(
