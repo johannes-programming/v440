@@ -129,14 +129,13 @@ class PreCandidatePool(tuple[str]):
             sample = strings[indexes[0]]
             phase_objects = tuple(objects[i] for i in indexes)
             phase_bodies = tuple(strings[i] for i in indexes)
-            token_groups.append(
-                matching_specs(
-                    phase_objects,
-                    phase_bodies,
-                    token_specs(pattern, sample),
-                    relation,  # type: ignore[arg-type]
-                )
+            token_group = matching_specs(
+                phase_objects,
+                phase_bodies,
+                token_specs(pattern, sample),
+                relation,  # type: ignore[arg-type]
             )
+            token_groups.append(token_group)
 
         specs = ("".join(parts) for parts in product(*token_groups))
         data = matching_specs(
