@@ -98,7 +98,7 @@ class PreAccumulation:
             raise ValueError
         return candidates[0]
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         return type(self)(tuple(sorted(set(self.strings + other.strings))))
 
 

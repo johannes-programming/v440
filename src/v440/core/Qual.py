@@ -124,9 +124,6 @@ class Qual(NestedABC):
 class QualAccumulation:
     strings: tuple[str, ...] = ()
 
-    def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(tuple(sorted(set(self.strings + other.strings))))
-
     def best(self: Self, /) -> str:
         """Return the actual shortest common qualification format specifier.
 
@@ -231,3 +228,6 @@ class QualAccumulation:
         if best is None:
             raise ValueError
         return best
+
+    def union(self: Self, other: Self, /) -> Self:
+        return type(self)(tuple(sorted(set(self.strings + other.strings))))

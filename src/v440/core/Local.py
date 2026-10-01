@@ -145,7 +145,7 @@ class LitAccumulation:
         ).rstrip("#")
         return cls(data)
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         ans: list[str]
         x: str
         y: str
@@ -179,10 +179,10 @@ class EvenAccumulation:
             return cls(num=Mag(len(item)))
         return cls(num=Mag(-len(item)))
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         return type(self)(
-            lit=self.lit.intersection(other.lit),
-            num=self.num.intersection(other.num),
+            lit=self.lit.union(other.lit),
+            num=self.num.union(other.num),
         )
 
 
@@ -210,11 +210,9 @@ class LocalAccumulation(NamedTuple):
             odds=parts[1::2],
         )
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         evens: tuple[EvenAccumulation, ...]
-        evens = tuple(
-            map(EvenAccumulation.intersection, self.evens, other.evens)
-        )
+        evens = tuple(map(EvenAccumulation.union, self.evens, other.evens))
         evens += self.evens[len(evens) :] or other.evens[len(evens) :]
         if any(map(operator.ne, self.odds, other.odds)):
             raise ValueError

@@ -124,13 +124,13 @@ class BaseAccumulation:
         ans += self.release.best()
         return ans
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         epoch: Mag
         if self.basev != other.basev:
             raise ValueError
-        epoch = self.epoch.intersection(other.epoch)
+        epoch = self.epoch.union(other.epoch)
         return type(self)(
             basev=self.basev,
             epoch=epoch,
-            release=self.release.intersection(other.release),
+            release=self.release.union(other.release),
         )

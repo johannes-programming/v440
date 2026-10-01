@@ -97,17 +97,17 @@ class PublicAccumulation:
     base: BaseAccumulation
     qual: QualAccumulation
 
-    def intersection(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            base=self.base.intersection(other.base),
-            qual=self.qual.intersection(other.qual),
-        )
-
     def best(self: Self, /) -> str:
         ans: str
         ans = self.base.best()
         ans += self.qual.best()
         return ans
+
+    def union(self: Self, other: Self, /) -> Self:
+        return type(self)(
+            base=self.base.union(other.base),
+            qual=self.qual.union(other.qual),
+        )
 
 
 def split_public(value: str, /) -> tuple[str, str]:

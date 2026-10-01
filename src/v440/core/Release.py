@@ -197,13 +197,13 @@ class ReleaseAccumulation(tuple[Mag, ...]):
             mags[-1] = Mag(1)
         return cls(tuple(mags))
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         mags: list[Mag]
         mags = list()
         for x, y in zip(self, other):
-            mags.append(x.intersection(y))
+            mags.append(x.union(y))
         for x in self[len(mags) :] or other[len(mags) :]:
-            Mag(0).intersection(x)
+            Mag(0).union(x)
         return type(self)(tuple(mags))
 
 

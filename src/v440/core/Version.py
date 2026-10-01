@@ -122,13 +122,13 @@ class VersionAccumulation:
         else:
             return self.leading + "!" + self.trailing
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         if self.leading != other.leading or self.trailing != other.trailing:
             raise ArithmeticError
         return type(self)(
             leading=self.leading,
-            public=self.public.intersection(other.public),
-            local=self.local.intersection(other.local),
+            public=self.public.union(other.public),
+            local=self.local.union(other.local),
             trailing=self.trailing,
         )
 

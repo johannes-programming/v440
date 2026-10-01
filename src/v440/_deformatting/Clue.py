@@ -15,7 +15,7 @@ class BaseClue:
     head: str = ""
     mag: Mag = Mag()
 
-    def intersection(self: Self, other: Self, /) -> Self:
+    def union(self: Self, other: Self, /) -> Self:
         if self.head == "":
             return other
         if other.head == "":
@@ -24,7 +24,7 @@ class BaseClue:
             raise ValueError
         return type(self)(
             head=self.head,
-            mag=self.mag.intersection(other.mag),
+            mag=self.mag.union(other.mag),
         )
 
 

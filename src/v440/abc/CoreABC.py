@@ -118,7 +118,7 @@ class CoreABC(Copyable):
         try:
             acc = cls(string=flats[0])._deformat(flats[0])
             for flat in flats[1:]:
-                acc = acc.intersection(cls(string=flat)._deformat(flat))
+                acc = acc.union(cls(string=flat)._deformat(flat))
             return acc.best()  # type: ignore[no-any-return]
         except VersionError:
             raise

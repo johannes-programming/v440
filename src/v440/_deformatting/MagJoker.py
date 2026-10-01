@@ -16,5 +16,5 @@ class MagJoker(enum.Enum):
     def best(self: Self, /) -> str:
         return ""
 
-    def intersection(self: Self, other: Self | Mag, /) -> Self | Mag:
+    def union(self: Self, other: Self | Mag, /) -> Self | Mag:
         return other
