@@ -3,7 +3,6 @@
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
-from dataclasses import dataclass
 from typing import Any, Self
 
 import setdoc
@@ -13,20 +12,6 @@ from datarepr import oxford
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.errors.VersionError import VersionError
-
-
-def core_split(flat: str, /) -> tuple[str, str, str]:
-    x: str
-    y: str
-    z: str
-    y = flat.strip()
-    if y:
-        x, z = flat.split(y)
-    elif flat:
-        raise ValueError
-    else:
-        x, z = "", ""
-    return x, y, z
 
 
 class CoreABC(Copyable):
@@ -139,3 +124,17 @@ class CoreABC(Copyable):
     @setter
     def string(self: Self, value: object, /) -> None:
         self._string_fset(str(value).lower())
+
+
+def core_split(flat: str, /) -> tuple[str, str, str]:
+    x: str
+    y: str
+    z: str
+    y = flat.strip()
+    if y:
+        x, z = flat.split(y)
+    elif flat:
+        raise ValueError
+    else:
+        x, z = "", ""
+    return x, y, z
