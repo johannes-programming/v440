@@ -5,11 +5,8 @@ from __future__ import annotations
 __all__ = ["token_specs"]
 
 from functools import lru_cache
-from typing import Literal
 
 from v440._utils.Cfg import Cfg
-
-Relation = Literal["contains", "exact", "prefix", "suffix"]
 
 # The longest literal head in the qualification format grammar is
 # ``.preview.`` (nine characters).  Hash marks, which describe numeric width,
