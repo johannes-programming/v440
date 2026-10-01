@@ -110,13 +110,13 @@ class PreCandidatePool(tuple[str]):
         strings: tuple[str, ...],
         relation: str,
         /,
-    ) -> tuple[str, ...]:
+    ) -> Self:
         """Return all potentially shortest pre-format specs for the examples."""
 
         if not objects:
-            return ("",)
+            return cls(("",))
         if not any(objects):
-            return ("",)
+            return cls(("",))
 
         token_groups: list[tuple[str, ...]] = []
         for lit, pattern in (("a", "a_f"), ("b", "b_f"), ("rc", "rc_f")):

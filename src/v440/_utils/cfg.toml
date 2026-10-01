@@ -12,6 +12,35 @@ pre = "rc"
 c = "rc"
 rc = "rc"
 
+[inactive-specs]
+a_f = [
+    "",
+    "A",
+    "A#",
+]
+b_f = [
+    "",
+    "B",
+    "B#",
+]
+rc_f = [
+    "",
+    "C",
+    "C#",
+]
+post_f = [
+    "",
+    "-",
+    "R",
+    "-#",
+    "R#",
+]
+dev_f = [
+    "",
+    "DEV",
+    "DEV#",
+]
+
 [patterns]
 basev_f = "V?"
 epoch_f = "\\#*"

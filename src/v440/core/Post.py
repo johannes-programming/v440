@@ -97,9 +97,9 @@ class PostCandidatePool(tuple[str]):
         strings: tuple[str, ...],
         relation: str,
         /,
-    ) -> tuple[str, ...]:
+    ) -> Self:
         if not objects:
-            return ("",)
+            return cls(("",))
         active = next((i for i, obj in enumerate(objects) if obj), None)
         specs = (
             inactive_specs("post_f")

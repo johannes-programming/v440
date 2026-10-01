@@ -134,19 +134,19 @@ class QualAccumulation:
         than committing to the regex parser's one decomposition of each input.
         """
         best: str | None
-        objects: tuple[Qual, ...]
-        pre_objects: tuple[Pre_, ...]
-        post_objects: tuple[Post_, ...]
-        dev_objects: tuple[Dev_, ...]
-        pre_specs: PreCandidatePool
-        post_specs: PostCandidatePool
-        dev_specs: DevCandidatePool
-        pre_groups: dict[tuple[str, ...], list[str]]
-        post_groups: dict[tuple[str, ...], list[str]]
-        dev_groups: dict[tuple[str, ...], list[str]]
-        middle: list[str]
-        possible: bool
         body: str
+        dev_groups: dict[tuple[str, ...], list[str]]
+        dev_objects: tuple[Dev_, ...]
+        dev_specs: DevCandidatePool
+        middle: list[str]
+        objects: tuple[Qual, ...]
+        possible: bool
+        post_groups: dict[tuple[str, ...], list[str]]
+        post_objects: tuple[Post_, ...]
+        post_specs: PostCandidatePool
+        pre_groups: dict[tuple[str, ...], list[str]]
+        pre_objects: tuple[Pre_, ...]
+        pre_specs: PreCandidatePool
 
         objects = tuple(Qual(string=body) for body in self.strings)
         if not objects:
