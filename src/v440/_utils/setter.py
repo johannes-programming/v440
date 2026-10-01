@@ -4,6 +4,7 @@ from collections import abc
 from functools import wraps
 from typing import Any, TypeVar, cast
 
+from v440.errors.PEP440Error import PEP440Error
 from v440.errors.VersionError import VersionError
 
 Function = TypeVar("Function", bound=abc.Callable[..., None])
@@ -28,6 +29,6 @@ def setter(function: Function, /) -> Function:
             msg = "%r is an invalid value for %r"
             target = type(self).__name__ + "." + function.__name__
             msg %= (value, target)
-            raise VersionError(msg)
+            raise PEP440Error(msg)
 
     return cast(Function, decorated)
