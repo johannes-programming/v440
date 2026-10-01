@@ -136,46 +136,58 @@ class QualAccumulation:
         Dev's default ``.dev`` spelling.  Search component output vectors rather
         than committing to the regex parser's one decomposition of each input.
         """
+        best: str | None
+        objects: tuple[Qual, ...]
+        pre_objects: tuple[Pre_, ...]
+        post_objects: tuple[Post_, ...]
+        dev_objects: tuple[Dev_, ...]
+        pre_specs: PreCandidatePool
+        post_specs: PostCandidatePool
+        dev_specs: DevCandidatePool
+        pre_groups: dict[tuple[str, ...], list[str]]
+        post_groups: dict[tuple[str, ...], list[str]]
+        dev_groups: dict[tuple[str, ...], list[str]]
+        middle: list[str]
+        possible: bool
+        body: str
 
         objects = tuple(Qual(string=body) for body in self.strings)
         if not objects:
             return ""
 
         pre_objects = tuple(obj.pre for obj in objects)
-        post_objects = tuple(obj.post for obj in objects)
-        dev_objects = tuple(obj.dev for obj in objects)
-
         pre_specs = PreCandidatePool.by_specs(
             pre_objects, self.strings, "prefix"
         )
-        post_specs = PostCandidatePool.by_specs(
-            post_objects, self.strings, "contains"
-        )
-        dev_specs = DevCandidatePool.by_specs(
-            dev_objects, self.strings, "suffix"
-        )
-
-        pre_groups: dict[tuple[str, ...], list[str]] = {}
+        pre_groups = {}
         for spec in pre_specs:
             outputs = tuple(format(obj.pre, spec) for obj in objects)
             pre_groups.setdefault(outputs, []).append(spec)
 
-        post_groups: dict[tuple[str, ...], list[str]] = {}
+        post_objects = tuple(obj.post for obj in objects)
+        post_specs = PostCandidatePool.by_specs(
+            post_objects, self.strings, "contains"
+        )
+        post_groups = {}
         for spec in post_specs:
             outputs = tuple(format(obj.post, spec) for obj in objects)
             post_groups.setdefault(outputs, []).append(spec)
 
-        dev_groups: dict[tuple[str, ...], list[str]] = {}
+        dev_objects = tuple(obj.dev for obj in objects)
+        dev_specs = DevCandidatePool.by_specs(
+            dev_objects, self.strings, "suffix"
+        )
+        dev_groups = {}
         for spec in dev_specs:
             outputs = tuple(format(obj.dev, spec) for obj in objects)
             dev_groups.setdefault(outputs, []).append(spec)
 
-        best: str | None = None
+        best = None
         for pre_outputs, dev_outputs in iterprod(pre_groups, dev_groups):
             pre_group = pre_groups[pre_outputs]
             dev_group = dev_groups[dev_outputs]
 
-            middle: list[str] = []
+            middle = []
             possible = True
             for body, pre_output, dev_output in zip(
                 self.strings, pre_outputs, dev_outputs
