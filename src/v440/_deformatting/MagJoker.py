@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__: list[str] = ["Mag"]
+__all__: list[str] = ["MagJoker"]
 
 
 import enum
