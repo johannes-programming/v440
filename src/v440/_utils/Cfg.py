@@ -49,7 +49,3 @@ class Cfg(enum.Enum):
             parts[x] = f"(?P<{x}>{z})"
             ans[x] = re.compile(z, re.IGNORECASE | re.VERBOSE)
         return ans
-
-    @functools.cached_property
-    def phases(self: Self, /) -> dict[str, str]:
-        return cast(dict[str, str], Cfg.cfg.data["consts"]["phases"])

@@ -1,16 +1,7 @@
-[consts.errors]
-deformat = "No common format specifier for %s."
-format = "Invalid format specifier %r for object of type %r."
-
-[consts.phases]
-alpha = "a"
-a = "a"
-beta = "b"
-b = "b"
-preview = "rc"
-pre = "rc"
-c = "rc"
-rc = "rc"
+[errors]
+deformat = "No common format specifier for {oxford}."
+format = "Invalid format specifier {spec!r} for type {Self}!"
+setter = "Invalid value {value!r} of type {Value} for {Self}.{func}!"
 
 [inactive-specs]
 a_f = [
@@ -74,3 +65,13 @@ clue = "{head}?{num}?"
 head_f = "[-_\\.]?[A-Z]*[-_\\.]?"
 num_f = "\\#*"
 clue_f = "{head_f}?{num_f}?"
+
+[phases]
+alpha = "a"
+a = "a"
+beta = "b"
+b = "b"
+preview = "rc"
+pre = "rc"
+c = "rc"
+rc = "rc"

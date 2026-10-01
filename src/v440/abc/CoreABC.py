@@ -3,7 +3,6 @@
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
-from dataclasses import dataclass
 from typing import Any, Self
 
 import setdoc
@@ -12,6 +11,7 @@ from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
+from v440.errors.MiniLangError import MiniLangError
 from v440.errors.VersionError import VersionError
 
 
@@ -46,9 +46,11 @@ class CoreABC(Copyable):
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
-            raise ValueError(
-                f"Invalid format specifier {format_spec} for object of type {type(self).__name__}!"
-            ) from None
+            msg = Cfg.cfg.data["errors"]["format"].format(
+                Self=type(self).__name__,
+                spec=format_spec,
+            )
+            raise MiniLangError(msg) from None
         return str(self._format_parsed(*parsed))
 
     @abstractmethod
@@ -122,9 +124,9 @@ class CoreABC(Copyable):
         except VersionError:
             raise
         except Exception:
-            msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
+            msg = Cfg.cfg.data["errors"]["deformat"]
             msg %= oxford(*strings)
-            raise VersionError(msg)
+            raise MiniLangError(msg)
 
     @property
     @abstractmethod
