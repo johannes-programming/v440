@@ -42,14 +42,13 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
-        msg: str
         parsed: tuple[Any, ...]
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
-            msg = Cfg.cfg.data["consts"]["errors"]["format"]
-            msg %= (format_spec, type(self).__name__)
-            raise VersionError(msg)  # from None
+            raise ValueError(
+                f"Invalid format specifier {format_spec} for object of type {type(self).__name__}!"
+            ) from None
         return str(self._format_parsed(*parsed))
 
     @abstractmethod
