@@ -1,8 +1,5 @@
 --sort
 --sort
---key=consts
---sort
---key=consts
 --key=errors
 --
 src/v440/_utils/cfg.toml

@@ -9,6 +9,11 @@
 --all-keys
 --all-keys
 --sort
+--key=examples
+--all-keys
+--all-keys
+--key=formatted
+--sort
 --key=release-key
 --key=
 --all-keys
