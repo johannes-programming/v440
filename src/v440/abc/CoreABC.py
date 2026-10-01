@@ -122,7 +122,7 @@ class CoreABC(Copyable):
         except VersionError:
             raise
         except Exception:
-            msg = Cfg.cfg.data["consts"]["errors"]["deformat"]
+            msg = Cfg.cfg.data["errors"]["deformat"]
             msg %= oxford(*strings)
             raise VersionError(msg)
 

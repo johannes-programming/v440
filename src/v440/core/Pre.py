@@ -65,7 +65,7 @@ class Pre(QualABC):
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> str:
-        return Cfg.cfg.phases[value]
+        return Cfg.cfg.data["phases"][value]
 
     @property
     def packaging(self: Self, /) -> tuple[str, int] | None:
