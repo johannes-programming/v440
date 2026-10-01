@@ -4,6 +4,7 @@ from collections import abc
 from functools import wraps
 from typing import Any, TypeVar, cast
 
+from v440._utils.Cfg import Cfg
 from v440.errors.PEP440Error import PEP440Error
 from v440.errors.VersionError import VersionError
 
@@ -17,7 +18,6 @@ def setter(function: Function, /) -> Function:
     def decorated(self: Any, value: object, /) -> None:
         backup: str
         msg: str
-        target: str
         backup = str(self)
         try:
             function(self, value)
@@ -26,9 +26,13 @@ def setter(function: Function, /) -> Function:
             raise
         except Exception:
             self._string_fset(backup.lower())
-            msg = "%r is an invalid value for %r"
-            target = type(self).__name__ + "." + function.__name__
-            msg %= (value, target)
-            raise PEP440Error(msg)
+            msg = Cfg.cfg.data["errors"]["setter"]
+            msg = msg.format(
+                Self=type(self).__name__,
+                Value=type(value).__name__,
+                func=function.__name__,
+                value=value,
+            )
+            raise PEP440Error(msg) from None
 
     return cast(Function, decorated)
