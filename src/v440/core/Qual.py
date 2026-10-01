@@ -198,10 +198,10 @@ class QualAccumulation:
         *,
         dev_group: list[str],
         dev_outputs: tuple[str, ...],
+        objects: tuple[Qual, ...],
         pre_group: list[str],
         pre_outputs: tuple[str, ...],
         post_groups: dict[tuple[str, ...], list[str]],
-        objects: tuple[Qual, ...],
     ) -> str | None:
         ans_: str | None
         middle: list[str]
@@ -238,16 +238,21 @@ class QualAccumulation:
                 ans_,
             ):
                 continue
-            try:
-                recreates = all(
-                    format(obj, spec) == body
-                    for obj, body in zip(objects, self.strings)
-                )
-            except Exception:
-                recreates = False
-            if recreates:
+            if self.recreates(objects=objects, spec=spec):
                 ans_ = spec
         return ans_
+
+    def recreates(
+        self: Self, /, *, objects: tuple[Qual, ...], spec: str
+    ) -> bool:
+        """Return whether the given format specifier recreates all examples."""
+        try:
+            return all(
+                format(obj, spec) == body
+                for obj, body in zip(objects, self.strings)
+            )
+        except Exception:
+            return False
 
     def union(self: Self, other: Self, /) -> Self:
         return type(self)(tuple(sorted(set(self.strings + other.strings))))
