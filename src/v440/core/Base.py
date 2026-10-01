@@ -1,88 +1,60 @@
+"""Provide the Base class for v440 public version base."""
+
 from __future__ import annotations
 
+__all__: list[str] = ["Base"]
+
 import operator
-from typing import *
+from dataclasses import dataclass
+from typing import Any, Final, Self
 
-import setdoc
-
+from v440._deformatting.Mag import Mag
 from v440._utils.Cfg import Cfg
+from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
-from v440.core.Release import Release
-
-__all__ = ["Base"]
+from v440.core.Release import Release as Release_
+from v440.core.Release import ReleaseAccumulation
 
 
 class Base(NestedABC):
 
+    Release: Final[type[Release_]] = Release_
+    _epoch: int
+    _release: Release_
+
     __slots__ = ("_epoch", "_release")
 
-    epoch: int
-    packaging: str
-    release: Release
-    string: str
-
-    @setdoc.basic
-    def __init__(self: Self, string: Any = "0") -> None:
-        self._epoch = 0
-        self._release = Release()
-        self.string = string
-
-    def _cmp(self: Self) -> tuple[int, Release]:
+    def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
-    @classmethod
-    def _deformat(cls: type[Self], info: dict[str, Self], /) -> str:
+    def _deformat(self: Self, string: str, /) -> BaseAccumulation:
+        epoch: str
         matches: dict[str, str]
-        table: dict[str, set]
-        s: str
-        t: str
-        table = dict()
-        table["basev"] = set()
-        table["epoch"] = set()
-        table["release"] = set()
-        for s in info.keys():
-            matches = Cfg.fullmatches("base", s)
-            for t in ("basev", "epoch", "release"):
-                table[t].add(matches[t])
-        s = cls._deformat_basev(*table["basev"])
-        s += cls._deformat_epoch(*table["epoch"])
-        s += Release.deformat(*table["release"])
-        return s
-
-    @classmethod
-    def _deformat_basev(cls: type[Self], value: str = "") -> str:
-        return value
-
-    @classmethod
-    def _deformat_epoch(cls: type[Self], *table: str) -> str:
-        n: int
-        s: str
-        n = 0
-        for s in table:
-            if s.startswith("0"):
-                n = max(n, len(s))
-        if n > min(map(len, table), default=0):
-            raise ValueError
-        return "#" * n + "!" * bool(n)
+        matches = Cfg.fullmatches("base", string)
+        epoch = matches["epoch"]
+        return BaseAccumulation(
+            basev=matches["basev"],
+            epoch=Mag(len(epoch) if epoch.startswith("0") else -len(epoch)),
+            release=self.release._deformat(matches["release"]),
+        )
 
     @classmethod
     def _format_parse(
         cls: type[Self],
         spec: str,
         /,
-    ) -> dict[str, Any]:
-        ans: dict[str, int | str]
+    ) -> tuple[str, int, str]:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
-        ans = dict()
-        ans["basev_f"] = matches["basev_f"]
-        ans["epoch_mag"] = len(matches["epoch_f"])
-        ans["release_f"] = matches["release_f"]
-        return ans
+        return (
+            matches["basev_f"],
+            len(matches["epoch_f"]),
+            matches["release_f"],
+        )
 
     def _format_parsed(
         self: Self,
-        *,
+        /,
         basev_f: str,
         epoch_mag: int,
         release_f: str,
@@ -95,7 +67,11 @@ class Base(NestedABC):
         ans += format(self.release, release_f)
         return ans
 
-    def _string_fset(self: Self, value: str) -> None:
+    @classmethod
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
+        return dict(_epoch=int, _release=Release_)
+
+    def _string_fset(self: Self, value: str, /) -> None:
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
@@ -104,26 +80,57 @@ class Base(NestedABC):
             self.epoch = 0
         self.release.string = matches["release"]
 
-    def _todict(self: Self) -> dict[str, Any]:
+    def _todict(self: Self, /) -> dict[str, Any]:
         return dict(epoch=self.epoch, release=self.release)
 
     @property
-    def epoch(self: Self) -> int:
+    def epoch(self: Self, /) -> int:
         "This property represents the epoch."
         return self._epoch
 
     @epoch.setter
-    def epoch(self: Self, value: Any) -> None:
+    @setter
+    def epoch(self: Self, value: Any, /) -> None:
         v: int
         v = operator.index(value)
         if v < 0:
             raise ValueError
         self._epoch = v
 
+    packaging = NestedABC.string
+
     @property
-    def release(self: Self) -> Release:
+    def release(self: Self, /) -> Release_:
         "This property represents the release."
         return self._release
 
+    @release.setter
+    @setter
+    def release(self: Self, value: object, /) -> None:
+        self.release.string = value
 
-Base.Release = Release
+
+@dataclass(frozen=True, kw_only=True)
+class BaseAccumulation:
+    basev: str
+    epoch: Mag
+    release: ReleaseAccumulation
+
+    def best(self: Self, /) -> str:
+        ans: str
+        ans = self.basev
+        ans += "#" * self.epoch
+        ans += "!" * (self.epoch > 0)
+        ans += self.release.best()
+        return ans
+
+    def union(self: Self, other: Self, /) -> Self:
+        epoch: Mag
+        if self.basev != other.basev:
+            raise ValueError
+        epoch = self.epoch.union(other.epoch)
+        return type(self)(
+            basev=self.basev,
+            epoch=epoch,
+            release=self.release.union(other.release),
+        )
