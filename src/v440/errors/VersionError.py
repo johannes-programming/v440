@@ -1,14 +1,9 @@
-from typing import *
+"""Provide the VersionError exception for v440."""
 
-import setdoc
-
-__all__ = ["VersionError"]
+__all__: list[str] = ["VersionError"]
 
 
 class VersionError(ValueError):
+    """Raise for invalid values passed to v440 properties."""
 
-    args: tuple  # inherited property
-
-    @setdoc.basic
-    def __init__(self: Self, *args: Any) -> None:
-        super().__init__(*args)
+    pass
