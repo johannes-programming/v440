@@ -133,14 +133,11 @@ class QualAccumulation:
         Dev's default ``.dev`` spelling.  Search component output vectors rather
         than committing to the regex parser's one decomposition of each input.
         """
-        best: str | None
-        body: str
+        ans: str | None
         dev_groups: dict[tuple[str, ...], list[str]]
         dev_objects: tuple[Dev_, ...]
         dev_specs: DevCandidatePool
-        middle: list[str]
         objects: tuple[Qual, ...]
-        possible: bool
         post_groups: dict[tuple[str, ...], list[str]]
         post_objects: tuple[Post_, ...]
         post_specs: PostCandidatePool
@@ -179,55 +176,78 @@ class QualAccumulation:
             outputs = tuple(format(obj.dev, spec) for obj in objects)
             dev_groups.setdefault(outputs, []).append(spec)
 
-        best = None
+        ans = None
         for pre_outputs, dev_outputs in iterprod(pre_groups, dev_groups):
-            pre_group = pre_groups[pre_outputs]
-            dev_group = dev_groups[dev_outputs]
-
-            middle = []
-            possible = True
-            for body, pre_output, dev_output in zip(
-                self.strings, pre_outputs, dev_outputs
-            ):
-                if not body.startswith(pre_output):
-                    possible = False
-                    break
-                if not body.endswith(dev_output):
-                    possible = False
-                    break
-                if len(pre_output) + len(dev_output) > len(body):
-                    possible = False
-                    break
-                end = len(body) - len(dev_output)
-                middle.append(body[len(pre_output) : end])
-            if not possible:
-                continue
-
-            post_group = post_groups.get(tuple(middle))
-            if post_group is None:
-                continue
-            for pre_spec, post_spec, dev_spec in iterprod(
-                pre_group, post_group, dev_group
-            ):
-                spec = pre_spec + post_spec + dev_spec
-                if best is not None and (len(spec), spec) >= (
-                    len(best),
-                    best,
-                ):
-                    continue
-                try:
-                    recreates = all(
-                        format(obj, spec) == body
-                        for obj, body in zip(objects, self.strings)
-                    )
-                except Exception:
-                    recreates = False
-                if recreates:
-                    best = spec
-
-        if best is None:
+            ans = self.foo(
+                ans,
+                dev_group=dev_groups[dev_outputs],
+                dev_outputs=dev_outputs,
+                objects=objects,
+                post_groups=post_groups,
+                pre_group=pre_groups[pre_outputs],
+                pre_outputs=pre_outputs,
+            )
+        if ans is None:
             raise ValueError
-        return best
+        return ans
+
+    def foo(
+        self: Self,
+        ans: str | None,
+        /,
+        *,
+        dev_group: list[str],
+        dev_outputs: tuple[str, ...],
+        pre_group: list[str],
+        pre_outputs: tuple[str, ...],
+        post_groups: dict[tuple[str, ...], list[str]],
+        objects: tuple[Qual, ...],
+    ) -> str | None:
+        ans_: str | None
+        middle: list[str]
+        possible: bool
+        middle = []
+        possible = True
+        for body, pre_output, dev_output in zip(
+            self.strings, pre_outputs, dev_outputs
+        ):
+            if not body.startswith(pre_output):
+                possible = False
+                break
+            if not body.endswith(dev_output):
+                possible = False
+                break
+            if len(pre_output) + len(dev_output) > len(body):
+                possible = False
+                break
+            end = len(body) - len(dev_output)
+            middle.append(body[len(pre_output) : end])
+        if not possible:
+            return ans
+
+        post_group = post_groups.get(tuple(middle))
+        if post_group is None:
+            return ans
+        ans_ = ans
+        for pre_spec, post_spec, dev_spec in iterprod(
+            pre_group, post_group, dev_group
+        ):
+            spec = pre_spec + post_spec + dev_spec
+            if ans_ is not None and (len(spec), spec) >= (
+                len(ans_),
+                ans_,
+            ):
+                continue
+            try:
+                recreates = all(
+                    format(obj, spec) == body
+                    for obj, body in zip(objects, self.strings)
+                )
+            except Exception:
+                recreates = False
+            if recreates:
+                ans_ = spec
+        return ans_
 
     def union(self: Self, other: Self, /) -> Self:
         return type(self)(tuple(sorted(set(self.strings + other.strings))))
