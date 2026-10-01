@@ -53,8 +53,8 @@ then the given value is passed to its ``string`` property.
 This magic method implements ``bool(self)``.
 It is always defined as equivalent to ``self != type(self)()``.
 
-``__format__(format_spec: object) -> str``
-""""""""""""""""""""""""""""""""""""""""""
+``__format__(format_spec: object, /) -> str``
+"""""""""""""""""""""""""""""""""""""""""""""
 
 The instances of each class can be formatted.
 ``format_spec`` is always either valid or invalid for a certain class.
@@ -63,21 +63,21 @@ The ``format`` function always returns a ``PEP 440``-conforming string notation 
 Each possible ``PEP 440``-conforming notation of an object has at least one valid ``format_spec``
 that allows for its recreation in formatting.
 
-``__eq__(other: object) -> Any``
-""""""""""""""""""""""""""""""""
+``__eq__(other: object, /) -> bool``
+""""""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self == other``.
 If ``type(self) is type(other)``,
 the overwrites will always ``return self.string == other.string``.
 
-``__ge__(other: Any, /) -> bool``
-"""""""""""""""""""""""""""""""""
+``__ge__(other: Self, /) -> bool``
+""""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self >= other``.
 See ``__le__``.
 
-``__gt__(other: Any, /) -> bool``
-"""""""""""""""""""""""""""""""""
+``__gt__(other: Self, /) -> bool``
+""""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self > other``.
 See ``__le__``.
@@ -85,10 +85,10 @@ See ``__le__``.
 ``__hash__ = None``
 """""""""""""""""""
 
-This ``class`` and all its decendents are unhashable.
+This ``class`` and all its descendants are unhashable.
 
-``__le__(other: Any, /) -> bool``
-"""""""""""""""""""""""""""""""""
+``__le__(other: Self, /) -> bool``
+""""""""""""""""""""""""""""""""""
 
 This abstract magic method will be overwritten to implement ``self <= other``.
 The overwrites should always establish at the very least a partial order.
@@ -97,10 +97,10 @@ Therefore, each class establishes a total order of all of its possible instances
 with the sole exception of ``Pre("")``
 which is neither greater than nor lesser than any instances of ``Pre``.
 
-``__lt__(other: Any, /) -> bool``
-"""""""""""""""""""""""""""""""""
+``__lt__(other: Self, /) -> bool``
+""""""""""""""""""""""""""""""""""
 
-This abstract magic method will should overwritten to implement ``self < other``.
+This abstract magic method will be overwritten to implement ``self < other``.
 See ``__le__``.
 
 ``__repr__() -> str``
@@ -140,8 +140,8 @@ The ``string`` property accepts any value iff that value provides a ``PEP 440``-
 It (and therefore also calling ``str``) always returns a standardized ``PEP 440``-conforming string.
 Two objects of the same type are equal iff their ``string`` properties are equal.
 
-``class v440.abc.ListABC.ListABC[Item](data: Iterable[Item] | None = None, /, **kwargs: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.ListABC.ListABC[Item](other: Iterable[Item] | None = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``datahold.HoldList[Item]`` and from ``CoreABC``.
 
@@ -164,7 +164,7 @@ This abstract base class inherits from ``NestedABC``.
 ``v440.core``
 ~~~~~~~~~~~~~
 
-This subpackage contains the principle classes of the project.
+This subpackage contains the principal classes of the project.
 Each of these classes has a dedicated module inside ``core``.
 Each class can be accessed alternatively in a nested fashion,
 e.g. ``v440.core.Base.Base is v440.Version.Public.Base``.
@@ -220,8 +220,8 @@ It can only take non-negative values and is restricted to ``0`` if ``lit`` is ``
 
 This ``property`` represents the equivalent ``packaging.version.Version.dev`` value.
 
-``class v440.core.Local.Local(data: Iterable[int | str] | None = None, /, **kwargs: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.core.Local.Local(other: Iterable[int | str] | None = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This list-like class represents the local part of version identifiers.
 It inherits from ``v440.abc.ListABC.ListABC[int | str]``.
@@ -352,8 +352,8 @@ See ``v440.core.Post.Post``.
 
 See ``v440.core.Pre.Pre``.
 
-``class v440.core.Release.Release(data: Iterable[int] | None = None, /, **kwargs: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.core.Release.Release(other: Iterable[int] | None = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This class inherits from ``v440.abc.ListABC.ListABC[int]``.
 
