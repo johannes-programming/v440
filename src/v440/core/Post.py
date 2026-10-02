@@ -5,10 +5,10 @@ from __future__ import annotations
 __all__: list[str] = ["Post"]
 
 import operator
-from typing import Any, Literal, Self, SupportsIndex
+from typing import Literal, Self, SupportsIndex
 
-from v440._deformatting.Clue import Clue
 from v440._deformatting.PostRestrictor import PostRestrictor
+from v440._deformatting.QualABCPair import QualABCPair
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
@@ -28,26 +28,30 @@ class Post(QualABC[Literal["post"]]):
         return PostRestrictor.by_string(string)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        clue: Clue
+    def _format_parse(
+        cls: type[Self], spec: str, /
+    ) -> tuple[QualABCPair | None]:
+        lit: str
         matches: dict[str, str]
+        pair: QualABCPair
         matches = Cfg.fullmatches("post_f", spec)
-        clue = Clue(
-            head=matches["post_head_f"] or matches["post_hyphen_f"],
+        lit = matches["post_head_f"] or matches["post_hyphen_f"]
+        if not lit:
+            return (None,)
+        pair = QualABCPair(
+            lit=lit,
             mag=len(matches["post_num_f"]),
         )
-        return (clue,)
+        return (pair,)
 
-    def _format_parsed(self: Self, /, *parsed: Any) -> str:
-        clue: Clue
-        (clue,) = parsed
+    def _format_parsed(self: Self, pair: QualABCPair | None, /) -> str:
         if not self:
             return ""
-        if "" == clue.head:
+        if pair is None:
             return ".post" + str(self.num)
-        if self.num or clue.mag or "-" == clue.head:
-            return clue.head + format(self.num, f"0{clue.mag}d")
-        return clue.head
+        if self.num or pair.mag or "-" == pair.lit:
+            return pair.lit + format(self.num, f"0{pair.mag}d")
+        return pair.lit
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> Literal["post"]:

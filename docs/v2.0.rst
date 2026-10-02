@@ -152,13 +152,13 @@ This abstract base class inherits from ``datahold.HoldList[Item]`` and from ``Co
 
 This abstract base class inherits from ``CoreABC``.
 
-``class v440.abc.QualABC.QualABC(other: Self | None = None, /, **kwargs: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.QualABC.QualABC[Lit: str](other: Self | None = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``NestedABC``.
 
-``lit: str``
-""""""""""""
+``lit: Literal[""] | Lit``
+""""""""""""""""""""""""""
 
 ``num: int``
 """"""""""""
@@ -203,7 +203,7 @@ See ``v440.core.Release.Release``.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the developmental release information.
-It inherits from ``QualABC``.
+It inherits from ``QualABC[Literal["dev"]]``.
 
 ``lit: str``
 """"""""""""
@@ -257,7 +257,7 @@ This ``property`` represents the equivalent ``packaging.version.Version.post`` v
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the pre-release information.
-It inherits from ``v440.abc.QualABC.QualABC``.
+It inherits from ``v440.abc.QualABC.QualABC[Literal["a", "b", "rc"]]``.
 
 ``lit: str``
 """"""""""""
