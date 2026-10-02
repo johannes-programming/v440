@@ -2558,6 +2558,14 @@ strings = [
     "\nV10!10.20\n",
 ]
 
+[deformatting.Qual.double]
+exceptiontype = ""
+solution = "a##"
+strings = [
+    "a01",
+    "a02",
+]
+
 [deformatting.Qual.no-strings]
 exceptiontype = ""
 solution = ""
