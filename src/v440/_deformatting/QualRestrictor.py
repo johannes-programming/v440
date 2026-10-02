@@ -28,31 +28,7 @@ class QualInfo:
     # important: it defines which numeric interpretation wins for strings
     # that the grammar can otherwise segment in more than one way.
     _QUAL_RE: ClassVar[re.Pattern[str]] = re.compile(
-        r"""
-        (?P<pre>
-            [-_.]?
-            (?P<pre_l>alpha|a|beta|b|preview|pre|c|rc)
-            [-_.]?
-            (?P<pre_n>[0-9]+)?
-        )?
-        (?P<post>
-            (?:-(?P<post_n1>[0-9]+))
-            |
-            (?:
-                [-_.]?
-                (?P<post_l>post|rev|r)
-                [-_.]?
-                (?P<post_n2>[0-9]+)?
-            )
-        )?
-        (?P<dev>
-            [-_.]?
-            (?P<dev_l>dev)
-            [-_.]?
-            (?P<dev_n>[0-9]+)?
-        )?
-        \Z
-        """,
+        Cfg.cfg.data["qual-restrictor"]["re"],
         re.ASCII | re.IGNORECASE | re.VERBOSE,
     )
 
