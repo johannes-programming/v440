@@ -13,7 +13,7 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Pre(QualABC[Literal["", "a", "b", "rc"]]):
+class Pre(QualABC[Literal["a", "b", "rc"]]):
 
     __slots__ = ()
 
@@ -60,7 +60,7 @@ class Pre(QualABC[Literal["", "a", "b", "rc"]]):
         return ans
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str, /) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> Literal["a", "b", "rc"]:
         return Cfg.cfg.data["phases"][value]  # type: ignore[no-any-return]
 
     @property

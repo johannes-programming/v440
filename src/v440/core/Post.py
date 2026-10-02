@@ -14,7 +14,7 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Post(QualABC[Literal["", "post"]]):
+class Post(QualABC[Literal["post"]]):
 
     __slots__ = ()
 
