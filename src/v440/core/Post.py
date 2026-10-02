@@ -24,8 +24,8 @@ class Post(QualABC):
         else:
             return -1
 
-    def _deformat(self: Self, body: str, /) -> PostRestrictor:
-        return PostRestrictor((body,))
+    def _deformat(self: Self, string: str, /) -> PostRestrictor:
+        return PostRestrictor.by_string(string)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
