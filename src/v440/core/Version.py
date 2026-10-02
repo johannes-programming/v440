@@ -4,17 +4,15 @@ from __future__ import annotations
 
 __all__: list[str] = ["Version"]
 
-from dataclasses import dataclass
 from typing import Any, Final, NamedTuple, Self
 
 import packaging.version
 
-from v440._deformatting.LocalRestrictor import LocalRestrictor
+from v440._deformatting.VersionRestrictor import VersionRestrictor
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
 from v440.core.Public import Public as Public_
-from v440.core.Public import PublicAccumulation
 
 
 class Version(NestedABC):
@@ -29,10 +27,10 @@ class Version(NestedABC):
     def _cmp(self: Self, /) -> tuple[Public_, Local_]:
         return self.public, self.local
 
-    def _deformat(self: Self, string: str, /) -> VersionAccumulation:
+    def _deformat(self: Self, string: str, /) -> VersionRestrictor:
         split: VersionSplit
         split = VersionSplit.by_string(string)
-        return VersionAccumulation(
+        return VersionRestrictor(
             leading=split.leading,
             public=self.public._deformat(split.public),
             local=self.local._deformat(split.local),
@@ -102,35 +100,6 @@ class Version(NestedABC):
     @setter
     def public(self: Self, value: object, /) -> None:
         self.public.string = value
-
-
-@dataclass(frozen=True, kw_only=True)
-class VersionAccumulation:
-    leading: str
-    public: PublicAccumulation
-    local: LocalRestrictor
-    trailing: str
-
-    def best(self: Self, /) -> str:
-        ans: str
-        ans = self.local.best()
-        if ans:
-            ans = "+" + ans
-        ans = self.public.best() + ans
-        if ans or self.leading == self.trailing == "":
-            return self.leading + ans + self.trailing
-        else:
-            return self.leading + "!" + self.trailing
-
-    def union(self: Self, other: Self, /) -> Self:
-        if self.leading != other.leading or self.trailing != other.trailing:
-            raise ArithmeticError
-        return type(self)(
-            leading=self.leading,
-            public=self.public.union(other.public),
-            local=self.local.union(other.local),
-            trailing=self.trailing,
-        )
 
 
 class VersionSplit(NamedTuple):
