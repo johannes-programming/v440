@@ -9,10 +9,10 @@ from typing import Any, Final, NamedTuple, Self
 
 import packaging.version
 
+from v440._deformatting.LocalRestrictor import LocalRestrictor
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Local import Local as Local_
-from v440.core.Local import LocalAccumulation
 from v440.core.Public import Public as Public_
 from v440.core.Public import PublicAccumulation
 
@@ -108,7 +108,7 @@ class Version(NestedABC):
 class VersionAccumulation:
     leading: str
     public: PublicAccumulation
-    local: LocalAccumulation
+    local: LocalRestrictor
     trailing: str
 
     def best(self: Self, /) -> str:
