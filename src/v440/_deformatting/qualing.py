@@ -4,6 +4,7 @@ __all__: list[str] = ["QualAccumulation"]
 
 import re
 from dataclasses import dataclass
+from itertools import product
 from typing import ClassVar, NamedTuple, Self
 
 
@@ -201,14 +202,181 @@ class QualAccumulation:
     mag_row: tuple[int | None, int | None, int | None, int | None, int | None]
     lit_rows: frozenset[QualRow]
 
+    _FORMAT_RE: ClassVar[re.Pattern[str]] = re.compile(
+        r"""
+        \A
+        (?P<a_f>[-_.]?(?:alpha|a)[-_.]?\#*)?
+        (?P<b_f>[-_.]?(?:beta|b)[-_.]?\#*)?
+        (?P<rc_f>[-_.]?(?:preview|pre|c|rc)[-_.]?\#*)?
+        (?P<post_f>
+            (?P<post_lit_f>
+                (?P<post_hyphen_f>-)
+                |
+                (?P<post_head_f>[-_.]?(?:post|rev|r)[-_.]?)
+            )
+            (?P<post_num_f>\#*)
+        )?
+        (?P<dev_f>
+            (?P<dev_head_f>[-_.]?dev[-_.]?)
+            (?P<dev_num_f>\#*)
+        )?
+        \Z
+        """,
+        re.IGNORECASE | re.VERBOSE,
+    )
+    _FIELDS: ClassVar[tuple[str, ...]] = QualRow._fields
+    _CANON: ClassVar[dict[str, str]] = {
+        "a": "a",
+        "b": "b",
+        "rc": "rc",
+        "post": ".post",
+        "dev": ".dev",
+    }
+    _INACTIVE: ClassVar[dict[str, tuple[str, ...]]] = {
+        "a": ("", "A", "A#"),
+        "b": ("", "B", "B#"),
+        "rc": ("", "C", "C#"),
+        "post": ("", "-", "R", "-#", "R#"),
+        "dev": ("", "DEV", "DEV#"),
+    }
+
     def best(self: Self, /) -> str:
-        pass
+        """Return the shortest qual format spec represented by this state.
+
+        A literal row fixes the spelling of every qualifier segment that was
+        actually observed.  Unobserved segments are free to use one of the
+        minimal inactive spellings when that is needed to keep the format
+        grammar from greedily assigning a separator to the wrong segment.
+
+        Numeric magnitudes describe exactly which ``#`` widths preserve the
+        observed digits.  Negative magnitudes permit harmless widths up to
+        the shortest natural number, zero means that at least one example
+        omitted the number entirely, and positive magnitudes require zero
+        padding of that width.
+        """
+        candidates: set[str] = set()
+
+        for row in self.lit_rows:
+            groups = tuple(
+                self._field_options(field, literal, mag)
+                for field, literal, mag in zip(
+                    self._FIELDS, row, self.mag_row
+                )
+            )
+            for parts in product(*groups):
+                spec = "".join(parts)
+                if self._matches(spec, row):
+                    candidates.add(spec)
+
+        if not candidates:
+            raise ValueError
+        return min(candidates, key=lambda spec: (len(spec), spec))
+
+    @classmethod
+    def _field_options(
+        cls, field: str, literal: str, mag: int | None, /
+    ) -> tuple[str, ...]:
+        if mag is None:
+            return cls._INACTIVE[field]
+
+        options: list[str] = []
+        if literal == cls._CANON[field] and cls._always_num_ok(mag, 0):
+            options.append("")
+
+        limit = max(1, abs(mag))
+        for width in range(limit + 1):
+            if field == "post" and literal == "-":
+                ok = cls._always_num_ok(mag, width)
+            else:
+                ok = cls._conditional_num_ok(mag, width)
+            if ok:
+                options.append(literal + "#" * width)
+
+        return tuple(dict.fromkeys(options))
+
+    @staticmethod
+    def _conditional_num_ok(mag: int, width: int, /) -> bool:
+        if mag > 0:
+            return width == mag
+        if mag == 0:
+            return width == 0
+        return 0 <= width <= -mag
+
+    @staticmethod
+    def _always_num_ok(mag: int, width: int, /) -> bool:
+        if mag > 1:
+            return width == mag
+        if mag == 1:
+            return width in (0, 1)
+        if mag == 0:
+            return False
+        return 0 <= width <= -mag
+
+    def _matches(self: Self, spec: str, row: QualRow, /) -> bool:
+        cls = type(self)
+        match = cls._FORMAT_RE.fullmatch(spec)
+        if match is None:
+            return False
+
+        parsed: dict[str, tuple[bool, str, int]] = {}
+        for field in ("a", "b", "rc"):
+            token = match.group(field + "_f") or ""
+            if token:
+                head = token.rstrip("#")
+                parsed[field] = (True, head, len(token) - len(head))
+            else:
+                parsed[field] = (False, "", 0)
+
+        post_token = match.group("post_f") or ""
+        if post_token:
+            head = (
+                match.group("post_hyphen_f")
+                or match.group("post_head_f")
+                or ""
+            )
+            parsed["post"] = (
+                True,
+                head,
+                len(match.group("post_num_f") or ""),
+            )
+        else:
+            parsed["post"] = (False, "", 0)
+
+        dev_token = match.group("dev_f") or ""
+        if dev_token:
+            parsed["dev"] = (
+                True,
+                match.group("dev_head_f") or "",
+                len(match.group("dev_num_f") or ""),
+            )
+        else:
+            parsed["dev"] = (False, "", 0)
+
+        for field, literal, mag in zip(cls._FIELDS, row, self.mag_row):
+            if mag is None:
+                continue
+            present, head, width = parsed[field]
+            if not present:
+                if literal != cls._CANON[field]:
+                    return False
+                if not cls._always_num_ok(mag, 0):
+                    return False
+                continue
+            if head != literal:
+                return False
+            if field == "post" and head == "-":
+                if not cls._always_num_ok(mag, width):
+                    return False
+            elif not cls._conditional_num_ok(mag, width):
+                return False
+
+        return True
 
     @classmethod
     def by_string(cls: type[Self], text: str, /) -> Self:
         qual_info = QualInfo.by_string(text)
         mag_row = list()
-        for num in qual_info.mag_row:
+        for num in qual_info.num_row:
             if num == "?":
                 mag_row.append(None)
             elif num.startswith("0"):
