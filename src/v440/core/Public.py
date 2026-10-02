@@ -6,11 +6,9 @@ __all__: list[str] = ["Public"]
 
 
 import string as string_
-from dataclasses import dataclass
 from typing import Any, Final, Self
 
-from v440._deformatting.BaseRestrictor import BaseRestrictor
-from v440._deformatting.QualRestrictor import QualRestrictor
+from v440._deformatting.PublicRestrictor import PublicRestrictor
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
@@ -29,11 +27,11 @@ class Public(NestedABC):
     def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
         return self.base, self.qual
 
-    def _deformat(self: Self, body: str, /) -> PublicAccumulation:
+    def _deformat(self: Self, body: str, /) -> PublicRestrictor:
         base: str
         qual: str
         base, qual = split_public(body)
-        return PublicAccumulation(
+        return PublicRestrictor(
             base=self.base._deformat(base),
             qual=self.qual._deformat(qual),
         )
@@ -90,24 +88,6 @@ class Public(NestedABC):
     @setter
     def qual(self: Self, value: object, /) -> None:
         self.qual.string = value
-
-
-@dataclass(frozen=True, kw_only=True)
-class PublicAccumulation:
-    base: BaseRestrictor
-    qual: QualRestrictor
-
-    def best(self: Self, /) -> str:
-        ans: str
-        ans = self.base.best()
-        ans += self.qual.best()
-        return ans
-
-    def union(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            base=self.base.union(other.base),
-            qual=self.qual.union(other.qual),
-        )
 
 
 def split_public(value: str, /) -> tuple[str, str]:

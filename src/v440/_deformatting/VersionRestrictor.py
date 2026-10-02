@@ -8,13 +8,13 @@ from dataclasses import dataclass
 from typing import Self
 
 from v440._deformatting.LocalRestrictor import LocalRestrictor
-from v440.core.Public import PublicAccumulation
+from v440._deformatting.PublicRestrictor import PublicRestrictor
 
 
 @dataclass(frozen=True, kw_only=True)
 class VersionRestrictor:
     leading: str
-    public: PublicAccumulation
+    public: PublicRestrictor
     local: LocalRestrictor
     trailing: str
 
