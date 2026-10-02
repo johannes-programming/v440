@@ -23,12 +23,6 @@ class QualInfo:
     num_row: QualRow
     lit_rows: frozenset[QualRow]
 
-    _PRE_ALIASES: ClassVar[dict[str, tuple[str, ...]]] = {
-        "a": ("alpha", "a"),
-        "b": ("beta", "b"),
-        "rc": ("preview", "pre", "c", "rc"),
-    }
-
     # This is the qualifier-only tail of the permissive PEP 440 reference
     # pattern.  Keeping the same alternative order and greedy optionals is
     # important: it defines which numeric interpretation wins for strings
@@ -114,9 +108,11 @@ class QualInfo:
         """Return every lowercase literal prefix allowed for one segment."""
         forms: set[str] = set()
 
-        if field in cls._PRE_ALIASES:
+        if field in Cfg.cfg.data["qual-restrictor"]["pre-aliases"]:
             for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                for alias in cls._PRE_ALIASES[field]:
+                for alias in Cfg.cfg.data["qual-restrictor"]["pre-aliases"][
+                    field
+                ]:
                     for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
                         forms.add(before + alias + after)
 

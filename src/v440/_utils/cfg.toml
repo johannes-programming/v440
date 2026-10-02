@@ -89,3 +89,19 @@ sep = [
     "-",
     "_",
 ]
+
+[qual-restrictor.pre-aliases]
+a = [
+    "alpha",
+    "a",
+]
+b = [
+    "beta",
+    "b",
+]
+rc = [
+    "preview",
+    "pre",
+    "c",
+    "rc",
+]
