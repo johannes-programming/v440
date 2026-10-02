@@ -5,7 +5,7 @@ from __future__ import annotations
 __all__: list[str] = ["Post"]
 
 import operator
-from typing import Any, Self, SupportsIndex
+from typing import Any, Literal, Self, SupportsIndex
 
 from v440._deformatting.Clue import Clue
 from v440._deformatting.PostRestrictor import PostRestrictor
@@ -14,7 +14,7 @@ from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Post(QualABC):
+class Post(QualABC[Literal["", "post"]]):
 
     __slots__ = ()
 

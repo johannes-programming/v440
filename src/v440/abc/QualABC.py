@@ -5,14 +5,16 @@ __all__: list[str] = ["QualABC"]
 import operator
 import string as string_
 from abc import abstractmethod
-from typing import Any, Self, SupportsIndex
+from typing import Any, Generic, Self, SupportsIndex, TypeVar
 
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 
+Lit = TypeVar("Lit", bound=str)
 
-class QualABC(NestedABC):
-    _lit: str
+
+class QualABC(NestedABC, Generic[Lit]):
+    _lit: Lit
     _num: int
     __slots__ = ("_lit", "_num")
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 __all__: list[str] = ["PreRestrictor"]
 
+from collections import abc
 from itertools import product
 from typing import Literal, NamedTuple, Self
 
@@ -17,6 +18,8 @@ def _spec_sort_key(item: str, /) -> tuple[int, str]:
 def _options(
     name: str, pattern: str, restrictor: QualABCRestrictor, /
 ) -> tuple[str, ...]:
+    ans: set[str]
+    magnitudes: abc.Iterable[int]
     pair = restrictor.pair
     if pair is None:
         return tuple(Cfg.cfg.data["inactive-specs"][pattern])
@@ -26,9 +29,9 @@ def _options(
     elif pair.num == 0:
         magnitudes = (0,)
     else:
-        magnitudes = range(-pair.num + 1)
+        magnitudes = range(1 - pair.num)
 
-    ans: set[str] = set()
+    ans = set()
     for magnitude in magnitudes:
         spec = pair.lit + "#" * magnitude
         try:
