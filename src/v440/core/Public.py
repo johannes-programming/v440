@@ -9,12 +9,12 @@ import string as string_
 from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from v440._deformatting.qualing import QualAccumulation
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
 from v440.core.Base import BaseAccumulation
 from v440.core.Qual import Qual as Qual_
-from v440.core.Qual import QualAccumulation
 
 
 class Public(NestedABC):

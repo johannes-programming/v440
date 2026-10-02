@@ -372,6 +372,8 @@ class QualAccumulation:
 
     @classmethod
     def by_string(cls: type[Self], text: str, /) -> Self:
+        mag_row: list[int | None]
+        qual_info: QualInfo
         qual_info = QualInfo.by_string(text)
         mag_row = list()
         for num in qual_info.num_row:
@@ -381,7 +383,10 @@ class QualAccumulation:
                 mag_row.append(len(num))
             else:
                 mag_row.append(-len(num))
-        return cls(mag_row=tuple(mag_row), lit_rows=qual_info.lit_rows)
+        return cls(
+            mag_row=tuple(mag_row),  # type: ignore[arg-type]
+            lit_rows=qual_info.lit_rows,
+        )
 
     def union(self: Self, other: Self, /) -> Self:
         mag_row = list()
@@ -389,6 +394,8 @@ class QualAccumulation:
             if a is None:
                 mag_row.append(b)
             elif b is None:
+                mag_row.append(a)
+            elif a == b:
                 mag_row.append(a)
             elif a + b <= 0:
                 mag_row.append(max(a, b))
@@ -398,4 +405,7 @@ class QualAccumulation:
         for rowA in self.lit_rows:
             for rowB in other.lit_rows:
                 lit_rows.update(lit_row_union(rowA, rowB))
-        return type(self)(mag_row=tuple(mag_row), lit_rows=frozenset(lit_rows))
+        return type(self)(
+            mag_row=tuple(mag_row),  # type: ignore[arg-type]
+            lit_rows=frozenset(lit_rows),
+        )
