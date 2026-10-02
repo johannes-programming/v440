@@ -5,13 +5,10 @@ from __future__ import annotations
 __all__: list[str] = ["Dev"]
 
 import operator
-from dataclasses import dataclass
 from typing import Any, Self, SupportsIndex
 
 from v440._deformatting.Clue import Clue
-from v440._deformatting.inactive_specs import inactive_specs
-from v440._deformatting.matching_specs import matching_specs
-from v440._deformatting.token_specs import token_specs
+from v440._deformatting.DevRestrictor import DevRestrictor
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
@@ -27,8 +24,8 @@ class Dev(QualABC):
         else:
             return (1,)
 
-    def _deformat(self: Self, body: str, /) -> DevAccumulation:
-        return DevAccumulation((body,))
+    def _deformat(self: Self, body: str, /) -> DevRestrictor:
+        return DevRestrictor((body,))
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
@@ -73,44 +70,3 @@ class Dev(QualABC):
         else:
             self.lit = "dev"
             self.num = operator.index(value)
-
-
-@dataclass(frozen=True)
-class DevAccumulation:
-    strings: tuple[str, ...] = ()
-
-    def best(self: Self, /) -> str:
-        objects = tuple(Dev(string=body) for body in self.strings)
-        candidates = DevCandidatePool.by_specs(objects, self.strings, "exact")
-        if not candidates:
-            raise ValueError
-        return candidates[0]
-
-    def union(self: Self, other: Self, /) -> Self:
-        return type(self)(tuple(sorted(set(self.strings + other.strings))))
-
-
-class DevCandidatePool(tuple[str]):
-    @classmethod
-    def by_specs(
-        cls: type[Self],
-        objects: tuple[Dev, ...],
-        strings: tuple[str, ...],
-        relation: str,
-        /,
-    ) -> Self:
-        if not objects:
-            return cls(("",))
-        active = next((i for i, obj in enumerate(objects) if obj), None)
-        specs = (
-            inactive_specs("dev_f")
-            if active is None
-            else token_specs("dev_f", strings[active])
-        )
-        data = matching_specs(
-            objects,
-            strings,
-            specs,
-            relation,  # type: ignore[arg-type]
-        )
-        return cls(data)
