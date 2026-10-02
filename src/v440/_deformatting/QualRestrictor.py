@@ -23,8 +23,6 @@ class QualInfo:
     num_row: QualRow
     lit_rows: frozenset[QualRow]
 
-    _ABSENT: ClassVar[str] = "?"
-
     _PRE_ALIASES: ClassVar[dict[str, tuple[str, ...]]] = {
         "a": ("alpha", "a"),
         "b": ("beta", "b"),
@@ -88,7 +86,7 @@ class QualInfo:
 
     @classmethod
     def _num_row_from_match(cls, match: re.Match[str]) -> QualRow:
-        values = [cls._ABSENT] * 5
+        values = [Cfg.cfg.data["qual-restrictor"]["absent"]] * 5
 
         pre_l = match.group("pre_l")
         if pre_l is not None:
@@ -150,11 +148,11 @@ class QualInfo:
         present = [
             (index, field, num)
             for index, (field, num) in enumerate(zip(fields, num_row))
-            if num != cls._ABSENT
+            if num != Cfg.cfg.data["qual-restrictor"]["absent"]
         ]
 
         rows: set[QualRow] = set()
-        base = [cls._ABSENT] * 5
+        base = [Cfg.cfg.data["qual-restrictor"]["absent"]] * 5
 
         def visit(which: int, pos: int, row: list[str]) -> None:
             if which == len(present):

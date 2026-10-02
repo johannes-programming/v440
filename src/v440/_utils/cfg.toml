@@ -77,14 +77,15 @@ c = "rc"
 rc = "rc"
 
 [qual-restrictor]
+absent = "?"
+post-aliases = [
+    "post",
+    "rev",
+    "r",
+]
 sep = [
     "",
     ".",
     "-",
     "_",
-]
-post-aliases = [
-    "post",
-    "rev",
-    "r",
 ]
