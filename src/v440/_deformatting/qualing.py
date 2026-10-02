@@ -259,9 +259,7 @@ class QualAccumulation:
         for row in self.lit_rows:
             groups = tuple(
                 self._field_options(field, literal, mag)
-                for field, literal, mag in zip(
-                    self._FIELDS, row, self.mag_row
-                )
+                for field, literal, mag in zip(self._FIELDS, row, self.mag_row)
             )
             for parts in product(*groups):
                 spec = "".join(parts)
