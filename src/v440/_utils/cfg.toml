@@ -98,6 +98,35 @@ rc = "rc"
 post = ".post"
 dev = ".dev"
 
+[qual-restrictor.inactive]
+a = [
+    "",
+    "A",
+    "A#",
+]
+b = [
+    "",
+    "B",
+    "B#",
+]
+rc = [
+    "",
+    "C",
+    "C#",
+]
+post = [
+    "",
+    "-",
+    "R",
+    "-#",
+    "R#",
+]
+dev = [
+    "",
+    "DEV",
+    "DEV#",
+]
+
 [qual-restrictor.pre-aliases]
 a = [
     "alpha",

@@ -196,13 +196,6 @@ class QualRestrictor:
         re.IGNORECASE | re.VERBOSE,
     )
     _FIELDS: ClassVar[tuple[str, ...]] = QualRow._fields
-    _INACTIVE: ClassVar[dict[str, tuple[str, ...]]] = {
-        "a": ("", "A", "A#"),
-        "b": ("", "B", "B#"),
-        "rc": ("", "C", "C#"),
-        "post": ("", "-", "R", "-#", "R#"),
-        "dev": ("", "DEV", "DEV#"),
-    }
 
     def best(self: Self, /) -> str:
         """Return the shortest qual format spec represented by this state.
@@ -239,7 +232,9 @@ class QualRestrictor:
         cls, field: str, literal: str, mag: int | None, /
     ) -> tuple[str, ...]:
         if mag is None:
-            return cls._INACTIVE[field]
+            return tuple[str, ...](
+                Cfg.cfg.data["qual-restrictor"]["inactive"][field]
+            )
 
         options: list[str] = []
         if literal == Cfg.cfg.data["qual-restrictor"]["canon"][
