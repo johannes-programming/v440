@@ -59,7 +59,7 @@ class QualABC(NestedABC, Generic[Lit]):
         return dict(lit=self.lit, num=self.num)
 
     @property
-    def lit(self: Self, /) -> str:
+    def lit(self: Self, /) -> Lit | Literal[""]:
         return self._lit
 
     @lit.setter

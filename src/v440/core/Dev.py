@@ -48,7 +48,7 @@ class Dev(QualABC[Literal["dev"]]):
         return clue.head
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str, /) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> Literal["dev"]:
         if value == "dev":
             return "dev"
         else:

@@ -50,7 +50,7 @@ class Post(QualABC[Literal["post"]]):
         return clue.head
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str, /) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> Literal["post"]:
         if value in ("-", "post", "r", "rev"):
             return "post"
         else:

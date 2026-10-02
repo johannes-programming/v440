@@ -104,7 +104,7 @@ class PreRestrictor(NamedTuple):
 
     @classmethod
     def by_string(
-        cls: type[Self], text: str, /, *, name: Literal["a", "b", "rc"]
+        cls: type[Self], text: str, /, *, name: Literal["", "a", "b", "rc"]
     ) -> Self:
         if name:
             return cls(**{name: QualABCRestrictor.by_string(text)})
