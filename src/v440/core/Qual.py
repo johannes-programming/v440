@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from v440._deformatting.qualing import QualAccumulation
+from v440._deformatting.QualRestrictor import QualRestrictor
 
 __all__: list[str] = ["Qual"]
 
@@ -37,8 +37,8 @@ class Qual(NestedABC):
             ans = ("", 0)
         return ans + (self.post, self.dev)
 
-    def _deformat(self: Self, body: str, /) -> QualAccumulation:
-        return QualAccumulation.by_string(body)
+    def _deformat(self: Self, body: str, /) -> QualRestrictor:
+        return QualRestrictor.by_string(body)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:

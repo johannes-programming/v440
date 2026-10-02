@@ -5,15 +5,14 @@ from __future__ import annotations
 __all__: list[str] = ["Base"]
 
 import operator
-from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from v440._deformatting.BaseRestrictor import BaseRestrictor
 from v440._deformatting.Mag import Mag
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
-from v440.core.Release import ReleaseAccumulation
 
 
 class Base(NestedABC):
@@ -27,12 +26,12 @@ class Base(NestedABC):
     def _cmp(self: Self, /) -> tuple[int, Release_]:
         return self.epoch, self.release
 
-    def _deformat(self: Self, string: str, /) -> BaseAccumulation:
+    def _deformat(self: Self, string: str, /) -> BaseRestrictor:
         epoch: str
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", string)
         epoch = matches["epoch"]
-        return BaseAccumulation(
+        return BaseRestrictor(
             basev=matches["basev"],
             epoch=Mag(len(epoch) if epoch.startswith("0") else -len(epoch)),
             release=self.release._deformat(matches["release"]),
@@ -108,29 +107,3 @@ class Base(NestedABC):
     @setter
     def release(self: Self, value: object, /) -> None:
         self.release.string = value
-
-
-@dataclass(frozen=True, kw_only=True)
-class BaseAccumulation:
-    basev: str
-    epoch: Mag
-    release: ReleaseAccumulation
-
-    def best(self: Self, /) -> str:
-        ans: str
-        ans = self.basev
-        ans += "#" * self.epoch
-        ans += "!" * (self.epoch > 0)
-        ans += self.release.best()
-        return ans
-
-    def union(self: Self, other: Self, /) -> Self:
-        epoch: Mag
-        if self.basev != other.basev:
-            raise ValueError
-        epoch = self.epoch.union(other.epoch)
-        return type(self)(
-            basev=self.basev,
-            epoch=epoch,
-            release=self.release.union(other.release),
-        )

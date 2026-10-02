@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__: list[str] = ["QualAccumulation"]
+__all__: list[str] = ["QualRestrictor"]
 
 import re
 from dataclasses import dataclass
@@ -198,7 +198,7 @@ def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
 
 
 @dataclass(frozen=True, kw_only=True)
-class QualAccumulation:
+class QualRestrictor:
     mag_row: tuple[int | None, int | None, int | None, int | None, int | None]
     lit_rows: frozenset[QualRow]
 

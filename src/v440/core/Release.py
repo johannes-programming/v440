@@ -8,10 +8,9 @@ import operator
 import string as string_
 from typing import Any, Self, SupportsIndex, overload
 
+from v440._deformatting.ReleaseRestrictor import ReleaseRestrictor
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
-
-from .._deformatting.Mag import Mag
 
 
 class Release(ListABC[int]):
@@ -25,8 +24,8 @@ class Release(ListABC[int]):
             v.pop()
         return v
 
-    def _deformat(self: Self, body: str, /) -> ReleaseAccumulation:
-        return ReleaseAccumulation.by_string(body)
+    def _deformat(self: Self, body: str, /) -> ReleaseRestrictor:
+        return ReleaseRestrictor.by_string(body)
 
     def _delitem(
         self: Self,
@@ -175,36 +174,6 @@ class Release(ListABC[int]):
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
         "This method sorts the data."
         self.data = sorted(self, key=key, reverse=reverse)
-
-
-class ReleaseAccumulation(tuple[Mag, ...]):
-
-    def best(self: Self, /) -> str:
-        ans: str
-        ans = ".".join("#" * mag for mag in self).rstrip(".")
-        return ans
-
-    @classmethod
-    def by_string(cls: type[Self], body: str, /) -> Self:
-        mags: list[Mag]
-        mags = list()
-        for part in body.split("."):
-            if part == "0" or not part.startswith("0"):
-                mags.append(Mag(-len(part)))
-            else:
-                mags.append(Mag(len(part)))
-        if body.endswith(".0"):
-            mags[-1] = Mag(1)
-        return cls(tuple(mags))
-
-    def union(self: Self, other: Self, /) -> Self:
-        mags: list[Mag]
-        mags = list()
-        for x, y in zip(self, other):
-            mags.append(x.union(y))
-        for x in self[len(mags) :] or other[len(mags) :]:
-            Mag(0).union(x)
-        return type(self)(tuple(mags))
 
 
 def item_parse(value: SupportsIndex, /) -> int:

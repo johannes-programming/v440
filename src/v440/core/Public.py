@@ -9,11 +9,11 @@ import string as string_
 from dataclasses import dataclass
 from typing import Any, Final, Self
 
-from v440._deformatting.qualing import QualAccumulation
+from v440._deformatting.BaseRestrictor import BaseRestrictor
+from v440._deformatting.QualRestrictor import QualRestrictor
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
-from v440.core.Base import BaseAccumulation
 from v440.core.Qual import Qual as Qual_
 
 
@@ -94,8 +94,8 @@ class Public(NestedABC):
 
 @dataclass(frozen=True, kw_only=True)
 class PublicAccumulation:
-    base: BaseAccumulation
-    qual: QualAccumulation
+    base: BaseRestrictor
+    qual: QualRestrictor
 
     def best(self: Self, /) -> str:
         ans: str
