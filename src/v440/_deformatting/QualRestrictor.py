@@ -196,13 +196,6 @@ class QualRestrictor:
         re.IGNORECASE | re.VERBOSE,
     )
     _FIELDS: ClassVar[tuple[str, ...]] = QualRow._fields
-    _CANON: ClassVar[dict[str, str]] = {
-        "a": "a",
-        "b": "b",
-        "rc": "rc",
-        "post": ".post",
-        "dev": ".dev",
-    }
     _INACTIVE: ClassVar[dict[str, tuple[str, ...]]] = {
         "a": ("", "A", "A#"),
         "b": ("", "B", "B#"),
@@ -249,7 +242,9 @@ class QualRestrictor:
             return cls._INACTIVE[field]
 
         options: list[str] = []
-        if literal == cls._CANON[field] and cls._always_num_ok(mag, 0):
+        if literal == Cfg.cfg.data["qual-restrictor"]["canon"][
+            field
+        ] and cls._always_num_ok(mag, 0):
             options.append("")
 
         limit = max(1, abs(mag))
@@ -326,7 +321,7 @@ class QualRestrictor:
                 continue
             present, head, width = parsed[field]
             if not present:
-                if literal != cls._CANON[field]:
+                if literal != Cfg.cfg.data["qual-restrictor"]["canon"][field]:
                     return False
                 if not cls._always_num_ok(mag, 0):
                     return False

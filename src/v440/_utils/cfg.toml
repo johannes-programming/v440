@@ -91,6 +91,13 @@ sep = [
     "_",
 ]
 
+[qual-restrictor.canon]
+a = "a"
+b = "b"
+rc = "rc"
+post = ".post"
+dev = ".dev"
+
 [qual-restrictor.pre-aliases]
 a = [
     "alpha",
