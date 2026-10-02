@@ -1,5 +1,7 @@
 --sort
 --sort
 --key=errors
+--sort
+--key=qual-restrictor
 --
 src/v440/_utils/cfg.toml
