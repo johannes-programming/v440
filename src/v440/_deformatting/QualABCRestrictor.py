@@ -19,8 +19,8 @@ class QualABCRestrictor:
             return self.pair.best()
 
     @classmethod
-    def by_fields(cls: type[Self], /, lit: str, num: int) -> Self:
-        return cls(QualABCPair(lit, num))
+    def by_fields(cls: type[Self], /, lit: str, mag: int) -> Self:
+        return cls(QualABCPair(lit, mag))
 
     @classmethod
     def by_spec(cls: type[Self], text: str, /) -> Self:

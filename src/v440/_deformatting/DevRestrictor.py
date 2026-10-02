@@ -8,6 +8,6 @@ class DevRestrictor(QualABCRestrictor):
     def best(self: Self, /) -> str:
         if self.pair is None:
             return ""
-        if self.pair.lit == ".dev" and self.pair.num and self.pair.num <= 1:
+        if self.pair.lit == ".dev" and self.pair.mag and self.pair.mag <= 1:
             return ""
-        return self.pair.lit + self.pair.num * "#"
+        return self.pair.lit + self.pair.mag * "#"

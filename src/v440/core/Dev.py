@@ -38,7 +38,7 @@ class Dev(QualABC[Literal["dev"]]):
         matches = Cfg.fullmatches("dev_f", spec)
         pair = QualABCPair(
             lit=matches["dev_head_f"],
-            num=len(matches["dev_num_f"]),
+            mag=len(matches["dev_num_f"]),
         )
         return (pair,)
 
@@ -47,8 +47,8 @@ class Dev(QualABC[Literal["dev"]]):
             return ""
         if pair is None:
             return ".dev" + str(self.num)
-        if self.num or pair.num:
-            return pair.lit + format(self.num, f"0{pair.num}d")
+        if self.num or pair.mag:
+            return pair.lit + format(self.num, f"0{pair.mag}d")
         return pair.lit
 
     @classmethod

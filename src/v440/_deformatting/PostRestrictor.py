@@ -8,8 +8,8 @@ class PostRestrictor(QualABCRestrictor):
     def best(self: Self, /) -> str:
         if self.pair is None:
             return ""
-        if self.pair.num <= 1 and self.pair.num and self.pair.lit == ".post":
+        if self.pair.mag <= 1 and self.pair.mag and self.pair.lit == ".post":
             return ""
-        if self.pair.num <= 1 and self.pair.lit == "-":
+        if self.pair.mag <= 1 and self.pair.lit == "-":
             return "-"
-        return self.pair.lit + self.pair.num * "#"
+        return self.pair.lit + self.pair.mag * "#"

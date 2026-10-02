@@ -24,12 +24,12 @@ def _options(
     if pair is None:
         return tuple(Cfg.cfg.data["inactive-specs"][pattern])
 
-    if pair.num > 0:
-        magnitudes = (pair.num,)
-    elif pair.num == 0:
+    if pair.mag > 0:
+        magnitudes = (pair.mag,)
+    elif pair.mag == 0:
         magnitudes = (0,)
     else:
-        magnitudes = range(1 - pair.num)
+        magnitudes = range(1 - pair.mag)
 
     ans = set()
     for magnitude in magnitudes:
@@ -44,7 +44,7 @@ def _options(
     # natural decimal number. This reproduces the canonical, non-omitted forms
     # that need at most one digit of zero-padding (``a0``, ``a1``, ``a10``,
     # and analogues).
-    if pair.lit == name and pair.num != 0 and pair.num <= 1:
+    if pair.lit == name and pair.mag != 0 and pair.mag <= 1:
         ans.add("")
 
     return tuple(sorted(ans, key=_spec_sort_key))
@@ -56,14 +56,14 @@ def _valid(name: str, restrictor: QualABCRestrictor, clue: Clue, /) -> bool:
         return True
 
     if clue.head == "":
-        return pair.lit == name and pair.num != 0 and pair.num <= 1
+        return pair.lit == name and pair.mag != 0 and pair.mag <= 1
     if clue.head != pair.lit:
         return False
-    if pair.num > 0:
-        return clue.mag == pair.num
-    if pair.num == 0:
+    if pair.mag > 0:
+        return clue.mag == pair.mag
+    if pair.mag == 0:
         return clue.mag == 0
-    return clue.mag <= -pair.num
+    return clue.mag <= -pair.mag
 
 
 class PreRestrictor(NamedTuple):

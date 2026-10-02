@@ -8,33 +8,33 @@ from typing import NamedTuple, Self
 
 class QualABCPair(NamedTuple):
     lit: str
-    num: int
+    mag: int
 
     def best(self: Self, /) -> str:
-        return self.lit + self.num * "#"
+        return self.lit + self.mag * "#"
 
     @classmethod
     def by_spec(cls: type[Self], text: str, /) -> Self:
         lit: str
         lit = text.rstrip("#")
-        return cls(lit=lit, num=len(text) - len(lit))
+        return cls(lit=lit, mag=len(text) - len(lit))
 
     @classmethod
     def by_string(cls: type[Self], text: str, /) -> Self:
         lit: str
-        num: str
+        mag: str
         lit = text.rstrip(string.digits)
-        num = text[len(lit) :]
-        if num.startswith("0"):
-            return cls(lit=lit, num=len(num))
+        mag = text[len(lit) :]
+        if mag.startswith("0"):
+            return cls(lit=lit, mag=len(mag))
         else:
-            return cls(lit=lit, num=-len(num))
+            return cls(lit=lit, mag=-len(mag))
 
     def union(self: Self, other: Self, /) -> Self:
         if self.lit != other.lit:
             raise ArithmeticError
-        if self.num == other.num:
+        if self.mag == other.mag:
             return self
-        if self.num + other.num <= 0:
+        if self.mag + other.mag <= 0:
             return max(self, other)
         raise ArithmeticError
