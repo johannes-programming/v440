@@ -69,17 +69,3 @@ class Clue(BaseClue):
                 ans.add(short)
                 ans.add(short + "#")
             return ans
-
-    def seal(self: Self, /) -> Self:
-        mag: int
-        mag = self.mag if self.mag >= -1 else -1
-        return type(self)(head=self.head, mag=mag)
-
-    def solo(self: Self, /, hollow: str) -> str:
-        mag: int
-        if self.head == "":
-            return ""
-        mag = self.mag if self.mag >= -1 else -1
-        if self.head == hollow and mag in (-1, 1):
-            return ""
-        return self.head + max(0, mag) * "#"

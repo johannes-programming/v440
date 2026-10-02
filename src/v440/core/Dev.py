@@ -24,8 +24,8 @@ class Dev(QualABC):
         else:
             return (1,)
 
-    def _deformat(self: Self, body: str, /) -> DevRestrictor:
-        return DevRestrictor((body,))
+    def _deformat(self: Self, string: str, /) -> DevRestrictor:
+        return DevRestrictor.by_string(string)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
