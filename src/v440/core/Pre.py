@@ -6,8 +6,8 @@ __all__: list[str] = ["Pre"]
 
 from typing import Any, Literal, Self, SupportsIndex
 
-from v440._deformatting.Clue import Clue
 from v440._deformatting.PreRestrictor import PreRestrictor
+from v440._deformatting.QualABCRestrictor import QualABCRestrictor
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
@@ -26,38 +26,43 @@ class Pre(QualABC[Literal["a", "b", "rc"]]):
         return PreRestrictor.by_string(string, name=self.lit)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        a: Clue
-        b: Clue
+    def _format_parse(
+        cls: type[Self], spec: str, /
+    ) -> tuple[QualABCRestrictor, QualABCRestrictor, QualABCRestrictor]:
+        a: QualABCRestrictor
+        b: QualABCRestrictor
         matches: dict[str, str]
-        rc: Clue
+        rc: QualABCRestrictor
         matches = Cfg.fullmatches("pre_f", spec)
-        a = Clue.by_spec(matches["a_f"])
-        b = Clue.by_spec(matches["b_f"])
-        rc = Clue.by_spec(matches["rc_f"])
+        a = QualABCRestrictor.by_spec(matches["a_f"])
+        b = QualABCRestrictor.by_spec(matches["b_f"])
+        rc = QualABCRestrictor.by_spec(matches["rc_f"])
         return a, b, rc
 
-    def _format_parsed(self: Self, /, *parsed: Any) -> str:
-        ans: str
-        a: Clue
-        b: Clue
-        clue: Clue
-        rc: Clue
-        a, b, rc = parsed
+    def _format_parsed(
+        self: Self,
+        a: QualABCRestrictor,
+        b: QualABCRestrictor,
+        rc: QualABCRestrictor,
+        /,
+    ) -> str:
+        restrictor: QualABCRestrictor
         if self.lit == "a":
-            clue = a
+            restrictor = a
         elif self.lit == "b":
-            clue = b
+            restrictor = b
         elif self.lit == "rc":
-            clue = rc
+            restrictor = rc
         else:
             return ""
-        if clue.head == "":
+        if restrictor.pair is None:
             return self.lit + str(self.num)
-        ans = clue.head
-        if self.num or clue.mag:
-            ans += format(self.num, f"0{clue.mag}d")
-        return ans
+        if self.num or restrictor.pair.mag:
+            return restrictor.pair.lit + format(
+                self.num, f"0{restrictor.pair.mag}d"
+            )
+        else:
+            return restrictor.pair.lit
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> Literal["a", "b", "rc"]:
