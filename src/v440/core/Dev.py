@@ -5,10 +5,10 @@ from __future__ import annotations
 __all__: list[str] = ["Dev"]
 
 import operator
-from typing import Any, Literal, Self, SupportsIndex
+from typing import Literal, Self, SupportsIndex
 
-from v440._deformatting.Clue import Clue
 from v440._deformatting.DevRestrictor import DevRestrictor
+from v440._deformatting.QualABCPair import QualABCPair
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
@@ -28,24 +28,28 @@ class Dev(QualABC[Literal["dev"]]):
         return DevRestrictor.by_string(string)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        clue: Clue
+    def _format_parse(
+        cls: type[Self], spec: str, /
+    ) -> tuple[QualABCPair | None]:
+        pair: QualABCPair
         matches: dict[str, str]
+        if spec == "":
+            return (None,)
         matches = Cfg.fullmatches("dev_f", spec)
-        clue = Clue(
-            head=matches["dev_head_f"],
-            mag=len(matches["dev_num_f"]),
+        pair = QualABCPair(
+            lit=matches["dev_head_f"],
+            num=len(matches["dev_num_f"]),
         )
-        return (clue,)
+        return (pair,)
 
-    def _format_parsed(self: Self, clue: Clue, /) -> str:
+    def _format_parsed(self: Self, pair: QualABCPair | None, /) -> str:
         if not self:
             return ""
-        if "" == clue.head:
+        if pair is None:
             return ".dev" + str(self.num)
-        if self.num or clue.mag:
-            return clue.head + format(self.num, f"0{clue.mag}d")
-        return clue.head
+        if self.num or pair.num:
+            return pair.lit + format(self.num, f"0{pair.num}d")
+        return pair.lit
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> Literal["dev"]:
