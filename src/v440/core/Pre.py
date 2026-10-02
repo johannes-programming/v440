@@ -22,8 +22,8 @@ class Pre(QualABC):
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
 
-    def _deformat(self: Self, body: str, /) -> PreRestrictor:
-        return PreRestrictor((body,))
+    def _deformat(self: Self, string: str, /) -> PreRestrictor:
+        return PreRestrictor.by_string(string, name=self.lit)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
