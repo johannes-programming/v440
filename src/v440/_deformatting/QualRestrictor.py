@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from itertools import product
 from typing import ClassVar, NamedTuple, Self
 
+from v440._utils.Cfg import Cfg
+
 
 class QualRow(NamedTuple):
     a: str
@@ -22,7 +24,7 @@ class QualInfo:
     lit_rows: frozenset[QualRow]
 
     _ABSENT: ClassVar[str] = "?"
-    _SEP: ClassVar[tuple[str, ...]] = ("", ".", "-", "_")
+
     _PRE_ALIASES: ClassVar[dict[str, tuple[str, ...]]] = {
         "a": ("alpha", "a"),
         "b": ("beta", "b"),
@@ -116,9 +118,9 @@ class QualInfo:
         forms: set[str] = set()
 
         if field in cls._PRE_ALIASES:
-            for before in cls._SEP:
+            for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
                 for alias in cls._PRE_ALIASES[field]:
-                    for after in cls._SEP:
+                    for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
                         forms.add(before + alias + after)
 
         elif field == "post":
@@ -126,14 +128,14 @@ class QualInfo:
             # spellings, it cannot use an implicit numeric value.
             if num:
                 forms.add("-")
-            for before in cls._SEP:
+            for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
                 for alias in cls._POST_ALIASES:
-                    for after in cls._SEP:
+                    for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
                         forms.add(before + alias + after)
 
         elif field == "dev":
-            for before in cls._SEP:
-                for after in cls._SEP:
+            for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
+                for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
                     forms.add(before + "dev" + after)
 
         else:  # pragma: no cover - private misuse guard
