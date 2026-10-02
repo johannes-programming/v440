@@ -30,7 +30,6 @@ class QualInfo:
         "b": ("beta", "b"),
         "rc": ("preview", "pre", "c", "rc"),
     }
-    _POST_ALIASES: ClassVar[tuple[str, ...]] = ("post", "rev", "r")
 
     # This is the qualifier-only tail of the permissive PEP 440 reference
     # pattern.  Keeping the same alternative order and greedy optionals is
@@ -129,7 +128,7 @@ class QualInfo:
             if num:
                 forms.add("-")
             for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                for alias in cls._POST_ALIASES:
+                for alias in Cfg.cfg.data["qual-restrictor"]["post-aliases"]:
                     for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
                         forms.add(before + alias + after)
 

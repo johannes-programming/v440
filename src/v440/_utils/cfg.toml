@@ -83,3 +83,8 @@ sep = [
     "-",
     "_",
 ]
+post-aliases = [
+    "post",
+    "rev",
+    "r",
+]
