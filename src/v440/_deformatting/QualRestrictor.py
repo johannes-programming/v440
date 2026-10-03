@@ -255,10 +255,7 @@ class QualRestrictor:
     def best(self: Self, /) -> str:
         """Return the shortest qual format spec represented by this state."""
         candidates: set[str]
-        field: str
-        groups: tuple[tuple[str, ...], ...]
-        literal: str
-        mag: int | None
+        groups: map[tuple[str, ...]]
         parts: tuple[str, ...]
         row: QualRow
         # A literal row fixes observed spellings. Unobserved segments may use
@@ -266,10 +263,7 @@ class QualRestrictor:
         candidates = set()
 
         for row in self.lit_rows:
-            groups = tuple(
-                self._field_options(field, literal, mag)
-                for field, literal, mag in zip(self._FIELDS, row, self.mag_row)
-            )
+            groups = map(self._field_options, self._FIELDS, row, self.mag_row)
             for parts in product(*groups):
                 spec = "".join(parts)
                 if self._matches(spec, row):
