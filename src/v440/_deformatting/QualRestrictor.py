@@ -238,25 +238,24 @@ class QualRestrictor:
     _FIELDS: ClassVar[tuple[str, ...]] = QualRow._fields
 
     def best(self: Self, /) -> str:
-        """Return the shortest qual format spec represented by this state.
-
-        A literal row fixes the spelling of every qualifier segment that was
-        actually observed.  Unobserved segments are free to use one of the
-        minimal inactive spellings when that is needed to keep the format
-        grammar from greedily assigning a separator to the wrong segment.
-
-        Numeric magnitudes describe exactly which ``#`` widths preserve the
-        observed digits.  Negative magnitudes permit harmless widths up to
-        the shortest natural number, zero means that at least one example
-        omitted the number entirely, and positive magnitudes require zero
-        padding of that width.
-        """
-        candidates: set[str] = set()
+        """Return the shortest qual format spec represented by this state."""
+        candidates: set[str]
+        field: str
+        groups: tuple[tuple[str, ...], ...]
+        literal: str
+        mag: int | None
+        parts: tuple[str, ...]
+        row: QualRow
+        # A literal row fixes observed spellings. Unobserved segments may use
+        # a minimal inactive spelling so separators stay on the right segment.
+        candidates = set()
 
         for row in self.lit_rows:
             groups = tuple(
                 self._field_options(field, literal, mag)
-                for field, literal, mag in zip(self._FIELDS, row, self.mag_row)
+                for field, literal, mag in zip(
+                    self._FIELDS, row, self.mag_row
+                )
             )
             for parts in product(*groups):
                 spec = "".join(parts)
