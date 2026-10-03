@@ -120,10 +120,13 @@ class QualInfo:
             # spellings, it cannot use an implicit numeric value.
             if num:
                 forms.add("-")
-            for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                for alias in Cfg.cfg.data["qual-restrictor"]["post-aliases"]:
-                    for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                        forms.add(before + alias + after)
+            triples = iterprod(
+                Cfg.cfg.data["qual-restrictor"]["sep"],
+                Cfg.cfg.data["qual-restrictor"]["post-aliases"],
+                Cfg.cfg.data["qual-restrictor"]["sep"],
+            )
+            for before, alias, after in triples:
+                forms.add(before + alias + after)
 
         elif field == "dev":
             for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
