@@ -1,4 +1,5 @@
 """Pair a qualifier literal with a magnitude clue."""
+
 from __future__ import annotations
 
 __all__: list[str] = ["QualABCPair"]
@@ -9,6 +10,7 @@ from typing import NamedTuple, Self
 
 class QualABCPair(NamedTuple):
     """Represent QualABCPair."""
+
     lit: str
     mag: int
 

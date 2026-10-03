@@ -16,8 +16,8 @@ from v440.core.Release import Release as Release_
 
 
 class Base(NestedABC):
-
     """Represent Base."""
+
     Release: Final[type[Release_]] = Release_
     _epoch: int
     _release: Release_

@@ -15,6 +15,7 @@ from v440._deformatting.QualRestrictor import QualRestrictor
 @dataclass(frozen=True, kw_only=True)
 class PublicRestrictor:
     """Represent PublicRestrictor."""
+
     base: BaseRestrictor
     qual: QualRestrictor
 

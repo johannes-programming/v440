@@ -1,4 +1,5 @@
 """Wrap property setters so failures restore the instance."""
+
 __all__: list[str] = ["setter"]
 
 from collections import abc

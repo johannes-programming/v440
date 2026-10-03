@@ -14,8 +14,8 @@ from v440.abc.QualABC import QualABC
 
 
 class Pre(QualABC[Literal["a", "b", "rc"]]):
-
     """Represent Pre."""
+
     __slots__ = ()
 
     def _cmp(self: Self, /) -> tuple[Any, ...]:

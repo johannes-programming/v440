@@ -17,8 +17,8 @@ from v440.core.Pre import Pre as Pre_
 
 
 class Qual(NestedABC):
-
     """Represent Qual."""
+
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_
     Dev: Final[type[Dev_]] = Dev_

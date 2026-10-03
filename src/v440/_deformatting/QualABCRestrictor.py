@@ -1,4 +1,5 @@
 """Restrict one qualifier segment while deformatting."""
+
 from __future__ import annotations
 
 __all__: list[str] = ["QualABCRestrictor"]
@@ -12,6 +13,7 @@ from v440._deformatting.QualABCPair import QualABCPair
 @dataclass(frozen=True)
 class QualABCRestrictor:
     """Represent QualABCRestrictor."""
+
     pair: QualABCPair | None = None
 
     def best(self: Self, /) -> str:

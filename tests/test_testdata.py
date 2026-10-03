@@ -1,4 +1,5 @@
 """Exercise v440 against recorded version examples."""
+
 __all__: list[str] = [
     "TestDeformatting",
     "TestFormat",
@@ -38,6 +39,7 @@ from v440.errors.VersionError import VersionError
 
 class Util(enum.Enum):
     """Represent Util."""
+
     util = None
 
     @functools.cached_property
@@ -67,8 +69,8 @@ class Util(enum.Enum):
 
 
 class TestDeformatting(unittest.TestCase):
-
     """Exercise TestDeformatting."""
+
     def go_blob(
         self: Self,
         cls: type[Any],
@@ -145,8 +147,8 @@ class TestDeformatting(unittest.TestCase):
 
 
 class TestStringExamples(unittest.TestCase):
-
     """Exercise TestStringExamples."""
+
     def go_version(
         self: Self, example: str, /, *, valid: bool, **kwargs: Any
     ) -> None:
@@ -230,6 +232,7 @@ class TestStringExamples(unittest.TestCase):
 
 class TestTypeNames(unittest.TestCase):
     """Exercise TestTypeNames."""
+
     def go_name(self: Self, name: str, /) -> None:
         """Perform go name."""
         cls: type[Any]
@@ -243,8 +246,8 @@ class TestTypeNames(unittest.TestCase):
 
 
 class TestStringExamples0(unittest.TestCase):
-
     """Exercise TestStringExamples0."""
+
     def go_examples(
         self: Self, /, clsname: str, tables: dict[Any, Any]
     ) -> None:
@@ -405,8 +408,8 @@ class TestStringExamples0(unittest.TestCase):
 
 
 class TestTotalAttrSetter(unittest.TestCase):
-
     """Exercise TestTotalAttrSetter."""
+
     def go_clsname(
         self: Self,
         clsname: str,
@@ -477,8 +480,8 @@ class TestTotalAttrSetter(unittest.TestCase):
 
 
 class TestTotalMethod(unittest.TestCase):
-
     """Exercise TestTotalMethod."""
+
     def go_clsname(
         self: Self,
         clsname: str,
@@ -527,8 +530,8 @@ class TestTotalMethod(unittest.TestCase):
 
 
 class TestFunction(unittest.TestCase):
-
     """Exercise TestFunction."""
+
     def go_clsname(
         self: Self,
         clsname: str,
@@ -575,8 +578,8 @@ class TestFunction(unittest.TestCase):
 
 
 class TestVersionEpochGo(unittest.TestCase):
-
     """Exercise TestVersionEpochGo."""
+
     def test_0(self: Self, /) -> None:
         """Exercise test 0."""
         x: str
@@ -605,8 +608,8 @@ class TestVersionEpochGo(unittest.TestCase):
 
 
 class TestSlicingGo(unittest.TestCase):
-
     """Exercise TestSlicingGo."""
+
     def go_cls(self: Self, cls: type[Any], /, **kwargs: Any) -> None:
         """Perform go cls."""
         x: str
@@ -654,8 +657,8 @@ class TestSlicingGo(unittest.TestCase):
 
 
 class TestFormat(unittest.TestCase):
-
     """Exercise TestFormat."""
+
     def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
         """Perform go."""
         a: Version_
@@ -681,8 +684,8 @@ class TestFormat(unittest.TestCase):
 
 
 class TestOrder(unittest.TestCase):
-
     """Exercise TestOrder."""
+
     def go(
         self: Self,
         *,
@@ -751,6 +754,7 @@ class TestOrder(unittest.TestCase):
 
 class TestSlots(unittest.TestCase):
     """Exercise TestSlots."""
+
     def go_blob(
         self: Self,
         cls: type[Any],
@@ -790,6 +794,7 @@ class TestSlots(unittest.TestCase):
 
 class TestReleaseAlias(unittest.TestCase):
     """Exercise TestReleaseAlias."""
+
     def test_0(self: Self, /) -> None:
         """Exercise test 0."""
         x: Any

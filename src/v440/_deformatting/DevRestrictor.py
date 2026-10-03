@@ -1,4 +1,5 @@
 """Restrict developmental segments while deformatting versions."""
+
 __all__: list[str] = ["DevRestrictor"]
 from typing import Self
 
@@ -7,6 +8,7 @@ from .QualABCRestrictor import QualABCRestrictor
 
 class DevRestrictor(QualABCRestrictor):
     """Represent DevRestrictor."""
+
     def best(self: Self, /) -> str:
         """Return the best of this state."""
         if self.pair is None:

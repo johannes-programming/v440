@@ -15,6 +15,7 @@ from v440.abc.ListABC import ListABC
 
 class Release(ListABC[int]):
     """Represent Release."""
+
     __slots__ = ()
 
     @classmethod

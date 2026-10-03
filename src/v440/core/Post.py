@@ -15,8 +15,8 @@ from v440.abc.QualABC import QualABC
 
 
 class Post(QualABC[Literal["post"]]):
-
     """Represent Post."""
+
     __slots__ = ()
 
     def _cmp(self: Self, /) -> int:

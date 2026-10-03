@@ -1,4 +1,5 @@
 """Represent an unconstrained magnitude while deformatting."""
+
 from __future__ import annotations
 
 __all__: list[str] = ["MagJoker"]
@@ -13,6 +14,7 @@ if TYPE_CHECKING:
 
 class MagJoker(enum.Enum):
     """Represent MagJoker."""
+
     JOKER = None
 
     def best(self: Self, /) -> str:

@@ -15,6 +15,7 @@ Lit = TypeVar("Lit", bound=str)
 
 class QualABC(NestedABC, Generic[Lit]):
     """Represent QualABC."""
+
     _lit: Lit | Literal[""]
     _num: int
     __slots__ = ("_lit", "_num")

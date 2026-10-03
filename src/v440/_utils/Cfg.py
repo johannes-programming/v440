@@ -13,6 +13,7 @@ from typing import Any, Self, cast
 
 class Cfg(enum.Enum):
     """Represent Cfg."""
+
     cfg = None
 
     @functools.cached_property

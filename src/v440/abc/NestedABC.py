@@ -14,6 +14,7 @@ from v440.abc.CoreABC import CoreABC
 
 class NestedABC(cmp3.CmpABC, CoreABC):
     """Represent NestedABC."""
+
     __slots__ = ()
 
     @setdoc.basic

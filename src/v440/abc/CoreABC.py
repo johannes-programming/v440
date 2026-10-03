@@ -18,6 +18,7 @@ from v440.errors.VersionError import VersionError
 
 class CoreABC(Copyable):
     """Represent CoreABC."""
+
     __slots__ = ()
 
     @abstractmethod

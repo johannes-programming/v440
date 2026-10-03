@@ -16,6 +16,7 @@ from v440.abc.ListABC import ListABC
 
 class Local(ListABC[int | str]):
     """Represent Local."""
+
     __slots__ = ()
 
     @classmethod

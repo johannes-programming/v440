@@ -17,8 +17,8 @@ Item = TypeVar("Item", bound=int | str)
 
 
 class ListABC(HoldList[Item], CoreABC):
-
     """Represent ListABC."""
+
     __slots__ = ()
 
     @setdoc.basic

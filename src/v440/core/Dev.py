@@ -15,8 +15,8 @@ from v440.abc.QualABC import QualABC
 
 
 class Dev(QualABC[Literal["dev"]]):
-
     """Represent Dev."""
+
     __slots__ = ()
 
     def _cmp(self: Self, /) -> tuple[int] | tuple[int, int]:

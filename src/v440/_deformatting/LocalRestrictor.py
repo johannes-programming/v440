@@ -16,6 +16,7 @@ from v440._deformatting.MagJoker import MagJoker
 @dataclass(frozen=True)
 class LitAccumulation:
     """Represent LitAccumulation."""
+
     data: str = ""
 
     def best(self: Self, /) -> str:
@@ -57,6 +58,7 @@ class LitAccumulation:
 @dataclass(frozen=True, kw_only=True)
 class EvenAccumulation:
     """Represent EvenAccumulation."""
+
     num: Mag | MagJoker = MagJoker.JOKER
     lit: LitAccumulation = LitAccumulation()
 
@@ -84,6 +86,7 @@ class EvenAccumulation:
 
 class LocalRestrictor(NamedTuple):
     """Represent LocalRestrictor."""
+
     evens: tuple[EvenAccumulation, ...]
     odds: tuple[str, ...]
 

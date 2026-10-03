@@ -16,8 +16,8 @@ from v440.core.Public import Public as Public_
 
 
 class Version(NestedABC):
-
     """Represent Version."""
+
     Public: Final[type[Public_]] = Public_
     Local: Final[type[Local_]] = Local_
     _public: Public_
@@ -115,6 +115,7 @@ class Version(NestedABC):
 
 class VersionSplit(NamedTuple):
     """Represent VersionSplit."""
+
     leading: str
     public: str
     local: str

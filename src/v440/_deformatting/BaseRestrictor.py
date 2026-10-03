@@ -14,6 +14,7 @@ from v440._deformatting.ReleaseRestrictor import ReleaseRestrictor
 @dataclass(frozen=True, kw_only=True)
 class BaseRestrictor:
     """Represent BaseRestrictor."""
+
     basev: str
     epoch: Mag
     release: ReleaseRestrictor

@@ -1,4 +1,5 @@
 """Represent a numeric magnitude used while deformatting."""
+
 from __future__ import annotations
 
 __all__: list[str] = ["Mag"]
@@ -11,6 +12,7 @@ from .MagJoker import MagJoker
 
 class Mag(int):
     """Represent Mag."""
+
     def best(self: Self, /) -> str:
         """Return the best of this state."""
         return "#" * self

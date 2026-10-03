@@ -16,8 +16,8 @@ from v440.core.Qual import Qual as Qual_
 
 
 class Public(NestedABC):
-
     """Represent Public."""
+
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
     _base: Base_

@@ -15,6 +15,7 @@ from v440._utils.Cfg import Cfg
 
 class PreRestrictor(NamedTuple):
     """Represent PreRestrictor."""
+
     a: QualABCRestrictor = QualABCRestrictor()
     b: QualABCRestrictor = QualABCRestrictor()
     rc: QualABCRestrictor = QualABCRestrictor()
@@ -132,4 +133,3 @@ class PreRestrictor(NamedTuple):
 def _spec_sort_key(item: str, /) -> tuple[int, str]:
     """Sort format specs by length, then text."""
     return len(item), item
-

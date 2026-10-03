@@ -11,8 +11,8 @@ from .._deformatting.Mag import Mag
 
 
 class ReleaseRestrictor(tuple[Mag, ...]):
-
     """Represent ReleaseRestrictor."""
+
     def best(self: Self, /) -> str:
         """Return the best of this state."""
         ans: str

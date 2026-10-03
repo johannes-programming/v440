@@ -14,6 +14,7 @@ from v440._deformatting.PublicRestrictor import PublicRestrictor
 @dataclass(frozen=True, kw_only=True)
 class VersionRestrictor:
     """Represent VersionRestrictor."""
+
     leading: str
     public: PublicRestrictor
     local: LocalRestrictor

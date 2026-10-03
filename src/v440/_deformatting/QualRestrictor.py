@@ -17,6 +17,7 @@ from v440._utils.Cfg import Cfg
 
 class QualRow(NamedTuple):
     """Represent QualRow."""
+
     a: str
     b: str
     rc: str
@@ -27,6 +28,7 @@ class QualRow(NamedTuple):
 @dataclass(frozen=True, kw_only=True)
 class QualInfo:
     """Represent QualInfo."""
+
     num_row: QualRow
     lit_rows: frozenset[QualRow]
 
@@ -94,9 +96,9 @@ class QualInfo:
 
     @classmethod
     def _literal_forms(
-        cls: type[Self], 
-        /, 
-        field: str, 
+        cls: type[Self],
+        /,
+        field: str,
         num: str,
     ) -> tuple[str, ...]:
         """Return every lowercase literal prefix allowed for one segment."""
@@ -222,6 +224,7 @@ def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
 @dataclass(frozen=True, kw_only=True)
 class QualRestrictor:
     """Represent QualRestrictor."""
+
     mag_row: tuple[int | None, int | None, int | None, int | None, int | None]
     lit_rows: frozenset[QualRow]
 
@@ -265,9 +268,7 @@ class QualRestrictor:
         for row in self.lit_rows:
             groups = tuple(
                 self._field_options(field, literal, mag)
-                for field, literal, mag in zip(
-                    self._FIELDS, row, self.mag_row
-                )
+                for field, literal, mag in zip(self._FIELDS, row, self.mag_row)
             )
             for parts in product(*groups):
                 spec = "".join(parts)
