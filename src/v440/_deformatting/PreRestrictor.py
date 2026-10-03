@@ -14,41 +14,6 @@ def _spec_sort_key(item: str, /) -> tuple[int, str]:
     return len(item), item
 
 
-def _options(name: str, restrictor: QualABCRestrictor, /) -> tuple[str, ...]:
-    ans: set[str]
-    magnitudes: abc.Iterable[int]
-    pattern: str
-    pattern = name + "_f"
-    pair = restrictor.pair
-    if pair is None:
-        return tuple(Cfg.cfg.data["inactive-specs"][pattern])
-
-    if pair.mag > 0:
-        magnitudes = (pair.mag,)
-    elif pair.mag == 0:
-        magnitudes = (0,)
-    else:
-        magnitudes = range(1 - pair.mag)
-
-    ans = set()
-    for magnitude in magnitudes:
-        spec = pair.lit + "#" * magnitude
-        try:
-            Cfg.fullmatches(pattern, spec)
-        except Exception:
-            continue
-        ans.add(spec)
-
-    # With an empty clue, Pre uses its canonical phase spelling and emits the
-    # natural decimal number. This reproduces the canonical, non-omitted forms
-    # that need at most one digit of zero-padding (``a0``, ``a1``, ``a10``,
-    # and analogues).
-    if pair.lit == name and pair.mag != 0 and pair.mag <= 1:
-        ans.add("")
-
-    return tuple(sorted(ans, key=_spec_sort_key))
-
-
 def _valid(
     name: str, restrictor: QualABCRestrictor, clue: QualABCRestrictor, /
 ) -> bool:
@@ -72,6 +37,40 @@ class PreRestrictor(NamedTuple):
     b: QualABCRestrictor = QualABCRestrictor()
     rc: QualABCRestrictor = QualABCRestrictor()
 
+    def _options(self: Self, name: str, /) -> tuple[str, ...]:
+        ans: set[str]
+        magnitudes: abc.Iterable[int]
+        pattern: str
+        pattern = name + "_f"
+        pair = getattr(self, name).pair
+        if pair is None:
+            return tuple(Cfg.cfg.data["inactive-specs"][pattern])
+
+        if pair.mag > 0:
+            magnitudes = (pair.mag,)
+        elif pair.mag == 0:
+            magnitudes = (0,)
+        else:
+            magnitudes = range(1 - pair.mag)
+
+        ans = set()
+        for magnitude in magnitudes:
+            spec = pair.lit + "#" * magnitude
+            try:
+                Cfg.fullmatches(pattern, spec)
+            except Exception:
+                continue
+            ans.add(spec)
+
+        # With an empty clue, Pre uses its canonical phase spelling and emits the
+        # natural decimal number. This reproduces the canonical, non-omitted forms
+        # that need at most one digit of zero-padding (``a0``, ``a1``, ``a10``,
+        # and analogues).
+        if pair.lit == name and pair.mag != 0 and pair.mag <= 1:
+            ans.add("")
+
+        return tuple(sorted(ans, key=_spec_sort_key))
+
     def best(self: Self, /) -> str:
         """Return the shortest pre-release format represented by this state."""
 
@@ -79,7 +78,7 @@ class PreRestrictor(NamedTuple):
         names = ("a", "b", "rc")
         patterns = ("a_f", "b_f", "rc_f")
 
-        groups = tuple(map(_options, names, self))
+        groups = tuple(map(self._options, names))
         candidates = set()
         for parts in product(*groups):
             spec = "".join(parts)
