@@ -205,8 +205,8 @@ See ``v440.core.Release.Release``.
 This ``class`` represents the developmental release information.
 It inherits from ``QualABC[Literal["dev"]]``.
 
-``lit: str``
-""""""""""""
+``lit: Literal["", "dev"]``
+"""""""""""""""""""""""""""
 
 This ``property`` represents the literal part of the information.
 It can take the values ``""`` (with the numeral ``0``) and ``"dev"`` (with any non-negative numeral).
@@ -238,8 +238,8 @@ This ``property`` represents the equivalent ``packaging.version.Version.local`` 
 
 This ``class`` represents the post-release information.
 
-``lit: str``
-""""""""""""
+``lit: Literal["", "post"]``
+""""""""""""""""""""""""""""
 
 This ``property`` represents the literal part of the information. It can take the values ``""`` (with the numeral ``0``) and ``"post"`` (with any non-negative numeral).
 
@@ -259,8 +259,8 @@ This ``property`` represents the equivalent ``packaging.version.Version.post`` v
 This ``class`` represents the pre-release information.
 It inherits from ``v440.abc.QualABC.QualABC[Literal["a", "b", "rc"]]``.
 
-``lit: str``
-""""""""""""
+``lit: Literal["", "a", "b", "rc"]``
+""""""""""""""""""""""""""""""""""""
 
 This ``property`` represents the literal part of the information.
 It can take the values ``""``, ``"a"``, ``"b"``, and ``"rc"``. The value ``""`` demands the numeral ``0``. It signifies that we are not dealing with a pre-release. All other values tolerate any non-negative numeral. Each of them represents another phase of the pre-release process: alpha-releases, beta-releases, and previews.
