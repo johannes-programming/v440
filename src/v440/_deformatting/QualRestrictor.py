@@ -176,6 +176,10 @@ class QualInfo:
 
 
 def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
+    """Unite two literal rows, or return no row."""
+    a: str
+    ans: list[str]
+    b: str
     ans = list()
     for a, b in zip(rowA, rowB):
         if a == "?":
@@ -191,6 +195,7 @@ def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
 
 @dataclass(frozen=True, kw_only=True)
 class QualRestrictor:
+    """Represent QualRestrictor."""
     mag_row: tuple[int | None, int | None, int | None, int | None, int | None]
     lit_rows: frozenset[QualRow]
 
@@ -250,14 +255,19 @@ class QualRestrictor:
 
     @classmethod
     def _field_options(
-        cls, field: str, literal: str, mag: int | None, /
+        cls: type[Self], field: str, literal: str, mag: int | None, /
     ) -> tuple[str, ...]:
+        """Return format widths allowed for one qualifier field."""
+        limit: int
+        ok: bool
+        options: list[str]
+        width: int
         if mag is None:
             return tuple[str, ...](
                 Cfg.cfg.data["qual-restrictor"]["inactive"][field]
             )
 
-        options: list[str] = []
+        options = []
         if literal == Cfg.cfg.data["qual-restrictor"]["canon"][
             field
         ] and cls._always_num_ok(mag, 0):
@@ -276,6 +286,7 @@ class QualRestrictor:
 
     @staticmethod
     def _conditional_num_ok(mag: int, width: int, /) -> bool:
+        """Handle conditional num ok."""
         if mag > 0:
             return width == mag
         if mag == 0:
@@ -284,6 +295,7 @@ class QualRestrictor:
 
     @staticmethod
     def _always_num_ok(mag: int, width: int, /) -> bool:
+        """Handle always num ok."""
         if mag > 1:
             return width == mag
         if mag == 1:
@@ -293,12 +305,25 @@ class QualRestrictor:
         return 0 <= width <= -mag
 
     def _matches(self: Self, spec: str, row: QualRow, /) -> bool:
+        """Report whether a spec still reproduces the observed row."""
+        cls: type[QualRestrictor]
+        dev_token: str
+        field: str
+        head: str
+        literal: str
+        mag: int | None
+        match: re.Match[str] | None
+        parsed: dict[str, tuple[bool, str, int]]
+        post_token: str
+        present: bool
+        token: str
+        width: int
         cls = type(self)
         match = cls._FORMAT_RE.fullmatch(spec)
         if match is None:
             return False
 
-        parsed: dict[str, tuple[bool, str, int]] = {}
+        parsed = {}
         for field in ("a", "b", "rc"):
             token = match.group(field + "_f") or ""
             if token:
