@@ -383,11 +383,14 @@ class QualRestrictor:
             if mag is None:
                 continue
             present, head, width = parsed[field]
+            if not (
+                present
+                or literal == Cfg.cfg.data["qual-restrictor"]["canon"][field]
+            ):
+                return False
+            if not (present or cls._always_num_ok(mag, 0)):
+                return False
             if not present:
-                if literal != Cfg.cfg.data["qual-restrictor"]["canon"][field]:
-                    return False
-                if not cls._always_num_ok(mag, 0):
-                    return False
                 continue
             if head != literal:
                 return False
