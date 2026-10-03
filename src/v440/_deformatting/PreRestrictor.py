@@ -6,7 +6,6 @@ from collections import abc
 from itertools import product
 from typing import Literal, NamedTuple, Self
 
-from v440._deformatting.Clue import Clue
 from v440._deformatting.QualABCRestrictor import QualABCRestrictor
 from v440._utils.Cfg import Cfg
 
