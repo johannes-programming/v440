@@ -75,15 +75,12 @@ class PreRestrictor(NamedTuple):
     def best(self: Self, /) -> str:
         """Return the shortest pre-release format represented by this state."""
 
+        candidates: set[str]
         names = ("a", "b", "rc")
         patterns = ("a_f", "b_f", "rc_f")
-        restrictors = (self.a, self.b, self.rc)
 
-        groups = tuple(
-            _options(name, pattern, restrictor)
-            for name, pattern, restrictor in zip(names, patterns, restrictors)
-        )
-        candidates: set[str] = set()
+        groups = tuple(map(_options, names, patterns, self))
+        candidates = set()
         for parts in product(*groups):
             spec = "".join(parts)
             try:
@@ -94,12 +91,7 @@ class PreRestrictor(NamedTuple):
                 QualABCRestrictor.by_spec(matches[pattern])
                 for pattern in patterns
             )
-            if all(
-                _valid(name, restrictor, restrictor_)
-                for name, restrictor, restrictor_ in zip(
-                    names, restrictors, restrictors_
-                )
-            ):
+            if all(map(_valid, names, self, restrictors_)):
                 candidates.add(spec)
 
         if not candidates:
