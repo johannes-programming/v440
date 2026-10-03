@@ -14,7 +14,7 @@ from v440._utils.Cfg import Cfg
 
 
 class PreRestrictor(NamedTuple):
-    """Represent PreRestrictor."""
+    """Track formatting constraints for pre-release qualifiers."""
 
     a: QualABCRestrictor = QualABCRestrictor()
     b: QualABCRestrictor = QualABCRestrictor()
@@ -22,7 +22,7 @@ class PreRestrictor(NamedTuple):
 
     def _options(self: Self, name: str, /) -> tuple[str, ...]:
         """Return format options for one pre-release phase."""
-        ans: set[str]
+        options: set[str]
         magnitude: int
         magnitudes: abc.Iterable[int]
         pair: QualABCPair | None
@@ -40,23 +40,23 @@ class PreRestrictor(NamedTuple):
         else:
             magnitudes = range(1 - pair.mag)
 
-        ans = set()
+        options = set()
         for magnitude in magnitudes:
             spec = pair.lit + "#" * magnitude
             try:
                 Cfg.fullmatches(pattern, spec)
             except Exception:
                 continue
-            ans.add(spec)
+            options.add(spec)
 
         # With an empty clue, Pre uses its canonical phase spelling and
         # emits the natural decimal number. This reproduces the canonical,
         # non-omitted forms that need at most one digit of zero-padding
         # (``a0``, ``a1``, ``a10``, and analogues).
         if pair.lit == name and pair.mag != 0 and pair.mag <= 1:
-            ans.add("")
+            options.add("")
 
-        return tuple(sorted(ans, key=_spec_sort_key))
+        return tuple(sorted(options, key=_spec_sort_key))
 
     def _valid(
         self: Self,
@@ -64,7 +64,7 @@ class PreRestrictor(NamedTuple):
         clue: QualABCRestrictor,
         /,
     ) -> bool:
-        """Handle valid."""
+        """Return whether a candidate clue reproduces the stored pre-release phase."""
         pair: QualABCPair
         pair = getattr(self, name).pair
         if pair is None:
@@ -115,14 +115,14 @@ class PreRestrictor(NamedTuple):
     def by_string(
         cls: type[Self], text: str, /, *, name: Literal["", "a", "b", "rc"]
     ) -> Self:
-        """Build an instance by string."""
+        """Infer formatting constraints from one observed rendering."""
         if name:
             return cls(**{name: QualABCRestrictor.by_string(text)})
         else:
             return cls()
 
     def union(self: Self, other: Self, /) -> Self:
-        """Unite this state with another."""
+        """Combine these constraints with another compatible observation."""
         return type(self)(
             a=self.a.union(other.a),
             b=self.b.union(other.b),
@@ -131,5 +131,5 @@ class PreRestrictor(NamedTuple):
 
 
 def _spec_sort_key(item: str, /) -> tuple[int, str]:
-    """Sort format specs by length, then text."""
+    """Order format specifications by length and then lexical value."""
     return len(item), item

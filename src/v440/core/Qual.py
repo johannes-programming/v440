@@ -17,7 +17,7 @@ from v440.core.Pre import Pre as Pre_
 
 
 class Qual(NestedABC):
-    """Represent Qual."""
+    """Model the pre-, post-, and development qualifiers of a version."""
 
     Pre: Final[type[Pre_]] = Pre_
     Post: Final[type[Post_]] = Post_
@@ -29,23 +29,23 @@ class Qual(NestedABC):
     __slots__ = ("_pre", "_post", "_dev")
 
     def _cmp(self: Self, /) -> tuple[str, int, Post_, Dev_]:
-        """Handle cmp."""
-        ans: tuple[str, int]
+        """Return the comparison key for this value."""
+        pre_key: tuple[str, int]
         if self.pre:
-            ans = (self.pre.lit, self.pre.num)
+            pre_key = (self.pre.lit, self.pre.num)
         elif self.post or not self.dev:
-            ans = ("z", 0)
+            pre_key = ("z", 0)
         else:
-            ans = ("", 0)
-        return ans + (self.post, self.dev)
+            pre_key = ("", 0)
+        return pre_key + (self.post, self.dev)
 
     def _deformat(self: Self, body: str, /) -> QualRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints that reproduce the supplied rendering."""
         return QualRestrictor.by_string(body)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        """Handle format parse."""
+        """Parse a format specification into normalized rendering fields."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual_f", spec)
         return (
@@ -57,20 +57,20 @@ class Qual(NestedABC):
     def _format_parsed(
         self: Self, pre_f: str, post_f: str, dev_f: str, /
     ) -> str:
-        """Handle format parsed."""
-        ans: str
-        ans = format(self.pre, pre_f)
-        ans += format(self.post, post_f)
-        ans += format(self.dev, dev_f)
-        return ans
+        """Render this value from normalized format fields."""
+        result: str
+        result = format(self.pre, pre_f)
+        result += format(self.post, post_f)
+        result += format(self.dev, dev_f)
+        return result
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
-        """Handle init factories."""
+        """Return factories for the nested fields owned by this class."""
         return dict(_pre=Pre_, _post=Post_, _dev=Dev_)
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
+        """Parse a string into this instance's normalized fields."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("qual", value)
         self.pre.string = matches["pre"]
@@ -78,7 +78,7 @@ class Qual(NestedABC):
         self.dev.string = matches["dev"]
 
     def _todict(self: Self, /) -> dict[str, Any]:
-        """Handle todict."""
+        """Return this instance's nested fields by public name."""
         return dict(pre=self.pre, post=self.post, dev=self.dev)
 
     @property
@@ -89,7 +89,7 @@ class Qual(NestedABC):
     @dev.setter
     @setter
     def dev(self: Self, value: object, /) -> None:
-        """Perform dev."""
+        """Update the development qualifier from the supplied value."""
         self.dev.string = value
 
     def isdevrelease(self: Self, /) -> bool:
@@ -108,22 +108,22 @@ class Qual(NestedABC):
 
     @property
     def post(self: Self, /) -> Post_:
-        """Perform post."""
+        """Return the post-release qualifier."""
         return self._post
 
     @post.setter
     @setter
     def post(self: Self, value: object, /) -> None:
-        """Perform post."""
+        """Update the post-release qualifier from the supplied value."""
         self.post.string = value
 
     @property
     def pre(self: Self, /) -> Pre_:
-        """Perform pre."""
+        """Return the pre-release qualifier."""
         return self._pre
 
     @pre.setter
     @setter
     def pre(self: Self, value: object, /) -> None:
-        """Perform pre."""
+        """Update the pre-release qualifier from the supplied value."""
         self.pre.string = value

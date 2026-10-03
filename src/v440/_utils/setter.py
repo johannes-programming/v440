@@ -1,5 +1,7 @@
 """Wrap property setters so failures restore the instance."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["setter"]
 
 from collections import abc
@@ -18,9 +20,11 @@ def setter(function: Function, /) -> Function:
 
     @wraps(function)
     def decorated(self: Any, value: object, /) -> None:
-        """Perform decorated."""
+        """Apply the setter transactionally, restoring the previous value on failure."""
         backup: str
-        msg: str
+        message: str
+        # Setters are transactional: retain the canonical rendering so a failed
+        # mutation can restore the object before the normalized error is raised.
         backup = str(self)
         try:
             function(self, value)
@@ -29,13 +33,13 @@ def setter(function: Function, /) -> Function:
             raise
         except Exception:
             self._string_fset(backup.lower())
-            msg = Cfg.cfg.data["errors"]["setter"]
-            msg = msg.format(
+            message = Cfg.cfg.data["errors"]["setter"]
+            message = message.format(
                 Self=type(self).__name__,
                 Value=type(value).__name__,
                 func=function.__name__,
                 value=value,
             )
-            raise PEP440Error(msg) from None
+            raise PEP440Error(message) from None
 
     return cast(Function, decorated)

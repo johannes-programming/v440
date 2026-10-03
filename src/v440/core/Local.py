@@ -15,7 +15,7 @@ from v440.abc.ListABC import ListABC
 
 
 class Local(ListABC[int | str]):
-    """Represent Local."""
+    """Model a PEP 440 local-version identifier as normalized segments."""
 
     __slots__ = ()
 
@@ -23,11 +23,11 @@ class Local(ListABC[int | str]):
     def _data_parse(
         cls: type[Self], value: list[Any], /
     ) -> tuple[int | str, ...]:
-        """Handle data parse."""
+        """Validate and normalize incoming sequence data."""
         return tuple(map(item_parse, value))
 
     def _deformat(self: Self, body: str, /) -> LocalRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints that reproduce the supplied rendering."""
         if self:
             return LocalRestrictor.by_parts(
                 *Cfg.cfg.patterns["local_splitter"].split(body)
@@ -37,78 +37,82 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        """Handle format parse."""
-        l: str
-        m: int
-        x: str
-        y: str
+        """Parse a format specification into normalized rendering fields."""
+        literal_flags: str
+        magnitude: int
+        segment_spec: str
+        separator: str
         parts: list[Any]
         split: list[tuple[int, str, str]]
+        # Local formatting uses # for numeric width, ^ for forced uppercase, and
+        # ~ as a literal-position placeholder; separators are preserved verbatim.
         if spec.strip("#^~.-_"):
             raise ValueError
         parts = Cfg.cfg.patterns["local_splitter"].split(spec) + ["."]
         split = []
-        for x, y in zip(parts[::2], parts[1::2]):
-            l = x.lstrip("#")
-            if "#" in l:
+        for segment_spec, separator in zip(parts[::2], parts[1::2]):
+            literal_flags = segment_spec.lstrip("#")
+            if "#" in literal_flags:
                 raise ValueError
-            m = len(x) - len(l)
-            if m == 1:
-                m = 0
-            l = l.rstrip("~")
-            split.append((m, l, y))
+            magnitude = len(segment_spec) - len(literal_flags)
+            if magnitude == 1:
+                magnitude = 0
+            literal_flags = literal_flags.rstrip("~")
+            split.append((magnitude, literal_flags, separator))
         while len(split) and split[-1] == (0, "", "."):
             split.pop()
         return tuple(split)
 
     def _format_parsed(self: Self, /, *parsed: tuple[Any, ...]) -> str:
-        """Handle format parsed."""
-        ans: str
+        """Render this value from normalized format fields."""
+        result: str
         item: int | str
         index: int
-        s: str
-        t: str
-        x: int
-        y: str
-        z: str
-        ans = ""
+        case_flag: str
+        character: str
+        magnitude: int
+        case_flags: str
+        separator: str
+        result = ""
         for index, item in enumerate(self):
             if index < len(parsed):
-                x, y, z = parsed[index]
+                magnitude, case_flags, separator = parsed[index]
             else:
-                x, y, z = 0, "", "."
+                magnitude, case_flags, separator = 0, "", "."
             if isinstance(item, int):
-                ans += format(item, f"0{x}d")
-                ans += z
+                result += format(item, f"0{magnitude}d")
+                result += separator
                 continue
-            for s, t in zip(y, item):
-                ans += t.upper() if s == "^" else t
-            ans += item[len(y) :]
-            ans += z
-        ans = ans[:-1]
-        return ans
+            # Apply case flags only to positions covered by the specification;
+            # the remaining literal text keeps its normalized lowercase spelling.
+            for case_flag, character in zip(case_flags, item):
+                result += character.upper() if case_flag == "^" else character
+            result += item[len(case_flags) :]
+            result += separator
+        result = result[:-1]
+        return result
 
     @classmethod
     def _sort(cls: type[Self], value: Any, /) -> tuple[bool, int | str]:
-        """Handle sort."""
+        """Return the comparison key for one normalized sequence item."""
         return type(value) is int, value
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
-        v: str
+        """Parse a string into this instance's normalized fields."""
+        normalized: str
         if value == "":
             self.data = ()
             return
-        v = value
-        if v.startswith("+"):
-            v = v[1:]
-        v = v.replace("_", ".")
-        v = v.replace("-", ".")
-        self.data = v.split(".")
+        normalized = value
+        if normalized.startswith("+"):
+            normalized = normalized[1:]
+        normalized = normalized.replace("_", ".")
+        normalized = normalized.replace("-", ".")
+        self.data = normalized.split(".")
 
     @property
     def packaging(self: Self, /) -> str | None:
-        """Perform packaging."""
+        """Return the packaging-compatible representation of this value."""
         if self:
             return str(self)
         else:
@@ -117,7 +121,7 @@ class Local(ListABC[int | str]):
     @packaging.setter
     @setter
     def packaging(self: Self, value: Any, /) -> None:
-        """Perform packaging."""
+        """Update this value from its packaging-compatible representation."""
         if value is None:
             self.string = ""
         else:
@@ -133,20 +137,20 @@ class Local(ListABC[int | str]):
 
 
 def item_parse(value: Any, /) -> int | str:
-    """Perform item parse."""
-    ans: int | str
+    """Normalize one local-version segment to an integer or lowercase text."""
+    parsed_item: int | str
     try:
-        ans = operator.index(value)
+        parsed_item = operator.index(value)
     except Exception:
-        ans = str(value).lower()
-        if ans.strip(string_.digits + string_.ascii_lowercase):
+        parsed_item = str(value).lower()
+        if parsed_item.strip(string_.digits + string_.ascii_lowercase):
             raise
-        if not ans.strip(string_.digits):
-            ans = int(ans)
+        if not parsed_item.strip(string_.digits):
+            parsed_item = int(parsed_item)
     else:
-        if ans < 0:
+        if parsed_item < 0:
             raise ValueError
-    return ans
+    return parsed_item
 
 
 def sort_key(item: int | str, /) -> tuple[bool, int | str]:

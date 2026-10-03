@@ -1,5 +1,7 @@
 """Provide the CoreABC abstract base for v440 classes."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
@@ -17,7 +19,7 @@ from v440.errors.VersionError import VersionError
 
 
 class CoreABC(Copyable):
-    """Represent CoreABC."""
+    """Define the shared parsing, formatting, copying, and error-handling interface."""
 
     __slots__ = ()
 
@@ -31,17 +33,20 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
-        """Handle format."""
+        """Render this value with the v440 format mini-language."""
+        message: str
         parsed: tuple[Any, ...]
+        # The format mini-language is user-facing, so implementation errors are
+        # normalized to MiniLangError rather than leaking parser internals.
         try:
             parsed = self._format_parse(str(format_spec))
         except Exception:
-            msg = Cfg.cfg.data["errors"]["format"]
-            msg = msg.format(
+            message = Cfg.cfg.data["errors"]["format"]
+            message = message.format(
                 Self=type(self).__name__,
                 spec=format_spec,
             )
-            raise MiniLangError(msg) from None
+            raise MiniLangError(message) from None
         return str(self._format_parsed(*parsed))
 
     @abstractmethod
@@ -56,7 +61,7 @@ class CoreABC(Copyable):
     def __init__(
         self: Self, other: Self | None = None, /, **kwargs: Any
     ) -> None:
-        """Handle init."""
+        """Initialize this value from an optional source and keyword overrides."""
         self._init_other(other)
         self._init_kwargs(**kwargs)
 
@@ -74,7 +79,7 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __str__(self: Self, /) -> str:
-        """Handle str."""
+        """Render this value with its default format specification."""
         return format(self, "")
 
     @abstractmethod
@@ -88,11 +93,11 @@ class CoreABC(Copyable):
     def _format_parsed(self: Self, /, *parsed: Any) -> object: ...
 
     def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
-        """Handle init kwargs."""
-        x: str
-        y: Any
-        for x, y in kwargs.items():
-            setattr(self, x.lstrip("_"), y)
+        """Apply keyword overrides to the corresponding public attributes."""
+        attribute_name: str
+        attribute_value: Any
+        for attribute_name, attribute_value in kwargs.items():
+            setattr(self, attribute_name.lstrip("_"), attribute_value)
 
     @abstractmethod
     def _init_other(self: Self, other: Self | None, /) -> None: ...
@@ -102,27 +107,34 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def copy(self: Self, /) -> Self:
-        """Handle copy."""
+        """Return an independent copy of this value."""
         return type(self)(self)
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
-        """Handle deformat."""
-        flat: str
+        """Infer a shortest format specification reproducing the supplied strings."""
+        message: str
+        rendering: str
+        renderings: list[str]
+        restriction: Any
         if strings == ():
             return ""
-        flats = list(sorted(set(map(str, strings))))
+        # Sorting and deduplicating makes the inferred specification independent
+        # of input order while avoiding redundant unions of identical renderings.
+        renderings = list(sorted(set(map(str, strings))))
         try:
-            acc = cls(string=flats[0])._deformat(flats[0])
-            for flat in flats[1:]:
-                acc = acc.union(cls(string=flat)._deformat(flat))
-            return acc.best()  # type: ignore[no-any-return]
+            restriction = cls(string=renderings[0])._deformat(renderings[0])
+            for rendering in renderings[1:]:
+                restriction = restriction.union(
+                    cls(string=rendering)._deformat(rendering)
+                )
+            return restriction.best()  # type: ignore[no-any-return]
         except VersionError:
             raise
         except Exception:
-            msg = Cfg.cfg.data["errors"]["deformat"]
-            msg = msg.format(oxford=oxford(*map(repr, flats)))
-            raise MiniLangError(msg)
+            message = Cfg.cfg.data["errors"]["deformat"]
+            message = message.format(oxford=oxford(*map(repr, renderings)))
+            raise MiniLangError(message)
 
     @property
     @abstractmethod
@@ -130,26 +142,26 @@ class CoreABC(Copyable):
 
     @property
     def string(self: Self, /) -> str:
-        "Represent self as a string."
+        """Return this value in canonical string form."""
         return format(self, "")
 
     @string.setter
     @setter
     def string(self: Self, value: object, /) -> None:
-        """Handle string."""
+        """Parse and assign this value from a string-compatible object."""
         self._string_fset(str(value).lower())
 
 
 def core_split(flat: str, /) -> tuple[str, str, str]:
-    """Handle core split."""
-    x: str
-    y: str
-    z: str
-    y = flat.strip()
-    if y:
-        x, z = flat.split(y)
+    """Split a flat value into leading whitespace, body, and trailing whitespace."""
+    leading: str
+    body: str
+    trailing: str
+    body = flat.strip()
+    if body:
+        leading, trailing = flat.split(body)
     elif flat:
         raise ValueError
     else:
-        x, z = "", ""
-    return x, y, z
+        leading, trailing = "", ""
+    return leading, body, trailing

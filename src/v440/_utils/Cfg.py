@@ -1,5 +1,7 @@
 """Provide configuration and pattern utilities for v440."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["Cfg"]
 
 import enum
@@ -12,7 +14,7 @@ from typing import Any, Self, cast
 
 
 class Cfg(enum.Enum):
-    """Represent Cfg."""
+    """Load v440 configuration data and compile its regular-expression patterns."""
 
     cfg = None
 
@@ -27,29 +29,29 @@ class Cfg(enum.Enum):
     def fullmatches(
         cls: type[Self], /, key: str, value: str
     ) -> dict[str, str]:
-        """Perform fullmatches."""
-        ans: dict[Any, Any]
+        """Match a configured pattern and normalize missing groups to empty strings."""
+        groups: dict[Any, Any]
         fullmatch: Any
-        x: str
+        group_name: str
         fullmatch = cls.cfg.patterns[key].fullmatch(value)
-        ans = fullmatch.groupdict()
-        for x in ans.keys():
-            if ans[x] is None:
-                ans[x] = ""
-        return ans
+        groups = fullmatch.groupdict()
+        for group_name in groups.keys():
+            if groups[group_name] is None:
+                groups[group_name] = ""
+        return groups
 
     @functools.cached_property
     def patterns(self: Self, /) -> dict[str, re.Pattern[str]]:
-        """Perform patterns."""
-        ans: dict[str, re.Pattern[str]]
-        parts: dict[str, str]
-        x: str
-        y: str
-        z: str
-        ans = dict()
-        parts = dict()
-        for x, y in self.data["patterns"].items():
-            z = y.format(**parts)
-            parts[x] = f"(?P<{x}>{z})"
-            ans[x] = re.compile(z, re.IGNORECASE | re.VERBOSE)
-        return ans
+        """Compile configured regular-expression fragments in dependency order."""
+        patterns: dict[str, re.Pattern[str]]
+        named_parts: dict[str, str]
+        name: str
+        template: str
+        expanded: str
+        patterns = dict()
+        named_parts = dict()
+        for name, template in self.data["patterns"].items():
+            expanded = template.format(**named_parts)
+            named_parts[name] = f"(?P<{name}>{expanded})"
+            patterns[name] = re.compile(expanded, re.IGNORECASE | re.VERBOSE)
+        return patterns

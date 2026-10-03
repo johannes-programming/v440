@@ -1,5 +1,7 @@
 """Provide the QualABC abstract base for qualified v440 classes."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["QualABC"]
 
 import operator
@@ -14,7 +16,7 @@ Lit = TypeVar("Lit", bound=str)
 
 
 class QualABC(NestedABC, Generic[Lit]):
-    """Represent QualABC."""
+    """Provide shared literal-and-number behavior for qualifier components."""
 
     _lit: Lit | Literal[""]
     _num: int
@@ -25,7 +27,7 @@ class QualABC(NestedABC, Generic[Lit]):
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
-        """Handle init factories."""
+        """Return factories for the nested fields owned by this class."""
         return dict(_lit=str, _num=int)
 
     @classmethod
@@ -33,49 +35,51 @@ class QualABC(NestedABC, Generic[Lit]):
     def _lit_parse(cls: type[Self], value: str, /) -> Lit: ...
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
-        x: str
-        y: str
+        """Parse a string into this instance's normalized fields."""
+        literal: str
+        digits: str
         if value == "":
             self._lit = ""
             self._num = 0
             return
-        x = value.rstrip(string_.digits)
-        y = value[len(x) :]
-        if x == "-":
-            if not y:
+        literal = value.rstrip(string_.digits)
+        digits = value[len(literal) :]
+        if literal == "-":
+            if not digits:
                 raise ValueError
             self._lit = self._lit_parse("-")
-            self._num = int(y)
+            self._num = int(digits)
             return
-        x = x.replace("-", ".")
-        x = x.replace("_", ".")
-        if x.endswith("."):
-            x = x[:-1]
-        if x.startswith("."):
-            x = x[1:]
-        if not x:
+        # PEP 440 accepts hyphen, underscore, and dot separators interchangeably;
+        # normalize them before resolving aliases to the canonical literal.
+        literal = literal.replace("-", ".")
+        literal = literal.replace("_", ".")
+        if literal.endswith("."):
+            literal = literal[:-1]
+        if literal.startswith("."):
+            literal = literal[1:]
+        if not literal:
             raise ValueError
-        self._lit = self._lit_parse(x)
-        self._num = int("0" + y)
+        self._lit = self._lit_parse(literal)
+        self._num = int("0" + digits)
 
     def _todict(self: Self, /) -> dict[str, Any]:
-        """Handle todict."""
+        """Return this instance's nested fields by public name."""
         return dict(lit=self.lit, num=self.num)
 
     @property
     def lit(self: Self, /) -> Lit | Literal[""]:
-        """Handle lit."""
+        """Return the canonical qualifier literal."""
         return self._lit
 
     @lit.setter
     @setter
     def lit(self: Self, value: object, /) -> None:
-        """Handle lit."""
-        x: str
-        x = str(value).lower()
-        if x:
-            self._lit = self._lit_parse(x)
+        """Normalize and assign the qualifier literal."""
+        normalized_literal: str
+        normalized_literal = str(value).lower()
+        if normalized_literal:
+            self._lit = self._lit_parse(normalized_literal)
         elif self.num:
             self.string = self.num
         else:
@@ -83,18 +87,18 @@ class QualABC(NestedABC, Generic[Lit]):
 
     @property
     def num(self: Self, /) -> int:
-        """Handle num."""
+        """Return the qualifier number."""
         return self._num
 
     @num.setter
     @setter
     def num(self: Self, value: SupportsIndex, /) -> None:
-        """Handle num."""
-        y: int
-        y = operator.index(value)
-        if y < 0:
+        """Validate and assign the qualifier number."""
+        number: int
+        number = operator.index(value)
+        if number < 0:
             raise ValueError
-        if y and not self.lit:
-            self.string = y
+        if number and not self.lit:
+            self.string = number
         else:
-            self._num = y
+            self._num = number

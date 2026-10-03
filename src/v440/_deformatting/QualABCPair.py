@@ -9,25 +9,25 @@ from typing import NamedTuple, Self
 
 
 class QualABCPair(NamedTuple):
-    """Represent QualABCPair."""
+    """Store a qualifier literal together with its numeric-width constraint."""
 
     lit: str
     mag: int
 
     def best(self: Self, /) -> str:
-        """Return the best of this state."""
+        """Return the shortest format fragment satisfying these constraints."""
         return self.lit + self.mag * "#"
 
     @classmethod
     def by_spec(cls: type[Self], text: str, /) -> Self:
-        """Build an instance by spec."""
+        """Parse formatting constraints from one format-specification fragment."""
         lit: str
         lit = text.rstrip("#")
         return cls(lit=lit, mag=len(text) - len(lit))
 
     @classmethod
     def by_string(cls: type[Self], text: str, /) -> Self:
-        """Build an instance by string."""
+        """Infer formatting constraints from one observed rendering."""
         lit: str
         mag: str
         lit = text.rstrip(string.digits)
@@ -38,7 +38,7 @@ class QualABCPair(NamedTuple):
             return cls(lit=lit, mag=-len(mag))
 
     def union(self: Self, other: Self, /) -> Self:
-        """Unite this state with another."""
+        """Combine these constraints with another compatible observation."""
         if self.lit != other.lit:
             raise ArithmeticError
         if self.mag == other.mag:

@@ -16,7 +16,7 @@ from v440.core.Release import Release as Release_
 
 
 class Base(NestedABC):
-    """Represent Base."""
+    """Model the epoch and release portion of a public version."""
 
     Release: Final[type[Release_]] = Release_
     _epoch: int
@@ -25,11 +25,11 @@ class Base(NestedABC):
     __slots__ = ("_epoch", "_release")
 
     def _cmp(self: Self, /) -> tuple[int, Release_]:
-        """Handle cmp."""
+        """Return the comparison key for this value."""
         return self.epoch, self.release
 
     def _deformat(self: Self, string: str, /) -> BaseRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints that reproduce the supplied rendering."""
         epoch: str
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", string)
@@ -46,7 +46,7 @@ class Base(NestedABC):
         spec: str,
         /,
     ) -> tuple[str, int, str]:
-        """Handle format parse."""
+        """Parse a format specification into normalized rendering fields."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         return (
@@ -62,22 +62,22 @@ class Base(NestedABC):
         epoch_mag: int,
         release_f: str,
     ) -> str:
-        """Handle format parsed."""
-        ans: str
-        ans = basev_f
+        """Render this value from normalized format fields."""
+        result: str
+        result = basev_f
         if epoch_mag or self.epoch:
-            ans += format(self.epoch, "0%sd" % epoch_mag)
-            ans += "!"
-        ans += format(self.release, release_f)
-        return ans
+            result += format(self.epoch, "0%sd" % epoch_mag)
+            result += "!"
+        result += format(self.release, release_f)
+        return result
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
-        """Handle init factories."""
+        """Return factories for the nested fields owned by this class."""
         return dict(_epoch=int, _release=Release_)
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
+        """Parse a string into this instance's normalized fields."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
@@ -87,33 +87,33 @@ class Base(NestedABC):
         self.release.string = matches["release"]
 
     def _todict(self: Self, /) -> dict[str, Any]:
-        """Handle todict."""
+        """Return this instance's nested fields by public name."""
         return dict(epoch=self.epoch, release=self.release)
 
     @property
     def epoch(self: Self, /) -> int:
-        "Represent the epoch."
+        """Return the version epoch."""
         return self._epoch
 
     @epoch.setter
     @setter
     def epoch(self: Self, value: Any, /) -> None:
-        """Perform epoch."""
-        v: int
-        v = operator.index(value)
-        if v < 0:
+        """Validate and assign the version epoch."""
+        epoch_value: int
+        epoch_value = operator.index(value)
+        if epoch_value < 0:
             raise ValueError
-        self._epoch = v
+        self._epoch = epoch_value
 
     packaging = NestedABC.string
 
     @property
     def release(self: Self, /) -> Release_:
-        "Represent the release."
+        """Return the release-number component object."""
         return self._release
 
     @release.setter
     @setter
     def release(self: Self, value: object, /) -> None:
-        """Perform release."""
+        """Update the release-number components from the supplied value."""
         self.release.string = value

@@ -16,7 +16,7 @@ from v440.core.Qual import Qual as Qual_
 
 
 class Public(NestedABC):
-    """Represent Public."""
+    """Model the public portion of a PEP 440 version."""
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
@@ -26,11 +26,11 @@ class Public(NestedABC):
     __slots__ = ("_base", "_qual")
 
     def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
-        """Handle cmp."""
+        """Return the comparison key for this value."""
         return self.base, self.qual
 
     def _deformat(self: Self, body: str, /) -> PublicRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints that reproduce the supplied rendering."""
         base: str
         qual: str
         base, qual = split_public(body)
@@ -41,38 +41,38 @@ class Public(NestedABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        """Handle format parse."""
-        i: int
-        i = int(spec.lower().startswith("v"))
-        while i < len(spec):
-            if spec[i] in "#!.":
-                i += 1
+        """Parse a format specification into normalized rendering fields."""
+        split_index: int
+        split_index = int(spec.lower().startswith("v"))
+        while split_index < len(spec):
+            if spec[split_index] in "#!.":
+                split_index += 1
             else:
                 break
         if (
-            i != 0
-            and spec[i - 1] == "."
-            and i != len(spec)
-            and spec[i] not in "-_"
+            split_index != 0
+            and spec[split_index - 1] == "."
+            and split_index != len(spec)
+            and spec[split_index] not in "-_"
         ):
-            i -= 1
-        return spec[:i], spec[i:]
+            split_index -= 1
+        return spec[:split_index], spec[split_index:]
 
     def _format_parsed(self: Self, base_f: str, qual_f: str, /) -> str:
-        """Handle format parsed."""
+        """Render this value from normalized format fields."""
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
-        """Handle init factories."""
+        """Return factories for the nested fields owned by this class."""
         return dict(_base=Base_, _qual=Qual_)
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
+        """Parse a string into this instance's normalized fields."""
         self.base.string, self.qual.string = split_public(value)
 
     def _todict(self: Self, /) -> dict[str, Any]:
-        """Handle todict."""
+        """Return this instance's nested fields by public name."""
         return dict(base=self.base, qual=self.qual)
 
     @property
@@ -83,7 +83,7 @@ class Public(NestedABC):
     @base.setter
     @setter
     def base(self: Self, value: object, /) -> None:
-        """Perform base."""
+        """Update the public-version base from the supplied value."""
         self.base.string = value
 
     packaging = NestedABC.string
@@ -96,19 +96,21 @@ class Public(NestedABC):
     @qual.setter
     @setter
     def qual(self: Self, value: object, /) -> None:
-        """Perform qual."""
+        """Update the qualifier component from the supplied value."""
         self.qual.string = value
 
 
 def split_public(value: str, /) -> tuple[str, str]:
-    """Perform split public."""
-    i: int
-    i = int(value.lower().startswith("v"))
-    while i < len(value):
-        if value[i] in (string_.digits + "!."):
-            i += 1
+    """Split a public-version string into base and qualifier portions."""
+    split_index: int
+    # Scan only the epoch/release grammar here. The first non-base character
+    # begins the qualifier and is delegated to Qual for normalization.
+    split_index = int(value.lower().startswith("v"))
+    while split_index < len(value):
+        if value[split_index] in (string_.digits + "!."):
+            split_index += 1
         else:
             break
-    if i and (value[i - 1] == "."):
-        i -= 1
-    return value[:i], value[i:]
+    if split_index and (value[split_index - 1] == "."):
+        split_index -= 1
+    return value[:split_index], value[split_index:]
