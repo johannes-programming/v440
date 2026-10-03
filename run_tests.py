@@ -8,10 +8,12 @@ from typing import Never
 
 
 def main() -> Never:
+    """Exit with the test-suite status."""
     sys.exit(not run().wasSuccessful())
 
 
 def run() -> unittest.TextTestResult:
+    """Run the discovered unit tests."""
     loader: unittest.TestLoader
     suite: unittest.TestSuite
     runner: unittest.TextTestRunner

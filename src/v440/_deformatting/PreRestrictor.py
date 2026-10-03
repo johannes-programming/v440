@@ -1,3 +1,5 @@
+"""Restrict pre-release segments while deformatting versions."""
+
 from __future__ import annotations
 
 __all__: list[str] = ["PreRestrictor"]
@@ -11,19 +13,20 @@ from v440._deformatting.QualABCRestrictor import QualABCRestrictor
 from v440._utils.Cfg import Cfg
 
 
-def _spec_sort_key(item: str, /) -> tuple[int, str]:
-    return len(item), item
-
-
 class PreRestrictor(NamedTuple):
+    """Represent PreRestrictor."""
     a: QualABCRestrictor = QualABCRestrictor()
     b: QualABCRestrictor = QualABCRestrictor()
     rc: QualABCRestrictor = QualABCRestrictor()
 
     def _options(self: Self, name: str, /) -> tuple[str, ...]:
+        """Return format options for one pre-release phase."""
         ans: set[str]
+        magnitude: int
         magnitudes: abc.Iterable[int]
+        pair: QualABCPair | None
         pattern: str
+        spec: str
         pattern = name + "_f"
         pair = getattr(self, name).pair
         if pair is None:
@@ -45,10 +48,10 @@ class PreRestrictor(NamedTuple):
                 continue
             ans.add(spec)
 
-        # With an empty clue, Pre uses its canonical phase spelling and emits the
-        # natural decimal number. This reproduces the canonical, non-omitted forms
-        # that need at most one digit of zero-padding (``a0``, ``a1``, ``a10``,
-        # and analogues).
+        # With an empty clue, Pre uses its canonical phase spelling and
+        # emits the natural decimal number. This reproduces the canonical,
+        # non-omitted forms that need at most one digit of zero-padding
+        # (``a0``, ``a1``, ``a10``, and analogues).
         if pair.lit == name and pair.mag != 0 and pair.mag <= 1:
             ans.add("")
 
@@ -60,6 +63,7 @@ class PreRestrictor(NamedTuple):
         clue: QualABCRestrictor,
         /,
     ) -> bool:
+        """Handle valid."""
         pair: QualABCPair
         pair = getattr(self, name).pair
         if pair is None:
@@ -76,11 +80,14 @@ class PreRestrictor(NamedTuple):
         return clue.pair.mag <= -pair.mag
 
     def best(self: Self, /) -> str:
-        """Return the shortest pre-release format represented by this state."""
-
+        """Return the shortest pre-release format for this state."""
         candidates: set[str]
+        groups: tuple[tuple[str, ...], ...]
+        matches: dict[str, str]
+        names: tuple[str, str, str]
+        parts: tuple[str, ...]
+        spec: str
         names = ("a", "b", "rc")
-
         groups = tuple(map(self._options, names))
         candidates = set()
         for parts in product(*groups):
@@ -107,14 +114,22 @@ class PreRestrictor(NamedTuple):
     def by_string(
         cls: type[Self], text: str, /, *, name: Literal["", "a", "b", "rc"]
     ) -> Self:
+        """Build an instance by string."""
         if name:
             return cls(**{name: QualABCRestrictor.by_string(text)})
         else:
             return cls()
 
     def union(self: Self, other: Self, /) -> Self:
+        """Unite this state with another."""
         return type(self)(
             a=self.a.union(other.a),
             b=self.b.union(other.b),
             rc=self.rc.union(other.rc),
         )
+
+
+def _spec_sort_key(item: str, /) -> tuple[int, str]:
+    """Sort format specs by length, then text."""
+    return len(item), item
+

@@ -1,8 +1,8 @@
+"""Exercise mutable Version operations."""
 __all__: list[str] = [
     "TestDataHoldStandards",
     "TestDevNoGo",
     "TestVersionBumpRelease",
-    "TestVersionSlicingNoGo",
     "TestVersionLocal",
     "TestVersionLocal0",
     "TestVersionManipulation",
@@ -12,6 +12,7 @@ __all__: list[str] = [
     "TestVersionRelative",
     "TestVersionRelease",
     "TestVersionReleaseAdditional",
+    "TestVersionSlicingNoGo",
 ]
 
 import unittest
@@ -26,8 +27,10 @@ from v440.errors.VersionError import VersionError
 
 class TestVersionBumpRelease(unittest.TestCase):
 
+    """Exercise TestVersionBumpRelease."""
     def test_release_bump(self: Self, /) -> None:
         # Create an instance of the v440.Version class
+        """Exercise test release bump."""
         r: Release
         r = Release(string="1.2.3")
 
@@ -46,8 +49,10 @@ class TestVersionBumpRelease(unittest.TestCase):
 
 class TestVersionManipulation(unittest.TestCase):
 
+    """Exercise TestVersionManipulation."""
     def test_version_modification(self: Self, /) -> None:
         # Create an instance of the v440.Version class
+        """Exercise test version modification."""
         v: Version
         v = Version(string="1.2.3")
 
@@ -63,7 +68,9 @@ class TestVersionManipulation(unittest.TestCase):
 
 class TestVersionLocal0(unittest.TestCase):
 
+    """Exercise TestVersionLocal0."""
     def test_version_operations(self: Self, /) -> None:
+        """Exercise test version operations."""
         backup: Local
         v: Any
         v = Version(string="1.2.3")
@@ -93,7 +100,9 @@ class TestVersionLocal0(unittest.TestCase):
 
 class TestVersionPre(unittest.TestCase):
 
+    """Exercise TestVersionPre."""
     def test_pre(self: Self, /) -> None:
+        """Exercise test pre."""
         backup: Qual
         v: Version
         v = Version(string="1.2.3")
@@ -132,7 +141,9 @@ class TestVersionPre(unittest.TestCase):
 
 class TestVersionPreviousExample(unittest.TestCase):
 
+    """Exercise TestVersionPreviousExample."""
     def test_example_2(self: Self, /) -> None:
+        """Exercise test example 2."""
         v: Version
         v = Version(string="2.5.3")
         self.assertEqual(str(v), "2.5.3")  # Modified version
@@ -141,6 +152,7 @@ class TestVersionPreviousExample(unittest.TestCase):
         self.assertEqual(str(v), "2.64.4")  # Further modified version
 
     def test_example_3(self: Self, /) -> None:
+        """Exercise test example 3."""
         v1: Version
         v2: Version
         v1 = Version(string="1.6.3")
@@ -211,6 +223,7 @@ class TestVersionPreviousExample(unittest.TestCase):
             str(v2) < v1
 
     def test_example_5(self: Self, /) -> None:
+        """Exercise test example 5."""
         v: Version
         v = Version(string="2.0.0-alpha.1")
         self.assertEqual(str(v), "2a1")  # Pre-release version
@@ -225,6 +238,7 @@ class TestVersionPreviousExample(unittest.TestCase):
         )  # Even further modified pre-release version
 
     def test_example_6(self: Self, /) -> None:
+        """Exercise test example 6."""
         v: Version
         v = Version(string="1.2.3")
         v.public.qual.post.string = -1
@@ -254,6 +268,7 @@ class TestVersionPreviousExample(unittest.TestCase):
         )  # Modified local again
 
     def test_example_7(self: Self, /) -> None:
+        """Exercise test example 7."""
         v: Version
         v = Version(string="5.0.0")
         self.assertEqual(str(v), "5")  # Original version
@@ -267,7 +282,9 @@ class TestVersionPreviousExample(unittest.TestCase):
 
 
 class TestVersionQualPatch(unittest.TestCase):
+    """Exercise TestVersionQualPatch."""
     def test_example_0(self: Self, /) -> None:
+        """Exercise test example 0."""
         x: Qual
         y: Qual
         x = Qual(string="a1")
@@ -277,7 +294,9 @@ class TestVersionQualPatch(unittest.TestCase):
 
 
 class TestVersionRelative(unittest.TestCase):
+    """Exercise TestVersionRelative."""
     def test_cmp(self: Self, /) -> None:
+        """Exercise test cmp."""
         self.assertFalse(Version(string="1+1") == Version(string="1+a"))
         self.assertFalse(Version(string="1+1") <= Version(string="1+a"))
         self.assertFalse(Version(string="1+1") < Version(string="1+a"))
@@ -288,7 +307,9 @@ class TestVersionRelative(unittest.TestCase):
 
 class TestVersionRelease(unittest.TestCase):
 
+    """Exercise TestVersionRelease."""
     def test_repr(self: Self, /) -> None:
+        """Exercise test repr."""
         release: Release
         release = Release([1, 2, 3])
         self.assertEqual(repr(release), "Release([1, 2, 3])")
@@ -296,6 +317,7 @@ class TestVersionRelease(unittest.TestCase):
 
     def test_major_minor_micro_aliases(self: Self, /) -> None:
         # Test major, minor, and micro aliases for the first three indices
+        """Exercise test major minor micro aliases."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
@@ -308,6 +330,7 @@ class TestVersionRelease(unittest.TestCase):
 
     def test_release_modify_aliases(self: Self, /) -> None:
         # Test modifying the release via major, minor, and micro properties
+        """Exercise test release modify aliases."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
@@ -319,6 +342,7 @@ class TestVersionRelease(unittest.TestCase):
 
     def test_release_with_tailing_zeros_simulation(self: Self, /) -> None:
         # Test that the release can simulate arbitrary high number of tailing zeros
+        """Exercise test release with tailing zeros simulation."""
         version: Version
         version = Version()
         version.public.base.release.data = [1, 2]
@@ -329,6 +353,7 @@ class TestVersionRelease(unittest.TestCase):
 
     def test_release_empty_major(self: Self, /) -> None:
         # Test that an empty release still has valid major, minor, micro values
+        """Exercise test release empty major."""
         version: Any
         version = Version()
         version.public.base.release.data = []
@@ -340,8 +365,10 @@ class TestVersionRelease(unittest.TestCase):
 
 class TestVersionReleaseAdditional(unittest.TestCase):
 
+    """Exercise TestVersionReleaseAdditional."""
     def test_release_inequality_with_list(self: Self, /) -> None:
         # Test inequality of release with a normal list
+        """Exercise test release inequality with list."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
@@ -349,6 +376,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_len(self: Self, /) -> None:
         # Test the length of the release list
+        """Exercise test release len."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
@@ -356,6 +384,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_slice_assignment(self: Self, /) -> None:
         # Test assigning a slice to release
+        """Exercise test release slice assignment."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3, 4, 5]
@@ -367,6 +396,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_iterable(self: Self, /) -> None:
         # Test if release supports iteration
+        """Exercise test release iterable."""
         version: Any
         result: list[Any]
         version = Version()
@@ -376,6 +406,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_repr(self: Self, /) -> None:
         # Test the repr of the release property
+        """Exercise test release repr."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
@@ -383,6 +414,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_data_property(self: Self, /) -> None:
         # Test the 'data' property
+        """Exercise test release data property."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
@@ -390,6 +422,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_data_setter(self: Self, /) -> None:
         # Test setting the 'data' property directly
+        """Exercise test release data setter."""
         version: Any
         version = Version()
         version.public.base.release.data = [10, 20, 30]
@@ -397,6 +430,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_contains(self: Self, /) -> None:
         # Test 'in' keyword with release
+        """Exercise test release contains."""
         version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
@@ -405,6 +439,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_mul(self: Self, /) -> None:
         # Test multiplying the release (list behavior)
+        """Exercise test release mul."""
         answer: list[int]
         solution: list[int]
         version: Any
@@ -416,6 +451,7 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
     def test_release_addition(self: Self, /) -> None:
         # Test adding another list to release
+        """Exercise test release addition."""
         answer: list[Any]
         solution: list[Any]
         version: Any
@@ -428,8 +464,10 @@ class TestVersionReleaseAdditional(unittest.TestCase):
 
 class TestVersionLocal(unittest.TestCase):
 
+    """Exercise TestVersionLocal."""
     def test_local_len(self: Self, /) -> None:
         # Test the length of the local list
+        """Exercise test local len."""
         version: Any
         version = Version()
         version.local.data = [1, "dev", "build"]
@@ -437,6 +475,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_local_slice_assignment(self: Self, /) -> None:
         # Test assigning a slice to the local list
+        """Exercise test local slice assignment."""
         version: Any
         version = Version()
         version.local.data = [1, "dev", "build"]
@@ -445,6 +484,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_local_contains(self: Self, /) -> None:
         # Test 'in' keyword with local list
+        """Exercise test local contains."""
         version: Any
         version = Version()
         version.local.data = [1, "dev", "build"]
@@ -453,6 +493,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_local_mul(self: Self, /) -> None:
         # Test multiplying the local list
+        """Exercise test local mul."""
         answer: list[Any]
         solution: list[Any]
         version: Any
@@ -464,6 +505,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_local_addition(self: Self, /) -> None:
         # Test adding another list to local
+        """Exercise test local addition."""
         answer: list[Any]
         solution: list[Any]
         version: Any
@@ -475,6 +517,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_local_inequality_with_list(self: Self, /) -> None:
         # Test inequality of local with a normal list
+        """Exercise test local inequality with list."""
         version: Any
         version = Version()
         version.local.data = [1, "dev"]
@@ -482,6 +525,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_local_repr(self: Self, /) -> None:
         # Test repr of local list
+        """Exercise test local repr."""
         version: Any
         version = Version()
         version.local.data = [1, "dev", "build"]
@@ -489,6 +533,7 @@ class TestVersionLocal(unittest.TestCase):
 
     def test_local_data_property(self: Self, /) -> None:
         # Test that 'data' property correctly reflects local's internal list
+        """Exercise test local data property."""
         version: Any
         version = Version()
         version.local.data = [1, "dev", "build"]
@@ -497,13 +542,16 @@ class TestVersionLocal(unittest.TestCase):
 
 class TestVersionSlicingNoGo(unittest.TestCase):
 
+    """Exercise TestVersionSlicingNoGo."""
     def test_slicing_2(self: Self, /) -> None:
+        """Exercise test slicing 2."""
         v: Version
         v = Version(string="1.2.3.4.5.6.7.8.9.10")
         with self.assertRaises(Exception):
             v.public.base.release[-8:15:5] = 777  # type: ignore[call-overload]
 
     def test_slicing_7(self: Self, /) -> None:
+        """Exercise test slicing 7."""
         v: Version
         v = Version(string="1.2.3.4.5.6.7.8.9.10")
         del v.public.base.release[-8:15:5]
@@ -512,13 +560,16 @@ class TestVersionSlicingNoGo(unittest.TestCase):
 
 class TestDevNoGo(unittest.TestCase):
 
+    """Exercise TestDevNoGo."""
     def test_initial_none_dev(self: Self, /) -> None:
+        """Exercise test initial none dev."""
         v: Version
         v = Version(string="1.2.3")
         self.assertEqual(str(v), "1.2.3")
         self.assertFalse(v.public.qual.dev)
 
     def test_dev_as_none(self: Self, /) -> None:
+        """Exercise test dev as none."""
         v: Version
         v = Version(string="1.2.3")
         v.public.qual.dev.string = ""
@@ -527,7 +578,9 @@ class TestDevNoGo(unittest.TestCase):
 
 
 class TestDataHoldStandards(unittest.TestCase):
+    """Exercise TestDataHoldStandards."""
     def test_list_like_comparison(self: Self, /) -> None:
+        """Exercise test list like comparison."""
         local: Local
         release: Release
         local = Local()

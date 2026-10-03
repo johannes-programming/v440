@@ -14,16 +14,19 @@ from v440._deformatting.QualRestrictor import QualRestrictor
 
 @dataclass(frozen=True, kw_only=True)
 class PublicRestrictor:
+    """Represent PublicRestrictor."""
     base: BaseRestrictor
     qual: QualRestrictor
 
     def best(self: Self, /) -> str:
+        """Return the best of this state."""
         ans: str
         ans = self.base.best()
         ans += self.qual.best()
         return ans
 
     def union(self: Self, other: Self, /) -> Self:
+        """Unite this state with another."""
         return type(self)(
             base=self.base.union(other.base),
             qual=self.qual.union(other.qual),

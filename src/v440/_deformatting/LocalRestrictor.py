@@ -15,13 +15,16 @@ from v440._deformatting.MagJoker import MagJoker
 
 @dataclass(frozen=True)
 class LitAccumulation:
+    """Represent LitAccumulation."""
     data: str = ""
 
     def best(self: Self, /) -> str:
+        """Return the best of this state."""
         return self.data.replace("#", "~").rstrip("~")
 
     @classmethod
     def by_item(cls: type[Self], item: str, /) -> Self:
+        """Build an instance by item."""
         data: str
         s: str
         data = "".join(
@@ -35,6 +38,7 @@ class LitAccumulation:
         return cls(data)
 
     def union(self: Self, other: Self, /) -> Self:
+        """Unite this state with another."""
         ans: list[str]
         x: str
         y: str
@@ -52,10 +56,12 @@ class LitAccumulation:
 
 @dataclass(frozen=True, kw_only=True)
 class EvenAccumulation:
+    """Represent EvenAccumulation."""
     num: Mag | MagJoker = MagJoker.JOKER
     lit: LitAccumulation = LitAccumulation()
 
     def best(self: Self, /) -> str:
+        """Return the best of this state."""
         return self.num.best() + self.lit.best()
 
     @classmethod
@@ -69,6 +75,7 @@ class EvenAccumulation:
         return cls(num=Mag(-len(item)))
 
     def union(self: Self, other: Self, /) -> Self:
+        """Unite this state with another."""
         return type(self)(
             lit=self.lit.union(other.lit),
             num=self.num.union(other.num),
@@ -76,10 +83,12 @@ class EvenAccumulation:
 
 
 class LocalRestrictor(NamedTuple):
+    """Represent LocalRestrictor."""
     evens: tuple[EvenAccumulation, ...]
     odds: tuple[str, ...]
 
     def best(self: Self, /) -> str:
+        """Return the best of this state."""
         ans: str
         even: EvenAccumulation
         odd: str
@@ -94,12 +103,14 @@ class LocalRestrictor(NamedTuple):
 
     @classmethod
     def by_parts(cls: type[Self], /, *parts: str) -> Self:
+        """Build an instance by parts."""
         return cls(
             evens=tuple(map(EvenAccumulation.by_item, parts[::2])),
             odds=parts[1::2],
         )
 
     def union(self: Self, other: Self, /) -> Self:
+        """Unite this state with another."""
         evens: tuple[EvenAccumulation, ...]
         evens = tuple(map(EvenAccumulation.union, self.evens, other.evens))
         evens += self.evens[len(evens) :] or other.evens[len(evens) :]

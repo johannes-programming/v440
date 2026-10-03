@@ -1,6 +1,8 @@
+"""Exercise v440 against recorded version examples."""
 __all__: list[str] = [
     "TestDeformatting",
     "TestFormat",
+    "TestFunction",
     "TestOrder",
     "TestReleaseAlias",
     "TestSlicingGo",
@@ -9,7 +11,6 @@ __all__: list[str] = [
     "TestTotalAttrSetter",
     "TestTotalMethod",
     "TestTypeNames",
-    "TestFunction",
     "TestVersionEpochGo",
 ]
 
@@ -36,10 +37,12 @@ from v440.errors.VersionError import VersionError
 
 
 class Util(enum.Enum):
+    """Represent Util."""
     util = None
 
     @functools.cached_property
     def data(self: Self, /) -> dict[str, Any]:
+        """Perform data."""
         file: Path
         stream: io.BufferedReader
         file = Path(__file__).parent / "testdata.toml"
@@ -48,10 +51,12 @@ class Util(enum.Enum):
 
     @functools.cached_property
     def examples(self: Self, /) -> dict[str, Any]:
+        """Perform examples."""
         return cast(dict[str, Any], Util.util.data.get("examples", {}))
 
     @classmethod
     def import_(cls: type[Self], qualname: str, /) -> Any:
+        """Perform import."""
         module: types.ModuleType
         name: str
         names: list[str]
@@ -63,6 +68,7 @@ class Util(enum.Enum):
 
 class TestDeformatting(unittest.TestCase):
 
+    """Exercise TestDeformatting."""
     def go_blob(
         self: Self,
         cls: type[Any],
@@ -71,6 +77,7 @@ class TestDeformatting(unittest.TestCase):
         exceptiontype: str,
         **kwargs: Any,
     ) -> None:
+        """Perform go blob."""
         self.assertNotEqual(len(kwargs["strings"]), 1)
         if exceptiontype:
             self.go_blob_invalid(cls, **kwargs, exceptiontype=exceptiontype)
@@ -86,6 +93,7 @@ class TestDeformatting(unittest.TestCase):
         strings: list[str],
         **kwargs: Any,
     ) -> None:
+        """Perform go blob invalid."""
         with self.assertRaises(Util.import_(exceptiontype)):
             cls.deformat(*strings)
 
@@ -98,6 +106,7 @@ class TestDeformatting(unittest.TestCase):
         strings: list[str],
         **kwargs: Any,
     ) -> None:
+        """Perform go blob valid."""
         self.assertEqual(cls.deformat(*strings), solution)
         for x in strings:
             self.assertEqual(format(cls(string=x), solution), x)
@@ -108,6 +117,7 @@ class TestDeformatting(unittest.TestCase):
         /,
         **typedict: dict[str, Any],
     ) -> None:
+        """Perform go cls."""
         example: tuple[str]
         log: dict[tuple[str], str]
         self.assertGreaterEqual(len(typedict), 30)
@@ -124,6 +134,7 @@ class TestDeformatting(unittest.TestCase):
                 self.go_blob(cls, **testdict)
 
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         cls: type[Any]
         typename: str
         typedict: dict[Any, Any]
@@ -135,9 +146,11 @@ class TestDeformatting(unittest.TestCase):
 
 class TestStringExamples(unittest.TestCase):
 
+    """Exercise TestStringExamples."""
     def go_version(
         self: Self, example: str, /, *, valid: bool, **kwargs: Any
     ) -> None:
+        """Perform go version."""
         s: str
         x: Version
         y: Version_
@@ -207,6 +220,7 @@ class TestStringExamples(unittest.TestCase):
         )
 
     def test_versions(self: Self, /) -> None:
+        """Exercise test versions."""
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples["Version"].items():
@@ -215,21 +229,26 @@ class TestStringExamples(unittest.TestCase):
 
 
 class TestTypeNames(unittest.TestCase):
+    """Exercise TestTypeNames."""
     def go_name(self: Self, name: str, /) -> None:
+        """Perform go name."""
         cls: type[Any]
         cls = Util.import_(f"v440.core.{name}.{name}")
         self.assertEqual(cls.__name__, name)
 
     def test_0(self: Self) -> None:
+        """Exercise test 0."""
         for name in Util.util.data["synonymous-to-empty"]:
             self.go_name(name)
 
 
 class TestStringExamples0(unittest.TestCase):
 
+    """Exercise TestStringExamples0."""
     def go_examples(
         self: Self, /, clsname: str, tables: dict[Any, Any]
     ) -> None:
+        """Perform go examples."""
         cls: type
         split: dict[Any, Any]
         x: str
@@ -248,6 +267,7 @@ class TestStringExamples0(unittest.TestCase):
     def go_invalid_example(
         self: Self, cls: type, example: str, /, **kwargs: Any
     ) -> None:
+        """Perform go invalid example."""
         with self.assertRaises(VersionError):
             cls(string=example)
 
@@ -257,6 +277,7 @@ class TestStringExamples0(unittest.TestCase):
         *args: Any,
         **kwargs: Any,
     ) -> None:
+        """Perform go valid example."""
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
@@ -273,6 +294,7 @@ class TestStringExamples0(unittest.TestCase):
         deformatted: str | None = None,
         **kwargs: Any,
     ) -> None:
+        """Perform go valid example deformatted."""
         spec: str
         spec = cls.deformat(example)
         if deformatted is not None:
@@ -287,6 +309,7 @@ class TestStringExamples0(unittest.TestCase):
         formatted: dict[str, str] | tuple[()] = (),
         **kwargs: Any,
     ) -> None:
+        """Perform go valid example formatted."""
         obj: Any
         x: str
         y: str
@@ -302,6 +325,7 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
+        """Perform go valid example remake."""
         obj: Any
         remake: str
         spec: str
@@ -321,6 +345,7 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
+        """Perform go valid example repr."""
         bool_: bool
         obj: Any
         repr_: str | None
@@ -338,6 +363,7 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
+        """Perform go valid example str."""
         obj: Any
         answer: str
         solution: str | None
@@ -357,6 +383,7 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
+        """Perform go valid example synonym."""
         obj: Any
         syn: str
         syn = Util.util.data["synonymous-to-empty"][cls.__name__][""][
@@ -369,6 +396,7 @@ class TestStringExamples0(unittest.TestCase):
             self.assertEqual(x, y)
 
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.examples.items():
@@ -378,12 +406,14 @@ class TestStringExamples0(unittest.TestCase):
 
 class TestTotalAttrSetter(unittest.TestCase):
 
+    """Exercise TestTotalAttrSetter."""
     def go_clsname(
         self: Self,
         clsname: str,
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
+        """Perform go clsname."""
         cls: type
         x: str
         y: dict[Any, Any]
@@ -399,6 +429,7 @@ class TestTotalAttrSetter(unittest.TestCase):
         exceptiontype: str,
         **kwargs: Any,
     ) -> None:
+        """Perform go task."""
         if exceptiontype:
             self.go_task_invalid(*args, **kwargs, exceptiontype=exceptiontype)
         else:
@@ -414,6 +445,7 @@ class TestTotalAttrSetter(unittest.TestCase):
         queryname: str,
         **kwargs: Any,
     ) -> None:
+        """Perform go task invalid."""
         exc: type[Exception]
         obj: Any
         exc = Util.import_(exceptiontype)
@@ -430,11 +462,13 @@ class TestTotalAttrSetter(unittest.TestCase):
         queryname: str,
         **_kwargs: Any,
     ) -> None:
+        """Perform go task valid."""
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
 
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.data["attr-setter"].items():
@@ -444,12 +478,14 @@ class TestTotalAttrSetter(unittest.TestCase):
 
 class TestTotalMethod(unittest.TestCase):
 
+    """Exercise TestTotalMethod."""
     def go_clsname(
         self: Self,
         clsname: str,
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
+        """Perform go clsname."""
         cls: type
         x: str
         y: dict[Any, Any]
@@ -471,6 +507,7 @@ class TestTotalMethod(unittest.TestCase):
         queryname: str,
         **_kwargs: Any,
     ) -> None:
+        """Perform go task."""
         ans: Any
         attr: Any
         obj: Any
@@ -481,6 +518,7 @@ class TestTotalMethod(unittest.TestCase):
         self.assertEqual(ans, check)
 
     def test_1(self: Self, /) -> None:
+        """Exercise test 1."""
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.data["total-method"].items():
@@ -490,12 +528,14 @@ class TestTotalMethod(unittest.TestCase):
 
 class TestFunction(unittest.TestCase):
 
+    """Exercise TestFunction."""
     def go_clsname(
         self: Self,
         clsname: str,
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
+        """Perform go clsname."""
         cls: type
         x: str
         y: dict[Any, Any]
@@ -517,6 +557,7 @@ class TestFunction(unittest.TestCase):
         solutionname: str,
         **_kwargs: Any,
     ) -> None:
+        """Perform go task."""
         ans: Any
         obj: Any
         obj = cls()
@@ -525,6 +566,7 @@ class TestFunction(unittest.TestCase):
         self.assertEqual(ans, solution)
 
     def test_2(self: Self, /) -> None:
+        """Exercise test 2."""
         x: str
         y: dict[Any, Any]
         for x, y in Util.util.data["function"].items():
@@ -534,7 +576,9 @@ class TestFunction(unittest.TestCase):
 
 class TestVersionEpochGo(unittest.TestCase):
 
+    """Exercise TestVersionEpochGo."""
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         x: str
         y: dict[str, Any]
         for x, y in Util.util.data["epoch"][""].items():
@@ -549,6 +593,7 @@ class TestVersionEpochGo(unittest.TestCase):
         query: Any = None,
         key: str = "",
     ) -> None:
+        """Perform go."""
         msg: str
         v: Version
         msg = "epoch %r" % key
@@ -561,7 +606,9 @@ class TestVersionEpochGo(unittest.TestCase):
 
 class TestSlicingGo(unittest.TestCase):
 
+    """Exercise TestSlicingGo."""
     def go_cls(self: Self, cls: type[Any], /, **kwargs: Any) -> None:
+        """Perform go cls."""
         x: str
         y: dict[str, Any]
         for x, y in kwargs.items():
@@ -581,6 +628,7 @@ class TestSlicingGo(unittest.TestCase):
         stop: Any = None,
         step: Any = None,
     ) -> None:
+        """Perform go cls key."""
         ctx: Any
         exc: Any
         v: Any
@@ -595,6 +643,7 @@ class TestSlicingGo(unittest.TestCase):
         self.assertEqual(str(v), solution)
 
     def test_2(self: Self, /) -> None:
+        """Exercise test 2."""
         cls: type[Any]
         x: str
         y: dict[Any, Any]
@@ -606,7 +655,9 @@ class TestSlicingGo(unittest.TestCase):
 
 class TestFormat(unittest.TestCase):
 
+    """Exercise TestFormat."""
     def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
+        """Perform go."""
         a: Version_
         b: str
         f: str
@@ -621,6 +672,7 @@ class TestFormat(unittest.TestCase):
         self.assertEqual(b, g)
 
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         x: str
         y: dict[str, Any]
         for x, y in Util.util.examples["Version"].items():
@@ -630,6 +682,7 @@ class TestFormat(unittest.TestCase):
 
 class TestOrder(unittest.TestCase):
 
+    """Exercise TestOrder."""
     def go(
         self: Self,
         *,
@@ -637,6 +690,7 @@ class TestOrder(unittest.TestCase):
         x: str,
         y: str,
     ) -> None:
+        """Perform go."""
         a: Version_
         b: Version
         c: Version_
@@ -672,6 +726,7 @@ class TestOrder(unittest.TestCase):
         func: abc.Callable[[Any, Any], Any],
         pure: list[str],
     ) -> None:
+        """Perform go op."""
         i: int
         for i in range(len(pure) ** 2):
             x = pure[i // len(pure)]
@@ -680,6 +735,7 @@ class TestOrder(unittest.TestCase):
                 self.go(x=x, y=y, func=func)
 
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         pure: list[str]
         x: str
         y: dict[str, Any]
@@ -694,6 +750,7 @@ class TestOrder(unittest.TestCase):
 
 
 class TestSlots(unittest.TestCase):
+    """Exercise TestSlots."""
     def go_blob(
         self: Self,
         cls: type[Any],
@@ -702,6 +759,7 @@ class TestSlots(unittest.TestCase):
         attrvalue: Any,
         string: Any = None,
     ) -> None:
+        """Perform go blob."""
         obj: Any
         obj = cls(string=string)
         with self.assertRaises(AttributeError):
@@ -710,6 +768,7 @@ class TestSlots(unittest.TestCase):
     def go_cls(
         self: Self, cls: type[Any], /, **typetests: dict[str, Any]
     ) -> None:
+        """Perform go cls."""
         testdict: dict[str, Any]
         testname: str
         for testname, testdict in typetests.items():
@@ -717,6 +776,7 @@ class TestSlots(unittest.TestCase):
                 self.go_blob(cls, **testdict)
 
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         cls: type[Any]
         typename: str
         typetests: dict[str, dict[str, Any]]
@@ -729,7 +789,9 @@ class TestSlots(unittest.TestCase):
 
 
 class TestReleaseAlias(unittest.TestCase):
+    """Exercise TestReleaseAlias."""
     def test_0(self: Self, /) -> None:
+        """Exercise test 0."""
         x: Any
         y: Any
         for x, y in Util.util.data["release-key"][""].items():
@@ -737,6 +799,7 @@ class TestReleaseAlias(unittest.TestCase):
                 self.go(**y)
 
     def go(self: Self, /, steps: list[Any]) -> None:
+        """Perform go."""
         version: Version
         step: dict[str, Any]
         version = Version()
@@ -751,6 +814,7 @@ class TestReleaseAlias(unittest.TestCase):
         value: Any,
         solution: list[Any] | None = None,
     ) -> None:
+        """Perform modify."""
         answer: list[Any]
         setattr(version.public.base.release, name, value)
         if solution is None:
