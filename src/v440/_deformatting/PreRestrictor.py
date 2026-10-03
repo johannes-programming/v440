@@ -14,11 +14,11 @@ def _spec_sort_key(item: str, /) -> tuple[int, str]:
     return len(item), item
 
 
-def _options(
-    name: str, pattern: str, restrictor: QualABCRestrictor, /
-) -> tuple[str, ...]:
+def _options(name: str, restrictor: QualABCRestrictor, /) -> tuple[str, ...]:
     ans: set[str]
     magnitudes: abc.Iterable[int]
+    pattern: str
+    pattern = name + "_f"
     pair = restrictor.pair
     if pair is None:
         return tuple(Cfg.cfg.data["inactive-specs"][pattern])
@@ -79,7 +79,7 @@ class PreRestrictor(NamedTuple):
         names = ("a", "b", "rc")
         patterns = ("a_f", "b_f", "rc_f")
 
-        groups = tuple(map(_options, names, patterns, self))
+        groups = tuple(map(_options, names, self))
         candidates = set()
         for parts in product(*groups):
             spec = "".join(parts)
