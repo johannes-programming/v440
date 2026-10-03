@@ -1,3 +1,4 @@
+"""Wrap property setters so failures restore the instance."""
 __all__: list[str] = ["setter"]
 
 from collections import abc
@@ -16,6 +17,7 @@ def setter(function: Function, /) -> Function:
 
     @wraps(function)
     def decorated(self: Any, value: object, /) -> None:
+        """Perform decorated."""
         backup: str
         msg: str
         backup = str(self)

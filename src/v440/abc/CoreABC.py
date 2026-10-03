@@ -17,6 +17,7 @@ from v440.errors.VersionError import VersionError
 
 
 class CoreABC(Copyable):
+    """Represent CoreABC."""
     __slots__ = ()
 
     @abstractmethod
@@ -29,6 +30,7 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
+        """Handle format."""
         parsed: tuple[Any, ...]
         try:
             parsed = self._format_parse(str(format_spec))
@@ -53,6 +55,7 @@ class CoreABC(Copyable):
     def __init__(
         self: Self, other: Self | None = None, /, **kwargs: Any
     ) -> None:
+        """Handle init."""
         self._init_other(other)
         self._init_kwargs(**kwargs)
 
@@ -70,6 +73,7 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __str__(self: Self, /) -> str:
+        """Handle str."""
         return format(self, "")
 
     @abstractmethod
@@ -83,6 +87,7 @@ class CoreABC(Copyable):
     def _format_parsed(self: Self, /, *parsed: Any) -> object: ...
 
     def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
+        """Handle init kwargs."""
         x: str
         y: Any
         for x, y in kwargs.items():
@@ -96,10 +101,12 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def copy(self: Self, /) -> Self:
+        """Handle copy."""
         return type(self)(self)
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
+        """Handle deformat."""
         flat: str
         if strings == ():
             return ""
@@ -122,16 +129,18 @@ class CoreABC(Copyable):
 
     @property
     def string(self: Self, /) -> str:
-        "This property represents self as str."
+        "Represent self as a string."
         return format(self, "")
 
     @string.setter
     @setter
     def string(self: Self, value: object, /) -> None:
+        """Handle string."""
         self._string_fset(str(value).lower())
 
 
 def core_split(flat: str, /) -> tuple[str, str, str]:
+    """Handle core split."""
     x: str
     y: str
     z: str

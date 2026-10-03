@@ -12,11 +12,12 @@ from typing import Any, Self, cast
 
 
 class Cfg(enum.Enum):
+    """Represent Cfg."""
     cfg = None
 
     @functools.cached_property
     def data(self: Self, /) -> dict[str, Any]:
-        "This cached property holds the cfg data."
+        "Return the cached configuration data."
         file: Traversable
         file = resources.files("v440._utils").joinpath("cfg.toml")
         return tomllib.loads(file.read_text(encoding="utf-8"))
@@ -25,6 +26,7 @@ class Cfg(enum.Enum):
     def fullmatches(
         cls: type[Self], /, key: str, value: str
     ) -> dict[str, str]:
+        """Perform fullmatches."""
         ans: dict[Any, Any]
         fullmatch: Any
         x: str
@@ -37,6 +39,7 @@ class Cfg(enum.Enum):
 
     @functools.cached_property
     def patterns(self: Self, /) -> dict[str, re.Pattern[str]]:
+        """Perform patterns."""
         ans: dict[str, re.Pattern[str]]
         parts: dict[str, str]
         x: str
