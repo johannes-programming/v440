@@ -132,32 +132,43 @@ class QualInfo:
         rows: set[QualRow] = set()
         base = [Cfg.cfg.data["qual-restrictor"]["absent"]] * 5
 
-        def visit(which: int, pos: int, row: list[str]) -> None:
-            if which == len(present):
-                if pos == len(text):
-                    rows.add(QualRow(*row))
-                return
-
-            index, field, num = present[which]
-            for literal_pattern in cls._literal_forms(field, num):
-                end = pos + len(literal_pattern) + len(num)
-                if end > len(text):
-                    continue
-
-                literal = text[pos : pos + len(literal_pattern)]
-                digits = text[pos + len(literal_pattern) : end]
-
-                if literal.lower() != literal_pattern:
-                    continue
-                if digits != num:
-                    continue
-
-                next_row = row.copy()
-                next_row[index] = literal
-                visit(which + 1, end, next_row)
-
-        visit(0, 0, base)
+        cls._visit_literal_rows(text, present, 0, 0, base, rows)
         return rows
+
+    @classmethod
+    def _visit_literal_rows(
+        cls,
+        text: str,
+        present: list[tuple[int, str, str]],
+        which: int,
+        pos: int,
+        row: list[str],
+        rows: set[QualRow],
+    ) -> None:
+        if which == len(present):
+            if pos == len(text):
+                rows.add(QualRow(*row))
+            return
+
+        index, field, num = present[which]
+        for literal_pattern in cls._literal_forms(field, num):
+            end = pos + len(literal_pattern) + len(num)
+            if end > len(text):
+                continue
+
+            literal = text[pos : pos + len(literal_pattern)]
+            digits = text[pos + len(literal_pattern) : end]
+
+            if literal.lower() != literal_pattern:
+                continue
+            if digits != num:
+                continue
+
+            next_row = row.copy()
+            next_row[index] = literal
+            cls._visit_literal_rows(
+                text, present, which + 1, end, next_row, rows
+            )
 
 
 def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
