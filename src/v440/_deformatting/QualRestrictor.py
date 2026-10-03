@@ -1,3 +1,5 @@
+"""Restrict qualifier segments while deformatting versions."""
+
 from __future__ import annotations
 
 __all__: list[str] = ["QualRestrictor"]
@@ -14,6 +16,7 @@ from v440._utils.Cfg import Cfg
 
 
 class QualRow(NamedTuple):
+    """Represent QualRow."""
     a: str
     b: str
     rc: str
@@ -23,6 +26,7 @@ class QualRow(NamedTuple):
 
 @dataclass(frozen=True, kw_only=True)
 class QualInfo:
+    """Represent QualInfo."""
     num_row: QualRow
     lit_rows: frozenset[QualRow]
 

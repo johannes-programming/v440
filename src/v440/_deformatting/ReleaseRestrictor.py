@@ -12,13 +12,16 @@ from .._deformatting.Mag import Mag
 
 class ReleaseRestrictor(tuple[Mag, ...]):
 
+    """Represent ReleaseRestrictor."""
     def best(self: Self, /) -> str:
+        """Return the best of this state."""
         ans: str
         ans = ".".join("#" * mag for mag in self).rstrip(".")
         return ans
 
     @classmethod
     def by_string(cls: type[Self], body: str, /) -> Self:
+        """Build an instance by string."""
         mags: list[Mag]
         mags = list()
         for part in body.split("."):
@@ -31,6 +34,7 @@ class ReleaseRestrictor(tuple[Mag, ...]):
         return cls(tuple(mags))
 
     def union(self: Self, other: Self, /) -> Self:
+        """Unite this state with another."""
         mags: list[Mag]
         mags = list()
         for x, y in zip(self, other):
@@ -41,6 +45,7 @@ class ReleaseRestrictor(tuple[Mag, ...]):
 
 
 def item_parse(value: SupportsIndex, /) -> int:
+    """Perform item parse."""
     ans: int
     ans = operator.index(value)
     if ans < 0:
