@@ -40,13 +40,13 @@ class QualInfo:
     )
 
     @classmethod
-    def by_string(cls, text: str, /) -> Self:
-        """Parse *text* as a PEP 440 qual, preserving all literal splits.
-
-        ``num_row`` follows the parsing precedence of PEP 440's reference
-        regular expression.  ``lit_rows`` then contains every grammar-valid
-        literal segmentation that has exactly that same numeric row.
-        """
+    def by_string(cls: type[Self], text: str, /) -> Self:
+        """Parse text as a PEP 440 qual, preserving literal splits."""
+        lit_rows: set[QualRow]
+        match: re.Match[str] | None
+        num_row: QualRow
+        # num_row follows the PEP 440 reference regular expression.
+        # lit_rows holds every grammar-valid literal split of that numeric row.
         match = cls._QUAL_RE.fullmatch(text)
         if match is None:
             raise ValueError(f"not a PEP 440-conforming qual: {text!r}")
