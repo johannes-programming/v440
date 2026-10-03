@@ -354,6 +354,7 @@ class QualRestrictor:
 
     @classmethod
     def by_string(cls: type[Self], text: str, /) -> Self:
+        """Build a restrictor from one qualifier string."""
         mag_row: list[int | None]
         qual_info: QualInfo
         qual_info = QualInfo.by_string(text)
