@@ -3,9 +3,12 @@ from __future__ import annotations
 __all__: list[str] = ["QualRestrictor"]
 
 import re
+from collections import abc
 from dataclasses import dataclass
 from itertools import product
 from typing import ClassVar, NamedTuple, Self
+
+from iterprod import iterprod
 
 from v440._utils.Cfg import Cfg
 
@@ -82,15 +85,18 @@ class QualInfo:
     @classmethod
     def _literal_forms(cls, field: str, num: str) -> tuple[str, ...]:
         """Return every lowercase literal prefix allowed for one segment."""
-        forms: set[str] = set()
+        forms: set[str]
+        triples: abc.Iterable[tuple[str, str, str]]
+        forms = set()
 
         if field in Cfg.cfg.data["qual-restrictor"]["pre-aliases"]:
-            for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                for alias in Cfg.cfg.data["qual-restrictor"]["pre-aliases"][
-                    field
-                ]:
-                    for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                        forms.add(before + alias + after)
+            triples = iterprod(
+                Cfg.cfg.data["qual-restrictor"]["sep"],
+                Cfg.cfg.data["qual-restrictor"]["pre-aliases"][field],
+                Cfg.cfg.data["qual-restrictor"]["sep"],
+            )
+            for before, alias, after in triples:
+                forms.add(before + alias + after)
 
         elif field == "post":
             # Implicit post-release spelling: ``-N``.  Unlike the explicit
