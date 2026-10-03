@@ -13,12 +13,14 @@ from v440._deformatting.PublicRestrictor import PublicRestrictor
 
 @dataclass(frozen=True, kw_only=True)
 class VersionRestrictor:
+    """Represent VersionRestrictor."""
     leading: str
     public: PublicRestrictor
     local: LocalRestrictor
     trailing: str
 
     def best(self: Self, /) -> str:
+        """Return the best of this state."""
         ans: str
         ans = self.local.best()
         if ans:
@@ -30,6 +32,7 @@ class VersionRestrictor:
             return self.leading + "!" + self.trailing
 
     def union(self: Self, other: Self, /) -> Self:
+        """Unite this state with another."""
         if self.leading != other.leading or self.trailing != other.trailing:
             raise ArithmeticError
         return type(self)(
