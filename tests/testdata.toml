@@ -343,7 +343,7 @@ solution = ""
 strings = []
 
 [deformatting.Base.test00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!0",
