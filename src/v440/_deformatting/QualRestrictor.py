@@ -256,7 +256,6 @@ class QualRestrictor:
         """Return the shortest qual format spec represented by this state."""
         candidates: set[str]
         groups: map[tuple[str, ...]]
-        parts: tuple[str, ...]
         row: QualRow
         # A literal row fixes observed spellings. Unobserved segments may use
         # a minimal inactive spelling so separators stay on the right segment.
@@ -264,8 +263,8 @@ class QualRestrictor:
 
         for row in self.lit_rows:
             groups = map(self._field_options, self._FIELDS, row, self.mag_row)
-            for parts in product(*groups):
-                spec = "".join(parts)
+            specs = map("".join, product(*groups))
+            for spec in specs:
                 if self._matches(spec, row):
                     candidates.add(spec)
 
