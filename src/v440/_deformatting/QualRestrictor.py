@@ -131,7 +131,14 @@ class QualInfo:
         return tuple(sorted(forms, key=lambda item: (-len(item), item)))
 
     @classmethod
-    def _all_literal_rows(cls, text: str, num_row: QualRow) -> set[QualRow]:
+    def _all_literal_rows(
+        cls: type[Self], text: str, num_row: QualRow
+    ) -> set[QualRow]:
+        """Handle all literal rows."""
+        base: list[str]
+        fields: tuple[str, ...]
+        present: list[tuple[int, str, str]]
+        rows: set[QualRow]
         fields = QualRow._fields
         present = [
             (index, field, num)
