@@ -62,7 +62,13 @@ class QualInfo:
         return cls(num_row=num_row, lit_rows=frozenset(lit_rows))
 
     @classmethod
-    def _num_row_from_match(cls, match: re.Match[str]) -> QualRow:
+    def _num_row_from_match(cls: type[Self], match: re.Match[str]) -> QualRow:
+        """Build the numeric row from a reference match."""
+        index: int
+        post_n1: str | None
+        post_n2: str | None
+        pre_l: str | None
+        values: list[str]
         values = [Cfg.cfg.data["qual-restrictor"]["absent"]] * 5
 
         pre_l = match.group("pre_l")
