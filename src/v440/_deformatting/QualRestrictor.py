@@ -267,9 +267,9 @@ class QualRestrictor:
         for row in self.lit_rows:
             groups = map(self._field_options, self._FIELDS, row, self.mag_row)
             specs = map("".join, iterprod(*groups))
-            for spec in specs:
-                if self._matches(spec, row):
-                    candidates.add(spec)
+            candidates.update(
+                spec for spec in specs if self._matches(spec, row)
+            )
 
         if not candidates:
             raise ValueError
