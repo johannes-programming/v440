@@ -1,5 +1,7 @@
 """Provide the public API for v440."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["Version", "VersionError"]
 
 from v440.core.Version import Version
