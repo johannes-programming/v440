@@ -234,7 +234,9 @@ class TestVersionPreviousExample(unittest.TestCase):
         self.assertEqual(str(version), "2b2")  # Modified pre-release version
         with self.assertRaises(Exception):
             version.public.qual.pre[1] = 4  # type: ignore[index]
-        self.assertEqual(str(version), "2b2")  # Further modified pre-release version
+        self.assertEqual(
+            str(version), "2b2"
+        )  # Further modified pre-release version
         version.public.qual.pre.lit = "PrEvIeW"
         self.assertEqual(
             str(version), "2rc2"
@@ -253,9 +255,13 @@ class TestVersionPreviousExample(unittest.TestCase):
             format(version, "#.#"), "1.2.3.post1+local.7.dev"
         )  # Formatted version
         version.public.qual.post.string = -2
-        self.assertEqual(str(version), "1.2.3.post2+local.7.dev")  # Modified version
+        self.assertEqual(
+            str(version), "1.2.3.post2+local.7.dev"
+        )  # Modified version
         version.public.qual.post.string = ""
-        self.assertEqual(str(version), "1.2.3+local.7.dev")  # Modified without post
+        self.assertEqual(
+            str(version), "1.2.3+local.7.dev"
+        )  # Modified without post
         version.public.qual.post.string = -3
         version.local.sort()
         self.assertEqual(
