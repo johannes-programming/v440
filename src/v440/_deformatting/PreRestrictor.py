@@ -6,30 +6,13 @@ from collections import abc
 from itertools import product
 from typing import Literal, NamedTuple, Self
 
+from v440._deformatting.QualABCPair import QualABCPair
 from v440._deformatting.QualABCRestrictor import QualABCRestrictor
 from v440._utils.Cfg import Cfg
 
 
 def _spec_sort_key(item: str, /) -> tuple[int, str]:
     return len(item), item
-
-
-def _valid(
-    name: str, restrictor: QualABCRestrictor, clue: QualABCRestrictor, /
-) -> bool:
-    pair = restrictor.pair
-    if pair is None:
-        return True
-
-    if clue.pair is None:
-        return pair.lit == name and pair.mag != 0 and pair.mag <= 1
-    if clue.pair.lit != pair.lit:
-        return False
-    if pair.mag > 0:
-        return clue.pair.mag == pair.mag
-    if pair.mag == 0:
-        return clue.pair.mag == 0
-    return clue.pair.mag <= -pair.mag
 
 
 class PreRestrictor(NamedTuple):
@@ -71,6 +54,27 @@ class PreRestrictor(NamedTuple):
 
         return tuple(sorted(ans, key=_spec_sort_key))
 
+    def _valid(
+        self: Self,
+        name: str,
+        clue: QualABCRestrictor,
+        /,
+    ) -> bool:
+        pair: QualABCPair
+        pair = getattr(self, name).pair
+        if pair is None:
+            return True
+
+        if clue.pair is None:
+            return pair.lit == name and pair.mag != 0 and pair.mag <= 1
+        if clue.pair.lit != pair.lit:
+            return False
+        if pair.mag > 0:
+            return clue.pair.mag == pair.mag
+        if pair.mag == 0:
+            return clue.pair.mag == 0
+        return clue.pair.mag <= -pair.mag
+
     def best(self: Self, /) -> str:
         """Return the shortest pre-release format represented by this state."""
 
@@ -90,7 +94,7 @@ class PreRestrictor(NamedTuple):
                 QualABCRestrictor.by_spec(matches[pattern])
                 for pattern in patterns
             )
-            if all(map(_valid, names, self, restrictors_)):
+            if all(map(self._valid, names, restrictors_)):
                 candidates.add(spec)
 
         if not candidates:
