@@ -50,20 +50,22 @@ def _options(
     return tuple(sorted(ans, key=_spec_sort_key))
 
 
-def _valid(name: str, restrictor: QualABCRestrictor, clue: Clue, /) -> bool:
+def _valid(
+    name: str, restrictor: QualABCRestrictor, clue: QualABCRestrictor, /
+) -> bool:
     pair = restrictor.pair
     if pair is None:
         return True
 
-    if clue.head == "":
+    if clue.pair is None:
         return pair.lit == name and pair.mag != 0 and pair.mag <= 1
-    if clue.head != pair.lit:
+    if clue.pair.lit != pair.lit:
         return False
     if pair.mag > 0:
-        return clue.mag == pair.mag
+        return clue.pair.mag == pair.mag
     if pair.mag == 0:
-        return clue.mag == 0
-    return clue.mag <= -pair.mag
+        return clue.pair.mag == 0
+    return clue.pair.mag <= -pair.mag
 
 
 class PreRestrictor(NamedTuple):
@@ -89,12 +91,15 @@ class PreRestrictor(NamedTuple):
                 matches = Cfg.fullmatches("pre_f", spec)
             except Exception:
                 continue
-            clues = tuple(
-                Clue.by_spec(matches[pattern]) for pattern in patterns
+            restrictors_ = tuple(
+                QualABCRestrictor.by_spec(matches[pattern])
+                for pattern in patterns
             )
             if all(
-                _valid(name, restrictor, clue)
-                for name, restrictor, clue in zip(names, restrictors, clues)
+                _valid(name, restrictor, restrictor_)
+                for name, restrictor, restrictor_ in zip(
+                    names, restrictors, restrictors_
+                )
             ):
                 candidates.add(spec)
 
