@@ -391,10 +391,15 @@ class QualRestrictor:
                 continue
             if head != literal:
                 return False
+            if (
+                field == "post"
+                and head == "-"
+                and not cls._always_num_ok(mag, width)
+            ):
+                return False
             if field == "post" and head == "-":
-                if not cls._always_num_ok(mag, width):
-                    return False
-            elif not cls._conditional_num_ok(mag, width):
+                continue
+            if not cls._conditional_num_ok(mag, width):
                 return False
 
         return True
