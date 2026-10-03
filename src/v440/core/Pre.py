@@ -15,20 +15,24 @@ from v440.abc.QualABC import QualABC
 
 class Pre(QualABC[Literal["a", "b", "rc"]]):
 
+    """Represent Pre."""
     __slots__ = ()
 
     def _cmp(self: Self, /) -> tuple[Any, ...]:
+        """Handle cmp."""
         if not self:
             return (frozenset("0"),)
         return frozenset("1"), self.lit, self.num
 
     def _deformat(self: Self, string: str, /) -> PreRestrictor:
+        """Handle deformat."""
         return PreRestrictor.by_string(string, name=self.lit)
 
     @classmethod
     def _format_parse(
         cls: type[Self], spec: str, /
     ) -> tuple[QualABCRestrictor, QualABCRestrictor, QualABCRestrictor]:
+        """Handle format parse."""
         a: QualABCRestrictor
         b: QualABCRestrictor
         matches: dict[str, str]
@@ -46,6 +50,7 @@ class Pre(QualABC[Literal["a", "b", "rc"]]):
         rc: QualABCRestrictor,
         /,
     ) -> str:
+        """Handle format parsed."""
         restrictor: QualABCRestrictor
         if self.lit == "a":
             restrictor = a
@@ -66,10 +71,12 @@ class Pre(QualABC[Literal["a", "b", "rc"]]):
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> Literal["a", "b", "rc"]:
+        """Handle lit parse."""
         return Cfg.cfg.data["phases"][value]  # type: ignore[no-any-return]
 
     @property
     def packaging(self: Self, /) -> tuple[str, int] | None:
+        """Perform packaging."""
         if self:
             return self.lit, self.num
         else:
@@ -80,6 +87,7 @@ class Pre(QualABC[Literal["a", "b", "rc"]]):
     def packaging(
         self: Self, value: tuple[str, SupportsIndex] | None, /
     ) -> None:
+        """Perform packaging."""
         if value is None:
             self.num = 0
             self.lit = ""

@@ -16,21 +16,25 @@ from v440.abc.QualABC import QualABC
 
 class Dev(QualABC[Literal["dev"]]):
 
+    """Represent Dev."""
     __slots__ = ()
 
     def _cmp(self: Self, /) -> tuple[int] | tuple[int, int]:
+        """Handle cmp."""
         if self.lit:
             return 0, self.num
         else:
             return (1,)
 
     def _deformat(self: Self, string: str, /) -> DevRestrictor:
+        """Handle deformat."""
         return DevRestrictor.by_string(string)
 
     @classmethod
     def _format_parse(
         cls: type[Self], spec: str, /
     ) -> tuple[QualABCPair | None]:
+        """Handle format parse."""
         pair: QualABCPair
         matches: dict[str, str]
         if spec == "":
@@ -43,6 +47,7 @@ class Dev(QualABC[Literal["dev"]]):
         return (pair,)
 
     def _format_parsed(self: Self, pair: QualABCPair | None, /) -> str:
+        """Handle format parsed."""
         if not self:
             return ""
         if pair is None:
@@ -53,6 +58,7 @@ class Dev(QualABC[Literal["dev"]]):
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> Literal["dev"]:
+        """Handle lit parse."""
         if value == "dev":
             return "dev"
         else:
@@ -60,6 +66,7 @@ class Dev(QualABC[Literal["dev"]]):
 
     @property
     def packaging(self: Self, /) -> int | None:
+        """Perform packaging."""
         if self:
             return self.num
         else:
@@ -68,6 +75,7 @@ class Dev(QualABC[Literal["dev"]]):
     @packaging.setter
     @setter
     def packaging(self: Self, value: SupportsIndex | None, /) -> None:
+        """Perform packaging."""
         if value is None:
             self.num = 0
             self.lit = ""

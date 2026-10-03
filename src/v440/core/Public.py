@@ -17,6 +17,7 @@ from v440.core.Qual import Qual as Qual_
 
 class Public(NestedABC):
 
+    """Represent Public."""
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
     _base: Base_
@@ -25,9 +26,11 @@ class Public(NestedABC):
     __slots__ = ("_base", "_qual")
 
     def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
+        """Handle cmp."""
         return self.base, self.qual
 
     def _deformat(self: Self, body: str, /) -> PublicRestrictor:
+        """Handle deformat."""
         base: str
         qual: str
         base, qual = split_public(body)
@@ -38,6 +41,7 @@ class Public(NestedABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        """Handle format parse."""
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
@@ -55,16 +59,20 @@ class Public(NestedABC):
         return spec[:i], spec[i:]
 
     def _format_parsed(self: Self, base_f: str, qual_f: str, /) -> str:
+        """Handle format parsed."""
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
+        """Handle init factories."""
         return dict(_base=Base_, _qual=Qual_)
 
     def _string_fset(self: Self, value: str, /) -> None:
+        """Handle string fset."""
         self.base.string, self.qual.string = split_public(value)
 
     def _todict(self: Self, /) -> dict[str, Any]:
+        """Handle todict."""
         return dict(base=self.base, qual=self.qual)
 
     @property
@@ -75,6 +83,7 @@ class Public(NestedABC):
     @base.setter
     @setter
     def base(self: Self, value: object, /) -> None:
+        """Perform base."""
         self.base.string = value
 
     packaging = NestedABC.string
@@ -87,10 +96,12 @@ class Public(NestedABC):
     @qual.setter
     @setter
     def qual(self: Self, value: object, /) -> None:
+        """Perform qual."""
         self.qual.string = value
 
 
 def split_public(value: str, /) -> tuple[str, str]:
+    """Perform split public."""
     i: int
     i = int(value.lower().startswith("v"))
     while i < len(value):

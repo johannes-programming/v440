@@ -17,6 +17,7 @@ from v440.core.Release import Release as Release_
 
 class Base(NestedABC):
 
+    """Represent Base."""
     Release: Final[type[Release_]] = Release_
     _epoch: int
     _release: Release_
@@ -24,9 +25,11 @@ class Base(NestedABC):
     __slots__ = ("_epoch", "_release")
 
     def _cmp(self: Self, /) -> tuple[int, Release_]:
+        """Handle cmp."""
         return self.epoch, self.release
 
     def _deformat(self: Self, string: str, /) -> BaseRestrictor:
+        """Handle deformat."""
         epoch: str
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", string)
@@ -43,6 +46,7 @@ class Base(NestedABC):
         spec: str,
         /,
     ) -> tuple[str, int, str]:
+        """Handle format parse."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         return (
@@ -58,6 +62,7 @@ class Base(NestedABC):
         epoch_mag: int,
         release_f: str,
     ) -> str:
+        """Handle format parsed."""
         ans: str
         ans = basev_f
         if epoch_mag or self.epoch:
@@ -68,9 +73,11 @@ class Base(NestedABC):
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
+        """Handle init factories."""
         return dict(_epoch=int, _release=Release_)
 
     def _string_fset(self: Self, value: str, /) -> None:
+        """Handle string fset."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
@@ -80,16 +87,18 @@ class Base(NestedABC):
         self.release.string = matches["release"]
 
     def _todict(self: Self, /) -> dict[str, Any]:
+        """Handle todict."""
         return dict(epoch=self.epoch, release=self.release)
 
     @property
     def epoch(self: Self, /) -> int:
-        "This property represents the epoch."
+        "Represent the epoch."
         return self._epoch
 
     @epoch.setter
     @setter
     def epoch(self: Self, value: Any, /) -> None:
+        """Perform epoch."""
         v: int
         v = operator.index(value)
         if v < 0:
@@ -100,10 +109,11 @@ class Base(NestedABC):
 
     @property
     def release(self: Self, /) -> Release_:
-        "This property represents the release."
+        "Represent the release."
         return self._release
 
     @release.setter
     @setter
     def release(self: Self, value: object, /) -> None:
+        """Perform release."""
         self.release.string = value

@@ -15,15 +15,18 @@ from v440.abc.ListABC import ListABC
 
 
 class Local(ListABC[int | str]):
+    """Represent Local."""
     __slots__ = ()
 
     @classmethod
     def _data_parse(
         cls: type[Self], value: list[Any], /
     ) -> tuple[int | str, ...]:
+        """Handle data parse."""
         return tuple(map(item_parse, value))
 
     def _deformat(self: Self, body: str, /) -> LocalRestrictor:
+        """Handle deformat."""
         if self:
             return LocalRestrictor.by_parts(
                 *Cfg.cfg.patterns["local_splitter"].split(body)
@@ -33,6 +36,7 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        """Handle format parse."""
         l: str
         m: int
         x: str
@@ -57,6 +61,7 @@ class Local(ListABC[int | str]):
         return tuple(split)
 
     def _format_parsed(self: Self, /, *parsed: tuple[Any, ...]) -> str:
+        """Handle format parsed."""
         ans: str
         item: int | str
         index: int
@@ -84,9 +89,11 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _sort(cls: type[Self], value: Any, /) -> tuple[bool, int | str]:
+        """Handle sort."""
         return type(value) is int, value
 
     def _string_fset(self: Self, value: str, /) -> None:
+        """Handle string fset."""
         v: str
         if value == "":
             self.data = ()
@@ -100,6 +107,7 @@ class Local(ListABC[int | str]):
 
     @property
     def packaging(self: Self, /) -> str | None:
+        """Perform packaging."""
         if self:
             return str(self)
         else:
@@ -108,6 +116,7 @@ class Local(ListABC[int | str]):
     @packaging.setter
     @setter
     def packaging(self: Self, value: Any, /) -> None:
+        """Perform packaging."""
         if value is None:
             self.string = ""
         else:
@@ -123,6 +132,7 @@ class Local(ListABC[int | str]):
 
 
 def item_parse(value: Any, /) -> int | str:
+    """Perform item parse."""
     ans: int | str
     try:
         ans = operator.index(value)
