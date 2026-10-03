@@ -398,6 +398,12 @@ class QualRestrictor:
         )
 
     def union(self: Self, other: Self, /) -> Self:
+        a: int | None
+        b: int | None
+        lit_rows: set[QualRow]
+        mag_row: list[int | None]
+        rowA: QualRow
+        rowB: QualRow
         mag_row = list()
         for a, b in zip(self.mag_row, other.mag_row):
             if a is None:
