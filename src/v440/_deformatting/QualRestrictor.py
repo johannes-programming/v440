@@ -132,8 +132,7 @@ class QualInfo:
             for index, (field, num) in enumerate(zip(fields, num_row))
             if num != Cfg.cfg.data["qual-restrictor"]["absent"]
         ]
-
-        rows: set[QualRow] = set()
+        rows = set()
         base = [Cfg.cfg.data["qual-restrictor"]["absent"]] * 5
 
         cls._visit_literal_rows(text, present, 0, 0, base, rows)
@@ -141,7 +140,7 @@ class QualInfo:
 
     @classmethod
     def _visit_literal_rows(
-        cls,
+        cls: type[Self],
         text: str,
         present: list[tuple[int, str, str]],
         which: int,
@@ -149,6 +148,15 @@ class QualInfo:
         row: list[str],
         rows: set[QualRow],
     ) -> None:
+        """Visit every literal segmentation of the remaining text."""
+        digits: str
+        end: int
+        field: str
+        index: int
+        literal: str
+        literal_pattern: str
+        next_row: list[str]
+        num: str
         if which == len(present):
             if pos == len(text):
                 rows.add(QualRow(*row))
