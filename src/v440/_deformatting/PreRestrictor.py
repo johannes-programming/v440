@@ -80,7 +80,6 @@ class PreRestrictor(NamedTuple):
 
         candidates: set[str]
         names = ("a", "b", "rc")
-        patterns = ("a_f", "b_f", "rc_f")
 
         groups = tuple(map(self._options, names))
         candidates = set()
@@ -90,12 +89,15 @@ class PreRestrictor(NamedTuple):
                 matches = Cfg.fullmatches("pre_f", spec)
             except Exception:
                 continue
-            restrictors_ = tuple(
-                QualABCRestrictor.by_spec(matches[pattern])
-                for pattern in patterns
-            )
-            if all(map(self._valid, names, restrictors_)):
-                candidates.add(spec)
+            if not self._valid("a", QualABCRestrictor.by_spec(matches["a_f"])):
+                continue
+            if not self._valid("b", QualABCRestrictor.by_spec(matches["b_f"])):
+                continue
+            if not self._valid(
+                "rc", QualABCRestrictor.by_spec(matches["rc_f"])
+            ):
+                continue
+            candidates.add(spec)
 
         if not candidates:
             raise ValueError
