@@ -93,7 +93,12 @@ class QualInfo:
         return QualRow(*values)
 
     @classmethod
-    def _literal_forms(cls, field: str, num: str) -> tuple[str, ...]:
+    def _literal_forms(
+        cls: type[Self], 
+        /, 
+        field: str, 
+        num: str,
+    ) -> tuple[str, ...]:
         """Return every lowercase literal prefix allowed for one segment."""
         forms: set[str]
         triples: abc.Iterable[tuple[str, str, str]]
