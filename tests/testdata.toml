@@ -91,7 +91,7 @@ solution = [
 ]
 
 [attr-setter.Local.test_local_invalid_value]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 query = [
     "a",
     {},
@@ -120,7 +120,7 @@ solution = [
 ]
 
 [attr-setter.Local.test_local_non_string_elements]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 query = [
     1,
     [],
@@ -211,7 +211,7 @@ solution = [
 ]
 
 [attr-setter.Release.test_release_invalid_assignment]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 query = [
     "1",
     "invalid",
@@ -220,7 +220,7 @@ query = [
 queryname = "data"
 
 [attr-setter.Release.test_release_invalid_boolean_assignment]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 query = [
     "true",
     "false",
@@ -228,7 +228,7 @@ query = [
 queryname = "data"
 
 [attr-setter.Release.test_release_invalid_float_value]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 query = [
     1,
     2.5,
@@ -237,7 +237,7 @@ query = [
 queryname = "data"
 
 [attr-setter.Release.test_release_invalid_value]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 query = [
     "a",
     2,
@@ -270,7 +270,7 @@ solution = [
 ]
 
 [attr-setter.Release.test_release_non_integer_elements]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 query = [
     "invalid",
     2,
@@ -350,63 +350,63 @@ strings = [
 ]
 
 [deformatting.Base.test00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!0.0.0",
 ]
 
 [deformatting.Base.test00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!00",
 ]
 
 [deformatting.Base.test00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!00.00",
 ]
 
 [deformatting.Base.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!00.00.00",
 ]
 
 [deformatting.Base.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001",
 ]
 
 [deformatting.Base.test00000011]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002",
 ]
 
 [deformatting.Base.test00000012]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002.003",
 ]
 
 [deformatting.Base.test00000013]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!002",
 ]
 
 [deformatting.Base.test00000014]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!007",
@@ -503,28 +503,28 @@ strings = [
 ]
 
 [deformatting.Base.test00000056]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "1.2.3",
     "v4.5",
 ]
 
 [deformatting.Base.test00000078]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "V1.2.3",
     "4.5",
 ]
 
 [deformatting.Base.whitespace-a-000106]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 01 ",
     " 02 ",
 ]
 
 [deformatting.Base.whitespace-a-000106a]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 01 ",
     " 42 ",
@@ -547,7 +547,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-a-000107]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	v1	",
     "	v2	",
@@ -562,7 +562,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-a-000108]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  001!2.03",
     "  002!3.04",
@@ -577,7 +577,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-a-000109]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "1.2  ",
     "2.3  ",
@@ -592,21 +592,21 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-a-000110]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 1 ",
     "  2 ",
 ]
 
 [deformatting.Base.whitespace-a-000111]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	1 ",
     "	2  ",
 ]
 
 [deformatting.Base.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 1!01 ",
     " 2!02 ",
@@ -623,7 +623,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	1!01	",
     "	2!02	",
@@ -631,7 +631,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n1!01\n",
     "\n2!02\n",
@@ -639,7 +639,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  1!01  ",
     "  2!02  ",
@@ -658,7 +658,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	1!01	 ",
     " 	2!02	 ",
@@ -667,7 +667,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\n1!01\r\n",
     "\r\n2!02\r\n",
@@ -676,7 +676,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 1!01 ",
     "	2!02 ",
@@ -684,7 +684,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 1!01 ",
     " 2!02	",
@@ -693,7 +693,7 @@ strings = [
 ]
 
 [deformatting.Base.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n1!01\n",
     "\r\n2!02\r\n",
@@ -707,70 +707,70 @@ solution = ""
 strings = []
 
 [deformatting.Dev.test00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV-0",
 ]
 
 [deformatting.Dev.test00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV-0001",
 ]
 
 [deformatting.Dev.test00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV-001",
 ]
 
 [deformatting.Dev.test00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV-007",
 ]
 
 [deformatting.Dev.test00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV-01",
 ]
 
 [deformatting.Dev.test00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV-02",
 ]
 
 [deformatting.Dev.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV-099",
 ]
 
 [deformatting.Dev.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV.0",
 ]
 
 [deformatting.Dev.test00000011]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV.0001",
 ]
 
 [deformatting.Dev.test00000012]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-DEV",
     "-DEV.001",
@@ -875,7 +875,7 @@ strings = [
 ]
 
 [deformatting.Dev.test00000087a]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.MiniLangError"
 solution = "deV_"
 strings = [
     "deV",
@@ -892,14 +892,14 @@ strings = [
 ]
 
 [deformatting.Dev.test00000093]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "dev",
     "deV_1",
 ]
 
 [deformatting.Dev.test00000094]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "dev",
     "dev.1",
@@ -914,7 +914,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-a-000107]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " dev1 ",
     " dev2 ",
@@ -929,7 +929,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-a-000108]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	.dev1	",
     "	.dev2	",
@@ -944,7 +944,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-a-000109]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  _dev01",
     "  _dev02",
@@ -959,7 +959,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-a-000110]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "dev0  ",
     "dev1  ",
@@ -974,21 +974,21 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-a-000111]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " dev1 ",
     "  dev2 ",
 ]
 
 [deformatting.Dev.whitespace-a-000112]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	dev1 ",
     "	dev2  ",
 ]
 
 [deformatting.Dev.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -DEV1 ",
     " -DEV2 ",
@@ -1005,7 +1005,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	-DEV1	",
     "	-DEV2	",
@@ -1013,7 +1013,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000002a]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	_DEV1	",
     "	_DEV2	",
@@ -1021,7 +1021,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000002b]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	_DeV1	",
     "	_DeV2	",
@@ -1047,7 +1047,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n-DEV1\n",
     "\n-DEV2\n",
@@ -1055,7 +1055,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000003a]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n\n",
     "\n\n",
@@ -1078,7 +1078,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  -DEV1  ",
     "  -DEV2  ",
@@ -1087,7 +1087,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	-DEV1	 ",
     " 	-DEV2	 ",
@@ -1096,7 +1096,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\n-DEV1\r\n",
     "\r\n-DEV2\r\n",
@@ -1115,7 +1115,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -DEV1 ",
     "	-DEV2 ",
@@ -1123,7 +1123,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -DEV1 ",
     " -DEV2	",
@@ -1132,7 +1132,7 @@ strings = [
 ]
 
 [deformatting.Dev.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n-DEV1\n",
     "\r\n-DEV2\r\n",
@@ -1236,70 +1236,70 @@ strings = [
 ]
 
 [deformatting.Local.test00000014]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001",
 ]
 
 [deformatting.Local.test00000015]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-0",
 ]
 
 [deformatting.Local.test00000016]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-001",
 ]
 
 [deformatting.Local.test00000017]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-002-003",
 ]
 
 [deformatting.Local.test00000018]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-002.003",
 ]
 
 [deformatting.Local.test00000019]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-002_003",
 ]
 
 [deformatting.Local.test00000020]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-01",
 ]
 
 [deformatting.Local.test00000021]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-1",
 ]
 
 [deformatting.Local.test00000022]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-10",
 ]
 
 [deformatting.Local.test00000023]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "001-2",
@@ -1322,7 +1322,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-a-000106]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " ABC ",
     " DEF ",
@@ -1337,7 +1337,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-a-000107]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	abc_01	",
     "	def_02	",
@@ -1352,7 +1352,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-a-000108]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  01",
     "  02",
@@ -1367,7 +1367,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-a-000109]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "abc.1  ",
     "def.2  ",
@@ -1382,21 +1382,21 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-a-000110]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " abc ",
     "  def ",
 ]
 
 [deformatting.Local.whitespace-a-000111]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	abc ",
     "	def  ",
 ]
 
 [deformatting.Local.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 0-001 ",
     " 0-002 ",
@@ -1413,7 +1413,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	0-001	",
     "	0-002	",
@@ -1421,7 +1421,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n0-001\n",
     "\n0-002\n",
@@ -1429,7 +1429,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  0-001  ",
     "  0-002  ",
@@ -1448,7 +1448,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	0-001	 ",
     " 	0-002	 ",
@@ -1457,7 +1457,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\n0-001\r\n",
     "\r\n0-002\r\n",
@@ -1466,7 +1466,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 0-001 ",
     "	0-002 ",
@@ -1474,7 +1474,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 0-001 ",
     " 0-002	",
@@ -1483,7 +1483,7 @@ strings = [
 ]
 
 [deformatting.Local.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n0-001\n",
     "\r\n0-002\r\n",
@@ -1497,70 +1497,70 @@ solution = ""
 strings = []
 
 [deformatting.Post.test00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-001",
 ]
 
 [deformatting.Post.test00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-01",
 ]
 
 [deformatting.Post.test00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST",
 ]
 
 [deformatting.Post.test00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST-0",
 ]
 
 [deformatting.Post.test00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST-001",
 ]
 
 [deformatting.Post.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST-007",
 ]
 
 [deformatting.Post.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST-01",
 ]
 
 [deformatting.Post.test00000011]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST-02",
 ]
 
 [deformatting.Post.test00000012]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST-099",
 ]
 
 [deformatting.Post.test00000013]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-0",
     "-POST-1",
@@ -1657,7 +1657,7 @@ strings = [
 ]
 
 [deformatting.Post.test00000090]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "r",
     "r.1",
@@ -1672,7 +1672,7 @@ strings = [
 ]
 
 [deformatting.Post.test00000091]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "r",
     "r_1",
@@ -1687,7 +1687,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-a-000106]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " post1 ",
     " post2 ",
@@ -1702,7 +1702,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-a-000107]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	.post1	",
     "	.post2	",
@@ -1717,7 +1717,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-a-000108]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  rev1",
     "  rev2",
@@ -1732,7 +1732,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-a-000109]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "-1  ",
     "-2  ",
@@ -1747,21 +1747,21 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-a-000110]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " post1 ",
     "  post2 ",
 ]
 
 [deformatting.Post.whitespace-a-000111]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	post1 ",
     "	post2  ",
 ]
 
 [deformatting.Post.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -001 ",
     " -002 ",
@@ -1778,7 +1778,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	-001	",
     "	-002	",
@@ -1786,7 +1786,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n-001\n",
     "\n-002\n",
@@ -1794,7 +1794,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  -001  ",
     "  -002  ",
@@ -1813,7 +1813,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	-001	 ",
     " 	-002	 ",
@@ -1822,7 +1822,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\n-001\r\n",
     "\r\n-002\r\n",
@@ -1831,7 +1831,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -001 ",
     "	-002 ",
@@ -1839,7 +1839,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -001 ",
     " -002	",
@@ -1848,7 +1848,7 @@ strings = [
 ]
 
 [deformatting.Post.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n-001\n",
     "\r\n-002\r\n",
@@ -1862,77 +1862,77 @@ solution = ""
 strings = []
 
 [deformatting.Pre.test00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A-0",
 ]
 
 [deformatting.Pre.test00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A-001",
 ]
 
 [deformatting.Pre.test00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A-007",
 ]
 
 [deformatting.Pre.test00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A-01",
 ]
 
 [deformatting.Pre.test00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A-02",
 ]
 
 [deformatting.Pre.test00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A-099",
 ]
 
 [deformatting.Pre.test00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A.0",
 ]
 
 [deformatting.Pre.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A.001",
 ]
 
 [deformatting.Pre.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A.007",
 ]
 
 [deformatting.Pre.test00000011]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-A",
     "-A.01",
 ]
 
 [deformatting.Pre.test00000068]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "a",
     "alpha",
@@ -2046,7 +2046,7 @@ strings = [
 ]
 
 [deformatting.Pre.test00000093]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "beTA",
     "a12",
@@ -2063,7 +2063,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-a-000108]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " a1 ",
     " a2 ",
@@ -2078,7 +2078,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-a-000109]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	beta1	",
     "	beta2	",
@@ -2093,7 +2093,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-a-000110]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  rc1",
     "  rc2",
@@ -2108,7 +2108,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-a-000111]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "preview1  ",
     "preview2  ",
@@ -2123,21 +2123,21 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-a-000112]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " a1 ",
     "  a2 ",
 ]
 
 [deformatting.Pre.whitespace-a-000113]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	rc1 ",
     "	rc2  ",
 ]
 
 [deformatting.Pre.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -A0 ",
     " -A1 ",
@@ -2154,7 +2154,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	-A0	",
     "	-A1	",
@@ -2162,7 +2162,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n-A0\n",
     "\n-A1\n",
@@ -2170,7 +2170,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  -A0  ",
     "  -A1  ",
@@ -2189,7 +2189,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	-A0	 ",
     " 	-A1	 ",
@@ -2198,7 +2198,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\n-A0\r\n",
     "\r\n-A1\r\n",
@@ -2207,7 +2207,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -A0 ",
     "	-A1 ",
@@ -2215,7 +2215,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " -A0 ",
     " -A1	",
@@ -2224,7 +2224,7 @@ strings = [
 ]
 
 [deformatting.Pre.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n-A0\n",
     "\r\n-A1\r\n",
@@ -2238,70 +2238,70 @@ solution = ""
 strings = []
 
 [deformatting.Public.test00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002",
 ]
 
 [deformatting.Public.test00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06",
 ]
 
 [deformatting.Public.test00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002_beta.4_post-3DEV5",
 ]
 
 [deformatting.Public.test00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02",
 ]
 
 [deformatting.Public.test00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002bpost1dev1",
 ]
 
 [deformatting.Public.test00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002rc01post.02dev.02",
 ]
 
 [deformatting.Public.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!01.02.03.004",
 ]
 
 [deformatting.Public.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!01.02.03.004-alpha3.post.DEV_06",
 ]
 
 [deformatting.Public.test00000011]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!01.02.03.004_beta.4post1_dev-3",
 ]
 
 [deformatting.Public.test00000012]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!01.02.03.004alpha.04post1dev1",
@@ -2398,7 +2398,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-a-000104]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 01 ",
     " 02 ",
@@ -2413,7 +2413,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-a-000105]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	v1	",
     "	v2	",
@@ -2428,7 +2428,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-a-000106]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  1a1",
     "  2a2",
@@ -2443,7 +2443,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-a-000107]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "1.post1  ",
     "2.post2  ",
@@ -2458,21 +2458,21 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-a-000108]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 1 ",
     "  2 ",
 ]
 
 [deformatting.Public.whitespace-a-000109]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	1 ",
     "	2  ",
 ]
 
 [deformatting.Public.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " V1!1.2.3 ",
     " V1!42 ",
@@ -2480,7 +2480,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	V1!1.2.3	",
     "	V1!42	",
@@ -2488,7 +2488,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\nV1!1.2.3\n",
     "\nV1!42\n",
@@ -2496,7 +2496,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  V1!1.2.3  ",
     "  V1!42  ",
@@ -2515,7 +2515,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	V1!1.2.3	 ",
     " 	V1!42	 ",
@@ -2524,7 +2524,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\nV1!1.2.3\r\n",
     "\r\nV1!42\r\n",
@@ -2533,7 +2533,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " V1!1.2.3 ",
     "	V1!42 ",
@@ -2541,7 +2541,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " V1!1.2.3 ",
     " V1!42	",
@@ -2550,7 +2550,7 @@ strings = [
 ]
 
 [deformatting.Public.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\nV1!1.2.3\n",
     "\r\nV1!42\r\n",
@@ -2572,70 +2572,70 @@ solution = ""
 strings = []
 
 [deformatting.Qual.test00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1",
 ]
 
 [deformatting.Qual.test00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1-dev4",
 ]
 
 [deformatting.Qual.test00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1.DEV_06",
 ]
 
 [deformatting.Qual.test00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1.dev",
 ]
 
 [deformatting.Qual.test00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1DEV5",
 ]
 
 [deformatting.Qual.test00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1_dev-3",
 ]
 
 [deformatting.Qual.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1dev.02",
 ]
 
 [deformatting.Qual.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-1dev1",
 ]
 
 [deformatting.Qual.test00000011]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-alpha3-1",
 ]
 
 [deformatting.Qual.test00000012]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "-02",
     "-alpha3-1-dev4",
@@ -2777,14 +2777,14 @@ strings = [
 ]
 
 [deformatting.Qual.test00000088a]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "c",
     "c-1",
 ]
 
 [deformatting.Qual.test00000089]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "c",
     "c-1",
@@ -2809,7 +2809,7 @@ strings = [
 ]
 
 [deformatting.Qual.test00000091]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "c",
     "c1",
@@ -2825,7 +2825,7 @@ strings = [
 ]
 
 [deformatting.Qual.test00000101]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "rc",
     "rc1",
@@ -2833,14 +2833,14 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-a-000115]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " a1 ",
     " a2 ",
 ]
 
 [deformatting.Qual.whitespace-a-000116]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	post1	",
     "	post2	",
@@ -2855,7 +2855,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-a-000117]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  dev1",
     "  dev2",
@@ -2870,7 +2870,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-a-000118]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "a1.post2.dev3  ",
     "a2.post3.dev4  ",
@@ -2885,21 +2885,21 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-a-000119]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " a1 ",
     "  a2 ",
 ]
 
 [deformatting.Qual.whitespace-a-000120]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	post1 ",
     "	post2  ",
 ]
 
 [deformatting.Qual.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " a1r ",
     " a1r4 ",
@@ -2907,7 +2907,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	a1r	",
     "	a1r4	",
@@ -2915,7 +2915,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\na1r\n",
     "\na1r4\n",
@@ -2923,7 +2923,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  a1r  ",
     "  a1r4  ",
@@ -2942,7 +2942,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	a1r	 ",
     " 	a1r4	 ",
@@ -2951,7 +2951,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\na1r\r\n",
     "\r\na1r4\r\n",
@@ -2960,7 +2960,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " a1r ",
     "	a1r4 ",
@@ -2968,7 +2968,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " a1r ",
     " a1r4	",
@@ -2977,7 +2977,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\na1r\n",
     "\r\na1r4\r\n",
@@ -2986,7 +2986,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000100]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " b1000 ",
     " rc42 ",
@@ -3001,7 +3001,7 @@ strings = [
 ]
 
 [deformatting.Qual.whitespace-c-00000101]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " B1000 ",
     " rc42 ",
@@ -3021,14 +3021,14 @@ solution = ""
 strings = []
 
 [deformatting.Release.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "00",
     "0",
 ]
 
 [deformatting.Release.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "00.00",
     "0.0",
@@ -3051,14 +3051,14 @@ strings = [
 ]
 
 [deformatting.Release.test00000015]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0001.0002",
     "100.200",
 ]
 
 [deformatting.Release.test00000016]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0001.0002",
     "1000.200",
@@ -3074,7 +3074,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000020]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "001",
     "10",
@@ -3089,7 +3089,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000022]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "001",
     "100",
@@ -3130,21 +3130,21 @@ strings = [
 ]
 
 [deformatting.Release.test00000027]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "001.02",
     "10.20",
 ]
 
 [deformatting.Release.test00000029]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01",
     "001",
 ]
 
 [deformatting.Release.test00000030]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01",
     "1",
@@ -3167,7 +3167,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000033]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.00",
     "10.0",
@@ -3190,35 +3190,35 @@ strings = [
 ]
 
 [deformatting.Release.test00000036]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.002",
     "10.20",
 ]
 
 [deformatting.Release.test00000037]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02",
     "001.02",
 ]
 
 [deformatting.Release.test00000038]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02",
     "01.002",
 ]
 
 [deformatting.Release.test00000039]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02",
     "1.2",
 ]
 
 [deformatting.Release.test00000040]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02",
     "1.20",
@@ -3233,7 +3233,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000042]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02",
     "10.20",
@@ -3258,7 +3258,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000045]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02.00",
     "10.20.0",
@@ -3281,14 +3281,14 @@ strings = [
 ]
 
 [deformatting.Release.test00000049]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02.003",
     "10.2.300",
 ]
 
 [deformatting.Release.test00000050]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02.003",
     "10.20.30",
@@ -3303,7 +3303,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000052]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "01.02.003",
     "100.200.300",
@@ -3352,7 +3352,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000069]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "1.0",
     "9.8.7.0",
@@ -3400,7 +3400,7 @@ strings = [
 ]
 
 [deformatting.Release.test00000081]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "1.2.0",
     "9.8.7.0",
@@ -3458,14 +3458,14 @@ strings = [
 ]
 
 [deformatting.Release.test00000095]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "4.0",
     "1.2.0",
 ]
 
 [deformatting.Release.test00000096]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "4.0",
     "1.2.0",
@@ -3481,7 +3481,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-a-000107]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 01 ",
     " 02 ",
@@ -3496,7 +3496,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-a-000108]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	01.02	",
     "	02.03	",
@@ -3511,7 +3511,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-a-000109]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  1.2.0",
     "  2.3.0",
@@ -3526,7 +3526,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-a-000110]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "001.02.3  ",
     "002.03.4  ",
@@ -3541,21 +3541,21 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-a-000111]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 1 ",
     "  2 ",
 ]
 
 [deformatting.Release.whitespace-a-000112]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	1 ",
     "	2  ",
 ]
 
 [deformatting.Release.whitespace-c-00000001]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 01.02.03 ",
     " 10.20.30 ",
@@ -3563,7 +3563,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000002]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "	01.02.03	",
     "	10.20.30	",
@@ -3571,7 +3571,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n01.02.03\n",
     "\n10.20.30\n",
@@ -3579,7 +3579,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "  01.02.03  ",
     "  10.20.30  ",
@@ -3588,7 +3588,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 	01.02.03	 ",
     " 	10.20.30	 ",
@@ -3607,7 +3607,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\r\n01.02.03\r\n",
     "\r\n10.20.30\r\n",
@@ -3616,7 +3616,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 01.02.03 ",
     "	10.20.30 ",
@@ -3624,7 +3624,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     " 01.02.03 ",
     " 10.20.30	",
@@ -3633,7 +3633,7 @@ strings = [
 ]
 
 [deformatting.Release.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.PEP440Error"
 strings = [
     "\n01.02.03\n",
     "\r\n10.20.30\r\n",
@@ -3655,70 +3655,70 @@ strings = [
 ]
 
 [deformatting.Version.test00000003]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06",
 ]
 
 [deformatting.Version.test00000004]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+0.0",
 ]
 
 [deformatting.Version.test00000005]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+9.AB12",
 ]
 
 [deformatting.Version.test00000006]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+Foo_Foo",
 ]
 
 [deformatting.Version.test00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002-alpha3-02.DEV_06+x-9",
 ]
 
 [deformatting.Version.test00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02",
 ]
 
 [deformatting.Version.test00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+001-0",
 ]
 
 [deformatting.Version.test00000010]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+9_ABC",
 ]
 
 [deformatting.Version.test00000011]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+X-ABC",
 ]
 
 [deformatting.Version.test00000012]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "0",
     "0!001.002alpha.04_post-3dev.02+x.A1",
@@ -3815,7 +3815,7 @@ strings = [
 ]
 
 [deformatting.Version.test00000071]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "1.2.3",
     "v9.8",
@@ -3854,14 +3854,14 @@ strings = [
 ]
 
 [deformatting.Version.whitespace-a-000109]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.MiniLangError"
 strings = [
     " 1 ",
     "  2 ",
 ]
 
 [deformatting.Version.whitespace-a-000110]
-exceptiontype = "v440.VersionError"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "	1 ",
     "	2  ",
@@ -3953,7 +3953,7 @@ strings = [
 ]
 
 [deformatting.Version.whitespace-c-00000006b]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "\r\n1!01+foo\r\n",
     "\r\n2!02+bar\r\n",
@@ -3982,7 +3982,7 @@ strings = [
 ]
 
 [deformatting.Version.whitespace-c-00000007]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     " 1!01+foo ",
     "	2!02+bar ",
@@ -3990,7 +3990,7 @@ strings = [
 ]
 
 [deformatting.Version.whitespace-c-00000008]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     " 1!01+foo ",
     " 2!02+bar	",
@@ -3999,7 +3999,7 @@ strings = [
 ]
 
 [deformatting.Version.whitespace-c-00000009]
-exceptiontype = "builtins.Exception"
+exceptiontype = "v440.MiniLangError"
 strings = [
     "\n1!01+foo\n",
     "\r\n2!02+bar\r\n",
@@ -11034,7 +11034,7 @@ change = [
     7,
     7,
 ]
-exceptiontype = "builtins.Exception"
+exceptiontype = "builtins.ValueError"
 query = "1.2.3.4.5.6.7.8.9.10"
 solution = "1.2.3.4.5.6.7.8.9.10"
 start = -8
