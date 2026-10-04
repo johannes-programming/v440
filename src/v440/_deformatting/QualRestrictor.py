@@ -16,7 +16,7 @@ from v440._utils.Cfg import Cfg
 
 
 class QualRow(NamedTuple):
-    """Represent QualRow."""
+    """Store one five-field qualifier segmentation."""
 
     a: str
     b: str
@@ -27,7 +27,7 @@ class QualRow(NamedTuple):
 
 @dataclass(frozen=True, kw_only=True)
 class QualInfo:
-    """Represent QualInfo."""
+    """Store numeric and literal interpretations of a qualifier string."""
 
     num_row: QualRow
     lit_rows: frozenset[QualRow]
@@ -102,6 +102,9 @@ class QualInfo:
         num: str,
     ) -> tuple[str, ...]:
         """Return every lowercase literal prefix allowed for one segment."""
+        after: str
+        alias: str
+        before: str
         forms: set[str]
         triples: abc.Iterable[tuple[str, str, str]]
         forms = set()
@@ -144,7 +147,7 @@ class QualInfo:
     def _all_literal_rows(
         cls: type[Self], text: str, num_row: QualRow
     ) -> set[QualRow]:
-        """Handle all literal rows."""
+        """Enumerate every grammar-valid literal segmentation for a qualifier row."""
         base: list[str]
         fields: tuple[str, ...]
         present: list[tuple[int, str, str]]
@@ -206,27 +209,27 @@ class QualInfo:
             )
 
 
-def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
+def lit_row_union(left_row: QualRow, right_row: QualRow) -> set[QualRow]:
     """Unite two literal rows, or return no row."""
-    a: str
-    ans: list[str]
-    b: str
-    ans = list()
-    for a, b in zip(rowA, rowB):
-        if a == "?":
-            ans.append(b)
-        elif b == "?":
-            ans.append(a)
-        elif a == b:
-            ans.append(a)
+    left_literal: str
+    merged: list[str]
+    right_literal: str
+    merged = list()
+    for left_literal, right_literal in zip(left_row, right_row):
+        if left_literal == "?":
+            merged.append(right_literal)
+        elif right_literal == "?":
+            merged.append(left_literal)
+        elif left_literal == right_literal:
+            merged.append(left_literal)
         else:
             return set()
-    return {QualRow(*ans)}
+    return {QualRow(*merged)}
 
 
 @dataclass(frozen=True, kw_only=True)
 class QualRestrictor:
-    """Represent QualRestrictor."""
+    """Track formatting constraints for all qualifier segments."""
 
     mag_row: tuple[int | None, int | None, int | None, int | None, int | None]
     lit_rows: frozenset[QualRow]
@@ -259,6 +262,7 @@ class QualRestrictor:
         """Return the shortest qual format spec represented by this state."""
         candidates: set[str]
         groups: map[tuple[str, ...]]
+        specifications: map[str]
         row: QualRow
         # A literal row fixes observed spellings. Unobserved segments may use
         # a minimal inactive spelling so separators stay on the right segment.
@@ -266,9 +270,9 @@ class QualRestrictor:
 
         for row in self.lit_rows:
             groups = map(self._field_options, self._FIELDS, row, self.mag_row)
-            specs = map("".join, iterprod(*groups))
+            specifications = map("".join, iterprod(*groups))
             candidates.update(
-                spec for spec in specs if self._matches(spec, row)
+                spec for spec in specifications if self._matches(spec, row)
             )
 
         if not candidates:
@@ -308,7 +312,7 @@ class QualRestrictor:
 
     @staticmethod
     def _conditional_num_ok(mag: int, width: int, /) -> bool:
-        """Handle conditional num ok."""
+        """Return whether a conditional numeric field may use the requested width."""
         if mag > 0:
             return width == mag
         if mag == 0:
@@ -317,7 +321,7 @@ class QualRestrictor:
 
     @staticmethod
     def _always_num_ok(mag: int, width: int, /) -> bool:
-        """Handle always num ok."""
+        """Return whether an always-emitted number may use the requested width."""
         if mag > 1:
             return width == mag
         if mag == 1:
@@ -428,28 +432,28 @@ class QualRestrictor:
         )
 
     def union(self: Self, other: Self, /) -> Self:
-        a: int | None
-        b: int | None
+        left_magnitude: int | None
+        right_magnitude: int | None
         lit_rows: set[QualRow]
         mag_row: list[int | None]
-        rowA: QualRow
-        rowB: QualRow
+        left_row: QualRow
+        right_row: QualRow
         mag_row = list()
-        for a, b in zip(self.mag_row, other.mag_row):
-            if a is None:
-                mag_row.append(b)
-            elif b is None:
-                mag_row.append(a)
-            elif a == b:
-                mag_row.append(a)
-            elif a + b <= 0:
-                mag_row.append(max(a, b))
+        for left_magnitude, right_magnitude in zip(self.mag_row, other.mag_row):
+            if left_magnitude is None:
+                mag_row.append(right_magnitude)
+            elif right_magnitude is None:
+                mag_row.append(left_magnitude)
+            elif left_magnitude == right_magnitude:
+                mag_row.append(left_magnitude)
+            elif left_magnitude + right_magnitude <= 0:
+                mag_row.append(max(left_magnitude, right_magnitude))
             else:
                 raise ValueError
         lit_rows = set()
-        for rowA in self.lit_rows:
-            for rowB in other.lit_rows:
-                lit_rows.update(lit_row_union(rowA, rowB))
+        for left_row in self.lit_rows:
+            for right_row in other.lit_rows:
+                lit_rows.update(lit_row_union(left_row, right_row))
         return type(self)(
             mag_row=tuple(mag_row),  # type: ignore[arg-type]
             lit_rows=frozenset(lit_rows),

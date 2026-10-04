@@ -7,47 +7,53 @@ __all__: list[str] = ["ReleaseRestrictor"]
 import operator
 from typing import Self, SupportsIndex
 
-from .._deformatting.Mag import Mag
+from v440._deformatting.Mag import Mag
 
 
 class ReleaseRestrictor(tuple[Mag, ...]):
-    """Represent ReleaseRestrictor."""
+    """Track formatting constraints for release-number components."""
 
     def best(self: Self, /) -> str:
-        """Return the best of this state."""
-        ans: str
-        ans = ".".join("#" * mag for mag in self).rstrip(".")
-        return ans
+        """Return the shortest format fragment satisfying these constraints."""
+        result: str
+        result = ".".join("#" * mag for mag in self).rstrip(".")
+        return result
 
     @classmethod
     def by_string(cls: type[Self], body: str, /) -> Self:
-        """Build an instance by string."""
-        mags: list[Mag]
-        mags = list()
-        for part in body.split("."):
-            if part == "0" or not part.startswith("0"):
-                mags.append(Mag(-len(part)))
+        """Infer formatting constraints from one observed rendering."""
+        component: str
+        magnitudes: list[Mag]
+        magnitudes = list()
+        for component in body.split("."):
+            if component == "0" or not component.startswith("0"):
+                magnitudes.append(Mag(-len(component)))
             else:
-                mags.append(Mag(len(part)))
+                magnitudes.append(Mag(len(component)))
+        # A final literal .0 must remain distinguishable from an omitted trailing
+        # zero, so retain a positive width constraint for that last component.
         if body.endswith(".0"):
-            mags[-1] = Mag(1)
-        return cls(tuple(mags))
+            magnitudes[-1] = Mag(1)
+        return cls(tuple(magnitudes))
 
     def union(self: Self, other: Self, /) -> Self:
-        """Unite this state with another."""
-        mags: list[Mag]
-        mags = list()
-        for x, y in zip(self, other):
-            mags.append(x.union(y))
-        for x in self[len(mags) :] or other[len(mags) :]:
-            Mag(0).union(x)
-        return type(self)(tuple(mags))
+        """Combine these constraints with another compatible observation."""
+        component: str
+        left_magnitude: Mag
+        magnitudes: list[Mag]
+        right_magnitude: Mag
+        magnitudes = list()
+        for left_magnitude, right_magnitude in zip(self, other):
+            magnitudes.append(left_magnitude.union(right_magnitude))
+        for left_magnitude in self[len(magnitudes) :] or other[len(magnitudes) :]:
+            Mag(0).union(left_magnitude)
+        return type(self)(tuple(magnitudes))
 
 
 def item_parse(value: SupportsIndex, /) -> int:
-    """Perform item parse."""
-    ans: int
-    ans = operator.index(value)
-    if ans < 0:
+    """Convert one release value to a nonnegative integer."""
+    component: int
+    component = operator.index(value)
+    if component < 0:
         raise ValueError
-    return ans
+    return component

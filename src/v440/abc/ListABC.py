@@ -1,5 +1,7 @@
 """Provide the ListABC abstract base for list-like v440 classes."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["ListABC"]
 
 from abc import abstractmethod
@@ -17,20 +19,20 @@ Item = TypeVar("Item", bound=int | str)
 
 
 class ListABC(HoldList[Item], CoreABC):
-    """Represent ListABC."""
+    """Provide list-like storage, comparison, and mutation for version components."""
 
     __slots__ = ()
 
     @setdoc.basic
     def __bool__(self: Self, /) -> bool:
-        """Handle bool."""
+        """Return whether this instance contains a meaningful value."""
         return bool(self.data)
 
     __eq__ = BaseDataObject.__eq__
 
     @setdoc.basic
     def __ge__(self: Self, other: object, /) -> Any:
-        """Handle ge."""
+        """Return whether this value sorts at or after the other value."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -39,7 +41,7 @@ class ListABC(HoldList[Item], CoreABC):
 
     @setdoc.basic
     def __gt__(self: Self, other: object, /) -> Any:
-        """Handle gt."""
+        """Return whether this value sorts after the other value."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -53,13 +55,13 @@ class ListABC(HoldList[Item], CoreABC):
         /,
         **kwargs: Any,
     ) -> None:
-        """Handle init."""
+        """Initialize this value from an optional source and keyword overrides."""
         self._init_other(other)
         self._init_kwargs(**kwargs)
 
     @setdoc.basic
     def __le__(self: Self, other: object, /) -> Any:
-        """Handle le."""
+        """Return whether this value sorts at or before the other value."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -68,7 +70,7 @@ class ListABC(HoldList[Item], CoreABC):
 
     @setdoc.basic
     def __lt__(self: Self, other: object, /) -> Any:
-        """Handle lt."""
+        """Return whether this value sorts before the other value."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -84,7 +86,7 @@ class ListABC(HoldList[Item], CoreABC):
     ) -> abc.Iterable[Item]: ...
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
-        """Handle init other."""
+        """Initialize internal fields from a source value or their defaults."""
         self._data = ()
         if other is not None:
             self.data = other
@@ -92,13 +94,13 @@ class ListABC(HoldList[Item], CoreABC):
     @property
     @setdoc.basic
     def data(self: Self, /) -> tuple[Item, ...]:
-        """Handle data."""
+        """Return the normalized sequence data."""
         return self._data
 
     @data.setter
     @setter
     def data(self: Self, value: abc.Iterable[Any], /) -> None:
-        """Handle data."""
+        """Validate and replace the normalized sequence data."""
         self._data = tuple(self._data_parse(list(value)))
 
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
@@ -110,24 +112,24 @@ class ListABC(HoldList[Item], CoreABC):
         )
 
 
-def cmp(x: Any, y: Any) -> Any:
+def cmp(left: Any, right: Any) -> Any:
     """Compare two values with PEP 440 style for mixed int/str."""
-    i: int
-    if x is y or x == y:
+    type_order: int
+    if left is right or left == right:
         return 0
     try:
-        if x <= y:
+        if left <= right:
             return -1
         else:
             return 1
     except Exception:
-        i = bool(isinstance(x, int)) - bool(isinstance(y, int))
-        if i == 0:
+        type_order = bool(isinstance(left, int)) - bool(isinstance(right, int))
+        if type_order == 0:
             raise
         else:
-            return i
+            return type_order
 
 
-def cmpkey(x: int | str, /) -> tuple[bool, int | str]:
+def cmpkey(item: int | str, /) -> tuple[bool, int | str]:
     """Return key for sorting int before str."""
-    return isinstance(x, int), x
+    return isinstance(item, int), item

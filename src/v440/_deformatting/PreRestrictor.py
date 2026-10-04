@@ -22,7 +22,7 @@ class PreRestrictor(NamedTuple):
 
     def _options(self: Self, name: str, /) -> tuple[str, ...]:
         """Return format options for one pre-release phase."""
-        ans: set[str]
+        options: set[str]
         magnitude: int
         magnitudes: abc.Iterable[int]
         pair: QualABCPair | None
@@ -40,23 +40,23 @@ class PreRestrictor(NamedTuple):
         else:
             magnitudes = range(1 - pair.mag)
 
-        ans = set()
+        options = set()
         for magnitude in magnitudes:
             spec = pair.lit + "#" * magnitude
             try:
                 Cfg.fullmatches(pattern, spec)
             except Exception:
                 continue
-            ans.add(spec)
+            options.add(spec)
 
         # With an empty clue, Pre uses its canonical phase spelling and
         # emits the natural decimal number. This reproduces the canonical,
         # non-omitted forms that need at most one digit of zero-padding
         # (``a0``, ``a1``, ``a10``, and analogues).
         if pair.lit == name and pair.mag != 0 and pair.mag <= 1:
-            ans.add("")
+            options.add("")
 
-        return tuple(sorted(ans, key=_spec_sort_key))
+        return tuple(sorted(options, key=_spec_sort_key))
 
     def _valid(
         self: Self,

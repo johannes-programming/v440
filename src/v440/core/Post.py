@@ -15,26 +15,26 @@ from v440.abc.QualABC import QualABC
 
 
 class Post(QualABC[Literal["post"]]):
-    """Represent Post."""
+    """Model a post-release qualifier."""
 
     __slots__ = ()
 
     def _cmp(self: Self, /) -> int:
-        """Handle cmp."""
+        """Return the comparison key for this value."""
         if self.lit:
             return self.num
         else:
             return -1
 
     def _deformat(self: Self, string: str, /) -> PostRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints that reproduce the supplied rendering."""
         return PostRestrictor.by_string(string)
 
     @classmethod
     def _format_parse(
         cls: type[Self], spec: str, /
     ) -> tuple[QualABCPair | None]:
-        """Handle format parse."""
+        """Parse a format specification into normalized rendering fields."""
         lit: str
         matches: dict[str, str]
         pair: QualABCPair
@@ -49,7 +49,7 @@ class Post(QualABC[Literal["post"]]):
         return (pair,)
 
     def _format_parsed(self: Self, pair: QualABCPair | None, /) -> str:
-        """Handle format parsed."""
+        """Render this value from normalized format fields."""
         if not self:
             return ""
         if pair is None:
@@ -60,7 +60,7 @@ class Post(QualABC[Literal["post"]]):
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> Literal["post"]:
-        """Handle lit parse."""
+        """Normalize a qualifier literal to its canonical spelling."""
         if value in ("-", "post", "r", "rev"):
             return "post"
         else:
@@ -68,13 +68,13 @@ class Post(QualABC[Literal["post"]]):
 
     @property
     def packaging(self: Self, /) -> int | None:
-        """Perform packaging."""
+        """Return the packaging-compatible representation of this value."""
         return self.num if self else None
 
     @packaging.setter
     @setter
     def packaging(self: Self, value: SupportsIndex | None, /) -> None:
-        """Perform packaging."""
+        """Update this value from its packaging-compatible representation."""
         if value is None:
             self.num = 0
             self.lit = ""

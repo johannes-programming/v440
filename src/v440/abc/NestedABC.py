@@ -1,5 +1,7 @@
 """Provide the NestedABC abstract base for v440 nested classes."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["NestedABC"]
 
 from abc import abstractmethod
@@ -13,18 +15,18 @@ from v440.abc.CoreABC import CoreABC
 
 
 class NestedABC(cmp3.CmpABC, CoreABC):
-    """Represent NestedABC."""
+    """Provide comparison and representation behavior for nested version components."""
 
     __slots__ = ()
 
     @setdoc.basic
     def __bool__(self: Self, /) -> bool:
-        """Handle bool."""
+        """Return whether this instance contains a meaningful value."""
         return any(map(bool, self._todict().values()))
 
     @setdoc.basic
     def __cmp__(self: Self, other: Any, /) -> None | float | int:
-        """Handle cmp."""
+        """Compare this instance with another instance of the same concrete type."""
         if type(self) is not type(other):
             return None
         return cast(
@@ -33,7 +35,7 @@ class NestedABC(cmp3.CmpABC, CoreABC):
 
     @setdoc.basic
     def __repr__(self: Self, /) -> str:
-        """Handle repr."""
+        """Return a reconstructive representation of this value."""
         return datarepr(type(self).__name__, **self._todict())
 
     @abstractmethod
@@ -44,14 +46,14 @@ class NestedABC(cmp3.CmpABC, CoreABC):
     def _init_factories(cls: type[Self], /) -> dict[str, Any]: ...
 
     def _init_other(self: Self, other: Self | None, /) -> None:
-        """Handle init other."""
-        x: str
-        y: Any
-        for x, y in self._init_factories().items():
+        """Initialize internal fields from a source value or their defaults."""
+        field_name: str
+        factory: Any
+        for field_name, factory in self._init_factories().items():
             if other is None:
-                setattr(self, x, y())
+                setattr(self, field_name, factory())
             else:
-                setattr(self, x, y(getattr(other, x)))
+                setattr(self, field_name, factory(getattr(other, field_name)))
 
     @abstractmethod
     def _todict(self: Self, /) -> dict[str, Any]: ...

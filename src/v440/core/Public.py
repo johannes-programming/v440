@@ -42,21 +42,21 @@ class Public(NestedABC):
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         """Parse a format specification into normalized rendering fields."""
-        i: int
-        i = int(spec.lower().startswith("v"))
-        while i < len(spec):
-            if spec[i] in "#!.":
-                i += 1
+        split_index: int
+        split_index = int(spec.lower().startswith("v"))
+        while split_index < len(spec):
+            if spec[split_index] in "#!.":
+                split_index += 1
             else:
                 break
         if (
-            i != 0
-            and spec[i - 1] == "."
-            and i != len(spec)
-            and spec[i] not in "-_"
+            split_index != 0
+            and spec[split_index - 1] == "."
+            and split_index != len(spec)
+            and spec[split_index] not in "-_"
         ):
-            i -= 1
-        return spec[:i], spec[i:]
+            split_index -= 1
+        return spec[:split_index], spec[split_index:]
 
     def _format_parsed(self: Self, base_f: str, qual_f: str, /) -> str:
         """Render this value from normalized format fields."""
@@ -96,19 +96,21 @@ class Public(NestedABC):
     @qual.setter
     @setter
     def qual(self: Self, value: object, /) -> None:
-        """Perform qual."""
+        """Update the qualifier component from the supplied value."""
         self.qual.string = value
 
 
 def split_public(value: str, /) -> tuple[str, str]:
-    """Perform split public."""
-    i: int
-    i = int(value.lower().startswith("v"))
-    while i < len(value):
-        if value[i] in (string_.digits + "!."):
-            i += 1
+    """Split a public-version string into base and qualifier portions."""
+    split_index: int
+    # Scan only the epoch/release grammar here. The first non-base character
+    # begins the qualifier and is delegated to Qual for normalization.
+    split_index = int(value.lower().startswith("v"))
+    while split_index < len(value):
+        if value[split_index] in (string_.digits + "!."):
+            split_index += 1
         else:
             break
-    if i and (value[i - 1] == "."):
-        i -= 1
-    return value[:i], value[i:]
+    if split_index and (value[split_index - 1] == "."):
+        split_index -= 1
+    return value[:split_index], value[split_index:]

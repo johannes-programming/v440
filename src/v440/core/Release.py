@@ -14,21 +14,23 @@ from v440.abc.ListABC import ListABC
 
 
 class Release(ListABC[int]):
-    """Represent Release."""
+    """Model normalized release-number components."""
 
     __slots__ = ()
 
     @classmethod
     def _data_parse(cls: type[Self], value: list[Any], /) -> list[int]:
-        """Handle data parse."""
-        v: list[int]
-        v = list(map(item_parse, value))
-        while v and v[-1] == 0:
-            v.pop()
-        return v
+        """Normalize release components and discard insignificant trailing zeros."""
+        components: list[int]
+        components = list(map(item_parse, value))
+        # PEP 440 compares trailing release zeros as insignificant, so store the
+        # shortest equivalent sequence and synthesize zeros only when requested.
+        while components and components[-1] == 0:
+            components.pop()
+        return components
 
     def _deformat(self: Self, body: str, /) -> ReleaseRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints that reproduce the supplied rendering."""
         return ReleaseRestrictor.by_string(body)
 
     def _delitem(
@@ -38,7 +40,7 @@ class Release(ListABC[int]):
         *,
         minlen: Any = None,
     ) -> None:
-        """Handle delitem."""
+        """Delete sequence items while honoring the requested minimum length."""
         data: list[int]
         data = self._list(minlen=minlen)
         del data[key]
@@ -46,19 +48,19 @@ class Release(ListABC[int]):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        """Handle format parse."""
+        """Parse a format specification into normalized rendering fields."""
         if spec.strip("#."):
             raise ValueError
         return tuple(map(len, spec.rstrip(".").split(".")))
 
-    def _format_parsed(self: Self, /, *mags: Any) -> str:
-        """Handle format parsed."""
+    def _format_parsed(self: Self, /, *magnitudes: Any) -> str:
+        """Render this value from normalized format fields."""
         data: list[int]
         parts: list[Any]
         data = list(self)
-        data += [0] * max(0, len(mags) - len(self))
-        parts = [f"0{m}d" for m in mags]
-        parts += [""] * max(0, len(self) - len(mags))
+        data += [0] * max(0, len(magnitudes) - len(self))
+        parts = [f"0{magnitude}d" for magnitude in magnitudes]
+        parts += [""] * max(0, len(self) - len(magnitudes))
         return ".".join(map(format, data, parts))
 
     @overload
@@ -124,19 +126,21 @@ class Release(ListABC[int]):
     ) -> None:
         """Increment one release component and discard less-significant components."""
         data: list[int]
-        a: int
-        i: int
-        a = operator.index(amount)
-        i = operator.index(index)
+        increment: int
+        component_index: int
+        increment = operator.index(amount)
+        component_index = operator.index(index)
         data = list(self)
-        if i == -1:
-            data[-1] += a
-        elif i < len(self):
-            data[i] += a
-            data = data[: i + 1]
+        # Bumping an explicit component drops all less-significant components;
+        # bumping -1 is the exception because it targets the existing tail.
+        if component_index == -1:
+            data[-1] += increment
+        elif component_index < len(self):
+            data[component_index] += increment
+            data = data[: component_index + 1]
         else:
-            data.extend((0,) * (i - len(self)))
-            data.append(a)
+            data.extend((0,) * (component_index - len(self)))
+            data.append(increment)
         self.data = data
 
     @property
