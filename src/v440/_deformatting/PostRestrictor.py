@@ -1,16 +1,18 @@
 """Restrict post-release segments while deformatting versions."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["PostRestrictor"]
 from typing import Self
 
-from .QualABCRestrictor import QualABCRestrictor
+from v440._deformatting.QualABCRestrictor import QualABCRestrictor
 
 
 class PostRestrictor(QualABCRestrictor):
-    """Represent PostRestrictor."""
+    """Track formatting constraints for a post-release qualifier."""
 
     def best(self: Self, /) -> str:
-        """Return the best of this state."""
+        """Return the shortest format fragment satisfying these constraints."""
         if self.pair is None:
             return ""
         if self.pair.mag <= 1 and self.pair.mag and self.pair.lit == ".post":
