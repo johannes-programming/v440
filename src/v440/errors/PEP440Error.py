@@ -1,5 +1,9 @@
+"""Raise when a v440 property receives an invalid value."""
+
+from __future__ import annotations
+
 __all__: list[str] = ["PEP440Error"]
-from .VersionError import VersionError
+from v440.errors.VersionError import VersionError
 
 
 class PEP440Error(VersionError):

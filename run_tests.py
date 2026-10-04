@@ -1,5 +1,7 @@
 """Test the package."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["main", "run"]
 
 import sys
@@ -8,10 +10,12 @@ from typing import Never
 
 
 def main() -> Never:
+    """Exit with the test-suite status."""
     sys.exit(not run().wasSuccessful())
 
 
 def run() -> unittest.TextTestResult:
+    """Run the discovered unit tests."""
     loader: unittest.TestLoader
     suite: unittest.TestSuite
     runner: unittest.TextTestRunner

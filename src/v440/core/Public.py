@@ -6,18 +6,17 @@ __all__: list[str] = ["Public"]
 
 
 import string as string_
-from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from v440._deformatting.PublicRestrictor import PublicRestrictor
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Base import Base as Base_
-from v440.core.Base import BaseAccumulation
 from v440.core.Qual import Qual as Qual_
-from v440.core.Qual import QualAccumulation
 
 
 class Public(NestedABC):
+    """Model the public portion of a PEP 440 version."""
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
@@ -27,19 +26,22 @@ class Public(NestedABC):
     __slots__ = ("_base", "_qual")
 
     def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
+        """Return the comparison key for this value."""
         return self.base, self.qual
 
-    def _deformat(self: Self, body: str, /) -> PublicAccumulation:
+    def _deformat(self: Self, body: str, /) -> PublicRestrictor:
+        """Infer formatting constraints that reproduce the supplied rendering."""
         base: str
         qual: str
         base, qual = split_public(body)
-        return PublicAccumulation(
+        return PublicRestrictor(
             base=self.base._deformat(base),
             qual=self.qual._deformat(qual),
         )
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        """Parse a format specification into normalized rendering fields."""
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
@@ -57,16 +59,20 @@ class Public(NestedABC):
         return spec[:i], spec[i:]
 
     def _format_parsed(self: Self, base_f: str, qual_f: str, /) -> str:
+        """Render this value from normalized format fields."""
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
+        """Return factories for the nested fields owned by this class."""
         return dict(_base=Base_, _qual=Qual_)
 
     def _string_fset(self: Self, value: str, /) -> None:
+        """Parse a string into this instance's normalized fields."""
         self.base.string, self.qual.string = split_public(value)
 
     def _todict(self: Self, /) -> dict[str, Any]:
+        """Return this instance's nested fields by public name."""
         return dict(base=self.base, qual=self.qual)
 
     @property
@@ -77,6 +83,7 @@ class Public(NestedABC):
     @base.setter
     @setter
     def base(self: Self, value: object, /) -> None:
+        """Update the public-version base from the supplied value."""
         self.base.string = value
 
     packaging = NestedABC.string
@@ -89,28 +96,12 @@ class Public(NestedABC):
     @qual.setter
     @setter
     def qual(self: Self, value: object, /) -> None:
+        """Perform qual."""
         self.qual.string = value
 
 
-@dataclass(frozen=True, kw_only=True)
-class PublicAccumulation:
-    base: BaseAccumulation
-    qual: QualAccumulation
-
-    def best(self: Self, /) -> str:
-        ans: str
-        ans = self.base.best()
-        ans += self.qual.best()
-        return ans
-
-    def union(self: Self, other: Self, /) -> Self:
-        return type(self)(
-            base=self.base.union(other.base),
-            qual=self.qual.union(other.qual),
-        )
-
-
 def split_public(value: str, /) -> tuple[str, str]:
+    """Perform split public."""
     i: int
     i = int(value.lower().startswith("v"))
     while i < len(value):
