@@ -16,7 +16,7 @@ from v440.core.Qual import Qual as Qual_
 
 
 class Public(NestedABC):
-    """Represent Public."""
+    """Model the public portion of a PEP 440 version."""
 
     Base: Final[type[Base_]] = Base_
     Qual: Final[type[Qual_]] = Qual_
@@ -26,11 +26,11 @@ class Public(NestedABC):
     __slots__ = ("_base", "_qual")
 
     def _cmp(self: Self, /) -> tuple[Base_, Qual_]:
-        """Handle cmp."""
+        """Return the comparison key for this value."""
         return self.base, self.qual
 
     def _deformat(self: Self, body: str, /) -> PublicRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints that reproduce the supplied rendering."""
         base: str
         qual: str
         base, qual = split_public(body)
@@ -41,7 +41,7 @@ class Public(NestedABC):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        """Handle format parse."""
+        """Parse a format specification into normalized rendering fields."""
         i: int
         i = int(spec.lower().startswith("v"))
         while i < len(spec):
@@ -59,20 +59,20 @@ class Public(NestedABC):
         return spec[:i], spec[i:]
 
     def _format_parsed(self: Self, base_f: str, qual_f: str, /) -> str:
-        """Handle format parsed."""
+        """Render this value from normalized format fields."""
         return format(self.base, base_f) + format(self.qual, qual_f)
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
-        """Handle init factories."""
+        """Return factories for the nested fields owned by this class."""
         return dict(_base=Base_, _qual=Qual_)
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
+        """Parse a string into this instance's normalized fields."""
         self.base.string, self.qual.string = split_public(value)
 
     def _todict(self: Self, /) -> dict[str, Any]:
-        """Handle todict."""
+        """Return this instance's nested fields by public name."""
         return dict(base=self.base, qual=self.qual)
 
     @property
@@ -83,7 +83,7 @@ class Public(NestedABC):
     @base.setter
     @setter
     def base(self: Self, value: object, /) -> None:
-        """Perform base."""
+        """Update the public-version base from the supplied value."""
         self.base.string = value
 
     packaging = NestedABC.string
