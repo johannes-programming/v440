@@ -1,5 +1,7 @@
 """Provide the VersionError exception for v440."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["VersionError"]
 
 

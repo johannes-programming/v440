@@ -5,53 +5,60 @@ from __future__ import annotations
 __all__: list[str] = ["Dev"]
 
 import operator
-from dataclasses import dataclass
-from typing import Any, Self, SupportsIndex
+from typing import Literal, Self, SupportsIndex
 
-from v440._deformatting.Clue import Clue
-from v440._deformatting.inactive_specs import inactive_specs
-from v440._deformatting.matching_specs import matching_specs
-from v440._deformatting.token_specs import token_specs
+from v440._deformatting.DevRestrictor import DevRestrictor
+from v440._deformatting.QualABCPair import QualABCPair
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.QualABC import QualABC
 
 
-class Dev(QualABC):
+class Dev(QualABC[Literal["dev"]]):
+    """Represent Dev."""
 
     __slots__ = ()
 
     def _cmp(self: Self, /) -> tuple[int] | tuple[int, int]:
+        """Handle cmp."""
         if self.lit:
             return 0, self.num
         else:
             return (1,)
 
-    def _deformat(self: Self, body: str, /) -> DevAccumulation:
-        return DevAccumulation((body,))
+    def _deformat(self: Self, string: str, /) -> DevRestrictor:
+        """Handle deformat."""
+        return DevRestrictor.by_string(string)
 
     @classmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        clue: Clue
+    def _format_parse(
+        cls: type[Self], spec: str, /
+    ) -> tuple[QualABCPair | None]:
+        """Handle format parse."""
+        pair: QualABCPair
         matches: dict[str, str]
+        if spec == "":
+            return (None,)
         matches = Cfg.fullmatches("dev_f", spec)
-        clue = Clue(
-            head=matches["dev_head_f"],
+        pair = QualABCPair(
+            lit=matches["dev_head_f"],
             mag=len(matches["dev_num_f"]),
         )
-        return (clue,)
+        return (pair,)
 
-    def _format_parsed(self: Self, clue: Clue, /) -> str:
+    def _format_parsed(self: Self, pair: QualABCPair | None, /) -> str:
+        """Handle format parsed."""
         if not self:
             return ""
-        if "" == clue.head:
+        if pair is None:
             return ".dev" + str(self.num)
-        if self.num or clue.mag:
-            return clue.head + format(self.num, f"0{clue.mag}d")
-        return clue.head
+        if self.num or pair.mag:
+            return pair.lit + format(self.num, f"0{pair.mag}d")
+        return pair.lit
 
     @classmethod
-    def _lit_parse(cls: type[Self], value: str, /) -> str:
+    def _lit_parse(cls: type[Self], value: str, /) -> Literal["dev"]:
+        """Handle lit parse."""
         if value == "dev":
             return "dev"
         else:
@@ -59,6 +66,7 @@ class Dev(QualABC):
 
     @property
     def packaging(self: Self, /) -> int | None:
+        """Perform packaging."""
         if self:
             return self.num
         else:
@@ -67,50 +75,10 @@ class Dev(QualABC):
     @packaging.setter
     @setter
     def packaging(self: Self, value: SupportsIndex | None, /) -> None:
+        """Perform packaging."""
         if value is None:
             self.num = 0
             self.lit = ""
         else:
             self.lit = "dev"
             self.num = operator.index(value)
-
-
-@dataclass(frozen=True)
-class DevAccumulation:
-    strings: tuple[str, ...] = ()
-
-    def best(self: Self, /) -> str:
-        objects = tuple(Dev(string=body) for body in self.strings)
-        candidates = DevCandidatePool.by_specs(objects, self.strings, "exact")
-        if not candidates:
-            raise ValueError
-        return candidates[0]
-
-    def union(self: Self, other: Self, /) -> Self:
-        return type(self)(tuple(sorted(set(self.strings + other.strings))))
-
-
-class DevCandidatePool(tuple[str]):
-    @classmethod
-    def by_specs(
-        cls: type[Self],
-        objects: tuple[Dev, ...],
-        strings: tuple[str, ...],
-        relation: str,
-        /,
-    ) -> Self:
-        if not objects:
-            return cls(("",))
-        active = next((i for i, obj in enumerate(objects) if obj), None)
-        specs = (
-            inactive_specs("dev_f")
-            if active is None
-            else token_specs("dev_f", strings[active])
-        )
-        data = matching_specs(
-            objects,
-            strings,
-            specs,
-            relation,  # type: ignore[arg-type]
-        )
-        return cls(data)

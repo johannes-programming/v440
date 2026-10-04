@@ -5,18 +5,18 @@ from __future__ import annotations
 __all__: list[str] = ["Base"]
 
 import operator
-from dataclasses import dataclass
 from typing import Any, Final, Self
 
+from v440._deformatting.BaseRestrictor import BaseRestrictor
 from v440._deformatting.Mag import Mag
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC
 from v440.core.Release import Release as Release_
-from v440.core.Release import ReleaseAccumulation
 
 
 class Base(NestedABC):
+    """Represent Base."""
 
     Release: Final[type[Release_]] = Release_
     _epoch: int
@@ -25,14 +25,16 @@ class Base(NestedABC):
     __slots__ = ("_epoch", "_release")
 
     def _cmp(self: Self, /) -> tuple[int, Release_]:
+        """Handle cmp."""
         return self.epoch, self.release
 
-    def _deformat(self: Self, string: str, /) -> BaseAccumulation:
+    def _deformat(self: Self, string: str, /) -> BaseRestrictor:
+        """Handle deformat."""
         epoch: str
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", string)
         epoch = matches["epoch"]
-        return BaseAccumulation(
+        return BaseRestrictor(
             basev=matches["basev"],
             epoch=Mag(len(epoch) if epoch.startswith("0") else -len(epoch)),
             release=self.release._deformat(matches["release"]),
@@ -44,6 +46,7 @@ class Base(NestedABC):
         spec: str,
         /,
     ) -> tuple[str, int, str]:
+        """Handle format parse."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         return (
@@ -59,6 +62,7 @@ class Base(NestedABC):
         epoch_mag: int,
         release_f: str,
     ) -> str:
+        """Handle format parsed."""
         ans: str
         ans = basev_f
         if epoch_mag or self.epoch:
@@ -69,9 +73,11 @@ class Base(NestedABC):
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
+        """Handle init factories."""
         return dict(_epoch=int, _release=Release_)
 
     def _string_fset(self: Self, value: str, /) -> None:
+        """Handle string fset."""
         matches: dict[str, str]
         matches = Cfg.fullmatches("base", value)
         if matches["epoch"]:
@@ -81,16 +87,18 @@ class Base(NestedABC):
         self.release.string = matches["release"]
 
     def _todict(self: Self, /) -> dict[str, Any]:
+        """Handle todict."""
         return dict(epoch=self.epoch, release=self.release)
 
     @property
     def epoch(self: Self, /) -> int:
-        "This property represents the epoch."
+        "Represent the epoch."
         return self._epoch
 
     @epoch.setter
     @setter
     def epoch(self: Self, value: Any, /) -> None:
+        """Perform epoch."""
         v: int
         v = operator.index(value)
         if v < 0:
@@ -101,36 +109,11 @@ class Base(NestedABC):
 
     @property
     def release(self: Self, /) -> Release_:
-        "This property represents the release."
+        "Represent the release."
         return self._release
 
     @release.setter
     @setter
     def release(self: Self, value: object, /) -> None:
+        """Perform release."""
         self.release.string = value
-
-
-@dataclass(frozen=True, kw_only=True)
-class BaseAccumulation:
-    basev: str
-    epoch: Mag
-    release: ReleaseAccumulation
-
-    def best(self: Self, /) -> str:
-        ans: str
-        ans = self.basev
-        ans += "#" * self.epoch
-        ans += "!" * (self.epoch > 0)
-        ans += self.release.best()
-        return ans
-
-    def union(self: Self, other: Self, /) -> Self:
-        epoch: Mag
-        if self.basev != other.basev:
-            raise ValueError
-        epoch = self.epoch.union(other.epoch)
-        return type(self)(
-            basev=self.basev,
-            epoch=epoch,
-            release=self.release.union(other.release),
-        )

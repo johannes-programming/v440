@@ -8,25 +8,28 @@ import operator
 import string as string_
 from typing import Any, Self, SupportsIndex, overload
 
+from v440._deformatting.ReleaseRestrictor import ReleaseRestrictor
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
-from .._deformatting.Mag import Mag
-
 
 class Release(ListABC[int]):
+    """Represent Release."""
+
     __slots__ = ()
 
     @classmethod
     def _data_parse(cls: type[Self], value: list[Any], /) -> list[int]:
+        """Handle data parse."""
         v: list[int]
         v = list(map(item_parse, value))
         while v and v[-1] == 0:
             v.pop()
         return v
 
-    def _deformat(self: Self, body: str, /) -> ReleaseAccumulation:
-        return ReleaseAccumulation.by_string(body)
+    def _deformat(self: Self, body: str, /) -> ReleaseRestrictor:
+        """Handle deformat."""
+        return ReleaseRestrictor.by_string(body)
 
     def _delitem(
         self: Self,
@@ -35,6 +38,7 @@ class Release(ListABC[int]):
         *,
         minlen: Any = None,
     ) -> None:
+        """Handle delitem."""
         data: list[int]
         data = self._list(minlen=minlen)
         del data[key]
@@ -42,11 +46,13 @@ class Release(ListABC[int]):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        """Handle format parse."""
         if spec.strip("#."):
             raise ValueError
         return tuple(map(len, spec.rstrip(".").split(".")))
 
     def _format_parsed(self: Self, /, *mags: Any) -> str:
+        """Handle format parsed."""
         data: list[int]
         parts: list[Any]
         data = list(self)
@@ -79,9 +85,11 @@ class Release(ListABC[int]):
         *,
         minlen: SupportsIndex | None = None,
     ) -> int | list[int]:
+        """Return sequence items while honoring the requested minimum length."""
         return self._list(minlen=minlen)[key]
 
     def _list(self: Self, /, minlen: SupportsIndex | None = None) -> list[int]:
+        """Return release components padded to the requested minimum length."""
         data: list[Any]
         index: Any
         data = list(self)
@@ -94,6 +102,7 @@ class Release(ListABC[int]):
     def _setitem(
         self: Self, /, key: Any, value: Any, *, minlen: Any = None
     ) -> None:
+        """Assign sequence items while honoring the requested minimum length."""
         data: list[int]
         data = self._list(minlen=minlen)
         data[key] = value
@@ -101,9 +110,11 @@ class Release(ListABC[int]):
 
     @classmethod
     def _sort(cls: type[Self], value: int, /) -> tuple[bool, int]:
+        """Return the comparison key for one normalized sequence item."""
         return True, value
 
     def _string_fset(self: Self, value: str, /) -> None:
+        """Parse a string into this instance's normalized fields."""
         if value.strip(string_.digits + "."):
             raise ValueError
         self.data = map(int, value.split("."))
@@ -111,6 +122,7 @@ class Release(ListABC[int]):
     def bump(
         self: Self, /, index: SupportsIndex = -1, amount: SupportsIndex = 1
     ) -> None:
+        """Increment one release component and discard less-significant components."""
         data: list[int]
         a: int
         i: int
@@ -129,44 +141,50 @@ class Release(ListABC[int]):
 
     @property
     def major(self: Self, /) -> int:
-        "This property represents the version major."
+        """Return the major release component."""
         return self._getitem(key=0, minlen=1)
 
     @major.setter
     @setter
     def major(self: Self, value: Any, /) -> None:
+        """Set the major release component."""
         self._setitem(key=0, value=value, minlen=1)
 
     @major.deleter
     def major(self: Self, /) -> None:
+        """Delete the major release component."""
         self._delitem(key=0, minlen=1)
 
     @property
     def minor(self: Self, /) -> int:
-        "This property represents the version minor."
+        """Return the minor release component."""
         return self._getitem(key=1, minlen=2)
 
     @minor.setter
     @setter
     def minor(self: Self, value: Any, /) -> None:
+        """Set the minor release component."""
         self._setitem(key=1, value=value, minlen=2)
 
     @minor.deleter
     def minor(self: Self, /) -> None:
+        """Delete the minor release component."""
         self._delitem(key=1, minlen=2)
 
     @property
     def micro(self: Self, /) -> int:
-        "This property represents the version micro."
+        """Return the micro release component."""
         return self._getitem(key=2, minlen=3)
 
     @micro.setter
     @setter
     def micro(self: Self, value: Any, /) -> None:
+        """Set the micro release component."""
         self._setitem(key=2, value=value, minlen=3)
 
     @micro.deleter
     def micro(self: Self, /) -> None:
+        """Delete the micro release component."""
         self._delitem(key=2, minlen=3)
 
     packaging = ListABC.data
@@ -177,37 +195,8 @@ class Release(ListABC[int]):
         self.data = sorted(self, key=key, reverse=reverse)
 
 
-class ReleaseAccumulation(tuple[Mag, ...]):
-
-    def best(self: Self, /) -> str:
-        ans: str
-        ans = ".".join("#" * mag for mag in self).rstrip(".")
-        return ans
-
-    @classmethod
-    def by_string(cls: type[Self], body: str, /) -> Self:
-        mags: list[Mag]
-        mags = list()
-        for part in body.split("."):
-            if part == "0" or not part.startswith("0"):
-                mags.append(Mag(-len(part)))
-            else:
-                mags.append(Mag(len(part)))
-        if body.endswith(".0"):
-            mags[-1] = Mag(1)
-        return cls(tuple(mags))
-
-    def union(self: Self, other: Self, /) -> Self:
-        mags: list[Mag]
-        mags = list()
-        for x, y in zip(self, other):
-            mags.append(x.union(y))
-        for x in self[len(mags) :] or other[len(mags) :]:
-            Mag(0).union(x)
-        return type(self)(tuple(mags))
-
-
 def item_parse(value: SupportsIndex, /) -> int:
+    """Convert one release component to a nonnegative integer."""
     ans: int
     ans = operator.index(value)
     if ans < 0:
