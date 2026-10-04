@@ -33,8 +33,7 @@ from typing import Any, Self, cast
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
 
-from v440 import MiniLangError, VersionError, core
-from v440.core.Version import Version
+from v440 import MiniLangError, Version, VersionError
 
 
 class Util(enum.Enum):
@@ -439,7 +438,7 @@ class TestTotalAttrSetter(unittest.TestCase):
         cls: type
         x: str
         y: dict[Any, Any]
-        cls = getattr(getattr(core, clsname), clsname)
+        cls = Util.import_(f"v440.core.{clsname}.{clsname}")
         for x, y in legacy_table.items():
             with self.subTest(legacy_name=x):
                 self.go_task(cls, **y)
@@ -511,7 +510,7 @@ class TestTotalMethod(unittest.TestCase):
         cls: type
         x: str
         y: dict[Any, Any]
-        cls = getattr(getattr(core, clsname), clsname)
+        cls = Util.import_(f"v440.core.{clsname}.{clsname}")
         for x, y in legacy_table.items():
             with self.subTest(legacy_name=x):
                 self.go_task(cls, **y)
@@ -561,7 +560,7 @@ class TestFunction(unittest.TestCase):
         cls: type
         x: str
         y: dict[Any, Any]
-        cls = getattr(getattr(core, clsname), clsname)
+        cls = Util.import_(f"v440.core.{clsname}.{clsname}")
         for x, y in legacy_table.items():
             with self.subTest(legacy_name=x):
                 self.go_task(cls, **y)
