@@ -1,4 +1,5 @@
 """Exercise v440 against recorded version examples."""
+from __future__ import annotations
 
 __all__: list[str] = [
     "TestDeformatting",
@@ -38,13 +39,13 @@ from v440.errors.VersionError import VersionError
 
 
 class Util(enum.Enum):
-    """Represent Util."""
+    """Load and expose shared test-data fixtures."""
 
     util = None
 
     @functools.cached_property
     def data(self: Self, /) -> dict[str, Any]:
-        """Perform data."""
+        """Load and return the shared TOML test data."""
         file: Path
         stream: io.BufferedReader
         file = Path(__file__).parent / "testdata.toml"
@@ -53,12 +54,12 @@ class Util(enum.Enum):
 
     @functools.cached_property
     def examples(self: Self, /) -> dict[str, Any]:
-        """Perform examples."""
+        """Return the recorded example cases from the shared test data."""
         return cast(dict[str, Any], Util.util.data.get("examples", {}))
 
     @classmethod
     def import_(cls: type[Self], qualname: str, /) -> Any:
-        """Perform import."""
+        """Import the object named by a fully qualified test-data reference."""
         module: types.ModuleType
         name: str
         names: list[str]
@@ -69,7 +70,7 @@ class Util(enum.Enum):
 
 
 class TestDeformatting(unittest.TestCase):
-    """Exercise TestDeformatting."""
+    """Verify deformatting behavior."""
 
     def go_blob(
         self: Self,
@@ -79,7 +80,7 @@ class TestDeformatting(unittest.TestCase):
         exceptiontype: str,
         **kwargs: Any,
     ) -> None:
-        """Perform go blob."""
+        """Run the blob checks for one test-data case."""
         self.assertNotEqual(len(kwargs["strings"]), 1)
         if exceptiontype:
             self.go_blob_invalid(cls, **kwargs, exceptiontype=exceptiontype)
@@ -95,7 +96,7 @@ class TestDeformatting(unittest.TestCase):
         strings: list[str],
         **kwargs: Any,
     ) -> None:
-        """Perform go blob invalid."""
+        """Run the blob invalid checks for one test-data case."""
         with self.assertRaises(Util.import_(exceptiontype)):
             cls.deformat(*strings)
 
@@ -108,10 +109,11 @@ class TestDeformatting(unittest.TestCase):
         strings: list[str],
         **kwargs: Any,
     ) -> None:
-        """Perform go blob valid."""
+        """Run the blob valid checks for one test-data case."""
+        rendering: str
         self.assertEqual(cls.deformat(*strings), solution)
-        for x in strings:
-            self.assertEqual(format(cls(string=x), solution), x)
+        for rendering in strings:
+            self.assertEqual(format(cls(string=rendering), solution), rendering)
 
     def go_cls(
         self: Self,
