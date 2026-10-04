@@ -23,7 +23,6 @@ import functools
 import importlib
 import io
 import operator
-import shlex
 import tomllib
 import types
 import unittest
@@ -34,9 +33,8 @@ from typing import Any, Self, cast
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
 
-from v440 import core
+from v440 import MiniLangError, VersionError, core
 from v440.core.Version import Version
-from v440.errors.VersionError import VersionError
 
 
 class Util(enum.Enum):
@@ -292,6 +290,7 @@ class TestStringExamples0(unittest.TestCase):
         self.go_valid_example_repr(*args, **kwargs)
         self.go_valid_example_str(*args, **kwargs)
         self.go_valid_example_synonym(*args, **kwargs)
+        self.go_valid_example_unformattable(*args, **kwargs)
 
     def go_valid_example_deformatted(
         self: Self,
@@ -402,6 +401,21 @@ class TestStringExamples0(unittest.TestCase):
         y = format(obj, syn)
         with self.subTest(msg="synonym", empty=x, synonym=y):
             self.assertEqual(x, y)
+
+    def go_valid_example_unformattable(
+        self: Self,
+        cls: type[Any],
+        example: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        obj = cls(string=example)
+        for spec in Util.util.data["unformattable"][cls.__name__]:
+            with (
+                self.subTest(unformattable=spec),
+                self.assertRaises(MiniLangError),
+            ):
+                format(obj, spec)
 
     def test_0(self: Self, /) -> None:
         """Exercise test 0."""
