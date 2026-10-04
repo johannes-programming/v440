@@ -52,7 +52,7 @@ then the given value is passed to its ``string`` property.
 """"""""""""""""""""""
 
 This magic method implements ``bool(self)``.
-It is always defined as equivalent to ``self != type(self)()``.
+It is always defined as equal to ``self != type(self)()``.
 
 ``__format__(format_spec: object, /) -> str``
 """""""""""""""""""""""""""""""""""""""""""""
@@ -152,13 +152,13 @@ This abstract base class inherits from ``datahold.HoldList[Item]`` and from ``Co
 
 This abstract base class inherits from ``CoreABC``.
 
-``class v440.abc.QualABC.QualABC(other: Self | None = None, /, **kwargs: Any)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``class v440.abc.QualABC.QualABC[Lit: str](other: Self | None = None, /, **kwargs: Any)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This abstract base class inherits from ``NestedABC``.
 
-``lit: str``
-""""""""""""
+``lit: Literal[""] | Lit``
+""""""""""""""""""""""""""
 
 ``num: int``
 """"""""""""
@@ -190,7 +190,7 @@ This ``property`` represents the epoch.
 ``packaging: str``
 """"""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version.base_version`` value.
+This ``property`` is the counterpiece to ``packaging.version.Version.base_version``.
 
 It is defined as an alias of ``string``.
 
@@ -203,10 +203,10 @@ See ``v440.core.Release.Release``.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the developmental release information.
-It inherits from ``QualABC``.
+It inherits from ``QualABC[Literal["dev"]]``.
 
-``lit: str``
-""""""""""""
+``lit: Literal["", "dev"]``
+"""""""""""""""""""""""""""
 
 This ``property`` represents the literal part of the information.
 It can take the values ``""`` (with the numeral ``0``) and ``"dev"`` (with any non-negative numeral).
@@ -220,7 +220,7 @@ It can only take non-negative values and is restricted to ``0`` if ``lit`` is ``
 ``packaging: int | None``
 """""""""""""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version.dev`` value.
+This ``property`` is the counterpiece to ``packaging.version.Version.dev``.
 
 ``class v440.core.Local.Local(other: Iterable[int | str] | None = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -231,15 +231,15 @@ It inherits from ``v440.abc.ListABC.ListABC[int | str]``.
 ``packaging: str | None``
 """""""""""""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version.local`` value.
+This ``property`` is the counterpiece to ``packaging.version.Version.local``.
 
 ``class v440.core.Post.Post(other: Self | None = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the post-release information.
 
-``lit: str``
-""""""""""""
+``lit: Literal["", "post"]``
+""""""""""""""""""""""""""""
 
 This ``property`` represents the literal part of the information. It can take the values ``""`` (with the numeral ``0``) and ``"post"`` (with any non-negative numeral).
 
@@ -251,16 +251,16 @@ This ``property`` represents the numeral part of the information. It can only ta
 ``packaging: int | None``
 """""""""""""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version.post`` value.
+This ``property`` is the counterpiece to ``packaging.version.Version.post``.
 
 ``class v440.core.Pre.Pre(other: Self | None = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This ``class`` represents the pre-release information.
-It inherits from ``v440.abc.QualABC.QualABC``.
+It inherits from ``v440.abc.QualABC.QualABC[Literal["a", "b", "rc"]]``.
 
-``lit: str``
-""""""""""""
+``lit: Literal["", "a", "b", "rc"]``
+""""""""""""""""""""""""""""""""""""
 
 This ``property`` represents the literal part of the information.
 It can take the values ``""``, ``"a"``, ``"b"``, and ``"rc"``. The value ``""`` demands the numeral ``0``. It signifies that we are not dealing with a pre-release. All other values tolerate any non-negative numeral. Each of them represents another phase of the pre-release process: alpha-releases, beta-releases, and previews.
@@ -274,7 +274,7 @@ It can only take non-negative values and is restricted to ``0`` if ``lit`` is ``
 ``packaging: tuple[str, int] | None``
 """""""""""""""""""""""""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version.pre`` value.
+This ``property`` is the counterpiece to ``packaging.version.Version.pre``.
 
 ``class v440.core.Public.Public(other: Self | None = None, /, **kwargs: Any)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -295,7 +295,7 @@ See ``v440.core.Base.Base``.
 ``packaging: str``
 """"""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version.public`` value.
+This ``property`` is the counterpiece to ``packaging.version.Version.public``.
 
 It is defined as an alias of ``Public.string``.
 
@@ -374,7 +374,7 @@ This class inherits from ``v440.abc.ListABC.ListABC[int]``.
 ``packaging: tuple[int, ...]``
 """"""""""""""""""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version.release`` value.
+This ``property`` is the counterpiece to ``packaging.version.Version.release``.
 It is an alias for ``data``.
 
 ``patch: int``
@@ -400,7 +400,7 @@ See ``v440.core.Local.Local``.
 ``packaging: packaging.version.Version``
 """"""""""""""""""""""""""""""""""""""""
 
-This ``property`` represents the equivalent ``packaging.version.Version``.
+This ``property`` is the counterpiece to ``packaging.version.Version``.
 
 ``public: Public``
 """"""""""""""""""

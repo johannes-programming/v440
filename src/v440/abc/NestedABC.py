@@ -13,14 +13,18 @@ from v440.abc.CoreABC import CoreABC
 
 
 class NestedABC(cmp3.CmpABC, CoreABC):
+    """Represent NestedABC."""
+
     __slots__ = ()
 
     @setdoc.basic
     def __bool__(self: Self, /) -> bool:
+        """Handle bool."""
         return any(map(bool, self._todict().values()))
 
     @setdoc.basic
     def __cmp__(self: Self, other: Any, /) -> None | float | int:
+        """Handle cmp."""
         if type(self) is not type(other):
             return None
         return cast(
@@ -29,6 +33,7 @@ class NestedABC(cmp3.CmpABC, CoreABC):
 
     @setdoc.basic
     def __repr__(self: Self, /) -> str:
+        """Handle repr."""
         return datarepr(type(self).__name__, **self._todict())
 
     @abstractmethod
@@ -39,6 +44,7 @@ class NestedABC(cmp3.CmpABC, CoreABC):
     def _init_factories(cls: type[Self], /) -> dict[str, Any]: ...
 
     def _init_other(self: Self, other: Self | None, /) -> None:
+        """Handle init other."""
         x: str
         y: Any
         for x, y in self._init_factories().items():
