@@ -1,3 +1,5 @@
 """Provide error classes for v440."""
 
+from __future__ import annotations
+
 __all__: list[str] = []

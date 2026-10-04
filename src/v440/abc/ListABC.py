@@ -17,17 +17,20 @@ Item = TypeVar("Item", bound=int | str)
 
 
 class ListABC(HoldList[Item], CoreABC):
+    """Represent ListABC."""
 
     __slots__ = ()
 
     @setdoc.basic
     def __bool__(self: Self, /) -> bool:
+        """Handle bool."""
         return bool(self.data)
 
     __eq__ = BaseDataObject.__eq__
 
     @setdoc.basic
     def __ge__(self: Self, other: object, /) -> Any:
+        """Handle ge."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -36,6 +39,7 @@ class ListABC(HoldList[Item], CoreABC):
 
     @setdoc.basic
     def __gt__(self: Self, other: object, /) -> Any:
+        """Handle gt."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -49,11 +53,13 @@ class ListABC(HoldList[Item], CoreABC):
         /,
         **kwargs: Any,
     ) -> None:
+        """Handle init."""
         self._init_other(other)
         self._init_kwargs(**kwargs)
 
     @setdoc.basic
     def __le__(self: Self, other: object, /) -> Any:
+        """Handle le."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -62,6 +68,7 @@ class ListABC(HoldList[Item], CoreABC):
 
     @setdoc.basic
     def __lt__(self: Self, other: object, /) -> Any:
+        """Handle lt."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -77,6 +84,7 @@ class ListABC(HoldList[Item], CoreABC):
     ) -> abc.Iterable[Item]: ...
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
+        """Handle init other."""
         self._data = ()
         if other is not None:
             self.data = other
@@ -84,11 +92,13 @@ class ListABC(HoldList[Item], CoreABC):
     @property
     @setdoc.basic
     def data(self: Self, /) -> tuple[Item, ...]:
+        """Handle data."""
         return self._data
 
     @data.setter
     @setter
     def data(self: Self, value: abc.Iterable[Any], /) -> None:
+        """Handle data."""
         self._data = tuple(self._data_parse(list(value)))
 
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
