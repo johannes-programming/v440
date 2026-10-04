@@ -85,11 +85,11 @@ class Release(ListABC[int]):
         *,
         minlen: SupportsIndex | None = None,
     ) -> int | list[int]:
-        """Handle getitem."""
+        """Return sequence items while honoring the requested minimum length."""
         return self._list(minlen=minlen)[key]
 
     def _list(self: Self, /, minlen: SupportsIndex | None = None) -> list[int]:
-        """Handle list."""
+        """Return release components padded to the requested minimum length."""
         data: list[Any]
         index: Any
         data = list(self)
@@ -102,7 +102,7 @@ class Release(ListABC[int]):
     def _setitem(
         self: Self, /, key: Any, value: Any, *, minlen: Any = None
     ) -> None:
-        """Handle setitem."""
+        """Assign sequence items while honoring the requested minimum length."""
         data: list[int]
         data = self._list(minlen=minlen)
         data[key] = value
@@ -110,11 +110,11 @@ class Release(ListABC[int]):
 
     @classmethod
     def _sort(cls: type[Self], value: int, /) -> tuple[bool, int]:
-        """Handle sort."""
+        """Return the comparison key for one normalized sequence item."""
         return True, value
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
+        """Parse a string into this instance's normalized fields."""
         if value.strip(string_.digits + "."):
             raise ValueError
         self.data = map(int, value.split("."))
@@ -122,7 +122,7 @@ class Release(ListABC[int]):
     def bump(
         self: Self, /, index: SupportsIndex = -1, amount: SupportsIndex = 1
     ) -> None:
-        """Handle bump."""
+        """Increment one release component and discard less-significant components."""
         data: list[int]
         a: int
         i: int
@@ -141,50 +141,50 @@ class Release(ListABC[int]):
 
     @property
     def major(self: Self, /) -> int:
-        "Represent the major release component."
+        """Return the major release component."""
         return self._getitem(key=0, minlen=1)
 
     @major.setter
     @setter
     def major(self: Self, value: Any, /) -> None:
-        """Handle major."""
+        """Set the major release component."""
         self._setitem(key=0, value=value, minlen=1)
 
     @major.deleter
     def major(self: Self, /) -> None:
-        """Handle major."""
+        """Delete the major release component."""
         self._delitem(key=0, minlen=1)
 
     @property
     def minor(self: Self, /) -> int:
-        "Represent the minor release component."
+        """Return the minor release component."""
         return self._getitem(key=1, minlen=2)
 
     @minor.setter
     @setter
     def minor(self: Self, value: Any, /) -> None:
-        """Handle minor."""
+        """Set the minor release component."""
         self._setitem(key=1, value=value, minlen=2)
 
     @minor.deleter
     def minor(self: Self, /) -> None:
-        """Handle minor."""
+        """Delete the minor release component."""
         self._delitem(key=1, minlen=2)
 
     @property
     def micro(self: Self, /) -> int:
-        "Represent the micro release component."
+        """Return the micro release component."""
         return self._getitem(key=2, minlen=3)
 
     @micro.setter
     @setter
     def micro(self: Self, value: Any, /) -> None:
-        """Handle micro."""
+        """Set the micro release component."""
         self._setitem(key=2, value=value, minlen=3)
 
     @micro.deleter
     def micro(self: Self, /) -> None:
-        """Handle micro."""
+        """Delete the micro release component."""
         self._delitem(key=2, minlen=3)
 
     packaging = ListABC.data
@@ -196,7 +196,7 @@ class Release(ListABC[int]):
 
 
 def item_parse(value: SupportsIndex, /) -> int:
-    """Handle item parse."""
+    """Convert one release component to a nonnegative integer."""
     ans: int
     ans = operator.index(value)
     if ans < 0:
