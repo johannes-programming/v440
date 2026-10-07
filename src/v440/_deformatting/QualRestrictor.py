@@ -4,7 +4,6 @@ from __future__ import annotations
 
 __all__: list[str] = ["QualRestrictor"]
 
-import re
 from collections import abc
 from dataclasses import dataclass
 from typing import ClassVar, NamedTuple, Self
@@ -31,28 +30,22 @@ class QualInfo:
     num_row: QualRow
     lit_rows: frozenset[QualRow]
 
-    # This is the qualifier-only tail of the permissive PEP 440 reference
-    # pattern.  Keeping the same alternative order and greedy optionals is
-    # important: it defines which numeric interpretation wins for strings
-    # that the grammar can otherwise segment in more than one way.
-    _QUAL_RE: ClassVar[re.Pattern[str]] = re.compile(
-        Cfg.cfg.data["qual-restrictor"]["re"],
-        re.ASCII | re.IGNORECASE | re.VERBOSE,
-    )
-
     @classmethod
     def by_string(cls: type[Self], text: str, /) -> Self:
         """Parse text as a PEP 440 qual, preserving literal splits."""
         lit_rows: set[QualRow]
-        match: re.Match[str] | None
+        matches: dict[str, str]
         num_row: QualRow
-        # num_row follows the PEP 440 reference regular expression.
+        # num_row follows the configured PEP 440 qualifier pattern.
         # lit_rows holds every grammar-valid literal split of that numeric row.
-        match = cls._QUAL_RE.fullmatch(text)
-        if match is None:
-            raise ValueError(f"not a PEP 440-conforming qual: {text!r}")
+        try:
+            matches = Cfg.fullmatches("qual", text)
+        except AttributeError as exc:
+            raise ValueError(
+                f"not a PEP 440-conforming qual: {text!r}"
+            ) from exc
 
-        num_row = cls._num_row_from_match(match)
+        num_row = cls._num_row_from_matches(matches)
         lit_rows = cls._all_literal_rows(text, num_row)
 
         # A successful reference parse must itself correspond to at least one
@@ -63,17 +56,18 @@ class QualInfo:
         return cls(num_row=num_row, lit_rows=frozenset(lit_rows))
 
     @classmethod
-    def _num_row_from_match(cls: type[Self], match: re.Match[str]) -> QualRow:
-        """Build the numeric row from a reference match."""
+    def _num_row_from_matches(
+        cls: type[Self], matches: dict[str, str]
+    ) -> QualRow:
+        """Build the numeric row from configured qualifier matches."""
         index: int
-        post_n1: str | None
-        post_n2: str | None
-        pre_l: str | None
+        post_num: str
+        pre_l: str
         values: list[str]
         values = [Cfg.cfg.data["qual-restrictor"]["absent"]] * 5
 
-        pre_l = match.group("pre_l")
-        if pre_l is not None:
+        pre_l = matches["pre_lit"]
+        if pre_l:
             pre_l = pre_l.lower()
             if pre_l in {"alpha", "a"}:
                 index = 0
@@ -81,15 +75,16 @@ class QualInfo:
                 index = 1
             else:
                 index = 2
-            values[index] = match.group("pre_n") or ""
+            values[index] = matches["pre_num"]
 
-        if match.group("post") is not None:
-            post_n1 = match.group("post_n1")
-            post_n2 = match.group("post_n2")
-            values[3] = post_n1 if post_n1 is not None else (post_n2 or "")
+        if matches["post"]:
+            post_num = matches["post_num"]
+            if matches["post_hyphen_num"]:
+                post_num = matches["post_hyphen_num"][1:]
+            values[3] = post_num
 
-        if match.group("dev") is not None:
-            values[4] = match.group("dev_n") or ""
+        if matches["dev"]:
+            values[4] = matches["dev_num"]
 
         return QualRow(*values)
 
@@ -230,28 +225,6 @@ class QualRestrictor:
     mag_row: tuple[int | None, int | None, int | None, int | None, int | None]
     lit_rows: frozenset[QualRow]
 
-    _FORMAT_RE: ClassVar[re.Pattern[str]] = re.compile(
-        r"""
-        \A
-        (?P<a_f>[-_.]?(?:alpha|a)[-_.]?\#*)?
-        (?P<b_f>[-_.]?(?:beta|b)[-_.]?\#*)?
-        (?P<rc_f>[-_.]?(?:preview|pre|c|rc)[-_.]?\#*)?
-        (?P<post_f>
-            (?P<post_lit_f>
-                (?P<post_hyphen_f>-)
-                |
-                (?P<post_head_f>[-_.]?(?:post|rev|r)[-_.]?)
-            )
-            (?P<post_num_f>\#*)
-        )?
-        (?P<dev_f>
-            (?P<dev_head_f>[-_.]?dev[-_.]?)
-            (?P<dev_num_f>\#*)
-        )?
-        \Z
-        """,
-        re.IGNORECASE | re.VERBOSE,
-    )
     _FIELDS: ClassVar[tuple[str, ...]] = QualRow._fields
 
     def best(self: Self, /) -> str:
@@ -333,47 +306,40 @@ class QualRestrictor:
         head: str
         literal: str
         mag: int | None
-        match: re.Match[str] | None
+        matches: dict[str, str]
         parsed: dict[str, tuple[bool, str, int]]
         post_token: str
         present: bool
         token: str
         width: int
         cls = type(self)
-        match = cls._FORMAT_RE.fullmatch(spec)
-        if match is None:
+        try:
+            matches = Cfg.fullmatches("qual_f", spec)
+        except AttributeError:
             return False
 
         parsed = {}
         for field in ("a", "b", "rc"):
-            token = match.group(field + "_f") or ""
+            token = matches[field + "_f"]
             if token:
                 head = token.rstrip("#")
                 parsed[field] = (True, head, len(token) - len(head))
             else:
                 parsed[field] = (False, "", 0)
 
-        post_token = match.group("post_f") or ""
+        post_token = matches["post_f"]
         if post_token:
-            head = (
-                match.group("post_hyphen_f")
-                or match.group("post_head_f")
-                or ""
-            )
-            parsed["post"] = (
-                True,
-                head,
-                len(match.group("post_num_f") or ""),
-            )
+            head = matches["post_hyphen_f"] or matches["post_head"]
+            parsed["post"] = (True, head, len(matches["post_num_f"]))
         else:
             parsed["post"] = (False, "", 0)
 
-        dev_token = match.group("dev_f") or ""
+        dev_token = matches["dev_f"]
         if dev_token:
             parsed["dev"] = (
                 True,
-                match.group("dev_head_f") or "",
-                len(match.group("dev_num_f") or ""),
+                matches["dev_head"],
+                len(matches["dev_num_f"]),
             )
         else:
             parsed["dev"] = (False, "", 0)

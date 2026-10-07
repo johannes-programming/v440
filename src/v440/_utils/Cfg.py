@@ -9,7 +9,7 @@ import string as string_
 import tomllib
 from importlib import resources
 from importlib.resources.abc import Traversable
-from typing import Any, Self, cast
+from typing import Any, Self
 
 
 class Cfg(enum.Enum):
