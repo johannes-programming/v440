@@ -72,7 +72,6 @@ dev_num = "[0-9]*"
 dev = "{dev_prefix}{dev_lit}{dev_suffix}{dev_num}"
 qual = "{pre}?{post}?{dev}?"
 local_splitter = "([-_\\.])"
-head = "[-_\\.]?[A-Z]*[-_\\.]?"
 num = "[0-9]*"
 
 [phases]
