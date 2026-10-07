@@ -50,7 +50,7 @@ class Base(NestedABC):
         matches: dict[str, str]
         matches = Cfg.fullmatches("base_f", spec)
         return (
-            matches["basev_f"],
+            matches["basev"],
             len(matches["epoch_f"]),
             matches["release_f"],
         )
@@ -58,13 +58,13 @@ class Base(NestedABC):
     def _format_parsed(
         self: Self,
         /,
-        basev_f: str,
+        basev: str,
         epoch_mag: int,
         release_f: str,
     ) -> str:
         """Handle format parsed."""
         ans: str
-        ans = basev_f
+        ans = basev
         if epoch_mag or self.epoch:
             ans += format(self.epoch, "0%sd" % epoch_mag)
             ans += "!"

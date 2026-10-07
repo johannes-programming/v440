@@ -33,10 +33,10 @@ dev_f = [
 ]
 
 [patterns]
-basev_f = "V?"
+basev = "V"
 epoch_f = "\\#*"
 release_f = "[\\#\\.]*"
-base_f = "{basev_f}({epoch_f}!)?{release_f}"
+base_f = "{basev}?({epoch_f}!)?{release_f}"
 a_f = "[-_\\.]?(ALPHA|A)[-_\\.]?\\#*"
 b_f = "[-_\\.]?(BETA|B)[-_\\.]?\\#*"
 rc_f = "[-_\\.]?(PREVIEW|PRE|C|RC)[-_\\.]?\\#*"
@@ -50,7 +50,6 @@ dev_head_f = "[-_\\.]?DEV[-_\\.]?"
 dev_num_f = "\\#*"
 dev_f = "({dev_head_f}{dev_num_f})?"
 qual_f = "{pre_f}{post_f}{dev_f}"
-basev = "V"
 epoch = "[0-9]+"
 release = "[0-9]+(\\.[0-9]+)*"
 base = "{basev}?({epoch}!)?{release}"
