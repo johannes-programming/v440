@@ -75,7 +75,6 @@ local_splitter = "([-_\\.])"
 head = "[-_\\.]?[A-Z]*[-_\\.]?"
 num = "[0-9]*"
 clue = "{head}?{num}?"
-head_f = "[-_\\.]?[A-Z]*[-_\\.]?"
 num_f = "\\#*"
 
 [phases]
