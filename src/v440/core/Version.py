@@ -92,7 +92,7 @@ class Version(NestedABC):
 
     @property
     def packaging(self: Self, /) -> packaging.version.Version:
-        "Return an equivalent packaging.version.Version object."
+        """Return an equivalent packaging.version.Version object."""
         return packaging.version.Version(str(self))
 
     @packaging.setter

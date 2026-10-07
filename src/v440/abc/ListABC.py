@@ -1,5 +1,7 @@
 """Provide the ListABC abstract base for list-like v440 classes."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["ListABC"]
 
 from abc import abstractmethod
@@ -17,20 +19,20 @@ Item = TypeVar("Item", bound=int | str)
 
 
 class ListABC(HoldList[Item], CoreABC):
-    """Represent ListABC."""
+    """Define shared sequence behavior for list-like version components."""
 
     __slots__ = ()
 
     @setdoc.basic
     def __bool__(self: Self, /) -> bool:
-        """Handle bool."""
+        """Return whether this sequence contains any normalized components."""
         return bool(self.data)
 
     __eq__ = BaseDataObject.__eq__
 
     @setdoc.basic
     def __ge__(self: Self, other: object, /) -> Any:
-        """Handle ge."""
+        """Compare this sequence with another data object using PEP 440 item ordering."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -39,7 +41,7 @@ class ListABC(HoldList[Item], CoreABC):
 
     @setdoc.basic
     def __gt__(self: Self, other: object, /) -> Any:
-        """Handle gt."""
+        """Compare this sequence with another data object using PEP 440 item ordering."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -53,13 +55,13 @@ class ListABC(HoldList[Item], CoreABC):
         /,
         **kwargs: Any,
     ) -> None:
-        """Handle init."""
+        """Initialize this sequence from an iterable and keyword overrides."""
         self._init_other(other)
         self._init_kwargs(**kwargs)
 
     @setdoc.basic
     def __le__(self: Self, other: object, /) -> Any:
-        """Handle le."""
+        """Compare this sequence with another data object using PEP 440 item ordering."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -68,7 +70,7 @@ class ListABC(HoldList[Item], CoreABC):
 
     @setdoc.basic
     def __lt__(self: Self, other: object, /) -> Any:
-        """Handle lt."""
+        """Compare this sequence with another data object using PEP 440 item ordering."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -84,7 +86,7 @@ class ListABC(HoldList[Item], CoreABC):
     ) -> abc.Iterable[Item]: ...
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
-        """Handle init other."""
+        """Initialize sequence data from an optional iterable."""
         self._data = ()
         if other is not None:
             self.data = other
@@ -92,17 +94,17 @@ class ListABC(HoldList[Item], CoreABC):
     @property
     @setdoc.basic
     def data(self: Self, /) -> tuple[Item, ...]:
-        """Handle data."""
+        """Return the normalized immutable sequence data."""
         return self._data
 
     @data.setter
     @setter
     def data(self: Self, value: abc.Iterable[Any], /) -> None:
-        """Handle data."""
+        """Replace sequence data after normalizing every supplied item."""
         self._data = tuple(self._data_parse(list(value)))
 
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
-        "Sort the data."
+        """Sort the normalized sequence data in place."""
         self.data = sorted(
             self,
             key=cmp_to_key(cmp) if key is None else key,
@@ -112,7 +114,7 @@ class ListABC(HoldList[Item], CoreABC):
 
 def cmp(x: Any, y: Any) -> Any:
     """Compare two values with PEP 440 style for mixed int/str."""
-    i: int
+    type_order: int
     if x is y or x == y:
         return 0
     try:
@@ -121,11 +123,11 @@ def cmp(x: Any, y: Any) -> Any:
         else:
             return 1
     except Exception:
-        i = bool(isinstance(x, int)) - bool(isinstance(y, int))
-        if i == 0:
+        type_order = bool(isinstance(x, int)) - bool(isinstance(y, int))
+        if type_order == 0:
             raise
         else:
-            return i
+            return type_order
 
 
 def cmpkey(x: int | str, /) -> tuple[bool, int | str]:

@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
-__all__: list[str] = ["Version", "VersionError"]
+__all__: list[str] = [
+    "MiniLangError",
+    "PEP440Error",
+    "Version",
+    "VersionError",
+]
 
 from v440.core.Version import Version
 from v440.errors.MiniLangError import MiniLangError
