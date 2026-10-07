@@ -39,7 +39,7 @@ class Post(QualABC[Literal["post"]]):
         matches: dict[str, str]
         pair: QualABCPair
         matches = Cfg.fullmatches("post_f", spec)
-        lit = matches["post_head_f"] or matches["post_hyphen_f"]
+        lit = matches["post_head"] or matches["post_hyphen_f"]
         if not lit:
             return (None,)
         pair = QualABCPair(
