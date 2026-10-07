@@ -1,5 +1,7 @@
 """Wrap property setters so failures restore the instance."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["setter"]
 
 from collections import abc
@@ -18,7 +20,7 @@ def setter(function: Function, /) -> Function:
 
     @wraps(function)
     def decorated(self: Any, value: object, /) -> None:
-        """Perform decorated."""
+        """Apply a property update while restoring the previous value if validation fails."""
         backup: str
         msg: str
         backup = str(self)

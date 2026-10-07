@@ -183,46 +183,46 @@ class TestVersionPreviousExample(unittest.TestCase):
         # ge
         self.assertFalse(v1 >= v2)
         self.assertTrue(v2 >= v1)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v1 >= str(v2)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v1) >= v2
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v2 >= str(v1)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v2) >= v1
         # le
         self.assertFalse(v2 <= v1)
         self.assertTrue(v1 <= v2)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v1 <= str(v2)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v1) <= v2
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v2 <= str(v1)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v2) <= v1
         # gt
         self.assertFalse(v1 > v2)
         self.assertTrue(v2 > v1)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v1 > str(v2)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v1) > v2
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v2 > str(v1)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v2) > v1
         # lt
         self.assertFalse(v2 < v1)
         self.assertTrue(v1 < v2)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v1 < str(v2)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v1) < v2
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             v2 < str(v1)
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             str(v2) < v1
 
     def test_example_5(self: Self, /) -> None:
@@ -232,7 +232,7 @@ class TestVersionPreviousExample(unittest.TestCase):
         self.assertEqual(str(version), "2a1")  # Pre-release version
         version.public.qual.pre.string = "beta.2"
         self.assertEqual(str(version), "2b2")  # Modified pre-release version
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             version.public.qual.pre[1] = 4  # type: ignore[index]
         self.assertEqual(
             str(version), "2b2"
@@ -299,7 +299,7 @@ class TestVersionQualPatch(unittest.TestCase):
         right_qual: Qual
         left_qual = Qual(string="a1")
         right_qual = Qual(string="b2")
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             left_qual += right_qual  # type: ignore[operator]
 
 
@@ -559,7 +559,7 @@ class TestVersionSlicingNoGo(unittest.TestCase):
         """Verify slicing 2 behavior."""
         version: Version
         version = Version(string="1.2.3.4.5.6.7.8.9.10")
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             version.public.base.release[-8:15:5] = 777  # type: ignore[call-overload]
 
     def test_slicing_7(self: Self, /) -> None:

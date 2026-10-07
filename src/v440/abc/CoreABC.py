@@ -1,5 +1,7 @@
 """Provide the CoreABC abstract base for v440 classes."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["CoreABC"]
 
 from abc import abstractmethod
@@ -17,7 +19,7 @@ from v440.errors.VersionError import VersionError
 
 
 class CoreABC(Copyable):
-    """Represent CoreABC."""
+    """Define shared construction, formatting, copying, and string behavior for version components."""
 
     __slots__ = ()
 
@@ -31,7 +33,7 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
-        """Handle format."""
+        """Render this object according to a v440 format specification."""
         parsed: tuple[Any, ...]
         try:
             parsed = self._format_parse(str(format_spec))
@@ -56,7 +58,7 @@ class CoreABC(Copyable):
     def __init__(
         self: Self, other: Self | None = None, /, **kwargs: Any
     ) -> None:
-        """Handle init."""
+        """Initialize this object from another instance, a string value, and keyword overrides."""
         self._init_other(other)
         self._init_kwargs(**kwargs)
 
@@ -74,7 +76,7 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def __str__(self: Self, /) -> str:
-        """Handle str."""
+        """Return the canonical string representation of this object."""
         return format(self, "")
 
     @abstractmethod
@@ -88,11 +90,11 @@ class CoreABC(Copyable):
     def _format_parsed(self: Self, /, *parsed: Any) -> object: ...
 
     def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
-        """Handle init kwargs."""
-        x: str
-        y: Any
-        for x, y in kwargs.items():
-            setattr(self, x.lstrip("_"), y)
+        """Apply constructor keyword overrides to public component attributes."""
+        name: str
+        value: Any
+        for name, value in kwargs.items():
+            setattr(self, name.lstrip("_"), value)
 
     @abstractmethod
     def _init_other(self: Self, other: Self | None, /) -> None: ...
@@ -102,12 +104,12 @@ class CoreABC(Copyable):
 
     @setdoc.basic
     def copy(self: Self, /) -> Self:
-        """Handle copy."""
+        """Return an independent copy of this object."""
         return type(self)(self)
 
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
-        """Handle deformat."""
+        """Infer one format specification that reproduces all supplied renderings."""
         flat: str
         if strings == ():
             return ""
@@ -130,26 +132,26 @@ class CoreABC(Copyable):
 
     @property
     def string(self: Self, /) -> str:
-        "Represent self as a string."
+        """Return the canonical string representation of this object."""
         return format(self, "")
 
     @string.setter
     @setter
     def string(self: Self, value: object, /) -> None:
-        """Handle string."""
+        """Replace this object's state from the supplied string-compatible value."""
         self._string_fset(str(value).lower())
 
 
 def core_split(flat: str, /) -> tuple[str, str, str]:
-    """Handle core split."""
-    x: str
-    y: str
-    z: str
-    y = flat.strip()
-    if y:
-        x, z = flat.split(y)
+    """Split surrounding whitespace from a core version string."""
+    leading: str
+    core: str
+    trailing: str
+    core = flat.strip()
+    if core:
+        leading, trailing = flat.split(core)
     elif flat:
         raise ValueError
     else:
-        x, z = "", ""
-    return x, y, z
+        leading, trailing = "", ""
+    return leading, core, trailing
