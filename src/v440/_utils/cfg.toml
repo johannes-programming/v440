@@ -101,7 +101,6 @@ post-aliases = [
     "rev",
     "r",
 ]
-re = "(?P<pre>\n    [-_.]?\n    (?P<pre_l>alpha|a|beta|b|preview|pre|c|rc)\n    [-_.]?\n    (?P<pre_n>[0-9]+)?\n)?\n(?P<post>\n    (?:-(?P<post_n1>[0-9]+))\n    |\n    (?:\n        [-_.]?\n        (?P<post_l>post|rev|r)\n        [-_.]?\n        (?P<post_n2>[0-9]+)?\n    )\n)?\n(?P<dev>\n    [-_.]?\n    (?P<dev_l>dev)\n    [-_.]?\n    (?P<dev_n>[0-9]+)?\n)?\n"
 sep = [
     "",
     ".",
