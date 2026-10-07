@@ -32,14 +32,14 @@ class LitAccumulation:
     def union(self: Self, other: Self, /) -> Self:
         """Combine these constraints with another compatible observation."""
         ans: list[str]
-        x: str
-        y: str
+        left_symbol: str
+        right_symbol: str
         ans = []
-        for x, y in zip(self.data, other.data):
-            if x == "#":
-                ans.append(y)
-            elif y == "#" or x == y:
-                ans.append(x)
+        for left_symbol, right_symbol in zip(self.data, other.data):
+            if left_symbol == "#":
+                ans.append(right_symbol)
+            elif right_symbol == "#" or left_symbol == right_symbol:
+                ans.append(left_symbol)
             else:
                 raise ValueError
         ans.extend(self.data[len(ans) :] or other.data[len(ans) :])

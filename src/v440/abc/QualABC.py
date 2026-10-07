@@ -1,5 +1,7 @@
 """Provide the QualABC abstract base for qualified v440 classes."""
 
+from __future__ import annotations
+
 __all__: list[str] = ["QualABC"]
 
 import operator
@@ -14,7 +16,7 @@ Lit = TypeVar("Lit", bound=str)
 
 
 class QualABC(NestedABC, Generic[Lit]):
-    """Represent QualABC."""
+    """Define shared literal-and-number behavior for release qualifiers."""
 
     _lit: Lit | Literal[""]
     _num: int
@@ -25,7 +27,7 @@ class QualABC(NestedABC, Generic[Lit]):
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
-        """Handle init factories."""
+        """Return factories for the qualifier literal and number fields."""
         return dict(_lit=str, _num=int)
 
     @classmethod
@@ -33,49 +35,49 @@ class QualABC(NestedABC, Generic[Lit]):
     def _lit_parse(cls: type[Self], value: str, /) -> Lit: ...
 
     def _string_fset(self: Self, value: str, /) -> None:
-        """Handle string fset."""
-        x: str
-        y: str
+        """Parse a qualifier string into its normalized literal and number fields."""
+        literal: str
+        number_text: str
         if value == "":
             self._lit = ""
             self._num = 0
             return
-        x = value.rstrip(string_.digits)
-        y = value[len(x) :]
-        if x == "-":
-            if not y:
+        literal = value.rstrip(string_.digits)
+        number_text = value[len(literal) :]
+        if literal == "-":
+            if not number_text:
                 raise ValueError
             self._lit = self._lit_parse("-")
-            self._num = int(y)
+            self._num = int(number_text)
             return
-        x = x.replace("-", ".")
-        x = x.replace("_", ".")
-        if x.endswith("."):
-            x = x[:-1]
-        if x.startswith("."):
-            x = x[1:]
-        if not x:
+        literal = literal.replace("-", ".")
+        literal = literal.replace("_", ".")
+        if literal.endswith("."):
+            literal = literal[:-1]
+        if literal.startswith("."):
+            literal = literal[1:]
+        if not literal:
             raise ValueError
-        self._lit = self._lit_parse(x)
-        self._num = int("0" + y)
+        self._lit = self._lit_parse(literal)
+        self._num = int("0" + number_text)
 
     def _todict(self: Self, /) -> dict[str, Any]:
-        """Handle todict."""
+        """Return the qualifier literal and number by public name."""
         return dict(lit=self.lit, num=self.num)
 
     @property
     def lit(self: Self, /) -> Lit | Literal[""]:
-        """Handle lit."""
+        """Return the normalized qualifier literal."""
         return self._lit
 
     @lit.setter
     @setter
     def lit(self: Self, value: object, /) -> None:
-        """Handle lit."""
-        x: str
-        x = str(value).lower()
-        if x:
-            self._lit = self._lit_parse(x)
+        """Normalize and assign the qualifier literal."""
+        literal: str
+        literal = str(value).lower()
+        if literal:
+            self._lit = self._lit_parse(literal)
         elif self.num:
             self.string = self.num
         else:
@@ -83,18 +85,18 @@ class QualABC(NestedABC, Generic[Lit]):
 
     @property
     def num(self: Self, /) -> int:
-        """Handle num."""
+        """Return the nonnegative qualifier serial number."""
         return self._num
 
     @num.setter
     @setter
     def num(self: Self, value: SupportsIndex, /) -> None:
-        """Handle num."""
-        y: int
-        y = operator.index(value)
-        if y < 0:
+        """Validate and assign the nonnegative qualifier serial number."""
+        number: int
+        number = operator.index(value)
+        if number < 0:
             raise ValueError
-        if y and not self.lit:
-            self.string = y
+        if number and not self.lit:
+            self.string = number
         else:
-            self._num = y
+            self._num = number

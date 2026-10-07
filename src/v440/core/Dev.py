@@ -15,39 +15,39 @@ from v440.abc.QualABC import QualABC
 
 
 class Dev(QualABC[Literal["dev"]]):
-    """Represent Dev."""
+    """Store a development-release qualifier and its serial number."""
 
     __slots__ = ()
 
     def _cmp(self: Self, /) -> tuple[int] | tuple[int, int]:
-        """Handle cmp."""
+        """Return the comparison key for an active or absent development qualifier."""
         if self.lit:
             return 0, self.num
         else:
             return (1,)
 
     def _deformat(self: Self, string: str, /) -> DevRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints from one development-qualifier rendering."""
         return DevRestrictor.by_string(string)
 
     @classmethod
     def _format_parse(
         cls: type[Self], spec: str, /
     ) -> tuple[QualABCPair | None]:
-        """Handle format parse."""
+        """Parse a development-qualifier format specification into literal and width constraints."""
         pair: QualABCPair
         matches: dict[str, str]
         if spec == "":
             return (None,)
         matches = Cfg.fullmatches("dev_f", spec)
         pair = QualABCPair(
-            lit=matches["dev_head_f"],
+            lit=matches["dev_head"],
             mag=len(matches["dev_num_f"]),
         )
         return (pair,)
 
     def _format_parsed(self: Self, pair: QualABCPair | None, /) -> str:
-        """Handle format parsed."""
+        """Render the development qualifier from parsed literal and width constraints."""
         if not self:
             return ""
         if pair is None:
@@ -58,7 +58,7 @@ class Dev(QualABC[Literal["dev"]]):
 
     @classmethod
     def _lit_parse(cls: type[Self], value: str, /) -> Literal["dev"]:
-        """Handle lit parse."""
+        """Validate and normalize a development-qualifier literal."""
         if value == "dev":
             return "dev"
         else:
@@ -66,7 +66,7 @@ class Dev(QualABC[Literal["dev"]]):
 
     @property
     def packaging(self: Self, /) -> int | None:
-        """Perform packaging."""
+        """Return the development serial in packaging-compatible form."""
         if self:
             return self.num
         else:
@@ -75,7 +75,7 @@ class Dev(QualABC[Literal["dev"]]):
     @packaging.setter
     @setter
     def packaging(self: Self, value: SupportsIndex | None, /) -> None:
-        """Perform packaging."""
+        """Replace the development qualifier from a packaging-compatible serial."""
         if value is None:
             self.num = 0
             self.lit = ""

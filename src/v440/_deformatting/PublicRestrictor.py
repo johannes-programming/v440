@@ -14,20 +14,20 @@ from v440._deformatting.QualRestrictor import QualRestrictor
 
 @dataclass(frozen=True, kw_only=True)
 class PublicRestrictor:
-    """Represent PublicRestrictor."""
+    """Track formatting constraints for a public-version identifier."""
 
     base: BaseRestrictor
     qual: QualRestrictor
 
     def best(self: Self, /) -> str:
-        """Return the best of this state."""
+        """Return the shortest format fragment satisfying these public-version constraints."""
         ans: str
         ans = self.base.best()
         ans += self.qual.best()
         return ans
 
     def union(self: Self, other: Self, /) -> Self:
-        """Unite this state with another."""
+        """Combine these public-version constraints with another compatible observation."""
         return type(self)(
             base=self.base.union(other.base),
             qual=self.qual.union(other.qual),

@@ -13,7 +13,7 @@ from v440._deformatting.PublicRestrictor import PublicRestrictor
 
 @dataclass(frozen=True, kw_only=True)
 class VersionRestrictor:
-    """Represent VersionRestrictor."""
+    """Track formatting constraints for a complete version rendering."""
 
     leading: str
     public: PublicRestrictor
@@ -21,7 +21,7 @@ class VersionRestrictor:
     trailing: str
 
     def best(self: Self, /) -> str:
-        """Return the best of this state."""
+        """Return the shortest complete format specification satisfying these constraints."""
         ans: str
         ans = self.local.best()
         if ans:
@@ -33,7 +33,7 @@ class VersionRestrictor:
             return self.leading + "!" + self.trailing
 
     def union(self: Self, other: Self, /) -> Self:
-        """Unite this state with another."""
+        """Combine these complete-version constraints with another compatible observation."""
         if self.leading != other.leading or self.trailing != other.trailing:
             raise ArithmeticError
         return type(self)(

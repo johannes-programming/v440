@@ -1,4 +1,4 @@
-"""Represent an unconstrained magnitude while deformatting."""
+"""Track an unconstrained magnitude while deformatting."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 class MagJoker(enum.Enum):
-    """Represent an unconstrained numeric field width while deformatting."""
+    """Model the state and behavior associated with MagJoker."""
 
     JOKER = None
 
