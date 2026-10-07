@@ -41,7 +41,7 @@ class Dev(QualABC[Literal["dev"]]):
             return (None,)
         matches = Cfg.fullmatches("dev_f", spec)
         pair = QualABCPair(
-            lit=matches["dev_head_f"],
+            lit=matches["dev_head"],
             mag=len(matches["dev_num_f"]),
         )
         return (pair,)
