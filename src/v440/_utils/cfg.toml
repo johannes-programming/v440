@@ -74,7 +74,6 @@ qual = "{pre}?{post}?{dev}?"
 local_splitter = "([-_\\.])"
 head = "[-_\\.]?[A-Z]*[-_\\.]?"
 num = "[0-9]*"
-clue = "{head}?{num}?"
 
 [phases]
 alpha = "a"
