@@ -121,7 +121,7 @@ class TestDeformatting(unittest.TestCase):
         /,
         **typedict: dict[str, Any],
     ) -> None:
-        """Perform go cls."""
+        """Run deformatting cases for one target class and reject duplicate example sets."""
         example: tuple[str]
         log: dict[tuple[str], str]
         self.assertGreaterEqual(len(typedict), 30)
@@ -138,7 +138,7 @@ class TestDeformatting(unittest.TestCase):
                 self.go_blob(cls, **testdict)
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
+        """Run every configured deformatting case."""
         cls: type[Any]
         typename: str
         typedict: dict[Any, Any]
@@ -149,130 +149,130 @@ class TestDeformatting(unittest.TestCase):
 
 
 class TestStringExamples(unittest.TestCase):
-    """Exercise TestStringExamples."""
+    """Compare recorded Version examples with packaging.version behavior."""
 
     def go_version(
         self: Self, example: str, /, *, valid: bool, **kwargs: Any
     ) -> None:
-        """Perform go version."""
-        s: str
-        x: Version
-        y: Version_
+        """Compare one version example with packaging.version behavior."""
+        base_version: str
+        current: Version
+        reference: Version_
         if not valid:
             with self.assertRaises(InvalidVersion):
                 Version_(example)
             with self.assertRaises(VersionError):
                 Version(string=example)
             return
-        x = Version(string=example)
-        y = Version_(example)
-        self.assertEqual(y, x.packaging)
-        s = y.base_version
-        while s.endswith(".0"):
-            s = s[:-2]
-        self.assertTrue(s, x.public.base.packaging)
+        current = Version(string=example)
+        reference = Version_(example)
+        self.assertEqual(reference, current.packaging)
+        base_version = reference.base_version
+        while base_version.endswith(".0"):
+            base_version = base_version[:-2]
+        self.assertTrue(base_version, current.public.base.packaging)
         self.assertEqual(
-            y.dev,
-            x.public.qual.dev.packaging,
+            reference.dev,
+            current.public.qual.dev.packaging,
         )
         self.assertEqual(
-            y.local,
-            x.local.packaging,
+            reference.local,
+            current.local.packaging,
         )
         self.assertEqual(
-            y.is_devrelease,
-            x.public.qual.isdevrelease(),
+            reference.is_devrelease,
+            current.public.qual.isdevrelease(),
         )
         self.assertEqual(
-            y.is_postrelease,
-            x.public.qual.ispostrelease(),
+            reference.is_postrelease,
+            current.public.qual.ispostrelease(),
         )
         self.assertEqual(
-            y.is_prerelease,
-            x.public.qual.isprerelease(),
+            reference.is_prerelease,
+            current.public.qual.isprerelease(),
         )
         self.assertEqual(
-            y.major,
-            x.public.base.release.major,
+            reference.major,
+            current.public.base.release.major,
         )
         self.assertEqual(
-            y.micro,
-            x.public.base.release.micro,
+            reference.micro,
+            current.public.base.release.micro,
         )
         self.assertEqual(
-            y.minor,
-            x.public.base.release.minor,
+            reference.minor,
+            current.public.base.release.minor,
         )
         self.assertEqual(
-            y.post,
-            x.public.qual.post.packaging,
+            reference.post,
+            current.public.qual.post.packaging,
         )
         self.assertEqual(
-            y.pre,
-            x.public.qual.pre.packaging,
+            reference.pre,
+            current.public.qual.pre.packaging,
         )
-        s = y.public
-        self.assertTrue(s.startswith(x.public.base.packaging))
-        s = s[len(x.public.base.packaging) :]
-        self.assertTrue(s.endswith(x.public.qual.packaging))
-        if x.public.qual.packaging:
-            s = s[: -len(x.public.qual.packaging)]
-        self.assertEqual(s, ".0" * (len(s) // 2))
+        base_version = reference.public
+        self.assertTrue(base_version.startswith(current.public.base.packaging))
+        base_version = base_version[len(current.public.base.packaging) :]
+        self.assertTrue(base_version.endswith(current.public.qual.packaging))
+        if current.public.qual.packaging:
+            base_version = base_version[: -len(current.public.qual.packaging)]
+        self.assertEqual(base_version, ".0" * (len(base_version) // 2))
         self.assertEqual(
-            y.release[: len(x.public.base.release)],
-            x.public.base.release.packaging,
+            reference.release[: len(current.public.base.release)],
+            current.public.base.release.packaging,
         )
 
     def test_versions(self: Self, /) -> None:
-        """Exercise test versions."""
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.examples["Version"].items():
-            with self.subTest(example=x):
-                self.go_version(x, **y)
+        """Run packaging-compatibility checks for every recorded Version example."""
+        example: str
+        case: dict[Any, Any]
+        for example, case in Util.util.examples["Version"].items():
+            with self.subTest(example=example):
+                self.go_version(example, **case)
 
 
 class TestTypeNames(unittest.TestCase):
-    """Exercise TestTypeNames."""
+    """Check that documented core type names resolve to their classes."""
 
     def go_name(self: Self, name: str, /) -> None:
-        """Perform go name."""
+        """Verify that one core class can be imported by its public type name."""
         cls: type[Any]
         cls = Util.import_(f"v440.core.{name}.{name}")
         self.assertEqual(cls.__name__, name)
 
     def test_0(self: Self) -> None:
-        """Exercise test 0."""
+        """Verify all documented core type names."""
         for name in Util.util.data["synonymous-to-empty"]:
             self.go_name(name)
 
 
 class TestStringExamples0(unittest.TestCase):
-    """Exercise TestStringExamples0."""
+    """Check validity, formatting, reconstruction, and representations for recorded core examples."""
 
     def go_examples(
         self: Self, /, clsname: str, tables: dict[Any, Any]
     ) -> None:
-        """Perform go examples."""
+        """Partition examples by validity and run the corresponding checks."""
         cls: type
         split: dict[Any, Any]
-        x: str
-        y: dict[Any, Any]
+        example: str
+        case: dict[Any, Any]
         cls = Util.import_("v440.core.{0}.{0}".format(clsname))
         split = {False: dict(), True: dict()}
-        for x, y in tables.items():
-            split[y["valid"]][x] = y
-        for x, y in split[False].items():
-            with self.subTest(valid=False, example=x):
-                self.go_invalid_example(cls, x, **y)
-        for x, y in split[True].items():
-            with self.subTest(valid=True, example=x):
-                self.go_valid_example(cls, x, **y)
+        for example, case in tables.items():
+            split[case["valid"]][example] = case
+        for example, case in split[False].items():
+            with self.subTest(valid=False, example=example):
+                self.go_invalid_example(cls, example, **case)
+        for example, case in split[True].items():
+            with self.subTest(valid=True, example=example):
+                self.go_valid_example(cls, example, **case)
 
     def go_invalid_example(
         self: Self, cls: type, example: str, /, **kwargs: Any
     ) -> None:
-        """Perform go invalid example."""
+        """Verify that one invalid string is rejected with VersionError."""
         with self.assertRaises(VersionError):
             cls(string=example)
 
@@ -282,7 +282,7 @@ class TestStringExamples0(unittest.TestCase):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        """Perform go valid example."""
+        """Run every rendering and reconstruction check for one valid example."""
         self.go_valid_example_deformatted(*args, **kwargs)
         self.go_valid_example_formatted(*args, **kwargs)
         self.go_valid_example_remake(*args, **kwargs)
@@ -300,7 +300,7 @@ class TestStringExamples0(unittest.TestCase):
         deformatted: str | None = None,
         **kwargs: Any,
     ) -> None:
-        """Perform go valid example deformatted."""
+        """Verify the inferred deformatting specification for one valid example."""
         spec: str
         spec = cls.deformat(example)
         if deformatted is not None:
@@ -315,14 +315,14 @@ class TestStringExamples0(unittest.TestCase):
         formatted: dict[str, str] | tuple[()] = (),
         **kwargs: Any,
     ) -> None:
-        """Perform go valid example formatted."""
+        """Verify declared format specifications for one valid example."""
         obj: Any
-        x: str
-        y: str
+        spec: str
+        target: str
         obj = cls(string=example)
-        for x, y in dict(formatted).items():
-            with self.subTest(spec=x, target=y):
-                self.assertEqual(y, format(obj, x))
+        for spec, target in dict(formatted).items():
+            with self.subTest(spec=spec, target=target):
+                self.assertEqual(target, format(obj, spec))
 
     def go_valid_example_remake(
         self: Self,
@@ -331,7 +331,7 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
-        """Perform go valid example remake."""
+        """Verify that deformatting and formatting reproduce the original example."""
         obj: Any
         remake: str
         spec: str
@@ -351,7 +351,7 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
-        """Perform go valid example repr."""
+        """Verify truthiness and repr expectations for one valid example."""
         bool_: bool
         obj: Any
         repr_: str | None
@@ -369,7 +369,7 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
-        """Perform go valid example str."""
+        """Verify canonical string rendering for one valid example."""
         obj: Any
         answer: str
         solution: str | None
@@ -389,17 +389,19 @@ class TestStringExamples0(unittest.TestCase):
         /,
         **kwargs: Any,
     ) -> None:
-        """Perform go valid example synonym."""
+        """Verify that a documented format synonym matches the empty specification."""
         obj: Any
         syn: str
         syn = Util.util.data["synonymous-to-empty"][cls.__name__][""][
             "synonym"
         ]
         obj = cls(string=example)
-        x = format(obj, "")
-        y = format(obj, syn)
-        with self.subTest(msg="synonym", empty=x, synonym=y):
-            self.assertEqual(x, y)
+        empty_rendering = format(obj, "")
+        synonym_rendering = format(obj, syn)
+        with self.subTest(
+            msg="synonym", empty=empty_rendering, synonym=synonym_rendering
+        ):
+            self.assertEqual(empty_rendering, synonym_rendering)
 
     def go_valid_example_unformattable(
         self: Self,
@@ -417,16 +419,16 @@ class TestStringExamples0(unittest.TestCase):
                 format(obj, spec)
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.examples.items():
-            with self.subTest(clsname=x):
-                self.go_examples(x, y)
+        """Run recorded example checks for every core class."""
+        class_name: str
+        tables: dict[Any, Any]
+        for class_name, tables in Util.util.examples.items():
+            with self.subTest(clsname=class_name):
+                self.go_examples(class_name, tables)
 
 
 class TestTotalAttrSetter(unittest.TestCase):
-    """Exercise TestTotalAttrSetter."""
+    """Check data-driven attribute assignments and their declared exceptions."""
 
     def go_clsname(
         self: Self,
@@ -434,14 +436,14 @@ class TestTotalAttrSetter(unittest.TestCase):
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
-        """Perform go clsname."""
+        """Run attribute-setter cases for one core class."""
         cls: type
-        x: str
-        y: dict[Any, Any]
+        legacy_name: str
+        case: dict[Any, Any]
         cls = Util.import_(f"v440.core.{clsname}.{clsname}")
-        for x, y in legacy_table.items():
-            with self.subTest(legacy_name=x):
-                self.go_task(cls, **y)
+        for legacy_name, case in legacy_table.items():
+            with self.subTest(legacy_name=legacy_name):
+                self.go_task(cls, **case)
 
     def go_task(
         self: Self,
@@ -450,7 +452,7 @@ class TestTotalAttrSetter(unittest.TestCase):
         exceptiontype: str,
         **kwargs: Any,
     ) -> None:
-        """Perform go task."""
+        """Dispatch one attribute-setter case to its valid or invalid check."""
         if exceptiontype:
             self.go_task_invalid(*args, **kwargs, exceptiontype=exceptiontype)
         else:
@@ -466,7 +468,7 @@ class TestTotalAttrSetter(unittest.TestCase):
         queryname: str,
         **kwargs: Any,
     ) -> None:
-        """Perform go task invalid."""
+        """Verify that one invalid attribute assignment raises its declared exception."""
         exc: type[Exception]
         obj: Any
         exc = Util.import_(exceptiontype)
@@ -483,22 +485,22 @@ class TestTotalAttrSetter(unittest.TestCase):
         queryname: str,
         **_kwargs: Any,
     ) -> None:
-        """Perform go task valid."""
+        """Apply one valid attribute assignment."""
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.data["attr-setter"].items():
-            with self.subTest(clsname=x):
-                self.go_clsname(x, y)
+        """Run all configured attribute-setter cases."""
+        class_name: str
+        legacy_table: dict[Any, Any]
+        for class_name, legacy_table in Util.util.data["attr-setter"].items():
+            with self.subTest(clsname=class_name):
+                self.go_clsname(class_name, legacy_table)
 
 
 class TestTotalMethod(unittest.TestCase):
-    """Exercise TestTotalMethod."""
+    """Check data-driven method calls against their expected results."""
 
     def go_clsname(
         self: Self,
@@ -506,14 +508,14 @@ class TestTotalMethod(unittest.TestCase):
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
-        """Perform go clsname."""
+        """Run method cases for one core class."""
         cls: type
-        x: str
-        y: dict[Any, Any]
+        legacy_name: str
+        case: dict[Any, Any]
         cls = Util.import_(f"v440.core.{clsname}.{clsname}")
-        for x, y in legacy_table.items():
-            with self.subTest(legacy_name=x):
-                self.go_task(cls, **y)
+        for legacy_name, case in legacy_table.items():
+            with self.subTest(legacy_name=legacy_name):
+                self.go_task(cls, **case)
 
     def go_task(
         self: Self,
@@ -528,7 +530,7 @@ class TestTotalMethod(unittest.TestCase):
         queryname: str,
         **_kwargs: Any,
     ) -> None:
-        """Perform go task."""
+        """Invoke one configured method case and verify its result."""
         ans: Any
         attr: Any
         obj: Any
@@ -539,16 +541,16 @@ class TestTotalMethod(unittest.TestCase):
         self.assertEqual(ans, check)
 
     def test_1(self: Self, /) -> None:
-        """Exercise test 1."""
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.data["total-method"].items():
-            with self.subTest(clsname=x):
-                self.go_clsname(x, y)
+        """Run all configured method cases."""
+        class_name: str
+        legacy_table: dict[Any, Any]
+        for class_name, legacy_table in Util.util.data["total-method"].items():
+            with self.subTest(clsname=class_name):
+                self.go_clsname(class_name, legacy_table)
 
 
 class TestFunction(unittest.TestCase):
-    """Exercise TestFunction."""
+    """Check data-driven function calls against their expected results."""
 
     def go_clsname(
         self: Self,
@@ -556,14 +558,14 @@ class TestFunction(unittest.TestCase):
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
-        """Perform go clsname."""
+        """Run configured function cases for one core class."""
         cls: type
-        x: str
-        y: dict[Any, Any]
+        legacy_name: str
+        case: dict[Any, Any]
         cls = Util.import_(f"v440.core.{clsname}.{clsname}")
-        for x, y in legacy_table.items():
-            with self.subTest(legacy_name=x):
-                self.go_task(cls, **y)
+        for legacy_name, case in legacy_table.items():
+            with self.subTest(legacy_name=legacy_name):
+                self.go_task(cls, **case)
 
     def go_task(
         self: Self,
@@ -578,7 +580,7 @@ class TestFunction(unittest.TestCase):
         solutionname: str,
         **_kwargs: Any,
     ) -> None:
-        """Perform go task."""
+        """Invoke one configured function case and verify its result."""
         ans: Any
         obj: Any
         obj = cls()
@@ -587,24 +589,24 @@ class TestFunction(unittest.TestCase):
         self.assertEqual(ans, solution)
 
     def test_2(self: Self, /) -> None:
-        """Exercise test 2."""
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.data["function"].items():
-            with self.subTest(clsname=x):
-                self.go_clsname(x, y)
+        """Run all configured function cases."""
+        class_name: str
+        legacy_table: dict[Any, Any]
+        for class_name, legacy_table in Util.util.data["function"].items():
+            with self.subTest(clsname=class_name):
+                self.go_clsname(class_name, legacy_table)
 
 
 class TestVersionEpochGo(unittest.TestCase):
-    """Exercise TestVersionEpochGo."""
+    """Check epoch assignments from the shared test data."""
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
-        x: str
-        y: dict[str, Any]
-        for x, y in Util.util.data["epoch"][""].items():
-            with self.subTest(key=x):
-                self.go(**y)
+        """Run all configured epoch-assignment cases."""
+        case_name: str
+        case: dict[str, Any]
+        for case_name, case in Util.util.data["epoch"][""].items():
+            with self.subTest(key=case_name):
+                self.go(**case)
 
     def go(
         self: Self,
@@ -614,27 +616,27 @@ class TestVersionEpochGo(unittest.TestCase):
         query: Any = None,
         key: str = "",
     ) -> None:
-        """Perform go."""
+        """Apply one epoch assignment and verify the resulting full and component values."""
         msg: str
-        v: Version
+        version: Version
         msg = "epoch %r" % key
-        v = Version(string="1.2.3")
-        v.public.base.epoch = query
-        self.assertEqual(str(v), full, msg=msg)
-        self.assertIsInstance(v.public.base.epoch, int, msg=msg)
-        self.assertEqual(v.public.base.epoch, part, msg=msg)
+        version = Version(string="1.2.3")
+        version.public.base.epoch = query
+        self.assertEqual(str(version), full, msg=msg)
+        self.assertIsInstance(version.public.base.epoch, int, msg=msg)
+        self.assertEqual(version.public.base.epoch, part, msg=msg)
 
 
 class TestSlicingGo(unittest.TestCase):
-    """Exercise TestSlicingGo."""
+    """Check configured slice assignments for list-like version components."""
 
     def go_cls(self: Self, cls: type[Any], /, **kwargs: Any) -> None:
-        """Perform go cls."""
-        x: str
-        y: dict[str, Any]
-        for x, y in kwargs.items():
-            with self.subTest(key=x):
-                self.go_cls_key(cls, **y)
+        """Run configured slicing cases for one sequence class."""
+        case_name: str
+        case: dict[str, Any]
+        for case_name, case in kwargs.items():
+            with self.subTest(key=case_name):
+                self.go_cls_key(cls, **case)
 
     def go_cls_key(
         self: Self,
@@ -649,60 +651,60 @@ class TestSlicingGo(unittest.TestCase):
         stop: Any = None,
         step: Any = None,
     ) -> None:
-        """Perform go cls key."""
+        """Apply one configured slice assignment and verify its result or declared exception."""
         ctx: Any
         exc: Any
-        v: Any
-        v = cls(string=query)
+        obj: Any
+        obj = cls(string=query)
         if exceptiontype:
             exc = Util.import_(exceptiontype)
             ctx = self.assertRaises(exc)
         else:
             ctx = contextlib.nullcontext()
         with ctx:
-            v[start:stop:step] = change
-        self.assertEqual(str(v), solution)
+            obj[start:stop:step] = change
+        self.assertEqual(str(obj), solution)
 
     def test_2(self: Self, /) -> None:
-        """Exercise test 2."""
+        """Run slicing cases for every configured sequence class."""
         cls: type[Any]
-        x: str
-        y: dict[Any, Any]
-        for x, y in Util.util.data["slicing"].items():
-            cls = Util.import_(f"v440.core.{x}.{x}")
-            with self.subTest(typename=x):
-                self.go_cls(cls, **y)
+        class_name: str
+        cases: dict[Any, Any]
+        for class_name, cases in Util.util.data["slicing"].items():
+            cls = Util.import_(f"v440.core.{class_name}.{class_name}")
+            with self.subTest(typename=class_name):
+                self.go_cls(cls, **cases)
 
 
 class TestFormat(unittest.TestCase):
-    """Exercise TestFormat."""
+    """Check v440 formatting against packaging.version canonical output."""
 
     def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
-        """Perform go."""
-        a: Version_
-        b: str
-        f: str
-        g: str
+        """Compare one valid version format with packaging.version output."""
+        reference: Version_
+        expected: str
+        spec: str
+        actual: str
         if not valid:
             return
-        a = Version_(text)
-        b = str(a)
-        f = "#." * len(a.release)
-        f = f[:-1]
-        g = format(Version(string=text), f)
-        self.assertEqual(b, g)
+        reference = Version_(text)
+        expected = str(reference)
+        spec = "#." * len(reference.release)
+        spec = spec[:-1]
+        actual = format(Version(string=text), spec)
+        self.assertEqual(expected, actual)
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
-        x: str
-        y: dict[str, Any]
-        for x, y in Util.util.examples["Version"].items():
-            with self.subTest(example=x):
-                self.go(x, **y)
+        """Run formatting checks for every recorded Version example."""
+        example: str
+        case: dict[str, Any]
+        for example, case in Util.util.examples["Version"].items():
+            with self.subTest(example=example):
+                self.go(example, **case)
 
 
 class TestOrder(unittest.TestCase):
-    """Exercise TestOrder."""
+    """Check ordering compatibility between v440 and packaging.version."""
 
     def go(
         self: Self,
@@ -711,25 +713,25 @@ class TestOrder(unittest.TestCase):
         x: str,
         y: str,
     ) -> None:
-        """Perform go."""
-        a: Version_
-        b: Version
-        c: Version_
-        d: Version_
-        e: Version
-        f: Version_
+        """Compare ordering results across packaging and v440 representations."""
+        left_reference: Version_
+        left_current: Version
+        left_packaging: Version_
+        right_reference: Version_
+        right_current: Version
+        right_packaging: Version_
         backwards: bool
         current: bool
         legacy: bool
-        a = Version_(x)
-        b = Version(string=x)
-        c = b.packaging
-        d = Version_(y)
-        e = Version(string=y)
-        f = e.packaging
-        legacy = func(a, d)
-        current = func(b, e)
-        backwards = func(c, f)
+        left_reference = Version_(x)
+        left_current = Version(string=x)
+        left_packaging = left_current.packaging
+        right_reference = Version_(y)
+        right_current = Version(string=y)
+        right_packaging = right_current.packaging
+        legacy = func(left_reference, right_reference)
+        current = func(left_current, right_current)
+        backwards = func(left_packaging, right_packaging)
         self.assertEqual(
             current,
             legacy,
@@ -747,31 +749,31 @@ class TestOrder(unittest.TestCase):
         func: abc.Callable[[Any, Any], Any],
         pure: list[str],
     ) -> None:
-        """Perform go op."""
+        """Run one comparison operator across every ordered pair of valid versions."""
         i: int
         for i in range(len(pure) ** 2):
-            x = pure[i // len(pure)]
-            y = pure[i % len(pure)]
-            with self.subTest(x=x, y=y):
-                self.go(x=x, y=y, func=func)
+            left = pure[i // len(pure)]
+            right = pure[i % len(pure)]
+            with self.subTest(x=left, y=right):
+                self.go(x=left, y=right, func=func)
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
+        """Run every comparison operator across all valid version examples."""
         pure: list[str]
-        x: str
-        y: dict[str, Any]
+        example: str
+        case: dict[str, Any]
         pure = []
-        for x, y in Util.util.examples["Version"].items():
-            if y["valid"]:
-                pure.append(x)
-        for o in ("eq", "ge", "gt", "le", "lt", "ne"):
-            func = getattr(operator, o)
-            with self.subTest(func=o):
+        for example, case in Util.util.examples["Version"].items():
+            if case["valid"]:
+                pure.append(example)
+        for operator_name in ("eq", "ge", "gt", "le", "lt", "ne"):
+            func = getattr(operator, operator_name)
+            with self.subTest(func=operator_name):
                 self.go_op(func=func, pure=pure)
 
 
 class TestSlots(unittest.TestCase):
-    """Exercise TestSlots."""
+    """Check that slotted core classes reject undeclared attributes."""
 
     def go_blob(
         self: Self,
@@ -781,7 +783,7 @@ class TestSlots(unittest.TestCase):
         attrvalue: Any,
         string: Any = None,
     ) -> None:
-        """Perform go blob."""
+        """Verify that one undeclared attribute cannot be assigned."""
         obj: Any
         obj = cls(string=string)
         with self.assertRaises(AttributeError):
@@ -790,7 +792,7 @@ class TestSlots(unittest.TestCase):
     def go_cls(
         self: Self, cls: type[Any], /, **typetests: dict[str, Any]
     ) -> None:
-        """Perform go cls."""
+        """Run slot-protection cases for one class."""
         testdict: dict[str, Any]
         testname: str
         for testname, testdict in typetests.items():
@@ -798,7 +800,7 @@ class TestSlots(unittest.TestCase):
                 self.go_blob(cls, **testdict)
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
+        """Run all configured slot-protection cases."""
         cls: type[Any]
         typename: str
         typetests: dict[str, dict[str, Any]]
@@ -811,18 +813,18 @@ class TestSlots(unittest.TestCase):
 
 
 class TestReleaseAlias(unittest.TestCase):
-    """Exercise TestReleaseAlias."""
+    """Check major, minor, and micro release aliases through configured updates."""
 
     def test_0(self: Self, /) -> None:
-        """Exercise test 0."""
-        x: Any
-        y: Any
-        for x, y in Util.util.data["release-key"][""].items():
-            with self.subTest(test_label=x):
-                self.go(**y)
+        """Run all configured release-alias cases."""
+        test_label: Any
+        steps: Any
+        for test_label, steps in Util.util.data["release-key"][""].items():
+            with self.subTest(test_label=test_label):
+                self.go(**steps)
 
     def go(self: Self, /, steps: list[Any]) -> None:
-        """Perform go."""
+        """Apply the configured release-alias modification steps."""
         version: Version
         step: dict[str, Any]
         version = Version()
@@ -837,7 +839,7 @@ class TestReleaseAlias(unittest.TestCase):
         value: Any,
         solution: list[Any] | None = None,
     ) -> None:
-        """Perform modify."""
+        """Apply one release alias update and optionally verify the resulting sequence."""
         answer: list[Any]
         setattr(version.public.base.release, name, value)
         if solution is None:

@@ -1,4 +1,4 @@
-"""Represent a numeric magnitude used while deformatting."""
+"""Track a numeric magnitude used while deformatting."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from v440._deformatting.MagJoker import MagJoker
 
 
 class Mag(int):
-    """Represent a constrained numeric field width while deformatting."""
+    """Model the state and behavior associated with Mag."""
 
     def best(self: Self, /) -> str:
         """Return the shortest format fragment satisfying these constraints."""

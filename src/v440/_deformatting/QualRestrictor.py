@@ -14,7 +14,7 @@ from v440._utils.Cfg import Cfg
 
 
 class QualRow(NamedTuple):
-    """Represent QualRow."""
+    """Store literal spellings for each qualifier field."""
 
     a: str
     b: str
@@ -25,7 +25,7 @@ class QualRow(NamedTuple):
 
 @dataclass(frozen=True, kw_only=True)
 class QualInfo:
-    """Represent QualInfo."""
+    """Store numeric qualifier fields and every compatible literal segmentation."""
 
     num_row: QualRow
     lit_rows: frozenset[QualRow]
@@ -138,7 +138,7 @@ class QualInfo:
     def _all_literal_rows(
         cls: type[Self], text: str, num_row: QualRow
     ) -> set[QualRow]:
-        """Handle all literal rows."""
+        """Enumerate every grammar-valid literal segmentation for the numeric qualifier row."""
         base: list[str]
         fields: tuple[str, ...]
         present: list[tuple[int, str, str]]
@@ -202,17 +202,17 @@ class QualInfo:
 
 def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
     """Unite two literal rows, or return no row."""
-    a: str
+    left_literal: str
     ans: list[str]
-    b: str
+    right_literal: str
     ans = list()
-    for a, b in zip(rowA, rowB):
-        if a == "?":
-            ans.append(b)
-        elif b == "?":
-            ans.append(a)
-        elif a == b:
-            ans.append(a)
+    for left_literal, right_literal in zip(rowA, rowB):
+        if left_literal == "?":
+            ans.append(right_literal)
+        elif right_literal == "?":
+            ans.append(left_literal)
+        elif left_literal == right_literal:
+            ans.append(left_literal)
         else:
             return set()
     return {QualRow(*ans)}
@@ -220,7 +220,7 @@ def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
 
 @dataclass(frozen=True, kw_only=True)
 class QualRestrictor:
-    """Represent QualRestrictor."""
+    """Track formatting constraints for all public-version qualifiers."""
 
     mag_row: tuple[int | None, int | None, int | None, int | None, int | None]
     lit_rows: frozenset[QualRow]
@@ -280,7 +280,7 @@ class QualRestrictor:
 
     @staticmethod
     def _conditional_num_ok(mag: int, width: int, /) -> bool:
-        """Handle conditional num ok."""
+        """Return whether a numeric width is valid when omission depends on the observed magnitude."""
         if mag > 0:
             return width == mag
         if mag == 0:
@@ -289,7 +289,7 @@ class QualRestrictor:
 
     @staticmethod
     def _always_num_ok(mag: int, width: int, /) -> bool:
-        """Handle always num ok."""
+        """Return whether a numeric width is valid when an implicit number is always permitted."""
         if mag > 1:
             return width == mag
         if mag == 1:
@@ -393,22 +393,24 @@ class QualRestrictor:
         )
 
     def union(self: Self, other: Self, /) -> Self:
-        a: int | None
-        b: int | None
+        left_magnitude: int | None
+        right_magnitude: int | None
         lit_rows: set[QualRow]
         mag_row: list[int | None]
         rowA: QualRow
         rowB: QualRow
         mag_row = list()
-        for a, b in zip(self.mag_row, other.mag_row):
-            if a is None:
-                mag_row.append(b)
-            elif b is None:
-                mag_row.append(a)
-            elif a == b:
-                mag_row.append(a)
-            elif a + b <= 0:
-                mag_row.append(max(a, b))
+        for left_magnitude, right_magnitude in zip(
+            self.mag_row, other.mag_row
+        ):
+            if left_magnitude is None:
+                mag_row.append(right_magnitude)
+            elif right_magnitude is None:
+                mag_row.append(left_magnitude)
+            elif left_magnitude == right_magnitude:
+                mag_row.append(left_magnitude)
+            elif left_magnitude + right_magnitude <= 0:
+                mag_row.append(max(left_magnitude, right_magnitude))
             else:
                 raise ValueError
         lit_rows = set()
