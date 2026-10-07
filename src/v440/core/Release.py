@@ -14,21 +14,21 @@ from v440.abc.ListABC import ListABC
 
 
 class Release(ListABC[int]):
-    """Represent Release."""
+    """Store normalized numeric release components."""
 
     __slots__ = ()
 
     @classmethod
     def _data_parse(cls: type[Self], value: list[Any], /) -> list[int]:
-        """Handle data parse."""
-        v: list[int]
-        v = list(map(item_parse, value))
-        while v and v[-1] == 0:
-            v.pop()
-        return v
+        """Normalize release items and remove insignificant trailing zeros."""
+        parsed: list[int]
+        parsed = list(map(item_parse, value))
+        while parsed and parsed[-1] == 0:
+            parsed.pop()
+        return parsed
 
     def _deformat(self: Self, body: str, /) -> ReleaseRestrictor:
-        """Handle deformat."""
+        """Infer formatting constraints from one release-component rendering."""
         return ReleaseRestrictor.by_string(body)
 
     def _delitem(
@@ -38,7 +38,7 @@ class Release(ListABC[int]):
         *,
         minlen: Any = None,
     ) -> None:
-        """Handle delitem."""
+        """Delete release components while honoring an optional minimum length."""
         data: list[int]
         data = self._list(minlen=minlen)
         del data[key]
@@ -46,18 +46,18 @@ class Release(ListABC[int]):
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
-        """Handle format parse."""
+        """Parse a release format specification into numeric field widths."""
         if spec.strip("#."):
             raise ValueError
         return tuple(map(len, spec.rstrip(".").split(".")))
 
     def _format_parsed(self: Self, /, *mags: Any) -> str:
-        """Handle format parsed."""
+        """Render release components with the requested numeric field widths."""
         data: list[int]
         parts: list[Any]
         data = list(self)
         data += [0] * max(0, len(mags) - len(self))
-        parts = [f"0{m}d" for m in mags]
+        parts = [f"0{magnitude}d" for magnitude in mags]
         parts += [""] * max(0, len(self) - len(mags))
         return ".".join(map(format, data, parts))
 
@@ -124,19 +124,19 @@ class Release(ListABC[int]):
     ) -> None:
         """Increment one release component and discard less-significant components."""
         data: list[int]
-        a: int
-        i: int
-        a = operator.index(amount)
-        i = operator.index(index)
+        increment: int
+        target_index: int
+        increment = operator.index(amount)
+        target_index = operator.index(index)
         data = list(self)
-        if i == -1:
-            data[-1] += a
-        elif i < len(self):
-            data[i] += a
-            data = data[: i + 1]
+        if target_index == -1:
+            data[-1] += increment
+        elif target_index < len(self):
+            data[target_index] += increment
+            data = data[: target_index + 1]
         else:
-            data.extend((0,) * (i - len(self)))
-            data.append(a)
+            data.extend((0,) * (target_index - len(self)))
+            data.append(increment)
         self.data = data
 
     @property
@@ -191,7 +191,7 @@ class Release(ListABC[int]):
     patch = micro
 
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
-        "This method sorts the data."
+        """Sort the release components in place."""
         self.data = sorted(self, key=key, reverse=reverse)
 
 

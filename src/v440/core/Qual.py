@@ -83,25 +83,25 @@ class Qual(NestedABC):
 
     @property
     def dev(self: Self, /) -> Dev_:
-        "This property represents the stage of development."
+        """Return the development-release qualifier."""
         return self._dev
 
     @dev.setter
     @setter
     def dev(self: Self, value: object, /) -> None:
-        """Update the development qualifier from the supplied value."""
+        """Return the development-release qualifier."""
         self.dev.string = value
 
     def isdevrelease(self: Self, /) -> bool:
-        "Return whether this instance denotes a dev-release."
+        """Return whether this instance denotes a dev-release."""
         return bool(self.dev)
 
     def isprerelease(self: Self, /) -> bool:
-        "Return whether this instance denotes a pre-release."
+        """Return whether this instance denotes a pre-release."""
         return bool(self.pre) or bool(self.dev)
 
     def ispostrelease(self: Self, /) -> bool:
-        "Return whether this instance denotes a post-release."
+        """Return whether this instance denotes a post-release."""
         return bool(self.post)
 
     packaging = NestedABC.string
