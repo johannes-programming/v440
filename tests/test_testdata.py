@@ -437,7 +437,7 @@ class TestTotalAttrSetter(unittest.TestCase):
 
     def go_clsname(
         self: Self,
-        clsname: str,
+        typename: str,
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
@@ -445,7 +445,7 @@ class TestTotalAttrSetter(unittest.TestCase):
         cls: type
         legacy_name: str
         case: dict[Any, Any]
-        cls = Util.import_(f"v440.core.{clsname}.{clsname}")
+        cls = Util.import_(f"v440.core.{typename}.{typename}")
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
@@ -500,7 +500,7 @@ class TestTotalAttrSetter(unittest.TestCase):
         class_name: str
         legacy_table: dict[Any, Any]
         for class_name, legacy_table in Util.util.data["attr-setter"].items():
-            with self.subTest(clsname=class_name):
+            with self.subTest(typename=class_name):
                 self.go_clsname(class_name, legacy_table)
 
 
@@ -509,7 +509,7 @@ class TestTotalMethod(unittest.TestCase):
 
     def go_clsname(
         self: Self,
-        clsname: str,
+        typename: str,
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
@@ -517,7 +517,7 @@ class TestTotalMethod(unittest.TestCase):
         cls: type
         legacy_name: str
         case: dict[Any, Any]
-        cls = Util.import_(f"v440.core.{clsname}.{clsname}")
+        cls = Util.import_(f"v440.core.{typename}.{typename}")
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
@@ -550,7 +550,7 @@ class TestTotalMethod(unittest.TestCase):
         class_name: str
         legacy_table: dict[Any, Any]
         for class_name, legacy_table in Util.util.data["total-method"].items():
-            with self.subTest(clsname=class_name):
+            with self.subTest(typename=class_name):
                 self.go_clsname(class_name, legacy_table)
 
 
@@ -559,7 +559,7 @@ class TestFunction(unittest.TestCase):
 
     def go_clsname(
         self: Self,
-        clsname: str,
+        typename: str,
         legacy_table: dict[Any, Any],
         /,
     ) -> None:
@@ -567,7 +567,7 @@ class TestFunction(unittest.TestCase):
         cls: type
         legacy_name: str
         case: dict[Any, Any]
-        cls = Util.import_(f"v440.core.{clsname}.{clsname}")
+        cls = Util.import_(f"v440.core.{typename}.{typename}")
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
@@ -598,7 +598,7 @@ class TestFunction(unittest.TestCase):
         class_name: str
         legacy_table: dict[Any, Any]
         for class_name, legacy_table in Util.util.data["function"].items():
-            with self.subTest(clsname=class_name):
+            with self.subTest(typename=class_name):
                 self.go_clsname(class_name, legacy_table)
 
 
