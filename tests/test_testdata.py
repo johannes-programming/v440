@@ -250,9 +250,9 @@ class TestTypeNames(unittest.TestCase):
 class TestStringExamples0(unittest.TestCase):
     """Check validity, formatting, reconstruction, and representations for recorded core examples."""
 
-    def go_type(
+    def go_typename(
         self: Self,
-        clsname: str,
+        typename: str,
         /,
         **tables: Any,
     ) -> None:
@@ -261,7 +261,7 @@ class TestStringExamples0(unittest.TestCase):
         split: dict[Any, Any]
         example: str
         case: dict[Any, Any]
-        cls = Util.import_("v440.core.{0}.{0}".format(clsname))
+        cls = Util.import_("v440.core.{0}.{0}".format(typename))
         split = {False: dict(), True: dict()}
         for example, case in tables.items():
             with self.subTest(example=example):
@@ -429,7 +429,7 @@ class TestStringExamples0(unittest.TestCase):
         tables: dict[Any, Any]
         for typename, tables in Util.util.examples.items():
             with self.subTest(typename=typename):
-                self.go_type(typename, **tables)
+                self.go_typename(typename, **tables)
 
 
 class TestTotalAttrSetter(unittest.TestCase):
