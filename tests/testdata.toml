@@ -9120,6 +9120,11 @@ valid = true
 
 [examples.Pre.preview_.formatted]
 
+[examples.Pre."prevİew"]
+valid = false
+
+[examples.Pre."prevİew".formatted]
+
 [examples.Pre."prevıew"]
 valid = false
 
@@ -9585,6 +9590,11 @@ str = "42!9rc1.post5"
 valid = true
 
 [examples.Public."42!9rc1rev_05".formatted]
+
+[examples.Public."42prevİew"]
+valid = false
+
+[examples.Public."42prevİew".formatted]
 
 [examples.Public."42prevıew"]
 valid = false
@@ -10566,6 +10576,11 @@ str = "rc3.post0"
 valid = true
 
 [examples.Qual."pre.3r".formatted]
+
+[examples.Qual."prevİew"]
+valid = false
+
+[examples.Qual."prevİew".formatted]
 
 [examples.Qual."prevıew"]
 valid = false
@@ -13193,6 +13208,11 @@ valid = true
 
 [examples.Version."42!1.0.0rc999.post999.dev9999+exp.build.local1".formatted]
 
+[examples.Version."42prevİew"]
+valid = false
+
+[examples.Version."42prevİew".formatted]
+
 [examples.Version."42prevıew"]
 valid = false
 
@@ -13925,9 +13945,13 @@ solution = [
 
 [unformattable.Post.x]
 
+[unformattable.Pre."prevİew"]
+
 [unformattable.Pre."prevıew"]
 
 [unformattable.Pre.x]
+
+[unformattable.Public."prevİew"]
 
 [unformattable.Public."prevıew"]
 
@@ -13937,11 +13961,15 @@ solution = [
 
 [unformattable.Qual.".poſt#"]
 
+[unformattable.Qual."prevİew"]
+
 [unformattable.Qual."prevıew"]
 
 [unformattable.Qual.x]
 
 [unformattable.Release.x]
+
+[unformattable.Version."prevİew"]
 
 [unformattable.Version."prevıew"]
 
