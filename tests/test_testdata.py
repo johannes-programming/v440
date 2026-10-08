@@ -250,8 +250,11 @@ class TestTypeNames(unittest.TestCase):
 class TestStringExamples0(unittest.TestCase):
     """Check validity, formatting, reconstruction, and representations for recorded core examples."""
 
-    def go_examples(
-        self: Self, /, clsname: str, tables: dict[Any, Any]
+    def go_type(
+        self: Self,
+        clsname: str,
+        /,
+        **tables: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
         cls: type
@@ -261,6 +264,8 @@ class TestStringExamples0(unittest.TestCase):
         cls = Util.import_("v440.core.{0}.{0}".format(clsname))
         split = {False: dict(), True: dict()}
         for example, case in tables.items():
+            with self.subTest(example=example):
+                self.assertIn("valid", case)
             split[case["valid"]][example] = case
         for example, case in split[False].items():
             with self.subTest(valid=False, example=example):
@@ -420,11 +425,11 @@ class TestStringExamples0(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run recorded example checks for every core class."""
-        class_name: str
+        typename: str
         tables: dict[Any, Any]
-        for class_name, tables in Util.util.examples.items():
-            with self.subTest(clsname=class_name):
-                self.go_examples(class_name, tables)
+        for typename, tables in Util.util.examples.items():
+            with self.subTest(typename=typename):
+                self.go_type(typename, **tables)
 
 
 class TestTotalAttrSetter(unittest.TestCase):

@@ -24,7 +24,7 @@ dependencies = [
     "datarepr>=1.2,<2",
     "iterflat>=1.1,<2",
     "iterprod>=1.1,<2",
-    "packaging>=25.0,<26",
+    "packaging>=26.3,<27",
     "setdoc>=1.3,<2",
 ]
 description = "This project provides mutable version objects in accordance with PEP440."

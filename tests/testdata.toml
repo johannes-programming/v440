@@ -8072,6 +8072,11 @@ valid = true
 
 [examples.Post.".post0".formatted]
 
+[examples.Post.".poſt0"]
+valid = false
+
+[examples.Post.".poſt0".formatted]
+
 [examples.Post.".r"]
 deformatted = ".r"
 str = ".post0"
@@ -9216,6 +9221,11 @@ valid = false
 
 [examples.Public."!1".formatted]
 
+[examples.Public.".poſt0"]
+valid = false
+
+[examples.Public.".poſt0".formatted]
+
 [examples.Public.0]
 bool = false
 deformatted = ""
@@ -10103,6 +10113,11 @@ str = ".post0"
 valid = true
 
 [examples.Qual.".post".formatted]
+
+[examples.Qual.".poſt0"]
+valid = false
+
+[examples.Qual.".poſt0".formatted]
 
 [examples.Qual.".rev6"]
 deformatted = ".rev"
@@ -13249,6 +13264,11 @@ valid = true
 
 [examples.Version."v1.0.0.post0.dev0".formatted]
 
+[examples.Version."v1.0.0.poſt0"]
+valid = false
+
+[examples.Version."v1.0.0.poſt0".formatted]
+
 [examples.Version."v1.2.3"]
 deformatted = "v"
 legacy = "Invalid or Potentially Problematic Cases (for error handling)"
@@ -13879,11 +13899,19 @@ solution = [
 
 [unformattable.Local.x]
 
+[unformattable.Post.".poſt"]
+
+[unformattable.Post.".poſt#"]
+
 [unformattable.Post.x]
 
 [unformattable.Pre.x]
 
 [unformattable.Public.x]
+
+[unformattable.Qual.".poſt"]
+
+[unformattable.Qual.".poſt#"]
 
 [unformattable.Qual.x]
 
