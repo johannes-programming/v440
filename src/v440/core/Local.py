@@ -61,7 +61,7 @@ class Local(ListABC[int | str]):
             split.pop()
         return tuple(split)
 
-    def _format_parsed(self: Self, /, *parsed: tuple[Any, ...]) -> str:
+    def _format_parsed(self: Self, /, *parsed: tuple[int, str, str]) -> str:
         """Render local-version segments from parsed width, case, and separator constraints."""
         ans: str
         item: int | str
