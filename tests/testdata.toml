@@ -5626,6 +5626,16 @@ full = "1!1.2.3"
 part = 1
 query = true
 
+[example.Local."K"]
+valid = false
+
+[example.Local."K".formatted]
+
+[example.Version."1+K"]
+valid = false
+
+[example.Version."1+K".formatted]
+
 [examples.Base.""]
 valid = false
 
