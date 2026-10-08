@@ -95,16 +95,10 @@ class Local(ListABC[int | str]):
 
     def _string_fset(self: Self, value: str, /) -> None:
         """Parse and normalize a local-version identifier string."""
-        normalized: str
-        if value == "":
+        if value:
+            self.data = value.replace("_", ".").replace("-", ".").split(".")
+        else:
             self.data = ()
-            return
-        normalized = value
-        if normalized.startswith("+"):
-            normalized = normalized[1:]
-        normalized = normalized.replace("_", ".")
-        normalized = normalized.replace("-", ".")
-        self.data = normalized.split(".")
 
     @property
     def packaging(self: Self, /) -> str | None:
