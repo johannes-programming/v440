@@ -435,11 +435,11 @@ class TestStringExamples0(unittest.TestCase):
 class TestTotalAttrSetter(unittest.TestCase):
     """Check data-driven attribute assignments and their declared exceptions."""
 
-    def go_clsname(
+    def go_typename(
         self: Self,
         typename: str,
-        legacy_table: dict[Any, Any],
         /,
+        **legacy_table: Any,
     ) -> None:
         """Run attribute-setter cases for one core class."""
         cls: type
@@ -501,17 +501,17 @@ class TestTotalAttrSetter(unittest.TestCase):
         legacy_table: dict[Any, Any]
         for class_name, legacy_table in Util.util.data["attr-setter"].items():
             with self.subTest(typename=class_name):
-                self.go_clsname(class_name, legacy_table)
+                self.go_typename(class_name, **legacy_table)
 
 
 class TestTotalMethod(unittest.TestCase):
     """Check data-driven method calls against their expected results."""
 
-    def go_clsname(
+    def go_typename(
         self: Self,
         typename: str,
-        legacy_table: dict[Any, Any],
         /,
+        **legacy_table: dict[Any, Any],
     ) -> None:
         """Run method cases for one core class."""
         cls: type
@@ -551,17 +551,17 @@ class TestTotalMethod(unittest.TestCase):
         legacy_table: dict[Any, Any]
         for class_name, legacy_table in Util.util.data["total-method"].items():
             with self.subTest(typename=class_name):
-                self.go_clsname(class_name, legacy_table)
+                self.go_typename(class_name, **legacy_table)
 
 
 class TestFunction(unittest.TestCase):
     """Check data-driven function calls against their expected results."""
 
-    def go_clsname(
+    def go_typename(
         self: Self,
         typename: str,
-        legacy_table: dict[Any, Any],
         /,
+        **legacy_table: dict[Any, Any],
     ) -> None:
         """Run configured function cases for one core class."""
         cls: type
@@ -599,7 +599,7 @@ class TestFunction(unittest.TestCase):
         legacy_table: dict[Any, Any]
         for class_name, legacy_table in Util.util.data["function"].items():
             with self.subTest(typename=class_name):
-                self.go_clsname(class_name, legacy_table)
+                self.go_typename(class_name, **legacy_table)
 
 
 class TestVersionEpochGo(unittest.TestCase):
