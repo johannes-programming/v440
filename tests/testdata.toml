@@ -7088,6 +7088,11 @@ valid = false
 
 [examples.Local."+".formatted]
 
+[examples.Local."+abc"]
+valid = false
+
+[examples.Local."+abc".formatted]
+
 [examples.Local.".abc"]
 valid = false
 
