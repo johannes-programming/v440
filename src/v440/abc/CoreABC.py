@@ -14,7 +14,6 @@ from datarepr import oxford
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.errors.MiniLangError import MiniLangError
-from v440.errors.PEP440Error import PEP440Error
 from v440.errors.VersionError import VersionError
 
 
