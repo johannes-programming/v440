@@ -78,7 +78,7 @@ class BaseTestTypename(ABC):
     @abstractmethod
     def subTest(
         self: Self, /, *, typename: str
-    ) -> contextlib.AbstractContextManager: ...
+    ) -> contextlib.AbstractContextManager[Any]: ...
     def test_key0(self: Self, /) -> None:
         """Test under KEY0."""
         cls: type[Any]
@@ -248,19 +248,16 @@ class TestStringExamples(unittest.TestCase):
                 self.go_version(example, **case)
 
 
-class TestTypeNames(unittest.TestCase):
+class TestTypeNames(unittest.TestCase, BaseTestTypename):
     """Check that documented core type names resolve to their classes."""
 
-    def go_name(self: Self, name: str, /) -> None:
-        """Verify that one core class can be imported by its public type name."""
-        cls: type[Any]
-        cls = Util.import_(f"v440.core.{name}.{name}")
-        self.assertEqual(cls.__name__, name)
+    KEY0 = "synonymous-to-empty"
 
-    def test_0(self: Self) -> None:
-        """Verify all documented core type names."""
-        for name in Util.util.data["synonymous-to-empty"]:
-            self.go_name(name)
+    def go_type(
+        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+    ) -> None:
+        """Verify that one core class can be imported by its public type name."""
+        self.assertEqual(cls.__name__, typename)
 
 
 class TestStringExamples0(unittest.TestCase):
