@@ -26,9 +26,10 @@ import operator
 import tomllib
 import types
 import unittest
+from abc import ABC, abstractmethod
 from collections import abc
 from pathlib import Path
-from typing import Any, Self, cast
+from typing import Any, ClassVar, Self, cast
 
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
@@ -67,8 +68,32 @@ class Util(enum.Enum):
         return getattr(module, name)
 
 
-class TestDeformatting(unittest.TestCase):
+class BaseTestTypename(ABC):
+    KEY0: ClassVar[str]
+
+    @abstractmethod
+    def go_type(
+        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+    ) -> None: ...
+    @abstractmethod
+    def subTest(
+        self: Self, /, *, typename: str
+    ) -> contextlib.AbstractContextManager: ...
+    def test_key0(self: Self, /) -> None:
+        """Test under KEY0."""
+        cls: type[Any]
+        typename: str
+        typedict: dict[Any, Any]
+        for typename, typedict in Util.util.data["deformatting"].items():
+            cls = Util.import_("v440.core.{0}.{0}".format(typename))
+            with self.subTest(typename=typename):
+                self.go_type(typename, cls, **typedict)
+
+
+class TestDeformatting(unittest.TestCase, BaseTestTypename):
     """Verify deformatting behavior."""
+
+    KEY0: ClassVar[str] = "deformatting"
 
     def go_blob(
         self: Self,
@@ -115,8 +140,9 @@ class TestDeformatting(unittest.TestCase):
                 format(cls(string=rendering), solution), rendering
             )
 
-    def go_cls(
+    def go_type(
         self: Self,
+        typename: str,
         cls: type[Any],
         /,
         **typedict: dict[str, Any],
@@ -136,16 +162,6 @@ class TestDeformatting(unittest.TestCase):
                 )
                 log[example] = testname
                 self.go_blob(cls, **testdict)
-
-    def test_0(self: Self, /) -> None:
-        """Run every configured deformatting case."""
-        cls: type[Any]
-        typename: str
-        typedict: dict[Any, Any]
-        for typename, typedict in Util.util.data["deformatting"].items():
-            cls = Util.import_("v440.core.{0}.{0}".format(typename))
-            with self.subTest(typename=typename):
-                self.go_cls(cls, **typedict)
 
 
 class TestStringExamples(unittest.TestCase):
