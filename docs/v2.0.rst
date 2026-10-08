@@ -123,7 +123,7 @@ This method returns a copy of ``self``.
 
 This ``classmethod`` takes ``PEP 440``-conforming strings and returns the shortest possible ``format_spec`` that can recreate all of them in formatting.
 The ``classmethod`` raises ``PEP440Error`` if an argument is not actually ``PEP 440``-conforming.
-The ``classmethod`` raises ``VersionError`` elif no common ``format_spec`` exists.
+The ``classmethod`` raises ``MiniLangError`` elif no common ``format_spec`` exists.
 
 ``packaging: Any``
 """"""""""""""""""

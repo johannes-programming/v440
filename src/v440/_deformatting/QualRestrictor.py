@@ -78,9 +78,7 @@ class QualInfo:
             values[index] = matches["pre_num"]
 
         if matches["post"]:
-            post_num = matches["post_num"]
-            if matches["post_hyphen_num"]:
-                post_num = matches["post_hyphen_num"][1:]
+            post_num = matches["post_impl_num"] or matches["post_num"]
             values[3] = post_num
 
         if matches["dev"]:
