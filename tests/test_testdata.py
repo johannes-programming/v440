@@ -632,10 +632,14 @@ class TestVersionEpochGo(unittest.TestCase):
         self.assertEqual(version.public.base.epoch, part, msg=msg)
 
 
-class TestSlicingGo(unittest.TestCase):
+class TestSlicingGo(unittest.TestCase, BaseTestTypename):
     """Check configured slice assignments for list-like version components."""
 
-    def go_cls(self: Self, cls: type[Any], /, **kwargs: Any) -> None:
+    KEY0 = "slicing"
+
+    def go_type(
+        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+    ) -> None:
         """Run configured slicing cases for one sequence class."""
         case_name: str
         case: dict[str, Any]
@@ -669,16 +673,6 @@ class TestSlicingGo(unittest.TestCase):
         with ctx:
             obj[start:stop:step] = change
         self.assertEqual(str(obj), solution)
-
-    def test_2(self: Self, /) -> None:
-        """Run slicing cases for every configured sequence class."""
-        cls: type[Any]
-        class_name: str
-        cases: dict[Any, Any]
-        for class_name, cases in Util.util.data["slicing"].items():
-            cls = Util.import_(f"v440.core.{class_name}.{class_name}")
-            with self.subTest(typename=class_name):
-                self.go_cls(cls, **cases)
 
 
 class TestFormat(unittest.TestCase):
@@ -777,8 +771,10 @@ class TestOrder(unittest.TestCase):
                 self.go_op(func=func, pure=pure)
 
 
-class TestSlots(unittest.TestCase):
+class TestSlots(unittest.TestCase, BaseTestTypename):
     """Check that slotted core classes reject undeclared attributes."""
+
+    KEY0 = "core-non-attributes"
 
     def go_blob(
         self: Self,
@@ -794,8 +790,12 @@ class TestSlots(unittest.TestCase):
         with self.assertRaises(AttributeError):
             setattr(obj, attrname, attrvalue)
 
-    def go_cls(
-        self: Self, cls: type[Any], /, **typetests: dict[str, Any]
+    def go_type(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        /,
+        **typetests: dict[str, Any],
     ) -> None:
         """Run slot-protection cases for one class."""
         testdict: dict[str, Any]
@@ -803,18 +803,6 @@ class TestSlots(unittest.TestCase):
         for testname, testdict in typetests.items():
             with self.subTest(testname=testname):
                 self.go_blob(cls, **testdict)
-
-    def test_0(self: Self, /) -> None:
-        """Run all configured slot-protection cases."""
-        cls: type[Any]
-        typename: str
-        typetests: dict[str, dict[str, Any]]
-        for typename, typetests in Util.util.data[
-            "core-non-attributes"
-        ].items():
-            cls = Util.import_("v440.core.{0}.{0}".format(typename))
-            with self.subTest(typename=typename):
-                self.go_cls(cls, **typetests)
 
 
 class TestReleaseAlias(unittest.TestCase):
