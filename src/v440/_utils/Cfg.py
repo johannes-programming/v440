@@ -66,5 +66,7 @@ class Cfg(enum.Enum):
         for name, template in self.data["patterns"].items():
             pattern = template.format(**parts)
             parts[name] = f"(?P<{name}>{pattern})"
-            ans[name] = re.compile(pattern, re.IGNORECASE | re.VERBOSE)
+            ans[name] = re.compile(
+                pattern, re.ASCII | re.IGNORECASE | re.VERBOSE
+            )
         return ans
