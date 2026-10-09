@@ -260,21 +260,22 @@ class TestTypeNames(unittest.TestCase, BaseTestTypename):
         self.assertEqual(cls.__name__, typename)
 
 
-class TestStringExamples0(unittest.TestCase):
+class TestStringExamples0(unittest.TestCase, BaseTestTypename):
     """Check validity, formatting, reconstruction, and representations for recorded core examples."""
 
-    def go_typename(
+    KEY0 = "examples"
+
+    def go_type(
         self: Self,
         typename: str,
+        cls: type[Any],
         /,
         **tables: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
-        cls: type
         split: dict[Any, Any]
         example: str
         case: dict[Any, Any]
-        cls = Util.import_("v440.core.{0}.{0}".format(typename))
         split = {False: dict(), True: dict()}
         for example, case in tables.items():
             with self.subTest(example=example):
@@ -435,14 +436,6 @@ class TestStringExamples0(unittest.TestCase):
                 self.assertRaises(MiniLangError),
             ):
                 format(obj, spec)
-
-    def test_0(self: Self, /) -> None:
-        """Run recorded example checks for every core class."""
-        typename: str
-        tables: dict[Any, Any]
-        for typename, tables in Util.util.examples.items():
-            with self.subTest(typename=typename):
-                self.go_typename(typename, **tables)
 
 
 class TestTotalAttrSetter(unittest.TestCase):
