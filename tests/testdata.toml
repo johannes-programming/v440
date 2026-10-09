@@ -5626,6 +5626,16 @@ full = "1!1.2.3"
 part = 1
 query = true
 
+[example.Local."K"]
+valid = false
+
+[example.Local."K".formatted]
+
+[example.Version."1+K"]
+valid = false
+
+[example.Version."1+K".formatted]
+
 [examples.Base.""]
 valid = false
 
@@ -8072,6 +8082,11 @@ valid = true
 
 [examples.Post.".post0".formatted]
 
+[examples.Post.".poſt0"]
+valid = false
+
+[examples.Post.".poſt0".formatted]
+
 [examples.Post.".r"]
 deformatted = ".r"
 str = ".post0"
@@ -9115,6 +9130,16 @@ valid = true
 
 [examples.Pre.preview_.formatted]
 
+[examples.Pre."prevİew"]
+valid = false
+
+[examples.Pre."prevİew".formatted]
+
+[examples.Pre."prevıew"]
+valid = false
+
+[examples.Pre."prevıew".formatted]
+
 [examples.Pre.rc]
 deformatted = "rc"
 str = "rc0"
@@ -9215,6 +9240,11 @@ valid = false
 valid = false
 
 [examples.Public."!1".formatted]
+
+[examples.Public.".poſt0"]
+valid = false
+
+[examples.Public.".poſt0".formatted]
 
 [examples.Public.0]
 bool = false
@@ -9570,6 +9600,16 @@ str = "42!9rc1.post5"
 valid = true
 
 [examples.Public."42!9rc1rev_05".formatted]
+
+[examples.Public."42prevİew"]
+valid = false
+
+[examples.Public."42prevİew".formatted]
+
+[examples.Public."42prevıew"]
+valid = false
+
+[examples.Public."42prevıew".formatted]
 
 [examples.Public."9!01-02"]
 deformatted = "##-##"
@@ -10104,6 +10144,11 @@ valid = true
 
 [examples.Qual.".post".formatted]
 
+[examples.Qual.".poſt0"]
+valid = false
+
+[examples.Qual.".poſt0".formatted]
+
 [examples.Qual.".rev6"]
 deformatted = ".rev"
 str = ".post6"
@@ -10541,6 +10586,16 @@ str = "rc3.post0"
 valid = true
 
 [examples.Qual."pre.3r".formatted]
+
+[examples.Qual."prevİew"]
+valid = false
+
+[examples.Qual."prevİew".formatted]
+
+[examples.Qual."prevıew"]
+valid = false
+
+[examples.Qual."prevıew".formatted]
 
 [examples.Qual.rc]
 deformatted = "rc"
@@ -12708,6 +12763,13 @@ valid = true
 "" = "1.dev2"
 r = "1.dev2"
 
+[examples.Version."1.post1"]
+deformatted = ""
+str = "1.post1"
+valid = true
+
+[examples.Version."1.post1".formatted]
+
 [examples.Version."10!0.0.0+001_ab12"]
 deformatted = "..#+###_"
 str = "10!0+1.ab12"
@@ -13156,6 +13218,16 @@ valid = true
 
 [examples.Version."42!1.0.0rc999.post999.dev9999+exp.build.local1".formatted]
 
+[examples.Version."42prevİew"]
+valid = false
+
+[examples.Version."42prevİew".formatted]
+
+[examples.Version."42prevıew"]
+valid = false
+
+[examples.Version."42prevıew".formatted]
+
 [examples.Version."5.0rc1"]
 deformatted = ".#"
 legacy = "Pre-releases (alpha, beta, release candidate)"
@@ -13241,6 +13313,11 @@ str = "1.post0.dev0"
 valid = true
 
 [examples.Version."v1.0.0.post0.dev0".formatted]
+
+[examples.Version."v1.0.0.poſt0"]
+valid = false
+
+[examples.Version."v1.0.0.poſt0".formatted]
 
 [examples.Version."v1.2.3"]
 deformatted = "v"
@@ -13872,14 +13949,38 @@ solution = [
 
 [unformattable.Local.x]
 
+[unformattable.Post.".poſt"]
+
+[unformattable.Post.".poſt#"]
+
 [unformattable.Post.x]
+
+[unformattable.Pre."prevİew"]
+
+[unformattable.Pre."prevıew"]
 
 [unformattable.Pre.x]
 
+[unformattable.Public."prevİew"]
+
+[unformattable.Public."prevıew"]
+
 [unformattable.Public.x]
+
+[unformattable.Qual.".poſt"]
+
+[unformattable.Qual.".poſt#"]
+
+[unformattable.Qual."prevİew"]
+
+[unformattable.Qual."prevıew"]
 
 [unformattable.Qual.x]
 
 [unformattable.Release.x]
+
+[unformattable.Version."prevİew"]
+
+[unformattable.Version."prevıew"]
 
 [unformattable.Version.x]
