@@ -68,7 +68,7 @@ class Util(enum.Enum):
         return getattr(module, name)
 
 
-class BaseTestTypename(ABC):
+class BaseTestType(ABC):
     KEY0: ClassVar[str]
 
     @abstractmethod
@@ -90,7 +90,7 @@ class BaseTestTypename(ABC):
                 self.go_type(typename, cls, **typedict)
 
 
-class TestDeformatting(unittest.TestCase, BaseTestTypename):
+class TestTypeDeformatting(unittest.TestCase, BaseTestType):
     """Verify deformatting behavior."""
 
     KEY0: ClassVar[str] = "deformatting"
@@ -164,7 +164,7 @@ class TestDeformatting(unittest.TestCase, BaseTestTypename):
                 self.go_blob(cls, **testdict)
 
 
-class TestStringExamples(unittest.TestCase):
+class TestVersionExamples(unittest.TestCase):
     """Compare recorded Version examples with packaging.version behavior."""
 
     def go_version(
@@ -248,7 +248,7 @@ class TestStringExamples(unittest.TestCase):
                 self.go_version(example, **case)
 
 
-class TestTypeNames(unittest.TestCase, BaseTestTypename):
+class TestTypeNames(unittest.TestCase, BaseTestType):
     """Check that documented core type names resolve to their classes."""
 
     KEY0 = "synonymous-to-empty"
@@ -260,7 +260,7 @@ class TestTypeNames(unittest.TestCase, BaseTestTypename):
         self.assertEqual(cls.__name__, typename)
 
 
-class TestStringExamples0(unittest.TestCase, BaseTestTypename):
+class TestTypeExamples(unittest.TestCase, BaseTestType):
     """Check validity, formatting, reconstruction, and representations for recorded core examples."""
 
     KEY0 = "examples"
@@ -438,7 +438,7 @@ class TestStringExamples0(unittest.TestCase, BaseTestTypename):
                 format(obj, spec)
 
 
-class TestTotalAttrSetter(unittest.TestCase, BaseTestTypename):
+class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
     """Check data-driven attribute assignments and their declared exceptions."""
 
     KEY0 = "attr-setter"
@@ -504,20 +504,21 @@ class TestTotalAttrSetter(unittest.TestCase, BaseTestTypename):
         setattr(obj, queryname, query)
 
 
-class TestTotalMethod(unittest.TestCase):
+class TestTypeTotalMethod(unittest.TestCase, BaseTestType):
     """Check data-driven method calls against their expected results."""
 
-    def go_typename(
+    KEY0 = "total-method"
+
+    def go_type(
         self: Self,
         typename: str,
+        cls: type[Any],
         /,
         **legacy_table: dict[Any, Any],
     ) -> None:
         """Run method cases for one core class."""
-        cls: type
         legacy_name: str
         case: dict[Any, Any]
-        cls = Util.import_(f"v440.core.{typename}.{typename}")
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
@@ -545,29 +546,22 @@ class TestTotalMethod(unittest.TestCase):
         ans = attr(*args, **dict(kwargs))
         self.assertEqual(ans, check)
 
-    def test_1(self: Self, /) -> None:
-        """Run all configured method cases."""
-        class_name: str
-        legacy_table: dict[Any, Any]
-        for class_name, legacy_table in Util.util.data["total-method"].items():
-            with self.subTest(typename=class_name):
-                self.go_typename(class_name, **legacy_table)
 
-
-class TestFunction(unittest.TestCase):
+class TestTypeFunction(unittest.TestCase, BaseTestType):
     """Check data-driven function calls against their expected results."""
 
-    def go_typename(
+    KEY0 = "function"
+
+    def go_type(
         self: Self,
         typename: str,
+        cls: type[Any],
         /,
         **legacy_table: dict[Any, Any],
     ) -> None:
         """Run configured function cases for one core class."""
-        cls: type
         legacy_name: str
         case: dict[Any, Any]
-        cls = Util.import_(f"v440.core.{typename}.{typename}")
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
@@ -592,14 +586,6 @@ class TestFunction(unittest.TestCase):
         setattr(obj, queryname, query)
         ans = Util.import_(solutionname)(obj, *args, **dict(kwargs))
         self.assertEqual(ans, solution)
-
-    def test_2(self: Self, /) -> None:
-        """Run all configured function cases."""
-        class_name: str
-        legacy_table: dict[Any, Any]
-        for class_name, legacy_table in Util.util.data["function"].items():
-            with self.subTest(typename=class_name):
-                self.go_typename(class_name, **legacy_table)
 
 
 class TestVersionEpochGo(unittest.TestCase):
@@ -632,7 +618,7 @@ class TestVersionEpochGo(unittest.TestCase):
         self.assertEqual(version.public.base.epoch, part, msg=msg)
 
 
-class TestSlicingGo(unittest.TestCase, BaseTestTypename):
+class TestSlicingGo(unittest.TestCase, BaseTestType):
     """Check configured slice assignments for list-like version components."""
 
     KEY0 = "slicing"
@@ -771,7 +757,7 @@ class TestOrder(unittest.TestCase):
                 self.go_op(func=func, pure=pure)
 
 
-class TestSlots(unittest.TestCase, BaseTestTypename):
+class TestTypeSlots(unittest.TestCase, BaseTestType):
     """Check that slotted core classes reject undeclared attributes."""
 
     KEY0 = "core-non-attributes"
