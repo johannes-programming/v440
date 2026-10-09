@@ -8,6 +8,14 @@ __all__: list[str] = [
     "TestReleaseAlias",
     "TestSlicingGo",
     "TestTypeDeformatting",
+    "TestTypeExamples",
+    "TestTypeFunction",
+    "TestTypeNames",
+    "TestTypeSlots",
+    "TestTypeTotalAttrSetter",
+    "TestTypeTotalMethod",
+    "TestVersionEpochGo",
+    "TestVersionExamples",
 ]
 
 import contextlib
