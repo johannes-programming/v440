@@ -84,7 +84,7 @@ class BaseTestTypename(ABC):
         cls: type[Any]
         typename: str
         typedict: dict[Any, Any]
-        for typename, typedict in Util.util.data["deformatting"].items():
+        for typename, typedict in Util.util.data[type(self).KEY0].items():
             cls = Util.import_("v440.core.{0}.{0}".format(typename))
             with self.subTest(typename=typename):
                 self.go_type(typename, cls, **typedict)
