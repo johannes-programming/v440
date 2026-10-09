@@ -438,17 +438,19 @@ class TestStringExamples0(unittest.TestCase, BaseTestTypename):
                 format(obj, spec)
 
 
-class TestTotalAttrSetter(unittest.TestCase):
+class TestTotalAttrSetter(unittest.TestCase, BaseTestTypename):
     """Check data-driven attribute assignments and their declared exceptions."""
 
-    def go_typename(
+    KEY0 = "attr-setter"
+
+    def go_type(
         self: Self,
         typename: str,
+        cls: type[Any],
         /,
         **legacy_table: Any,
     ) -> None:
         """Run attribute-setter cases for one core class."""
-        cls: type
         legacy_name: str
         case: dict[Any, Any]
         cls = Util.import_(f"v440.core.{typename}.{typename}")
@@ -500,14 +502,6 @@ class TestTotalAttrSetter(unittest.TestCase):
         obj: Any
         obj = cls()
         setattr(obj, queryname, query)
-
-    def test_0(self: Self, /) -> None:
-        """Run all configured attribute-setter cases."""
-        class_name: str
-        legacy_table: dict[Any, Any]
-        for class_name, legacy_table in Util.util.data["attr-setter"].items():
-            with self.subTest(typename=class_name):
-                self.go_typename(class_name, **legacy_table)
 
 
 class TestTotalMethod(unittest.TestCase):
