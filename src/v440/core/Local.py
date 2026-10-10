@@ -11,7 +11,6 @@ from typing import Any, Self
 from v440._deformatting.LocalRestrictor import LocalRestrictor
 from v440._utils.Cfg import Cfg
 from v440._utils.list_key import list_key
-from v440._utils.lower_ascii import lower_ascii
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
@@ -131,7 +130,7 @@ def item_parse(value: Any, /) -> int | str:
     try:
         ans = operator.index(value)
     except Exception:
-        ans = lower_ascii(str(value))
+        ans = str(value)
         if ans.strip(string_.digits + string_.ascii_lowercase):
             raise
         if not ans.strip(string_.digits):
