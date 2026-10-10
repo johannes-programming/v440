@@ -353,23 +353,32 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **tables: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
-        split: dict[Any, Any]
-        example: str
-        case: dict[Any, Any]
-        split = {False: dict(), True: dict()}
-        for example, case in tables.items():
+        for example, blobdict in tables.items():
             with self.subTest(example=example):
-                self.assertIn("valid", case)
-            split[case["valid"]][example] = case
-        for example, case in split[False].items():
-            with self.subTest(valid=False, example=example):
-                self.go_invalid_example(cls, example, **case)
-        for example, case in split[True].items():
-            with self.subTest(valid=True, example=example):
+                self.go_type_blob(typename, cls, example, **blobdict)
+
+    def go_type_blob(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        example: str,
+        /,
+        **case: Any,
+    ) -> None:
+        """Partition examples by validity and run the corresponding checks."""
+        self.assertIn("valid", case)
+        with self.subTest(valid=case["valid"]):
+            if case["valid"]:
                 self.go_valid_example(cls, example, **case)
+            else:
+                self.go_invalid_example(cls, example, **case)
 
     def go_invalid_example(
-        self: Self, cls: type, example: str, /, **kwargs: Any
+        self: Self,
+        cls: type[Any],
+        example: str,
+        /,
+        **kwargs: Any,
     ) -> None:
         """Verify that one invalid string is rejected with VersionError."""
         with self.assertRaises(VersionError):
