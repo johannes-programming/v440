@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 __all__: list[str] = [
-    "TestFormat",
     "TestOrder",
     "TestReleaseAlias",
     "TestSlicingGo",
@@ -15,7 +14,6 @@ __all__: list[str] = [
     "TestTypeTotalAttrSetter",
     "TestTypeTotalMethod",
     "TestVersionEpochGo",
-    "TestVersionExamples",
 ]
 
 import contextlib
@@ -35,7 +33,7 @@ from typing import Any, ClassVar, Self, cast
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
 
-from v440 import MiniLangError, Version, VersionError
+from v440 import MiniLangError, PEP440Error, Version
 
 
 class Util(enum.Enum):
@@ -51,11 +49,6 @@ class Util(enum.Enum):
         file = Path(__file__).parent / "testdata.toml"
         with file.open("rb") as stream:
             return tomllib.load(stream)
-
-    @functools.cached_property
-    def examples(self: Self, /) -> dict[str, Any]:
-        """Return the recorded example cases from the shared test data."""
-        return cast(dict[str, Any], Util.util.data.get("examples", {}))
 
     @classmethod
     def import_(cls: type[Self], qualname: str, /) -> Any:
@@ -74,7 +67,7 @@ class BaseTestType(ABC):
 
     @abstractmethod
     def go_type(
-        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+        self: Self, typename: str, cls: type[Any], /, **typedict: Any
     ) -> None: ...
     @abstractmethod
     def subTest(
@@ -83,39 +76,12 @@ class BaseTestType(ABC):
     def test_key0(self: Self, /) -> None:
         """Test under KEY0."""
         cls: type[Any]
-        typename: str
         typedict: dict[Any, Any]
+        typename: str
         for typename, typedict in Util.util.data[type(self).KEY0].items():
             cls = Util.import_("v440.core.{0}.{0}".format(typename))
             with self.subTest(typename=typename):
                 self.go_type(typename, cls, **typedict)
-
-
-class TestFormat(unittest.TestCase):
-    """Check v440 formatting against packaging.version canonical output."""
-
-    def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
-        """Compare one valid version format with packaging.version output."""
-        reference: Version_
-        expected: str
-        spec: str
-        actual: str
-        if not valid:
-            return
-        reference = Version_(text)
-        expected = str(reference)
-        spec = "#." * len(reference.release)
-        spec = spec[:-1]
-        actual = format(Version(string=text), spec)
-        self.assertEqual(expected, actual)
-
-    def test_0(self: Self, /) -> None:
-        """Run formatting checks for every recorded Version example."""
-        example: str
-        case: dict[str, Any]
-        for example, case in Util.util.examples["Version"].items():
-            with self.subTest(example=example):
-                self.go(example, **case)
 
 
 class TestOrder(unittest.TestCase):
@@ -129,15 +95,15 @@ class TestOrder(unittest.TestCase):
         y: str,
     ) -> None:
         """Compare ordering results across packaging and v440 representations."""
-        left_reference: Version_
-        left_current: Version
-        left_packaging: Version_
-        right_reference: Version_
-        right_current: Version
-        right_packaging: Version_
         backwards: bool
         current: bool
+        left_current: Version
+        left_packaging: Version_
+        left_reference: Version_
         legacy: bool
+        right_current: Version
+        right_packaging: Version_
+        right_reference: Version_
         left_reference = Version_(x)
         left_current = Version(string=x)
         left_packaging = left_current.packaging
@@ -166,6 +132,8 @@ class TestOrder(unittest.TestCase):
     ) -> None:
         """Run one comparison operator across every ordered pair of valid versions."""
         i: int
+        left: str
+        right: str
         for i in range(len(pure) ** 2):
             left = pure[i // len(pure)]
             right = pure[i % len(pure)]
@@ -174,12 +142,14 @@ class TestOrder(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run every comparison operator across all valid version examples."""
-        pure: list[str]
+        blobdict: dict[str, Any]
         example: str
-        case: dict[str, Any]
+        func: abc.Callable[[Any, Any], Any]
+        operator_name: str
+        pure: list[str]
         pure = []
-        for example, case in Util.util.examples["Version"].items():
-            if case["valid"]:
+        for example, blobdict in Util.util.data["examples"]["Version"].items():
+            if blobdict["valid"]:
                 pure.append(example)
         for operator_name in ("eq", "ge", "gt", "le", "lt", "ne"):
             func = getattr(operator, operator_name)
@@ -192,16 +162,16 @@ class TestReleaseAlias(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run all configured release-alias cases."""
-        test_label: Any
         steps: Any
+        test_label: Any
         for test_label, steps in Util.util.data["release-key"][""].items():
             with self.subTest(test_label=test_label):
                 self.go(**steps)
 
     def go(self: Self, /, steps: list[Any]) -> None:
         """Apply the configured release-alias modification steps."""
-        version: Version
         step: dict[str, Any]
+        version: Version
         version = Version()
         for step in steps:
             self.modify(version=version, **step)
@@ -229,14 +199,14 @@ class TestSlicingGo(unittest.TestCase, BaseTestType):
     KEY0 = "slicing"
 
     def go_type(
-        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+        self: Self, typename: str, cls: type[Any], /, **typedict: Any
     ) -> None:
         """Run configured slicing cases for one sequence class."""
-        case_name: str
-        case: dict[str, Any]
-        for case_name, case in kwargs.items():
-            with self.subTest(key=case_name):
-                self.go_cls_key(cls, **case)
+        blobdict: dict[str, Any]
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(key=blobname):
+                self.go_cls_key(cls, **blobdict)
 
     def go_cls_key(
         self: Self,
@@ -324,20 +294,22 @@ class TestTypeDeformatting(unittest.TestCase, BaseTestType):
         **typedict: dict[str, Any],
     ) -> None:
         """Run deformatting cases for one target class and reject duplicate example sets."""
-        example: tuple[str]
-        log: dict[tuple[str], str]
+        log: dict[tuple[str, ...], str]
+        strings: tuple[str, ...]
+        blobdict: dict[str, Any]
+        blobname: str
         self.assertGreaterEqual(len(typedict), 30)
         log = dict()
-        for testname, testdict in typedict.items():
-            example = tuple(testdict["strings"])
-            with self.subTest(testname=testname, example=example):
+        for blobname, blobdict in typedict.items():
+            strings = tuple(blobdict["strings"])
+            with self.subTest(blobname=blobname, strings=strings):
                 self.assertNotIn(
-                    example,
+                    strings,
                     log,
-                    "conflict with %r" % log.get(example),
+                    "conflict with %r" % log.get(strings),
                 )
-                log[example] = testname
-                self.go_blob(cls, **testdict)
+                log[strings] = blobname
+                self.go_blob(cls, **blobdict)
 
 
 class TestTypeExamples(unittest.TestCase, BaseTestType):
@@ -350,49 +322,66 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         typename: str,
         cls: type[Any],
         /,
-        **tables: Any,
+        **typedict: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
-        split: dict[Any, Any]
+        blobdict: dict[str, Any]
         example: str
-        case: dict[Any, Any]
-        split = {False: dict(), True: dict()}
-        for example, case in tables.items():
+        for example, blobdict in typedict.items():
             with self.subTest(example=example):
-                self.assertIn("valid", case)
-            split[case["valid"]][example] = case
-        for example, case in split[False].items():
-            with self.subTest(valid=False, example=example):
-                self.go_invalid_example(cls, example, **case)
-        for example, case in split[True].items():
-            with self.subTest(valid=True, example=example):
-                self.go_valid_example(cls, example, **case)
+                self.go_example(typename, cls, example, **blobdict)
 
-    def go_invalid_example(
-        self: Self, cls: type, example: str, /, **kwargs: Any
+    def go_example(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        example: str,
+        /,
+        *,
+        valid: bool,
+        **blobdict: Any,
     ) -> None:
-        """Verify that one invalid string is rejected with VersionError."""
-        with self.assertRaises(VersionError):
-            cls(string=example)
+        if valid:
+            self.go_example_valid(typename, cls, example, **blobdict)
+        else:
+            self.go_example_invalid(typename, cls, example, **blobdict)
 
-    def go_valid_example(
+    def go_example_invalid(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        example: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        """Verify that one invalid string is rejected with PEP440Error."""
+        with self.assertRaises(PEP440Error):
+            cls(string=example)
+        if typename != "Version":
+            return
+        with self.assertRaises(InvalidVersion):
+            Version_(example)
+
+    def go_example_valid(
         self: Self,
         /,
         *args: Any,
         **kwargs: Any,
     ) -> None:
         """Run every rendering and reconstruction check for one valid example."""
-        self.go_valid_example_deformatted(*args, **kwargs)
-        self.go_valid_example_formatted(*args, **kwargs)
-        self.go_valid_example_remake(*args, **kwargs)
-        self.go_valid_example_repr(*args, **kwargs)
-        self.go_valid_example_str(*args, **kwargs)
-        self.go_valid_example_synonym(*args, **kwargs)
-        self.go_valid_example_unformattable(*args, **kwargs)
+        self.go_example_valid_deformatted(*args, **kwargs)
+        self.go_example_valid_formatted(*args, **kwargs)
+        self.go_example_valid_remake(*args, **kwargs)
+        self.go_example_valid_repr(*args, **kwargs)
+        self.go_example_valid_str(*args, **kwargs)
+        self.go_example_valid_synonym(*args, **kwargs)
+        self.go_example_valid_unformattable(*args, **kwargs)
+        self.go_example_valid_version(*args, **kwargs)
 
-    def go_valid_example_deformatted(
+    def go_example_valid_deformatted(
         self: Self,
-        cls: Any,
+        typename: str,
+        cls: type[Any],
         example: str,
         /,
         *,
@@ -405,9 +394,10 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         if deformatted is not None:
             self.assertEqual(spec, deformatted)
 
-    def go_valid_example_formatted(
+    def go_example_valid_formatted(
         self: Self,
-        cls: type,
+        typename: str,
+        cls: type[Any],
         example: str,
         /,
         *,
@@ -423,9 +413,10 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             with self.subTest(spec=spec, target=target):
                 self.assertEqual(target, format(obj, spec))
 
-    def go_valid_example_remake(
+    def go_example_valid_remake(
         self: Self,
-        cls: Any,
+        typename: str,
+        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
@@ -443,9 +434,10 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             msg="example=%r, remake=%r, spec=%r" % (example, remake, spec),
         )
 
-    def go_valid_example_repr(
+    def go_example_valid_repr(
         self: Self,
-        cls: type,
+        typename: str,
+        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
@@ -461,16 +453,17 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         if repr_ is not None:
             self.assertEqual(repr(obj), repr_)
 
-    def go_valid_example_str(
+    def go_example_valid_str(
         self: Self,
-        cls: type,
+        typename: str,
+        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
     ) -> None:
         """Verify canonical string rendering for one valid example."""
-        obj: Any
         answer: str
+        obj: Any
         solution: str | None
         obj = cls(string=example)
         answer = str(obj)
@@ -481,16 +474,19 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         if solution is not None:
             self.assertEqual(str(obj), solution)
 
-    def go_valid_example_synonym(
+    def go_example_valid_synonym(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
     ) -> None:
         """Verify that a documented format synonym matches the empty specification."""
+        empty_rendering: str
         obj: Any
         syn: str
+        synonym_rendering: str
         syn = Util.util.data["synonymous-to-empty"][cls.__name__][""][
             "synonym"
         ]
@@ -502,13 +498,16 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         ):
             self.assertEqual(empty_rendering, synonym_rendering)
 
-    def go_valid_example_unformattable(
+    def go_example_valid_unformattable(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
     ) -> None:
+        obj: Any
+        spec: str
         obj = cls(string=example)
         for spec in Util.util.data["unformattable"][cls.__name__]:
             with (
@@ -517,249 +516,47 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             ):
                 format(obj, spec)
 
-
-class TestTypeFunction(unittest.TestCase, BaseTestType):
-    """Check data-driven function calls against their expected results."""
-
-    KEY0 = "function"
-
-    def go_type(
+    def go_example_valid_version(
         self: Self,
         typename: str,
         cls: type[Any],
+        example: str,
         /,
-        **legacy_table: dict[Any, Any],
-    ) -> None:
-        """Run configured function cases for one core class."""
-        legacy_name: str
-        case: dict[Any, Any]
-        for legacy_name, case in legacy_table.items():
-            with self.subTest(legacy_name=legacy_name):
-                self.go_task(cls, **case)
-
-    def go_task(
-        self: Self,
-        cls: type,
-        /,
-        *,
-        args: abc.Sequence[Any] = (),
-        kwargs: dict[Any, Any] | tuple[()] = (),
-        query: list[Any],
-        queryname: str,
-        solution: Any,
-        solutionname: str,
-        **_kwargs: Any,
-    ) -> None:
-        """Invoke one configured function case and verify its result."""
-        ans: Any
-        obj: Any
-        obj = cls()
-        setattr(obj, queryname, query)
-        ans = Util.import_(solutionname)(obj, *args, **dict(kwargs))
-        self.assertEqual(ans, solution)
-
-
-class TestTypeNames(unittest.TestCase, BaseTestType):
-    """Check that documented core type names resolve to their classes."""
-
-    KEY0 = "synonymous-to-empty"
-
-    def go_type(
-        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
-    ) -> None:
-        """Verify that one core class can be imported by its public type name."""
-        self.assertEqual(cls.__name__, typename)
-
-
-class TestTypeSlots(unittest.TestCase, BaseTestType):
-    """Check that slotted core classes reject undeclared attributes."""
-
-    KEY0 = "core-non-attributes"
-
-    def go_blob(
-        self: Self,
-        cls: type[Any],
-        /,
-        attrname: str,
-        attrvalue: Any,
-        string: Any = None,
-    ) -> None:
-        """Verify that one undeclared attribute cannot be assigned."""
-        obj: Any
-        obj = cls(string=string)
-        with self.assertRaises(AttributeError):
-            setattr(obj, attrname, attrvalue)
-
-    def go_type(
-        self: Self,
-        typename: str,
-        cls: type[Any],
-        /,
-        **typetests: dict[str, Any],
-    ) -> None:
-        """Run slot-protection cases for one class."""
-        testdict: dict[str, Any]
-        testname: str
-        for testname, testdict in typetests.items():
-            with self.subTest(testname=testname):
-                self.go_blob(cls, **testdict)
-
-
-class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
-    """Check data-driven attribute assignments and their declared exceptions."""
-
-    KEY0 = "attr-setter"
-
-    def go_type(
-        self: Self,
-        typename: str,
-        cls: type[Any],
-        /,
-        **legacy_table: Any,
-    ) -> None:
-        """Run attribute-setter cases for one core class."""
-        legacy_name: str
-        case: dict[Any, Any]
-        cls = Util.import_(f"v440.core.{typename}.{typename}")
-        for legacy_name, case in legacy_table.items():
-            with self.subTest(legacy_name=legacy_name):
-                self.go_task(cls, **case)
-
-    def go_task(
-        self: Self,
-        /,
-        *args: Any,
-        exceptiontype: str,
         **kwargs: Any,
     ) -> None:
-        """Dispatch one attribute-setter case to its valid or invalid check."""
-        if exceptiontype:
-            self.go_task_invalid(*args, **kwargs, exceptiontype=exceptiontype)
-        else:
-            self.go_task_valid(*args, **kwargs)
+        if typename != "Version":
+            return
+        self.go_example_valid_version_format(example, **kwargs)
+        self.go_example_valid_version_mirror(example, **kwargs)
 
-    def go_task_invalid(
+    def go_example_valid_version_format(
         self: Self,
-        cls: type,
+        example: str,
         /,
-        *,
-        exceptiontype: str,
-        query: list[Any],
-        queryname: str,
         **kwargs: Any,
     ) -> None:
-        """Verify that one invalid attribute assignment raises its declared exception."""
-        exc: type[Exception]
-        obj: Any
-        exc = Util.import_(exceptiontype)
-        obj = cls()
-        with self.assertRaises(exc):
-            setattr(obj, queryname, query)
+        """Compare one valid version format with packaging.version output."""
+        actual: str
+        expected: str
+        reference: Version_
+        spec: str
+        reference = Version_(example)
+        expected = str(reference)
+        spec = "#." * len(reference.release)
+        spec = spec[:-1]
+        actual = format(Version(string=example), spec)
+        self.assertEqual(expected, actual)
 
-    def go_task_valid(
+    def go_example_valid_version_mirror(
         self: Self,
-        cls: type,
+        example: str,
         /,
-        *,
-        query: list[Any],
-        queryname: str,
-        **_kwargs: Any,
-    ) -> None:
-        """Apply one valid attribute assignment."""
-        obj: Any
-        obj = cls()
-        setattr(obj, queryname, query)
-
-
-class TestTypeTotalMethod(unittest.TestCase, BaseTestType):
-    """Check data-driven method calls against their expected results."""
-
-    KEY0 = "total-method"
-
-    def go_type(
-        self: Self,
-        typename: str,
-        cls: type[Any],
-        /,
-        **legacy_table: dict[Any, Any],
-    ) -> None:
-        """Run method cases for one core class."""
-        legacy_name: str
-        case: dict[Any, Any]
-        for legacy_name, case in legacy_table.items():
-            with self.subTest(legacy_name=legacy_name):
-                self.go_task(cls, **case)
-
-    def go_task(
-        self: Self,
-        cls: type,
-        /,
-        *,
-        args: abc.Sequence[Any] = (),
-        attrname: str,
-        check: list[Any] | None = None,
-        kwargs: dict[Any, Any] | tuple[()] = (),
-        query: list[Any],
-        queryname: str,
-        **_kwargs: Any,
-    ) -> None:
-        """Invoke one configured method case and verify its result."""
-        ans: Any
-        attr: Any
-        obj: Any
-        obj = cls()
-        setattr(obj, queryname, query)
-        attr = getattr(obj, attrname)
-        ans = attr(*args, **dict(kwargs))
-        self.assertEqual(ans, check)
-
-
-class TestVersionEpochGo(unittest.TestCase):
-    """Check epoch assignments from the shared test data."""
-
-    def test_0(self: Self, /) -> None:
-        """Run all configured epoch-assignment cases."""
-        case_name: str
-        case: dict[str, Any]
-        for case_name, case in Util.util.data["epoch"][""].items():
-            with self.subTest(key=case_name):
-                self.go(**case)
-
-    def go(
-        self: Self,
-        /,
-        full: Any,
-        part: Any,
-        query: Any = None,
-        key: str = "",
-    ) -> None:
-        """Apply one epoch assignment and verify the resulting full and component values."""
-        msg: str
-        version: Version
-        msg = "epoch %r" % key
-        version = Version(string="1.2.3")
-        version.public.base.epoch = query
-        self.assertEqual(str(version), full, msg=msg)
-        self.assertIsInstance(version.public.base.epoch, int, msg=msg)
-        self.assertEqual(version.public.base.epoch, part, msg=msg)
-
-
-class TestVersionExamples(unittest.TestCase):
-    """Compare recorded Version examples with packaging.version behavior."""
-
-    def go_version(
-        self: Self, example: str, /, *, valid: bool, **kwargs: Any
+        **kwargs: Any,
     ) -> None:
         """Compare one version example with packaging.version behavior."""
         base_version: str
         current: Version
         reference: Version_
-        if not valid:
-            with self.assertRaises(InvalidVersion):
-                Version_(example)
-            with self.assertRaises(VersionError):
-                Version(string=example)
-            return
         current = Version(string=example)
         reference = Version_(example)
         self.assertEqual(reference, current.packaging)
@@ -819,13 +616,231 @@ class TestVersionExamples(unittest.TestCase):
             current.public.base.release.packaging,
         )
 
-    def test_versions(self: Self, /) -> None:
-        """Run packaging-compatibility checks for every recorded Version example."""
-        example: str
-        case: dict[Any, Any]
-        for example, case in Util.util.examples["Version"].items():
-            with self.subTest(example=example):
-                self.go_version(example, **case)
+
+class TestTypeFunction(unittest.TestCase, BaseTestType):
+    """Check data-driven function calls against their expected results."""
+
+    KEY0 = "function"
+
+    def go_type(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        /,
+        **typedict: dict[Any, Any],
+    ) -> None:
+        """Run configured function cases for one core class."""
+        blobdict: dict[Any, Any]
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
+                self.go_task(cls, **blobdict)
+
+    def go_task(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        args: abc.Sequence[Any] = (),
+        kwargs: dict[Any, Any] | tuple[()] = (),
+        query: list[Any],
+        queryname: str,
+        solution: Any,
+        solutionname: str,
+        **_kwargs: Any,
+    ) -> None:
+        """Invoke one configured function case and verify its result."""
+        ans: Any
+        obj: Any
+        obj = cls()
+        setattr(obj, queryname, query)
+        ans = Util.import_(solutionname)(obj, *args, **dict(kwargs))
+        self.assertEqual(ans, solution)
+
+
+class TestTypeNames(unittest.TestCase, BaseTestType):
+    """Check that documented core type names resolve to their classes."""
+
+    KEY0 = "synonymous-to-empty"
+
+    def go_type(
+        self: Self, typename: str, cls: type[Any], /, **typedict: Any
+    ) -> None:
+        """Verify that one core class can be imported by its public type name."""
+        self.assertEqual(cls.__name__, typename)
+
+
+class TestTypeSlots(unittest.TestCase, BaseTestType):
+    """Check that slotted core classes reject undeclared attributes."""
+
+    KEY0 = "core-non-attributes"
+
+    def go_blob(
+        self: Self,
+        cls: type[Any],
+        /,
+        attrname: str,
+        attrvalue: Any,
+        string: Any = None,
+    ) -> None:
+        """Verify that one undeclared attribute cannot be assigned."""
+        obj: Any
+        obj = cls(string=string)
+        with self.assertRaises(AttributeError):
+            setattr(obj, attrname, attrvalue)
+
+    def go_type(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        /,
+        **typedict: dict[str, Any],
+    ) -> None:
+        """Run slot-protection cases for one class."""
+        blobdict: dict[str, Any]
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
+                self.go_blob(cls, **blobdict)
+
+
+class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
+    """Check data-driven attribute assignments and their declared exceptions."""
+
+    KEY0 = "attr-setter"
+
+    def go_type(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        /,
+        **typedict: Any,
+    ) -> None:
+        """Run attribute-setter cases for one core class."""
+        blobdict: dict[Any, Any]
+        blobname: str
+        cls = Util.import_(f"v440.core.{typename}.{typename}")
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
+                self.go_task(cls, **blobdict)
+
+    def go_task(
+        self: Self,
+        /,
+        *args: Any,
+        exceptiontype: str,
+        **kwargs: Any,
+    ) -> None:
+        """Dispatch one attribute-setter case to its valid or invalid check."""
+        if exceptiontype:
+            self.go_task_invalid(*args, **kwargs, exceptiontype=exceptiontype)
+        else:
+            self.go_task_valid(*args, **kwargs)
+
+    def go_task_invalid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        exceptiontype: str,
+        query: list[Any],
+        queryname: str,
+        **kwargs: Any,
+    ) -> None:
+        """Verify that one invalid attribute assignment raises its declared exception."""
+        exc: type[Exception]
+        obj: Any
+        exc = Util.import_(exceptiontype)
+        obj = cls()
+        with self.assertRaises(exc):
+            setattr(obj, queryname, query)
+
+    def go_task_valid(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        query: list[Any],
+        queryname: str,
+        **_kwargs: Any,
+    ) -> None:
+        """Apply one valid attribute assignment."""
+        obj: Any
+        obj = cls()
+        setattr(obj, queryname, query)
+
+
+class TestTypeTotalMethod(unittest.TestCase, BaseTestType):
+    """Check data-driven method calls against their expected results."""
+
+    KEY0 = "total-method"
+
+    def go_type(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        /,
+        **typedict: dict[Any, Any],
+    ) -> None:
+        """Run method cases for one core class."""
+        blobdict: dict[Any, Any]
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
+                self.go_task(cls, **blobdict)
+
+    def go_task(
+        self: Self,
+        cls: type,
+        /,
+        *,
+        args: abc.Sequence[Any] = (),
+        attrname: str,
+        check: list[Any] | None = None,
+        kwargs: dict[Any, Any] | tuple[()] = (),
+        query: list[Any],
+        queryname: str,
+        **_kwargs: Any,
+    ) -> None:
+        """Invoke one configured method case and verify its result."""
+        ans: Any
+        attr: Any
+        obj: Any
+        obj = cls()
+        setattr(obj, queryname, query)
+        attr = getattr(obj, attrname)
+        ans = attr(*args, **dict(kwargs))
+        self.assertEqual(ans, check)
+
+
+class TestVersionEpochGo(unittest.TestCase):
+    """Check epoch assignments from the shared test data."""
+
+    def test_0(self: Self, /) -> None:
+        """Run all configured epoch-assignment cases."""
+        blobdict: dict[str, Any]
+        blobname: str
+        for blobname, blobdict in Util.util.data["epoch"][""].items():
+            with self.subTest(key=blobname):
+                self.go(**blobdict)
+
+    def go(
+        self: Self,
+        /,
+        full: Any,
+        part: Any,
+        query: Any = None,
+        key: str = "",
+    ) -> None:
+        """Apply one epoch assignment and verify the resulting full and component values."""
+        msg: str
+        version: Version
+        msg = "epoch %r" % key
+        version = Version(string="1.2.3")
+        version.public.base.epoch = query
+        self.assertEqual(str(version), full, msg=msg)
+        self.assertIsInstance(version.public.base.epoch, int, msg=msg)
+        self.assertEqual(version.public.base.epoch, part, msg=msg)
 
 
 if __name__ == "__main__":

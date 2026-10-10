@@ -5,7 +5,7 @@ from __future__ import annotations
 __all__: list[str] = ["Base"]
 
 import operator
-from typing import Any, Final, Self
+from typing import Any, Final, Self, SupportsIndex
 
 from v440._deformatting.BaseRestrictor import BaseRestrictor
 from v440._deformatting.Mag import Mag
@@ -97,7 +97,7 @@ class Base(NestedABC):
 
     @epoch.setter
     @setter
-    def epoch(self: Self, value: Any, /) -> None:
+    def epoch(self: Self, value: SupportsIndex, /) -> None:
         """Validate and assign the nonnegative epoch component."""
         epoch_value: int
         epoch_value = operator.index(value)

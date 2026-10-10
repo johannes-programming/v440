@@ -78,20 +78,20 @@ class EvenAccumulation:
 class LocalRestrictor(NamedTuple):
     """Track formatting constraints for a local-version identifier."""
 
-    evens: tuple[EvenAccumulation, ...]
-    odds: tuple[str, ...]
+    segments: tuple[EvenAccumulation, ...]
+    separators: tuple[str, ...]
 
     def best(self: Self, /) -> str:
         """Return the shortest format fragment satisfying these constraints."""
         ans: str
-        even: EvenAccumulation
-        odd: str
+        segment: EvenAccumulation
+        separator: str
         ans = ""
-        for even, odd in zip(self.evens, self.odds):
-            ans += even.best()
-            ans += odd
-        if len(self.odds) < len(self.evens):
-            ans += self.evens[-1].best()
+        for segment, separator in zip(self.segments, self.separators):
+            ans += segment.best()
+            ans += separator
+        if len(self.separators) < len(self.segments):
+            ans += self.segments[-1].best()
         ans = ans.rstrip(".")
         return ans
 
@@ -99,18 +99,22 @@ class LocalRestrictor(NamedTuple):
     def by_parts(cls: type[Self], /, *parts: str) -> Self:
         """Infer formatting constraints from alternating observed parts."""
         return cls(
-            evens=tuple(map(EvenAccumulation.by_item, parts[::2])),
-            odds=parts[1::2],
+            segments=tuple(map(EvenAccumulation.by_item, parts[::2])),
+            separators=parts[1::2],
         )
 
     def union(self: Self, other: Self, /) -> Self:
         """Combine these constraints with another compatible observation."""
-        evens: tuple[EvenAccumulation, ...]
-        evens = tuple(map(EvenAccumulation.union, self.evens, other.evens))
-        evens += self.evens[len(evens) :] or other.evens[len(evens) :]
-        if any(map(operator.ne, self.odds, other.odds)):
+        segments: tuple[EvenAccumulation, ...]
+        segments = tuple(
+            map(EvenAccumulation.union, self.segments, other.segments)
+        )
+        segments += (
+            self.segments[len(segments) :] or other.segments[len(segments) :]
+        )
+        if any(map(operator.ne, self.separators, other.separators)):
             raise ValueError
         return type(self)(
-            evens=evens,
-            odds=max(self.odds, other.odds, key=len),
+            segments=segments,
+            separators=max(self.separators, other.separators, key=len),
         )

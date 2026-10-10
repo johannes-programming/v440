@@ -6,10 +6,11 @@ __all__: list[str] = ["Local"]
 
 import operator
 import string as string_
-from typing import Any, Self
+from typing import Any, Self, SupportsIndex
 
 from v440._deformatting.LocalRestrictor import LocalRestrictor
 from v440._utils.Cfg import Cfg
+from v440._utils.list_key import list_key
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
@@ -21,16 +22,18 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _data_parse(
-        cls: type[Self], value: list[Any], /
+        cls: type[Self],
+        /,
+        *value: object,
     ) -> tuple[int | str, ...]:
         """Normalize local-version sequence items."""
         return tuple(map(item_parse, value))
 
-    def _deformat(self: Self, body: str, /) -> LocalRestrictor:
+    def _deformat(self: Self, string: str, /) -> LocalRestrictor:
         """Infer formatting constraints from one local-version rendering."""
         if self:
             return LocalRestrictor.by_parts(
-                *Cfg.cfg.patterns["local_splitter"].split(body)
+                *Cfg.cfg.patterns["local_splitter"].split(string)
             )
         else:
             return LocalRestrictor.by_parts()
@@ -38,11 +41,11 @@ class Local(ListABC[int | str]):
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         """Parse a local-version format specification into per-segment formatting constraints."""
+        item_spec: str
         literal_pattern: str
         magnitude: int
-        item_spec: str
-        separator: str
         parts: list[Any]
+        separator: str
         split: list[tuple[int, str, str]]
         if spec.strip("#^~.-_"):
             raise ValueError
@@ -64,12 +67,12 @@ class Local(ListABC[int | str]):
     def _format_parsed(self: Self, /, *parsed: tuple[int, str, str]) -> str:
         """Render local-version segments from parsed width, case, and separator constraints."""
         ans: str
-        item: int | str
-        index: int
         case_marker: str
         character: str
-        magnitude: int
+        index: int
+        item: int | str
         literal_pattern: str
+        magnitude: int
         separator: str
         ans = ""
         for index, item in enumerate(self):
@@ -88,10 +91,7 @@ class Local(ListABC[int | str]):
         ans = ans[:-1]
         return ans
 
-    @classmethod
-    def _sort(cls: type[Self], value: Any, /) -> tuple[bool, int | str]:
-        """Return the comparison key for one local-version component."""
-        return type(value) is int, value
+    _sort = staticmethod(list_key)
 
     def _string_fset(self: Self, value: str, /) -> None:
         """Parse and normalize a local-version identifier string."""
@@ -121,28 +121,26 @@ class Local(ListABC[int | str]):
         """Sort local-version components using PEP 440 ordering by default."""
         self.data = sorted(
             self,
-            key=sort_key if key is None else key,
+            key=list_key if key is None else key,
             reverse=reverse,
         )
 
 
-def item_parse(value: Any, /) -> int | str:
+def item_parse(value: object, /) -> int | str:
     """Normalize one local-version component as a nonnegative integer or lowercase string."""
-    ans: int | str
-    try:
-        ans = operator.index(value)
-    except Exception:
-        ans = str(value).lower()
-        if ans.strip(string_.digits + string_.ascii_lowercase):
-            raise
-        if not ans.strip(string_.digits):
-            ans = int(ans)
-    else:
-        if ans < 0:
+    lit: str
+    num: int
+    if isinstance(value, SupportsIndex):
+        num = operator.index(value)
+        if num < 0:
             raise ValueError
-    return ans
-
-
-def sort_key(item: int | str, /) -> tuple[bool, int | str]:
-    """Return key for sorting int before str in Local."""
-    return isinstance(item, int), item
+        else:
+            return num
+    else:
+        lit = str(value).lower()
+        if lit.strip(string_.digits + string_.ascii_lowercase):
+            raise ValueError
+        elif lit.strip(string_.digits):
+            return lit
+        else:
+            return int(lit)

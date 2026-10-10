@@ -17,8 +17,8 @@ def main() -> Never:
 def run() -> unittest.TextTestResult:
     """Run the discovered unit tests."""
     loader: unittest.TestLoader
-    suite: unittest.TestSuite
     runner: unittest.TextTestRunner
+    suite: unittest.TestSuite
     loader = unittest.TestLoader()
     suite = loader.discover("tests")
     runner = unittest.TextTestRunner(verbosity=2)
