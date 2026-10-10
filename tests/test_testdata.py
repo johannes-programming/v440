@@ -15,7 +15,6 @@ __all__: list[str] = [
     "TestTypeTotalAttrSetter",
     "TestTypeTotalMethod",
     "TestVersionEpochGo",
-    "TestVersionExamples",
 ]
 
 import contextlib
@@ -372,6 +371,8 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
                 self.go_valid_example(cls, example, **case)
             else:
                 self.go_invalid_example(cls, example, **case)
+            if typename == "Version":
+                self.go_version(example, **case)
 
     def go_invalid_example(
         self: Self,
@@ -525,6 +526,78 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
                 self.assertRaises(MiniLangError),
             ):
                 format(obj, spec)
+
+    def go_version(
+        self: Self, example: str, /, *, valid: bool, **kwargs: Any
+    ) -> None:
+        """Compare one version example with packaging.version behavior."""
+        base_version: str
+        current: Version
+        reference: Version_
+        if not valid:
+            with self.assertRaises(InvalidVersion):
+                Version_(example)
+            with self.assertRaises(VersionError):
+                Version(string=example)
+            return
+        current = Version(string=example)
+        reference = Version_(example)
+        self.assertEqual(reference, current.packaging)
+        base_version = reference.base_version
+        while base_version.endswith(".0"):
+            base_version = base_version[:-2]
+        self.assertTrue(base_version, current.public.base.packaging)
+        self.assertEqual(
+            reference.dev,
+            current.public.qual.dev.packaging,
+        )
+        self.assertEqual(
+            reference.local,
+            current.local.packaging,
+        )
+        self.assertEqual(
+            reference.is_devrelease,
+            current.public.qual.isdevrelease(),
+        )
+        self.assertEqual(
+            reference.is_postrelease,
+            current.public.qual.ispostrelease(),
+        )
+        self.assertEqual(
+            reference.is_prerelease,
+            current.public.qual.isprerelease(),
+        )
+        self.assertEqual(
+            reference.major,
+            current.public.base.release.major,
+        )
+        self.assertEqual(
+            reference.micro,
+            current.public.base.release.micro,
+        )
+        self.assertEqual(
+            reference.minor,
+            current.public.base.release.minor,
+        )
+        self.assertEqual(
+            reference.post,
+            current.public.qual.post.packaging,
+        )
+        self.assertEqual(
+            reference.pre,
+            current.public.qual.pre.packaging,
+        )
+        base_version = reference.public
+        self.assertTrue(base_version.startswith(current.public.base.packaging))
+        base_version = base_version[len(current.public.base.packaging) :]
+        self.assertTrue(base_version.endswith(current.public.qual.packaging))
+        if current.public.qual.packaging:
+            base_version = base_version[: -len(current.public.qual.packaging)]
+        self.assertEqual(base_version, ".0" * (len(base_version) // 2))
+        self.assertEqual(
+            reference.release[: len(current.public.base.release)],
+            current.public.base.release.packaging,
+        )
 
 
 class TestTypeFunction(unittest.TestCase, BaseTestType):
@@ -751,90 +824,6 @@ class TestVersionEpochGo(unittest.TestCase):
         self.assertEqual(str(version), full, msg=msg)
         self.assertIsInstance(version.public.base.epoch, int, msg=msg)
         self.assertEqual(version.public.base.epoch, part, msg=msg)
-
-
-class TestVersionExamples(unittest.TestCase):
-    """Compare recorded Version examples with packaging.version behavior."""
-
-    def go_version(
-        self: Self, example: str, /, *, valid: bool, **kwargs: Any
-    ) -> None:
-        """Compare one version example with packaging.version behavior."""
-        base_version: str
-        current: Version
-        reference: Version_
-        if not valid:
-            with self.assertRaises(InvalidVersion):
-                Version_(example)
-            with self.assertRaises(VersionError):
-                Version(string=example)
-            return
-        current = Version(string=example)
-        reference = Version_(example)
-        self.assertEqual(reference, current.packaging)
-        base_version = reference.base_version
-        while base_version.endswith(".0"):
-            base_version = base_version[:-2]
-        self.assertTrue(base_version, current.public.base.packaging)
-        self.assertEqual(
-            reference.dev,
-            current.public.qual.dev.packaging,
-        )
-        self.assertEqual(
-            reference.local,
-            current.local.packaging,
-        )
-        self.assertEqual(
-            reference.is_devrelease,
-            current.public.qual.isdevrelease(),
-        )
-        self.assertEqual(
-            reference.is_postrelease,
-            current.public.qual.ispostrelease(),
-        )
-        self.assertEqual(
-            reference.is_prerelease,
-            current.public.qual.isprerelease(),
-        )
-        self.assertEqual(
-            reference.major,
-            current.public.base.release.major,
-        )
-        self.assertEqual(
-            reference.micro,
-            current.public.base.release.micro,
-        )
-        self.assertEqual(
-            reference.minor,
-            current.public.base.release.minor,
-        )
-        self.assertEqual(
-            reference.post,
-            current.public.qual.post.packaging,
-        )
-        self.assertEqual(
-            reference.pre,
-            current.public.qual.pre.packaging,
-        )
-        base_version = reference.public
-        self.assertTrue(base_version.startswith(current.public.base.packaging))
-        base_version = base_version[len(current.public.base.packaging) :]
-        self.assertTrue(base_version.endswith(current.public.qual.packaging))
-        if current.public.qual.packaging:
-            base_version = base_version[: -len(current.public.qual.packaging)]
-        self.assertEqual(base_version, ".0" * (len(base_version) // 2))
-        self.assertEqual(
-            reference.release[: len(current.public.base.release)],
-            current.public.base.release.packaging,
-        )
-
-    def test_versions(self: Self, /) -> None:
-        """Run packaging-compatibility checks for every recorded Version example."""
-        example: str
-        case: dict[Any, Any]
-        for example, case in Util.util.examples["Version"].items():
-            with self.subTest(example=example):
-                self.go_version(example, **case)
 
 
 if __name__ == "__main__":
