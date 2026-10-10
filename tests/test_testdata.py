@@ -202,11 +202,11 @@ class TestSlicingGo(unittest.TestCase, BaseTestType):
         self: Self, typename: str, cls: type[Any], /, **typedict: Any
     ) -> None:
         """Run configured slicing cases for one sequence class."""
-        case: dict[str, Any]
-        case_name: str
-        for case_name, case in typedict.items():
-            with self.subTest(key=case_name):
-                self.go_cls_key(cls, **case)
+        blobdict: dict[str, Any]
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(key=blobname):
+                self.go_cls_key(cls, **blobdict)
 
     def go_cls_key(
         self: Self,
@@ -819,9 +819,9 @@ class TestVersionEpochGo(unittest.TestCase):
     def test_0(self: Self, /) -> None:
         """Run all configured epoch-assignment cases."""
         blobdict: dict[str, Any]
-        case_name: str
-        for case_name, blobdict in Util.util.data["epoch"][""].items():
-            with self.subTest(key=case_name):
+        blobname: str
+        for blobname, blobdict in Util.util.data["epoch"][""].items():
+            with self.subTest(key=blobname):
                 self.go(**blobdict)
 
     def go(
