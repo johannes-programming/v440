@@ -294,21 +294,21 @@ class TestTypeDeformatting(unittest.TestCase, BaseTestType):
         **typedict: dict[str, Any],
     ) -> None:
         """Run deformatting cases for one target class and reject duplicate example sets."""
-        example: tuple[str]
-        log: dict[tuple[str], str]
+        log: dict[tuple[str, ...], str]
+        strings: tuple[str, ...]
         testdict: dict[str, Any]
         testname: str
         self.assertGreaterEqual(len(typedict), 30)
         log = dict()
         for testname, testdict in typedict.items():
-            example = tuple(testdict["strings"])
-            with self.subTest(testname=testname, example=example):
+            strings = tuple(testdict["strings"])
+            with self.subTest(testname=testname, strings=strings):
                 self.assertNotIn(
-                    example,
+                    strings,
                     log,
-                    "conflict with %r" % log.get(example),
+                    "conflict with %r" % log.get(strings),
                 )
-                log[example] = testname
+                log[strings] = testname
                 self.go_blob(cls, **testdict)
 
 
