@@ -16,6 +16,11 @@ from v440._utils.setter import setter
 from v440.errors.MiniLangError import MiniLangError
 from v440.errors.VersionError import VersionError
 
+TABLE: dict[int, int] = str.maketrans(
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "abcdefghijklmnopqrstuvwxyz",
+)
+
 
 class CoreABC(Copyable):
     """Define shared construction, formatting, copying, and string behavior for version components."""
@@ -142,7 +147,7 @@ class CoreABC(Copyable):
     @setter
     def string(self: Self, value: object, /) -> None:
         """Replace this object's state from the supplied string-compatible value."""
-        self._string_fset(str(value).lower())
+        self._string_fset(str(value).translate(TABLE))
 
 
 def core_split(flat: str, /) -> tuple[str, str, str]:

@@ -5626,16 +5626,6 @@ full = "1!1.2.3"
 part = 1
 query = true
 
-[example.Local."K"]
-valid = false
-
-[example.Local."K".formatted]
-
-[example.Version."1+K"]
-valid = false
-
-[example.Version."1+K".formatted]
-
 [examples.Base.""]
 valid = false
 
@@ -7692,6 +7682,12 @@ str = "x1.y2.3"
 valid = true
 
 [examples.Local."x1.y2.3".formatted]
+
+[examples.Local."K"]
+str = "k"
+valid = true
+
+[examples.Local."K".formatted]
 
 [examples.Post.""]
 bool = false
@@ -11790,6 +11786,12 @@ valid = true
 valid = false
 
 [examples.Version."1+abc+def".formatted]
+
+[examples.Version."1+K"]
+str = "1+^"
+valid = true
+
+[examples.Version."1+K".formatted]
 
 [examples.Version.1-]
 valid = false
