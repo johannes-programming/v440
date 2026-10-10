@@ -386,7 +386,6 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid(
         self: Self,
-        typename: str,
         /,
         *args: Any,
         **kwargs: Any,
@@ -402,7 +401,8 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_deformatted(
         self: Self,
-        cls: Any,
+        typename: str,
+        cls: type[Any],
         example: str,
         /,
         *,
@@ -417,6 +417,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_formatted(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
@@ -435,6 +436,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_remake(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
@@ -455,6 +457,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_repr(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
@@ -473,6 +476,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_str(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
@@ -493,6 +497,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_synonym(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
@@ -514,6 +519,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_unformattable(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
