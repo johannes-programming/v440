@@ -368,12 +368,17 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **case: Any,
     ) -> None:
         if valid:
-            self.go_example_valid(cls, example, **case)
+            self.go_example_valid(typename, cls, example, **case)
         else:
-            self.go_example_invalid(cls, example, **case)
+            self.go_example_invalid(typename, cls, example, **case)
 
     def go_example_invalid(
-        self: Self, cls: type, example: str, /, **kwargs: Any
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        example: str,
+        /,
+        **kwargs: Any,
     ) -> None:
         """Verify that one invalid string is rejected with VersionError."""
         with self.assertRaises(VersionError):
@@ -381,6 +386,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid(
         self: Self,
+        typename: str,
         /,
         *args: Any,
         **kwargs: Any,
@@ -411,7 +417,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_formatted(
         self: Self,
-        cls: type,
+        cls: type[Any],
         example: str,
         /,
         *,
@@ -429,7 +435,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_remake(
         self: Self,
-        cls: Any,
+        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
@@ -449,7 +455,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_repr(
         self: Self,
-        cls: type,
+        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
@@ -467,7 +473,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_str(
         self: Self,
-        cls: type,
+        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
