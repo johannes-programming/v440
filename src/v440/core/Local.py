@@ -38,11 +38,11 @@ class Local(ListABC[int | str]):
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
         """Parse a local-version format specification into per-segment formatting constraints."""
+        item_spec: str
         literal_pattern: str
         magnitude: int
-        item_spec: str
-        separator: str
         parts: list[Any]
+        separator: str
         split: list[tuple[int, str, str]]
         if spec.strip("#^~.-_"):
             raise ValueError
@@ -64,12 +64,12 @@ class Local(ListABC[int | str]):
     def _format_parsed(self: Self, /, *parsed: tuple[int, str, str]) -> str:
         """Render local-version segments from parsed width, case, and separator constraints."""
         ans: str
-        item: int | str
-        index: int
         case_marker: str
         character: str
-        magnitude: int
+        index: int
+        item: int | str
         literal_pattern: str
+        magnitude: int
         separator: str
         ans = ""
         for index, item in enumerate(self):

@@ -76,8 +76,8 @@ class BaseTestType(ABC):
     def test_key0(self: Self, /) -> None:
         """Test under KEY0."""
         cls: type[Any]
-        typename: str
         typedict: dict[Any, Any]
+        typename: str
         for typename, typedict in Util.util.data[type(self).KEY0].items():
             cls = Util.import_("v440.core.{0}.{0}".format(typename))
             with self.subTest(typename=typename):
@@ -95,15 +95,15 @@ class TestOrder(unittest.TestCase):
         y: str,
     ) -> None:
         """Compare ordering results across packaging and v440 representations."""
-        left_reference: Version_
-        left_current: Version
-        left_packaging: Version_
-        right_reference: Version_
-        right_current: Version
-        right_packaging: Version_
         backwards: bool
         current: bool
+        left_current: Version
+        left_packaging: Version_
+        left_reference: Version_
         legacy: bool
+        right_current: Version
+        right_packaging: Version_
+        right_reference: Version_
         left_reference = Version_(x)
         left_current = Version(string=x)
         left_packaging = left_current.packaging
@@ -132,6 +132,8 @@ class TestOrder(unittest.TestCase):
     ) -> None:
         """Run one comparison operator across every ordered pair of valid versions."""
         i: int
+        left: str
+        right: str
         for i in range(len(pure) ** 2):
             left = pure[i // len(pure)]
             right = pure[i % len(pure)]
@@ -140,9 +142,11 @@ class TestOrder(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run every comparison operator across all valid version examples."""
-        pure: list[str]
-        example: str
         case: dict[str, Any]
+        example: str
+        func: abc.Callable[[Any, Any], Any]
+        operator_name: str
+        pure: list[str]
         pure = []
         for example, case in Util.util.data["examples"]["Version"].items():
             if case["valid"]:
@@ -158,16 +162,16 @@ class TestReleaseAlias(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run all configured release-alias cases."""
-        test_label: Any
         steps: Any
+        test_label: Any
         for test_label, steps in Util.util.data["release-key"][""].items():
             with self.subTest(test_label=test_label):
                 self.go(**steps)
 
     def go(self: Self, /, steps: list[Any]) -> None:
         """Apply the configured release-alias modification steps."""
-        version: Version
         step: dict[str, Any]
+        version: Version
         version = Version()
         for step in steps:
             self.modify(version=version, **step)
@@ -198,8 +202,8 @@ class TestSlicingGo(unittest.TestCase, BaseTestType):
         self: Self, typename: str, cls: type[Any], /, **kwargs: Any
     ) -> None:
         """Run configured slicing cases for one sequence class."""
-        case_name: str
         case: dict[str, Any]
+        case_name: str
         for case_name, case in kwargs.items():
             with self.subTest(key=case_name):
                 self.go_cls_key(cls, **case)
@@ -292,6 +296,8 @@ class TestTypeDeformatting(unittest.TestCase, BaseTestType):
         """Run deformatting cases for one target class and reject duplicate example sets."""
         example: tuple[str]
         log: dict[tuple[str], str]
+        testdict: dict[str, Any]
+        testname: str
         self.assertGreaterEqual(len(typedict), 30)
         log = dict()
         for testname, testdict in typedict.items():
@@ -319,6 +325,8 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **tables: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
+        case: dict[str, Any]
+        example: str
         for example, case in tables.items():
             with self.subTest(example=example):
                 self.go_example(typename, cls, example, **case)
@@ -454,8 +462,8 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **kwargs: Any,
     ) -> None:
         """Verify canonical string rendering for one valid example."""
-        obj: Any
         answer: str
+        obj: Any
         solution: str | None
         obj = cls(string=example)
         answer = str(obj)
@@ -475,8 +483,10 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **kwargs: Any,
     ) -> None:
         """Verify that a documented format synonym matches the empty specification."""
+        empty_rendering: str
         obj: Any
         syn: str
+        synonym_rendering: str
         syn = Util.util.data["synonymous-to-empty"][cls.__name__][""][
             "synonym"
         ]
@@ -496,6 +506,8 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         /,
         **kwargs: Any,
     ) -> None:
+        obj: Any
+        spec: str
         obj = cls(string=example)
         for spec in Util.util.data["unformattable"][cls.__name__]:
             with (
@@ -524,10 +536,10 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **kwargs: Any,
     ) -> None:
         """Compare one valid version format with packaging.version output."""
-        reference: Version_
-        expected: str
-        spec: str
         actual: str
+        expected: str
+        reference: Version_
+        spec: str
         reference = Version_(text)
         expected = str(reference)
         spec = "#." * len(reference.release)
@@ -618,8 +630,8 @@ class TestTypeFunction(unittest.TestCase, BaseTestType):
         **legacy_table: dict[Any, Any],
     ) -> None:
         """Run configured function cases for one core class."""
-        legacy_name: str
         case: dict[Any, Any]
+        legacy_name: str
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
@@ -705,8 +717,8 @@ class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
         **legacy_table: Any,
     ) -> None:
         """Run attribute-setter cases for one core class."""
-        legacy_name: str
         case: dict[Any, Any]
+        legacy_name: str
         cls = Util.import_(f"v440.core.{typename}.{typename}")
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
@@ -771,8 +783,8 @@ class TestTypeTotalMethod(unittest.TestCase, BaseTestType):
         **legacy_table: dict[Any, Any],
     ) -> None:
         """Run method cases for one core class."""
-        legacy_name: str
         case: dict[Any, Any]
+        legacy_name: str
         for legacy_name, case in legacy_table.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
@@ -806,8 +818,8 @@ class TestVersionEpochGo(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run all configured epoch-assignment cases."""
-        case_name: str
         case: dict[str, Any]
+        case_name: str
         for case_name, case in Util.util.data["epoch"][""].items():
             with self.subTest(key=case_name):
                 self.go(**case)

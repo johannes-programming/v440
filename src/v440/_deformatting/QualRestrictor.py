@@ -33,6 +33,7 @@ class QualInfo:
     @classmethod
     def by_string(cls: type[Self], text: str, /) -> Self:
         """Parse text as a PEP 440 qual, preserving literal splits."""
+        exc: AttributeError
         lit_rows: set[QualRow]
         matches: dict[str, str]
         num_row: QualRow
@@ -94,6 +95,9 @@ class QualInfo:
         num: str,
     ) -> tuple[str, ...]:
         """Return every lowercase literal prefix allowed for one segment."""
+        after: str
+        alias: str
+        before: str
         forms: set[str]
         triples: abc.Iterable[tuple[str, str, str]]
         forms = set()
@@ -200,8 +204,8 @@ class QualInfo:
 
 def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
     """Unite two literal rows, or return no row."""
-    left_literal: str
     ans: list[str]
+    left_literal: str
     right_literal: str
     ans = list()
     for left_literal, right_literal in zip(rowA, rowB):
@@ -230,6 +234,7 @@ class QualRestrictor:
         candidates: set[str]
         groups: map[tuple[str, ...]]
         row: QualRow
+        specs: map[str]
         # A literal row fixes observed spellings. Unobserved segments may use
         # a minimal inactive spelling so separators stay on the right segment.
         candidates = set()
@@ -392,9 +397,9 @@ class QualRestrictor:
 
     def union(self: Self, other: Self, /) -> Self:
         left_magnitude: int | None
-        right_magnitude: int | None
         lit_rows: set[QualRow]
         mag_row: list[int | None]
+        right_magnitude: int | None
         rowA: QualRow
         rowB: QualRow
         mag_row = list()

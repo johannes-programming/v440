@@ -409,8 +409,8 @@ class TestVersionReleaseAdditional(unittest.TestCase):
     def test_release_iterable(self: Self, /) -> None:
         # Test if release supports iteration
         """Verify release iterable behavior."""
-        version: Any
         result: list[Any]
+        version: Any
         version = Version()
         version.public.base.release.data = [1, 2, 3]
         result = list(version.public.base.release)
