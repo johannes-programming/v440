@@ -126,16 +126,20 @@ class Local(ListABC[int | str]):
 
 def item_parse(value: Any, /) -> int | str:
     """Normalize one local-version component as a nonnegative integer or lowercase string."""
-    ans: int | str
+    lit: str
+    num: int
     try:
-        ans = operator.index(value)
+        num = operator.index(value)
     except Exception:
-        ans = str(value)
-        if ans.strip(string_.digits + string_.ascii_lowercase):
+        lit = str(value).lower()
+        if lit.strip(string_.digits + string_.ascii_lowercase):
             raise
-        if not ans.strip(string_.digits):
-            ans = int(ans)
+        if lit.strip(string_.digits):
+            return lit
+        else:
+            return int(lit)
     else:
-        if ans < 0:
+        if num < 0:
             raise ValueError
-    return ans
+        else:
+            return num
