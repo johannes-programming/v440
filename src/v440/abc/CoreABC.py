@@ -12,6 +12,7 @@ from copyable import Copyable
 from datarepr import oxford
 
 from v440._utils.Cfg import Cfg
+from v440._utils.lower_ascii import lower_ascii
 from v440._utils.setter import setter
 from v440.errors.MiniLangError import MiniLangError
 from v440.errors.VersionError import VersionError
@@ -142,7 +143,7 @@ class CoreABC(Copyable):
     @setter
     def string(self: Self, value: object, /) -> None:
         """Replace this object's state from the supplied string-compatible value."""
-        self._string_fset(str(value).lower())
+        self._string_fset(lower_ascii(str(value)))
 
 
 def core_split(flat: str, /) -> tuple[str, str, str]:
