@@ -6,7 +6,7 @@ __all__: list[str] = ["Local"]
 
 import operator
 import string as string_
-from typing import Any, Self
+from typing import Any, Self, SupportsIndex
 
 from v440._deformatting.LocalRestrictor import LocalRestrictor
 from v440._utils.Cfg import Cfg
@@ -128,18 +128,17 @@ def item_parse(value: Any, /) -> int | str:
     """Normalize one local-version component as a nonnegative integer or lowercase string."""
     lit: str
     num: int
-    try:
+    if isinstance(value, SupportsIndex):
         num = operator.index(value)
-    except Exception:
-        lit = str(value).lower()
-        if lit.strip(string_.digits + string_.ascii_lowercase):
-            raise
-        if lit.strip(string_.digits):
-            return lit
-        else:
-            return int(lit)
-    else:
         if num < 0:
             raise ValueError
         else:
             return num
+    else:
+        lit = str(value).lower()
+        if lit.strip(string_.digits + string_.ascii_lowercase):
+            raise ValueError
+        elif lit.strip(string_.digits):
+            return lit
+        else:
+            return int(lit)
