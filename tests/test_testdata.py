@@ -67,7 +67,7 @@ class BaseTestType(ABC):
 
     @abstractmethod
     def go_type(
-        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+        self: Self, typename: str, cls: type[Any], /, **cases: Any
     ) -> None: ...
     @abstractmethod
     def subTest(
@@ -199,12 +199,12 @@ class TestSlicingGo(unittest.TestCase, BaseTestType):
     KEY0 = "slicing"
 
     def go_type(
-        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+        self: Self, typename: str, cls: type[Any], /, **cases: Any
     ) -> None:
         """Run configured slicing cases for one sequence class."""
         case: dict[str, Any]
         case_name: str
-        for case_name, case in kwargs.items():
+        for case_name, case in cases.items():
             with self.subTest(key=case_name):
                 self.go_cls_key(cls, **case)
 
@@ -291,16 +291,16 @@ class TestTypeDeformatting(unittest.TestCase, BaseTestType):
         typename: str,
         cls: type[Any],
         /,
-        **typedict: dict[str, Any],
+        **cases: dict[str, Any],
     ) -> None:
         """Run deformatting cases for one target class and reject duplicate example sets."""
         example: tuple[str]
         log: dict[tuple[str], str]
         testdict: dict[str, Any]
         testname: str
-        self.assertGreaterEqual(len(typedict), 30)
+        self.assertGreaterEqual(len(cases), 30)
         log = dict()
-        for testname, testdict in typedict.items():
+        for testname, testdict in cases.items():
             example = tuple(testdict["strings"])
             with self.subTest(testname=testname, example=example):
                 self.assertNotIn(
@@ -322,12 +322,12 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         typename: str,
         cls: type[Any],
         /,
-        **tables: Any,
+        **cases: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
         case: dict[str, Any]
         example: str
-        for example, case in tables.items():
+        for example, case in cases.items():
             with self.subTest(example=example):
                 self.go_example(typename, cls, example, **case)
 
@@ -520,18 +520,18 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         self: Self,
         typename: str,
         cls: type[Any],
-        text: str,
+        example: str,
         /,
         **kwargs: Any,
     ) -> None:
         if typename != "Version":
             return
-        self.go_example_valid_version_format(text, **kwargs)
-        self.go_example_valid_version_mirror(text, **kwargs)
+        self.go_example_valid_version_format(example, **kwargs)
+        self.go_example_valid_version_mirror(example, **kwargs)
 
     def go_example_valid_version_format(
         self: Self,
-        text: str,
+        example: str,
         /,
         **kwargs: Any,
     ) -> None:
@@ -540,11 +540,11 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         expected: str
         reference: Version_
         spec: str
-        reference = Version_(text)
+        reference = Version_(example)
         expected = str(reference)
         spec = "#." * len(reference.release)
         spec = spec[:-1]
-        actual = format(Version(string=text), spec)
+        actual = format(Version(string=example), spec)
         self.assertEqual(expected, actual)
 
     def go_example_valid_version_mirror(
@@ -627,12 +627,12 @@ class TestTypeFunction(unittest.TestCase, BaseTestType):
         typename: str,
         cls: type[Any],
         /,
-        **legacy_table: dict[Any, Any],
+        **cases: dict[Any, Any],
     ) -> None:
         """Run configured function cases for one core class."""
         case: dict[Any, Any]
         legacy_name: str
-        for legacy_name, case in legacy_table.items():
+        for legacy_name, case in cases.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
 
@@ -664,7 +664,7 @@ class TestTypeNames(unittest.TestCase, BaseTestType):
     KEY0 = "synonymous-to-empty"
 
     def go_type(
-        self: Self, typename: str, cls: type[Any], /, **kwargs: Any
+        self: Self, typename: str, cls: type[Any], /, **cases: Any
     ) -> None:
         """Verify that one core class can be imported by its public type name."""
         self.assertEqual(cls.__name__, typename)
@@ -694,12 +694,12 @@ class TestTypeSlots(unittest.TestCase, BaseTestType):
         typename: str,
         cls: type[Any],
         /,
-        **typetests: dict[str, Any],
+        **cases: dict[str, Any],
     ) -> None:
         """Run slot-protection cases for one class."""
         testdict: dict[str, Any]
         testname: str
-        for testname, testdict in typetests.items():
+        for testname, testdict in cases.items():
             with self.subTest(testname=testname):
                 self.go_blob(cls, **testdict)
 
@@ -714,13 +714,13 @@ class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
         typename: str,
         cls: type[Any],
         /,
-        **legacy_table: Any,
+        **cases: Any,
     ) -> None:
         """Run attribute-setter cases for one core class."""
         case: dict[Any, Any]
         legacy_name: str
         cls = Util.import_(f"v440.core.{typename}.{typename}")
-        for legacy_name, case in legacy_table.items():
+        for legacy_name, case in cases.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
 
@@ -780,12 +780,12 @@ class TestTypeTotalMethod(unittest.TestCase, BaseTestType):
         typename: str,
         cls: type[Any],
         /,
-        **legacy_table: dict[Any, Any],
+        **cases: dict[Any, Any],
     ) -> None:
         """Run method cases for one core class."""
         case: dict[Any, Any]
         legacy_name: str
-        for legacy_name, case in legacy_table.items():
+        for legacy_name, case in cases.items():
             with self.subTest(legacy_name=legacy_name):
                 self.go_task(cls, **case)
 

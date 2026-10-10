@@ -31,7 +31,7 @@ class QualInfo:
     lit_rows: frozenset[QualRow]
 
     @classmethod
-    def by_string(cls: type[Self], text: str, /) -> Self:
+    def by_string(cls: type[Self], string: str, /) -> Self:
         """Parse text as a PEP 440 qual, preserving literal splits."""
         exc: AttributeError
         lit_rows: set[QualRow]
@@ -40,14 +40,14 @@ class QualInfo:
         # num_row follows the configured PEP 440 qualifier pattern.
         # lit_rows holds every grammar-valid literal split of that numeric row.
         try:
-            matches = Cfg.fullmatches("qual", text)
+            matches = Cfg.fullmatches("qual", string)
         except AttributeError as exc:
             raise ValueError(
-                f"not a PEP 440-conforming qual: {text!r}"
+                f"not a PEP 440-conforming qual: {string!r}"
             ) from exc
 
         num_row = cls._num_row_from_matches(matches)
-        lit_rows = cls._all_literal_rows(text, num_row)
+        lit_rows = cls._all_literal_rows(string, num_row)
 
         # A successful reference parse must itself correspond to at least one
         # enumerated segmentation.  Keeping this as an internal assertion
@@ -202,13 +202,13 @@ class QualInfo:
             )
 
 
-def lit_row_union(rowA: QualRow, rowB: QualRow) -> set[QualRow]:
+def lit_row_union(left_row: QualRow, right_row: QualRow) -> set[QualRow]:
     """Unite two literal rows, or return no row."""
     ans: list[str]
     left_literal: str
     right_literal: str
     ans = list()
-    for left_literal, right_literal in zip(rowA, rowB):
+    for left_literal, right_literal in zip(left_row, right_row):
         if left_literal == "?":
             ans.append(right_literal)
         elif right_literal == "?":
@@ -376,12 +376,12 @@ class QualRestrictor:
         return True
 
     @classmethod
-    def by_string(cls: type[Self], text: str, /) -> Self:
+    def by_string(cls: type[Self], string: str, /) -> Self:
         """Build a restrictor from one qualifier string."""
         mag_row: list[int | None]
         num: str
         qual_info: QualInfo
-        qual_info = QualInfo.by_string(text)
+        qual_info = QualInfo.by_string(string)
         mag_row = list()
         for num in qual_info.num_row:
             if num == "?":
@@ -400,8 +400,8 @@ class QualRestrictor:
         lit_rows: set[QualRow]
         mag_row: list[int | None]
         right_magnitude: int | None
-        rowA: QualRow
-        rowB: QualRow
+        left_row: QualRow
+        right_row: QualRow
         mag_row = list()
         for left_magnitude, right_magnitude in zip(
             self.mag_row, other.mag_row
@@ -417,9 +417,9 @@ class QualRestrictor:
             else:
                 raise ValueError
         lit_rows = set()
-        for rowA in self.lit_rows:
-            for rowB in other.lit_rows:
-                lit_rows.update(lit_row_union(rowA, rowB))
+        for left_row in self.lit_rows:
+            for right_row in other.lit_rows:
+                lit_rows.update(lit_row_union(left_row, right_row))
         return type(self)(
             mag_row=tuple(mag_row),  # type: ignore[arg-type]
             lit_rows=frozenset(lit_rows),
