@@ -368,11 +368,9 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         self.assertIn("valid", case)
         with self.subTest(valid=case["valid"]):
             if case["valid"]:
-                self.go_example_valid(cls, example, **case)
+                self.go_example_valid(typename, cls, example, **case)
             else:
                 self.go_example_invalid(typename, cls, example, **case)
-            if typename == "Version":
-                self.go_version(example, **case)
 
     def go_example_invalid(
         self: Self,
@@ -392,6 +390,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid(
         self: Self,
+        typename: str,
         /,
         *args: Any,
         **kwargs: Any,
@@ -535,6 +534,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_version(
         self: Self,
+        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
