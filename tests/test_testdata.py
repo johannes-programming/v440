@@ -383,6 +383,10 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         """Verify that one invalid string is rejected with VersionError."""
         with self.assertRaises(VersionError):
             cls(string=example)
+        if typename != "Version":
+            return
+        with self.assertRaises(InvalidVersion):
+            Version_(example)
 
     def go_example_valid(
         self: Self,
@@ -771,10 +775,6 @@ class TestVersionExamples(unittest.TestCase):
         current: Version
         reference: Version_
         if not valid:
-            with self.assertRaises(InvalidVersion):
-                Version_(example)
-            with self.assertRaises(VersionError):
-                Version(string=example)
             return
         current = Version(string=example)
         reference = Version_(example)
