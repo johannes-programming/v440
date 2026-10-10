@@ -370,12 +370,13 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             if case["valid"]:
                 self.go_example_valid(cls, example, **case)
             else:
-                self.go_example_invalid(cls, example, **case)
+                self.go_example_invalid(typename, cls, example, **case)
             if typename == "Version":
                 self.go_version(example, **case)
 
     def go_example_invalid(
         self: Self,
+        typename: str,
         cls: type[Any],
         example: str,
         /,
@@ -384,6 +385,10 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         """Verify that one invalid string is rejected with VersionError."""
         with self.assertRaises(VersionError):
             cls(string=example)
+        if typename != "Version":
+            return
+        with self.assertRaises(InvalidVersion):
+            Version_(example)
 
     def go_example_valid(
         self: Self,
@@ -399,6 +404,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         self.go_example_valid_str(*args, **kwargs)
         self.go_example_valid_synonym(*args, **kwargs)
         self.go_example_valid_unformattable(*args, **kwargs)
+        self.go_example_valid_version(*args, **kwargs)
 
     def go_example_valid_deformatted(
         self: Self,
@@ -527,19 +533,16 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             ):
                 format(obj, spec)
 
-    def go_version(
-        self: Self, example: str, /, *, valid: bool, **kwargs: Any
+    def go_example_valid_version(
+        self: Self,
+        example: str,
+        /,
+        **kwargs: Any,
     ) -> None:
         """Compare one version example with packaging.version behavior."""
         base_version: str
         current: Version
         reference: Version_
-        if not valid:
-            with self.assertRaises(InvalidVersion):
-                Version_(example)
-            with self.assertRaises(VersionError):
-                Version(string=example)
-            return
         current = Version(string=example)
         reference = Version_(example)
         self.assertEqual(reference, current.packaging)
