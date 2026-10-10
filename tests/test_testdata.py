@@ -368,8 +368,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         self.go_example_valid_str(*args, **kwargs)
         self.go_example_valid_synonym(*args, **kwargs)
         self.go_example_valid_unformattable(*args, **kwargs)
-        self.go_example_valid_version_format(*args, **kwargs)
-        self.go_example_valid_version_mirror(*args, **kwargs)
+        self.go_example_valid_version(*args, **kwargs)
 
     def go_example_valid_deformatted(
         self: Self,
@@ -505,10 +504,21 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             ):
                 format(obj, spec)
 
-    def go_example_valid_version_format(
+    def go_example_valid_version(
         self: Self,
         typename: str,
         cls: type[Any],
+        text: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        if typename != "Version":
+            return
+        self.go_example_valid_version_format(text, **kwargs)
+        self.go_example_valid_version_mirror(text, **kwargs)
+
+    def go_example_valid_version_format(
+        self: Self,
         text: str,
         /,
         **kwargs: Any,
@@ -518,8 +528,6 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         expected: str
         spec: str
         actual: str
-        if typename != "Version":
-            return
         reference = Version_(text)
         expected = str(reference)
         spec = "#." * len(reference.release)
@@ -529,8 +537,6 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
 
     def go_example_valid_version_mirror(
         self: Self,
-        typename: str,
-        cls: type[Any],
         example: str,
         /,
         **kwargs: Any,
@@ -539,8 +545,6 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         base_version: str
         current: Version
         reference: Version_
-        if typename != "Version":
-            return
         current = Version(string=example)
         reference = Version_(example)
         self.assertEqual(reference, current.packaging)
