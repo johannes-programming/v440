@@ -353,20 +353,13 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **tables: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
-        split: dict[Any, Any]
-        example: str
-        case: dict[Any, Any]
-        split = {False: dict(), True: dict()}
         for example, case in tables.items():
             with self.subTest(example=example):
                 self.assertIn("valid", case)
-            split[case["valid"]][example] = case
-        for example, case in split[False].items():
-            with self.subTest(valid=False, example=example):
-                self.go_invalid_example(cls, example, **case)
-        for example, case in split[True].items():
-            with self.subTest(valid=True, example=example):
-                self.go_valid_example(cls, example, **case)
+                if case["valid"]:
+                    self.go_valid_example(cls, example, **case)
+                else:
+                    self.go_invalid_example(cls, example, **case)
 
     def go_invalid_example(
         self: Self, cls: type, example: str, /, **kwargs: Any
