@@ -67,7 +67,7 @@ class QualInfo:
         values: list[str]
         values = [Cfg.cfg.data["qual-restrictor"]["absent"]] * 5
 
-        pre_l = matches["pre_lit"]
+        pre_l = matches["a_lit"] or matches["b_lit"] or matches["rc_lit"]
         if pre_l:
             pre_l = pre_l.lower()
             if pre_l in {"alpha", "a"}:
