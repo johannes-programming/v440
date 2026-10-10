@@ -142,14 +142,14 @@ class TestOrder(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run every comparison operator across all valid version examples."""
-        case: dict[str, Any]
+        blobdict: dict[str, Any]
         example: str
         func: abc.Callable[[Any, Any], Any]
         operator_name: str
         pure: list[str]
         pure = []
-        for example, case in Util.util.data["examples"]["Version"].items():
-            if case["valid"]:
+        for example, blobdict in Util.util.data["examples"]["Version"].items():
+            if blobdict["valid"]:
                 pure.append(example)
         for operator_name in ("eq", "ge", "gt", "le", "lt", "ne"):
             func = getattr(operator, operator_name)
@@ -296,20 +296,20 @@ class TestTypeDeformatting(unittest.TestCase, BaseTestType):
         """Run deformatting cases for one target class and reject duplicate example sets."""
         log: dict[tuple[str, ...], str]
         strings: tuple[str, ...]
-        testdict: dict[str, Any]
-        testname: str
+        blobdict: dict[str, Any]
+        blobname: str
         self.assertGreaterEqual(len(typedict), 30)
         log = dict()
-        for testname, testdict in typedict.items():
-            strings = tuple(testdict["strings"])
-            with self.subTest(testname=testname, strings=strings):
+        for blobname, blobdict in typedict.items():
+            strings = tuple(blobdict["strings"])
+            with self.subTest(blobname=blobname, strings=strings):
                 self.assertNotIn(
                     strings,
                     log,
                     "conflict with %r" % log.get(strings),
                 )
-                log[strings] = testname
-                self.go_blob(cls, **testdict)
+                log[strings] = blobname
+                self.go_blob(cls, **blobdict)
 
 
 class TestTypeExamples(unittest.TestCase, BaseTestType):
@@ -325,11 +325,11 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         **typedict: Any,
     ) -> None:
         """Partition examples by validity and run the corresponding checks."""
-        case: dict[str, Any]
+        blobdict: dict[str, Any]
         example: str
-        for example, case in typedict.items():
+        for example, blobdict in typedict.items():
             with self.subTest(example=example):
-                self.go_example(typename, cls, example, **case)
+                self.go_example(typename, cls, example, **blobdict)
 
     def go_example(
         self: Self,
@@ -339,12 +339,12 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         /,
         *,
         valid: bool,
-        **case: Any,
+        **blobdict: Any,
     ) -> None:
         if valid:
-            self.go_example_valid(typename, cls, example, **case)
+            self.go_example_valid(typename, cls, example, **blobdict)
         else:
-            self.go_example_invalid(typename, cls, example, **case)
+            self.go_example_invalid(typename, cls, example, **blobdict)
 
     def go_example_invalid(
         self: Self,
@@ -630,11 +630,11 @@ class TestTypeFunction(unittest.TestCase, BaseTestType):
         **typedict: dict[Any, Any],
     ) -> None:
         """Run configured function cases for one core class."""
-        case: dict[Any, Any]
+        blobdict: dict[Any, Any]
         legacy_name: str
-        for legacy_name, case in typedict.items():
+        for legacy_name, blobdict in typedict.items():
             with self.subTest(legacy_name=legacy_name):
-                self.go_task(cls, **case)
+                self.go_task(cls, **blobdict)
 
     def go_task(
         self: Self,
@@ -697,11 +697,11 @@ class TestTypeSlots(unittest.TestCase, BaseTestType):
         **typedict: dict[str, Any],
     ) -> None:
         """Run slot-protection cases for one class."""
-        testdict: dict[str, Any]
-        testname: str
-        for testname, testdict in typedict.items():
-            with self.subTest(testname=testname):
-                self.go_blob(cls, **testdict)
+        blobdict: dict[str, Any]
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
+                self.go_blob(cls, **blobdict)
 
 
 class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
@@ -717,12 +717,12 @@ class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
         **typedict: Any,
     ) -> None:
         """Run attribute-setter cases for one core class."""
-        case: dict[Any, Any]
+        blobdict: dict[Any, Any]
         legacy_name: str
         cls = Util.import_(f"v440.core.{typename}.{typename}")
-        for legacy_name, case in typedict.items():
+        for legacy_name, blobdict in typedict.items():
             with self.subTest(legacy_name=legacy_name):
-                self.go_task(cls, **case)
+                self.go_task(cls, **blobdict)
 
     def go_task(
         self: Self,
@@ -783,11 +783,11 @@ class TestTypeTotalMethod(unittest.TestCase, BaseTestType):
         **typedict: dict[Any, Any],
     ) -> None:
         """Run method cases for one core class."""
-        case: dict[Any, Any]
+        blobdict: dict[Any, Any]
         legacy_name: str
-        for legacy_name, case in typedict.items():
+        for legacy_name, blobdict in typedict.items():
             with self.subTest(legacy_name=legacy_name):
-                self.go_task(cls, **case)
+                self.go_task(cls, **blobdict)
 
     def go_task(
         self: Self,
@@ -818,11 +818,11 @@ class TestVersionEpochGo(unittest.TestCase):
 
     def test_0(self: Self, /) -> None:
         """Run all configured epoch-assignment cases."""
-        case: dict[str, Any]
+        blobdict: dict[str, Any]
         case_name: str
-        for case_name, case in Util.util.data["epoch"][""].items():
+        for case_name, blobdict in Util.util.data["epoch"][""].items():
             with self.subTest(key=case_name):
-                self.go(**case)
+                self.go(**blobdict)
 
     def go(
         self: Self,
