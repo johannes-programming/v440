@@ -368,13 +368,13 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         self.assertIn("valid", case)
         with self.subTest(valid=case["valid"]):
             if case["valid"]:
-                self.go_valid_example(cls, example, **case)
+                self.go_example_valid(cls, example, **case)
             else:
-                self.go_invalid_example(cls, example, **case)
+                self.go_example_invalid(cls, example, **case)
             if typename == "Version":
                 self.go_version(example, **case)
 
-    def go_invalid_example(
+    def go_example_invalid(
         self: Self,
         cls: type[Any],
         example: str,
@@ -385,22 +385,22 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         with self.assertRaises(VersionError):
             cls(string=example)
 
-    def go_valid_example(
+    def go_example_valid(
         self: Self,
         /,
         *args: Any,
         **kwargs: Any,
     ) -> None:
         """Run every rendering and reconstruction check for one valid example."""
-        self.go_valid_example_deformatted(*args, **kwargs)
-        self.go_valid_example_formatted(*args, **kwargs)
-        self.go_valid_example_remake(*args, **kwargs)
-        self.go_valid_example_repr(*args, **kwargs)
-        self.go_valid_example_str(*args, **kwargs)
-        self.go_valid_example_synonym(*args, **kwargs)
-        self.go_valid_example_unformattable(*args, **kwargs)
+        self.go_example_valid_deformatted(*args, **kwargs)
+        self.go_example_valid_formatted(*args, **kwargs)
+        self.go_example_valid_remake(*args, **kwargs)
+        self.go_example_valid_repr(*args, **kwargs)
+        self.go_example_valid_str(*args, **kwargs)
+        self.go_example_valid_synonym(*args, **kwargs)
+        self.go_example_valid_unformattable(*args, **kwargs)
 
-    def go_valid_example_deformatted(
+    def go_example_valid_deformatted(
         self: Self,
         cls: Any,
         example: str,
@@ -415,7 +415,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         if deformatted is not None:
             self.assertEqual(spec, deformatted)
 
-    def go_valid_example_formatted(
+    def go_example_valid_formatted(
         self: Self,
         cls: type,
         example: str,
@@ -433,7 +433,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             with self.subTest(spec=spec, target=target):
                 self.assertEqual(target, format(obj, spec))
 
-    def go_valid_example_remake(
+    def go_example_valid_remake(
         self: Self,
         cls: Any,
         example: str,
@@ -453,7 +453,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             msg="example=%r, remake=%r, spec=%r" % (example, remake, spec),
         )
 
-    def go_valid_example_repr(
+    def go_example_valid_repr(
         self: Self,
         cls: type,
         example: str,
@@ -471,7 +471,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         if repr_ is not None:
             self.assertEqual(repr(obj), repr_)
 
-    def go_valid_example_str(
+    def go_example_valid_str(
         self: Self,
         cls: type,
         example: str,
@@ -491,7 +491,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         if solution is not None:
             self.assertEqual(str(obj), solution)
 
-    def go_valid_example_synonym(
+    def go_example_valid_synonym(
         self: Self,
         cls: type[Any],
         example: str,
@@ -512,7 +512,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         ):
             self.assertEqual(empty_rendering, synonym_rendering)
 
-    def go_valid_example_unformattable(
+    def go_example_valid_unformattable(
         self: Self,
         cls: type[Any],
         example: str,
