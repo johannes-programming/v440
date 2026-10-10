@@ -4,7 +4,7 @@ from __future__ import annotations
 
 __all__: list[str] = ["QualABCPair"]
 
-import string
+import string as string_
 from typing import NamedTuple, Self
 
 
@@ -19,19 +19,19 @@ class QualABCPair(NamedTuple):
         return self.lit + self.mag * "#"
 
     @classmethod
-    def by_spec(cls: type[Self], text: str, /) -> Self:
+    def by_spec(cls: type[Self], spec: str, /) -> Self:
         """Parse a qualifier format fragment into its literal and numeric width."""
         lit: str
-        lit = text.rstrip("#")
-        return cls(lit=lit, mag=len(text) - len(lit))
+        lit = spec.rstrip("#")
+        return cls(lit=lit, mag=len(spec) - len(lit))
 
     @classmethod
-    def by_string(cls: type[Self], text: str, /) -> Self:
+    def by_string(cls: type[Self], string: str, /) -> Self:
         """Infer a qualifier literal and numeric-width constraint from one rendering."""
         lit: str
         mag: str
-        lit = text.rstrip(string.digits)
-        mag = text[len(lit) :]
+        lit = string.rstrip(string_.digits)
+        mag = string[len(lit) :]
         if mag.startswith("0"):
             return cls(lit=lit, mag=len(mag))
         else:

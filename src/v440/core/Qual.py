@@ -39,9 +39,9 @@ class Qual(NestedABC):
             ans = ("", 0)
         return ans + (self.post, self.dev)
 
-    def _deformat(self: Self, body: str, /) -> QualRestrictor:
+    def _deformat(self: Self, string: str, /) -> QualRestrictor:
         """Infer formatting constraints that reproduce the supplied rendering."""
-        return QualRestrictor.by_string(body)
+        return QualRestrictor.by_string(string)
 
     @classmethod
     def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
