@@ -50,11 +50,6 @@ class Util(enum.Enum):
         with file.open("rb") as stream:
             return tomllib.load(stream)
 
-    @functools.cached_property
-    def examples(self: Self, /) -> dict[str, Any]:
-        """Return the recorded example cases from the shared test data."""
-        return cast(dict[str, Any], Util.util.data.get("examples", {}))
-
     @classmethod
     def import_(cls: type[Self], qualname: str, /) -> Any:
         """Import the object named by a fully qualified test-data reference."""
@@ -149,7 +144,7 @@ class TestOrder(unittest.TestCase):
         example: str
         case: dict[str, Any]
         pure = []
-        for example, case in Util.util.examples["Version"].items():
+        for example, case in Util.util.data["examples"]["Version"].items():
             if case["valid"]:
                 pure.append(example)
         for operator_name in ("eq", "ge", "gt", "le", "lt", "ne"):
