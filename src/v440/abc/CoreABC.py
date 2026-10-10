@@ -79,7 +79,7 @@ class CoreABC(Copyable):
         return format(self, "")
 
     @abstractmethod
-    def _deformat(self: Self, body: str) -> Any: ...
+    def _deformat(self: Self, string: str, /) -> Any: ...
 
     @classmethod
     @abstractmethod
