@@ -631,9 +631,9 @@ class TestTypeFunction(unittest.TestCase, BaseTestType):
     ) -> None:
         """Run configured function cases for one core class."""
         blobdict: dict[Any, Any]
-        legacy_name: str
-        for legacy_name, blobdict in typedict.items():
-            with self.subTest(legacy_name=legacy_name):
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
                 self.go_task(cls, **blobdict)
 
     def go_task(
@@ -718,10 +718,10 @@ class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
     ) -> None:
         """Run attribute-setter cases for one core class."""
         blobdict: dict[Any, Any]
-        legacy_name: str
+        blobname: str
         cls = Util.import_(f"v440.core.{typename}.{typename}")
-        for legacy_name, blobdict in typedict.items():
-            with self.subTest(legacy_name=legacy_name):
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
                 self.go_task(cls, **blobdict)
 
     def go_task(
@@ -784,9 +784,9 @@ class TestTypeTotalMethod(unittest.TestCase, BaseTestType):
     ) -> None:
         """Run method cases for one core class."""
         blobdict: dict[Any, Any]
-        legacy_name: str
-        for legacy_name, blobdict in typedict.items():
-            with self.subTest(legacy_name=legacy_name):
+        blobname: str
+        for blobname, blobdict in typedict.items():
+            with self.subTest(blobname=blobname):
                 self.go_task(cls, **blobdict)
 
     def go_task(
