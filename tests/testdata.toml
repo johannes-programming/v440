@@ -11861,6 +11861,11 @@ valid = true
 
 [examples.Version."1.0+X-ABC".formatted]
 
+[examples.Version."1.0+café"]
+valid = false
+
+[examples.Version."1.0+café".formatted]
+
 [examples.Version."1.0+deadbeef"]
 deformatted = ".#"
 legacy = "Edge Cases / Special Forms"
@@ -12103,6 +12108,11 @@ str = "1.dev5"
 valid = true
 
 [examples.Version."1.0dev5".formatted]
+
+[examples.Version."1.0 "]
+valid = true
+
+[examples.Version."1.0 ".formatted]
 
 [examples.Version."1.1.0-alpha"]
 deformatted = "..#-alpha"
@@ -12770,6 +12780,11 @@ valid = true
 
 [examples.Version."1.post1".formatted]
 
+[examples.Version."1.١"]
+valid = false
+
+[examples.Version."1.١".formatted]
+
 [examples.Version."10!0.0.0+001_ab12"]
 deformatted = "..#+###_"
 str = "10!0+1.ab12"
@@ -13346,6 +13361,11 @@ valid = true
 valid = false
 
 [examples.Version.x.formatted]
+
+[examples.Version." 1.0"]
+valid = true
+
+[examples.Version." 1.0".formatted]
 
 [function.Version."data-property.dragon"]
 query = 9001
