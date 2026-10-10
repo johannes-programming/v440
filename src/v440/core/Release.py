@@ -19,7 +19,7 @@ class Release(ListABC[int]):
     __slots__ = ()
 
     @classmethod
-    def _data_parse(cls: type[Self], value: list[Any], /) -> list[int]:
+    def _data_parse(cls: type[Self], /, *value: SupportsIndex) -> list[int]:
         """Normalize release items and remove insignificant trailing zeros."""
         parsed: list[int]
         parsed = list(map(item_parse, value))

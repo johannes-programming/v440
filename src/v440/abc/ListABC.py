@@ -7,7 +7,7 @@ __all__: list[str] = ["ListABC"]
 from abc import abstractmethod
 from collections import abc
 from functools import cmp_to_key
-from typing import Any, Self, TypeVar
+from typing import Any, Self, SupportsIndex, TypeVar
 
 import setdoc
 from datahold import BaseDataObject, HoldList
@@ -83,7 +83,9 @@ class ListABC(HoldList[Item], CoreABC):
     @classmethod
     @abstractmethod
     def _data_parse(
-        cls: type[Self], value: list[Any], /
+        cls: type[Self],
+        /,
+        *value: Any,
     ) -> abc.Iterable[Item]: ...
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
@@ -102,7 +104,7 @@ class ListABC(HoldList[Item], CoreABC):
     @setter
     def data(self: Self, value: abc.Iterable[Any], /) -> None:
         """Replace sequence data after normalizing every supplied item."""
-        self._data = tuple(self._data_parse(list(value)))
+        self._data = tuple(self._data_parse(*value))
 
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
         """Sort the normalized sequence data in place."""

@@ -22,7 +22,9 @@ class Local(ListABC[int | str]):
 
     @classmethod
     def _data_parse(
-        cls: type[Self], value: list[Any], /
+        cls: type[Self],
+        /,
+        *value: object,
     ) -> tuple[int | str, ...]:
         """Normalize local-version sequence items."""
         return tuple(map(item_parse, value))
@@ -124,7 +126,7 @@ class Local(ListABC[int | str]):
         )
 
 
-def item_parse(value: Any, /) -> int | str:
+def item_parse(value: object, /) -> int | str:
     """Normalize one local-version component as a nonnegative integer or lowercase string."""
     lit: str
     num: int
