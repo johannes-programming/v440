@@ -10,6 +10,7 @@ from typing import Any, Self
 
 from v440._deformatting.LocalRestrictor import LocalRestrictor
 from v440._utils.Cfg import Cfg
+from v440._utils.list_key import list_key
 from v440._utils.setter import setter
 from v440.abc.ListABC import ListABC
 
@@ -88,10 +89,7 @@ class Local(ListABC[int | str]):
         ans = ans[:-1]
         return ans
 
-    @classmethod
-    def _sort(cls: type[Self], value: Any, /) -> tuple[bool, int | str]:
-        """Return the comparison key for one local-version component."""
-        return type(value) is int, value
+    _sort = staticmethod(list_key)
 
     def _string_fset(self: Self, value: str, /) -> None:
         """Parse and normalize a local-version identifier string."""
@@ -121,7 +119,7 @@ class Local(ListABC[int | str]):
         """Sort local-version components using PEP 440 ordering by default."""
         self.data = sorted(
             self,
-            key=sort_key if key is None else key,
+            key=list_key if key is None else key,
             reverse=reverse,
         )
 
@@ -141,8 +139,3 @@ def item_parse(value: Any, /) -> int | str:
         if ans < 0:
             raise ValueError
     return ans
-
-
-def sort_key(item: int | str, /) -> tuple[bool, int | str]:
-    """Return key for sorting int before str in Local."""
-    return isinstance(item, int), item
