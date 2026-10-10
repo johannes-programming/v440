@@ -33,7 +33,7 @@ from typing import Any, ClassVar, Self, cast
 from packaging.version import InvalidVersion
 from packaging.version import Version as Version_
 
-from v440 import MiniLangError, Version, VersionError
+from v440 import MiniLangError, PEP440Error, Version
 
 
 class Util(enum.Enum):
@@ -346,8 +346,8 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         /,
         **kwargs: Any,
     ) -> None:
-        """Verify that one invalid string is rejected with VersionError."""
-        with self.assertRaises(VersionError):
+        """Verify that one invalid string is rejected with PEP440Error."""
+        with self.assertRaises(PEP440Error):
             cls(string=example)
         if typename != "Version":
             return
