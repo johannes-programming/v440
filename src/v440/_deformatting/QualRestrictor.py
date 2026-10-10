@@ -24,7 +24,7 @@ class QualRow(NamedTuple, Generic[Item]):
 
 
 @dataclass(frozen=True, kw_only=True)
-class QualRestrictor(NamedTuple):
+class QualRestrictor:
     lit_row: QualRow[str]
     mag_row: QualRow[int]
     bracket_rows: frozenset[QualRow[tuple[str, str]]]
@@ -42,7 +42,6 @@ class QualRestrictor(NamedTuple):
         lit_row_ = list()
         mag_row_ = list()
         bracket_row_ = list()
-        bracket_rows_ = set()
         for name in ("a", "b", "rc"):
             if matches[f"{name}_lit"]:
                 lit_row_.append(matches["pre_lit"])
@@ -54,12 +53,6 @@ class QualRestrictor(NamedTuple):
                 lit_row_.append("")
                 mag_row_.append(0)
                 bracket_row_.append(("", ""))
-        for name in ("post", "dev"):
-            lit_row_.append(matches[f"{name}_lit"])
-            mag_row_.append(to_mag(matches[f"{name}_num"]))
-            bracket_row_.append(
-                (matches[f"{name}_prefix"], matches[f"{name}_suffix"])
-            )
         if matches["post_impl"]:
             lit_row_.append("-")
             mag_row_.append(to_mag(matches["post_impl_num"]))
@@ -73,8 +66,8 @@ class QualRestrictor(NamedTuple):
         lit_row_.append(matches["dev_lit"])
         mag_row_.append(to_mag(matches["dev_num"]))
         bracket_row_.append((matches["dev_prefix"], matches["dev_suffix"]))
+        bracket_rows_ = {QualRow(*bracket_row_)}
         if matches["post_impl"]:
-            bracket_rows_ = {QualRow(*bracket_row_)}
             return cls(
                 lit_row=QualRow(*lit_row_),
                 mag_row=QualRow(*mag_row_),
