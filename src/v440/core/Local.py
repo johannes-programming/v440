@@ -26,11 +26,11 @@ class Local(ListABC[int | str]):
         """Normalize local-version sequence items."""
         return tuple(map(item_parse, value))
 
-    def _deformat(self: Self, body: str, /) -> LocalRestrictor:
+    def _deformat(self: Self, string: str, /) -> LocalRestrictor:
         """Infer formatting constraints from one local-version rendering."""
         if self:
             return LocalRestrictor.by_parts(
-                *Cfg.cfg.patterns["local_splitter"].split(body)
+                *Cfg.cfg.patterns["local_splitter"].split(string)
             )
         else:
             return LocalRestrictor.by_parts()

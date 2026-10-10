@@ -29,11 +29,11 @@ class Public(NestedABC):
         """Return the comparison key for this value."""
         return self.base, self.qual
 
-    def _deformat(self: Self, body: str, /) -> PublicRestrictor:
+    def _deformat(self: Self, string: str, /) -> PublicRestrictor:
         """Infer formatting constraints that reproduce the supplied rendering."""
         base: str
         qual: str
-        base, qual = split_public(body)
+        base, qual = split_public(string)
         return PublicRestrictor(
             base=self.base._deformat(base),
             qual=self.qual._deformat(qual),
