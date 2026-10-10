@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 __all__: list[str] = [
-    "TestFormat",
     "TestOrder",
     "TestReleaseAlias",
     "TestSlicingGo",
@@ -88,33 +87,6 @@ class BaseTestType(ABC):
             cls = Util.import_("v440.core.{0}.{0}".format(typename))
             with self.subTest(typename=typename):
                 self.go_type(typename, cls, **typedict)
-
-
-class TestFormat(unittest.TestCase):
-    """Check v440 formatting against packaging.version canonical output."""
-
-    def go(self: Self, text: str, /, *, valid: bool, **kwargs: Any) -> None:
-        """Compare one valid version format with packaging.version output."""
-        reference: Version_
-        expected: str
-        spec: str
-        actual: str
-        if not valid:
-            return
-        reference = Version_(text)
-        expected = str(reference)
-        spec = "#." * len(reference.release)
-        spec = spec[:-1]
-        actual = format(Version(string=text), spec)
-        self.assertEqual(expected, actual)
-
-    def test_0(self: Self, /) -> None:
-        """Run formatting checks for every recorded Version example."""
-        example: str
-        case: dict[str, Any]
-        for example, case in Util.util.examples["Version"].items():
-            with self.subTest(example=example):
-                self.go(example, **case)
 
 
 class TestOrder(unittest.TestCase):
@@ -402,6 +374,7 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         self.go_example_valid_synonym(*args, **kwargs)
         self.go_example_valid_unformattable(*args, **kwargs)
         self.go_example_valid_version(*args, **kwargs)
+        self.go_example_valid_version_format(*args, **kwargs)
 
     def go_example_valid_deformatted(
         self: Self,
@@ -609,6 +582,28 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
             reference.release[: len(current.public.base.release)],
             current.public.base.release.packaging,
         )
+
+    def go_example_valid_version_format(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        text: str,
+        /,
+        **kwargs: Any,
+    ) -> None:
+        """Compare one valid version format with packaging.version output."""
+        reference: Version_
+        expected: str
+        spec: str
+        actual: str
+        if typename != "Version":
+            return
+        reference = Version_(text)
+        expected = str(reference)
+        spec = "#." * len(reference.release)
+        spec = spec[:-1]
+        actual = format(Version(string=text), spec)
+        self.assertEqual(expected, actual)
 
 
 class TestTypeFunction(unittest.TestCase, BaseTestType):
