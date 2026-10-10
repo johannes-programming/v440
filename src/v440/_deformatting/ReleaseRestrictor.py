@@ -20,22 +20,25 @@ class ReleaseRestrictor(tuple[Mag, ...]):
         return ans
 
     @classmethod
-    def by_string(cls: type[Self], body: str, /) -> Self:
+    def by_string(cls: type[Self], string: str, /) -> Self:
         """Infer release-component width constraints from one observed rendering."""
         mags: list[Mag]
+        part: str
         mags = list()
-        for part in body.split("."):
+        for part in string.split("."):
             if part == "0" or not part.startswith("0"):
                 mags.append(Mag(-len(part)))
             else:
                 mags.append(Mag(len(part)))
-        if body.endswith(".0"):
+        if string.endswith(".0"):
             mags[-1] = Mag(1)
         return cls(tuple(mags))
 
     def union(self: Self, other: Self, /) -> Self:
         """Combine these release-width constraints with another compatible observation."""
+        left_magnitude: Mag
         mags: list[Mag]
+        right_magnitude: Mag
         mags = list()
         for left_magnitude, right_magnitude in zip(self, other):
             mags.append(left_magnitude.union(right_magnitude))

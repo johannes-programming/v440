@@ -29,20 +29,20 @@ class QualABCRestrictor:
         return cls(QualABCPair(lit, mag))
 
     @classmethod
-    def by_spec(cls: type[Self], text: str, /) -> Self:
+    def by_spec(cls: type[Self], spec: str, /) -> Self:
         """Parse a qualifier format fragment into a constraint."""
-        if text == "":
+        if spec == "":
             return cls()
         else:
-            return cls(QualABCPair.by_spec(text))
+            return cls(QualABCPair.by_spec(spec))
 
     @classmethod
-    def by_string(cls: type[Self], text: str, /) -> Self:
+    def by_string(cls: type[Self], string: str, /) -> Self:
         """Infer a qualifier constraint from one observed rendering."""
-        if text == "":
+        if string == "":
             return cls()
         else:
-            return cls(QualABCPair.by_string(text))
+            return cls(QualABCPair.by_string(string))
 
     def union(self: Self, other: Self, /) -> Self:
         """Combine this qualifier constraint with another compatible observation."""

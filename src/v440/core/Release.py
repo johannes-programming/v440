@@ -19,7 +19,7 @@ class Release(ListABC[int]):
     __slots__ = ()
 
     @classmethod
-    def _data_parse(cls: type[Self], value: list[Any], /) -> list[int]:
+    def _data_parse(cls: type[Self], /, *value: SupportsIndex) -> list[int]:
         """Normalize release items and remove insignificant trailing zeros."""
         parsed: list[int]
         parsed = list(map(item_parse, value))
@@ -27,9 +27,9 @@ class Release(ListABC[int]):
             parsed.pop()
         return parsed
 
-    def _deformat(self: Self, body: str, /) -> ReleaseRestrictor:
+    def _deformat(self: Self, string: str, /) -> ReleaseRestrictor:
         """Infer formatting constraints from one release-component rendering."""
-        return ReleaseRestrictor.by_string(body)
+        return ReleaseRestrictor.by_string(string)
 
     def _delitem(
         self: Self,

@@ -1,7 +1,7 @@
 [errors]
 deformat = "No common format specifier for {oxford}!"
-format = "Invalid format specifier {spec} for type {Self}!"
-setter = "Invalid value {value} of type {Value} for {Self}.{func}!"
+format = "Invalid format specifier {spec} for type {Self!r}!"
+setter = "Invalid value {value!r} of type {Value!r} for {Self}.{func}!"
 
 [inactive-specs]
 a_f = [

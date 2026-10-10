@@ -7,11 +7,12 @@ __all__: list[str] = ["ListABC"]
 from abc import abstractmethod
 from collections import abc
 from functools import cmp_to_key
-from typing import Any, Self, TypeVar
+from typing import Any, Self, SupportsIndex, TypeVar
 
 import setdoc
 from datahold import BaseDataObject, HoldList
 
+from v440._utils.list_key import list_key
 from v440._utils.setter import setter
 from v440.abc.CoreABC import CoreABC
 
@@ -37,7 +38,7 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__ge__(self, other)
-        return tuple(map(cmpkey, self)) >= tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) >= tuple(map(list_key, other))
 
     @setdoc.basic
     def __gt__(self: Self, other: object, /) -> Any:
@@ -46,7 +47,7 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__gt__(self, other)
-        return tuple(map(cmpkey, self)) > tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) > tuple(map(list_key, other))
 
     @setdoc.basic
     def __init__(
@@ -66,7 +67,7 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__le__(self, other)
-        return tuple(map(cmpkey, self)) <= tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) <= tuple(map(list_key, other))
 
     @setdoc.basic
     def __lt__(self: Self, other: object, /) -> Any:
@@ -75,14 +76,16 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__lt__(self, other)
-        return tuple(map(cmpkey, self)) < tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) < tuple(map(list_key, other))
 
     __repr__ = HoldList.__repr__
 
     @classmethod
     @abstractmethod
     def _data_parse(
-        cls: type[Self], value: list[Any], /
+        cls: type[Self],
+        /,
+        *value: Any,
     ) -> abc.Iterable[Item]: ...
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
@@ -101,7 +104,7 @@ class ListABC(HoldList[Item], CoreABC):
     @setter
     def data(self: Self, value: abc.Iterable[Any], /) -> None:
         """Replace sequence data after normalizing every supplied item."""
-        self._data = tuple(self._data_parse(list(value)))
+        self._data = tuple(self._data_parse(*value))
 
     def sort(self: Self, /, *, key: Any = None, reverse: Any = False) -> None:
         """Sort the normalized sequence data in place."""
@@ -128,8 +131,3 @@ def cmp(x: Any, y: Any) -> Any:
             raise
         else:
             return type_order
-
-
-def cmpkey(x: int | str, /) -> tuple[bool, int | str]:
-    """Return key for sorting int before str."""
-    return isinstance(x, int), x
