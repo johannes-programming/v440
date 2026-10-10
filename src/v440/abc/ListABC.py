@@ -12,6 +12,7 @@ from typing import Any, Self, TypeVar
 import setdoc
 from datahold import BaseDataObject, HoldList
 
+from v440._utils.list_key import list_key
 from v440._utils.setter import setter
 from v440.abc.CoreABC import CoreABC
 
@@ -37,7 +38,7 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__ge__(self, other)
-        return tuple(map(cmpkey, self)) >= tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) >= tuple(map(list_key, other))
 
     @setdoc.basic
     def __gt__(self: Self, other: object, /) -> Any:
@@ -46,7 +47,7 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__gt__(self, other)
-        return tuple(map(cmpkey, self)) > tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) > tuple(map(list_key, other))
 
     @setdoc.basic
     def __init__(
@@ -66,7 +67,7 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__le__(self, other)
-        return tuple(map(cmpkey, self)) <= tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) <= tuple(map(list_key, other))
 
     @setdoc.basic
     def __lt__(self: Self, other: object, /) -> Any:
@@ -75,7 +76,7 @@ class ListABC(HoldList[Item], CoreABC):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__lt__(self, other)
-        return tuple(map(cmpkey, self)) < tuple(map(cmpkey, other))
+        return tuple(map(list_key, self)) < tuple(map(list_key, other))
 
     __repr__ = HoldList.__repr__
 
@@ -128,8 +129,3 @@ def cmp(x: Any, y: Any) -> Any:
             raise
         else:
             return type_order
-
-
-def cmpkey(x: int | str, /) -> tuple[bool, int | str]:
-    """Return key for sorting int before str."""
-    return isinstance(x, int), x
