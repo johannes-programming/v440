@@ -33,15 +33,15 @@ class Pre(QualABC[Literal["a", "b", "rc"]]):
         cls: type[Self], spec: str, /
     ) -> tuple[QualABCRestrictor, QualABCRestrictor, QualABCRestrictor]:
         """Parse a pre-release format specification into alpha, beta, and release-candidate constraints."""
-        alpha: QualABCRestrictor
-        beta: QualABCRestrictor
+        a: QualABCRestrictor
+        b: QualABCRestrictor
         matches: dict[str, str]
         rc: QualABCRestrictor
         matches = Cfg.fullmatches("pre_f", spec)
-        alpha = QualABCRestrictor.by_spec(matches["a_f"])
-        beta = QualABCRestrictor.by_spec(matches["b_f"])
+        a = QualABCRestrictor.by_spec(matches["a_f"])
+        b = QualABCRestrictor.by_spec(matches["b_f"])
         rc = QualABCRestrictor.by_spec(matches["rc_f"])
-        return alpha, beta, rc
+        return a, b, rc
 
     def _format_parsed(
         self: Self,

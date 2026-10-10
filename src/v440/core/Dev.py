@@ -35,8 +35,8 @@ class Dev(QualABC[Literal["dev"]]):
         cls: type[Self], spec: str, /
     ) -> tuple[QualABCPair | None]:
         """Parse a development-qualifier format specification into literal and width constraints."""
-        pair: QualABCPair
         matches: dict[str, str]
+        pair: QualABCPair
         if spec == "":
             return (None,)
         matches = Cfg.fullmatches("dev_f", spec)

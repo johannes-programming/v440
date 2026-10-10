@@ -112,11 +112,11 @@ class PreRestrictor(NamedTuple):
 
     @classmethod
     def by_string(
-        cls: type[Self], text: str, /, *, name: Literal["", "a", "b", "rc"]
+        cls: type[Self], string: str, /, *, name: Literal["", "a", "b", "rc"]
     ) -> Self:
         """Infer formatting constraints from one observed rendering."""
         if name:
-            return cls(**{name: QualABCRestrictor.by_string(text)})
+            return cls(**{name: QualABCRestrictor.by_string(string)})
         else:
             return cls()
 

@@ -57,10 +57,10 @@ class Cfg(enum.Enum):
     def patterns(self: Self, /) -> dict[str, re.Pattern[str]]:
         """Compile the configured grammar fragments into named regular-expression patterns."""
         ans: dict[str, re.Pattern[str]]
-        parts: dict[str, str]
         name: str
-        template: str
+        parts: dict[str, str]
         pattern: str
+        template: str
         ans = dict()
         parts = dict()
         for name, template in self.data["patterns"].items():

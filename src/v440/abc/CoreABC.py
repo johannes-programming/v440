@@ -33,6 +33,7 @@ class CoreABC(Copyable):
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
         """Render this object according to a v440 format specification."""
+        msg: str
         parsed: tuple[Any, ...]
         try:
             parsed = self._format_parse(str(format_spec))
@@ -79,7 +80,7 @@ class CoreABC(Copyable):
         return format(self, "")
 
     @abstractmethod
-    def _deformat(self: Self, body: str) -> Any: ...
+    def _deformat(self: Self, string: str, /) -> Any: ...
 
     @classmethod
     @abstractmethod
@@ -109,7 +110,10 @@ class CoreABC(Copyable):
     @classmethod
     def deformat(cls: type[Self], /, *strings: object) -> str:
         """Infer one format specification that reproduces all supplied renderings."""
+        acc: Any
         flat: str
+        flats: list[str]
+        msg: str
         if strings == ():
             return ""
         flats = list(sorted(set(map(str, strings))))
@@ -138,13 +142,17 @@ class CoreABC(Copyable):
     @setter
     def string(self: Self, value: object, /) -> None:
         """Replace this object's state from the supplied string-compatible value."""
-        self._string_fset(str(value).lower())
+        text: str
+        text = str(value)
+        if not text.strip().isascii():
+            raise ValueError
+        self._string_fset(text.lower())
 
 
 def core_split(flat: str, /) -> tuple[str, str, str]:
     """Split surrounding whitespace from a core version string."""
-    leading: str
     core: str
+    leading: str
     trailing: str
     core = flat.strip()
     if core:
