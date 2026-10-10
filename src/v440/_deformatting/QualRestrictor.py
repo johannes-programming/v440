@@ -77,7 +77,7 @@ class QualRestrictor:
         for j in range(5):
             if not lit_row_[j]:
                 continue
-            if i == -1 or (not bracket_row_[i][1]) or bracket_row_[j][0]:
+            if i == -1 or (not bracket_row_[i][1]) or mag_row_[i] or bracket_row_[j][0]:
                 i = j
                 continue
             for bracket_row_ in map(list, frozenset(bracket_rows_)):
