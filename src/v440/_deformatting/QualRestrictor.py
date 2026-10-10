@@ -58,7 +58,9 @@ class QualRestrictor:
             raise ValueError("No qualifier format satisfies these constraints")
         return min(candidates, key=lambda item: (len(item), item))
 
-    def _options(self: Self, index: int, bracket: tuple[str, str], /) -> tuple[str, ...]:
+    def _options(
+        self: Self, index: int, bracket: tuple[str, str], /
+    ) -> tuple[str, ...]:
         """List possible formats for a field, including canonical shorthand."""
         lit = self.lit_row[index]
         mag = self.mag_row[index]
@@ -110,7 +112,10 @@ class QualRestrictor:
                 width = len(matches["post_num_f"])
             else:
                 actual_lit = matches[f"{name}_lit"]
-                bracket = (matches[f"{name}_prefix"], matches[f"{name}_suffix"])
+                bracket = (
+                    matches[f"{name}_prefix"],
+                    matches[f"{name}_suffix"],
+                )
                 width = len(matches[f"{name}_num_f"])
             if actual_lit != expected_lit:
                 return False
@@ -226,9 +231,10 @@ class QualRestrictor:
                 else:
                     magnitudes.append(min(left, right))
 
-
         brackets: set[QualRow[tuple[str, str]]] = set()
-        for left_row, right_row in product(self.bracket_rows, other.bracket_rows):
+        for left_row, right_row in product(
+            self.bracket_rows, other.bracket_rows
+        ):
             combined: list[tuple[str, str]] = []
             for index in range(5):
                 if (
@@ -238,7 +244,9 @@ class QualRestrictor:
                 ):
                     break
                 combined.append(
-                    left_row[index] if self.lit_row[index] else right_row[index]
+                    left_row[index]
+                    if self.lit_row[index]
+                    else right_row[index]
                 )
             else:
                 brackets.add(QualRow(*combined))
