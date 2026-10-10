@@ -355,11 +355,22 @@ class TestTypeExamples(unittest.TestCase, BaseTestType):
         """Partition examples by validity and run the corresponding checks."""
         for example, case in tables.items():
             with self.subTest(example=example):
-                self.assertIn("valid", case)
-                if case["valid"]:
-                    self.go_valid_example(cls, example, **case)
-                else:
-                    self.go_invalid_example(cls, example, **case)
+                self.go_example(typename, cls, example, **case)
+
+    def go_example(
+        self: Self,
+        typename: str,
+        cls: type[Any],
+        example: str,
+        /,
+        *,
+        valid: bool,
+        **case: Any,
+    ) -> None:
+        if valid:
+            self.go_valid_example(cls, example, **case)
+        else:
+            self.go_invalid_example(cls, example, **case)
 
     def go_invalid_example(
         self: Self, cls: type, example: str, /, **kwargs: Any
