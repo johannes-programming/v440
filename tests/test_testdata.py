@@ -218,8 +218,8 @@ class TestSlicingGo(unittest.TestCase, BaseTestType):
         query: Any,
         solution: str,
         start: Any = None,
-        stop: Any = None,
         step: Any = None,
+        stop: Any = None,
     ) -> None:
         """Apply one configured slice assignment and verify its result or declared exception."""
         ctx: Any
@@ -294,10 +294,10 @@ class TestTypeDeformatting(unittest.TestCase, BaseTestType):
         **typedict: dict[str, Any],
     ) -> None:
         """Run deformatting cases for one target class and reject duplicate example sets."""
-        log: dict[tuple[str, ...], str]
-        strings: tuple[str, ...]
         blobdict: dict[str, Any]
         blobname: str
+        log: dict[tuple[str, ...], str]
+        strings: tuple[str, ...]
         self.assertGreaterEqual(len(typedict), 30)
         log = dict()
         for blobname, blobdict in typedict.items():

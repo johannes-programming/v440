@@ -33,7 +33,6 @@ class QualInfo:
     @classmethod
     def by_string(cls: type[Self], string: str, /) -> Self:
         """Parse text as a PEP 440 qual, preserving literal splits."""
-        exc: AttributeError
         lit_rows: set[QualRow]
         matches: dict[str, str]
         num_row: QualRow
@@ -397,10 +396,10 @@ class QualRestrictor:
 
     def union(self: Self, other: Self, /) -> Self:
         left_magnitude: int | None
+        left_row: QualRow
         lit_rows: set[QualRow]
         mag_row: list[int | None]
         right_magnitude: int | None
-        left_row: QualRow
         right_row: QualRow
         mag_row = list()
         for left_magnitude, right_magnitude in zip(

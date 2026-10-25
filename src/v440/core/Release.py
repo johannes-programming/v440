@@ -108,11 +108,6 @@ class Release(ListABC[int]):
         data[key] = value
         self.data = data
 
-    @classmethod
-    def _sort(cls: type[Self], value: int, /) -> tuple[bool, int]:
-        """Return the comparison key for one normalized sequence item."""
-        return True, value
-
     def _string_fset(self: Self, value: str, /) -> None:
         """Parse a string into this instance's normalized fields."""
         if value.strip(string_.digits + "."):
