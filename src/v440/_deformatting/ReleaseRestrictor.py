@@ -4,8 +4,7 @@ from __future__ import annotations
 
 __all__: list[str] = ["ReleaseRestrictor"]
 
-import operator
-from typing import Self, SupportsIndex
+from typing import Self
 
 from v440._deformatting.Mag import Mag
 
@@ -45,12 +44,3 @@ class ReleaseRestrictor(tuple[Mag, ...]):
         for left_magnitude in self[len(mags) :] or other[len(mags) :]:
             Mag(0).union(left_magnitude)
         return type(self)(tuple(mags))
-
-
-def item_parse(value: SupportsIndex, /) -> int:
-    """Convert one release-format width to a nonnegative integer."""
-    ans: int
-    ans = operator.index(value)
-    if ans < 0:
-        raise ValueError
-    return ans

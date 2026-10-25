@@ -7,7 +7,7 @@ __all__: list[str] = ["ListABC"]
 from abc import abstractmethod
 from collections import abc
 from functools import cmp_to_key
-from typing import Any, Self, SupportsIndex, TypeVar
+from typing import Any, Self, TypeVar
 
 import setdoc
 from datahold import BaseDataObject, HoldList

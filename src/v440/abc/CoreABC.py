@@ -147,18 +147,3 @@ class CoreABC(Copyable):
         if not text.strip().isascii():
             raise ValueError
         self._string_fset(text.lower())
-
-
-def core_split(flat: str, /) -> tuple[str, str, str]:
-    """Split surrounding whitespace from a core version string."""
-    core: str
-    leading: str
-    trailing: str
-    core = flat.strip()
-    if core:
-        leading, trailing = flat.split(core)
-    elif flat:
-        raise ValueError
-    else:
-        leading, trailing = "", ""
-    return leading, core, trailing
