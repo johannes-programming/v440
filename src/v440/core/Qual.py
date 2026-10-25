@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from v440._deformatting.QualRestrictor import QualRestrictor
-
 __all__: list[str] = ["Qual"]
 
 from typing import Any, Final, Self
 
+from v440._deformatting.QualRestrictor import QualRestrictor
 from v440._utils.Cfg import Cfg
 from v440._utils.setter import setter
 from v440.abc.NestedABC import NestedABC

@@ -91,8 +91,6 @@ class Local(ListABC[int | str]):
         ans = ans[:-1]
         return ans
 
-    _sort = staticmethod(list_key)
-
     def _string_fset(self: Self, value: str, /) -> None:
         """Parse and normalize a local-version identifier string."""
         if value:
