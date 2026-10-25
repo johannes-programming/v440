@@ -61,17 +61,19 @@ rebase:
 reset:
 	git reset HEAD~1 ;
 
-test: dist
+test: dist py311
 	mkdir dist/out/ ;
-	conda run -n base python make/env.py test_v440 --python=3.11 --recreate >/dev/null;
-	conda run -n test_v440 pip install dist/*.tar.gz >/dev/null;
-	conda run -n test_v440 python make/run_introspection.py > dist/out/introspection_out.txt 2> dist/out/introspection_err.txt || true;
-	conda run -n test_v440 pip install mypy >/dev/null;
-	conda run -n test_v440 python -m mypy --exclude build --exclude dist --strict . > dist/out/mypy_dir_out.txt 2> dist/out/mypy_dir_err.txt || true;
-	conda run -n test_v440 python -m mypy --strict -p v440 > dist/out/mypy_pkg_out.txt 2> dist/out/mypy_pkg_err.txt || true;
-	conda run -n base python make/env.py test_v440 --python=3.11 --recreate >/dev/null;
-	conda run -n test_v440 pip install dist/*.tar.gz >/dev/null;
-	conda run -n test_v440 python run_tests.py > dist/out/tests_out.txt 2> dist/out/tests_err.txt || true;
+	conda run -n py311 pip install "style_checker>=0.1.2,<0.2";
+	conda run -n py311 python -m style_checker -- "**/*.py" > dist/out/style_checker_out.txt 2> dist/out/style_checker_err.txt || true;
+	conda run -n base python make/env.py test_v440_mypy --python=3.11 --recreate >/dev/null;
+	conda run -n test_v440_mypy pip install dist/*.tar.gz >/dev/null;
+	conda run -n test_v440_mypy python make/run_introspection.py > dist/out/introspection_out.txt 2> dist/out/introspection_err.txt || true;
+	conda run -n test_v440_mypy pip install mypy >/dev/null;
+	conda run -n test_v440_mypy python -m mypy --exclude build --exclude dist --strict . > dist/out/mypy_dir_out.txt 2> dist/out/mypy_dir_err.txt || true;
+	conda run -n test_v440_mypy python -m mypy --strict -p v440 > dist/out/mypy_pkg_out.txt 2> dist/out/mypy_pkg_err.txt || true;
+	conda run -n base python make/env.py test_v440_tests --python=3.11 --recreate >/dev/null;
+	conda run -n test_v440_tests pip install dist/*.tar.gz >/dev/null;
+	conda run -n test_v440_tests python run_tests.py > dist/out/tests_out.txt 2> dist/out/tests_err.txt || true;
 	zip -r dist/out.zip dist/out;
 
 toml_sorted: py311

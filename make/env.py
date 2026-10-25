@@ -34,6 +34,7 @@ def env_list() -> list[str]:
     """List conda envs."""
     ans: list[str]
     data: Any
+    details: dict[str, Any]
     result: subprocess.CompletedProcess  # type: ignore[type-arg]
     try:
         result = subprocess.run(
