@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "v440"
-version = "2.0.54.post0"
+version = "2.0.54.post1"
 description = "This project provides mutable version objects in accordance with PEP440."
 readme = "README.rst"
 keywords = []
@@ -45,6 +45,12 @@ urls.Download = "https://pypi.org/project/v440/#files"
 urls.Index = "https://pypi.org/project/v440/"
 urls.Source = "https://github.com/johannes-programming/v440/"
 urls.Website = "https://v440.johannes-programming.online/"
+
+[tool.ruff]
+line-length = 79
+lint.select = [
+    "I",
+]
 
 [tool.pyproject-fmt]
 indent = 4
