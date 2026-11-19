@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "v440"
-version = "2.0.54.post2"
+version = "2.0.54.post3"
 description = "This project provides mutable version objects in accordance with PEP440."
 readme = "README.rst"
 keywords = []
@@ -49,7 +49,16 @@ urls.Website = "https://v440.johannes-programming.online/"
 [tool.ruff]
 line-length = 79
 lint.select = [
+    "ANN001",
+    "ANN002",
+    "ANN003",
+    "F",
     "I",
+    "PLE0604",
+    "PLE0605",
+    "RUF022",
+    "RUF068",
+    "UP035",
 ]
 
 [tool.pyproject-fmt]
