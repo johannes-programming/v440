@@ -86,7 +86,8 @@ class ListABC(HoldList[Item], CoreABC):
         cls: type[Self],
         /,
         *value: Any,
-    ) -> abc.Iterable[Item]: ...
+    ) -> abc.Iterable[Item]:
+        "..."
 
     def _init_other(self: Self, other: abc.Iterable[Item] | None, /) -> None:
         """Initialize sequence data from an optional iterable."""

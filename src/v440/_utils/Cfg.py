@@ -26,6 +26,17 @@ class Cfg(enum.Enum):
         file = resources.files("v440._utils").joinpath("cfg.toml")
         return tomllib.loads(file.read_text(encoding="utf-8"))
 
+    @functools.cached_property
+    def dev_forms(self: Self, /) -> frozenset[str]:
+        after: str
+        before: str
+        forms: set[str]
+        forms = set()
+        for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
+            for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
+                forms.add(before + "dev" + after)
+        return frozenset(forms)
+
     @classmethod
     def fullmatches(
         cls: type[Self], /, key: str, value: str

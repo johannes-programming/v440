@@ -39,11 +39,13 @@ class NestedABC(cmp3.CmpABC, CoreABC):
         return datarepr(type(self).__name__, **self._todict())
 
     @abstractmethod
-    def _cmp(self: Self, /) -> Any: ...
+    def _cmp(self: Self, /) -> Any:
+        "..."
 
     @classmethod
     @abstractmethod
-    def _init_factories(cls: type[Self], /) -> dict[str, Any]: ...
+    def _init_factories(cls: type[Self], /) -> dict[str, Any]:
+        "..."
 
     def _init_other(self: Self, other: Self | None, /) -> None:
         """Initialize nested fields from defaults or a compatible source object."""
@@ -56,4 +58,5 @@ class NestedABC(cmp3.CmpABC, CoreABC):
                 setattr(self, attribute, factory(getattr(other, attribute)))
 
     @abstractmethod
-    def _todict(self: Self, /) -> dict[str, Any]: ...
+    def _todict(self: Self, /) -> dict[str, Any]:
+        "..."

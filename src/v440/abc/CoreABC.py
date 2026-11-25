@@ -24,11 +24,13 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __bool__(self: Self, /) -> bool: ...
+    def __bool__(self: Self, /) -> bool:
+        "..."
 
     @abstractmethod
     @setdoc.basic
-    def __eq__(self: Self, other: object, /) -> bool: ...
+    def __eq__(self: Self, other: object, /) -> bool:
+        "..."
 
     @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
@@ -48,11 +50,13 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __ge__(self: Self, other: Self, /) -> bool: ...
+    def __ge__(self: Self, other: Self, /) -> bool:
+        "..."
 
     @abstractmethod
     @setdoc.basic
-    def __gt__(self: Self, other: Self, /) -> bool: ...
+    def __gt__(self: Self, other: Self, /) -> bool:
+        "..."
 
     @setdoc.basic
     def __init__(
@@ -64,15 +68,18 @@ class CoreABC(Copyable):
 
     @abstractmethod
     @setdoc.basic
-    def __le__(self: Self, other: Self, /) -> bool: ...
+    def __le__(self: Self, other: Self, /) -> bool:
+        "..."
 
     @abstractmethod
     @setdoc.basic
-    def __lt__(self: Self, other: Self, /) -> bool: ...
+    def __lt__(self: Self, other: Self, /) -> bool:
+        "..."
 
     @abstractmethod
     @setdoc.basic
-    def __repr__(self: Self, /) -> str: ...
+    def __repr__(self: Self, /) -> str:
+        "..."
 
     @setdoc.basic
     def __str__(self: Self, /) -> str:
@@ -80,14 +87,17 @@ class CoreABC(Copyable):
         return format(self, "")
 
     @abstractmethod
-    def _deformat(self: Self, string: str, /) -> Any: ...
+    def _deformat(self: Self, string: str, /) -> Any:
+        "..."
 
     @classmethod
     @abstractmethod
-    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]: ...
+    def _format_parse(cls: type[Self], spec: str, /) -> tuple[Any, ...]:
+        "..."
 
     @abstractmethod
-    def _format_parsed(self: Self, /, *parsed: Any) -> object: ...
+    def _format_parsed(self: Self, /, *parsed: Any) -> object:
+        "..."
 
     def _init_kwargs(self: Self, /, **kwargs: Any) -> None:
         """Apply constructor keyword overrides to public component attributes."""
@@ -97,10 +107,12 @@ class CoreABC(Copyable):
             setattr(self, name.lstrip("_"), value)
 
     @abstractmethod
-    def _init_other(self: Self, other: Self | None, /) -> None: ...
+    def _init_other(self: Self, other: Self | None, /) -> None:
+        "..."
 
     @abstractmethod
-    def _string_fset(self: Self, value: str, /) -> None: ...
+    def _string_fset(self: Self, value: str, /) -> None:
+        "..."
 
     @setdoc.basic
     def copy(self: Self, /) -> Self:
@@ -131,7 +143,8 @@ class CoreABC(Copyable):
 
     @property
     @abstractmethod
-    def packaging(self: Self, /) -> Any: ...
+    def packaging(self: Self, /) -> Any:
+        "..."
 
     @property
     def string(self: Self, /) -> str:

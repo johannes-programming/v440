@@ -68,11 +68,15 @@ class BaseTestType(ABC):
     @abstractmethod
     def go_type(
         self: Self, typename: str, cls: type[Any], /, **typedict: Any
-    ) -> None: ...
+    ) -> None:
+        "..."
+
     @abstractmethod
     def subTest(
         self: Self, /, *, typename: str
-    ) -> contextlib.AbstractContextManager[Any]: ...
+    ) -> contextlib.AbstractContextManager[Any]:
+        "..."
+
     def test_key0(self: Self, /) -> None:
         """Test under KEY0."""
         cls: type[Any]

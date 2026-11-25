@@ -23,7 +23,8 @@ class QualABC(NestedABC, Generic[Lit]):
     __slots__ = ("_lit", "_num")
 
     @abstractmethod
-    def _cmp(self: Self, /) -> Any: ...
+    def _cmp(self: Self, /) -> Any:
+        "..."
 
     @classmethod
     def _init_factories(cls: type[Self], /) -> dict[str, Any]:
@@ -32,7 +33,8 @@ class QualABC(NestedABC, Generic[Lit]):
 
     @classmethod
     @abstractmethod
-    def _lit_parse(cls: type[Self], value: str, /) -> Lit: ...
+    def _lit_parse(cls: type[Self], value: str, /) -> Lit:
+        "..."
 
     def _string_fset(self: Self, value: str, /) -> None:
         """Parse a qualifier string into its normalized literal and number fields."""

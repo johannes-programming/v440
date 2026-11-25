@@ -68,7 +68,9 @@ class Release(ListABC[int]):
         key: SupportsIndex,
         *,
         minlen: SupportsIndex | None = None,
-    ) -> int: ...
+    ) -> int:
+        "..."
+
     @overload
     def _getitem(
         self: Self,
@@ -76,7 +78,8 @@ class Release(ListABC[int]):
         key: slice,
         *,
         minlen: SupportsIndex | None = None,
-    ) -> list[int]: ...
+    ) -> list[int]:
+        "..."
 
     def _getitem(
         self: Self,

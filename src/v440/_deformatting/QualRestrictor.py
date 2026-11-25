@@ -124,9 +124,7 @@ class QualInfo:
                 forms.add(before + alias + after)
 
         elif field == "dev":
-            for before in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                for after in Cfg.cfg.data["qual-restrictor"]["sep"]:
-                    forms.add(before + "dev" + after)
+            forms |= Cfg.cfg.dev_forms
 
         else:  # pragma: no cover - private misuse guard
             raise AssertionError(field)
