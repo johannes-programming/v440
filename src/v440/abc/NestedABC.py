@@ -8,7 +8,6 @@ from abc import abstractmethod
 from typing import Any, Self, cast
 
 import cmp3
-import setdoc
 from datarepr import datarepr
 
 from v440.abc.CoreABC import CoreABC
@@ -19,12 +18,10 @@ class NestedABC(cmp3.CmpABC, CoreABC):
 
     __slots__ = ()
 
-    @setdoc.basic
     def __bool__(self: Self, /) -> bool:
-        """Return whether any nested component is nonempty."""
+        """Do bool(self)."""
         return any(map(bool, self._todict().values()))
 
-    @setdoc.basic
     def __cmp__(self: Self, other: Any, /) -> None | float | int:
         """Compare compatible nested objects through their normalized comparison keys."""
         if type(self) is not type(other):
@@ -33,9 +30,8 @@ class NestedABC(cmp3.CmpABC, CoreABC):
             float | int, cmp3.cmp(self._cmp(), other._cmp(), mode="le")
         )
 
-    @setdoc.basic
     def __repr__(self: Self, /) -> str:
-        """Return a constructor-style representation of the nested component state."""
+        """Do repr(self)."""
         return datarepr(type(self).__name__, **self._todict())
 
     @abstractmethod

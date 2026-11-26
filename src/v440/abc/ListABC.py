@@ -9,7 +9,6 @@ from collections import abc
 from functools import cmp_to_key
 from typing import Any, Self, TypeVar
 
-import setdoc
 from datahold import BaseDataObject, HoldList
 
 from v440._utils.list_key import list_key
@@ -24,32 +23,28 @@ class ListABC(HoldList[Item], CoreABC):
 
     __slots__ = ()
 
-    @setdoc.basic
     def __bool__(self: Self, /) -> bool:
-        """Return whether this sequence contains any normalized components."""
+        """Do bool(self)."""
         return bool(self.data)
 
     __eq__ = BaseDataObject.__eq__
 
-    @setdoc.basic
     def __ge__(self: Self, other: object, /) -> Any:
-        """Compare this sequence with another data object using PEP 440 item ordering."""
+        """Do self >= other."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__ge__(self, other)
         return tuple(map(list_key, self)) >= tuple(map(list_key, other))
 
-    @setdoc.basic
     def __gt__(self: Self, other: object, /) -> Any:
-        """Compare this sequence with another data object using PEP 440 item ordering."""
+        """Do self > other."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__gt__(self, other)
         return tuple(map(list_key, self)) > tuple(map(list_key, other))
 
-    @setdoc.basic
     def __init__(
         self: Self,
         other: abc.Iterable[Item] | None = None,
@@ -60,18 +55,16 @@ class ListABC(HoldList[Item], CoreABC):
         self._init_other(other)
         self._init_kwargs(**kwargs)
 
-    @setdoc.basic
     def __le__(self: Self, other: object, /) -> Any:
-        """Compare this sequence with another data object using PEP 440 item ordering."""
+        """Do self <= other."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
             return BaseDataObject.__le__(self, other)
         return tuple(map(list_key, self)) <= tuple(map(list_key, other))
 
-    @setdoc.basic
     def __lt__(self: Self, other: object, /) -> Any:
-        """Compare this sequence with another data object using PEP 440 item ordering."""
+        """Do self < other."""
         if not isinstance(other, BaseDataObject):
             return NotImplemented
         if not isinstance(other, ListABC):
@@ -96,7 +89,6 @@ class ListABC(HoldList[Item], CoreABC):
             self.data = other
 
     @property
-    @setdoc.basic
     def data(self: Self, /) -> tuple[Item, ...]:
         """Return the normalized immutable sequence data."""
         return self._data

@@ -7,7 +7,6 @@ __all__: list[str] = ["CoreABC"]
 from abc import abstractmethod
 from typing import Any, Self
 
-import setdoc
 from copyable import Copyable
 from datarepr import oxford
 
@@ -23,16 +22,13 @@ class CoreABC(Copyable):
     __slots__ = ()
 
     @abstractmethod
-    @setdoc.basic
     def __bool__(self: Self, /) -> bool:
-        "..."
+        "Do bool(self)."
 
     @abstractmethod
-    @setdoc.basic
     def __eq__(self: Self, other: object, /) -> bool:
-        "..."
+        "Do self == other."
 
-    @setdoc.basic
     def __format__(self: Self, format_spec: object, /) -> str:
         """Render this object according to a v440 format specification."""
         msg: str
@@ -49,16 +45,13 @@ class CoreABC(Copyable):
         return str(self._format_parsed(*parsed))
 
     @abstractmethod
-    @setdoc.basic
     def __ge__(self: Self, other: Self, /) -> bool:
-        "..."
+        "Do self >= other."
 
     @abstractmethod
-    @setdoc.basic
     def __gt__(self: Self, other: Self, /) -> bool:
-        "..."
+        "Do self > other."
 
-    @setdoc.basic
     def __init__(
         self: Self, other: Self | None = None, /, **kwargs: Any
     ) -> None:
@@ -67,23 +60,19 @@ class CoreABC(Copyable):
         self._init_kwargs(**kwargs)
 
     @abstractmethod
-    @setdoc.basic
     def __le__(self: Self, other: Self, /) -> bool:
-        "..."
+        "Do self <= other."
 
     @abstractmethod
-    @setdoc.basic
     def __lt__(self: Self, other: Self, /) -> bool:
-        "..."
+        "Do self < other."
 
     @abstractmethod
-    @setdoc.basic
     def __repr__(self: Self, /) -> str:
-        "..."
+        "Do repr(self)."
 
-    @setdoc.basic
     def __str__(self: Self, /) -> str:
-        """Return the canonical string representation of this object."""
+        """Do str(self)."""
         return format(self, "")
 
     @abstractmethod
@@ -114,7 +103,6 @@ class CoreABC(Copyable):
     def _string_fset(self: Self, value: str, /) -> None:
         "..."
 
-    @setdoc.basic
     def copy(self: Self, /) -> Self:
         """Return an independent copy of this object."""
         return type(self)(self)
