@@ -57,7 +57,7 @@ class QualInfo:
 
     @classmethod
     def _num_row_from_matches(
-        cls: type[Self], matches: dict[str, str]
+        cls: type[Self], /, matches: dict[str, str]
     ) -> QualRow:
         """Build the numeric row from configured qualifier matches."""
         index: int
@@ -135,7 +135,7 @@ class QualInfo:
 
     @classmethod
     def _all_literal_rows(
-        cls: type[Self], text: str, num_row: QualRow
+        cls: type[Self], /, text: str, num_row: QualRow
     ) -> set[QualRow]:
         """Enumerate every grammar-valid literal segmentation for the numeric qualifier row."""
         base: list[str]
@@ -157,6 +157,7 @@ class QualInfo:
     @classmethod
     def _visit_literal_rows(
         cls: type[Self],
+        /,
         text: str,
         present: list[tuple[int, str, str]],
         which: int,

@@ -93,6 +93,7 @@ class TestOrder(unittest.TestCase):
 
     def go(
         self: Self,
+        /,
         *,
         func: abc.Callable[[Any, Any], Any],
         x: str,
@@ -723,10 +724,11 @@ class TestTypeTotalAttrSetter(unittest.TestCase, BaseTestType):
         """Run attribute-setter cases for one core class."""
         blobdict: dict[Any, Any]
         blobname: str
-        cls = Util.import_(f"v440.core.{typename}.{typename}")
+        cls_: type[Any]
+        cls_ = Util.import_(f"v440.core.{typename}.{typename}")
         for blobname, blobdict in typedict.items():
             with self.subTest(blobname=blobname):
-                self.go_task(cls, **blobdict)
+                self.go_task(cls_, **blobdict)
 
     def go_task(
         self: Self,
