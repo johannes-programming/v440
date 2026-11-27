@@ -107,7 +107,7 @@ ruff: make-v440 out
 	conda run -n make-v440 ruff format . ;
 
 test: dist make-v440 out
-	conda run -n make-v440 pip install "style-checker<0.2,>=0.1.13";
+	conda run -n make-v440 pip install "style-checker<0.3,>=0.2.26";
 	conda run -n make-v440 python -m style_checker -- "**/*.py" > dist/out/style-out.txt 2> dist/out/style-err.txt || true;
 	conda run -n base python make/env.py --python=3.11 --recreate -- mypy-v440 >/dev/null;
 	conda run -n mypy-v440 pip install dist/*.tar.gz >/dev/null;
